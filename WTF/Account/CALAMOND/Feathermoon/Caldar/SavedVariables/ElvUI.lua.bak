@@ -1,0 +1,13 @@
+
+ElvCharacterDB = {
+	["ChatLog"] = {
+	},
+	["ChatEditHistory"] = {
+	},
+	["BodyGuard"] = {
+		["IsInValidZone"] = true,
+		["MaxHealth"] = 166352,
+		["Health"] = 166352,
+		["Active"] = true,
+	},
+}

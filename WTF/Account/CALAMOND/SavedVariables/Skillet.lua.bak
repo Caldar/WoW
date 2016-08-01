@@ -1,0 +1,62 @@
+
+SkilletDB = {
+	["profileKeys"] = {
+		["Nothing - Feathermoon"] = "Nothing - Feathermoon",
+	},
+	["profiles"] = {
+		["Nothing - Feathermoon"] = {
+			["WarnLog"] = true,
+			["plugins"] = {
+				["beancounter"] = {
+					["enabled"] = true,
+					["days"] = 30,
+				},
+			},
+		},
+	},
+	["global"] = {
+		["recipeDB"] = {
+		},
+		["dataVersion"] = 5,
+		["itemRecipeSource"] = {
+		},
+		["cachedGuildbank"] = {
+		},
+		["itemRecipeUsedIn"] = {
+		},
+	},
+	["realm"] = {
+		["Feathermoon"] = {
+			["reagentsInQueue"] = {
+				["Nothing"] = {
+				},
+			},
+			["tradeSkills"] = {
+				["Nothing"] = {
+				},
+			},
+			["queueData"] = {
+				["Nothing"] = {
+				},
+			},
+			["inventoryData"] = {
+				["Nothing"] = {
+				},
+			},
+			["skillDB"] = {
+				["Nothing"] = {
+				},
+			},
+			["userIgnoredMats"] = {
+				["Nothing"] = {
+				},
+			},
+			["auctionData"] = {
+				["Nothing"] = {
+				},
+			},
+			["groupDB"] = {
+			},
+		},
+	},
+}

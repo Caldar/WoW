@@ -1,0 +1,12 @@
+VER 3 010000000000000D "Trinket" "INV_MISC_QUESTIONMARK"
+#showtooltip Flame Shock
+/script UIErrorsFrame:Hide()
+/use 13
+/cast Flame Shock
+/script UIErrorsFrame:Clear(); UIErrorsFrame:Show()
+END
+VER 3 0100000000000002 "WS" "INV_Misc_QuestionMark"
+#showtooltip
+/stopcasting
+/cast Wind Shear
+END

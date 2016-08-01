@@ -1,0 +1,9 @@
+VER 3 0100000000000002 "int" "INV_MISC_QUESTIONMARK"
+/stopcasting
+/cast Spear Hand Strike
+END
+VER 3 0100000000000001 "Jab" "INV_MISC_QUESTIONMARK"
+#showtooltip
+/cast Jab
+/startattack
+END

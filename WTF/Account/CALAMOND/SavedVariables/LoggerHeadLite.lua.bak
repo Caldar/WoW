@@ -1,0 +1,10 @@
+
+LoggerHeadNDB = {
+	["profileKeys"] = {
+		["Nothing - Feathermoon"] = "Default",
+	},
+	["profiles"] = {
+		["Default"] = {
+		},
+	},
+}

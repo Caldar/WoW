@@ -1,0 +1,11 @@
+Scrap_Spotlight: disabled
+Archy: enabled
+Clique: enabled
+FishermansFriend: enabled
+LoggerHeadLite: disabled
+Molinari: enabled
+Skada: disabled
+Skillet: disabled
+AddOnSkins: enabled
+ElvUI_EverySecondCounts: enabled
+djbags: disabled

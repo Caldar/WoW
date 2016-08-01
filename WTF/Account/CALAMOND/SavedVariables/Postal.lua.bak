@@ -1,0 +1,17 @@
+
+Postal3DB = {
+	["global"] = {
+		["BlackBook"] = {
+			["alts"] = {
+				"Nothing|Feathermoon|Alliance|100|MONK", -- [1]
+			},
+		},
+	},
+	["profileKeys"] = {
+		["Nothing - Feathermoon"] = "Nothing - Feathermoon",
+	},
+	["profiles"] = {
+		["Nothing - Feathermoon"] = {
+		},
+	},
+}

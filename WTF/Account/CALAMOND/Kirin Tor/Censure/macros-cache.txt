@@ -1,0 +1,4 @@
+VER 3 0100000000000005 "ZGVMacro2" "0"
+/target The Lich King
+/run ZGV:MRM()
+END

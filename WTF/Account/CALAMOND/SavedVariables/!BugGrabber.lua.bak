@@ -1,0 +1,14 @@
+
+BugGrabberDB = {
+	["lastSanitation"] = 3,
+	["session"] = 1,
+	["errors"] = {
+		{
+			["message"] = "Interface\\AddOns\\Archy\\Archy-6.2.4.1.lua:443: attempt to index upvalue 'ArtifactFrame' (a nil value)",
+			["time"] = "2016/07/10 21:20:10",
+			["stack"] = "Interface\\AddOns\\Archy\\Archy-6.2.4.1.lua:443: in function `ConfigUpdated'\nInterface\\AddOns\\Archy\\Archy-6.2.4.1.lua:895: in function `?'\n...vUI\\libs\\CallbackHandler-1.0\\CallbackHandler-1.0-6.lua:145: in function <...vUI\\libs\\CallbackHandler-1.0\\CallbackHandler-1.0.lua:145>\n[string \"safecall Dispatcher[3]\"]:4: in function <[string \"safecall Dispatcher[3]\"]:4>\n[C]: ?\n[string \"safecall Dispatcher[3]\"]:13: in function `?'\n...vUI\\libs\\CallbackHandler-1.0\\CallbackHandler-1.0-6.lua:90: in function `Fire'\nInterface\\AddOns\\ElvUI\\libs\\AceDB-3.0\\AceDB-3.0-26.lua:217: in function <Interface\\AddOns\\ElvUI\\libs\\AceDB-3.0\\AceDB-3.0.lua:206>\nInterface\\AddOns\\Archy\\Archy-6.2.4.1.lua:639: in function <Interface\\AddOns\\Archy\\Archy.lua:624>\n(tail call): ?\n[C]: ?\n[string \"safecall Dispatcher[1]\"]:9: in function <[string \"safecall Dispatcher[1]\"]:5>\n(tail call): ?\n...face\\AddOns\\ElvUI\\libs\\AceAddon-3.0\\AceAddon-3.0-12.lua:529: in function `InitializeAddon'\n...face\\AddOns\\ElvUI\\libs\\AceAddon-3.0\\AceAddon-3.0-12.lua:644: in function <...face\\AddOns\\ElvUI\\libs\\AceAddon-3.0\\AceAddon-3.0.lua:636>",
+			["session"] = 1,
+			["counter"] = 1,
+		}, -- [1]
+	},
+}

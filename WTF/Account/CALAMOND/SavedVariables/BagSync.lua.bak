@@ -1,0 +1,154 @@
+
+BagSyncDB = {
+	["Feathermoon"] = {
+		["Sinister"] = {
+			["bag"] = {
+				{
+					[9] = "111456,20",
+					[10] = "111456,20",
+				}, -- [1]
+				{
+				}, -- [2]
+				{
+					"122742,2", -- [1]
+					"6532,18", -- [2]
+					"6532,20", -- [3]
+					"45991", -- [4]
+				}, -- [3]
+				{
+					"6948", -- [1]
+					"110560", -- [2]
+					"71153,10", -- [3]
+					"89906,10", -- [4]
+					"86143,17", -- [5]
+					"72986,20", -- [6]
+					nil, -- [7]
+					"141527,20", -- [8]
+					"130192,20", -- [9]
+					"136569,5", -- [10]
+					"129626", -- [11]
+					"129620", -- [12]
+					"7005", -- [13]
+					"129645", -- [14]
+					"129615", -- [15]
+					"129618", -- [16]
+					"129617", -- [17]
+					"129619", -- [18]
+					"129616", -- [19]
+					"5976", -- [20]
+					"110293", -- [21]
+					"110292", -- [22]
+				}, -- [4]
+				[0] = {
+					"23345", -- [1]
+					"109137,4", -- [2]
+					"109141,17", -- [3]
+					nil, -- [4]
+					nil, -- [5]
+					"110291", -- [6]
+					"110294", -- [7]
+					"110289", -- [8]
+					"110290", -- [9]
+					"110274", -- [10]
+					"111456,20", -- [11]
+				},
+			},
+			["guild"] = "I Have It Set To Muffins",
+			["gold"] = 8458123,
+			["equip"] = {
+				[0] = {
+					"129624", -- [1]
+					"129610", -- [2]
+					"129627", -- [3]
+					nil, -- [4]
+					"129621", -- [5]
+					"129628", -- [6]
+					"129625", -- [7]
+					"129622", -- [8]
+					"129629", -- [9]
+					"129623", -- [10]
+					"129613", -- [11]
+					"129612", -- [12]
+					"129614", -- [13]
+					"129611", -- [14]
+					"129609", -- [15]
+					"129630", -- [16]
+					"129630", -- [17]
+				},
+			},
+			["class"] = "SHAMAN",
+			["faction"] = "Alliance",
+		},
+	},
+}
+BagSyncOpt = {
+	["enableAuction"] = true,
+	["showGuildNames"] = false,
+	["tooltipOnlySearch"] = false,
+	["enableTooltips"] = true,
+	["enableMailbox"] = true,
+	["enableFaction"] = false,
+	["enableGuild"] = true,
+	["dbversion"] = "8.5",
+	["enableTooltipSeperator"] = true,
+	["showTotal"] = true,
+	["enableUnitClass"] = true,
+	["enableMinimap"] = false,
+}
+BagSyncGUILD_DB = {
+	["Feathermoon"] = {
+	},
+}
+BagSyncTOKEN_DB = {
+	["Feathermoon"] = {
+		["Garrison Resources"] = {
+			["Sinister"] = 379,
+			["header"] = "Warlords of Draenor",
+			["icon"] = "Interface\\Icons\\inv_garrison_resource",
+		},
+		["Elder Charm of Good Fortune"] = {
+			["Sinister"] = 2,
+			["header"] = "Mists of Pandaria",
+			["icon"] = "Interface\\Icons\\inv_misc_coin_17",
+		},
+		["Ironpaw Token"] = {
+			["Sinister"] = 50,
+			["header"] = "Miscellaneous",
+			["icon"] = "Interface\\Icons\\inv_relics_idolofferocity",
+		},
+		["Epicurean's Award"] = {
+			["Sinister"] = 7,
+			["header"] = "Miscellaneous",
+			["icon"] = "Interface\\Icons\\INV_Misc_Ribbon_01",
+		},
+		["Mogu Rune of Fate"] = {
+			["Sinister"] = 2,
+			["header"] = "Mists of Pandaria",
+			["icon"] = "Interface\\Icons\\archaeology_5_0_mogucoin",
+		},
+		["Champion's Seal"] = {
+			["Sinister"] = 5,
+			["header"] = "Wrath of the Lich King",
+			["icon"] = "Interface\\Icons\\Ability_Paladin_ArtofWar",
+		},
+		["Lesser Charm of Good Fortune"] = {
+			["Sinister"] = 118,
+			["header"] = "Mists of Pandaria",
+			["icon"] = "Interface\\Icons\\inv_misc_coin_18",
+		},
+	},
+}
+BagSyncCRAFT_DB = {
+	["Feathermoon"] = {
+		["Sinister"] = {
+			"Mining,700", -- [1]
+			nil, -- [2]
+			"Archaeology,700", -- [3]
+			"Fishing,450", -- [4]
+		},
+	},
+}
+BagSyncBLACKLIST_DB = {
+	["Feathermoon"] = {
+	},
+}

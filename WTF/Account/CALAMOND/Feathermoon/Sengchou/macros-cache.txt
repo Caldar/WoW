@@ -1,0 +1,10 @@
+VER 3 0100000000000341 "Jab" "INV_MISC_QUESTIONMARK"
+#showtooltip Jab
+/use 10
+/cast Jab
+END
+VER 3 0100000000000326 "SM" "INV_MISC_QUESTIONMARK"
+#showtooltip Soothing Mist
+/use 10
+/cast Soothing Mist
+END

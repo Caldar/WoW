@@ -1,0 +1,7 @@
+VER 3 0000000000000002 "maggot" "INV_MISC_QUESTIONMARK"
+/target Maggot
+/script SetRaidTarget("target",8);
+END
+VER 3 0000000000000001 "ore" "INV_MISC_QUESTIONMARK"
+#showtooltip Ogre Waystone
+END

@@ -1,0 +1,86 @@
+VER 3 0100000000000026 "A" "INV_Misc_QuestionMark"
+/cast [nocombat,nomounted] Ironbound Proto-Drake
+/dismount [mounted, noflying]
+END
+VER 3 0100000000000020 "CS" "INV_Misc_QuestionMark"
+#showtooltip
+/cast Crusader Strike
+/startattack
+END
+VER 3 010000000000002B "CSr" "INV_Misc_QuestionMark"
+#showtooltip Crusader Strike
+/use 14
+/cast Crusader Strike
+/startattack
+END
+VER 3 010000000000001D "DS" "INV_Misc_QuestionMark"
+#showtooltip Divine Storm
+/cast Divine Storm
+/startattack
+END
+VER 3 0100000000000024 "DSh" "INV_Misc_QuestionMark"
+#showtooltip
+/cancelaura Divine Shield
+/cast Divine Shield
+END
+VER 3 010000000000001C "Ex" "INV_Misc_QuestionMark"
+#showtooltip Exorcism
+/cast Exorcism
+/startattack
+END
+VER 3 0100000000000019 "G" "INV_Misc_QuestionMark"
+/cast [nocombat,nomounted] Mekgineer's Chopper
+/dismount [mounted]
+END
+VER 3 0100000000000027 "HoP" "INV_Misc_QuestionMark"
+#showtooltip
+/cancelaura Hand of Protection
+/cast Hand of Protection
+END
+VER 3 010000000000002A "HoPO" "INV_Misc_QuestionMark"
+#showtooltip
+/cast [@Hanstall] Hand of Protection
+END
+VER 3 0100000000000021 "HoR" "INV_Misc_QuestionMark"
+#showtooltip
+/cast Hammer of the Righteous
+/startattack
+END
+VER 3 010000000000001F "HoW" "INV_Misc_QuestionMark"
+#showtooltip Hammer of Wrath
+/cast Hammer of Wrath
+/startattack
+END
+VER 3 010000000000001E "HW" "INV_Misc_QuestionMark"
+#showtooltip Holy Wrath
+/cast Holy Wrath
+/startattack
+END
+VER 3 0100000000000022 "J" "INV_Misc_QuestionMark"
+#showtooltip
+/cast Judgement
+/startattack
+END
+VER 3 0100000000000028 "Rp" "INV_Misc_QuestionMark"
+#showtooltip Repentance
+/click ControlFreakFrame
+END
+VER 3 0100000000000023 "SalvHan" "INV_Misc_QuestionMark"
+#showtooltip
+/cast [@Hanstall] Hand of Sacrifice
+END
+VER 3 010000000000001B "TV" "INV_Misc_QuestionMark"
+#showtooltip Templar's Verdict
+/cast Templar's Verdict
+/startattack
+END
+VER 3 0100000000000025 "Tz" "INV_Misc_QuestionMark"
+#showtooltip
+/cast [@tziva] Word of Glory
+END
+VER 3 0100000000000029 "Wor" "INV_Misc_QuestionMark"
+#showtooltip Avenger's Shield
+/targetenemyplayer
+/cast Avenger's Shield
+/targetlasttargeta
+END

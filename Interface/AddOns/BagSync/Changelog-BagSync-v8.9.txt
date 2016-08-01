@@ -1,0 +1,22 @@
+tag v8.9
+02a9948e111e090eac316cd9761b203b466ef9b3
+Xruptor <xruptor@manaflux.com>
+2016-07-31 11:38:28 -0400
+
+
+
+--------------------
+
+Xruptor:
+	- Added Cross-Realm / BNet support to Search Window -Slowly but surely.  Had to change a local function to global for obvious reasons. -The @ commands only still work for the current logged in character.  Such as @bank or @void etc...
+	- German Locals Update -Updated German localization by GrimPala at wowinterface.com (THANKS! :D)
+	- DOH! A typo.... lol
+	- Cleanup of DB functions -Some cleanup of the DB functions -Added some independent functions to handle same filtering process
+	- Gold Tooltip Update Bah gonna commit this but I'm going to approach this a different way.
+Alexander Hess:
+	- FIX: GetInboxItem() change in 7.0.3
+	Return parameters of GetInboxItem() have changed in 7.0.3
+	
+	Instead of returning name, itemTexture, count, quality, canUse the function now returns name, itemID, itemTexture, count, quality, canUse
+	
+	Source: http://wow.gamepedia.com/Patch_7.0.3/API_changes

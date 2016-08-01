@@ -1,0 +1,26 @@
+------------------------------------------------------------------------
+r131 | funkydude | 2014-11-24 13:07:25 +0000 (Mon, 24 Nov 2014) | 1 line
+Changed paths:
+   A /tags/r131-release (from /trunk:130)
+
+Tagging as r131-release
+------------------------------------------------------------------------
+r130 | nevcairiel | 2014-11-24 12:26:07 +0000 (Mon, 24 Nov 2014) | 1 line
+Changed paths:
+   M /trunk/FishermansFriend.lua
+   M /trunk/locales/enUS.lua
+
+Add an option to automatically equip fishing hats from Draenor
+------------------------------------------------------------------------
+r129 | nevcairiel | 2014-11-22 10:26:23 +0000 (Sat, 22 Nov 2014) | 1 line
+Changed paths:
+   M /trunk/FishermansFriend.lua
+
+Worm Supreme is a +200 lure
+------------------------------------------------------------------------
+r128 | nevcairiel | 2014-10-22 08:54:00 +0000 (Wed, 22 Oct 2014) | 1 line
+Changed paths:
+   M /trunk/FishermansFriend.lua
+
+Fix missing comma
+------------------------------------------------------------------------

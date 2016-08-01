@@ -1,0 +1,127 @@
+
+StatBlockCoreDB = {
+	["profileKeys"] = {
+		["Caldar - Feathermoon"] = "Default",
+		["Calastir - Feathermoon"] = "Default",
+		["Failure - Feathermoon"] = "Default",
+		["Zenax - Scarlet Crusade"] = "Default",
+		["Calastir - Scarlet Crusade"] = "Default",
+		["Caladyth - Feathermoon"] = "Default",
+		["Censure - Kirin Tor"] = "Default",
+		["Calastir - Kirin Tor"] = "Default",
+		["Pyric - Feathermoon"] = "Default",
+		["Nothing - Feathermoon"] = "Default",
+		["Sengchou - Feathermoon"] = "Default",
+		["Sinister - Feathermoon"] = "Default",
+		["Souptruck - Feathermoon"] = "Default",
+		["Censure - Feathermoon"] = "Default",
+	},
+	["profiles"] = {
+		["Default"] = {
+			["globalFont"] = "PT Sans Narrow",
+			["plugins"] = {
+				["ArkInventory_Tracking_Item"] = {
+					["posx"] = 662.186703948974,
+					["enabled"] = false,
+					["posy"] = 340.479992389679,
+				},
+				["Skada"] = {
+					["posx"] = 981.43982181311,
+					["posy"] = 17.0669332122743,
+					["lock"] = true,
+					["showtext"] = false,
+				},
+				["ArkInventory_Bags"] = {
+					["notipincombat"] = true,
+					["showtext"] = false,
+					["lock"] = true,
+					["posx"] = 1023.03989900828,
+					["posy"] = 17.7068538522678,
+				},
+				["BugSack"] = {
+					["notipincombat"] = true,
+					["showtext"] = false,
+					["lock"] = true,
+					["posx"] = 1064.53317933083,
+					["posy"] = 16.9600704216941,
+				},
+				["ArkInventory_Tracking_Currency"] = {
+					["posx"] = 692.906703262328,
+					["enabled"] = false,
+					["posy"] = 465.920028648376,
+				},
+				["ArkInventory_Mounts"] = {
+					["posx"] = 708.266702919005,
+					["enabled"] = false,
+					["posy"] = 346.240031323432,
+				},
+				["WIM"] = {
+					["posx"] = 1037.11989869356,
+					["posy"] = 17.7068538522678,
+					["lock"] = true,
+					["showtext"] = false,
+				},
+				["WeakAuras"] = {
+					["enabled"] = false,
+				},
+				["ArkInventory_Pets"] = {
+					["posx"] = 696.106625065804,
+					["enabled"] = false,
+					["posy"] = 321.280012350082,
+				},
+				["S&L Friends"] = {
+					["posx"] = 599.466627225877,
+					["enabled"] = false,
+					["posy"] = 449.919989943504,
+				},
+				["S&L Guild"] = {
+					["posx"] = 611.626666016578,
+					["enabled"] = false,
+					["posy"] = 392.95999121666,
+				},
+				["ArkInventory_Money"] = {
+					["posx"] = 562.986667103767,
+					["enabled"] = false,
+					["posy"] = 327.040012221336,
+				},
+				["BagSyncLDB"] = {
+					["notipincombat"] = true,
+					["showtext"] = false,
+					["lock"] = true,
+					["posx"] = 981.43982181311,
+					["posy"] = 17.0669332122743,
+				},
+				["AdiBags"] = {
+					["notipincombat"] = true,
+					["showtext"] = false,
+					["lock"] = true,
+					["posx"] = 1050.45317964554,
+					["posy"] = 16.9600704216941,
+				},
+				["Archy"] = {
+					["notipincombat"] = true,
+					["showtext"] = false,
+					["lock"] = true,
+					["posx"] = 967.359822127823,
+					["posy"] = 17.0669332122743,
+				},
+				["BagnonLauncher"] = {
+					["notipincombat"] = true,
+					["posy"] = 17.7068538522678,
+					["lock"] = true,
+					["posx"] = 1023.03989900828,
+					["showtext"] = false,
+				},
+				["LoggerHeadLite"] = {
+					["notipincombat"] = true,
+					["showtext"] = false,
+					["lock"] = true,
+					["posx"] = 1050.45325777054,
+					["posy"] = 16.9600704216941,
+				},
+			},
+			["globalAlpha"] = 0,
+			["globalSize"] = 12,
+		},
+	},
+}

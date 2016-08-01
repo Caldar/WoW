@@ -1,0 +1,10 @@
+
+StatBlockCoreDB = {
+	["profileKeys"] = {
+		["Nothing - Feathermoon"] = "Default",
+	},
+	["profiles"] = {
+		["Default"] = {
+		},
+	},
+}

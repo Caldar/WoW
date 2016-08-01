@@ -1,0 +1,7 @@
+
+SkilletDBPC = {
+	"07/10/16 22:45:15(D0): initialize database for Nothing", -- [1]
+	"07/10/16 22:45:15(D0): data gather module is nil", -- [2]
+}
+SkilletMemory = {
+}

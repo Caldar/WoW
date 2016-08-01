@@ -1,0 +1,59 @@
+VER 3 0100000000000008 "F" "INV_Misc_QuestionMark"
+#showtooltip Swift Flight Form(Shapeshift)
+/cast Swift Flight Form(Shapeshift)
+/dismount [noflying]
+END
+VER 3 0100000000000007 "G" "INV_Misc_QuestionMark"
+#showtooltip Swift Mistsaber
+/cancelaura [nocombat] Moonkin Form(Shapeshift)
+/cast [nocombat, nomounted, noflying] Swift Mistsaber
+/dismount [mounted]
+END
+VER 3 010000000000000B "Lacerate" "INV_Misc_QuestionMark"
+#showtooltip
+/cast Lacerate
+/startattack
+END
+VER 3 010000000000000A "Mangle" "INV_Misc_QuestionMark"
+#showtooltip
+/cast Mangle
+/startattack
+END
+VER 3 010000000000000D "Maul" "INV_Misc_QuestionMark"
+#showtooltip
+/cast Maul
+/startattack
+END
+VER 3 0100000000000001 "PS" "INV_Misc_QuestionMark"
+/cast [stance:1] !Bear Form
+/cast [stance:2] !Aquatic Form
+/cast [stance:3] !Cat Form
+/cast [stance:4] !Travel Form
+/cast [stance:5] !Moonkin Form
+END
+VER 3 010000000000000C "Pulverize" "INV_Misc_QuestionMark"
+#showtooltip
+/cast Pulverize
+/startattack
+END
+VER 3 0100000000000006 "Rez" "INV_Misc_QuestionMark"
+#showtooltip
+/use [nocombat] Revive
+/stopmacro [nocombat]
+/use Rebirth
+/say *** Rebirth cast on %t ***
+END
+VER 3 0100000000000009 "Root" "INV_Misc_QuestionMark"
+#showtooltip Entangling Roots
+/click ControlFreakFrame
+END
+VER 3 010000000000000E "Swipe" "INV_Misc_QuestionMark"
+#showtooltip
+/cast Swipe(Bear Form)
+/startattack
+END
+VER 3 010000000000000F "Thrash" "INV_Misc_QuestionMark"
+#showtooltip
+/cast Thrash
+/startattack
+END

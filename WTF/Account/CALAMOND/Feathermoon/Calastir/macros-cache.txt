@@ -1,0 +1,12 @@
+VER 3 0100000000000003 "flying" "Ability_Mount_Gryphon_01"
+/use Flying Machine Control
+END
+VER 3 0100000000000002 "mount" "Ability_Mount_MountainRam"
+/use Stormpike Battle Charger
+END
+VER 3 0100000000000001 "Sap" "INV_Misc_QuestionMark"
+#showtooltip Sap
+#show Sap
+/focus
+/cast Sap
+END

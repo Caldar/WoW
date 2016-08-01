@@ -1,0 +1,31 @@
+VER 3 0100000000000008 "F" "INV_Misc_QuestionMark"
+/cast [nomounted, nocombat] Magnificent Flying Carpet
+/dismount [mounted, noflying]
+END
+VER 3 0100000000000007 "G" "INV_Misc_QuestionMark"
+/cast [nomounted, nocombat] Black War Bear
+/dismount [mounted]
+END
+VER 3 010000000000000A "MC" "INV_Misc_QuestionMark"
+#showtooltip Mind Control
+/stopcasting
+/cast Mind Control
+END
+VER 3 0100000000000006 "raz" "Ability_CheapShot"
+/target Instructor
+/petattack
+/click PetActionButton6;
+/click PetActionButton5;
+/raid ----> Caldar has Taunted <-----
+/sw 20
+/script Stopwatch_Play();
+/in 20 /rsay === TAUNT NOW! ===
+END
+VER 3 0100000000000009 "Sh" "INV_Misc_QuestionMark"
+#showtooltip Shackle Undead
+/click ControlFreakFrame
+END
+VER 3 01000000000004C0 "ZGVMacro1" "0"
+/target (npc 79901)
+/run ZGV:MRM():CG(1,1)
+END

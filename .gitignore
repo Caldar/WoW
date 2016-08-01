@@ -45,3 +45,21 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# WoW stuff to ignore
+Cache/
+Data/
+Errors/
+Logs/
+Utils/
+.build.info
+.curseclient
+.patch.result
+.product.db
+BlizzardError.exe
+dbghelp.dll
+Launcher.db
+World of Warcraft Launcher.exe
+Wow.exe
+WoW.mfil
+Wow-64.exe
