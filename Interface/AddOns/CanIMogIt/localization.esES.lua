@@ -7,6 +7,8 @@ local translations = {
 	-- ["Cannot be learned."] = "",
 	-- ["Cannot be learned by this character."] = "",
 	-- ["Cannot determine status on other characters."] = "",
+	-- ["Cannot learn:"] = "",
+	-- ["Cannot Learn: Soulbound"] = "",
 	-- ["Debug Tooltip"] = "",
 	-- ["Detailed information for debug purposes. Use this when sending bug reports."] = "",
 	-- ["Equippable Items Only"] = "",
@@ -20,8 +22,12 @@ local translations = {
 	-- ["Only show on items that can be equipped."] = "",
 	-- ["Only show on items that can be transmoggrified."] = "",
 	-- ["Only show on items that you haven't learned."] = "",
+	-- ["Show Bag Icons"] = "",
+	-- ["Shows a more detailed text for some of the tooltips."] = "",
+	-- ["Shows the icon directly on the item in your bag."] = "",
 	-- ["Transmoggable Items Only"] = "",
 	-- ["Unknown Items Only"] = "",
+	-- ["Verbose Text"] = "",
 }
 
 

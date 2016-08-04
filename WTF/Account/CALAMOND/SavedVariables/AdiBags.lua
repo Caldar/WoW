@@ -25,19 +25,19 @@ AdiBagsDB = {
 		},
 		["AdiBags_TooltipInfo"] = {
 		},
-		["Equipment"] = {
+		["MoneyFrame"] = {
 		},
 		["CurrencyFrame"] = {
 			["profiles"] = {
 				["Default"] = {
 					["shown"] = {
 						["Ironpaw Token"] = false,
-						["Mogu Rune of Fate"] = false,
-						["Timeless Coin"] = false,
+						["Elder Charm of Good Fortune"] = false,
+						["Lesser Charm of Good Fortune"] = false,
 						["Epicurean's Award"] = false,
 						["Valor"] = false,
 						["Seal of Tempered Fate"] = false,
-						["Lesser Charm of Good Fortune"] = false,
+						["Timeless Coin"] = false,
 						["Seal of Inevitable Fate"] = false,
 						["Apexis Crystal"] = false,
 						["Darkmoon Prize Ticket"] = false,
@@ -45,7 +45,7 @@ AdiBagsDB = {
 						["Garrison Resources"] = false,
 						["Oil"] = false,
 						["Champion's Seal"] = false,
-						["Elder Charm of Good Fortune"] = false,
+						["Mogu Rune of Fate"] = false,
 					},
 				},
 			},
@@ -56,7 +56,7 @@ AdiBagsDB = {
 		},
 		["Junk"] = {
 		},
-		["MoneyFrame"] = {
+		["Equipment"] = {
 		},
 	},
 	["profileKeys"] = {

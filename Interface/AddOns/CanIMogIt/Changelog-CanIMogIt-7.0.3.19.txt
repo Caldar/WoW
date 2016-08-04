@@ -1,0 +1,27 @@
+tag 7.0.3.19
+4c2da82f6d0c9bb60fafbdf76024597b28f4286e
+Salvatore Lopiparo <toreltwiddler@gmail.com>
+2016-08-03 17:18:15 -0700
+
+Added bag icon overlays! (Only works with default bags and bag addons that hook the default bags, like Bagnon)
+Simplified text for learned and can't be learned items. (Option added for verbose text.)
+Exposed Tooltip Hook for other addon authors.
+
+
+--------------------
+
+Salvatore Lopiparo:
+	- More improvements to appearancesReady.
+	- Added more checking for appearancesReady.
+	- Actually fixed the caching issues.
+	- Improved cache resetting logic to be smarter.
+	- Cleared up option description text.
+	- More improvements for finding bag frames.
+	- Smarter detection of bag frames.
+	- Fixed bug where Soulbound wasn't showing correctly in debug tooltip.
+	- Adds the red text on a tooltip as the reason for being unknowable.
+	- Resets the cache a couple seconds after login.
+	- Simplified texts Added option for Verbose text (default off) Added backgrounds to bag images Exposed Tooltip Hook for other addon use
+	- Added option for icon overlay.
+	- Reorganized debug tooltip.
+	- Added bag icon overlay!

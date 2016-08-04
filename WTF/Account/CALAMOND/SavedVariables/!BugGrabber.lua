@@ -1,7 +1,7 @@
 
 BugGrabberDB = {
+	["session"] = 108,
 	["lastSanitation"] = 3,
-	["session"] = 105,
 	["errors"] = {
 		{
 			["message"] = "Interface\\AddOns\\Archy\\Archy-6.2.4.1.lua:443: attempt to index upvalue 'ArtifactFrame' (a nil value)",

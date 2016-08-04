@@ -7,6 +7,8 @@ local translations = {
 	["Cannot be learned."] = "형상변환 등록할 수 없음",
 	["Cannot be learned by this character."] = "현재 캐릭터로 형상변환 등록 불가",
 	["Cannot determine status on other characters."] = "다른 캐릭터의 형상변환 상태 확인 불가",
+	-- ["Cannot learn:"] = "",
+	-- ["Cannot Learn: Soulbound"] = "",
 	["Debug Tooltip"] = "디버그 툴팁",
 	["Detailed information for debug purposes. Use this when sending bug reports."] = "아이템의 상세 정보를 툴팁에 표시합니다. 버그를 제보할 때 이것을 같이 보내주세요.",
 	["Equippable Items Only"] = "착용 가능한 아이템만 표시",
@@ -20,8 +22,12 @@ local translations = {
 	["Only show on items that can be equipped."] = "착용 가능한 아이템만 표시합니다.",
 	["Only show on items that can be transmoggrified."] = "형상변환이 가능한 아이템만 표시합니다.",
 	["Only show on items that you haven't learned."] = "아직 형상변환을 배우지 않은 아이템만 표시합니다.",
+	-- ["Show Bag Icons"] = "",
+	-- ["Shows a more detailed text for some of the tooltips."] = "",
+	-- ["Shows the icon directly on the item in your bag."] = "",
 	["Transmoggable Items Only"] = "형상변환 가능한 아이템만 표시",
 	["Unknown Items Only"] = "형상변환 미등록 아이템만 표시",
+	-- ["Verbose Text"] = "",
 }
 
 

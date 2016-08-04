@@ -192,23 +192,23 @@ function Database:GetItemInfoReceived()
 end
 
 
-function CanIMogIt.frame:PlayerLogin(event, ...)
-    if event == "PLAYER_LOGIN" then
-        -- add all known appearanceID's to the database
-        Database:UpdateAppearances()
-    end
-end
+-- function CanIMogIt.frame:PlayerLogin(event, ...)
+--     if event == "PLAYER_LOGIN" then
+--         -- add all known appearanceID's to the database
+--         Database:UpdateAppearances()
+--     end
+-- end
 
 
-function CanIMogIt.frame:TransmogCollectionUpdated(event, ...)
-    if event == "TRANSMOG_COLLECTION_UPDATED" then
-        -- add the equipment slot that was changed to the database
-        Database:UpdateAppearances()
-    end
-end
+-- function CanIMogIt.frame:TransmogCollectionUpdated(event, ...)
+--     if event == "TRANSMOG_COLLECTION_UPDATED" then
+--         -- add the equipment slot that was changed to the database
+--         Database:UpdateAppearances()
+--     end
+-- end
 
 
-function CanIMogIt.frame:GetItemInfoReceived(event, ...)
-    if event ~= "GET_ITEM_INFO_RECEIVED" then return end
-    Database:GetItemInfoReceived()
-end
+-- function CanIMogIt.frame:GetItemInfoReceived(event, ...)
+--     if event ~= "GET_ITEM_INFO_RECEIVED" then return end
+--     Database:GetItemInfoReceived()
+-- end

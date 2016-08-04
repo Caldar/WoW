@@ -1,5 +1,21 @@
 
 Postal3DB = {
+	["profileKeys"] = {
+		["Caldar - Feathermoon"] = "Caldar - Feathermoon",
+		["Calastir - Feathermoon"] = "Calastir - Feathermoon",
+		["Failure - Feathermoon"] = "Failure - Feathermoon",
+		["Zenax - Scarlet Crusade"] = "Zenax - Scarlet Crusade",
+		["Calastir - Scarlet Crusade"] = "Calastir - Scarlet Crusade",
+		["Caladyth - Feathermoon"] = "Caladyth - Feathermoon",
+		["Censure - Kirin Tor"] = "Censure - Kirin Tor",
+		["Calastir - Kirin Tor"] = "Calastir - Kirin Tor",
+		["Pyric - Feathermoon"] = "Pyric - Feathermoon",
+		["Nothing - Feathermoon"] = "Nothing - Feathermoon",
+		["Sengchou - Feathermoon"] = "Sengchou - Feathermoon",
+		["Sinister - Feathermoon"] = "Sinister - Feathermoon",
+		["Souptruck - Feathermoon"] = "Souptruck - Feathermoon",
+		["Censure - Feathermoon"] = "Censure - Feathermoon",
+	},
 	["global"] = {
 		["BlackBook"] = {
 			["alts"] = {
@@ -19,22 +35,6 @@ Postal3DB = {
 				"Zenax|Scarlet Crusade|Alliance|85|WARLOCK", -- [14]
 			},
 		},
-	},
-	["profileKeys"] = {
-		["Caldar - Feathermoon"] = "Caldar - Feathermoon",
-		["Calastir - Feathermoon"] = "Calastir - Feathermoon",
-		["Failure - Feathermoon"] = "Failure - Feathermoon",
-		["Zenax - Scarlet Crusade"] = "Zenax - Scarlet Crusade",
-		["Calastir - Scarlet Crusade"] = "Calastir - Scarlet Crusade",
-		["Caladyth - Feathermoon"] = "Caladyth - Feathermoon",
-		["Censure - Kirin Tor"] = "Censure - Kirin Tor",
-		["Calastir - Kirin Tor"] = "Calastir - Kirin Tor",
-		["Pyric - Feathermoon"] = "Pyric - Feathermoon",
-		["Nothing - Feathermoon"] = "Nothing - Feathermoon",
-		["Sengchou - Feathermoon"] = "Sengchou - Feathermoon",
-		["Sinister - Feathermoon"] = "Sinister - Feathermoon",
-		["Souptruck - Feathermoon"] = "Souptruck - Feathermoon",
-		["Censure - Feathermoon"] = "Censure - Feathermoon",
 	},
 	["profiles"] = {
 		["Caldar - Feathermoon"] = {

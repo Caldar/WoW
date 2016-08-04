@@ -7,6 +7,8 @@ local translations = {
 	["Cannot be learned."] = "Невозможно выучить.",
 	["Cannot be learned by this character."] = "Невозможно выучить этим персонажем.",
 	["Cannot determine status on other characters."] = "Невозможно получить статус на других персонажах.",
+	-- ["Cannot learn:"] = "",
+	-- ["Cannot Learn: Soulbound"] = "",
 	["Debug Tooltip"] = "Подсказка для отладки",
 	["Detailed information for debug purposes. Use this when sending bug reports."] = "Детальная информация для отлова ошибок. Используйте её, когда посылаете сообщение о ошибке.",
 	["Equippable Items Only"] = "Только одеваемые предметы",
@@ -20,8 +22,12 @@ local translations = {
 	["Only show on items that can be equipped."] = "Показывать только на одеваемых предметах.",
 	["Only show on items that can be transmoggrified."] = "Показывать только на трансмогрифицируемых предметах.",
 	["Only show on items that you haven't learned."] = "Показывать только на не изученных предметах.",
+	-- ["Show Bag Icons"] = "",
+	-- ["Shows a more detailed text for some of the tooltips."] = "",
+	-- ["Shows the icon directly on the item in your bag."] = "",
 	["Transmoggable Items Only"] = "Только трансмогрифицируемые предметы",
 	["Unknown Items Only"] = "Только неизвестные предметы",
+	-- ["Verbose Text"] = "",
 }
 
 
