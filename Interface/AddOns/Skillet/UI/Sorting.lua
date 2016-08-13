@@ -142,9 +142,9 @@ local function NOSORT(tradeskill, a, b)
 end
 
 local function SkillIsFilteredOut(skillIndex)
-	DA.DEBUG(0,"SkillIsFilteredOut("..tostring(skillIndex)..")")
+	--DA.DEBUG(0,"SkillIsFilteredOut("..tostring(skillIndex)..")")
 	local skill = Skillet:GetSkill(Skillet.currentPlayer, Skillet.currentTrade, skillIndex)
-	DA.DEBUG(1,"skill = "..DA.DUMP1(skill,1))
+	--DA.DEBUG(1,"skill = "..DA.DUMP1(skill,1))
 	local recipe = Skillet:GetRecipe(skill.id)
 	local recipeID = recipe.spellID or 0
 	if recipeID == 0 then
@@ -284,12 +284,67 @@ function Skillet:CollapseAll()
 	Skillet:SortAndFilterRecipes()
 	Skillet:UpdateTradeSkillWindow()
 end
--- Builds a sorted and fitlered list of recipes for the
+
+-- Builds a sorted and filtered list of recipes for the
 -- currently selected tradekskill and sorting method
 -- if no sorting, then headers will be included
 
-local function SortAndFilterRecipes()
-	DA.DEBUG(0,"SortAndFilterRecipes()")
+--
+-- Adds the sorting routine to the list of sorting routines.
+--
+function Skillet:internal_AddRecipeSorter(text, sorter)
+	assert(text and tostring(text),
+		"Usage Skillet:AddRecipeSorter(text, sorter), text must be a string")
+	assert(sorter and type(sorter) == "function",
+		"Usage Skillet:AddRecipeSorter(text, sorter), sorter must be a function")
+	table.insert(sorters, {["name"]=text, ["sorter"]=sorter})
+end
+
+function Skillet:InitializeSorting()
+	-- Default sorting methods
+	-- We don't go through the public API for this as we want our methods
+	-- to appear first in the list, no matter what.
+	table.insert(sorters, 1, {["name"]=L["None"], ["sorter"]=sort_recipe_by_index})
+	table.insert(sorters, 2, {["name"]=L["By Name"], ["sorter"]=sort_recipe_by_name})
+	table.insert(sorters, 3, {["name"]=L["By Difficulty"], ["sorter"]=sort_recipe_by_skill_level})
+--	table.insert(sorters, 4, {["name"]=L["By Skill Level"], ["sorter"]=sort_recipe_by_skill_level})
+	table.insert(sorters, 4, {["name"]=L["By Item Level"], ["sorter"]=sort_recipe_by_item_level})
+	table.insert(sorters, 5, {["name"]=L["By Quality"], ["sorter"]=sort_recipe_by_item_quality})
+	recipe_sort_method = sort_recipe_by_index
+	SkilletSortAscButton:SetScript("OnClick", function()
+		-- clicked the button will toggle sort ascending off
+		set_sort_desc(true)
+		SkilletSortAscButton:Hide()
+		SkilletSortDescButton:Show()
+		self:UpdateTradeSkillWindow()
+	end)
+	SkilletSortAscButton:SetScript("OnEnter", function()
+		GameTooltip:SetOwner(SkilletSortAscButton, "ANCHOR_RIGHT")
+		GameTooltip:SetText(L["SORTASC"])
+	end)
+	SkilletSortAscButton:SetScript("OnLeave", function()
+		GameTooltip:Hide()
+	end)
+	SkilletSortDescButton:SetScript("OnClick", function()
+		-- clicked the button will toggle sort descending off
+		set_sort_desc(false)
+		SkilletSortDescButton:Hide()
+		SkilletSortAscButton:Show()
+		self:UpdateTradeSkillWindow()
+	end)
+	SkilletSortDescButton:SetScript("OnEnter", function()
+		GameTooltip:SetOwner(SkilletSortDescButton, "ANCHOR_RIGHT")
+		GameTooltip:SetText(L["SORTDESC"])
+	end)
+	SkilletSortDescButton:SetScript("OnLeave", function()
+		GameTooltip:Hide()
+	end)
+end
+--
+-- Causes the list of recipes to be resorted
+--
+function Skillet:internal_SortAndFilterRecipes()
+	--DA.DEBUG(0,"internal_SortAndFilterRecipes()")
 	local skillListKey = Skillet.currentPlayer..":"..Skillet.currentTrade..":"..Skillet.currentGroupLabel
 	local numSkills = Skillet:GetNumSkills(Skillet.currentPlayer, Skillet.currentTrade)
 	if not Skillet.data.sortedSkillList then
@@ -352,67 +407,9 @@ local function SortAndFilterRecipes()
 			button_index = Skillet:RecipeGroupFlatten(group, 0, sortedSkillList, 0)
 		end
 	end
-	DA.DEBUG(0,"sorted "..button_index.." skills")
+	--DA.DEBUG(1,"sorted "..button_index.." skills")
 	sortedSkillList.count = button_index
 	return button_index
-end
-
---
--- Adds the sorting routine to the list of sorting routines.
---
-function Skillet:internal_AddRecipeSorter(text, sorter)
-	assert(text and tostring(text),
-		"Usage Skillet:AddRecipeSorter(text, sorter), text must be a string")
-	assert(sorter and type(sorter) == "function",
-		"Usage Skillet:AddRecipeSorter(text, sorter), sorter must be a function")
-	table.insert(sorters, {["name"]=text, ["sorter"]=sorter})
-end
-
-function Skillet:InitializeSorting()
-	-- Default sorting methods
-	-- We don't go through the public API for this as we want our methods
-	-- to appear first in the list, no matter what.
-	table.insert(sorters, 1, {["name"]=L["None"], ["sorter"]=sort_recipe_by_index})
-	table.insert(sorters, 2, {["name"]=L["By Name"], ["sorter"]=sort_recipe_by_name})
-	table.insert(sorters, 3, {["name"]=L["By Difficulty"], ["sorter"]=sort_recipe_by_skill_level})
---	table.insert(sorters, 4, {["name"]=L["By Skill Level"], ["sorter"]=sort_recipe_by_skill_level})
-	table.insert(sorters, 4, {["name"]=L["By Item Level"], ["sorter"]=sort_recipe_by_item_level})
-	table.insert(sorters, 5, {["name"]=L["By Quality"], ["sorter"]=sort_recipe_by_item_quality})
-	recipe_sort_method = sort_recipe_by_index
-	SkilletSortAscButton:SetScript("OnClick", function()
-		-- clicked the button will toggle sort ascending off
-		set_sort_desc(true)
-		SkilletSortAscButton:Hide()
-		SkilletSortDescButton:Show()
-		self:UpdateTradeSkillWindow()
-	end)
-	SkilletSortAscButton:SetScript("OnEnter", function()
-		GameTooltip:SetOwner(SkilletSortAscButton, "ANCHOR_RIGHT")
-		GameTooltip:SetText(L["SORTASC"])
-	end)
-	SkilletSortAscButton:SetScript("OnLeave", function()
-		GameTooltip:Hide()
-	end)
-	SkilletSortDescButton:SetScript("OnClick", function()
-		-- clicked the button will toggle sort descending off
-		set_sort_desc(false)
-		SkilletSortDescButton:Hide()
-		SkilletSortAscButton:Show()
-		self:UpdateTradeSkillWindow()
-	end)
-	SkilletSortDescButton:SetScript("OnEnter", function()
-		GameTooltip:SetOwner(SkilletSortDescButton, "ANCHOR_RIGHT")
-		GameTooltip:SetText(L["SORTDESC"])
-	end)
-	SkilletSortDescButton:SetScript("OnLeave", function()
-		GameTooltip:Hide()
-	end)
-end
---
--- Causes the list of recipes to be resorted
---
-function Skillet:internal_SortAndFilterRecipes()
-	return SortAndFilterRecipes()
 end
 
 -- called when the sort drop down is first loaded
@@ -446,7 +443,6 @@ end
 function Skillet:SortDropdown_Initialize()
 	recipe_sort_method = NOSORT
 	local info
-	local i = 0
 	for i=1, #sorters, 1 do
 		local entry = sorters[i]
 		info = UIDropDownMenu_CreateInfo()
@@ -456,7 +452,6 @@ function Skillet:SortDropdown_Initialize()
 		end
 		info.func = Skillet.SortDropdown_OnClick
 		info.value = i
-		i = i + 1
 		if self then
 			info.owner = self:GetParent()
 		end
@@ -475,4 +470,68 @@ function Skillet:SortDropdown_OnClick()
 	show_sort_toggle()
 	Skillet:SortAndFilterRecipes()
 	Skillet:UpdateTradeSkillWindow()
+end
+
+-- called when the new filter drop down is first loaded
+function Skillet:NewFilterDropdown_OnLoad()
+	--DA.DEBUG(0,"NewFilterDropdown_OnLoad()")
+	UIDropDownMenu_Initialize(SkilletNewFilterDropdown, Skillet.NewFilterDropdown_Initialize)
+	SkilletNewFilterDropdown.displayMode = "MENU"  -- changes the pop-up borders to be rounded instead of square
+end
+
+-- Called when the new filter drop down is displayed
+function Skillet:NewFilterDropdown_OnShow()
+	--DA.DEBUG(0,"NewFilterDropdown_OnShow()")
+	UIDropDownMenu_Initialize(SkilletNewFilterDropdown, Skillet.NewFilterDropdown_Initialize)
+	SkilletNewFilterDropdown.displayMode = "MENU"  -- changes the pop-up borders to be rounded instead of square
+	if Skillet.unlearnedRecipes then
+		UIDropDownMenu_SetSelectedID(SkilletNewFilterDropdown, 2)
+	else
+		UIDropDownMenu_SetSelectedID(SkilletNewFilterDropdown, 1)
+	end
+end
+
+-- The method we use the initialize the new filter drop down.
+function Skillet:NewFilterDropdown_Initialize()
+	--DA.DEBUG(0,"NewFilterDropdown_Initialize()")
+	local info
+	local i = 1
+
+	info = UIDropDownMenu_CreateInfo()
+	info.text = L["Learned"]
+	info.func = Skillet.NewFilterDropdown_OnClick
+	info.value = i
+	if self then
+		info.owner = self:GetParent()
+	end
+	UIDropDownMenu_AddButton(info)
+	i = i + 1
+
+	info = UIDropDownMenu_CreateInfo()
+	info.text = L["Unlearned"]
+	info.func = Skillet.NewFilterDropdown_OnClick
+	info.value = i
+	if self then
+		info.owner = self:GetParent()
+	end
+	UIDropDownMenu_AddButton(info)
+	i = i + 1
+end
+
+-- Called when the user selects an item in the new filter drop down
+function Skillet:NewFilterDropdown_OnClick()
+	--DA.DEBUG(0,"NewFilterDropdown_OnClick()")
+	UIDropDownMenu_SetSelectedID(SkilletNewFilterDropdown, self:GetID())
+	local index = self:GetID()
+	if index == 1 then
+		Skillet:SetTradeSkillLearned()
+	elseif index == 2 then
+		Skillet:SetTradeSkillUnlearned()
+	end
+	Skillet:ScanTrade()
+	Skillet:UpdateTradeSkillWindow()
+end
+
+function Skillet:RecipeNewFilterOperations_OnClick(self)
+	DA.DEBUG(0,"RecipeNewFilterOperations_OnClick()")
 end

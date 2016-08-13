@@ -363,6 +363,7 @@ L["These options are for modifing the Shadow & Light Friends datatext."] = "Оп
 L["Hide In Combat"] = "Скрывать в бою"
 L["Will not show the tooltip while in combat."] = "Не отображать подсказки инфо-текста в бою."
 L["Hide Friends"] = "Скрыть друзей"
+L["Hide Title"] = "Скрыть заголовок"
 L["Minimize the Friend Datatext."] = "Минимизировать список друзей"
 L["Show Totals"] = "Показывать общее"
 L["Show total friends in the datatext."] = "Показывать общее кол-во друзей на инфо-тексте."
@@ -549,7 +550,8 @@ L["Right click on the location panel will bring up a menu with available options
 L["Custom Width"] = "Своя ширина"
 L["By default menu's width will be equal to the location panel width. Checking this option will allow you to set own width."] = "По умолчанию ширина меню будет равна ширине панели. Включение данной опции позволит установить свою ширину."
 L["Justify Text"] = "Выравнивание тектса"
-
+L["Hearthstone Location"] = "Привязка камня"
+L["Show the name on location your Heathstone is bound to."] = "Показывать имя локации, к которой привязан камень возвращения."
 
 --Miscs
 L["Error Frame"] = "Фрейм ошибок"

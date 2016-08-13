@@ -336,13 +336,12 @@ function Skillet:RecipeGroupRenameEntry(entry, name)
 				entry.name = name
 			end
 		end
-
 		self:RecipeGroupConstructDBString(entry.parent)
 	end
 end
 
 function Skillet:RecipeGroupSort(group, sortMethod, reverse)
-	DA.DEBUG(0,"RecipeGroupSort()")
+	--DA.DEBUG(0,"RecipeGroupSort("..tostring(group.skillIndex)..", "..tostring(sortMethod)..","..tostring(reverse)..")")
 	if group then
 		for v, entry in pairs(group.entries) do
 			if entry.subGroup and entry.subGroup ~= group then
@@ -379,7 +378,7 @@ function Skillet:RecipeGroupInitFlatten(group, list)
 end
 
 function Skillet:RecipeGroupFlatten(group, depth, list, index)
-	DA.DEBUG(0,"RecipeGroupFlatten("..DA.DUMP1(entry,1)..", "..tostring(depth)..", "..DA.DUMP1(list,1)..", "..tostring(index)..")")
+	--DA.DEBUG(0,"RecipeGroupFlatten("..DA.DUMP1(entry,1)..", "..tostring(depth)..", "..DA.DUMP1(list,1)..", "..tostring(index)..")")
 	--DA.DEBUG(0,"group= "..DA.DUMP1(group,2))
 	--DA.DEBUG(0,"list= "..DA.DUMP1(list,2))
 	local num = 0
@@ -578,11 +577,6 @@ end
 
 function Skillet:RecipeGroupGenerateAutoGroups()
 	--DA.DEBUG(0,"RecipeGroupGenerateAutoGroups()")
-	local player = self.currentPlayer
-	local dataModule = self.dataGatheringModules[player]
-	if dataModule then
-		dataModule.RecipeGroupGenerateAutoGroups(dataModule)
-	end
 end
 
 -- Called when the grouping drop down is displayed

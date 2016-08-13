@@ -244,6 +244,7 @@ P["sle"] = {
 			["expandBNBroadcast"] = false,
 			["hideFriends"] = false,
 			["hide_hintline"] = false,
+			["hide_titleline"] = false,
 			["sortBN"] = 'TOONNAME',
 			["tooltipAutohide"] = 0.2,
 			["totals"] = false,
@@ -255,6 +256,7 @@ P["sle"] = {
 			["hideGuild"] = false,
 			["hide_guildname"] = false,
 			["hide_hintline"] = false,
+			["hide_titleline"] = false,
 			["sortGuild"] = 'TOONNAME',
 			["tooltipAutohide"] = 0.2,
 			["totals"] = false,
@@ -489,6 +491,7 @@ P["sle"] = {
 			["customColor"] = {r = 1, g = 1, b = 1 },
 			["portals"] = {
 				["enable"] = true,
+				["HSplace"] = true,
 				["customWidth"] = false,
 				["customWidthValue"] = 200,
 				["justify"] = "LEFT",
@@ -514,6 +517,13 @@ P["sle"] = {
 		["showthreat"] = false,
 		["targetcount"] = false,
 		["visibleRange"] = 60,
+	},
+	--Order Halls
+	["orderhall"] = {
+		["autoOrder"] = {
+			["enable"] = false,
+			["autoEquip"] = false,
+		},
 	},
 	--Quests
 	["quests"] = {

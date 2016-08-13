@@ -760,7 +760,7 @@ local function CountsToInfoString(countTable)
 	end
 	
 	if countTable['reagentbank'] > 0 then
-		local count = L["ReagentBank: %d"]:format(countTable['reagentbank'])
+		local count = L["Reagent: %d"]:format(countTable['reagentbank'])
 		if info then
 			info = strjoin(', ', info, count)
 		else
@@ -770,7 +770,7 @@ local function CountsToInfoString(countTable)
 	end
 
 	if countTable['equip'] > 0 then
-		local count = L["Equipped: %d"]:format(countTable['equip'])
+		local count = L["Equip: %d"]:format(countTable['equip'])
 		if info then
 			info = strjoin(', ', info, count)
 		else
@@ -790,7 +790,7 @@ local function CountsToInfoString(countTable)
 	end
 	
 	if countTable['mailbox'] > 0 and BagSyncOpt.enableMailbox then
-		local count = L["Mailbox: %d"]:format(countTable['mailbox'])
+		local count = L["Mail: %d"]:format(countTable['mailbox'])
 		if info then
 			info = strjoin(', ', info, count)
 		else
@@ -898,33 +898,14 @@ local function AddCurrencyToTooltip(frame, currencyName)
 end
 
 local function AddItemToTooltip(frame, link) --workaround
-	if (link) then
-		local itemId = tonumber(string.match(link, "item:(%d+):"))	-- get itemID // itemID seems to be "0" for every reagent in profession window?!
-		if ((itemId == nil or itemId == 0) and (TradeSkillFrame ~= nil and TradeSkillFrame:IsVisible())) then -- some other frames show ID = 0 aswell, so limit this workaround to the profession window || IMPORTANT: TradeSkillFrame ~= nil has to be checked BEFORE TradeSkillFrame:IsVisible()
-			local newItemId
-			if (GetMouseFocus() == TradeSkillFrame.DetailsFrame.Contents.ResultIcon) then 			--replace TradeSkill
-				newItemId = tonumber(C_TradeSkillUI.GetRecipeItemLink(TradeSkillFrame.RecipeList.selectedRecipeID):match("item:(%d+):"))
-			else 		-- could check if a reagent is under mouse, but since we have to check it 3 lines later again...
-				for i = 1, 12 do 													-- how many reagents can a reciepe have? lets assume not more than 12
-					if (GetMouseFocus() == TradeSkillFrame.DetailsFrame.Contents["Reagent" .. i]) then 	--replace TradeSkillReagents
-						newItemId = tonumber(C_TradeSkillUI.GetRecipeReagentItemLink(TradeSkillFrame.RecipeList.selectedRecipeID, i):match("item:(%d+):"))
-						break 			--end loop if correct one already found
-					end
-				end
-			end
-			if newItemId then
-				link = select(2, GetItemInfo(newItemId)) -- replace original link with our found link
-			end
-		end	
-	end
-	
+
 	--if we can't convert the item link then lets just ignore it altogether	
 	local itemLink = ToShortLink(link)
 	if not itemLink then
 		frame:Show()
 		return
 	end
-	
+
 	--only show tooltips in search frame if the option is enabled
 	if BagSyncOpt.tooltipOnlySearch and frame:GetOwner() and frame:GetOwner():GetName() and string.sub(frame:GetOwner():GetName(), 1, 16) ~= "BagSyncSearchRow" then
 		frame:Show()
@@ -939,9 +920,6 @@ local function AddItemToTooltip(frame, link) --workaround
 	
 	--lag check (check for previously displayed data) if so then display it
 	if lastItem and itemLink and itemLink == lastItem then
-		if BagSyncOpt.enableTooltipSeperator then
-			frame:AddDoubleLine(" ", " ")
-		end
 		for i = 1, #lastDisplayed do
 			local ename, ecount  = strsplit('@', lastDisplayed[i])
 			if ename and ecount then
@@ -1032,14 +1010,7 @@ local function AddItemToTooltip(frame, link) --workaround
 			infoString = CountsToInfoString(allowList)
 
 			if infoString and infoString ~= '' then
-				--check for seperator
-				if first and BagSyncOpt.enableTooltipSeperator then
-					first = false
-					frame:AddDoubleLine(" ", " ")
-				end
-				
 				k = BagSync:getCharacterInfo(k, v.realm)
-
 				table.insert(lastDisplayed, getNameColor(k or 'Unknown', pClass).."@"..(infoString or 'unknown'))
 			end
 			
@@ -1066,6 +1037,11 @@ local function AddItemToTooltip(frame, link) --workaround
 		table.insert(lastDisplayed, format(TTL_C, L["Total:"]).."@"..format(SILVER, grandTotal))
 	end
 	
+	--now check for seperater and only add if we have something in the table already
+	if table.getn(lastDisplayed) > 0 and BagSyncOpt.enableTooltipSeperator then
+		table.insert(lastDisplayed, 1 , " @ ")
+	end
+	
 	--add it all together now
 	for i = 1, #lastDisplayed do
 		local ename, ecount  = strsplit('@', lastDisplayed[i])
@@ -1080,17 +1056,117 @@ end
 --simplified tooltip function, similar to the past HookTip that was used before Jan 06, 2011 (commit:a89046f844e24585ab8db60d10f2f168498b9af4)
 --Honestly we aren't going to care about throttleing or anything like that anymore.  The lastdisplay array token should take care of that
 --Special thanks to Tuller for tooltip hook function
+
 local function hookTip(tooltip)
 	local modified = false
+	
+	tooltip:HookScript("OnHide", function(self)
+		modified = false
+		self.lastHyperLink = nil
+	end)	
 	tooltip:HookScript('OnTooltipCleared', function(self)
 		modified = false
 	end)
+
 	tooltip:HookScript('OnTooltipSetItem', function(self)
 		if modified or not BagSyncOpt.enableTooltips then return end
-		modified = true
 		local name, link = self:GetItem()
-		AddItemToTooltip(self, link)
+		if link and ToShortLink(link) then
+			modified = true
+			AddItemToTooltip(self, link)
+			return
+		end
+		--sometimes we have a tooltip but no link because GetItem() returns nil, this is the case for recipes
+		--so lets try something else to see if we can get the link.  Doesn't always work!  Thanks for breaking GetItem() Blizzard... you ROCK! :P
+		if not modified and self.lastHyperLink then
+			local xName, xLink = GetItemInfo(self.lastHyperLink)
+			--local title = _G[tooltip:GetName().."TextLeft1"]
+			-- if xName and xLink and title and title:GetText() and title:GetText() == xName and ToShortLink(xLink) then  --only show info if the tooltip text matches the link
+				-- modified = true
+				-- AddItemToTooltip(self, xLink)
+			-- end
+			if xLink and ToShortLink(xLink) then  --only show info if the tooltip text matches the link
+				modified = true
+				AddItemToTooltip(self, xLink)
+			end		
+		end
 	end)
+	---------------------------------
+	--Special thanks to GetItem() being broken we need to capture the ItemLink before the tooltip shows sometimes
+	hooksecurefunc(tooltip, 'SetBagItem', function(self, tab, slot)
+		if not BagSyncOpt.enableTooltips then return end
+		local link = GetContainerItemLink(tab, slot)
+		if link and ToShortLink(link) then
+			self.lastHyperLink = link
+		end
+	end)
+	hooksecurefunc(tooltip, 'SetInventoryItem', function(self, tab, slot)
+		if not BagSyncOpt.enableTooltips then return end
+		local link = GetInventoryItemLink(tab, slot)
+		if link and ToShortLink(link) then
+			self.lastHyperLink = link
+		end
+	end)
+	hooksecurefunc(tooltip, 'SetGuildBankItem', function(self, tab, slot)
+		if not BagSyncOpt.enableTooltips then return end
+		local link = GetGuildBankItemLink(tab, slot)
+		if link and ToShortLink(link) then
+			self.lastHyperLink = link
+		end
+	end)
+	hooksecurefunc(tooltip, 'SetHyperlink', function(self, link)
+		if modified or not BagSyncOpt.enableTooltips then return end
+		if link and ToShortLink(link) then
+			--I'm pretty sure there is a better way to do this but since Recipes fire OnTooltipSetItem with empty/nil GetItem().  There is really no way to my knowledge to grab the current itemID
+			--without storing the ItemLink from the bag parsing or at least grabbing the current SetHyperLink.
+			if tooltip:IsVisible() then modified = true end --only do the modifier if the tooltip is showing, because this interferes with ItemRefTooltip if someone clicks it twice in chat
+			AddItemToTooltip(self, link)
+		end
+	end)
+	---------------------------------
+
+	--lets hook other frames so we can show tooltips there as well
+	hooksecurefunc(tooltip, 'SetRecipeReagentItem', function(self, recipeID, reagentIndex)
+		if modified or not BagSyncOpt.enableTooltips then return end
+		local link = C_TradeSkillUI.GetRecipeReagentItemLink(recipeID, reagentIndex)
+		if link and ToShortLink(link) then
+			modified = true
+			AddItemToTooltip(self, link)
+		end
+	end)
+	hooksecurefunc(tooltip, 'SetRecipeResultItem', function(self, recipeID)
+		if modified or not BagSyncOpt.enableTooltips then return end
+		local link = C_TradeSkillUI.GetRecipeItemLink(recipeID)
+		if link and ToShortLink(link) then
+			modified = true
+			AddItemToTooltip(self, link)
+		end
+	end)	
+	hooksecurefunc(tooltip, 'SetQuestLogItem', function(self, itemType, index)
+		if modified or not BagSyncOpt.enableTooltips then return end
+		local link = GetQuestLogItemLink(itemType, index)
+		if link and ToShortLink(link) then
+			modified = true
+			AddItemToTooltip(self, link)
+		end
+	end)
+	hooksecurefunc(tooltip, 'SetQuestItem', function(self, itemType, index)
+		if modified or not BagSyncOpt.enableTooltips then return end
+		local link = GetQuestItemLink(itemType, index)
+		if link and ToShortLink(link) then
+			modified = true
+			AddItemToTooltip(self, link)
+		end
+	end)	
+	-- hooksecurefunc(tooltip, 'SetItemByID', function(self, link)
+		-- if modified or not BagSyncOpt.enableTooltips then return end
+		-- if link and ToShortLink(link) then
+			-- modified = true
+			-- AddItemToTooltip(self, link)
+		-- end
+	-- end)
+	
+	--------------------------------------------------
 	hooksecurefunc(tooltip, 'SetCurrencyToken', function(self, index)
 		if modified or not BagSyncOpt.enableTooltips then return end
 		modified = true
@@ -1115,9 +1191,8 @@ local function hookTip(tooltip)
 		-- local currencyName = GetTradeSkillReagentInfo(index,1)
 		-- AddCurrencyToTooltip(self, currencyName)
 	-- end)
+	
 end
---GameTooltip:SetTradeSkillItem(skillIndex [, reagentIndex])
-
 
 hookTip(GameTooltip)
 hookTip(ItemRefTooltip)

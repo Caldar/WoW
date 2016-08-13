@@ -27,6 +27,10 @@ AdiBagsDB = {
 		},
 		["MoneyFrame"] = {
 		},
+		["DataSource"] = {
+		},
+		["ItemSets"] = {
+		},
 		["CurrencyFrame"] = {
 			["profiles"] = {
 				["Default"] = {
@@ -36,23 +40,19 @@ AdiBagsDB = {
 						["Lesser Charm of Good Fortune"] = false,
 						["Epicurean's Award"] = false,
 						["Valor"] = false,
-						["Seal of Tempered Fate"] = false,
+						["Oil"] = false,
 						["Timeless Coin"] = false,
-						["Seal of Inevitable Fate"] = false,
+						["Seal of Tempered Fate"] = false,
 						["Apexis Crystal"] = false,
 						["Darkmoon Prize Ticket"] = false,
 						["Warforged Seal"] = false,
 						["Garrison Resources"] = false,
-						["Oil"] = false,
+						["Seal of Inevitable Fate"] = false,
 						["Champion's Seal"] = false,
 						["Mogu Rune of Fate"] = false,
 					},
 				},
 			},
-		},
-		["DataSource"] = {
-		},
-		["ItemSets"] = {
 		},
 		["Junk"] = {
 		},

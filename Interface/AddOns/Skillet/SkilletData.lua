@@ -20,30 +20,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 local PT = LibStub("LibPeriodicTable-3.1")
 local L = Skillet.L
 
--- a table of tradeskills by id
-local TradeSkillList = {
-	2259,		-- alchemy
-	2018,		-- blacksmithing
-	7411,		-- enchanting
-	4036,		-- engineering
-	45357,		-- inscription
-	25229,		-- jewelcrafting
-	2108,		-- leatherworking
-	2656,		-- smelting (from mining, 2575)
-	3908,		-- tailoring
-	2550,		-- cooking
-	3273,		-- first aid
-	53428,		-- runeforging
-}
+--[[ == Global Tables == ]]--
 
--- Table of follower (IsNPCCrafting) tradeskills that should use the Blizzard frame
+-- Table of follower (C_TradeSkillUI.IsNPCCrafting) tradeskills that should use the Blizzard frame
 Skillet.FollowerSkillList = {
-	[7411] = false,		-- Enchanting follower for Illusions is broken in 6.0
-	[25229] = false,	-- Jewelcrafting Apexis Gemcutter is broken in 6.2
 }
 
 -- In case the previous table is too broad
--- Table of follower (IsNPCCrafting) NPC IDs (from GUID) that should use the Blizzard frame 
+-- Table of follower (C_TradeSkillUI.IsNPCCrafting) NPC IDs (from GUID) that should use the Blizzard frame 
 Skillet.FollowerNPC = {
 }
 
@@ -52,11 +36,11 @@ Skillet.TradeSkillAdditionalAbilities = {
 	[2550]	= {818,"Basic_Campfire"},	-- cooking = basic campfire
 	[45357] = {51005,"Milling"},		-- inscription = milling
 	[25229] = {31252,"Prospecting"},	-- jewelcrafting = prospecting
-	[2018]	= {126462,"Thermal Anvil"},	 -- blacksmithing = thermal anvil (item:87216)
-	[4036]	= {126462,"Thermal Anvil"},	 -- engineering = thermal anvil (item:87216)
-	[2656]	= {126462,"Thermal Anvil"},	 -- smelting = thermal anvil (item:87216)
+	[2018]	= {126462,"Thermal_Anvil"},	 -- blacksmithing = thermal anvil (item:87216)
+	[4036]	= {126462,"Thermal_Anvil"},	 -- engineering = thermal anvil (item:87216)
+	[2575]	= {126462,"Thermal_Anvil"},	 -- smelting = thermal anvil (item:87216)
 }
-Skillet.AutoButtonsList = {}
+
 Skillet.TradeSkillAutoTarget = {
 	[7411] =  {	  -- Enchanting
 		[38682] = 1, -- Enchanting Vellum
@@ -151,63 +135,6 @@ Skillet.TradeSkillAutoTarget = {
 		[109130] = 5, -- Chameleon Lotus
 	}
 }
-
--- Items in this list are ignored because they can cause infinite loops.
-local TradeSkillIgnoredMats	 = {
-	[11479] = 1 , -- Transmute: Iron to Gold
-	[11480] = 1 , -- Transmute: Mithril to Truesilver
-	[60350] = 1 , -- Transmute: Titanium
-	[17559] = 1 , -- Transmute: Air to Fire
-	[17560] = 1 , -- Transmute: Fire to Earth
-	[17561] = 1 , -- Transmute: Earth to Water
-	[17562] = 1 , -- Transmute: Water to Air
-	[17563] = 1 , -- Transmute: Undeath to Water
-	[17565] = 1 , -- Transmute: Life to Earth
-	[17566] = 1 , -- Transmute: Earth to Life
-	[28585] = 1 , -- Transmute: Primal Earth to Life
-	[28566] = 1 , -- Transmute: Primal Air to Fire
-	[28567] = 1 , -- Transmute: Primal Earth to Water
-	[28568] = 1 , -- Transmute: Primal Fire to Earth
-	[28569] = 1 , -- Transmute: Primal Water to Air
-	[28580] = 1 , -- Transmute: Primal Shadow to Water
-	[28581] = 1 , -- Transmute: Primal Water to Shadow
-	[28582] = 1 , -- Transmute: Primal Mana to Fire
-	[28583] = 1 , -- Transmute: Primal Fire to Mana
-	[28584] = 1 , -- Transmute: Primal Life to Earth
-	[53771] = 1 , -- Transmute: Eternal Life to Shadow
-	[53773] = 1 , -- Transmute: Eternal Life to Fire
-	[53774] = 1 , -- Transmute: Eternal Fire to Water
-	[53775] = 1 , -- Transmute: Eternal Fire to Life
-	[53776] = 1 , -- Transmute: Eternal Air to Water
-	[53777] = 1 , -- Transmute: Eternal Air to Earth
-	[53779] = 1 , -- Transmute: Eternal Shadow to Earth
-	[53780] = 1 , -- Transmute: Eternal Shadow to Life
-	[53781] = 1 , -- Transmute: Eternal Earth to Air
-	[53782] = 1 , -- Transmute: Eternal Earth to Shadow
-	[53783] = 1 , -- Transmute: Eternal Water to Air
-	[53784] = 1 , -- Transmute: Eternal Water to Fire
-	[45765] = 1 , -- Void Shatter
-	[42615] = 1 , -- small prismatic shard
-	[42613] = 1 , -- nexus transformation
-	[28022] = 1 , -- large prismatic shard
-	[118239] = 1 , -- sha shatter
-	[118238] = 1 , -- ethereal shard shatter
-	[118237] = 1 , -- mysterious diffusion
-	[181637] = 1 , -- Transmute: Sorcerous-air-to-earth
-	[181633] = 1 , -- Transmute: Sorcerous-air-to-fire
-	[181636] = 1 , -- Transmute: Sorcerous-air-to-water
-	[181631] = 1 , -- Transmute: Sorcerous-earth-to-air
-	[181632] = 1 , -- Transmute: Sorcerous-earth-to-fire
-	[181635] = 1 , -- Transmute: Sorcerous-earth-to-water
-	[181627] = 1 , -- Transmute: Sorcerous-fire-to-air
-	[181625] = 1 , -- Transmute: Sorcerous-fire-to-earth
-	[181628] = 1 , -- Transmute: Sorcerous-fire-to-water
-	[181630] = 1 , -- Transmute: Sorcerous-water-to-air
-	[181629] = 1 , -- Transmute: Sorcerous-water-to-earth
-	[181634] = 1 , -- Transmute: Sorcerous-water-to-fire
-	[181643] = 1 , -- Transmute: Savage Blood
-}
-Skillet.TradeSkillIgnoredMats = TradeSkillIgnoredMats
 
 Skillet.scrollData = {
 	-- Scraped from WoWhead using the following javascript:
@@ -566,10 +493,477 @@ Skillet.scrollData = {
 	[44506] = 38960, -- Enchant Gloves - Gatherer
 	[63746] = 45628, -- Enchant Boots - Lesser Accuracy
 	[71692] = 50816, -- Enchant Gloves - Angler
+	[190954] = 128554,  -- Enchant Shoulder - Boon of the Scavenger
+	[190988] = 128558,  -- Enchant Gloves - Legion Herbalism
+	[190989] = 128559,  -- Enchant Gloves - Legion Mining
+	[190990] = 128560,  -- Enchant Gloves - Legion Skinning
+	[190991] = 128561,  -- Enchant Gloves - Legion Surveying
 }
 
-SkilletData = {}				-- skillet data scanner
-SkilletLink = {}
+--[[
+Skillet.enchantingItemIDs = {
+	-- "Borrowed" from TradeSkillMaster_Crafting\Modules\EnchantingInfo.lua
+	-- Scraped from Wowhead (http://www.wowhead.com/items/consumables/item-enhancements-permanent?filter=86;4;0) using the following javascript:
+	-- for (i=0; i<listviewitems.length; i++) console.log("["+listviewitems[i].sourcemore[0].ti+"] = \"i:"+listviewitems[i].id+"\",  -- "+listviewitems[i].name.substr(1));
+	[158914] = "i:110638",  -- Enchant Ring - Gift of Critical Strike
+	[158915] = "i:110639",  -- Enchant Ring - Gift of Haste
+	[158916] = "i:110640",  -- Enchant Ring - Gift of Mastery
+	[158917] = "i:110641",  -- Enchant Ring - Gift of Multistrike
+	[158918] = "i:110642",  -- Enchant Ring - Gift of Versatility
+	[158899] = "i:110645",  -- Enchant Neck - Gift of Critical Strike
+	[158900] = "i:110646",  -- Enchant Neck - Gift of Haste
+	[158901] = "i:110647",  -- Enchant Neck - Gift of Mastery
+	[158902] = "i:110648",  -- Enchant Neck - Gift of Multistrike
+	[158903] = "i:110649",  -- Enchant Neck - Gift of Versatility
+	[158884] = "i:110652",  -- Enchant Cloak - Gift of Critical Strike
+	[158885] = "i:110653",  -- Enchant Cloak - Gift of Haste
+	[158886] = "i:110654",  -- Enchant Cloak - Gift of Mastery
+	[158887] = "i:110655",  -- Enchant Cloak - Gift of Multistrike
+	[158889] = "i:110656",  -- Enchant Cloak - Gift of Versatility
+	[159235] = "i:110682",  -- Enchant Weapon - Mark of the Thunderlord
+	[159236] = "i:112093",  -- Enchant Weapon - Mark of the Shattered Hand
+	[159673] = "i:112115",  -- Enchant Weapon - Mark of Shadowmoon
+	[159674] = "i:112160",  -- Enchant Weapon - Mark of Blackrock
+	[159671] = "i:112164",  -- Enchant Weapon - Mark of Warsong
+	[159672] = "i:112165",  -- Enchant Weapon - Mark of the Frostwolf
+	[173323] = "i:118015",  -- Enchant Weapon - Mark of Bleeding Hollow
+	[158907] = "i:110617",  -- Enchant Ring - Breath of Critical Strike
+	[158908] = "i:110618",  -- Enchant Ring - Breath of Haste
+	[158909] = "i:110619",  -- Enchant Ring - Breath of Mastery
+	[158910] = "i:110620",  -- Enchant Ring - Breath of Multistrike
+	[158911] = "i:110621",  -- Enchant Ring - Breath of Versatility
+	[158892] = "i:110624",  -- Enchant Neck - Breath of Critical Strike
+	[158893] = "i:110625",  -- Enchant Neck - Breath of Haste
+	[158894] = "i:110626",  -- Enchant Neck - Breath of Mastery
+	[158895] = "i:110627",  -- Enchant Neck - Breath of Multistrike
+	[158896] = "i:110628",  -- Enchant Neck - Breath of Versatility
+	[158877] = "i:110631",  -- Enchant Cloak - Breath of Critical Strike
+	[158878] = "i:110632",  -- Enchant Cloak - Breath of Haste
+	[158879] = "i:110633",  -- Enchant Cloak - Breath of Mastery
+	[158880] = "i:110634",  -- Enchant Cloak - Breath of Multistrike
+	[158881] = "i:110635",  -- Enchant Cloak - Breath of Versatility
+	[104425] = "i:74723",  -- Enchant Weapon - Windsong
+	[104427] = "i:74724",  -- Enchant Weapon - Jade Spirit
+	[104430] = "i:74725",  -- Enchant Weapon - Elemental Force
+	[104434] = "i:74726",  -- Enchant Weapon - Dancing Steel
+	[104440] = "i:74727",  -- Enchant Weapon - Colossus
+	[104442] = "i:74728",  -- Enchant Weapon - River's Song
+	[104338] = "i:74700",  -- Enchant Bracer - Mastery
+	[104385] = "i:74701",  -- Enchant Bracer - Major Dodge
+	[104389] = "i:74703",  -- Enchant Bracer - Super Intellect
+	[104390] = "i:74704",  -- Enchant Bracer - Exceptional Strength
+	[104391] = "i:74705",  -- Enchant Bracer - Greater Agility
+	[104392] = "i:74706",  -- Enchant Chest - Super Resilience
+	[104393] = "i:74707",  -- Enchant Chest - Mighty Spirit
+	[104395] = "i:74708",  -- Enchant Chest - Glorious Stats
+	[104397] = "i:74709",  -- Enchant Chest - Superior Stamina
+	[104398] = "i:74710",  -- Enchant Cloak - Accuracy
+	[104401] = "i:74711",  -- Enchant Cloak - Greater Protection
+	[104403] = "i:74712",  -- Enchant Cloak - Superior Intellect
+	[104404] = "i:74713",  -- Enchant Cloak - Superior Critical Strike
+	[104407] = "i:74715",  -- Enchant Boots - Greater Haste
+	[104408] = "i:74716",  -- Enchant Boots - Greater Precision
+	[104409] = "i:74717",  -- Enchant Boots - Blurred Speed
+	[104414] = "i:74718",  -- Enchant Boots - Pandaren's Step
+	[104416] = "i:74719",  -- Enchant Gloves - Greater Haste
+	[104417] = "i:74720",  -- Enchant Gloves - Superior Haste
+	[104419] = "i:74721",  -- Enchant Gloves - Super Strength
+	[104420] = "i:74722",  -- Enchant Gloves - Superior Mastery
+	[104445] = "i:74729",  -- Enchant Off-Hand - Major Intellect
+	[130758] = "i:89737",  -- Enchant Shield - Greater Parry
+	[74195] = "i:52747",  -- Enchant Weapon - Mending
+	[96264] = "i:68784",  -- Enchant Bracer - Agility
+	[96261] = "i:68785",  -- Enchant Bracer - Major Strength
+	[96262] = "i:68786",  -- Enchant Bracer - Mighty Intellect
+	[74132] = "i:52687",  -- Enchant Gloves - Mastery
+	[74189] = "i:52743",  -- Enchant Boots - Earthen Vitality
+	[74191] = "i:52744",  -- Enchant Chest - Mighty Stats
+	[74192] = "i:52745",  -- Enchant Cloak - Lesser Power
+	[74193] = "i:52746",  -- Enchant Bracer - Speed
+	[74197] = "i:52748",  -- Enchant Weapon - Avalanche
+	[74198] = "i:52749",  -- Enchant Gloves - Haste
+	[74199] = "i:52750",  -- Enchant Boots - Haste
+	[74200] = "i:52751",  -- Enchant Chest - Stamina
+	[74201] = "i:52752",  -- Enchant Bracer - Critical Strike
+	[74202] = "i:52753",  -- Enchant Cloak - Intellect
+	[74207] = "i:52754",  -- Enchant Shield - Protection
+	[74211] = "i:52755",  -- Enchant Weapon - Elemental Slayer
+	[74212] = "i:52756",  -- Enchant Gloves - Exceptional Strength
+	[74213] = "i:52757",  -- Enchant Boots - Major Agility
+	[74214] = "i:52758",  -- Enchant Chest - Mighty Resilience
+	[74220] = "i:52759",  -- Enchant Gloves - Greater Haste
+	[74223] = "i:52760",  -- Enchant Weapon - Hurricane
+	[74225] = "i:52761",  -- Enchant Weapon - Heartsong
+	[74226] = "i:52762",  -- Enchant Shield - Mastery
+	[74229] = "i:52763",  -- Enchant Bracer - Superior Dodge
+	[74230] = "i:52764",  -- Enchant Cloak - Critical Strike
+	[74231] = "i:52765",  -- Enchant Chest - Exceptional Spirit
+	[74232] = "i:52766",  -- Enchant Bracer - Precision
+	[74234] = "i:52767",  -- Enchant Cloak - Protection
+	[74235] = "i:52768",  -- Enchant Off-Hand - Superior Intellect
+	[74236] = "i:52769",  -- Enchant Boots - Precision
+	[74237] = "i:52770",  -- Enchant Bracer - Exceptional Spirit
+	[74238] = "i:52771",  -- Enchant Boots - Mastery
+	[74239] = "i:52772",  -- Enchant Bracer - Greater Haste
+	[74240] = "i:52773",  -- Enchant Cloak - Greater Intellect
+	[74242] = "i:52774",  -- Enchant Weapon - Power Torrent
+	[74244] = "i:52775",  -- Enchant Weapon - Windwalk
+	[74246] = "i:52776",  -- Enchant Weapon - Landslide
+	[74247] = "i:52777",  -- Enchant Cloak - Greater Critical Strike
+	[74248] = "i:52778",  -- Enchant Bracer - Greater Critical Strike
+	[74250] = "i:52779",  -- Enchant Chest - Peerless Stats
+	[74251] = "i:52780",  -- Enchant Chest - Greater Stamina
+	[74252] = "i:52781",  -- Enchant Boots - Assassin's Step
+	[74253] = "i:52782",  -- Enchant Boots - Lavawalker
+	[74254] = "i:52783",  -- Enchant Gloves - Mighty Strength
+	[74255] = "i:52784",  -- Enchant Gloves - Greater Mastery
+	[74256] = "i:52785",  -- Enchant Bracer - Greater Speed
+	[95471] = "i:68134",  -- Enchant 2H Weapon - Mighty Agility
+	[42974] = "i:38948",  -- Enchant Weapon - Executioner
+	[44510] = "i:38963",  -- Enchant Weapon - Exceptional Spirit
+	[44524] = "i:38965",  -- Enchant Weapon - Icebreaker
+	[44576] = "i:38972",  -- Enchant Weapon - Lifeward
+	[44595] = "i:38981",  -- Enchant 2H Weapon - Scourgebane
+	[44621] = "i:38988",  -- Enchant Weapon - Giant Slayer
+	[44629] = "i:38991",  -- Enchant Weapon - Exceptional Spellpower
+	[44630] = "i:38992",  -- Enchant 2H Weapon - Greater Savagery
+	[44633] = "i:38995",  -- Enchant Weapon - Exceptional Agility
+	[46578] = "i:38998",  -- Enchant Weapon - Deathfrost
+	[59625] = "i:43987",  -- Enchant Weapon - Black Magic
+	[60621] = "i:44453",  -- Enchant Weapon - Greater Potency
+	[60691] = "i:44463",  -- Enchant 2H Weapon - Massacre
+	[60707] = "i:44466",  -- Enchant Weapon - Superior Potency
+	[60714] = "i:44467",  -- Enchant Weapon - Mighty Spellpower
+	[59621] = "i:44493",  -- Enchant Weapon - Berserking
+	[59619] = "i:44497",  -- Enchant Weapon - Accuracy
+	[62948] = "i:45056",  -- Enchant Staff - Greater Spellpower
+	[62959] = "i:45060",  -- Enchant Staff - Spellpower
+	[27958] = "i:38912",  -- Enchant Chest - Exceptional Mana
+	[44484] = "i:38951",  -- Enchant Gloves - Haste
+	[44488] = "i:38953",  -- Enchant Gloves - Precision
+	[44489] = "i:38954",  -- Enchant Shield - Dodge
+	[44492] = "i:38955",  -- Enchant Chest - Mighty Health
+	[44500] = "i:38959",  -- Enchant Cloak - Superior Agility
+	[44508] = "i:38961",  -- Enchant Boots - Greater Spirit
+	[44509] = "i:38962",  -- Enchant Chest - Greater Mana Restoration
+	[44513] = "i:38964",  -- Enchant Gloves - Greater Assault
+	[44528] = "i:38966",  -- Enchant Boots - Greater Fortitude
+	[44529] = "i:38967",  -- Enchant Gloves - Major Agility
+	[44555] = "i:38968",  -- Enchant Bracer - Exceptional Intellect
+	[60616] = "i:38971",  -- Enchant Bracer - Assault
+	[44582] = "i:38973",  -- Enchant Cloak - Minor Power
+	[44584] = "i:38974",  -- Enchant Boots - Greater Vitality
+	[44588] = "i:38975",  -- Enchant Chest - Exceptional Resilience
+	[44589] = "i:38976",  -- Enchant Boots - Superior Agility
+	[44591] = "i:38978",  -- Enchant Cloak - Superior Dodge
+	[44592] = "i:38979",  -- Enchant Gloves - Exceptional Spellpower
+	[44593] = "i:38980",  -- Enchant Bracer - Major Spirit
+	[44598] = "i:38984",  -- Enchant Bracer - Haste
+	[60623] = "i:38986",  -- Enchant Boots - Icewalker
+	[44616] = "i:38987",  -- Enchant Bracer - Greater Stats
+	[44623] = "i:38989",  -- Enchant Chest - Super Stats
+	[44625] = "i:38990",  -- Enchant Gloves - Armsman
+	[44631] = "i:38993",  -- Enchant Cloak - Shadow Armor
+	[44635] = "i:38997",  -- Enchant Bracer - Greater Spellpower
+	[47672] = "i:39001",  -- Enchant Cloak - Mighty Stamina
+	[47766] = "i:39002",  -- Enchant Chest - Greater Dodge
+	[47898] = "i:39003",  -- Enchant Cloak - Greater Speed
+	[47899] = "i:39004",  -- Enchant Cloak - Wisdom
+	[47900] = "i:39005",  -- Enchant Chest - Super Health
+	[47901] = "i:39006",  -- Enchant Boots - Tuskarr's Vitality
+	[60606] = "i:44449",  -- Enchant Boots - Assault
+	[60653] = "i:44455",  -- Shield Enchant - Greater Intellect
+	[60609] = "i:44456",  -- Enchant Cloak - Speed
+	[60663] = "i:44457",  -- Enchant Cloak - Major Agility
+	[60668] = "i:44458",  -- Enchant Gloves - Crusher
+	[60692] = "i:44465",  -- Enchant Chest - Powerful Stats
+	[60763] = "i:44469",  -- Enchant Boots - Greater Assault
+	[60767] = "i:44470",  -- Enchant Bracer - Superior Spellpower
+	[44575] = "i:44815",  -- Enchant Bracer - Greater Assault
+	[62256] = "i:44947",  -- Enchant Bracer - Major Stamina
+	[27967] = "i:38917",  -- Enchant Weapon - Major Striking
+	[27968] = "i:38918",  -- Enchant Weapon - Major Intellect
+	[27971] = "i:38919",  -- Enchant 2H Weapon - Savagery
+	[27972] = "i:38920",  -- Enchant Weapon - Potency
+	[27975] = "i:38921",  -- Enchant Weapon - Major Spellpower
+	[27977] = "i:38922",  -- Enchant 2H Weapon - Major Agility
+	[27981] = "i:38923",  -- Enchant Weapon - Sunfire
+	[27982] = "i:38924",  -- Enchant Weapon - Soulfrost
+	[27984] = "i:38925",  -- Enchant Weapon - Mongoose
+	[28003] = "i:38926",  -- Enchant Weapon - Spellsurge
+	[28004] = "i:38927",  -- Enchant Weapon - Battlemaster
+	[34010] = "i:38946",  -- Enchant Weapon - Major Healing
+	[42620] = "i:38947",  -- Enchant Weapon - Greater Agility
+	[27951] = "i:37603",  -- Enchant Boots - Dexterity
+	[25086] = "i:38895",  -- Enchant Cloak - Dodge
+	[27899] = "i:38897",  -- Enchant Bracer - Brawn
+	[27905] = "i:38898",  -- Enchant Bracer - Stats
+	[27906] = "i:38899",  -- Enchant Bracer - Greater Dodge
+	[27911] = "i:38900",  -- Enchant Bracer - Superior Healing
+	[27913] = "i:38901",  -- Enchant Bracer - Restore Mana Prime
+	[27914] = "i:38902",  -- Enchant Bracer - Fortitude
+	[27917] = "i:38903",  -- Enchant Bracer - Spellpower
+	[27944] = "i:38904",  -- Enchant Shield - Lesser Dodge
+	[27945] = "i:38905",  -- Enchant Shield - Intellect
+	[27946] = "i:38906",  -- Enchant Shield - Parry
+	[27948] = "i:38908",  -- Enchant Boots - Vitality
+	[27950] = "i:38909",  -- Enchant Boots - Fortitude
+	[27954] = "i:38910",  -- Enchant Boots - Surefooted
+	[27957] = "i:38911",  -- Enchant Chest - Exceptional Health
+	[27960] = "i:38913",  -- Enchant Chest - Exceptional Stats
+	[27961] = "i:38914",  -- Enchant Cloak - Major Armor
+	[33990] = "i:38928",  -- Enchant Chest - Major Spirit
+	[33991] = "i:38929",  -- Enchant Chest - Restore Mana Prime
+	[33992] = "i:38930",  -- Enchant Chest - Major Resilience
+	[33993] = "i:38931",  -- Enchant Gloves - Blasting
+	[33994] = "i:38932",  -- Enchant Gloves - Precise Strikes
+	[33995] = "i:38933",  -- Enchant Gloves - Major Strength
+	[33996] = "i:38934",  -- Enchant Gloves - Assault
+	[33997] = "i:38935",  -- Enchant Gloves - Major Spellpower
+	[33999] = "i:38936",  -- Enchant Gloves - Major Healing
+	[34001] = "i:38937",  -- Enchant Bracer - Major Intellect
+	[34002] = "i:38938",  -- Enchant Bracer - Lesser Assault
+	[34003] = "i:38939",  -- Enchant Cloak - PvP Power
+	[34004] = "i:38940",  -- Enchant Cloak - Greater Agility
+	[34007] = "i:38943",  -- Enchant Boots - Cat's Swiftness
+	[34008] = "i:38944",  -- Enchant Boots - Boar's Speed
+	[34009] = "i:38945",  -- Enchant Shield - Major Stamina
+	[44383] = "i:38949",  -- Enchant Shield - Resilience
+	[46594] = "i:38999",  -- Enchant Chest - Dodge
+	[47051] = "i:39000",  -- Enchant Cloak - Greater Dodge
+	[7745] = "i:38772",  -- Enchant 2H Weapon - Minor Impact
+	[7786] = "i:38779",  -- Enchant Weapon - Minor Beastslayer
+	[7788] = "i:38780",  -- Enchant Weapon - Minor Striking
+	[7793] = "i:38781",  -- Enchant 2H Weapon - Lesser Intellect
+	[13380] = "i:38788",  -- Enchant 2H Weapon - Lesser Spirit
+	[13503] = "i:38794",  -- Enchant Weapon - Lesser Striking
+	[13529] = "i:38796",  -- Enchant 2H Weapon - Lesser Impact
+	[13653] = "i:38813",  -- Enchant Weapon - Lesser Beastslayer
+	[13655] = "i:38814",  -- Enchant Weapon - Lesser Elemental Slayer
+	[13693] = "i:38821",  -- Enchant Weapon - Striking
+	[13695] = "i:38822",  -- Enchant 2H Weapon - Impact
+	[13898] = "i:38838",  -- Enchant Weapon - Fiery Weapon
+	[13915] = "i:38840",  -- Enchant Weapon - Demonslaying
+	[13937] = "i:38845",  -- Enchant 2H Weapon - Greater Impact
+	[13943] = "i:38848",  -- Enchant Weapon - Greater Striking
+	[20029] = "i:38868",  -- Enchant Weapon - Icy Chill
+	[20030] = "i:38869",  -- Enchant 2H Weapon - Superior Impact
+	[20031] = "i:38870",  -- Enchant Weapon - Superior Striking
+	[20032] = "i:38871",  -- Enchant Weapon - Lifestealing
+	[20033] = "i:38872",  -- Enchant Weapon - Unholy Weapon
+	[20034] = "i:38873",  -- Enchant Weapon - Crusader
+	[20035] = "i:38874",  -- Enchant 2H Weapon - Major Spirit
+	[20036] = "i:38875",  -- Enchant 2H Weapon - Major Intellect
+	[21931] = "i:38876",  -- Enchant Weapon - Winter's Might
+	[22749] = "i:38877",  -- Enchant Weapon - Spellpower
+	[22750] = "i:38878",  -- Enchant Weapon - Healing Power
+	[23799] = "i:38879",  -- Enchant Weapon - Strength
+	[23800] = "i:38880",  -- Enchant Weapon - Agility
+	[23803] = "i:38883",  -- Enchant Weapon - Mighty Spirit
+	[23804] = "i:38884",  -- Enchant Weapon - Mighty Intellect
+	[27837] = "i:38896",  -- Enchant 2H Weapon - Agility
+	[64441] = "i:46026",  -- Enchant Weapon - Blade Ward
+	[64579] = "i:46098",  -- Enchant Weapon - Blood Draining
+	[7418] = "i:38679",  -- Enchant Bracer - Minor Health
+	[7420] = "i:38766",  -- Enchant Chest - Minor Health
+	[7426] = "i:38767",  -- Enchant Chest - Minor Absorption
+	[7428] = "i:38768",  -- Enchant Bracer - Minor Dodge
+	[7443] = "i:38769",  -- Enchant Chest - Minor Mana
+	[7457] = "i:38771",  -- Enchant Bracer - Minor Stamina
+	[7748] = "i:38773",  -- Enchant Chest - Lesser Health
+	[7766] = "i:38774",  -- Enchant Bracer - Minor Spirit
+	[7771] = "i:38775",  -- Enchant Cloak - Minor Protection
+	[7776] = "i:38776",  -- Enchant Chest - Lesser Mana
+	[7779] = "i:38777",  -- Enchant Bracer - Minor Agility
+	[7782] = "i:38778",  -- Enchant Bracer - Minor Strength
+	[7857] = "i:38782",  -- Enchant Chest - Health
+	[7859] = "i:38783",  -- Enchant Bracer - Lesser Spirit
+	[7863] = "i:38785",  -- Enchant Boots - Minor Stamina
+	[7867] = "i:38786",  -- Enchant Boots - Minor Agility
+	[13378] = "i:38787",  -- Enchant Shield - Minor Stamina
+	[13419] = "i:38789",  -- Enchant Cloak - Minor Agility
+	[13421] = "i:38790",  -- Enchant Cloak - Lesser Protection
+	[13464] = "i:38791",  -- Enchant Shield - Lesser Protection
+	[13485] = "i:38792",  -- Enchant Shield - Lesser Spirit
+	[13501] = "i:38793",  -- Enchant Bracer - Lesser Stamina
+	[13536] = "i:38797",  -- Enchant Bracer - Lesser Strength
+	[13538] = "i:38798",  -- Enchant Chest - Lesser Absorption
+	[13607] = "i:38799",  -- Enchant Chest - Mana
+	[13612] = "i:38800",  -- Enchant Gloves - Mining
+	[13617] = "i:38801",  -- Enchant Gloves - Herbalism
+	[13620] = "i:38802",  -- Enchant Gloves - Fishing
+	[13622] = "i:38803",  -- Enchant Bracer - Lesser Intellect
+	[13626] = "i:38804",  -- Enchant Chest - Minor Stats
+	[13631] = "i:38805",  -- Enchant Shield - Lesser Stamina
+	[13635] = "i:38806",  -- Enchant Cloak - Defense
+	[13637] = "i:38807",  -- Enchant Boots - Lesser Agility
+	[13640] = "i:38808",  -- Enchant Chest - Greater Health
+	[13642] = "i:38809",  -- Enchant Bracer - Spirit
+	[13644] = "i:38810",  -- Enchant Boots - Lesser Stamina
+	[13646] = "i:38811",  -- Enchant Bracer - Lesser Dodge
+	[13648] = "i:38812",  -- Enchant Bracer - Stamina
+	[13659] = "i:38816",  -- Enchant Shield - Spirit
+	[13661] = "i:38817",  -- Enchant Bracer - Strength
+	[13663] = "i:38818",  -- Enchant Chest - Greater Mana
+	[13687] = "i:38819",  -- Enchant Boots - Lesser Spirit
+	[13689] = "i:38820",  -- Enchant Shield - Lesser Parry
+	[13698] = "i:38823",  -- Enchant Gloves - Skinning
+	[13700] = "i:38824",  -- Enchant Chest - Lesser Stats
+	[13746] = "i:38825",  -- Enchant Cloak - Greater Defense
+	[13815] = "i:38827",  -- Enchant Gloves - Agility
+	[13817] = "i:38828",  -- Enchant Shield - Stamina
+	[13822] = "i:38829",  -- Enchant Bracer - Intellect
+	[13836] = "i:38830",  -- Enchant Boots - Stamina
+	[13841] = "i:38831",  -- Enchant Gloves - Advanced Mining
+	[13846] = "i:38832",  -- Enchant Bracer - Greater Spirit
+	[13858] = "i:38833",  -- Enchant Chest - Superior Health
+	[13868] = "i:38834",  -- Enchant Gloves - Advanced Herbalism
+	[13882] = "i:38835",  -- Enchant Cloak - Lesser Agility
+	[13887] = "i:38836",  -- Enchant Gloves - Strength
+	[13890] = "i:38837",  -- Enchant Boots - Minor Speed
+	[13905] = "i:38839",  -- Enchant Shield - Greater Spirit
+	[13917] = "i:38841",  -- Enchant Chest - Superior Mana
+	[13931] = "i:38842",  -- Enchant Bracer - Dodge
+	[13935] = "i:38844",  -- Enchant Boots - Agility
+	[13939] = "i:38846",  -- Enchant Bracer - Greater Strength
+	[13941] = "i:38847",  -- Enchant Chest - Stats
+	[13945] = "i:38849",  -- Enchant Bracer - Greater Stamina
+	[13947] = "i:38850",  -- Enchant Gloves - Riding Skill
+	[13948] = "i:38851",  -- Enchant Gloves - Minor Haste
+	[20008] = "i:38852",  -- Enchant Bracer - Greater Intellect
+	[20009] = "i:38853",  -- Enchant Bracer - Superior Spirit
+	[20010] = "i:38854",  -- Enchant Bracer - Superior Strength
+	[20011] = "i:38855",  -- Enchant Bracer - Superior Stamina
+	[20012] = "i:38856",  -- Enchant Gloves - Greater Agility
+	[20013] = "i:38857",  -- Enchant Gloves - Greater Strength
+	[20015] = "i:38859",  -- Enchant Cloak - Superior Defense
+	[20016] = "i:38860",  -- Enchant Shield - Vitality
+	[20017] = "i:38861",  -- Enchant Shield - Greater Stamina
+	[20020] = "i:38862",  -- Enchant Boots - Greater Stamina
+	[20023] = "i:38863",  -- Enchant Boots - Greater Agility
+	[20024] = "i:38864",  -- Enchant Boots - Spirit
+	[20025] = "i:38865",  -- Enchant Chest - Greater Stats
+	[20026] = "i:38866",  -- Enchant Chest - Major Health
+	[20028] = "i:38867",  -- Enchant Chest - Major Mana
+	[23801] = "i:38881",  -- Enchant Bracer - Mana Regeneration
+	[23802] = "i:38882",  -- Enchant Bracer - Healing Power
+	[25072] = "i:38885",  -- Enchant Gloves - Threat
+	[25073] = "i:38886",  -- Enchant Gloves - Shadow Power
+	[25074] = "i:38887",  -- Enchant Gloves - Frost Power
+	[25078] = "i:38888",  -- Enchant Gloves - Fire Power
+	[25079] = "i:38889",  -- Enchant Gloves - Healing Power
+	[25080] = "i:38890",  -- Enchant Gloves - Superior Agility
+	[25083] = "i:38893",  -- Enchant Cloak - Stealth
+	[25084] = "i:38894",  -- Enchant Cloak - Subtlety
+	[44506] = "i:38960",  -- Enchant Gloves - Gatherer
+	[63746] = "i:45628",  -- Enchant Boots - Lesser Accuracy
+	[71692] = "i:50816",  -- Enchant Gloves - Angler
+	[190954] = "i:128554",  -- Enchant Shoulder - Boon of the Scavenger
+	[190988] = "i:128558",  -- Enchant Gloves - Legion Herbalism
+	[190989] = "i:128559",  -- Enchant Gloves - Legion Mining
+	[190990] = "i:128560",  -- Enchant Gloves - Legion Skinning
+	[190991] = "i:128561",  -- Enchant Gloves - Legion Surveying
+}
+
+-- The following function can be used (/run Skillet:CountEnchants()) to check for missing items
+-- in either Skillet's or TradeSkillMaster's table of enchant recipe IDs to enchant (scroll) item IDs
+Skillet.missing_enchantingItemIDs = {}
+Skillet.missing_scrollData = {}
+function Skillet:CountEnchants()
+	local i,j = 0,0
+	for rid,eid in pairs(Skillet.scrollData) do
+		i = i + 1
+		if not Skillet.enchantingItemIDs[rid] then
+			table.insert(Skillet.missing_enchantingItemIDs, rid)
+		end
+	end
+	for rid,eid in pairs(Skillet.enchantingItemIDs) do
+		j = j + 1
+		if not Skillet.scrollData[rid] then
+			table.insert(Skillet.missing_scrollData, rid)
+		end
+	end
+	DA.CHAT("scrollData count= "..tostring(i)..", missing= "..DA.DUMP1(Skillet.missing_scrollData))
+	DA.CHAT("enchantingItemIDs count= "..tostring(j)..", missing= "..DA.DUMP1(Skillet.missing_enchantingItemIDs))
+end
+]]--
+
+--[[ == Local Tables == ]]--
+
+-- a table of tradeskills by id
+local TradeSkillList = {
+	2259,		-- alchemy
+	2018,		-- blacksmithing
+	7411,		-- enchanting
+	4036,		-- engineering
+	45357,		-- inscription
+	25229,		-- jewelcrafting
+	2108,		-- leatherworking
+	2575,		-- mining
+	2656,		-- smelting (from mining, 2575)
+	3908,		-- tailoring
+	2550,		-- cooking
+	3273,		-- first aid
+--	53428,		-- runeforging
+}
+
+-- Items in this list are ignored because they can cause infinite loops.
+local TradeSkillIgnoredMats	 = {
+	[11479] = 1 , -- Transmute: Iron to Gold
+	[11480] = 1 , -- Transmute: Mithril to Truesilver
+	[60350] = 1 , -- Transmute: Titanium
+	[17559] = 1 , -- Transmute: Air to Fire
+	[17560] = 1 , -- Transmute: Fire to Earth
+	[17561] = 1 , -- Transmute: Earth to Water
+	[17562] = 1 , -- Transmute: Water to Air
+	[17563] = 1 , -- Transmute: Undeath to Water
+	[17565] = 1 , -- Transmute: Life to Earth
+	[17566] = 1 , -- Transmute: Earth to Life
+	[28585] = 1 , -- Transmute: Primal Earth to Life
+	[28566] = 1 , -- Transmute: Primal Air to Fire
+	[28567] = 1 , -- Transmute: Primal Earth to Water
+	[28568] = 1 , -- Transmute: Primal Fire to Earth
+	[28569] = 1 , -- Transmute: Primal Water to Air
+	[28580] = 1 , -- Transmute: Primal Shadow to Water
+	[28581] = 1 , -- Transmute: Primal Water to Shadow
+	[28582] = 1 , -- Transmute: Primal Mana to Fire
+	[28583] = 1 , -- Transmute: Primal Fire to Mana
+	[28584] = 1 , -- Transmute: Primal Life to Earth
+	[53771] = 1 , -- Transmute: Eternal Life to Shadow
+	[53773] = 1 , -- Transmute: Eternal Life to Fire
+	[53774] = 1 , -- Transmute: Eternal Fire to Water
+	[53775] = 1 , -- Transmute: Eternal Fire to Life
+	[53776] = 1 , -- Transmute: Eternal Air to Water
+	[53777] = 1 , -- Transmute: Eternal Air to Earth
+	[53779] = 1 , -- Transmute: Eternal Shadow to Earth
+	[53780] = 1 , -- Transmute: Eternal Shadow to Life
+	[53781] = 1 , -- Transmute: Eternal Earth to Air
+	[53782] = 1 , -- Transmute: Eternal Earth to Shadow
+	[53783] = 1 , -- Transmute: Eternal Water to Air
+	[53784] = 1 , -- Transmute: Eternal Water to Fire
+	[45765] = 1 , -- Void Shatter
+	[42615] = 1 , -- small prismatic shard
+	[42613] = 1 , -- nexus transformation
+	[28022] = 1 , -- large prismatic shard
+	[118239] = 1 , -- sha shatter
+	[118238] = 1 , -- ethereal shard shatter
+	[118237] = 1 , -- mysterious diffusion
+	[181637] = 1 , -- Transmute: Sorcerous-air-to-earth
+	[181633] = 1 , -- Transmute: Sorcerous-air-to-fire
+	[181636] = 1 , -- Transmute: Sorcerous-air-to-water
+	[181631] = 1 , -- Transmute: Sorcerous-earth-to-air
+	[181632] = 1 , -- Transmute: Sorcerous-earth-to-fire
+	[181635] = 1 , -- Transmute: Sorcerous-earth-to-water
+	[181627] = 1 , -- Transmute: Sorcerous-fire-to-air
+	[181625] = 1 , -- Transmute: Sorcerous-fire-to-earth
+	[181628] = 1 , -- Transmute: Sorcerous-fire-to-water
+	[181630] = 1 , -- Transmute: Sorcerous-water-to-air
+	[181629] = 1 , -- Transmute: Sorcerous-water-to-earth
+	[181634] = 1 , -- Transmute: Sorcerous-water-to-fire
+	[181643] = 1 , -- Transmute: Savage Blood
+}
+Skillet.TradeSkillIgnoredMats = TradeSkillIgnoredMats
+
 local TradeSkillIDsByName = {}		-- filled in with ids and names for reverse matching (since the same name has multiple id's based on level)
 local DifficultyText = {
 	x = "unknown",
@@ -597,34 +991,82 @@ local skill_style_type = {
 	["unavailable"]		= { r = 0.3, g = 0.3, b = 0.3,	  level = 6, alttext="",	cstring = "|cff606060"},
 }
 
-local lastAutoTarget = {}
-function Skillet:GetAutoTargetItem(tradeID)
-	if Skillet.TradeSkillAutoTarget[tradeID] then
-		local itemID = lastAutoTarget[tradeID]
-		if itemID then
-			local limit	 = Skillet.TradeSkillAutoTarget[tradeID][itemID]
-			local count = GetItemCount(itemID)
-			if count >= limit then
-				return itemID
-			end
+local missingVendorItems = {
+	[30817] = true,				-- simple flour
+	[4539] = true,				-- Goldenbark Apple
+	[17035] = true,				-- Stranglethorn seed
+	[17034] = true,				-- Maple seed
+	[52188] = true,				-- Jeweler's Setting
+	[4399]	= true,				-- Wooden Stock
+	[38682] = true,				-- Enchanting Vellum
+	[3857]	= true,				-- Coal
+}
+
+local topink = 113111				-- Warbinder's Ink
+local specialVendorItems = {
+	[37101] = {1, topink},			--Ivory Ink
+	[39469] = {1, topink},			--Moonglow Ink
+	[39774] = {1, topink},			--Midnight Ink
+	[43116] = {1, topink},			--Lions Ink
+	[43118] = {1, topink},			--Jadefire Ink
+	[43120] = {1, topink},			--Celestial Ink
+	[43122] = {1, topink},			--Shimmering Ink
+	[43124] = {1, topink},			--Ethereal Ink
+	[43126] = {1, topink},			--Ink of the Sea
+	[61978] = {1, topink},			--Blackfallow Ink
+	[79254] = {1, topink},			--Ink of Dreams
+
+	[43127] = {10, topink},			--Snowfall Ink
+	[61981] = {10, topink},			--Inferno Ink
+	[79255] = {10, topink},			--Starlight Ink
+}
+
+function Skillet:GetTradeSkillInfo(index)
+	--DA.PROFILE("Skillet:GetTradeSkillInfo("..tostring(index)..")")
+-- index is now a recipeID
+-- GetTradeSkillInfo returned:
+-- skillName, skillType, numAvailable, isExpanded, altVerb, numSkillUps, indentLevel, showProgressBar, currentRank, maxRank, startingRank
+	if index then
+		local info = C_TradeSkillUI.GetRecipeInfo(index)
+		if info then
+			local tradeSkillID, skillLineName, skillLineRank, skillLineMaxRank, skillLineModifier = C_TradeSkillUI.GetTradeSkillLineForRecipe(index)
+			return info.name, info.difficulty, info.numAvailable, false, info.alternateVerb, info.numSkillUps, info.numIndents, false, skillLineRank, skillLineMaxRank, nil
 		end
-		for itemID,limit in pairs(Skillet.TradeSkillAutoTarget[tradeID]) do
-			local count = GetItemCount(itemID)
-			if count >= limit then
-				lastAutoTarget[tradeID] = itemID
-				return itemID
-			end
-		end
-		lastAutoTarget[tradeID] = nil
 	end
 end
 
-function Skillet:GetAutoTargetMacro(additionalSpellId)
-	local itemID = Skillet:GetAutoTargetItem(additionalSpellId)
+local lastAutoTarget = {}
+function Skillet:GetAutoTargetItem(addSpellID)
+	--DA.DEBUG(0,"GetAutoTargetItem("..tostring(addSpellID)..")")
+	if Skillet.TradeSkillAutoTarget[addSpellID] then
+		local itemID = lastAutoTarget[addSpellID]
+		--DA.DEBUG(0,"itemID= "..tostring(itemID))
+		if itemID then 
+			local limit = Skillet.TradeSkillAutoTarget[addSpellID][itemID]
+			local count = GetItemCount(itemID)
+			if count >= limit then
+				return itemID
+			end
+		end
+		for itemID,limit in pairs(Skillet.TradeSkillAutoTarget[addSpellID]) do
+			local count = GetItemCount(itemID)
+			--DA.DEBUG(0,"itemID= "..tostring(itemID)..", limit= "..tostring(limit)..", count= "..tostring(count))
+			if count >= limit then
+				lastAutoTarget[addSpellID] = itemID
+				return itemID
+			end
+		end
+		lastAutoTarget[addSpellID] = nil
+	end
+end
+
+function Skillet:GetAutoTargetMacro(addSpellID)
+	--DA.DEBUG(0,"GetAutoTargetMacro("..tostring(addSpellID)..")")
+	local itemID = Skillet:GetAutoTargetItem(addSpellID)
 	if itemID then
-		return "/cast "..(GetSpellInfo(additionalSpellId) or "").."\n/use "..(GetItemInfo(itemID) or "")
+		return "/cast "..(GetSpellInfo(addSpellID) or "").."\n/use "..(GetItemInfo(itemID) or "")
 	else
-		return "/cast "..(GetSpellInfo(additionalSpellId) or "")
+		return "/cast "..(GetSpellInfo(addSpellID) or "")
 	end
 end
 
@@ -688,7 +1130,6 @@ function Skillet:CollectRecipeInformation()
 		self.data.skillIndexLookup[player] = {}
 		for trade,skillList in pairs(tradeList) do
 			for i=1,#skillList do
---				local skillData = self:GetSkill(player, trade, i)
 				local skillString = self.db.realm.skillDB[player][trade][i]
 				if skillString then
 					local skillData = string.split(" ",skillString)
@@ -704,6 +1145,9 @@ function Skillet:CollectRecipeInformation()
 end
 
 -- Checks to see if the current trade is one that we support.
+-- Shift key say we don't support it (even if we do).
+-- 5419  is ?
+-- 53428 is Runeforging
 function Skillet:IsSupportedTradeskill(tradeID)
 	if IsShiftKeyDown() or not tradeID or tradeID == 5419 or tradeID == 53428 then
 		return false
@@ -713,9 +1157,9 @@ end
 
 -- Checks to see if this trade follower can not use Skillet frame.
 function Skillet:IsNotSupportedFollower(tradeID)
-	DA.DEBUG(0,"IsNotSupportedFollower("..tostring(tradeID)..")")
+	--DA.DEBUG(0,"IsNotSupportedFollower("..tostring(tradeID)..")")
 	Skillet.wasNPCCrafting = false
-	if IsNPCCrafting() then
+	if C_TradeSkillUI.IsNPCCrafting() then
 		local guid = UnitGUID("target")
 		local gtype, zero, server_id, instance_id, zone_uid, npc_id, spawn_uid
 		if guid then
@@ -746,36 +1190,6 @@ function Skillet:IsNotSupportedFollower(tradeID)
 	end
 	return false -- Use Skillet frame
 end
-
-local missingVendorItems = {
-	[30817] = true,				-- simple flour
-	[4539] = true,				-- Goldenbark Apple
-	[17035] = true,				-- Stranglethorn seed
-	[17034] = true,				-- Maple seed
-	[52188] = true,				-- Jeweler's Setting
-	[4399]	= true,				-- Wooden Stock
-	[38682] = true,				-- Enchanting Vellum
-	[3857]	= true,				-- Coal
-}
-
-local topink = 113111				-- Warbinder's Ink
-local specialVendorItems = {
-	[37101] = {1, topink},			--Ivory Ink
-	[39469] = {1, topink},			--Moonglow Ink
-	[39774] = {1, topink},			--Midnight Ink
-	[43116] = {1, topink},			--Lions Ink
-	[43118] = {1, topink},			--Jadefire Ink
-	[43120] = {1, topink},			--Celestial Ink
-	[43122] = {1, topink},			--Shimmering Ink
-	[43124] = {1, topink},			--Ethereal Ink
-	[43126] = {1, topink},			--Ink of the Sea
-	[61978] = {1, topink},			--Blackfallow Ink
-	[79254] = {1, topink},			--Ink of Dreams
-
-	[43127] = {10, topink},			--Snowfall Ink
-	[61981] = {10, topink},			--Inferno Ink
-	[79255] = {10, topink},			--Starlight Ink
-}
 
 function Skillet:VendorItemAvailable(itemID)
 	if specialVendorItems[itemID] then
@@ -811,133 +1225,112 @@ function Skillet:VendorSellsReagent(itemID)
 end
 
 -- resets the blizzard tradeskill search filters just to make sure no other addon has monkeyed with them
-function SkilletData:ResetTradeSkillFilter()
-	if not GetTradeSkillCategoryFilter(0) then
-		SetTradeSkillCategoryFilter(0, 1, 1)
-	end
-	SetTradeSkillItemNameFilter("")
-	SetTradeSkillItemLevelFilter(0,0)
+function Skillet:ResetTradeSkillFilter()
+	--DA.PROFILE("Skillet:ResetTradeSkillFilter()")
+	C_TradeSkillUI.ClearInventorySlotFilter()
+	C_TradeSkillUI.ClearRecipeCategoryFilter()
+	C_TradeSkillUI.ClearRecipeSourceTypeFilter()
+	C_TradeSkillUI.SetRecipeItemNameFilter(nil)
+	C_TradeSkillUI.SetRecipeItemLevelFilter(0, 0)
 end
 
-function SkilletLink:ResetTradeSkillFilter()
-	if not GetTradeSkillCategoryFilter(0) then
-		SetTradeSkillCategoryFilter(0, 1, 1)
-	end
-	SetTradeSkillItemNameFilter("")
-	SetTradeSkillItemLevelFilter(0,0)
+function Skillet:SetTradeSkillLearned()
+	C_TradeSkillUI.SetOnlyShowLearnedRecipes(true);
+	C_TradeSkillUI.SetOnlyShowUnlearnedRecipes(false);
+	Skillet.unlearnedRecipes = false
+	Skillet:NewFilterDropdown_OnShow()
+end
+
+function Skillet:SetTradeSkillUnlearned()
+	C_TradeSkillUI.SetOnlyShowLearnedRecipes(false);
+	C_TradeSkillUI.SetOnlyShowUnlearnedRecipes(true);
+	Skillet.unlearnedRecipes = true
+	Skillet:NewFilterDropdown_OnShow()
+end
+
+function Skillet:ExpandTradeSkillSubClass(i)
+	--DA.DEBUG(0,"Skillet:ExpandTradeSkillSubClass "..tostring(i))
 end
 
 function Skillet:GetRecipeName(id)
 	if not id then return "unknown" end
 	local name = GetSpellInfo(id)
 	--DA.DEBUG(0,"name "..(id or "nil").." "..(name or "nil"))
-	if name then return name, id end
-	id = tonumber(id)
-	name = "unknown"
-	for n,m in pairs(self.recipeDataModules) do
-		if name == "unknown" then
-			name = m.GetRecipeName(m, id)
-		end
+	if name then 
+		return name, id 
 	end
-	return name
-end
-
-function SkilletData:GetRecipeName(id)
-	if not id then return "unknown" end
-	local name = GetSpellInfo(id)
-	--DA.DEBUG(0,"name "..(id or "nil").." "..(name or "nil"))
-	if name then return name, id end
-	return tostring(id), id
 end
 
 function Skillet:GetRecipe(id)
-	--DA.DEBUG(2,"Skillet:GetRecipe "..tostring(id))
-	if not id or id == 0 then return self.unknownRecipe end
-	local recipe = self.unknownRecipe
-	id = tonumber(id)
-	for n,m in pairs(self.recipeDataModules) do
-		if recipe == self.unknownRecipe then
-			recipe = m.GetRecipe(m, id)
+	--DA.DEBUG(0,"Skillet:GetRecipe("..tostring(id)..")")
+	if id and id ~= 0 then 
+		if Skillet.data.recipeList[id] then
+			return Skillet.data.recipeList[id]
 		end
-	end
-	return recipe
-end
-
--- reconstruct a recipe from a recipeString and cache it into our system for this session
-function SkilletData:GetRecipe(id)
-	--DA.DEBUG(3,"SkilletData:GetRecipe "..tostring(id))
-	if not id or id == 0 then return self.unknownRecipe end
-	if (not Skillet.data.recipeList[id]) and Skillet.db.global.recipeDB[id] then
-		local recipeString = Skillet.db.global.recipeDB[id]
-		--DA.DEBUG(3,"recipeString= "..tostring(recipeString))
-		local tradeID, itemString, reagentString, toolString = string.split(" ",recipeString)
-		local itemID, numMade = 0, 1
-		local slot = nil
-		if itemString ~= "0" then
-			local a, b = string.split(":",itemString)
-			--DA.DEBUG(3,"itemString a= "..tostring(a)..", b= "..tostring(b))
-			if a ~= "0" then
-				itemID, numMade = a,b
+		if Skillet.db.global.recipeDB[id] then
+			local recipeString = Skillet.db.global.recipeDB[id]
+			--DA.DEBUG(0,"recipeString= "..tostring(recipeString))
+			local tradeID, itemString, reagentString, toolString = string.split(" ",recipeString)
+			local itemID, numMade = 0, 1
+			local slot = nil
+			if itemString then
+				if itemString ~= "0" then
+					local a, b = string.split(":",itemString)
+					--DA.DEBUG(0,"itemString a= "..tostring(a)..", b= "..tostring(b))
+					if a ~= "0" then
+						itemID, numMade = a,b
+					else
+						itemID = 0
+						numMade = 1
+						slot = tonumber(b)
+					end
+					if not numMade then
+						numMade = 1
+					end
+				end
 			else
-				itemID = 0
-				numMade = 1
-				slot = tonumber(b)
+				DA.DEBUG(0,"id= "..tostring(id)..", recipeString= "..tostring(recipeString))
 			end
-			if not numMade then
-				numMade = 1
+			Skillet.data.recipeList[id] = {}
+			Skillet.data.recipeList[id].spellID = tonumber(id)
+			Skillet.data.recipeList[id].name = GetSpellInfo(tonumber(id))
+			Skillet.data.recipeList[id].tradeID = tonumber(tradeID)
+			Skillet.data.recipeList[id].itemID = tonumber(itemID)
+			Skillet.data.recipeList[id].numMade = tonumber(numMade)
+			Skillet.data.recipeList[id].slot = slot
+			Skillet.data.recipeList[id].reagentData = {}
+			if reagentString then
+				if reagentString ~= "-" then
+					local reagentList = { string.split(":",reagentString) }
+					local numReagents = #reagentList / 2
+					for i=1,numReagents do
+						Skillet.data.recipeList[id].reagentData[i] = {}
+						Skillet.data.recipeList[id].reagentData[i].reagentID = tonumber(reagentList[1 + (i-1)*2])
+						Skillet.data.recipeList[id].reagentData[i].numNeeded = tonumber(reagentList[2 + (i-1)*2])
+					end
+				end
+			else
+				DA.DEBUG(0,"id= "..tostring(id)..", recipeString= "..tostring(recipeString))
 			end
-		end
-		Skillet.data.recipeList[id] = {}
-		Skillet.data.recipeList[id].spellID = tonumber(id)
-		Skillet.data.recipeList[id].name = GetSpellInfo(tonumber(id))
-		Skillet.data.recipeList[id].tradeID = tonumber(tradeID)
-		Skillet.data.recipeList[id].itemID = tonumber(itemID)
-		Skillet.data.recipeList[id].numMade = tonumber(numMade)
-		Skillet.data.recipeList[id].slot = slot
-		Skillet.data.recipeList[id].reagentData = {}
-		if reagentString ~= "-" then
-			local reagentList = { string.split(":",reagentString) }
-			local numReagents = #reagentList / 2
-			for i=1,numReagents do
-				Skillet.data.recipeList[id].reagentData[i] = {}
-				Skillet.data.recipeList[id].reagentData[i].id = tonumber(reagentList[1 + (i-1)*2])
-				Skillet.data.recipeList[id].reagentData[i].numNeeded = tonumber(reagentList[2 + (i-1)*2])
+			if toolString then
+				if toolString ~= "-" then
+					Skillet.data.recipeList[id].tools = {}
+					local toolList = { string.split(":",toolString) }
+					for i=1,#toolList do
+						Skillet.data.recipeList[id].tools[i] = string.gsub(toolList[i],"_"," ")
+					end
+				end
+			else
+				DA.DEBUG(0,"id= "..tostring(id)..", recipeString= "..tostring(recipeString))
 			end
-		end
-		if toolString ~= "-" then
-			Skillet.data.recipeList[id].tools = {}
-			local toolList = { string.split(":",toolString) }
-			for i=1,#toolList do
-				Skillet.data.recipeList[id].tools[i] = string.gsub(toolList[i],"_"," ")
-			end
+			return Skillet.data.recipeList[id]
 		end
 	end
-	return Skillet.data.recipeList[id] or Skillet.unknownRecipe
-end
-
-function SkilletLink:GetRecipe(id)
-	--DA.DEBUG(3,"SkilletLink:GetRecipe "..tostring(id))
-	if not id or id == 0 then return self.unknownRecipe end
-	if (not Skillet.data.recipeList[id]) then
-		self:RescanTrade()
-		--DA.DEBUG(0,"can't find recipe "..id);
-	end
-	return Skillet.data.recipeList[id] or Skillet.unknownRecipe
+	return Skillet.unknownRecipe
 end
 
 function Skillet:GetNumSkills(player, trade)
-	local r
-	local skillModule = self.dataGatheringModules[player]
-	if skillModule then
-		r = skillModule.GetNumSkills(skillModule, player, trade)
-	else
-		r = 0
-	end
-	--DA.DEBUG(2,"Skillet:GetNumSkills("..tostring(player)..", "..tostring(trade)..")= "..tostring(r))
-	return r
-end
-
-function SkilletData:GetNumSkills(player, trade)
+	--DA.PROFILE("Skillet:GetNumSkills("..tostring(player)..", "..tostring(trade)..")")
 	local r
 	if not Skillet.db.realm.skillDB[player] then
 		r = 0
@@ -946,35 +1339,12 @@ function SkilletData:GetNumSkills(player, trade)
 	else
 		r = #Skillet.db.realm.skillDB[player][trade]
 	end
-	--DA.DEBUG(2,"SkilletData:GetNumSkills("..tostring(player)..", "..tostring(trade)..")= "..tostring(r))
-	return r
-end
-
-function SkilletLink:GetNumSkills(player, trade)
-	local r
-	local linkedSkill, linkedPlayer = Skillet:IsTradeSkillLinked()
-	if linkedSkill then
---		if linkedPlayer == player then
-			local skill, rank, max = GetTradeSkillLine()
-			if GetSpellInfo(trade) == skill then
-				r = GetNumTradeSkills()
-			end
---		end
-	else
-		r = 0
-	end
-	--DA.DEBUG(2,"SkilletLink:GetNumSkills("..tostring(player)..", "..tostring(trade)..")= "..tostring(r))
+	--DA.DEBUG(2,"r= "..tostring(r))
 	return r
 end
 
 function Skillet:GetSkillRanks(player, trade)
-	local skillModule = self.dataGatheringModules[player]
-	if skillModule then
-		return skillModule.GetSkillRanks(skillModule, player, trade)
-	end
-end
-
-function SkilletData:GetSkillRanks(player, trade)
+	--DA.PROFILE("Skillet:GetSkillRanks("..tostring(player)..", "..tostring(trade)..")")
 	if player and trade then
 		if Skillet.db.realm.tradeSkills[player] then
 			return Skillet.db.realm.tradeSkills[player][trade]
@@ -982,41 +1352,8 @@ function SkilletData:GetSkillRanks(player, trade)
 	end
 end
 
-function SkilletLink:GetSkillRanks(player, trade)
-	local skillRanks = {}
-	if Skillet.db.realm.tradeSkills[player] and Skillet.db.realm.tradeSkills[player][trade] then
-		skillRanks.rank = Skillet.db.realm.tradeSkills[player][trade].rank
-		skillRanks.maxRank = Skillet.db.realm.tradeSkills[player][trade].maxRank
-		return skillRanks
-	end
-	local linkedSkill, linkedPlayer = Skillet:IsTradeSkillLinked()
-	if linkedSkill then
-		if linkedPlayer == player then
-			local skill, rank, maxRank = GetTradeSkillLine()
-			if GetSpellInfo(trade) == skill then
-				skillRanks.rank = rank
-				skillRanks.maxRank = maxRank
-				return skillRanks
-			end
-		end
-	end
-end
-
 function Skillet:GetSkill(player,trade,index)
-	--DA.DEBUG(2,"Skillet:GetSkill("..tostring(player)..", "..tostring(trade)..", "..tostring(index)..")")
-	local skillModule = self.dataGatheringModules[player]
-	if skillModule then
-		local skill = skillModule.GetSkill(skillModule, player,trade,index)
-		if skill then
-			return skill
-		end
-	end
-	return self.unknownRecipe
-end
-
--- reconstruct a skill from a skillString and cache it into our system for this session
-function SkilletData:GetSkill(player,trade,index)
-	--DA.DEBUG(0,"SkilletData:GetSkill("..tostring(player)..", "..tostring(trade)..", "..tostring(index)..")")
+	--DA.PROFILE("Skillet:GetSkill("..tostring(player)..", "..tostring(trade)..", "..tostring(index)..")")
 	if player and trade and index then
 		if not Skillet.data.skillList[player] then
 			Skillet.data.skillList[player] = {}
@@ -1058,29 +1395,12 @@ function SkilletData:GetSkill(player,trade,index)
 		end
 		return Skillet.data.skillList[player][trade][index]
 	end
-end
-
-function SkilletLink:GetSkill(player,trade,index)
-	--DA.DEBUG(3,"SkilletLink:GetSkill("..tostring(player)..", "..tostring(trade)..", "..tostring(index)..")")
-	if player and trade and index then
-		local scanned = true
-		if not Skillet.data.skillList[player] or not Skillet.data.skillList[player][trade] then
-			scanned = self:RescanTrade()
-		end
-		if scanned then
-			local skill = Skillet.data.skillList[player]
-			if skill then
-				local trade = skill[trade]
-				if trade then
-					return trade[index]
-				end
-			end
-		end
-	end
+	return self.unknownRecipe
 end
 
 -- collects generic tradeskill data (id to name and name to id)
 function Skillet:CollectTradeSkillData()
+	--DA.DEBUG(0,"CollectTradeSkillData()")
 	for i=1,#TradeSkillList,1 do
 		local id = TradeSkillList[i]
 		local name, _, icon = GetSpellInfo(id)
@@ -1091,26 +1411,24 @@ function Skillet:CollectTradeSkillData()
 end
 
 -- this routine collects the basic data (which tradeskills a player has)
-function SkilletData:ScanPlayerTradeSkills(player)
+-- clean = true means wipe the old data
+function Skillet:ScanPlayerTradeSkills(player)
+	DA.DEBUG(0,"Skillet:ScanPlayerTradeSkills("..tostring(player)..")")
 	if player == (UnitName("player")) then -- only for active player
-		if not Skillet.db.realm.tradeSkills[player] then
-			Skillet.db.realm.tradeSkills[player] = {}
-		end
 		local skillRanksData = Skillet.db.realm.tradeSkills[player]
 		for i=1,#TradeSkillList,1 do
 			local id = TradeSkillList[i]
 			local name = GetSpellInfo(id)					-- always returns data
 			local _, rankName, icon = GetSpellInfo(name)	-- only returns data if you have this spell in your spellbook
 			if rankName then
-				DA.DEBUG(0,"Collecting tradeskill data for: "..tostring(name))
+				if id == 2656 then id = 2575 end -- Ye old Smelting vs. Mining issue
 				if not skillRanksData[id] then
+					DA.DEBUG(0,"adding tradeskill data for "..tostring(name).." ("..tostring(id)..")")
 					skillRanksData[id] = {}
 					skillRanksData[id].rank = 0
 					skillRanksData[id].maxRank = 0
+					skillRanksData[id].name = name
 				end
-			else
-				--DA.DEBUG(0,"Skipping tradeskill data for: "..tostring(name))
-				skillRanksData[id] = nil
 			end
 		end
 		if not Skillet.db.realm.faction then
@@ -1118,59 +1436,6 @@ function SkilletData:ScanPlayerTradeSkills(player)
 		end
 		Skillet.db.realm.faction[player] = UnitFactionGroup("player")
 	end
-	return Skillet.db.realm.tradeSkills[player]
-end
-
--- this routine collects the basic data (which tradeskills a player has)
-function SkilletLink:ScanPlayerTradeSkills(player)
-	if Skillet.db.realm.tradeSkills[player] then
-		return true
-	end
-	local isLinked, playerLinked = Skillet:IsTradeSkillLinked()
-	if isLinked and player == playerLinked then
-		return true
-	end
-end
-
-function Skillet:EnableUpdateEvents()
-	self:RegisterEvent("CHAT_MSG_SKILL")
-	self:RegisterEvent("CHAT_MSG_SYSTEM")
-	self:RegisterEvent("TRADE_SKILL_UPDATE")
-end
-
-function Skillet:DisableUpdateEvents()
-	self:UnregisterEvent("CHAT_MSG_SKILL")
-	self:UnregisterEvent("CHAT_MSG_SYSTEM")
-	self:UnregisterEvent("TRADE_SKILL_UPDATE")
-end
-
-function Skillet:EnableDataGathering(addon)
-	Skillet:EnableUpdateEvents()
-	self.dataScanned = false
-	self:CollectTradeSkillData()
-	self:RegisterRecipeDatabase("sk",SkilletData)
-	if self.db and self.db.realm and self.db.realm.tradeSkills then
-		for player in pairs(self.db.realm.tradeSkills) do
-			self:RegisterPlayerDataGathering(player,SkilletLink,"sk")
-		end
-	end
-	self:RegisterPlayerDataGathering((UnitName("player")),SkilletData, "sk") -- make sure to add the current player as well
-	SkilletARL:Enable()
-end
-
-function Skillet:EnableQueue(addon)
-	assert(tostring(addon),"Usage: EnableDataGathering('addon')")
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED",	 "ContinueCastCheckUnit")
-	self:RegisterEvent("UNIT_SPELLCAST_FAILED",		 "StopCastCheckUnit")
-	self:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED", "StopCastCheckUnit")
-	self:RegisterEvent("UNIT_SPELLCAST_STOPPED",	 "StopCastCheckUnit")
-end
-
-function Skillet:DisableQueue(addon)
-	self:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-	self:UnregisterEvent("UNIT_SPELLCAST_FAILED")
-	self:UnregisterEvent("UNIT_SPELLCAST_INTERRUPTED")
-	self:UnregisterEvent("UNIT_SPELLCAST_STOPPED")
 end
 
 -- takes a profession and a skill index and returns the recipe
@@ -1182,7 +1447,6 @@ function Skillet:GetRecipeDataByTradeIndex(tradeID, index)
 	if skill then
 		local recipeID = skill.id
 		if recipeID then
-			-- local recipeData = self.db.global.recipeData[recipeID] or selfUnknownRecipe
 			local recipeData = self:GetRecipe(recipeID)
 			return recipeData, recipeData.spellID, recipeData.ItemID
 		end
@@ -1190,83 +1454,8 @@ function Skillet:GetRecipeDataByTradeIndex(tradeID, index)
 	return self.unknownRecipe
 end
 
-function Skillet:ContinueCastCheckUnit(event, unit, spell, rank)
-	--DA.DEBUG(0,"ContinueCastCheckUnit "..(unit or "nil"))
-	if unit == "player" and spell==self.processingSpell then
-		self:ContinueCast(spell)
-		-- AceEvent:ScheduleEvent("Skillet_StopCast", self.StopCast, 0.1,self,event,spell)
-	end
-end
-
-function Skillet:StopCastCheckUnit(event, unit, spell, rank)
-	if unit == "player" then
-		self:StopCast(spell)
-		-- AceEvent:ScheduleEvent("Skillet_StopCast", self.StopCast, 0.1,self,event,spell)
-	end
-end
-
-local rescan_time = 1
--- Internal
--- scan trade, if it fails, rescan after 1 sek, if it fails, rescan after 5 sek and give up
-function Skillet:Skillet_AutoRescan()
-	Skillet.scheduleRescan = false
-	local start = GetTime()
-	DA.DEBUG(0,"Skillet_AutoRescan Start")
-	if InCombatLockdown() or not SkilletFrame:IsVisible() then
-		self.auto_rescan_timer = nil
-		return
-	end
-	local scanResult = self:RescanTrade()
-	if not scanResult or Skillet.scheduleRescan then
-		if rescan_time > 5 then
-			rescan_time = 1
-			self.auto_rescan_timer = nil
-			return
-		end
-		self.auto_rescan_timer = self:ScheduleTimer("Skillet_AutoRescan", rescan_time)
-		rescan_time = rescan_time + 4
-	else
-		rescan_time = 1
-		self.auto_rescan_timer = nil
-		self:UpdateTradeSkillWindow()
-	end
-	local elapsed = GetTime() - start
-	DA.DEBUG(1,"Skillet_AutoRescan complete in "..(math.floor(elapsed*100+.5)/100).." seconds")
-end
-
-function Skillet:TRADE_SKILL_UPDATE()
-	--DA.DEBUG(0,"TRADE_SKILL_UPDATE "..(event or "nil").." "..(arg1 or "nil"))
-	if not Skillet.scanInProgress and not self.auto_rescan_timer then
-		self.auto_rescan_timer = self:ScheduleTimer("Skillet_AutoRescan", 0.5)
-	else
-		-- Skillet.scheduleRescan = true
-	end
-end
-
-function Skillet:CHAT_MSG_SKILL()
-	--DA.DEBUG(0,"CHAT_MSG_SKILL "..(event or "nil"))
-	if not Skillet.scanInProgress and not self.auto_rescan_timer then
-		self.auto_rescan_timer = self:ScheduleTimer("Skillet_AutoRescan", 0.5)
-	else
-		Skillet.scheduleRescan = true
-	end
-end
-
-function Skillet:CHAT_MSG_SYSTEM(event,msg)
-	--DA.DEBUG(0,"CHAT_MSG_SYSTEM "..(msg or "nil"))
-	local cutString = string.sub(ERR_LEARN_RECIPE_S,1,(string.find(ERR_LEARN_RECIPE_S,"%%s")-1))
-	--DA.DEBUG(0,"CHAT_MSG_SYSTEM "..(arg1 or "nil").." vs "..cutString)
-	if msg and string.find(msg, cutString) then
-		if not Skillet.scanInProgress and not self.auto_rescan_timer then
-			self.auto_rescan_timer = self:ScheduleTimer("Skillet_AutoRescan", 0.5)
-		else
-			Skillet.scheduleRescan = true
-		end
-	end
-end
-
 function Skillet:CalculateCraftableCounts(playerOverride)
-	DA.DEBUG(0,"CalculateCraftableCounts("..tostring(playerOverride)..")")
+	--DA.DEBUG(0,"CalculateCraftableCounts("..tostring(playerOverride)..")")
 	local player = playerOverride or self.currentPlayer
 	--DA.DEBUG(0,tostring(player).." "..tostring(self.currentTrade))
 	self.visited = {}
@@ -1280,634 +1469,326 @@ function Skillet:CalculateCraftableCounts(playerOverride)
 			end
 		end
 	end
-	DA.DEBUG(0,"CalculateCraftableCounts Complete")
 end
 
-function Skillet:RescanTrade(force)
-	DA.DEBUG(0,"Skillet:RescanTrade("..tostring(force)..")")
-	if not self.currentPlayer or not self.currentTrade then return end
-	local dataModule = self.dataGatheringModules[self.currentPlayer]
-	local val = true
-	if dataModule and dataModule.RescanTrade then
-		Skillet.scanInProgress = true
-		Skillet:DisableUpdateEvents()
-		val = dataModule.RescanTrade(dataModule, force)
-		Skillet:EnableUpdateEvents()
-		Skillet.scanInProgress = false
-	end
-	return val
-end
-
--- Triggers a rescan of the currently selected tradeskill
-function SkilletData:RescanTrade(force)
-	DA.DEBUG(0,"SkilletData:RescanTrade("..tostring(force)..")")
-	if not Skillet.currentPlayer or not Skillet.currentTrade then return end
+function Skillet:RescanTrade()
+	--DA.PROFILE("Skillet:RescanTrade()")
 	local player, tradeID = Skillet.currentPlayer, Skillet.currentTrade
-	if player == (UnitName("player")) then -- only allow actual skill rescans of current player data
-		if not Skillet.data.skillList[player] then
-			Skillet.data.skillList[player] = {}
-		end
-		if not Skillet.data.skillList[player][tradeID] then
-			Skillet.data.skillList[player][tradeID]={}
-		end
-		if not Skillet.db.realm.skillDB[player] then
-			Skillet.db.realm.skillDB[player] = {}
-		end
-		if not Skillet.db.realm.skillDB[player][tradeID] then
-			Skillet.db.realm.skillDB[player][tradeID] = {}
-		end
-		if force then
-			Skillet.data.skillList[player]={}
-			Skillet:InitializeDatabase(player)
-			local firstSkill
-			for id,list in pairs(Skillet.db.realm.tradeSkills[player]) do
-				if not firstSkill then
-					firstSkill = id
-				end
-				Skillet.data.skillList[player][id] = {}
-			end
-			Skillet.data.skillIndexLookup[player] = {}
-			if not Skillet.db.realm.tradeSkills[player] then
-				Skillet.currentTrade = firstSkill
-			end
-		end
-		Skillet:ScanQueuedReagents()
-		Skillet.dataScanned = self:ScanTrade()
-	else	-- it's an alt, just do the inventory and craftability update stuff
-		Skillet:ScanQueuedReagents()
-		Skillet:InventoryScan()
-		Skillet:CalculateCraftableCounts()
-		Skillet.dataScanned = true
-	end
-	self:RecipeGroupGenerateAutoGroups()
-	DA.DEBUG(0,"SkilletData:RescanTrade Complete")
-	return Skillet.dataScanned
-end
-
--- Triggers a rescan of the currently selected tradeskill
-function SkilletLink:RescanTrade(force)
-	DA.DEBUG(0,"SkilletLink:RescanTrade("..tostring(force)..")")
-	if not Skillet.currentPlayer or not Skillet.currentTrade then return end
-	local player, tradeID = Skillet.currentPlayer, Skillet.currentTrade
+	if not player or not tradeID then return end
+	Skillet.scanInProgress = true
 	if not Skillet.data.skillList[player] then
 		Skillet.data.skillList[player] = {}
 	end
 	if not Skillet.data.skillList[player][tradeID] then
 		Skillet.data.skillList[player][tradeID]={}
 	end
-	if force then
-		Skillet.data.skillList[player]={}
-		Skillet:InitializeDatabase(player)
+	if not Skillet.db.realm.skillDB[player] then
+		Skillet.db.realm.skillDB[player] = {}
 	end
-	Skillet:ScanQueuedReagents()
+	if not Skillet.db.realm.skillDB[player][tradeID] then
+		Skillet.db.realm.skillDB[player][tradeID] = {}
+	end
+	if not Skillet.db.realm.Filtered[player] then
+		Skillet.db.realm.Filtered[player] = {}
+	end
+	if not Skillet.db.realm.Filtered[player][tradeID] then
+		Skillet.db.realm.Filtered[player][tradeID] = {}
+	end
+	if not Skillet.db.realm.recipeInfo[player] then
+		Skillet.db.realm.recipeInfo[player] = {}
+	end
+	if not Skillet.db.realm.recipeInfo[player][tradeID] then
+		Skillet.db.realm.recipeInfo[player][tradeID] = {}
+	end
+	if not Skillet.db.global.AllRecipe[tradeID] then
+		Skillet.db.global.AllRecipe[tradeID] = {}
+	end
+	if not Skillet.db.global.Categories[tradeID] then
+		Skillet.db.global.Categories[tradeID] = {}
+	end
 	Skillet.dataScanned = self:ScanTrade()
-	DA.DEBUG(0,"SkilletLink:RescanTrade Complete")
-	self:RecipeGroupGenerateAutoGroups()
+	Skillet.scanInProgress = false
 	return Skillet.dataScanned
 end
 
-function SkilletData:ScanTrade()
-	DA.DEBUG(0,"SkilletData:ScanTrade()")
-	if self.scanInProgress == true then
-		DA.DEBUG(0,"SCAN BUSY!")
-		return
-	end
-	self.scanInProgress = true
-	local tradeID
-	local link = GetTradeSkillListLink()
-	local profession, rank, maxRank = GetTradeSkillLine()
+function Skillet:ScanTrade()
+	--DA.PROFILE("Skillet:ScanTrade()")
+	local link = C_TradeSkillUI.GetTradeSkillListLink()
+	local _, profession, rank, maxRank = C_TradeSkillUI.GetTradeSkillLine()
+	DA.DEBUG(0,"ScanTrade: profession= "..tostring(profession)..", rank= "..tostring(rank)..", maxRank= "..tostring(maxRank))
 	if link then
-		--DA.DEBUG(0,"GetTradeSkill: "..(profession or "nil").." link="..link.." "..string.gsub(link, "\124", "\124\124"))
+		--DA.DEBUG(0,"ScanTrade: "..tostring(profession).." link="..link.." "..DA.PLINK(link))
 	else
-		--DA.DEBUG(0,"GetTradeSkill: "..(profession or "nil").." non linkable")
-	end
-	-- get the tradeID from the profession name (data collected earlier).
-	tradeID = TradeSkillIDsByName[profession] or 2656	-- "mining" doesn't exist as a spell, so instead use smelting (id 2656)
-	if tradeID ~= Skillet.currentTrade then
-		DA.DEBUG(0,"TRADE MISMATCH for player "..(Skillet.currentPlayer or "nil").."!  "..(tradeID or "nil").." vs "..(Skillet.currentTrade or "nil"));
+		DA.DEBUG(0,"ScanTrade: "..tostring(profession).." not linkable")
 	end
 	local player = Skillet.currentPlayer
-	if not self.recacheRecipe then
-		self.recacheRecipe = {}
+	local tradeID = TradeSkillIDsByName[profession]
+	if not player or not tradeID then
+		DA.DEBUG(0,"ScanTrade: abort! player= "..tostring(player)..", "..tostring(tradeID))
+		Skillet.scanInProgress = false
+		return false
 	end
-	if not self.alreadyScanned then
-		self.alreadyScanned = {}
-	end
-	if not self.alreadyScanned[player] then
-		self.alreadyScanned[player] = {}
-	end
-	if not self.alreadyScanned[player][tradeID] then
-		self.alreadyScanned[player][tradeID] = 0
-	end
-	if not Skillet:IsTradeSkillLinked() then
-		Skillet.db.realm.tradeSkills[player][tradeID] = {}
-		Skillet.db.realm.tradeSkills[player][tradeID].rank = rank
-		Skillet.db.realm.tradeSkills[player][tradeID].maxRank = maxRank
-	end
-		self:ResetTradeSkillFilter() -- verify the search filter is blank (so we get all skills)
-	local numSkills = GetNumTradeSkills()
-	for i = 1, numSkills do
-		local skillName, skillType, _, isExpanded = GetTradeSkillInfo(i)
-		--DA.DEBUG(3,"i= "..tostring(i)..", skillName= "..tostring(skillName)..", skillType="..tostring(skillType)..", isExpanded= "..tostring(isExpanded))
-		if i == 1 and skillType == "subheader" then skillType = "header" end --**-- workaround for Blizzard bug in 6.02
-		if skillType == "header" or skillType == "subheader" then
-			if not isExpanded then
-				ExpandTradeSkillSubClass(i)
-			end
-		end
-	end
-	numSkills = GetNumTradeSkills()
-	DA.DEBUG(0,"Scanning Trade "..(profession or "nil")..":"..(tradeID or "nil").." "..numSkills.." recipes")
+	Skillet.currentTrade = tradeID
 	if not Skillet.data.skillIndexLookup[player] then
 		Skillet.data.skillIndexLookup[player] = {}
 	end
+	if not Skillet.db.realm.tradeSkills[player] then
+		Skillet.db.realm.tradeSkills[player] = {}
+	end
+	Skillet.db.realm.tradeSkills[player][tradeID] = {}
+	Skillet.db.realm.tradeSkills[player][tradeID].link = link
+	Skillet.db.realm.tradeSkills[player][tradeID].rank = rank
+	Skillet.db.realm.tradeSkills[player][tradeID].maxRank = maxRank
+	Skillet.db.realm.tradeSkills[player][tradeID].name = profession
+
+	if #Skillet.db.global.AllRecipe[tradeID] == 0 then
+		Skillet.db.global.AllRecipe[tradeID] = C_TradeSkillUI.GetAllRecipeIDs()
+	end
+
+	if #Skillet.db.global.Categories[tradeID] == 0 then
+		local categories = { C_TradeSkillUI.GetCategories() }
+		for i, categoryID in ipairs(categories) do
+			Skillet.db.global.Categories[tradeID][categoryID] = C_TradeSkillUI.GetCategoryInfo(categoryID)
+			local subCategories = { C_TradeSkillUI.GetSubCategories(categoryID) }
+			for j, subCategory in ipairs(subCategories) do
+				Skillet.db.global.Categories[tradeID][subCategory] = C_TradeSkillUI.GetCategoryInfo(subCategory)
+				local subsubCategories = { C_TradeSkillUI.GetSubCategories(subCategory) }
+				for k, subsubCategory in ipairs(subsubCategories) do
+					Skillet.db.global.Categories[tradeID][subsubCategory] = C_TradeSkillUI.GetCategoryInfo(subsubCategory)
+					local subsubsubCategories = { C_TradeSkillUI.GetSubCategories(subsubCategory) }
+					if #subsubsubCategories > 0 then
+						DA.DEBUG(0,"ScanTrade: too many subCategory levels")
+					end
+				end
+			end
+		end
+	end
+
+	self:ResetTradeSkillFilter() -- verify the search filter is blank (so we get all skills)
+	Skillet.db.realm.Filtered[player][tradeID] = C_TradeSkillUI.GetFilteredRecipeIDs()
+	local numSkills = #C_TradeSkillUI.GetFilteredRecipeIDs()
+	--DA.DEBUG(0,"ScanTrade: Expanding, "..tostring(profession)..":"..tostring(tradeID).." "..tostring(numSkills).." recipes")
+
+-- Build a list of categories (headers) used for this set of filtered recipes
+	local headerUsed = {}
+	for i = 1, numSkills do
+		local id = Skillet.db.realm.Filtered[player][tradeID][i]
+		local info = C_TradeSkillUI.GetRecipeInfo(id)
+		headerUsed[info.categoryID] = false
+		Skillet.db.realm.recipeInfo[player][tradeID][id] = info
+	end
+
 	local skillDB = Skillet.db.realm.skillDB[player][tradeID]
 	local skillData = Skillet.data.skillList[player][tradeID]
 	local recipeDB = Skillet.db.global.recipeDB
 	if not skillData then
-		self.scanInProgress = false
+		DA.DEBUG(0,"ScanTrade: no skillData")
 		return false
 	end
-	local lastHeader = nil
-	local gotNil = false
 	local currentGroup = nil
 	local mainGroup = Skillet:RecipeGroupNew(player,tradeID,"Blizzard")
 	mainGroup.locked = true
 	mainGroup.autoGroup = true
 	Skillet:RecipeGroupClearEntries(mainGroup)
 	local groupList = {}
-	if not Skillet.db.realm.tradeSkills[player] then
-		Skillet.db.realm.tradeSkills[player] = {}
-	end
-	if not Skillet.db.realm.tradeSkills[player][tradeID] then
-		Skillet.db.realm.tradeSkills[player][tradeID] = {}
-	end
-	local skillName, rank, maxRank = GetTradeSkillLine()
-	Skillet.db.realm.tradeSkills[player][tradeID].link = link
-	Skillet.db.realm.tradeSkills[player][tradeID].rank = rank
-	Skillet.db.realm.tradeSkills[player][tradeID].maxRank = maxRank
 	local numHeaders = 0
 	local parentGroup
-	local alreadyScannedThisRun = 0
-	--DA.DEBUG(0,"for "..numSkills)
-	for i = 1, numSkills, 1 do
-		repeat
-			local skillName, skillType, isExpanded, subSpell, extra
-			local skillName, skillType, _, isExpanded, _, _, _, _, _, _, _, displayAsUnavailable, _ = GetTradeSkillInfo(i);
-			--DA.DEBUG(0,i.." "..skillName)
-			--DA.DEBUG(3,"i= "..tostring(i)..", skillName= "..tostring(skillName)..", skillType="..tostring(skillType)..", isExpanded= "..tostring(isExpanded))
-			if i == 1 and skillType == "subheader" then skillType = "header" end --**-- workaround for Blizzard bug in 6.02
-			if displayAsUnavailable then skillType = "unavailable" end
-			gotNil = false
-			if skillName then
-				if skillType == "header" or skillType == "subheader" then
-					numHeaders = numHeaders + 1
-					if not isExpanded then
-						ExpandTradeSkillSubClass(i)
-					end
-					local groupName
-					if groupList[skillName] then
-						groupList[skillName] = groupList[skillName]+1
-						groupName = skillName.." "..groupList[skillName]
-					else
-						groupList[skillName] = 1
-						groupName = skillName
-					end
-					skillDB[i] = "header "..skillName
-					skillData[i] = nil
-					currentGroup = Skillet:RecipeGroupNew(player, tradeID, "Blizzard", groupName)
-					currentGroup.autoGroup = true
-					if skillType == "header" then
-						parentGroup = currentGroup
-						Skillet:RecipeGroupAddSubGroup(mainGroup, currentGroup, i)
-					else
-						Skillet:RecipeGroupAddSubGroup(parentGroup, currentGroup, i)
-					end
+	--DA.DEBUG(0,"ScanTrade: Scanning, "..tostring(profession)..":"..tostring(tradeID).." "..tostring(numSkills).." recipes")
+	local i = 1
+	for j = 1, numSkills, 1 do
+		local recipeID = Skillet.db.realm.Filtered[player][tradeID][j]
+		local recipeInfo = Skillet.db.realm.recipeInfo[player][tradeID][recipeID]
+		local skillName, skillType, _, isExpanded, _, _, _, _, _, _, _, displayAsUnavailable, _ = Skillet:GetTradeSkillInfo(recipeID);
+		if displayAsUnavailable then skillType = "unavailable" end
+		if not headerUsed[recipeInfo.categoryID] then
+-- This category (header) hasn't been seen yet. Stack it (and its unseen parents)
+			headerUsed[recipeInfo.categoryID] = true
+			local headerType = Skillet.db.global.Categories[tradeID][recipeInfo.categoryID].type
+			local headerName = Skillet.db.global.Categories[tradeID][recipeInfo.categoryID].name
+			local category = recipeInfo.categoryID
+			local numCat = 1
+			local catStack = {}
+			catStack[numCat] = category
+			while headerType == "subheader" do
+				category = Skillet.db.global.Categories[tradeID][category].parentCategoryID
+				if not headerUsed[category] then
+					headerUsed[category] = true
+					numCat = numCat + 1
+					catStack[numCat] = category
+				end
+				headerType = Skillet.db.global.Categories[tradeID][category].type
+			end
+			while numCat > 0 do
+-- We have a stack of headers. Output them to the skillDB.
+				category = catStack[numCat]
+				headerType = Skillet.db.global.Categories[tradeID][category].type
+				headerName = Skillet.db.global.Categories[tradeID][category].name
+				--DA.DEBUG(2,"ScanTrade: headerType= "..tostring(headerType)..", headerName= "..tostring(headerName))
+				local groupName
+				if groupList[headerName] then
+					groupList[headerName] = groupList[headerName]+1
+					groupName = headerName.." "..groupList[headerName]
 				else
-					local recipeLink = GetTradeSkillRecipeLink(i)
-					local recipeID = Skillet:GetItemIDFromLink(recipeLink)
-					local noRecipe = false
-					if not recipeID then
-						recipeLink = GetTradeSkillItemLink(i)
-						recipeID = Skillet:GetItemIDFromLink(recipeLink)
-						if not recipeID then
-							gotNil = true
-							break
-						end
-						noRecipe = true
-					end
-					if currentGroup then
-						Skillet:RecipeGroupAddRecipe(currentGroup, recipeID, i)
-					else
-						Skillet:RecipeGroupAddRecipe(mainGroup, recipeID, i)
-					end
-					-- break recipes into lists by profession for ease of sorting
-					skillData[i] = {}
-					skillData[i].name = skillName
-					skillData[i].id = recipeID
-					skillData[i].noRecipe = noRecipe
-					skillData[i].difficulty = skillType
-					skillData[i].color = skill_style_type[skillType]
-					skillData[i].category = lastHeader
-					local skillDBString = DifficultyChar[skillType]..recipeID
-					local tools = { GetTradeSkillTools(i) }
-					skillData[i].tools = {}
-					local slot = 1
-					for t=2,#tools,2 do
-						skillData[i].tools[slot] = (tools[t] or 0)
-						slot = slot + 1
-					end
-					local cd = GetTradeSkillCooldown(i)
-					if cd then
-						skillData[i].cooldown = cd + time()		-- this is when your cooldown will be up
-						skillDBString = skillDBString.." cd=" .. cd + time()
-					end
-					local numTools = #tools+1
-					if numTools > 1 then
-						local toolString = ""
-						local toolsAbsent = false
-						local slot = 1
-						for t=2,numTools,2 do
-							if not tools[t] then
-								toolsAbsent = true
-								toolString = toolString..slot
-							end
-							slot = slot + 1
-						end
-						if toolsAbsent then										-- only point out missing tools
-							skillDBString = skillDBString.." t="..toolString
-						end
-					end
-					skillDB[i] = skillDBString
-					Skillet.data.skillIndexLookup[player][recipeID] = i
-					if recipeDB[recipeID] and not self.recacheRecipe[recipeID] then
-						-- presumably the data is the same, so there's not much that needs to happen here.
-						-- potentially, however, i could see an instance where a mod might feed tradeskill info and then "better" tradeskill info
-						-- might be retrieved from the server which should over-ride the earlier tradeskill info
-						-- (eg, tradeskillinfo sends skillet some data and then we learn that data was not quite up-to-date)
-					else
-						Skillet.data.recipeList[recipeID] = {}
-						local recipe = Skillet.data.recipeList[recipeID]
-						local recipeString
-						local toolString = "-"
-						recipe.tradeID = tradeID
-						recipe.spellID = recipeID
-						recipe.name = skillName
-						if #tools >= 1 then
-							recipe.tools = { tools[1] }
-							toolString = string.gsub(tools[1]," ", "_")
-							for t=3,#tools,2 do
-								table.insert(recipe.tools, tools[t])
-								toolString = toolString..":"..string.gsub(tools[t]," ", "_")
-							end
-						end
-						local itemLink = GetTradeSkillItemLink(i)
-						if not itemLink then
-							gotNil = true
-							break
-						end
-						local itemString = "0"
-						if GetItemInfo(itemLink) then
-							local itemID = Skillet:GetItemIDFromLink(itemLink)
-							local minMade,maxMade = GetTradeSkillNumMade(i)
-							recipe.itemID = itemID
-							recipe.numMade = (minMade + maxMade)/2
-							if recipe.numMade > 1 then
-								itemString = itemID..":"..recipe.numMade
-							else
-								itemString = itemID
-							end
-							Skillet:ItemDataAddRecipeSource(itemID,recipeID) -- add a cross reference for the source of particular items
-						else
-							recipe.numMade = 1
-							if Skillet.scrollData[recipeID] then
-								local itemID = Skillet.scrollData[recipeID]
-								recipe.itemID = itemID
-								itemString = itemID
-								Skillet:ItemDataAddRecipeSource(itemID,recipeID)	-- add a cross reference for the source of particular items
-							else
-								recipe.itemID = 0									-- indicates an enchant
-							end
-						end
-						local reagentString = "-"
-						local reagentData = {}
-						for j=1, GetTradeSkillNumReagents(i), 1 do
-							local reagentName, _, numNeeded = GetTradeSkillReagentInfo(i,j)
-							local reagentID = 0
-							if reagentName then
-								local reagentLink = GetTradeSkillReagentItemLink(i,j)
-								reagentID = Skillet:GetItemIDFromLink(reagentLink)
-							else
-								gotNil = true
-								break
-							end
-							reagentData[j] = {}
-							reagentData[j].id = reagentID
-							reagentData[j].numNeeded = numNeeded
-							if reagentString ~= "-" then
-								reagentString = reagentString..":"..reagentID..":"..numNeeded
-							else
-								reagentString = reagentID..":"..numNeeded
-							end
-							Skillet:ItemDataAddUsedInRecipe(reagentID, recipeID)	-- add a cross reference for where a particular item is used
-						end
-						recipe.reagentData = reagentData
-						if gotNil then
-							self.recacheRecipe[recipeID] = true
-						else
-							recipeString = tradeID.." "..itemString.." "..reagentString
-							if #tools then
-								recipeString = recipeString.." "..toolString
-							end
-							recipeDB[recipeID] = recipeString
-						end
-					end
+					groupList[headerName] = 1
+					groupName = headerName
+				end
+				skillDB[i] = "header "..headerName
+				--DA.DEBUG(0,"i = "..tostring(i)..", category= "..tostring(category))
+				skillData[i] = {}
+				skillData[i].category = category
+				currentGroup = Skillet:RecipeGroupNew(player, tradeID, "Blizzard", groupName)
+				currentGroup.autoGroup = true
+				if headerType == "header" then
+					parentGroup = currentGroup
+					Skillet:RecipeGroupAddSubGroup(mainGroup, currentGroup, i)
+				else
+					Skillet:RecipeGroupAddSubGroup(parentGroup, currentGroup, i)
+				end
+				numHeaders = numHeaders + 1
+				numCat = numCat - 1
+				i = i + 1
+			end
+		end
+		if currentGroup then
+			Skillet:RecipeGroupAddRecipe(currentGroup, recipeID, i)
+		else
+			Skillet:RecipeGroupAddRecipe(mainGroup, recipeID, i)
+		end
+		-- break recipes into lists by profession for ease of sorting
+		skillData[i] = {}
+		skillData[i].name = skillName
+		skillData[i].id = recipeID
+		skillData[i].difficulty = skillType
+		skillData[i].color = skill_style_type[skillType]
+		local skillDBString = DifficultyChar[skillType]..tostring(recipeID)
+
+		recipeInfo.sourceText = C_TradeSkillUI.GetRecipeSourceText(recipeID); -- capture for later use
+
+		local tools = { C_TradeSkillUI.GetRecipeTools(recipeID) }
+		recipeInfo.tools = tools	-- save a copy for our records
+		skillData[i].tools = {}
+		local slot = 1
+		for t=2,#tools,2 do
+			skillData[i].tools[slot] = (tools[t] or 0)
+			slot = slot + 1
+		end
+		local numTools = #tools+1
+		if numTools > 1 then
+			local toolString = ""
+			local toolsAbsent = false
+			local slot = 1
+			for t=2,numTools,2 do
+				if not tools[t] then
+					toolsAbsent = true
+					toolString = toolString..slot
+				end
+				slot = slot + 1
+			end
+			if toolsAbsent then										-- only point out missing tools
+				skillDBString = skillDBString.." t="..toolString
+			end
+		end
+		skillDB[i] = skillDBString
+		Skillet.data.skillIndexLookup[player][recipeID] = i
+
+		--DA.DEBUG(2,"recipeID= "..tostring(recipeID))
+		Skillet.data.recipeList[recipeID] = {}
+		local recipe = Skillet.data.recipeList[recipeID]
+		local itemString = "-"
+		local reagentString = "-"
+		local toolString = "-"
+		local recipeString = "-"
+		recipe.tradeID = tradeID
+		recipe.spellID = recipeID
+		recipe.name = skillName
+
+		local itemLink = C_TradeSkillUI.GetRecipeItemLink(recipeID)
+		--DA.DEBUG(2,"itemLink = "..DA.PLINK(itemLink))
+		recipeInfo.itemLink = itemLink	-- save a copy for our records
+		if itemLink then
+			local itemID = Skillet:GetItemIDFromLink(itemLink)
+			--DA.DEBUG(2,"itemID= "..tostring(itemID))
+			if (not itemID or tonumber(itemID) == 0) then
+				DA.DEBUG(0,"recipeID= "..tostring(recipeID)..", itemID= "..tostring(itemID))
+			end
+			if not recipeInfo.alternateVerb or recipeInfo.alternateVerb ~= ENSCRIBE then
+				local minMade,maxMade = C_TradeSkillUI.GetRecipeNumItemsProduced(recipeID)
+				recipeInfo.minMade = minMade	-- save a copy for our records
+				recipeInfo.maxMade = maxMade	-- save a copy for our records
+				recipe.itemID = itemID
+				recipe.numMade = (minMade + maxMade)/2
+				if recipe.numMade > 1 then
+					itemString = itemID..":"..recipe.numMade
+				else
+					itemString = tostring(itemID)
+				end
+				Skillet:ItemDataAddRecipeSource(itemID,recipeID) -- add a cross reference for the source of this item
+			else 
+				recipe.itemID = 0
+				recipe.numMade = 1
+				recipeInfo.numMade = 1
+				if Skillet.scrollData[recipeID] then	-- note that this table is maintained by datamining
+					local itemID = Skillet.scrollData[recipeID]
+					recipe.itemID = itemID
+					itemString = tostring(itemID)
+					Skillet:ItemDataAddRecipeSource(itemID,recipeID)	-- add a cross reference for the source of this item
+				end
+			end
+		else
+			DA.DEBUG(0,"recipeID= "..tostring(recipeID).." has no itemLink")
+		end
+
+		local reagentData = {}
+		for k = 1, C_TradeSkillUI.GetRecipeNumReagents(recipeID), 1 do
+			local reagentName, _, numNeeded = C_TradeSkillUI.GetRecipeReagentInfo(recipeID, k)
+			local reagentID = 0
+			if reagentName then
+				local reagentLink = C_TradeSkillUI.GetRecipeReagentItemLink(recipeID,k)
+				if reagentLink then
+					reagentID = Skillet:GetItemIDFromLink(reagentLink)
+				else
+					DA.DEBUG(0,"recipeID= "..tostring(recipeID)..", reagentName= "..tostring(reagentName).." has no reagentLink")
 				end
 			else
-				gotNil = true
+				--DA.DEBUG(0,"recipeID= "..tostring(recipeID).."("..tostring(k)..") reagentName missing")
 			end
-		until true
-		if gotNil and recipeID then
-			self.recacheRecipe[recipeID] = true
-		else
-			alreadyScannedThisRun = alreadyScannedThisRun + 1
+			reagentData[k] = {}
+			reagentData[k].reagentID = reagentID
+			reagentData[k].numNeeded = numNeeded
+			if reagentString ~= "-" then
+				reagentString = reagentString..":"..reagentID..":"..numNeeded
+			else
+				reagentString = reagentID..":"..numNeeded
+			end
+			Skillet:ItemDataAddUsedInRecipe(reagentID, recipeID)	-- add a cross reference for where a particular item is used
 		end
-		if alreadyScannedThisRun > self.alreadyScanned[player][tradeID] then
-			self.alreadyScanned[player][tradeID] = alreadyScannedThisRun
-			local progress = math.ceil(alreadyScannedThisRun*100/numSkills)
-			if progress < 100 then
-				--Skillet:UpdateScanningText(L["Scanning tradeskill"]..": "..progress.."%")
+		recipe.reagentData = reagentData
+		recipeString = tradeID.." "..itemString.." "..reagentString
+
+		if #tools >= 1 then
+			recipe.tools = { tools[1] }
+			toolString = string.gsub(tools[1]," ", "_")
+			for t=3,#tools,2 do
+				table.insert(recipe.tools, tools[t])
+				toolString = toolString..":"..string.gsub(tools[t]," ", "_")
 			end
 		end
-	end
-	-- Skillet:RecipeGroupConstructDBString(mainGroup)
-	DA.DEBUG(0,"SkilletData:ScanTrade Complete, numSkills= "..tostring(numSkills)..", numHeaders= "..tostring(numHeaders))
+		recipeString = recipeString.." "..toolString
 
-	if DA.deepcopy then
-		SkilletMemory.groupList1 = {}
-		SkilletMemory.groupList1 = DA.deepcopy(Skillet.data.groupList)
+		recipeDB[recipeID] = recipeString
+		--DA.DEBUG(2,"recipeDB["..tostring(recipeID).."]= "..tostring(recipeDB[recipeID]))
+		i = i + 1
 	end
 
+	Skillet:ScanQueuedReagents()
 	Skillet:InventoryScan()
 	Skillet:CalculateCraftableCounts()
 	Skillet:SortAndFilterRecipes()
-	DA.DEBUG(0,"all sorted")
-	self.scanInProgress = false
+	--DA.DEBUG(0,"ScanTrade: Complete, numSkills= "..tostring(numSkills)..", numHeaders= "..tostring(numHeaders))
 	if numHeaders == 0 then
 		skillData.scanned = false
 		return false
 	end
-	Skillet:UpdateScanningText()
 	skillData.scanned = true
 	return true
-	-- Skillet:SendMessage("Skillet_Scan_Complete", profession)
 end
-
-function SkilletLink:ScanTrade()
-	DA.DEBUG(0,"SkilletLink:ScanTrade()")
-	if self.scanInProgress == true then
-		DA.DEBUG(0,"SCAN BUSY!")
-		return
-	end
-	self.scanInProgress = true
-	local tradeID
-	local API = {}
-	local profession, rank, maxRank = GetTradeSkillLine()
-	--DA.DEBUG(0,"GetTradeSkill: "..(profession or "nil"))
-	-- get the tradeID from the profession name (data collected earlier).
-	tradeID = TradeSkillIDsByName[profession] or 2656				-- "mining" doesn't exist as a spell, so instead use smelting (id 2656)
-	if tradeID ~= Skillet.currentTrade then
-		--DA.DEBUG(0,"TRADE MISMATCH for player "..(Skillet.currentPlayer or "nil").."!	 "..(tradeID or "nil").." vs "..(Skillet.currentTrade or "nil"));
-	end
-	local player = Skillet.currentPlayer
-	if not self.recacheRecipe then
-		self.recacheRecipe = {}
-	end
-	if not self.alreadyScanned then
-		self.alreadyScanned = {}
-	end
-	if not self.alreadyScanned[player] then
-		self.alreadyScanned[player] = {}
-	end
-	if not self.alreadyScanned[player][tradeID] then
-		self.alreadyScanned[player][tradeID] = 0
-	end
-	self:ResetTradeSkillFilter() -- verify the search filter is blank (so we get all skills)
-	local numSkills = GetNumTradeSkills()
-	for i = 1, numSkills do
-		local skillName, skillType, _, isExpanded = GetTradeSkillInfo(i)
-		--DA.DEBUG(3,"i= "..tostring(i)..", skillName= "..tostring(skillName)..", skillType="..tostring(skillType)..", isExpanded= "..tostring(isExpanded))
-		if i == 1 and skillType == "subheader" then skillType = "header" end --**-- workaround for Blizzard bug in 6.02
-		if skillType == "header" or skillType == "subheader" then
-			if not isExpanded then
-				ExpandTradeSkillSubClass(i)
-			end
-		end
-	end
-	numSkills = GetNumTradeSkills()
-	DA.DEBUG(0,"Scanning Trade "..tostring(profession)..":"..tostring(tradeID).." "..tostring(numSkills).." recipes")
-	if not Skillet.data.skillIndexLookup[player] then
-		Skillet.data.skillIndexLookup[player] = {}
-	end
-	if not Skillet.data.skillList[player] then
-		Skillet.data.skillList[player] = {}
-	end
-	if not Skillet.data.skillList[player][tradeID] then
-		Skillet.data.skillList[player][tradeID] = {}
-	end
-	local skillData = Skillet.data.skillList[player][tradeID]
-	local lastHeader = nil
-	local gotNil = false
-	local currentGroup = nil
-	local mainGroup = Skillet:RecipeGroupNew(player,tradeID,"Blizzard")
-	mainGroup.locked = true
-	mainGroup.autoGroup = true
-	Skillet:RecipeGroupClearEntries(mainGroup)
-	local groupList = {}
-	local numHeaders = 0
-	local alreadyScannedThisRun = 0
-	local parentGroup=nil
-	for i = 1, numSkills, 1 do
-		repeat
-			local subSpell, extra
-			local skillName, skillType, _, isExpanded, _, _, _, _, _, _, _, displayAsUnavailable, _ = GetTradeSkillInfo(i);
-			--DA.DEBUG(3,"i= "..tostring(i)..", skillName= "..tostring(skillName)..", skillType="..tostring(skillType)..", isExpanded= "..tostring(isExpanded))
-			if i == 1 and skillType == "subheader" then skillType = "header" end --**-- workaround for Blizzard bug in 6.02
-			if displayAsUnavailable then skillType = "unavailable" end
-			gotNil = false
-			if skillName then
-				if skillType == "header" or skillType == "subheader" then
-					numHeaders = numHeaders + 1
-					if not isExpanded then
-						ExpandTradeSkillSubClass(i)
-					end
-					local groupName
-					if groupList[skillName] then
-						groupList[skillName] = groupList[skillName]+1
-						groupName = skillName.." "..groupList[skillName]
-					else
-						groupList[skillName] = 1
-						groupName = skillName
-					end
-					skillData[i] = {}
-					skillData[i].id = 0
-					skillData[i].name = skillName
-					currentGroup = Skillet:RecipeGroupNew(player, tradeID, "Blizzard", groupName)
-					currentGroup.autoGroup = true
-					if skillType == "header" then
-						parentGroup = currentGroup
-						Skillet:RecipeGroupAddSubGroup(mainGroup, currentGroup, i)
-					else
-						Skillet:RecipeGroupAddSubGroup(parentGroup, currentGroup, i)
-					end
-				else
-					local recipeLink = GetTradeSkillRecipeLink(i)
-					local recipeID = Skillet:GetItemIDFromLink(recipeLink)
-					if not recipeID then
-						gotNil = true
-						break
-					end
-					if currentGroup then
-						Skillet:RecipeGroupAddRecipe(currentGroup, recipeID, i)
-					else
-						Skillet:RecipeGroupAddRecipe(mainGroup, recipeID, i)
-					end
-					-- break recipes into lists by profession for ease of sorting
-					skillData[i] = {}
-					skillData[i].name = skillName
-					skillData[i].id = recipeID
-					skillData[i].difficulty = skillType
-					skillData[i].color = skill_style_type[skillType]
-					skillData[i].category = lastHeader
-					local tools = { GetTradeSkillTools(i) }
-					skillData[i].tools = {}
-					local slot = 1
-					for t=2,#tools,2 do
-						skillData[i].tools[slot] = (tools[t] or 0)
-						slot = slot + 1
-					end
-					local cd = GetTradeSkillCooldown(i)
-					if cd then
-						skillData[i].cooldown = cd + time()						-- this is when your cooldown will be up
-					end
-					local numTools = #tools+1
-					if numTools > 1 then
-						local toolString = ""
-						local toolsAbsent = false
-						local slot = 1
-						for t=2,numTools,2 do
-							if not tools[t] then
-								toolsAbsent = true
-								toolString = toolString..slot
-							end
-							slot = slot + 1
-						end
-					end
-					Skillet.data.skillIndexLookup[player][recipeID] = i
-					Skillet.data.recipeList[recipeID] = {}
-					local recipe = Skillet.data.recipeList[recipeID]
-					local recipeString
-					local toolString = "-"
-					recipe.tradeID = tradeID
-					recipe.spellID = recipeID
-					recipe.name = skillName
-					if #tools >= 1 then
-						recipe.tools = { tools[1] }
-						toolString = string.gsub(tools[1]," ", "_")
-						for t=3,#tools,2 do
-							table.insert(recipe.tools, tools[t])
-							toolString = toolString..":"..string.gsub(tools[t]," ", "_")
-						end
-					end
-					local itemLink = GetTradeSkillItemLink(i)
-					if not itemLink then
-						gotNil = true
-						break
-					end
-					local itemString = "0"
-					if GetItemInfo(itemLink) then
-						local itemID = Skillet:GetItemIDFromLink(itemLink)
-						local minMade,maxMade = GetTradeSkillNumMade(i)
-						recipe.itemID = itemID
-						recipe.numMade = (minMade + maxMade)/2
-						if recipe.numMade > 1 then
-							itemString = itemID..":"..recipe.numMade
-						else
-							itemString = itemID
-						end
-						Skillet:ItemDataAddRecipeSource(itemID,recipeID)	-- add a cross reference for the source of particular items
-					else
-						recipe.numMade = 1
-						if Skillet.scrollData[recipeID] then
-							local itemID = Skillet.scrollData[recipeID]
-							recipe.itemID = itemID
-							itemString = itemID
-							Skillet:ItemDataAddRecipeSource(itemID,recipeID)	-- add a cross reference for the source of particular items
-						else
-							recipe.itemID = 0								-- indicates an enchant
-						end
-					end
-					local reagentString = nil
-					local reagentData = {}
-					for j=1, GetTradeSkillNumReagents(i), 1 do
-						local reagentName, _, numNeeded = GetTradeSkillReagentInfo(i,j)
-						local reagentID = 0
-						if reagentName then
-							local reagentLink = GetTradeSkillReagentItemLink(i,j)
-							reagentID = Skillet:GetItemIDFromLink(reagentLink)
-						else
-							gotNil = true
-							break
-						end
-						reagentData[j] = {}
-						reagentData[j].id = reagentID
-						reagentData[j].numNeeded = numNeeded
-						Skillet:ItemDataAddUsedInRecipe(reagentID, recipeID)	-- add a cross reference for where a particular item is used
-					end
-					recipe.reagentData = reagentData
-					if gotNil then
-						self.recacheRecipe[recipeID] = true
-					else
-					end
-				end
-			else
-				gotNil = true
-			end
-		until true
-		if gotNil and recipeID then
-			self.recacheRecipe[recipeID] = true
-		else
-			alreadyScannedThisRun = alreadyScannedThisRun + 1
-		end
-		if alreadyScannedThisRun > self.alreadyScanned[player][tradeID] then
-			self.alreadyScanned[player][tradeID] = alreadyScannedThisRun
-			local progress = math.ceil(alreadyScannedThisRun*100/numSkills)
-			if progress < 100 then
-				--Skillet:UpdateScanningText(L["Scanning tradeskill"]..": "..progress.."%")
-			end
-		end
-	end
-	DA.DEBUG(0,"SkilletLink:ScanTrade Complete")
-	Skillet:InventoryScan()
-	Skillet:CalculateCraftableCounts()
-	Skillet:SortAndFilterRecipes()
-	--DA.DEBUG(0,"all sorted")
-	self.scanInProgress = false
-	if numHeaders == 0 then
-		skillData.scanned = false
-		return false
-	end
-	Skillet:UpdateScanningText()
-	skillData.scanned = true
-	return true
-	-- Skillet:SendMessage("Skillet_Scan_Complete", profession)
-end
-
-function SkilletData:RecipeGroupGenerateAutoGroups()
-	--DA.DEBUG(0,"SkilletData:RecipeGroupGenerateAutoGroups()")
-end
-
-function SkilletLink:RecipeGroupGenerateAutoGroups()
-	--DA.DEBUG(0,"SkilletLink:RecipeGroupGenerateAutoGroups()")
-end
-

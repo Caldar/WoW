@@ -57,7 +57,7 @@ L["Moving Frames"] = true
 L["Import Profile"] = true
 L["AFK Mode"] = true
 L["You have selected to use %s and role %s."] = true
-L["SLE_INSTALL_SETTINGS_LAYOUT_TEXT"] = [[This action can cause you to loose some of your settings.
+L["SLE_INSTALL_SETTINGS_LAYOUT_TEXT"] = [[This action can cause you to lose some of your settings.
 Continue?]]
 L["SLE_INSTALL_SETTINGS_ADDONS_TEXT"] = [[This will create a profile for these addons (if enabled) and switch to it:
 %s
@@ -368,6 +368,7 @@ L["These options are for modifing the Shadow & Light Friends datatext."] = true
 L["Hide In Combat"] = true
 L["Will not show the tooltip while in combat."] = true
 L["Hide Friends"] = true
+L["Hide Title"] = true
 L["Minimize the Friend Datatext."] = true
 L["Show Totals"] = true
 L["Show total friends in the datatext."] = true
@@ -557,6 +558,8 @@ L["Right click on the location panel will bring up a menu with available options
 L["Custom Width"] = true
 L["By default menu's width will be equal to the location panel width. Checking this option will allow you to set own width."] = true
 L["Justify Text"] = true
+L["Hearthstone Location"] = true
+L["Show the name on location your Heathstone is bound to."] = true
 
 
 --Miscs

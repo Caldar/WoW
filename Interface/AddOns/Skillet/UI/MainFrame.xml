@@ -717,7 +717,7 @@
 			</OnUpdate>
 			<OnClick>
 				Skillet:InventoryFilterButtons_Hide()
-				local link = Skillet:GetTradeSkillReagentItemLink(Skillet.selectedSkill, self:GetID())
+				local link = Skillet:GetRecipeReagentItemLink(Skillet.selectedSkill, self:GetID())
 				if ( IsControlKeyDown() ) then
 				<!-- This opens up the dressing room window and display the character
 					 wearing the item (if that is possible) -->
@@ -804,7 +804,7 @@
 	<!-- Don't change the name 'SkilletFrame' as other mods may depend on it -->
 	<Frame name="SkilletFrame" toplevel="true" movable="true" resizable="true" parent="UIParent" enableMouse="true" hidden="true">
 		<Size>
-			<AbsDimension x="660" y="512"/>
+			<AbsDimension x="680" y="545"/>
 		</Size>
 		<Frames>
 			<!--
@@ -871,12 +871,10 @@
 					<OnClick>
 						local activeEditBox =  ChatEdit_GetActiveWindow();
 						if activeEditBox then
-							local link=GetTradeSkillListLink();
+							local link=C_TradeSkillUI.GetTradeSkillListLink();
 							if (not ChatEdit_InsertLink(link) ) then
 								assert(activeEditBox:GetName(), "Failed to add tradeskill link")
 							end
-						else
-							ToggleDropDownMenu(1, nil, TradeSkillLinkDropDown, "SkilletTradeSkillLinkButton", 25, 25);
 						end
 					</OnClick>
 					<OnEnter>
@@ -1034,7 +1032,7 @@
 				<Anchors>
 					<Anchor point="BOTTOMRIGHT" relativeTo="SkilletRankFrame" relativePoint="TOPLEFT">
 						<Offset>
-							<AbsDimension x="-10" y="5"/>
+							<AbsDimension x="-10" y="10"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -1185,6 +1183,51 @@
 			</Button>
 			<!--
 			#
+			# Drop down where users can select the new filter they want to use
+			#
+			-->
+			<Frame name="SkilletNewFilterDropdown" inherits="UIDropDownMenuTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="SkilletSortDescButton" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						Skillet:NewFilterDropdown_OnLoad()
+					</OnLoad>
+					<OnShow>
+						Skillet:NewFilterDropdown_OnShow()
+					</OnShow>
+				</Scripts>
+			</Frame>
+			<!--
+			<Button name="SkilletNewFilterOperations">
+				<Size>
+					<AbsDimension x="20" y="20"/>
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="SkilletNewFilterDropdownButton" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-2" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Up"/>
+				<PushedTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Down"/>
+				<HighlightTexture file="Interface\Buttons\ButtonHilight-Round" alphaMode="ADD"/>
+				<Scripts>
+					<OnClick>
+						Skillet:InventoryFilterButtons_Hide()
+						Skillet:RecipeNewFilterOperations_OnClick(self)
+					</OnClick>
+				</Scripts>
+			</Button>
+			-->
+			<!--
+			#
 			# An edit box where users can type in filter text
 			#
 			-->
@@ -1239,7 +1282,7 @@
 						</Texture>
 					</Layer>
 					<Layer level="ARTWORK">
-						<FontString name="SkilletFilterLabel" inherits="GameFontNormal" text="Filter">
+						<FontString name="SkilletFilterLabel" inherits="GameFontNormal" text="Search">
 							<Anchors>
 								<Anchor point="RIGHT" relativeTo="$parent" relativePoint="LEFT">
 									<Offset>
@@ -1636,7 +1679,7 @@
 			-->
 			<Frame name="SkilletReagentParent" parent="SkilletFrame">
 				<Size>
-					<AbsDimension x="280" y="280"/>
+					<AbsDimension x="280" y="300"/>
 				</Size>
 				<Anchors>
 					<Anchor point="TOPRIGHT" relativeTo="SkilletFrame" relativePoint="TOPRIGHT">
@@ -1705,9 +1748,9 @@
 						</FontString>
 						<FontString name="SkilletReagentLabel" inherits="GameFontNormalSmall" justifyH="LEFT" text="SPELL_REAGENTS">
 							<Anchors>
-								<Anchor point="TOPLEFT" relative="SkilletReagentParent" relativePoint="TOPLEFT">
+								<Anchor point="TOPLEFT" relativeTo="SkilletSkillCooldown" relativePoint="BOTTOMLEFT">
 									<Offset>
-										<AbsDimension x="10" y="-90"/>
+										<AbsDimension x="-47" y="-20"/>
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -2014,7 +2057,7 @@
 			-->
 			<Button name="SkilletRecipeNotesButton" inherits="UIPanelButtonTemplate" parent="SkilletFrame">
 				<Size>
-					<AbsDimension x="60" y="20"/>
+					<AbsDimension x="80" y="20"/>
 				</Size>
 				<Anchors>
 					<Anchor point="BOTTOMRIGHT" relativeTo="SkilletReagentParent" relativePoint="TOPRIGHT">
@@ -2032,7 +2075,7 @@
 			</Button>
 			<Button name="SkilletQueueManagementButton" inherits="UIPanelButtonTemplate" parent="SkilletFrame">
 				<Size>
-					<AbsDimension x="70" y="20"/>
+					<AbsDimension x="110" y="20"/>
 				</Size>
 				<Anchors>
 					<Anchor point="RIGHT" relativeTo="SkilletRecipeNotesButton" relativePoint="LEFT">
@@ -2127,7 +2170,7 @@
 					</OnLoad>
 					<OnClick>
 						Skillet:InventoryFilterButtons_Hide()
-						local link = Skillet:GetTradeSkillItemLink(Skillet.selectedSkill);
+						local link = Skillet:GetRecipeItemLink(Skillet.selectedSkill);
 						if ( IsControlKeyDown() ) then
 							<!-- This opens up the dressing room window and display the character
 								 wearing the item (if that is possible) -->
