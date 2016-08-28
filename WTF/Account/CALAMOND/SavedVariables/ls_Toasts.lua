@@ -26,8 +26,8 @@ LS_TOASTS_CFG_GLOBAL = {
 		},
 		["instance_enabled"] = true,
 		["max_active_toasts"] = 10,
-		["loot_enabled"] = true,
-		["recipe_enabled"] = true,
 		["scale"] = 1,
+		["recipe_enabled"] = true,
+		["loot_enabled"] = true,
 	},
 }

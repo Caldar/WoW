@@ -3,729 +3,831 @@ ArchyDB = {
 	["char"] = {
 		["Caldar - Feathermoon"] = {
 			["digsites"] = {
-				["blacklist"] = {
-				},
 				["stats"] = {
 					[55352] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[67025] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[55478] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[56347] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[56441] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[354033] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[56508] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[308007] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[56388] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[55428] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[354049] = {
-						["fragments"] = 0,
 						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[56543] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[54133] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[307962] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[56394] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[177491] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[66817] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[354045] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[56553] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[307979] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[307987] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[56432] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[55472] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[177523] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[56528] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[55414] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
 					},
 					[56437] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
+					[55414] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[66817] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[307962] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[56394] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[177491] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[54133] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[307979] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[56553] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[354045] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[307987] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[56432] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[55472] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[177523] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[56528] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[56543] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[354049] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+				},
+				["blacklist"] = {
 				},
 			},
 		},
 		["Nothing - Feathermoon"] = {
 			["digsites"] = {
-				["blacklist"] = {
-				},
 				["stats"] = {
 					[54139] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[55464] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[56539] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[354045] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[307993] = {
 						["fragments"] = 60,
-						["counter"] = 0,
+						["surveys"] = 47,
 						["keystones"] = 0,
 						["looted"] = 9,
-						["surveys"] = 47,
+						["counter"] = 0,
 					},
 					[92174] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[307979] = {
 						["fragments"] = 59,
-						["counter"] = 0,
+						["surveys"] = 36,
 						["keystones"] = 0,
 						["looted"] = 9,
-						["surveys"] = 36,
+						["counter"] = 0,
 					},
 					[264227] = {
 						["fragments"] = 20,
-						["counter"] = 3,
+						["surveys"] = 16,
 						["keystones"] = 0,
 						["looted"] = 3,
-						["surveys"] = 16,
+						["counter"] = 3,
 					},
 					[56455] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[308013] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[346522] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[60369] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[56528] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[66991] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[56343] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[60444] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[56351] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[56418] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[307985] = {
 						["fragments"] = 67,
-						["counter"] = 0,
+						["surveys"] = 46,
 						["keystones"] = 0,
 						["looted"] = 10,
-						["surveys"] = 46,
+						["counter"] = 0,
 					},
 					[307954] = {
 						["fragments"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 					},
 					[66933] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[308003] = {
 						["fragments"] = 70,
-						["counter"] = 0,
+						["surveys"] = 45,
 						["keystones"] = 0,
 						["looted"] = 9,
-						["surveys"] = 45,
+						["counter"] = 0,
 					},
 					[60352] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[56448] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[56446] = {
-						["fragments"] = 0,
 						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[55446] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[308005] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[55356] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[307983] = {
-						["fragments"] = 69,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 10,
-						["surveys"] = 34,
-					},
-					[354043] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[264229] = {
-						["fragments"] = 69,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 10,
-						["surveys"] = 42,
-					},
-					[56520] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
 					},
 					[66969] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
-				},
-			},
-		},
-		["Calastir - Kirin Tor"] = {
-			["digsites"] = {
-				["blacklist"] = {
-				},
-				["stats"] = {
-				},
-			},
-		},
-		["Failure - Feathermoon"] = {
-			["digsites"] = {
-				["blacklist"] = {
-				},
-				["stats"] = {
-					[354047] = {
+					[55446] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
-					[55757] = {
+					[308005] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
-					[56410] = {
+					[56520] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
-					[67033] = {
-						["fragments"] = 0,
-						["counter"] = 0,
+					[264229] = {
+						["fragments"] = 69,
+						["surveys"] = 42,
 						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
+						["looted"] = 10,
+						["counter"] = 0,
 					},
-					[60442] = {
+					[354043] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
-					[56537] = {
-						["fragments"] = 0,
-						["counter"] = 0,
+					[307983] = {
+						["fragments"] = 69,
+						["surveys"] = 34,
 						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
+						["looted"] = 10,
+						["counter"] = 0,
 					},
-					[354041] = {
+					[55356] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[56446] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[56510] = {
-						["fragments"] = 0,
 						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
 					},
-					[308007] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[56450] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[56358] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[55460] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[56516] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[354033] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[308015] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[308013] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[308011] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[55468] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[66767] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[56369] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[66789] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[56526] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[55442] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[56367] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[66890] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[56439] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-				},
-			},
-		},
-		["Zenax - Scarlet Crusade"] = {
-			["digsites"] = {
-				["stats"] = {
 				},
 				["blacklist"] = {
-				},
-			},
-		},
-		["Censure - Kirin Tor"] = {
-			["digsites"] = {
-				["stats"] = {
-				},
-				["blacklist"] = {
-				},
-			},
-		},
-		["Calastir - Scarlet Crusade"] = {
-			["digsites"] = {
-				["blacklist"] = {
-				},
-				["stats"] = {
 				},
 			},
 		},
 		["Sinister - Feathermoon"] = {
 			["digsites"] = {
+				["blacklist"] = {
+				},
 				["stats"] = {
-					[54137] = {
-						["fragments"] = 0,
-						["counter"] = 0,
+					[307973] = {
+						["fragments"] = 128,
+						["surveys"] = 63,
 						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[307928] = {
-						["fragments"] = 63,
+						["looted"] = 19,
 						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 9,
-						["surveys"] = 34,
 					},
-					[307944] = {
-						["fragments"] = 250,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 30,
-						["surveys"] = 116,
-					},
-					[307960] = {
-						["fragments"] = 123,
-						["surveys"] = 64,
+					[308005] = {
+						["fragments"] = 133,
+						["surveys"] = 91,
 						["keystones"] = 0,
 						["looted"] = 18,
 						["counter"] = 0,
 					},
-					[354249] = {
-						["fragments"] = 0,
-						["counter"] = 0,
+					[307942] = {
+						["fragments"] = 139,
+						["surveys"] = 94,
 						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
+						["looted"] = 18,
+						["counter"] = 0,
 					},
-					[346502] = {
-						["fragments"] = 0,
-						["counter"] = 0,
+					[307975] = {
+						["fragments"] = 64,
+						["surveys"] = 39,
 						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
+						["looted"] = 10,
+						["counter"] = 0,
 					},
-					[56356] = {
-						["fragments"] = 0,
+					[307944] = {
+						["fragments"] = 250,
+						["surveys"] = 116,
+						["keystones"] = 0,
+						["looted"] = 30,
 						["counter"] = 0,
+					},
+					[56537] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[56422] = {
+						["fragments"] = 0,
 						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
 					},
 					[307977] = {
 						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[346522] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[66795] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[56331] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[308011] = {
+						["fragments"] = 67,
+						["surveys"] = 36,
+						["keystones"] = 0,
+						["looted"] = 9,
+						["counter"] = 0,
+					},
+					[307916] = {
+						["fragments"] = 65,
+						["surveys"] = 38,
+						["keystones"] = 0,
+						["looted"] = 9,
+						["counter"] = 0,
+					},
+					[354049] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[177509] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[264229] = {
+						["fragments"] = 65,
+						["surveys"] = 43,
+						["keystones"] = 0,
+						["looted"] = 9,
+						["counter"] = 0,
+					},
+					[307981] = {
+						["fragments"] = 95,
+						["surveys"] = 56,
+						["keystones"] = 0,
+						["looted"] = 14,
+						["counter"] = 0,
+					},
+					[55478] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[307950] = {
+						["fragments"] = 198,
+						["surveys"] = 107,
+						["keystones"] = 0,
+						["looted"] = 28,
+						["counter"] = 0,
+					},
+					[264231] = {
+						["fragments"] = 51,
+						["counter"] = 0,
+						["keystones"] = 0,
+						["looted"] = 9,
+						["surveys"] = 33,
+					},
+					[307983] = {
+						["fragments"] = 74,
+						["surveys"] = 38,
+						["keystones"] = 0,
+						["looted"] = 10,
+						["counter"] = 0,
+					},
+					[56526] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[307952] = {
+						["fragments"] = 67,
+						["surveys"] = 36,
+						["keystones"] = 0,
+						["looted"] = 9,
+						["counter"] = 0,
+					},
+					[177495] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[264233] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[54137] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[307985] = {
+						["fragments"] = 76,
+						["surveys"] = 35,
+						["keystones"] = 0,
+						["looted"] = 11,
+						["counter"] = 0,
+					},
+					[307922] = {
+						["fragments"] = 62,
+						["surveys"] = 39,
+						["keystones"] = 0,
+						["looted"] = 9,
+						["counter"] = 0,
+					},
+					[307954] = {
+						["fragments"] = 74,
+						["surveys"] = 43,
+						["keystones"] = 0,
+						["looted"] = 9,
+						["counter"] = 0,
+					},
+					[56455] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[307987] = {
+						["fragments"] = 139,
+						["surveys"] = 85,
+						["keystones"] = 0,
+						["looted"] = 19,
+						["counter"] = 0,
+					},
+					[307924] = {
+						["fragments"] = 68,
+						["counter"] = 0,
+						["keystones"] = 0,
+						["looted"] = 9,
+						["surveys"] = 30,
+					},
+					[307956] = {
+						["fragments"] = 62,
+						["surveys"] = 35,
+						["keystones"] = 0,
+						["looted"] = 9,
+						["counter"] = 0,
+					},
+					[56356] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[354249] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[307926] = {
+						["fragments"] = 54,
+						["surveys"] = 47,
+						["keystones"] = 0,
+						["looted"] = 9,
+						["counter"] = 0,
+					},
+					[307958] = {
+						["fragments"] = 79,
+						["surveys"] = 29,
+						["keystones"] = 0,
+						["looted"] = 11,
+						["counter"] = 0,
+					},
+					[54864] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[56392] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[354251] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[307928] = {
+						["fragments"] = 63,
+						["surveys"] = 34,
+						["keystones"] = 0,
+						["looted"] = 9,
+						["counter"] = 0,
+					},
+					[307960] = {
+						["fragments"] = 123,
+						["counter"] = 0,
+						["keystones"] = 0,
+						["looted"] = 18,
+						["surveys"] = 64,
+					},
+					[307993] = {
+						["fragments"] = 61,
+						["surveys"] = 33,
+						["keystones"] = 0,
+						["looted"] = 9,
+						["counter"] = 0,
+					},
+					[307930] = {
+						["fragments"] = 143,
+						["surveys"] = 73,
+						["keystones"] = 0,
+						["looted"] = 19,
+						["counter"] = 0,
+					},
+					[346475] = {
+						["fragments"] = 0,
 						["counter"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
 						["surveys"] = 0,
 					},
-					[55478] = {
+					[307995] = {
+						["fragments"] = 74,
+						["surveys"] = 39,
+						["keystones"] = 0,
+						["looted"] = 11,
+						["counter"] = 0,
+					},
+					[56341] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[307997] = {
+						["fragments"] = 66,
+						["surveys"] = 31,
+						["keystones"] = 0,
+						["looted"] = 8,
+						["counter"] = 0,
+					},
+					[307934] = {
+						["fragments"] = 150,
+						["surveys"] = 86,
+						["keystones"] = 0,
+						["looted"] = 21,
+						["counter"] = 0,
+					},
+					[307966] = {
+						["fragments"] = 62,
+						["surveys"] = 46,
+						["keystones"] = 0,
+						["looted"] = 9,
+						["counter"] = 0,
+					},
+					[56524] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[354037] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[54135] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[353979] = {
+						["fragments"] = 0,
+						["counter"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["surveys"] = 0,
+					},
+					[308001] = {
+						["fragments"] = 125,
+						["surveys"] = 64,
+						["keystones"] = 0,
+						["looted"] = 19,
+						["counter"] = 8,
+					},
+					[353985] = {
 						["fragments"] = 0,
 						["counter"] = 0,
 						["keystones"] = 0,
@@ -734,300 +836,55 @@ ArchyDB = {
 					},
 					[56362] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
-					[354251] = {
+					[346502] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
 					[56555] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[307975] = {
-						["fragments"] = 64,
 						["counter"] = 0,
+					},
+					[307948] = {
+						["fragments"] = 67,
+						["surveys"] = 45,
 						["keystones"] = 0,
 						["looted"] = 10,
-						["surveys"] = 39,
-					},
-					[307930] = {
-						["fragments"] = 143,
 						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 19,
-						["surveys"] = 73,
-					},
-					[307997] = {
-						["fragments"] = 66,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 8,
-						["surveys"] = 31,
-					},
-					[307916] = {
-						["fragments"] = 65,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 9,
-						["surveys"] = 38,
-					},
-					[54864] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[308011] = {
-						["fragments"] = 67,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 9,
-						["surveys"] = 36,
-					},
-					[307942] = {
-						["fragments"] = 139,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 18,
-						["surveys"] = 94,
-					},
-					[56331] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[354049] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
 					},
 					[264227] = {
 						["fragments"] = 138,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 21,
 						["surveys"] = 62,
-					},
-					[307966] = {
-						["fragments"] = 62,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 9,
-						["surveys"] = 46,
-					},
-					[307981] = {
-						["fragments"] = 95,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 14,
-						["surveys"] = 56,
-					},
-					[307934] = {
-						["fragments"] = 150,
-						["counter"] = 0,
 						["keystones"] = 0,
 						["looted"] = 21,
-						["surveys"] = 86,
-					},
-					[307950] = {
-						["fragments"] = 198,
 						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 28,
-						["surveys"] = 107,
-					},
-					[346522] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[56524] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[56526] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[264229] = {
-						["fragments"] = 65,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 9,
-						["surveys"] = 43,
-					},
-					[56341] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[307983] = {
-						["fragments"] = 74,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 10,
-						["surveys"] = 38,
-					},
-					[307936] = {
-						["fragments"] = 61,
-						["surveys"] = 39,
-						["keystones"] = 0,
-						["looted"] = 9,
-						["counter"] = 0,
-					},
-					[307952] = {
-						["fragments"] = 67,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 9,
-						["surveys"] = 36,
-					},
-					[67021] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[354037] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[56455] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[264231] = {
-						["fragments"] = 51,
-						["surveys"] = 33,
-						["keystones"] = 0,
-						["looted"] = 9,
-						["counter"] = 0,
-					},
-					[56422] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[307985] = {
-						["fragments"] = 76,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 11,
-						["surveys"] = 35,
-					},
-					[308001] = {
-						["fragments"] = 125,
-						["counter"] = 8,
-						["keystones"] = 0,
-						["looted"] = 19,
-						["surveys"] = 64,
-					},
-					[307954] = {
-						["fragments"] = 74,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 9,
-						["surveys"] = 43,
-					},
-					[307993] = {
-						["fragments"] = 61,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 9,
-						["surveys"] = 33,
-					},
-					[177509] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[66795] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
-					},
-					[264233] = {
-						["fragments"] = 0,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 0,
-						["surveys"] = 0,
 					},
 					[307971] = {
 						["fragments"] = 61,
-						["counter"] = 0,
+						["surveys"] = 42,
 						["keystones"] = 0,
 						["looted"] = 9,
-						["surveys"] = 42,
-					},
-					[307987] = {
-						["fragments"] = 139,
 						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 19,
-						["surveys"] = 85,
 					},
 					[308003] = {
 						["fragments"] = 135,
-						["counter"] = 0,
+						["surveys"] = 78,
 						["keystones"] = 0,
 						["looted"] = 19,
-						["surveys"] = 78,
-					},
-					[307956] = {
-						["fragments"] = 62,
-						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 9,
-						["surveys"] = 35,
-					},
-					[307924] = {
-						["fragments"] = 68,
-						["surveys"] = 30,
-						["keystones"] = 0,
-						["looted"] = 9,
 						["counter"] = 0,
 					},
-					[307922] = {
-						["fragments"] = 62,
+					[307936] = {
+						["fragments"] = 61,
 						["counter"] = 0,
 						["keystones"] = 0,
 						["looted"] = 9,
@@ -1035,86 +892,260 @@ ArchyDB = {
 					},
 					[56394] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
-					[56392] = {
+					[67021] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
+						["counter"] = 0,
+					},
+				},
+			},
+		},
+		["Failure - Feathermoon"] = {
+			["digsites"] = {
+				["stats"] = {
+					[354047] = {
+						["fragments"] = 0,
 						["surveys"] = 0,
-					},
-					[307973] = {
-						["fragments"] = 128,
-						["counter"] = 0,
 						["keystones"] = 0,
-						["looted"] = 19,
-						["surveys"] = 63,
-					},
-					[307926] = {
-						["fragments"] = 54,
+						["looted"] = 0,
 						["counter"] = 0,
-						["keystones"] = 0,
-						["looted"] = 9,
-						["surveys"] = 47,
 					},
-					[308005] = {
-						["fragments"] = 133,
-						["counter"] = 0,
+					[55757] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
-						["looted"] = 18,
-						["surveys"] = 91,
+						["looted"] = 0,
+						["counter"] = 0,
 					},
-					[307958] = {
-						["fragments"] = 79,
-						["counter"] = 0,
+					[56410] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
-						["looted"] = 11,
-						["surveys"] = 29,
+						["looted"] = 0,
+						["counter"] = 0,
 					},
-					[307948] = {
-						["fragments"] = 67,
-						["counter"] = 0,
+					[67033] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
-						["looted"] = 10,
-						["surveys"] = 45,
+						["looted"] = 0,
+						["counter"] = 0,
 					},
-					[307995] = {
-						["fragments"] = 74,
-						["counter"] = 0,
+					[60442] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
-						["looted"] = 11,
-						["surveys"] = 39,
+						["looted"] = 0,
+						["counter"] = 0,
 					},
 					[56537] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
-					[54135] = {
+					[354041] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
-						["surveys"] = 0,
+						["counter"] = 0,
 					},
-					[177495] = {
+					[56446] = {
 						["fragments"] = 0,
-						["counter"] = 0,
+						["surveys"] = 0,
 						["keystones"] = 0,
 						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[56510] = {
+						["fragments"] = 0,
 						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[308007] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[56450] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[56358] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[55460] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[56516] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[56439] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[66890] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[56367] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[55442] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[55468] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[56526] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[56369] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[66789] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[66767] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[308011] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[308013] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[308015] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
+					},
+					[354033] = {
+						["fragments"] = 0,
+						["surveys"] = 0,
+						["keystones"] = 0,
+						["looted"] = 0,
+						["counter"] = 0,
 					},
 				},
 				["blacklist"] = {
 				},
 			},
 		},
+		["Zenax - Scarlet Crusade"] = {
+			["digsites"] = {
+				["blacklist"] = {
+				},
+				["stats"] = {
+				},
+			},
+		},
+		["Censure - Kirin Tor"] = {
+			["digsites"] = {
+				["blacklist"] = {
+				},
+				["stats"] = {
+				},
+			},
+		},
+		["Calastir - Scarlet Crusade"] = {
+			["digsites"] = {
+				["stats"] = {
+				},
+				["blacklist"] = {
+				},
+			},
+		},
+		["Calastir - Kirin Tor"] = {
+			["digsites"] = {
+				["stats"] = {
+				},
+				["blacklist"] = {
+				},
+			},
+		},
+	},
+	["profileKeys"] = {
+		["Caldar - Feathermoon"] = "Default",
+		["Nothing - Feathermoon"] = "Default",
+		["Sinister - Feathermoon"] = "Default",
+		["Failure - Feathermoon"] = "Default",
+		["Zenax - Scarlet Crusade"] = "Default",
+		["Censure - Kirin Tor"] = "Default",
+		["Calastir - Scarlet Crusade"] = "Default",
+		["Calastir - Kirin Tor"] = "Default",
 	},
 	["global"] = {
 		["surveyNodes"] = {
@@ -2842,141 +2873,111 @@ ArchyDB = {
 					["f"] = 0,
 				}, -- [7]
 			},
-			[307948] = {
+			[307924] = {
 				{
-					["m"] = 948,
-					["x"] = 0.304030089575876,
-					["y"] = 0.44480613717313,
+					["m"] = 947,
+					["x"] = 0.376843284493062,
+					["y"] = 0.683197994805274,
 					["f"] = 0,
 				}, -- [1]
 				{
-					["m"] = 948,
-					["x"] = 0.317213978112376,
-					["y"] = 0.417971665501388,
+					["m"] = 947,
+					["x"] = 0.378455222969625,
+					["y"] = 0.692399482003205,
 					["f"] = 0,
 				}, -- [2]
 				{
-					["m"] = 948,
-					["x"] = 0.331041410570931,
-					["y"] = 0.420818496143461,
+					["m"] = 947,
+					["x"] = 0.38160447761194,
+					["y"] = 0.673638297546717,
 					["f"] = 0,
 				}, -- [3]
 				{
-					["m"] = 948,
-					["x"] = 0.320959585018708,
-					["y"] = 0.486567907961743,
+					["m"] = 947,
+					["x"] = 0.373679105844071,
+					["y"] = 0.702026340659004,
 					["f"] = 0,
 				}, -- [4]
 				{
-					["m"] = 948,
-					["x"] = 0.339341173370108,
-					["y"] = 0.470650414437053,
+					["m"] = 947,
+					["x"] = 0.376186566708693,
+					["y"] = 0.676548743186842,
 					["f"] = 0,
 				}, -- [5]
 				{
-					["m"] = 948,
-					["x"] = 0.310151753296642,
-					["y"] = 0.461540551849635,
+					["m"] = 947,
+					["x"] = 0.374231344194555,
+					["y"] = 0.688503956988284,
 					["f"] = 0,
 				}, -- [6]
 				{
-					["m"] = 948,
-					["x"] = 0.321504109788311,
-					["y"] = 0.448692682897643,
+					["m"] = 947,
+					["x"] = 0.371947761649516,
+					["y"] = 0.692668134424459,
 					["f"] = 0,
 				}, -- [7]
+				{
+					["m"] = 947,
+					["x"] = 0.381097015836346,
+					["y"] = 0.690429330085901,
+					["f"] = 0,
+				}, -- [8]
 			},
-			[308005] = {
+			[307916] = {
 				{
-					["m"] = 949,
-					["x"] = 0.410643632051248,
-					["y"] = 0.72008806981078,
+					["m"] = 941,
+					["x"] = 0.132331232588189,
+					["y"] = 0.48816794533082,
 					["f"] = 0,
 				}, -- [1]
 				{
-					["m"] = 949,
-					["x"] = 0.386992182928198,
-					["y"] = 0.731464216599771,
+					["m"] = 941,
+					["x"] = 0.132936375597045,
+					["y"] = 0.514682042573169,
 					["f"] = 0,
 				}, -- [2]
 				{
-					["m"] = 949,
-					["x"] = 0.387554742193677,
-					["y"] = 0.71599636252867,
+					["m"] = 941,
+					["x"] = 0.123270936910987,
+					["y"] = 0.486279410672754,
 					["f"] = 0,
 				}, -- [3]
 				{
-					["m"] = 949,
-					["x"] = 0.404076509493225,
-					["y"] = 0.733978013904817,
+					["m"] = 941,
+					["x"] = 0.126443665452142,
+					["y"] = 0.515417863293516,
 					["f"] = 0,
 				}, -- [4]
 				{
-					["m"] = 949,
-					["x"] = 0.401520584975649,
-					["y"] = 0.730289922591743,
+					["m"] = 941,
+					["x"] = 0.119918294514071,
+					["y"] = 0.490718766542194,
 					["f"] = 0,
 				}, -- [5]
 				{
-					["m"] = 949,
-					["x"] = 0.389560333749734,
-					["y"] = 0.716803684059633,
+					["m"] = 941,
+					["x"] = 0.120114498838795,
+					["y"] = 0.502075004850381,
 					["f"] = 0,
 				}, -- [6]
 				{
-					["m"] = 949,
-					["x"] = 0.396971295205975,
-					["y"] = 0.731317463446101,
+					["m"] = 941,
+					["x"] = 0.12098132746919,
+					["y"] = 0.513774482446412,
 					["f"] = 0,
 				}, -- [7]
 				{
-					["m"] = 949,
-					["x"] = 0.388178432978955,
-					["y"] = 0.725445903813073,
+					["m"] = 941,
+					["x"] = 0.13854588678735,
+					["y"] = 0.508672840023665,
 					["f"] = 0,
 				}, -- [8]
 				{
-					["m"] = 949,
-					["x"] = 0.403416124867735,
-					["y"] = 0.721666069380734,
+					["m"] = 941,
+					["x"] = 0.124383000983477,
+					["y"] = 0.527730644585658,
 					["f"] = 0,
 				}, -- [9]
-				{
-					["m"] = 949,
-					["x"] = 0.392874483181144,
-					["y"] = 0.73599636252867,
-					["f"] = 0,
-				}, -- [10]
-				{
-					["m"] = 949,
-					["x"] = 0.413480836201564,
-					["y"] = 0.724088033973624,
-					["f"] = 0,
-				}, -- [11]
-				{
-					["m"] = 949,
-					["x"] = 0.392250777467534,
-					["y"] = 0.733152325831422,
-					["f"] = 0,
-				}, -- [12]
-				{
-					["m"] = 949,
-					["x"] = 0.406669112922681,
-					["y"] = 0.717996344610092,
-					["f"] = 0,
-				}, -- [13]
-				{
-					["m"] = 949,
-					["x"] = 0.394843395825322,
-					["y"] = 0.721886199111239,
-					["f"] = 0,
-				}, -- [14]
-				{
-					["m"] = 949,
-					["x"] = 0.388692057171929,
-					["y"] = 0.719702730791284,
-					["f"] = 0,
-				}, -- [15]
 			},
 			[307973] = {
 				{
@@ -3114,6 +3115,304 @@ ArchyDB = {
 					["f"] = 0,
 				}, -- [8]
 			},
+			[308005] = {
+				{
+					["m"] = 949,
+					["x"] = 0.410643632051248,
+					["y"] = 0.72008806981078,
+					["f"] = 0,
+				}, -- [1]
+				{
+					["m"] = 949,
+					["x"] = 0.386992182928198,
+					["y"] = 0.731464216599771,
+					["f"] = 0,
+				}, -- [2]
+				{
+					["m"] = 949,
+					["x"] = 0.387554742193677,
+					["y"] = 0.71599636252867,
+					["f"] = 0,
+				}, -- [3]
+				{
+					["m"] = 949,
+					["x"] = 0.404076509493225,
+					["y"] = 0.733978013904817,
+					["f"] = 0,
+				}, -- [4]
+				{
+					["m"] = 949,
+					["x"] = 0.401520584975649,
+					["y"] = 0.730289922591743,
+					["f"] = 0,
+				}, -- [5]
+				{
+					["m"] = 949,
+					["x"] = 0.389560333749734,
+					["y"] = 0.716803684059633,
+					["f"] = 0,
+				}, -- [6]
+				{
+					["m"] = 949,
+					["x"] = 0.396971295205975,
+					["y"] = 0.731317463446101,
+					["f"] = 0,
+				}, -- [7]
+				{
+					["m"] = 949,
+					["x"] = 0.388178432978955,
+					["y"] = 0.725445903813073,
+					["f"] = 0,
+				}, -- [8]
+				{
+					["m"] = 949,
+					["x"] = 0.403416124867735,
+					["y"] = 0.721666069380734,
+					["f"] = 0,
+				}, -- [9]
+				{
+					["m"] = 949,
+					["x"] = 0.392874483181144,
+					["y"] = 0.73599636252867,
+					["f"] = 0,
+				}, -- [10]
+				{
+					["m"] = 949,
+					["x"] = 0.413480836201564,
+					["y"] = 0.724088033973624,
+					["f"] = 0,
+				}, -- [11]
+				{
+					["m"] = 949,
+					["x"] = 0.392250777467534,
+					["y"] = 0.733152325831422,
+					["f"] = 0,
+				}, -- [12]
+				{
+					["m"] = 949,
+					["x"] = 0.406669112922681,
+					["y"] = 0.717996344610092,
+					["f"] = 0,
+				}, -- [13]
+				{
+					["m"] = 949,
+					["x"] = 0.394843395825322,
+					["y"] = 0.721886199111239,
+					["f"] = 0,
+				}, -- [14]
+				{
+					["m"] = 949,
+					["x"] = 0.388692057171929,
+					["y"] = 0.719702730791284,
+					["f"] = 0,
+				}, -- [15]
+			},
+			[307958] = {
+				{
+					["m"] = 948,
+					["x"] = 0.35582516319579,
+					["y"] = 0.255801337588551,
+					["f"] = 0,
+				}, -- [1]
+				{
+					["m"] = 948,
+					["x"] = 0.347393388288157,
+					["y"] = 0.271075198326713,
+					["f"] = 0,
+				}, -- [2]
+				{
+					["m"] = 948,
+					["x"] = 0.345462837090875,
+					["y"] = 0.264886436061338,
+					["f"] = 0,
+				}, -- [3]
+				{
+					["m"] = 948,
+					["x"] = 0.354059617062966,
+					["y"] = 0.271099954886703,
+					["f"] = 0,
+				}, -- [4]
+				{
+					["m"] = 948,
+					["x"] = 0.354950628297269,
+					["y"] = 0.263128833621684,
+					["f"] = 0,
+				}, -- [5]
+				{
+					["m"] = 948,
+					["x"] = 0.349950966787272,
+					["y"] = 0.270555348340135,
+					["f"] = 0,
+				}, -- [6]
+				{
+					["m"] = 948,
+					["x"] = 0.351980537137006,
+					["y"] = 0.268203618679292,
+					["f"] = 0,
+				}, -- [7]
+				{
+					["m"] = 948,
+					["x"] = 0.358465244227134,
+					["y"] = 0.276669840925541,
+					["f"] = 0,
+				}, -- [8]
+			},
+			[307930] = {
+				{
+					["m"] = 947,
+					["x"] = 0.212694028028801,
+					["y"] = 0.158959562689801,
+					["f"] = 0,
+				}, -- [1]
+				{
+					["m"] = 947,
+					["x"] = 0.219858207133279,
+					["y"] = 0.164668513753124,
+					["f"] = 0,
+				}, -- [2]
+				{
+					["m"] = 947,
+					["x"] = 0.224902981430737,
+					["y"] = 0.165340155054691,
+					["f"] = 0,
+				}, -- [3]
+				{
+					["m"] = 947,
+					["x"] = 0.212067160535215,
+					["y"] = 0.151325245361149,
+					["f"] = 0,
+				}, -- [4]
+				{
+					["m"] = 947,
+					["x"] = 0.211514919907299,
+					["y"] = 0.170108819227481,
+					["f"] = 0,
+				}, -- [5]
+				{
+					["m"] = 947,
+					["x"] = 0.212858203489389,
+					["y"] = 0.163728226862591,
+					["f"] = 0,
+				}, -- [6]
+				{
+					["m"] = 947,
+					["x"] = 0.222977613762244,
+					["y"] = 0.178078957206917,
+					["f"] = 0,
+				}, -- [7]
+				{
+					["m"] = 947,
+					["x"] = 0.218037309788946,
+					["y"] = 0.163974489874002,
+					["f"] = 0,
+				}, -- [8]
+				{
+					["m"] = 947,
+					["x"] = 0.216350744446712,
+					["y"] = 0.183832673425349,
+					["f"] = 0,
+				}, -- [9]
+				{
+					["m"] = 947,
+					["x"] = 0.222022386237757,
+					["y"] = 0.172123743132183,
+					["f"] = 0,
+				}, -- [10]
+				{
+					["m"] = 947,
+					["x"] = 0.214291044776119,
+					["y"] = 0.192787890779581,
+					["f"] = 0,
+				}, -- [11]
+				{
+					["m"] = 947,
+					["x"] = 0.224664179104478,
+					["y"] = 0.156653583289425,
+					["f"] = 0,
+				}, -- [12]
+				{
+					["m"] = 947,
+					["x"] = 0.212962682923274,
+					["y"] = 0.191310285381963,
+					["f"] = 0,
+				}, -- [13]
+			},
+			[307922] = {
+				{
+					["m"] = 941,
+					["x"] = 0.530249015190243,
+					["y"] = 0.225651687573205,
+					["f"] = 0,
+				}, -- [1]
+				{
+					["m"] = 941,
+					["x"] = 0.538115475029177,
+					["y"] = 0.225872409836812,
+					["f"] = 0,
+				}, -- [2]
+				{
+					["m"] = 941,
+					["x"] = 0.533487145172973,
+					["y"] = 0.184789086284081,
+					["f"] = 0,
+				}, -- [3]
+				{
+					["m"] = 941,
+					["x"] = 0.550659215986444,
+					["y"] = 0.188468189885818,
+					["f"] = 0,
+				}, -- [4]
+				{
+					["m"] = 941,
+					["x"] = 0.545278649769271,
+					["y"] = 0.196218858759309,
+					["f"] = 0,
+				}, -- [5]
+				{
+					["m"] = 941,
+					["x"] = 0.53054336160495,
+					["y"] = 0.188149382145329,
+					["f"] = 0,
+				}, -- [6]
+				{
+					["m"] = 941,
+					["x"] = 0.545654767949756,
+					["y"] = 0.191705848960342,
+					["f"] = 0,
+				}, -- [7]
+			},
+			[307997] = {
+				{
+					["m"] = 950,
+					["x"] = 0.677168829157489,
+					["y"] = 0.122620983843353,
+					["f"] = 0,
+				}, -- [1]
+				{
+					["m"] = 950,
+					["x"] = 0.681309798320485,
+					["y"] = 0.0919072731886076,
+					["f"] = 0,
+				}, -- [2]
+				{
+					["m"] = 950,
+					["x"] = 0.658226097879956,
+					["y"] = 0.0957927877024356,
+					["f"] = 0,
+				}, -- [3]
+				{
+					["m"] = 950,
+					["x"] = 0.684869218061674,
+					["y"] = 0.104013078539121,
+					["f"] = 0,
+				}, -- [4]
+				{
+					["m"] = 950,
+					["x"] = 0.689397886839207,
+					["y"] = 0.107158427446864,
+					["f"] = 0,
+				}, -- [5]
+			},
 			[307942] = {
 				{
 					["m"] = 948,
@@ -3206,329 +3505,51 @@ ArchyDB = {
 					["f"] = 0,
 				}, -- [15]
 			},
-			[307958] = {
+			[307948] = {
 				{
 					["m"] = 948,
-					["x"] = 0.35582516319579,
-					["y"] = 0.255801337588551,
+					["x"] = 0.304030089575876,
+					["y"] = 0.44480613717313,
 					["f"] = 0,
 				}, -- [1]
 				{
 					["m"] = 948,
-					["x"] = 0.347393388288157,
-					["y"] = 0.271075198326713,
+					["x"] = 0.317213978112376,
+					["y"] = 0.417971665501388,
 					["f"] = 0,
 				}, -- [2]
 				{
 					["m"] = 948,
-					["x"] = 0.345462837090875,
-					["y"] = 0.264886436061338,
+					["x"] = 0.331041410570931,
+					["y"] = 0.420818496143461,
 					["f"] = 0,
 				}, -- [3]
 				{
 					["m"] = 948,
-					["x"] = 0.354059617062966,
-					["y"] = 0.271099954886703,
+					["x"] = 0.320959585018708,
+					["y"] = 0.486567907961743,
 					["f"] = 0,
 				}, -- [4]
 				{
 					["m"] = 948,
-					["x"] = 0.354950628297269,
-					["y"] = 0.263128833621684,
+					["x"] = 0.339341173370108,
+					["y"] = 0.470650414437053,
 					["f"] = 0,
 				}, -- [5]
 				{
 					["m"] = 948,
-					["x"] = 0.349950966787272,
-					["y"] = 0.270555348340135,
+					["x"] = 0.310151753296642,
+					["y"] = 0.461540551849635,
 					["f"] = 0,
 				}, -- [6]
 				{
 					["m"] = 948,
-					["x"] = 0.351980537137006,
-					["y"] = 0.268203618679292,
+					["x"] = 0.321504109788311,
+					["y"] = 0.448692682897643,
 					["f"] = 0,
 				}, -- [7]
-				{
-					["m"] = 948,
-					["x"] = 0.358465244227134,
-					["y"] = 0.276669840925541,
-					["f"] = 0,
-				}, -- [8]
-			},
-			[307997] = {
-				{
-					["m"] = 950,
-					["x"] = 0.677168829157489,
-					["y"] = 0.122620983843353,
-					["f"] = 0,
-				}, -- [1]
-				{
-					["m"] = 950,
-					["x"] = 0.681309798320485,
-					["y"] = 0.0919072731886076,
-					["f"] = 0,
-				}, -- [2]
-				{
-					["m"] = 950,
-					["x"] = 0.658226097879956,
-					["y"] = 0.0957927877024356,
-					["f"] = 0,
-				}, -- [3]
-				{
-					["m"] = 950,
-					["x"] = 0.684869218061674,
-					["y"] = 0.104013078539121,
-					["f"] = 0,
-				}, -- [4]
-				{
-					["m"] = 950,
-					["x"] = 0.689397886839207,
-					["y"] = 0.107158427446864,
-					["f"] = 0,
-				}, -- [5]
-			},
-			[307922] = {
-				{
-					["m"] = 941,
-					["x"] = 0.530249015190243,
-					["y"] = 0.225651687573205,
-					["f"] = 0,
-				}, -- [1]
-				{
-					["m"] = 941,
-					["x"] = 0.538115475029177,
-					["y"] = 0.225872409836812,
-					["f"] = 0,
-				}, -- [2]
-				{
-					["m"] = 941,
-					["x"] = 0.533487145172973,
-					["y"] = 0.184789086284081,
-					["f"] = 0,
-				}, -- [3]
-				{
-					["m"] = 941,
-					["x"] = 0.550659215986444,
-					["y"] = 0.188468189885818,
-					["f"] = 0,
-				}, -- [4]
-				{
-					["m"] = 941,
-					["x"] = 0.545278649769271,
-					["y"] = 0.196218858759309,
-					["f"] = 0,
-				}, -- [5]
-				{
-					["m"] = 941,
-					["x"] = 0.53054336160495,
-					["y"] = 0.188149382145329,
-					["f"] = 0,
-				}, -- [6]
-				{
-					["m"] = 941,
-					["x"] = 0.545654767949756,
-					["y"] = 0.191705848960342,
-					["f"] = 0,
-				}, -- [7]
-			},
-			[307930] = {
-				{
-					["m"] = 947,
-					["x"] = 0.212694028028801,
-					["y"] = 0.158959562689801,
-					["f"] = 0,
-				}, -- [1]
-				{
-					["m"] = 947,
-					["x"] = 0.219858207133279,
-					["y"] = 0.164668513753124,
-					["f"] = 0,
-				}, -- [2]
-				{
-					["m"] = 947,
-					["x"] = 0.224902981430737,
-					["y"] = 0.165340155054691,
-					["f"] = 0,
-				}, -- [3]
-				{
-					["m"] = 947,
-					["x"] = 0.212067160535215,
-					["y"] = 0.151325245361149,
-					["f"] = 0,
-				}, -- [4]
-				{
-					["m"] = 947,
-					["x"] = 0.211514919907299,
-					["y"] = 0.170108819227481,
-					["f"] = 0,
-				}, -- [5]
-				{
-					["m"] = 947,
-					["x"] = 0.212858203489389,
-					["y"] = 0.163728226862591,
-					["f"] = 0,
-				}, -- [6]
-				{
-					["m"] = 947,
-					["x"] = 0.222977613762244,
-					["y"] = 0.178078957206917,
-					["f"] = 0,
-				}, -- [7]
-				{
-					["m"] = 947,
-					["x"] = 0.218037309788946,
-					["y"] = 0.163974489874002,
-					["f"] = 0,
-				}, -- [8]
-				{
-					["m"] = 947,
-					["x"] = 0.216350744446712,
-					["y"] = 0.183832673425349,
-					["f"] = 0,
-				}, -- [9]
-				{
-					["m"] = 947,
-					["x"] = 0.222022386237757,
-					["y"] = 0.172123743132183,
-					["f"] = 0,
-				}, -- [10]
-				{
-					["m"] = 947,
-					["x"] = 0.214291044776119,
-					["y"] = 0.192787890779581,
-					["f"] = 0,
-				}, -- [11]
-				{
-					["m"] = 947,
-					["x"] = 0.224664179104478,
-					["y"] = 0.156653583289425,
-					["f"] = 0,
-				}, -- [12]
-				{
-					["m"] = 947,
-					["x"] = 0.212962682923274,
-					["y"] = 0.191310285381963,
-					["f"] = 0,
-				}, -- [13]
-			},
-			[307916] = {
-				{
-					["m"] = 941,
-					["x"] = 0.132331232588189,
-					["y"] = 0.48816794533082,
-					["f"] = 0,
-				}, -- [1]
-				{
-					["m"] = 941,
-					["x"] = 0.132936375597045,
-					["y"] = 0.514682042573169,
-					["f"] = 0,
-				}, -- [2]
-				{
-					["m"] = 941,
-					["x"] = 0.123270936910987,
-					["y"] = 0.486279410672754,
-					["f"] = 0,
-				}, -- [3]
-				{
-					["m"] = 941,
-					["x"] = 0.126443665452142,
-					["y"] = 0.515417863293516,
-					["f"] = 0,
-				}, -- [4]
-				{
-					["m"] = 941,
-					["x"] = 0.119918294514071,
-					["y"] = 0.490718766542194,
-					["f"] = 0,
-				}, -- [5]
-				{
-					["m"] = 941,
-					["x"] = 0.120114498838795,
-					["y"] = 0.502075004850381,
-					["f"] = 0,
-				}, -- [6]
-				{
-					["m"] = 941,
-					["x"] = 0.12098132746919,
-					["y"] = 0.513774482446412,
-					["f"] = 0,
-				}, -- [7]
-				{
-					["m"] = 941,
-					["x"] = 0.13854588678735,
-					["y"] = 0.508672840023665,
-					["f"] = 0,
-				}, -- [8]
-				{
-					["m"] = 941,
-					["x"] = 0.124383000983477,
-					["y"] = 0.527730644585658,
-					["f"] = 0,
-				}, -- [9]
-			},
-			[307924] = {
-				{
-					["m"] = 947,
-					["x"] = 0.376843284493062,
-					["y"] = 0.683197994805274,
-					["f"] = 0,
-				}, -- [1]
-				{
-					["m"] = 947,
-					["x"] = 0.378455222969625,
-					["y"] = 0.692399482003205,
-					["f"] = 0,
-				}, -- [2]
-				{
-					["m"] = 947,
-					["x"] = 0.38160447761194,
-					["y"] = 0.673638297546717,
-					["f"] = 0,
-				}, -- [3]
-				{
-					["m"] = 947,
-					["x"] = 0.373679105844071,
-					["y"] = 0.702026340659004,
-					["f"] = 0,
-				}, -- [4]
-				{
-					["m"] = 947,
-					["x"] = 0.376186566708693,
-					["y"] = 0.676548743186842,
-					["f"] = 0,
-				}, -- [5]
-				{
-					["m"] = 947,
-					["x"] = 0.374231344194555,
-					["y"] = 0.688503956988284,
-					["f"] = 0,
-				}, -- [6]
-				{
-					["m"] = 947,
-					["x"] = 0.371947761649516,
-					["y"] = 0.692668134424459,
-					["f"] = 0,
-				}, -- [7]
-				{
-					["m"] = 947,
-					["x"] = 0.381097015836346,
-					["y"] = 0.690429330085901,
-					["f"] = 0,
-				}, -- [8]
 			},
 		},
-	},
-	["profileKeys"] = {
-		["Caldar - Feathermoon"] = "Default",
-		["Nothing - Feathermoon"] = "Default",
-		["Calastir - Kirin Tor"] = "Default",
-		["Failure - Feathermoon"] = "Default",
-		["Zenax - Scarlet Crusade"] = "Default",
-		["Censure - Kirin Tor"] = "Default",
-		["Calastir - Scarlet Crusade"] = "Default",
-		["Sinister - Feathermoon"] = "Default",
 	},
 	["profiles"] = {
 		["Default"] = {
