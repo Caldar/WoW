@@ -91,12 +91,13 @@ StatBlockCoreDB = {
 					["posx"] = 982.399978041649,
 					["posy"] = 36.4799991846085,
 				},
-				["LoggerHeadLite"] = {
+				["AdiBags"] = {
 					["notipincombat"] = true,
 					["showtext"] = false,
 					["lock"] = true,
-					["posx"] = 1050.45325777054,
-					["posy"] = 16.9600704216941,
+					["enabled"] = false,
+					["posx"] = 1060.79911691429,
+					["posy"] = 36.4799991846085,
 				},
 				["Archy"] = {
 					["notipincombat"] = true,
@@ -112,12 +113,12 @@ StatBlockCoreDB = {
 					["posx"] = 1023.03989900828,
 					["showtext"] = false,
 				},
-				["AdiBags"] = {
+				["LoggerHeadLite"] = {
 					["notipincombat"] = true,
 					["showtext"] = false,
 					["lock"] = true,
-					["posx"] = 1060.79911691429,
-					["posy"] = 36.4799991846085,
+					["posx"] = 1050.45325777054,
+					["posy"] = 16.9600704216941,
 				},
 			},
 			["globalAlpha"] = 0,

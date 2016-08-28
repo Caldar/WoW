@@ -4,12 +4,12 @@ TEST_CONFIG = {
 		["Feathermoon"] = {
 			["Alliance"] = {
 				["Sinister"] = {
-					["money_on_first_login_today"] = 10163703,
+					["money_on_first_login_today"] = 10296087,
 					["money_on_log_out"] = 10296087,
-					["CLASS"] = "SHAMAN",
-					["money_on_session_start"] = 10163703,
+					["lastLoginDate"] = 20160813,
+					["money_on_session_start"] = 10296087,
 					["money_on_first_weekday"] = 10163703,
-					["lastLoginDate"] = 20160805,
+					["CLASS"] = "SHAMAN",
 				},
 			},
 		},

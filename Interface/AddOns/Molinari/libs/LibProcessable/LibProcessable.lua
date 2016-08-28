@@ -1,4 +1,4 @@
-local MAJOR, MINOR = 'LibProcessable', 11
+local MAJOR, MINOR = 'LibProcessable', 13
 assert(LibStub, MAJOR .. ' requires LibStub')
 
 local lib, oldMinor = LibStub:NewLibrary(MAJOR, MINOR)
@@ -6,7 +6,7 @@ if(not lib) then
 	return
 end
 
-local itemClasses, hasEnchantingBuilding = {}
+local hasEnchantingBuilding
 local inscriptionSkill, jewelcraftingSkill, enchantingSkill, blacksmithingSkill
 
 local MILLING, MORTAR = 51005, 114942
@@ -327,19 +327,19 @@ function lib:IsDisenchantable(itemID, ignoreGarrison, ignoreGarrisonBuildingRequ
 	if(IsSpellKnown(DISENCHANTING)) then
 		local _, _, quality, level, _, type, _, _, _, _, _, class = GetItemInfo(itemID)
 		if(IsEquippableItem(itemID) and quality and level) then
-			local skillRequired = GetSkillRequired(class or itemClasses[type], quality, level)
+			local skillRequired = GetSkillRequired(class, quality, level)
 			return skillRequired and skillRequired <= enchantingSkill, skillRequired, enchantingSkill
 		end
 	elseif(not ignoreGarrison and (hasEnchantingBuilding or ignoreGarrisonBuildingRequirement)) then
 		local _, _, quality, level, _, type, _, _, _, _, _, class = GetItemInfo(itemID)
 		if(IsEquippableItem(itemID) and quality and level) then
-			local skillRequired = GetSkillRequired(class or itemClasses[type], quality, level)
+			local skillRequired = GetSkillRequired(class, quality, level)
 			return skillRequired and skillRequired == 0, skillRequired, enchantingSkill
 		end
 	end
 end
 
--- http://www.wowhead.com/items?filter=na=key;cr=86;crs=2;crv=0
+-- http://www.wowhead.com/items/name:key?filter=86;2;0
 local function GetSkeletonKey(pickLevel)
 	if(pickLevel > 425) then
 		return 82960, 500 -- Ghostly Skeleton Key
@@ -360,17 +360,24 @@ local function GetSkeletonKey(pickLevel)
 	end
 end
 
-local LOCKPICKING, BLACKSMITH = 1804, 2018
+-- http://www.wowhead.com/items/name:lock?filter=86;7;0
+local function GetJeweledLockpick(pickLevel)
+	if(pickLevel <= 750) then
+		return 130250, 1
+	end
+end
+
+local LOCKPICKING, BLACKSMITHING, JEWELCRAFTING = 1804, 2018, 25229
 --- API to verify if an item can be processed through the Lock Pick skill or with Blacksmithing skeleton keys.
 -- @name LibProcessable:IsOpenable
--- @usage LibStub('LibProcessable'):IsOpenable(itemID[, ignoreSkeletonKeys])
+-- @usage LibStub('LibProcessable'):IsOpenable(itemID[, ignoreProfessionKeys])
 -- @param itemID The itemID of the item to check against
--- @param ignoreSkeletonKeys Ignore checking for Skeleton Keys
+-- @param ignoreProfessionKeys Ignore checking for Skeleton Keys
 -- @return isOpenable Boolean indicating if the player can process the item
 -- @return skillRequired Number representing the required skill in Lockpicking or Blacksmithing to process the item
 -- @return skillLevel Number representing the player's skill in Lockpicking or Blacksmithing
 -- @return skeletonKeyItemID Number representing the Skeleton Key, if used
-function lib:IsOpenable(itemID, ignoreSkeletonKeys)
+function lib:IsOpenable(itemID, ignoreProfessionKeys)
 	assert(tonumber(itemID), 'itemID needs to be a number or convertable to a number')
 	itemID = tonumber(itemID)
 
@@ -378,14 +385,18 @@ function lib:IsOpenable(itemID, ignoreSkeletonKeys)
 	if(IsSpellKnown(LOCKPICKING)) then
 		local playerSkill = UnitLevel('player') * 5
 		return pickLevel and pickLevel <= playerSkill, pickLevel, playerSkill
-	elseif(not ignoreSkeletonKeys and pickLevel and GetSpellBookItemInfo(GetSpellInfo(BLACKSMITH))) then
-		local skeletonKeyID, skillRequired = GetSkeletonKey(pickLevel)
-		return skillRequired <= blacksmithingSkill, skillRequired, blacksmithingSkill, skeletonKeyID
+	elseif(not ignoreProfessionKeys and pickLevel) then
+		if(GetSpellBookItemInfo(GetSpellInfo(BLACKSMITHING))) then
+			local skeletonKeyID, skillRequired = GetSkeletonKey(pickLevel)
+			return skillRequired <= blacksmithingSkill, skillRequired, blacksmithingSkill, skeletonKeyID
+		elseif(GetSpellBookItemInfo(GetSpellInfo(JEWELCRAFTING))) then
+			local lockpickID, skillRequired = GetJeweledLockpick(pickLevel)
+			return skillRequired <= jewelcraftingSkill, skillRequired, jewelcraftingSkill, lockpickID
+		end
 	end
 end
 
 local Handler = CreateFrame('Frame')
-Handler:RegisterEvent('PLAYER_LOGIN')
 Handler:RegisterEvent('SKILL_LINES_CHANGED')
 Handler:RegisterEvent('GARRISON_BUILDING_PLACED')
 Handler:RegisterEvent('GARRISON_BUILDING_REMOVED')
@@ -429,12 +440,6 @@ Handler:SetScript('OnEvent', function(self, event, ...)
 		local _, buildingID = ...
 		if(lib.enchantingBuildings[buildingID]) then
 			hasEnchantingBuilding = false
-		end
-	elseif(event == 'PLAYER_LOGIN') then
-		if(select(4, GetBuildInfo()) < 70000) then
-			local weapon, armor = GetAuctionItemClasses()
-			itemClasses[weapon] = 2
-			itemClasses[armor] = 4
 		end
 	end
 end)
@@ -536,7 +541,7 @@ lib.ores = {
 	[123919] = 0, -- Felslate
 }
 
--- http://www.wowhead.com/items?filter=cr=10:161:128;crs=1:1:1
+-- http://www.wowhead.com/items?filter=10:161:128;1:1:1;::
 lib.containers = {
 	[4632] = 1, -- Ornate Bronze Lockbox
 	[6354] = 1, -- Small Locked Chest

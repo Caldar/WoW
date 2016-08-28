@@ -8,23 +8,53 @@ end})
 
 local locale = GetLocale()
 if(locale == 'deDE') then
-	--@localization(locale="deDE", format="lua_additive_table")@
+	L["Drag items into the window below to add more."] = "Ziehe Gegenstände in das Fenster, um sie hinzuzufügen."
+L["Items blacklisted from potentially being processed."] = "Ausgeschlossene Gegenstände, die niemals verarbeitet werden."
+L["Right-click to remove item"] = "Rechtsklicke, um den Gegenstand zu entfernen"
+
 elseif(locale == 'esES') then
-	--@localization(locale="esES", format="lua_additive_table")@
+	-- L["Drag items into the window below to add more."] = ""
+-- L["Items blacklisted from potentially being processed."] = ""
+-- L["Right-click to remove item"] = ""
+
 elseif(locale == 'esMX') then
-	--@localization(locale="esMX", format="lua_additive_table")@
+	-- L["Drag items into the window below to add more."] = ""
+-- L["Items blacklisted from potentially being processed."] = ""
+-- L["Right-click to remove item"] = ""
+
 elseif(locale == 'frFR') then
-	--@localization(locale="frFR", format="lua_additive_table")@
+	-- L["Drag items into the window below to add more."] = ""
+-- L["Items blacklisted from potentially being processed."] = ""
+-- L["Right-click to remove item"] = ""
+
 elseif(locale == 'itIT') then
-	--@localization(locale="itIT", format="lua_additive_table")@
+	-- L["Drag items into the window below to add more."] = ""
+-- L["Items blacklisted from potentially being processed."] = ""
+-- L["Right-click to remove item"] = ""
+
 elseif(locale == 'koKR') then
-	--@localization(locale="koKR", format="lua_additive_table")@
+	-- L["Drag items into the window below to add more."] = ""
+-- L["Items blacklisted from potentially being processed."] = ""
+-- L["Right-click to remove item"] = ""
+
 elseif(locale == 'ptBR') then
-	--@localization(locale="ptBR", format="lua_additive_table")@
+	-- L["Drag items into the window below to add more."] = ""
+-- L["Items blacklisted from potentially being processed."] = ""
+-- L["Right-click to remove item"] = ""
+
 elseif(locale == 'ruRU') then
-	--@localization(locale="ruRU", format="lua_additive_table")@
+	-- L["Drag items into the window below to add more."] = ""
+-- L["Items blacklisted from potentially being processed."] = ""
+-- L["Right-click to remove item"] = ""
+
 elseif(locale == 'zhCN') then
-	--@localization(locale="zhCN", format="lua_additive_table")@
+	-- L["Drag items into the window below to add more."] = ""
+-- L["Items blacklisted from potentially being processed."] = ""
+-- L["Right-click to remove item"] = ""
+
 elseif(locale == 'zhTW') then
-	--@localization(locale="zhTW", format="lua_additive_table")@
+	L["Drag items into the window below to add more."] = "將物品拖曳到下方的視窗內，加入到忽略清單。"
+L["Items blacklisted from potentially being processed."] = "請將要避免不小心被處理掉的物品加入忽略清單。"
+L["Right-click to remove item"] = "點一下右鍵移除物品"
+
 end

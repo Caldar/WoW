@@ -4,21 +4,21 @@ CliqueDB3 = {
 	["profileKeys"] = {
 		["Caldar - Feathermoon"] = "Caldar - Feathermoon",
 		["Nothing - Feathermoon"] = "Nothing - Feathermoon",
-		["Calastir - Kirin Tor"] = "Calastir - Kirin Tor",
+		["Sinister - Feathermoon"] = "Sinister - Feathermoon",
 		["Failure - Feathermoon"] = "Failure - Feathermoon",
 		["Zenax - Scarlet Crusade"] = "Zenax - Scarlet Crusade",
 		["Censure - Kirin Tor"] = "Censure - Kirin Tor",
 		["Calastir - Scarlet Crusade"] = "Calastir - Scarlet Crusade",
-		["Sinister - Feathermoon"] = "Sinister - Feathermoon",
+		["Calastir - Kirin Tor"] = "Calastir - Kirin Tor",
 	},
 	["profiles"] = {
 		["Caldar - Feathermoon"] = {
 			["bindings"] = {
 				{
+					["type"] = "target",
 					["sets"] = {
 						["default"] = true,
 					},
-					["type"] = "target",
 					["key"] = "BUTTON1",
 					["unit"] = "mouseover",
 				}, -- [1]
@@ -34,10 +34,10 @@ CliqueDB3 = {
 		["Nothing - Feathermoon"] = {
 			["bindings"] = {
 				{
+					["type"] = "target",
 					["sets"] = {
 						["default"] = true,
 					},
-					["type"] = "target",
 					["key"] = "BUTTON1",
 					["unit"] = "mouseover",
 				}, -- [1]
@@ -50,7 +50,7 @@ CliqueDB3 = {
 				}, -- [2]
 			},
 		},
-		["Calastir - Kirin Tor"] = {
+		["Sinister - Feathermoon"] = {
 			["bindings"] = {
 				{
 					["sets"] = {
@@ -72,10 +72,10 @@ CliqueDB3 = {
 		["Failure - Feathermoon"] = {
 			["bindings"] = {
 				{
+					["type"] = "target",
 					["sets"] = {
 						["default"] = true,
 					},
-					["type"] = "target",
 					["key"] = "BUTTON1",
 					["unit"] = "mouseover",
 				}, -- [1]
@@ -91,10 +91,10 @@ CliqueDB3 = {
 		["Zenax - Scarlet Crusade"] = {
 			["bindings"] = {
 				{
-					["type"] = "target",
 					["sets"] = {
 						["default"] = true,
 					},
+					["type"] = "target",
 					["key"] = "BUTTON1",
 					["unit"] = "mouseover",
 				}, -- [1]
@@ -110,10 +110,10 @@ CliqueDB3 = {
 		["Censure - Kirin Tor"] = {
 			["bindings"] = {
 				{
-					["type"] = "target",
 					["sets"] = {
 						["default"] = true,
 					},
+					["type"] = "target",
 					["key"] = "BUTTON1",
 					["unit"] = "mouseover",
 				}, -- [1]
@@ -129,10 +129,10 @@ CliqueDB3 = {
 		["Calastir - Scarlet Crusade"] = {
 			["bindings"] = {
 				{
+					["type"] = "target",
 					["sets"] = {
 						["default"] = true,
 					},
-					["type"] = "target",
 					["key"] = "BUTTON1",
 					["unit"] = "mouseover",
 				}, -- [1]
@@ -145,7 +145,7 @@ CliqueDB3 = {
 				}, -- [2]
 			},
 		},
-		["Sinister - Feathermoon"] = {
+		["Calastir - Kirin Tor"] = {
 			["bindings"] = {
 				{
 					["type"] = "target",

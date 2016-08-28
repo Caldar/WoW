@@ -1656,7 +1656,12 @@ function WeakAuras.Modernize(data)
     if not data.fontFlags then
         data.fontFlags = "OUTLINE";
     end
+  end
 
+  if data.regionType == "text" then
+    if (type(data.outline) == "boolean") then
+      data.outline = data.outline and "OUTLINE" or "None";
+    end
   end
 
   if (not data.activeTriggerMode) then
@@ -3225,15 +3230,18 @@ local function applyToTriggerStateTriggers(stateShown, id, triggernum)
 end
 
 local function evaluateTriggerStateTriggers(id)
+  local result = false;
+  WeakAuras.ActivateAuraEnvironment(id);
   if(triggerState[id].disjunctive == "any" and triggerState[id].triggerCount > 0
       or (triggerState[id].disjunctive == "all" and triggerState[id].triggerCount == triggerState[id].numTriggers)
       or (triggerState[id].disjunctive == "custom"
           and triggerState[id].triggerLogicFunc
           and triggerState[id].triggerLogicFunc(triggerState[id].triggers))
     ) then
-    return true;
+    result = true;
   end
-  return false;
+  WeakAuras.ActivateAuraEnvironment(nil);
+  return result;
 end
 
 local function ApplyStatesToRegions(id, triggernum, states)

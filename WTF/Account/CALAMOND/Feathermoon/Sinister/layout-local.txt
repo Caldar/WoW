@@ -1,4 +1,11 @@
 Version: 1
+Frame: LSToastAnchor
+FrameLevel: 1
+Anchor: BOTTOMRIGHT
+X: -64
+Y: 283
+W: 234
+H: 58
 Frame: ColorPickerFrame
 FrameLevel: 22
 Anchor: CENTER
