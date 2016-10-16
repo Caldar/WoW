@@ -1,0 +1,20 @@
+
+TomTomDB = {
+	["profileKeys"] = {
+		["Sinister - Feathermoon"] = "Default",
+	},
+	["profiles"] = {
+		["Default"] = {
+		},
+	},
+}
+TomTomWaypoints = nil
+TomTomWaypointsMF = {
+	["profileKeys"] = {
+		["Sinister - Feathermoon"] = "Sinister - Feathermoon",
+	},
+	["profiles"] = {
+		["Sinister - Feathermoon"] = {
+		},
+	},
+}

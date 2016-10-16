@@ -6,10 +6,10 @@ X: 0
 Y: 0
 W: 365
 H: 240
-Frame: DJBagContainer_DJBagsBagCategoryContainer
-FrameLevel: 1
-Anchor: RIGHT
-X: -200
-Y: -127
-W: 307
-H: 546
+Frame: BagSync_MinimapButton
+FrameLevel: 5
+Anchor: TOPRIGHT
+X: -128
+Y: -164
+W: 32
+H: 32

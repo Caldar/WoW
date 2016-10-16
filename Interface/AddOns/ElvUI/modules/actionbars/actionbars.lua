@@ -878,7 +878,8 @@ function AB:UpdateButtonConfig(bar, buttonName)
 	SetModifiedClick("PICKUPACTION", self.db.movementModifier)
 	bar.buttonConfig.colors.range = E:GetColorTable(self.db.noRangeColor)
 	bar.buttonConfig.colors.mana = E:GetColorTable(self.db.noPowerColor)
-	bar.buttonConfig.colors.hp = E:GetColorTable(self.db.noPowerColor)
+	bar.buttonConfig.colors.usable = E:GetColorTable(self.db.usableColor)
+	bar.buttonConfig.colors.notUsable = E:GetColorTable(self.db.notUsableColor)
 
 	for i, button in pairs(bar.buttons) do
 		bar.buttonConfig.keyBoundTarget = format(buttonName.."%d", i)
@@ -1076,6 +1077,15 @@ function AB:VehicleFix()
 		bar.backdrop:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -offset, offset)
 	end
 end
+
+local color
+--Update text color when button is updated
+function AB:LAB_ButtonUpdate(button)
+	color = AB.db.fontColor
+	button.Count:SetTextColor(color.r, color.g, color.b)
+	button.HotKey:SetTextColor(color.r, color.g, color.b)
+end
+LAB.RegisterCallback(AB, "OnButtonUpdate", AB.LAB_ButtonUpdate)
 
 function AB:Initialize()
 	self.db = E.db.actionbar

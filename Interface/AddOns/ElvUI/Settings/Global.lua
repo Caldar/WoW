@@ -3,6 +3,7 @@
 --Global Settings
 G['general'] = {
 	["autoScale"] = true,
+	["minUiScale"] = 0.64,
 	["eyefinity"] = false,
 	['smallerWorldMap'] = true,
 	["fadeMapWhenMoving"] = true,
@@ -15,6 +16,7 @@ G['general'] = {
 	},
 	["disableTutorialButtons"] = true,
 	["animateConfig"] = true,
+	["commandBarSetting"] = "ENABLED_RESIZEPARENT",
 }
 
 G['classtimer'] = {}
@@ -24,4 +26,12 @@ G["nameplate"] = {}
 G['unitframe'] = {
 	['aurafilters'] = {},
 	['buffwatch'] = {},
+}
+
+G["bags"] = {
+	["ignoredItems"] = {},
+}
+
+G["datatexts"] = {
+	["customCurrencies"] = {},
 }

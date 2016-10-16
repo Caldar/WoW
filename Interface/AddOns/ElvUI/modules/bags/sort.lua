@@ -8,7 +8,7 @@ local ipairs, pairs, tonumber, select, unpack = ipairs, pairs, tonumber, select,
 local tinsert, tremove, tsort, twipe = table.insert, table.remove, table.sort, table.wipe
 local floor = math.floor
 local band = bit.band
-local match, split, gmatch, find = string.match, string.split, string.gmatch, string.find
+local match, gmatch, find = string.match, string.gmatch, string.find
 --WoW API / Variables
 local GetTime = GetTime
 local InCombatLockdown = InCombatLockdown
@@ -512,11 +512,9 @@ local blackList = {}
 local blackListQueries = {}
 
 local function buildBlacklist(...)
-	twipe(blackList)
-	twipe(blackListQueries)
-	for index = 1, select('#', ...) do
-		local entry = select(index, ...)
+	for entry in pairs(...) do
 		local itemName = GetItemInfo(entry)
+
 		if itemName then
 			blackList[itemName] = true
 		elseif entry ~= "" then
@@ -532,12 +530,14 @@ end
 function B.Sort(bags, sorter, invertDirection)
 	if not sorter then sorter = invertDirection and ReverseSort or DefaultSort end
 
+	--Wipe tables before we begin
+	twipe(blackList)
+	twipe(blackListQueries)
 	twipe(blackListedSlots)
 
-	local ignoreItems = B.db.ignoreItems
-	ignoreItems = ignoreItems:gsub(',%s', ',') --remove spaces that follow a comma
-	ignoreItems = ignoreItems:gsub("\n", "") --remove accidental newlines
-	buildBlacklist(split(",", ignoreItems))
+	--Build blacklist of items based on the profile and global list
+	buildBlacklist(B.db.ignoredItems)
+	buildBlacklist(E.global.bags.ignoredItems)
 
 	for i, bag, slot in B.IterateBags(bags, nil, 'both') do
 		local bagSlot = B:Encode_BagSlot(bag, slot)
@@ -614,11 +614,13 @@ end
 function B.Fill(sourceBags, targetBags, reverse, canMove)
 	if not canMove then canMove = DefaultCanMove end
 
+	--Wipe tables before we begin
+	twipe(blackList)
 	twipe(blackListedSlots)
 
-	local ignoreItems = B.db.ignoreItems
-	ignoreItems = ignoreItems:gsub(',%s', ',') --remove spaces that follow a comma
-	buildBlacklist(split(",", ignoreItems))
+	--Build blacklist of items based on the profile and global list
+	buildBlacklist(B.db.ignoredItems)
+	buildBlacklist(E.global.bags.ignoredItems)
 
 	for _, bag, slot in B.IterateBags(targetBags, reverse, "deposit") do
 		local bagSlot = B:Encode_BagSlot(bag, slot)

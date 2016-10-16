@@ -1,6 +1,5 @@
 ﻿local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local mod = E:NewModule('NamePlates', 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0')
-local LSM = LibStub("LibSharedMedia-3.0")
 
 --Cache global variables
 --Lua functions
@@ -225,7 +224,8 @@ function mod:SetTargetFrame(frame)
 			self:ConfigureElement_PowerBar(frame)
 			self:ConfigureElement_CastBar(frame)
 			self:ConfigureElement_Glow(frame)
-
+			self:ConfigureElement_Elite(frame)
+			self:ConfigureElement_Detection(frame)
 			self:ConfigureElement_Level(frame)
 			self:ConfigureElement_Name(frame)
 			self:ConfigureElement_NPCTitle(frame)
@@ -260,11 +260,11 @@ function mod:SetTargetFrame(frame)
 
 	mod:ClassBar_Update(frame)
 
-	--WoW shows nameplates for any unit which is in combat with you, even when nameplateShowAll is set to 0
-	if frame.isTarget then
-		frame:Show()
-	elseif self.db.onlyShowTarget then
+	if (self.db.displayStyle == "TARGET" and not frame.isTarget and frame.UnitType ~= "PLAYER") then
+		--Hide if we only allow our target to be displayed and the frame is not our current target and the frame is not the player nameplate
 		frame:Hide()
+	else
+		frame:Show()
 	end
 end
 
@@ -309,7 +309,7 @@ function mod:CheckUnitType(frame)
 	end
 end
 
-function mod:NAME_PLATE_UNIT_ADDED(event, unit, frame)
+function mod:NAME_PLATE_UNIT_ADDED(_, unit, frame)
 	local frame = frame or self:GetNamePlateForUnit(unit);
 	frame.UnitFrame.unit = unit
 	frame.UnitFrame.displayedUnit = unit
@@ -340,7 +340,7 @@ function mod:NAME_PLATE_UNIT_ADDED(event, unit, frame)
 		mod.PlayerFrame = frame
 	end
 
-	if(self.db.units[frame.UnitFrame.UnitType].healthbar.enable or self.db.onlyShowTarget) then
+	if(self.db.units[frame.UnitFrame.UnitType].healthbar.enable or self.db.displayStyle ~= "ALL") then
 		self:ConfigureElement_HealthBar(frame.UnitFrame)
 		self:ConfigureElement_PowerBar(frame.UnitFrame)
 		self:ConfigureElement_CastBar(frame.UnitFrame)
@@ -360,18 +360,20 @@ function mod:NAME_PLATE_UNIT_ADDED(event, unit, frame)
 	self:ConfigureElement_Level(frame.UnitFrame)
 	self:ConfigureElement_Name(frame.UnitFrame)
 	self:ConfigureElement_NPCTitle(frame.UnitFrame)
+	self:ConfigureElement_Elite(frame.UnitFrame)
+	self:ConfigureElement_Detection(frame.UnitFrame)
 	self:RegisterEvents(frame.UnitFrame, unit)
 	self:UpdateElement_All(frame.UnitFrame, unit)
 
-	-- WoW shows nameplates for all units that are in combat with you, even if nameplateShowAll is set to 0.
-	if ((self.db.onlyShowTarget and frame.UnitFrame.isTarget) or not self.db.onlyShowTarget) then
-		frame.UnitFrame:Show()
-	else
+	if (self.db.displayStyle == "TARGET" and not frame.UnitFrame.isTarget and frame.UnitFrame.UnitType ~= "PLAYER") then
+		--Hide if we only allow our target to be displayed and the frame is not our current target and the frame is not the player nameplate
 		frame.UnitFrame:Hide()
+	else
+		frame.UnitFrame:Show()
 	end
 end
 
-function mod:NAME_PLATE_UNIT_REMOVED(event, unit, frame, ...)
+function mod:NAME_PLATE_UNIT_REMOVED(_, unit, frame)
 	local frame = frame or self:GetNamePlateForUnit(unit);
 	frame.UnitFrame.unit = nil
 
@@ -398,6 +400,8 @@ function mod:NAME_PLATE_UNIT_REMOVED(event, unit, frame, ...)
 	frame.UnitFrame.Name:SetText("")
 	frame.UnitFrame.NPCTitle:ClearAllPoints()
 	frame.UnitFrame.NPCTitle:SetText("")
+	frame.UnitFrame.Elite:Hide()
+	frame.UnitFrame.DetectionModel:Hide()
 	frame.UnitFrame:Hide()
 	frame.UnitFrame.isTarget = nil
 	frame.UnitFrame.displayedUnit = nil
@@ -422,6 +426,10 @@ end
 
 function mod:ConfigureAll()
 	if E.private.nameplates.enable ~= true then return; end
+
+	--We don't allow player nameplate health to be disabled
+	self.db.units.PLAYER.healthbar.enable = true
+
 	self:ForEachPlate("UpdateAllFrame")
 	self:UpdateCVars()
 	self:TogglePlayerDisplayType()
@@ -437,8 +445,8 @@ end
 
 function mod:SetBaseNamePlateSize()
 	local self = mod
-	local baseWidth = self.db.units["ENEMY_NPC"].healthbar.width
-	local baseHeight = self.db.units["ENEMY_NPC"].castbar.height + self.db.units["ENEMY_NPC"].healthbar.height + 30
+	local baseWidth = self.db.clickableWidth
+	local baseHeight = self.db.clickableHeight
 	NamePlateDriverFrame:SetBaseNamePlateSize(baseWidth, baseHeight)
 	self.PlayerFrame__:SetSize(baseWidth, baseHeight)
 end
@@ -471,11 +479,10 @@ function mod:UpdateInVehicle(frame, noEvents)
 end
 
 function mod:UpdateElement_All(frame, unit, noTargetFrame)
-	if(self.db.units[frame.UnitType].healthbar.enable or self.db.onlyShowTarget or frame.isTarget) then
+	if(self.db.units[frame.UnitType].healthbar.enable or (self.db.displayStyle ~= "ALL") or frame.isTarget) then
 		mod:UpdateElement_MaxHealth(frame)
 		mod:UpdateElement_Health(frame)
 		mod:UpdateElement_HealthColor(frame)
-
 		mod:UpdateElement_Glow(frame)
 		mod:UpdateElement_Cast(frame)
 		mod:UpdateElement_Auras(frame)
@@ -492,13 +499,15 @@ function mod:UpdateElement_All(frame, unit, noTargetFrame)
 	mod:UpdateElement_Name(frame)
 	mod:UpdateElement_NPCTitle(frame)
 	mod:UpdateElement_Level(frame)
+	mod:UpdateElement_Elite(frame)
+	mod:UpdateElement_Detection(frame)
 
 	if(not noTargetFrame) then --infinite loop lol
 		mod:SetTargetFrame(frame)
 	end
 end
 
-function mod:NAME_PLATE_CREATED(event, frame)
+function mod:NAME_PLATE_CREATED(_, frame)
 	frame.UnitFrame = CreateFrame("BUTTON", frame:GetName().."UnitFrame", UIParent);
 	frame.UnitFrame:EnableMouse(false);
 	frame.UnitFrame:SetAllPoints(frame)
@@ -512,10 +521,12 @@ function mod:NAME_PLATE_CREATED(event, frame)
 	frame.UnitFrame.Name = self:ConstructElement_Name(frame.UnitFrame)
 	frame.UnitFrame.NPCTitle = self:ConstructElement_NPCTitle(frame.UnitFrame)
 	frame.UnitFrame.Glow = self:ConstructElement_Glow(frame.UnitFrame)
-	frame.UnitFrame.Buffs = self:ConstructElement_Auras(frame.UnitFrame, 5, "LEFT")
-	frame.UnitFrame.Debuffs = self:ConstructElement_Auras(frame.UnitFrame, 5, "RIGHT")
+	frame.UnitFrame.Buffs = self:ConstructElement_Auras(frame.UnitFrame, "LEFT")
+	frame.UnitFrame.Debuffs = self:ConstructElement_Auras(frame.UnitFrame, "RIGHT")
 	frame.UnitFrame.HealerIcon = self:ConstructElement_HealerIcon(frame.UnitFrame)
 	frame.UnitFrame.RaidIcon = self:ConstructElement_RaidIcon(frame.UnitFrame)
+	frame.UnitFrame.Elite = self:ConstructElement_Elite(frame.UnitFrame)
+	frame.UnitFrame.DetectionModel = self:ConstructElement_Detection(frame.UnitFrame)
 end
 
 function mod:OnEvent(event, unit, ...)
@@ -576,7 +587,6 @@ function mod:OnEvent(event, unit, ...)
 end
 
 function mod:RegisterEvents(frame, unit)
-	local unit = frame.unit;
 	local displayedUnit;
 	if ( unit ~= frame.displayedUnit ) then
 		displayedUnit = frame.displayedUnit;
@@ -646,7 +656,7 @@ end
 function mod:UpdateCVars()
 	E:LockCVar("nameplateShowSelf", (self.db.units.PLAYER.alwaysShow == true or self.db.units.PLAYER.enable ~= true) and "0" or "1")
 	E:LockCVar("nameplateMotion", self.db.motionType == "STACKED" and "1" or "0")
-	E:LockCVar("nameplateShowAll", self.db.onlyShowTarget == true and "0" or "1")
+	E:LockCVar("nameplateShowAll", self.db.displayStyle ~= "ALL" and "0" or "1")
 	E:LockCVar("nameplateShowFriendlyMinions", self.db.units.FRIENDLY_PLAYER.minions == true and "1" or "0")
 	E:LockCVar("nameplateShowEnemyMinions", self.db.units.ENEMY_PLAYER.minions == true and "1" or "0")
 	E:LockCVar("nameplateShowEnemyMinus", self.db.units.ENEMY_NPC.minors == true and "1" or "0")
@@ -694,7 +704,7 @@ function mod:TogglePlayerDisplayType()
 	end
 end
 
-function mod:UpdateVehicleStatus(event, unit)
+function mod:UpdateVehicleStatus()
 	if ( UnitHasVehicleUI("player") ) then
 		self.playerUnitToken = "vehicle"
 	else
@@ -737,6 +747,9 @@ end
 function mod:Initialize()
 	self.db = E.db["nameplates"]
 	if E.private["nameplates"].enable ~= true then return end
+
+	--We don't allow player nameplate health to be disabled
+	self.db.units.PLAYER.healthbar.enable = true
 
 	self:UpdateVehicleStatus()
 

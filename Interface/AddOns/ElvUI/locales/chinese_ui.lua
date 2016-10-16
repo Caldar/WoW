@@ -3,9 +3,6 @@ local AceLocale = LibStub:GetLibrary("AceLocale-3.0")
 local L = AceLocale:NewLocale("ElvUI", "zhCN")
 if not L then return end
 
---TEMP
-L["A taint has occured that is preventing you from using the queue system. Please reload your user interface and try again."] = "发生一个错误导致你无法使用队列系统,请重新加载你的用户界面,然后再试一次."
-
 --*_ADDON locales
 L["INCOMPATIBLE_ADDON"] = "插件 %s 不相容于 ElvUI 的 %s 模组。请停用不相容的插件，或停用模组。"
 
@@ -64,6 +61,11 @@ L["says"] = "说"
 L["whispers"] = "密语"
 L["yells"] = "大喊"
 
+--DataBars
+L["Current Level:"] = "当前等级:"
+L["Honor XP:"] = "荣誉值:"
+L["Honor Remaining:"] = "荣誉值剩余:"
+
 --DataTexts
 L["(Hold Shift) Memory Usage"] = "(按住Shift) 内存占用"
 L["AP"] = "攻击强度"
@@ -85,7 +87,7 @@ L["Earned:"] = "赚取:"
 L["Feet"] = "脚"
 L["Friends List"] = "好友列表"
 L["Friends"] = "好友" --Also in Skins
-L["Gold:"] = true;
+L["Gold:"] = "金:"
 L["goldabbrev"] = "|cffffd700金|r"
 L["Hands"] = "手"
 L["Head"] = "头"
@@ -105,6 +107,7 @@ L["Offhand"] = "副手"
 L["Profit:"] = "利润:"
 L["Reset Data: Hold Shift + Right Click"] = "重置数据: 按住 Shift + 右键点击"
 L["Saved Raid(s)"] = "已有进度的副本"
+L["Saved Dungeon(s)"] = true;
 L["Server: "] = "服务器: "
 L["Session:"] = "本次登入:"
 L["Shoulder"] = "肩"
@@ -121,6 +124,7 @@ L["Waist"] = "腰"
 L["Wrist"] = "护腕"
 L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = "|cffFFFFFF左键点击:|r 更改当前专精"
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = "|cffFFFFFF右键点击:|r 更改拾取专精"
+L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = "|cffFFFFFFShift + 左键:|r 显示专精天赋框架"
 
 --DebugTools
 L["%s: %s tried to call the protected function '%s'."] = "%s: %s 尝试调用保护函数 '%s'."
@@ -144,10 +148,10 @@ L["Auras Set"] = "光环样式设置"
 L["Auras"] = "光环"
 L["Caster DPS"] = "法系输出"
 L["Chat Set"] = "对话设定"
-L["Chat"] = "对话设定"
+L["Chat"] = "聊天框设定"
 L["Choose a theme layout you wish to use for your initial setup."] = "为你的个人设置选择一个你喜欢的皮肤主题."
 L["Classic"] = "经典"
-L["Click the button below to resize your chat frames, unitframes, and reposition your actionbars."] = "点击下面的按钮调整对话框、单位框架的尺寸，以及移动动作条位置"
+L["Click the button below to resize your chat frames, unitframes, and reposition your actionbars."] = "点击下面的按钮调整聊天框、单位框架的尺寸，以及移动动作条位置"
 L["Config Mode:"] = "设置模式:"
 L["CVars Set"] = "参数设定"
 L["CVars"] = "参数"
@@ -170,7 +174,6 @@ L["Layout"] = "界面布局"
 L["Lock"] = "锁定"
 L["Low Resolution"] = "低分辨率"
 L["low"] = "低"
-L["Movers unlocked. Move them now and click Lock when you are done."] = "解除框架移动锁定. 现在可以移动它们, 移好后请点击「锁定」."
 L["Nudge"] = "微调"
 L["Physical DPS"] = "物理输出"
 L["Please click the button below so you can setup variables and ReloadUI."] = "请按下方按钮设定变数并重载介面。"
@@ -179,18 +182,18 @@ L["Please press the continue button to go onto the next step."] = "请按继续�
 L["Resolution Style Set"] = "分辨率样式设置"
 L["Resolution"] = "分辨率"
 L["Select the type of aura system you want to use with ElvUI's unitframes. Set to Aura Bar & Icons to use both aura bars and icons, set to icons only to only see icons."] = true;
-L["Setup Chat"] = "设定对话视窗"
+L["Setup Chat"] = "设定聊天框"
 L["Setup CVars"] = "设定参数"
 L["Skip Process"] = "略过"
 L["Sticky Frames"] = "框架依附"
 L["Tank"] = "坦克"
 L["The chat windows function the same as Blizzard standard chat windows, you can right click the tabs and drag them around, rename, etc. Please click the button below to setup your chat windows."] = "对话视窗与 WOW 原始对话视窗的操作方式相同，你可以拖拉、移动分页或重新命名分页。请按下方按钮以设定对话视窗。"
-L["The in-game configuration menu can be accesses by typing the /ec command or by clicking the 'C' button on the minimap. Press the button below if you wish to skip the installation process."] = "若要进入内建设定选单，请输入 /ec，或者按一下小地图旁的 C 按钮。若要略过安装程序，请按下方按钮。"
+L["The in-game configuration menu can be accessed by typing the /ec command or by clicking the 'C' button on the minimap. Press the button below if you wish to skip the installation process."] = "若要进入内建设定选单，请输入 /ec，或者按一下小地图旁的 C 按钮。若要略过安装程序，请按下方按钮。"
 L["Theme Set"] = "主题设置"
 L["Theme Setup"] = "主题安装"
 L["This install process will help you learn some of the features in ElvUI has to offer and also prepare your user interface for usage."] = "此安装程序有助你了解 ElvUI 部份功能，并可协助你预先设定 UI。"
 L["This is completely optional."] = "这是可选项。"
-L["This part of the installation process sets up your chat windows names, positions and colors."] = "此安装步骤将会设定对话视窗的名称、位置和颜色。"
+L["This part of the installation process sets up your chat windows names, positions and colors."] = "此安装步骤将会设定聊天框的名称、位置和颜色。"
 L["This part of the installation process sets up your World of Warcraft default options it is recommended you should do this step for everything to behave properly."] = "此安装步骤将会设定 WOW 预设选项，建议你执行此步骤，以确保功能均可正常运作。"
 L["This resolution doesn't require that you change settings for the UI to fit on your screen."] = "这个分辨率不需要你改动任何设置以适应你的屏幕。"
 L["This resolution requires that you change some settings to get everything to fit on your screen."] = "这个分辨率需要你改变一些设置才能适应你的屏幕。"
@@ -217,13 +220,13 @@ L["iLvl"] = "装等" --Column header in raidbrowser
 L["Important Group Members:"] = "重要小队成员"
 L["Left Click:"] = "鼠标左键："
 L["Raid Browser"] = true; -- Minimap middle click menu
-L["Raid Menu"] = "团队选单"
+L["Raid Menu"] = "团队菜单"
 L["Remaining:"] = "剩余:"
 L["Rested:"] = "休息:"
 L["Right Click:"] = "鼠标右键："
 L["Show BG Texts"] = "显示战场资讯文字"
 L["Talent Spec"] = true; --Column header in raidbrowser
-L["Toggle Chat Frame"] = "开关对话框架"
+L["Toggle Chat Frame"] = "开关聊天框架"
 L["Toggle Configuration"] = "设置开关"
 L["XP:"] = "经验:"
 L["You don't have permission to mark targets."] = "你没有标记目标的权限"
@@ -233,7 +236,12 @@ L["Alternative Power"] = "特殊能量条"
 L["Archeology Progress Bar"] = "考古进度条"
 L["Arena Frames"] = "竞技场框架"
 L["Artifact Bar"] = "神器能量条"
+L["Bag Mover (Grow Down)"] = "背包框架(向下)"
+L["Bag Mover (Grow Up)"] = "背包框架(向上)"
+L["Bag Mover"] = "背包框架"
 L["Bags"] = "背包" --Also in DataTexts
+L["Bank Mover (Grow Down)"] = "银行框架(向下)"
+L["Bank Mover (Grow Up)"] = "银行框架(向上)"
 L["Bar "] = "动作条 " --Also in ActionBars
 L["BNet Frame"] = "战网提示资讯"
 L["Boss Button"] = "特殊技能键"
@@ -273,14 +281,20 @@ L["Raid-40 Frames"] = "40人团队框架"
 L["Reputation Bar"] = "声望条"
 L["Right Chat"] = "右侧对话框"
 L["Stance Bar"] = "姿态条" --Also in ActionBars
-L["Talking Head Frame"] = true
+L["Talking Head Frame"] = "特写框体"
 L["Target Castbar"] = "目标施法条"
 L["Target Frame"] = "目标框架"
 L["Target Powerbar"] = "目标能量条"
 L["TargetTarget Frame"] = "目标的目标框架"
 L["TargetTargetTarget Frame"] = "目标的目标的目标框架"
-L["Tooltip"] = "浮动提示"
+L["Tooltip"] = "鼠标提示"
 L["Vehicle Seat Frame"] = "载具座位框"
+L["DESC_MOVERCONFIG"] = [=[解除框架移动锁定. 现在可以移动它们, 移好后请点击「锁定」.
+
+Options:
+  Shift + RightClick - Hides mover temporarily.
+  Ctrl + RightClick - Resets mover position to default.
+]=]
 
 --Plugin Installer
 L["ElvUI Plugin Installation"] = "ElvUI插件安装"
@@ -311,6 +325,7 @@ L["|cFFE30000Lua error recieved. You can view the error message when you exit co
 
 --Static Popups
 L["A setting you have changed will change an option for this character only. This setting that you have changed will be uneffected by changing user profiles. Changing this setting requires that you reload your User Interface."] = "你所做的改动只会影响到使用这个插件的本角色, 你需要重新加载界面才能使改动生效."
+L["Are you sure you want to apply this font to all ElvUI elements?"] = "确定要对所有ElvUI元素使用这个字体?"
 L["Are you sure you want to delete all your gray items?"] = "确定需要摧毁你的灰色物品?"
 L["Are you sure you want to disband the group?"] = "确定要解散队伍?"
 L["Are you sure you want to reset all the settings on this profile?"] = "确定需要重置这个配置文件中的所有设置?"
@@ -365,5 +380,6 @@ L["You can toggle the microbar by using your middle mouse button on the minimap 
 L["You can use the /resetui command to reset all of your movers. You can also use the command to reset a specific mover, /resetui <mover name>.\nExample: /resetui Player Frame"] = "使用 /resetui 命令可以重置你的所有框架位置. 你也可以通过命令 /resetui <框架名称> 单独重置某个框架.\n例如: /resetui Player Frame"
 
 --UnitFrames
+L["Dead"] = "死亡"
 L["Ghost"] = "鬼魂"
 L["Offline"] = "离线"

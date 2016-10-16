@@ -25,7 +25,3 @@ VER 3 0100000000000009 "Sh" "INV_Misc_QuestionMark"
 #showtooltip Shackle Undead
 /click ControlFreakFrame
 END
-VER 3 01000000000004C0 "ZGVMacro1" "0"
-/target (npc 79901)
-/run ZGV:MRM():CG(1,1)
-END

@@ -38,9 +38,16 @@ local function configTable()
 				order = 10,
 				guiInline = true,
 				name = L["Quest Log Toggle"],
+				disabled = function() return not E.db.sle.quests.visibility.enable end,
 				get = function(info) return E.db.sle.quests.visibility[ info[#info] ] end,
 				set = function(info, value) E.db.sle.quests.visibility[ info[#info] ] = value; Q:ChangeState() end,
 				args = {
+					enable = {
+						order = 1,
+						type = "toggle",
+						name = L["Enable"],
+						disabled = false,
+					},
 					rested = {
 						order = 2,
 						type = "select",
@@ -53,32 +60,38 @@ local function configTable()
 						name = GARRISON_LOCATION_TOOLTIP,
 						values = settings,
 					},
-					bg = {
+					orderhall = {
 						order = 4,
+						type = "select",
+						name = L["Class Hall"],
+						values = settings,
+					},
+					bg = {
+						order = 5,
 						type = "select",
 						name = BATTLEGROUNDS,
 						values = settings,
 					},
 					arena = {
-						order = 5,
+						order = 6,
 						type = "select",
 						name = ARENA,
 						values = settings,
 					},
 					dungeon = {
-						order = 6,
+						order = 7,
 						type = "select",
 						name = DUNGEONS,
 						values = settings,
 					},
 					scenario = {
-						order = 7,
+						order = 8,
 						type = "select",
 						name = SCENARIOS,
 						values = settings,
 					},
 					raid = {
-						order = 8,
+						order = 9,
 						type = "select",
 						name = RAIDS,
 						values = settings,

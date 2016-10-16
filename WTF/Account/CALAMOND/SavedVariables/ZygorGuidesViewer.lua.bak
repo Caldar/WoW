@@ -1,0 +1,1959 @@
+
+ZygorGuidesViewerSettings = {
+	["char"] = {
+		["Sinister - Feathermoon"] = {
+			["CurrentDeals"] = {
+			},
+			["step"] = 216,
+			["ATsearchitems"] = {
+			},
+			["guidename"] = "LEVELING\\Legion (100-110)\\Legion Intro",
+			["guides_history_ZGV4clear"] = true,
+			["ActivatedPois"] = {
+			},
+			["guideTurnInsOnly"] = false,
+			["guides_history"] = {
+				{
+					"LEVELING\\Legion (100-110)\\Legion Intro", -- [1]
+					215, -- [2]
+				}, -- [1]
+			},
+			["notifications"] = {
+			},
+			["taxis"] = {
+				["Lor'danel"] = true,
+				["Kharanos"] = true,
+				["The Exodar"] = true,
+				["Dolanaar"] = true,
+				["Goldshire"] = true,
+				["Gol'Bolar Quarry"] = true,
+				["Eastvale Logging Camp"] = true,
+				["Azure Watch"] = true,
+				["Darnassus"] = true,
+				["Moonglade"] = true,
+				["Ironforge"] = true,
+				["Rut'theran Village"] = true,
+				["Stormwind"] = true,
+				["Serpent's Overlook"] = true,
+			},
+			["questrewards"] = {
+			},
+			["lastlogin"] = 1472507001,
+			["stephistory"] = {
+				1, -- [1]
+				146, -- [2]
+				147, -- [3]
+				148, -- [4]
+				149, -- [5]
+				150, -- [6]
+				151, -- [7]
+				152, -- [8]
+				153, -- [9]
+				154, -- [10]
+				155, -- [11]
+				156, -- [12]
+				157, -- [13]
+				158, -- [14]
+				159, -- [15]
+				160, -- [16]
+				161, -- [17]
+				162, -- [18]
+				163, -- [19]
+				164, -- [20]
+				165, -- [21]
+				166, -- [22]
+				167, -- [23]
+				168, -- [24]
+				169, -- [25]
+				170, -- [26]
+				171, -- [27]
+				172, -- [28]
+				173, -- [29]
+				174, -- [30]
+				175, -- [31]
+				176, -- [32]
+				177, -- [33]
+				178, -- [34]
+				179, -- [35]
+				180, -- [36]
+				181, -- [37]
+				182, -- [38]
+				183, -- [39]
+				184, -- [40]
+				185, -- [41]
+				186, -- [42]
+				187, -- [43]
+				188, -- [44]
+				189, -- [45]
+				190, -- [46]
+				191, -- [47]
+				192, -- [48]
+				193, -- [49]
+				194, -- [50]
+				195, -- [51]
+				196, -- [52]
+				197, -- [53]
+				198, -- [54]
+				199, -- [55]
+				200, -- [56]
+				201, -- [57]
+				202, -- [58]
+				203, -- [59]
+				204, -- [60]
+				205, -- [61]
+				206, -- [62]
+				207, -- [63]
+				208, -- [64]
+				209, -- [65]
+				210, -- [66]
+				211, -- [67]
+				212, -- [68]
+				213, -- [69]
+				214, -- [70]
+				215, -- [71]
+			},
+			["initialFlightPathsLoaded"] = true,
+			["debuglog"] = {
+				"17:43:26.521.915> Viewer started. ---------------------------", -- [1]
+			},
+			["MThiddenitems"] = {
+			},
+			["AThiddenitems"] = {
+			},
+			["GGbuyitems"] = {
+			},
+		},
+	},
+	["global"] = {
+		["gii_cache"] = {
+			[0] = {
+			},
+			["|cffffffff|Hitem:111456::::::::100:263::::::|h[Grilled Saberfish]|h|r"] = {
+				"Grilled Saberfish", -- [1]
+				"|cffffffff|Hitem:111456::::::::100:263::::::|h[Grilled Saberfish]|h|r", -- [2]
+				1, -- [3]
+				100, -- [4]
+				90, -- [5]
+				"Consumable", -- [6]
+				"Food & Drink", -- [7]
+				20, -- [8]
+				"", -- [9]
+				1045940, -- [10]
+				1250, -- [11]
+				0, -- [12]
+				5, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff9d9d9d|Hitem:140263::::::::100:263::::::|h[Worn Pamphlet]|h|r"] = {
+				"Worn Pamphlet", -- [1]
+				"|cff9d9d9d|Hitem:140263::::::::100:263::::::|h[Worn Pamphlet]|h|r", -- [2]
+				0, -- [3]
+				1, -- [4]
+				1, -- [5]
+				"Miscellaneous", -- [6]
+				"Junk", -- [7]
+				1, -- [8]
+				"", -- [9]
+				134329, -- [10]
+				1, -- [11]
+				15, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:129624::::::::100:263::::::"] = {
+				"Streamtalker Coif", -- [1]
+				"|cff1eff00|Hitem:129624::::::::100:263::::::|h[Streamtalker Coif]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Mail", -- [7]
+				1, -- [8]
+				"INVTYPE_HEAD", -- [9]
+				133111, -- [10]
+				2031, -- [11]
+				4, -- [12]
+				3, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["|cff9d9d9d|Hitem:140268::::::::100:263::::::|h[Odorous Pamphlet]|h|r"] = {
+				"Odorous Pamphlet", -- [1]
+				"|cff9d9d9d|Hitem:140268::::::::100:263::::::|h[Odorous Pamphlet]|h|r", -- [2]
+				0, -- [3]
+				1, -- [4]
+				1, -- [5]
+				"Miscellaneous", -- [6]
+				"Junk", -- [7]
+				1, -- [8]
+				"", -- [9]
+				134329, -- [10]
+				1, -- [11]
+				15, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff0070dd|Hitem:136586::::::::100:263::11::::|h[Stormwind Vanguard Splitter]|h|r"] = {
+				"Stormwind Vanguard Splitter", -- [1]
+				"|cff0070dd|Hitem:136586::::::::100:263::11::::|h[Stormwind Vanguard Splitter]|h|r", -- [2]
+				3, -- [3]
+				685, -- [4]
+				1, -- [5]
+				"Weapon", -- [6]
+				"One-Handed Axes", -- [7]
+				1, -- [8]
+				"INVTYPE_WEAPON", -- [9]
+				960899, -- [10]
+				444105, -- [11]
+				2, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cffffffff|Hitem:109223::::::::100:263::::::|h[Healing Tonic]|h|r"] = {
+				"Healing Tonic", -- [1]
+				"|cffffffff|Hitem:109223::::::::100:263::::::|h[Healing Tonic]|h|r", -- [2]
+				1, -- [3]
+				100, -- [4]
+				91, -- [5]
+				"Consumable", -- [6]
+				"Potion", -- [7]
+				20, -- [8]
+				"", -- [9]
+				967555, -- [10]
+				1200, -- [11]
+				0, -- [12]
+				1, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff1eff00|Hitem:129626::::::::100:263::::::|h[Streamtalker Aegis]|h|r"] = {
+				"Streamtalker Aegis", -- [1]
+				"|cff1eff00|Hitem:129626::::::::100:263::::::|h[Streamtalker Aegis]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Shields", -- [7]
+				1, -- [8]
+				"INVTYPE_SHIELD", -- [9]
+				464338, -- [10]
+				2499, -- [11]
+				4, -- [12]
+				6, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cffffffff|Hitem:72986:::::::1797515904:100:263::::::|h[Heavy Windwool Bandage]|h|r"] = {
+				"Heavy Windwool Bandage", -- [1]
+				"|cffffffff|Hitem:72986:::::::1797515904:100:263::::::|h[Heavy Windwool Bandage]|h|r", -- [2]
+				1, -- [3]
+				90, -- [4]
+				85, -- [5]
+				"Consumable", -- [6]
+				"Bandage", -- [7]
+				20, -- [8]
+				"", -- [9]
+				628647, -- [10]
+				1250, -- [11]
+				0, -- [12]
+				7, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff1eff00|Hitem:23345::::::::100:263::::::|h[Scout's Shirt]|h|r"] = {
+				"Scout's Shirt", -- [1]
+				"|cff1eff00|Hitem:23345::::::::100:263::::::|h[Scout's Shirt]|h|r", -- [2]
+				2, -- [3]
+				1, -- [4]
+				0, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_BODY", -- [9]
+				135018, -- [10]
+				1, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:128959::::::::100:263::11::::"] = {
+				"Seal of House Wrynn", -- [1]
+				"|cff0070dd|Hitem:128959::::::::100:263::11::::|h[Seal of House Wrynn]|h|r", -- [2]
+				3, -- [3]
+				685, -- [4]
+				0, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_TRINKET", -- [9]
+				646492, -- [10]
+				276316, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["|cff1eff00|Hitem:129616::::::::100:263::::::|h[Streamtalker Idol of Destruction]|h|r"] = {
+				"Streamtalker Idol of Destruction", -- [1]
+				"|cff1eff00|Hitem:129616::::::::100:263::::::|h[Streamtalker Idol of Destruction]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_TRINKET", -- [9]
+				643912, -- [10]
+				0, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff1eff00|Hitem:129615::::::::100:263::::::|h[Streamtalker Medallion]|h|r"] = {
+				"Streamtalker Medallion", -- [1]
+				"|cff1eff00|Hitem:129615::::::::100:263::::::|h[Streamtalker Medallion]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_NECK", -- [9]
+				632840, -- [10]
+				0, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff0070dd|Hitem:139172::::::::100:263::14::::|h[Legionnaire's Fel Pendant]|h|r"] = {
+				"Legionnaire's Fel Pendant", -- [1]
+				"|cff0070dd|Hitem:139172::::::::100:263::14::::|h[Legionnaire's Fel Pendant]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_NECK", -- [9]
+				1083389, -- [10]
+				143098, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["item:138172::::::::100:263:512:9:1:3387:100:::"] = {
+				"Fel-Chain Cinch", -- [1]
+				"|cff0070dd|Hitem:138172::::::::100:263:512:9:1:3387:100:::|h[Fel-Chain Cinch]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Mail", -- [7]
+				1, -- [8]
+				"INVTYPE_WAIST", -- [9]
+				973881, -- [10]
+				166021, -- [11]
+				4, -- [12]
+				3, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			[141411] = {
+				"Translocation Anomaly Neutralization Crystal", -- [1]
+				"|cff1eff00|Hitem:141411::::::::100:263::::::|h[Translocation Anomaly Neutralization Crystal]|h|r", -- [2]
+				2, -- [3]
+				1, -- [4]
+				1, -- [5]
+				"Consumable", -- [6]
+				"Explosives and Devices", -- [7]
+				1, -- [8]
+				"", -- [9]
+				1033184, -- [10]
+				0, -- [11]
+				0, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507086,
+			},
+			["item:138450::::::::100::::::"] = {
+				"Signet of Stormwind", -- [1]
+				"|cff0070dd|Hitem:138450::::::::100:263::::::|h[Signet of Stormwind]|h|r", -- [2]
+				3, -- [3]
+				685, -- [4]
+				98, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_FINGER", -- [9]
+				414293, -- [10]
+				192350, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff9d9d9d|Hitem:140282::::::::100:263::::::|h[Demonic Pamphlet]|h|r"] = {
+				"Demonic Pamphlet", -- [1]
+				"|cff9d9d9d|Hitem:140282::::::::100:263::::::|h[Demonic Pamphlet]|h|r", -- [2]
+				0, -- [3]
+				1, -- [4]
+				1, -- [5]
+				"Miscellaneous", -- [6]
+				"Junk", -- [7]
+				1, -- [8]
+				"", -- [9]
+				134329, -- [10]
+				1, -- [11]
+				15, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff1eff00|Hitem:86143:::::::175910144:100:263::::::|h[Battle Pet Bandage]|h|r"] = {
+				"Battle Pet Bandage", -- [1]
+				"|cff1eff00|Hitem:86143:::::::175910144:100:263::::::|h[Battle Pet Bandage]|h|r", -- [2]
+				2, -- [3]
+				20, -- [4]
+				1, -- [5]
+				"Consumable", -- [6]
+				"Other", -- [7]
+				250, -- [8]
+				"", -- [9]
+				133675, -- [10]
+				50, -- [11]
+				0, -- [12]
+				8, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff0070dd|Hitem:138173::::::::100:263:512:9:1:3387:100:::|h[Fel-Chain Bracers]|h|r"] = {
+				"Fel-Chain Bracers", -- [1]
+				"|cff0070dd|Hitem:138173::::::::100:263:512:9:1:3387:100:::|h[Fel-Chain Bracers]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Mail", -- [7]
+				1, -- [8]
+				"INVTYPE_WRIST", -- [9]
+				973887, -- [10]
+				166631, -- [11]
+				4, -- [12]
+				3, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["|cff0070dd|Hitem:138179::::::::100:263:512:9:1:3387:100:::|h[Fel-Chain Hauberk]|h|r"] = {
+				"Fel-Chain Hauberk", -- [1]
+				"|cff0070dd|Hitem:138179::::::::100:263:512:9:1:3387:100:::|h[Fel-Chain Hauberk]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Mail", -- [7]
+				1, -- [8]
+				"INVTYPE_CHEST", -- [9]
+				973890, -- [10]
+				347740, -- [11]
+				4, -- [12]
+				3, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["item:129610::::::::100:263::::::"] = {
+				"Streamtalker Choker", -- [1]
+				"|cff1eff00|Hitem:129610::::::::100:263::::::|h[Streamtalker Choker]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_NECK", -- [9]
+				632845, -- [10]
+				0, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff0070dd|Hitem:111245::::::::100:263::::::|h[Luminous Shard]|h|r"] = {
+				"Luminous Shard", -- [1]
+				"|cff0070dd|Hitem:111245::::::::100:263::::::|h[Luminous Shard]|h|r", -- [2]
+				3, -- [3]
+				100, -- [4]
+				0, -- [5]
+				"Tradeskill", -- [6]
+				"Enchanting", -- [7]
+				200, -- [8]
+				"", -- [9]
+				1003593, -- [10]
+				0, -- [11]
+				7, -- [12]
+				12, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff1eff00|Hitem:129610::::::::100:263::::::|h[Streamtalker Choker]|h|r"] = {
+				"Streamtalker Choker", -- [1]
+				"|cff1eff00|Hitem:129610::::::::100:263::::::|h[Streamtalker Choker]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_NECK", -- [9]
+				632845, -- [10]
+				0, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:129619::::::::100:263::::::"] = {
+				"Streamtalker Stone of Destruction", -- [1]
+				"|cff1eff00|Hitem:129619::::::::100:263::::::|h[Streamtalker Stone of Destruction]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_TRINKET", -- [9]
+				643421, -- [10]
+				0, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:136586::::::::100:263::11::::"] = {
+				"Stormwind Vanguard Splitter", -- [1]
+				"|cff0070dd|Hitem:136586::::::::100:263::11::::|h[Stormwind Vanguard Splitter]|h|r", -- [2]
+				3, -- [3]
+				685, -- [4]
+				1, -- [5]
+				"Weapon", -- [6]
+				"One-Handed Axes", -- [7]
+				1, -- [8]
+				"INVTYPE_WEAPON", -- [9]
+				960899, -- [10]
+				444105, -- [11]
+				2, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:129616::::::::100:263::::::"] = {
+				"Streamtalker Idol of Destruction", -- [1]
+				"|cff1eff00|Hitem:129616::::::::100:263::::::|h[Streamtalker Idol of Destruction]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_TRINKET", -- [9]
+				643912, -- [10]
+				0, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:139172::::::::100:263::14::::"] = {
+				"Legionnaire's Fel Pendant", -- [1]
+				"|cff0070dd|Hitem:139172::::::::100:263::14::::|h[Legionnaire's Fel Pendant]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_NECK", -- [9]
+				1083389, -- [10]
+				143098, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["item:138174::::::::100:263:512:9:1:3387:100:::"] = {
+				"Fel-Chain Grips", -- [1]
+				"|cff0070dd|Hitem:138174::::::::100:263:512:9:1:3387:100:::|h[Fel-Chain Grips]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Mail", -- [7]
+				1, -- [8]
+				"INVTYPE_HAND", -- [9]
+				973893, -- [10]
+				167258, -- [11]
+				4, -- [12]
+				3, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["item:129614::::::::100:263::::::"] = {
+				"Streamtalker Stone of Rage", -- [1]
+				"|cff1eff00|Hitem:129614::::::::100:263::::::|h[Streamtalker Stone of Rage]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_TRINKET", -- [9]
+				643421, -- [10]
+				0, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff0070dd|Hitem:128959::::::::100:263::11::::|h[Seal of House Wrynn]|h|r"] = {
+				"Seal of House Wrynn", -- [1]
+				"|cff0070dd|Hitem:128959::::::::100:263::11::::|h[Seal of House Wrynn]|h|r", -- [2]
+				3, -- [3]
+				685, -- [4]
+				0, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_TRINKET", -- [9]
+				646492, -- [10]
+				276316, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["item:141602::::::::100:263::9:3:1816:1814:3447:::"] = {
+				"Eredar Splitter", -- [1]
+				"|cff0070dd|Hitem:141602::::::::100:263::9:3:1816:1814:3447:::|h[Eredar Splitter]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				1, -- [5]
+				"Weapon", -- [6]
+				"One-Handed Axes", -- [7]
+				1, -- [8]
+				"INVTYPE_WEAPON", -- [9]
+				342424, -- [10]
+				497012, -- [11]
+				2, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["|cff1eff00|Hitem:129612::::::::100:263::::::|h[Streamtalker Band of Onslaught]|h|r"] = {
+				"Streamtalker Band of Onslaught", -- [1]
+				"|cff1eff00|Hitem:129612::::::::100:263::::::|h[Streamtalker Band of Onslaught]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_FINGER", -- [9]
+				629698, -- [10]
+				0, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["item:129626::::::::100:263::::::"] = {
+				"Streamtalker Aegis", -- [1]
+				"|cff1eff00|Hitem:129626::::::::100:263::::::|h[Streamtalker Aegis]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Shields", -- [7]
+				1, -- [8]
+				"INVTYPE_SHIELD", -- [9]
+				464338, -- [10]
+				2499, -- [11]
+				4, -- [12]
+				6, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff1eff00|Hitem:89906:::::::227296640:100:263::::::|h[Magical Mini-Treat]|h|r"] = {
+				"Magical Mini-Treat", -- [1]
+				"|cff1eff00|Hitem:89906:::::::227296640:100:263::::::|h[Magical Mini-Treat]|h|r", -- [2]
+				2, -- [3]
+				1, -- [4]
+				0, -- [5]
+				"Consumable", -- [6]
+				"Other", -- [7]
+				250, -- [8]
+				"", -- [9]
+				132841, -- [10]
+				60, -- [11]
+				0, -- [12]
+				8, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:45991:3269::::::-654715761:100:263::::::"] = {
+				"Bone Fishing Pole", -- [1]
+				"|cff0070dd|Hitem:45991:3269::::::-654715761:100:263::::::|h[Bone Fishing Pole]|h|r", -- [2]
+				3, -- [3]
+				15, -- [4]
+				0, -- [5]
+				"Weapon", -- [6]
+				"Fishing Poles", -- [7]
+				1, -- [8]
+				"INVTYPE_2HWEAPON", -- [9]
+				236573, -- [10]
+				1030, -- [11]
+				2, -- [12]
+				20, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:138450"] = {
+				"Signet of Stormwind", -- [1]
+				"|cff0070dd|Hitem:138450::::::::100:263::::::|h[Signet of Stormwind]|h|r", -- [2]
+				3, -- [3]
+				685, -- [4]
+				98, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_FINGER", -- [9]
+				414293, -- [10]
+				192350, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff0070dd|Hitem:45991:3269::::::-654715761:100:263::::::|h[Bone Fishing Pole]|h|r"] = {
+				"Bone Fishing Pole", -- [1]
+				"|cff0070dd|Hitem:45991:3269::::::-654715761:100:263::::::|h[Bone Fishing Pole]|h|r", -- [2]
+				3, -- [3]
+				15, -- [4]
+				0, -- [5]
+				"Weapon", -- [6]
+				"Fishing Poles", -- [7]
+				1, -- [8]
+				"INVTYPE_2HWEAPON", -- [9]
+				236573, -- [10]
+				1030, -- [11]
+				2, -- [12]
+				20, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff1eff00|Hitem:129613::::::::100:263::::::|h[Streamtalker Ring of Onslaught]|h|r"] = {
+				"Streamtalker Ring of Onslaught", -- [1]
+				"|cff1eff00|Hitem:129613::::::::100:263::::::|h[Streamtalker Ring of Onslaught]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_FINGER", -- [9]
+				629704, -- [10]
+				0, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cffffffff|Hitem:6532::::::::100:263::::::|h[Bright Baubles]|h|r"] = {
+				"Bright Baubles", -- [1]
+				"|cffffffff|Hitem:6532::::::::100:263::::::|h[Bright Baubles]|h|r", -- [2]
+				1, -- [3]
+				30, -- [4]
+				0, -- [5]
+				"Consumable", -- [6]
+				"Other", -- [7]
+				20, -- [8]
+				"", -- [9]
+				134139, -- [10]
+				62, -- [11]
+				0, -- [12]
+				8, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:138450::::::::100:263:512:11:1:3387:100:::"] = {
+				"Signet of Stormwind", -- [1]
+				"|cff0070dd|Hitem:138450::::::::100:263:512:11:1:3387:100:::|h[Signet of Stormwind]|h|r", -- [2]
+				3, -- [3]
+				685, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_FINGER", -- [9]
+				414293, -- [10]
+				192350, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["item:129611::::::::100:263::::::"] = {
+				"Streamtalker Idol of Rage", -- [1]
+				"|cff1eff00|Hitem:129611::::::::100:263::::::|h[Streamtalker Idol of Rage]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_TRINKET", -- [9]
+				643912, -- [10]
+				0, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["|cffffffff|Hitem:34861::::::::100:263::::::|h[Sharpened Fish Hook]|h|r"] = {
+				"Sharpened Fish Hook", -- [1]
+				"|cffffffff|Hitem:34861::::::::100:263::::::|h[Sharpened Fish Hook]|h|r", -- [2]
+				1, -- [3]
+				30, -- [4]
+				0, -- [5]
+				"Consumable", -- [6]
+				"Other", -- [7]
+				20, -- [8]
+				"", -- [9]
+				134226, -- [10]
+				137, -- [11]
+				0, -- [12]
+				8, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff0070dd|Hitem:138188::::::::100:263::14::::|h[Demon Commander's Drape]|h|r"] = {
+				"Demon Commander's Drape", -- [1]
+				"|cff0070dd|Hitem:138188::::::::100:263::14::::|h[Demon Commander's Drape]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Cloth", -- [7]
+				1, -- [8]
+				"INVTYPE_CLOAK", -- [9]
+				1253671, -- [10]
+				243388, -- [11]
+				4, -- [12]
+				1, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["|cff9d9d9d|Hitem:140267::::::::100:263::::::|h[Crumpled Pamphlet]|h|r"] = {
+				"Crumpled Pamphlet", -- [1]
+				"|cff9d9d9d|Hitem:140267::::::::100:263::::::|h[Crumpled Pamphlet]|h|r", -- [2]
+				0, -- [3]
+				1, -- [4]
+				1, -- [5]
+				"Miscellaneous", -- [6]
+				"Junk", -- [7]
+				1, -- [8]
+				"", -- [9]
+				134329, -- [10]
+				1, -- [11]
+				15, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff0070dd|Hitem:138175::::::::100:263:512:9:1:3387:100:::|h[Fel-Chain Boots]|h|r"] = {
+				"Fel-Chain Boots", -- [1]
+				"|cff0070dd|Hitem:138175::::::::100:263:512:9:1:3387:100:::|h[Fel-Chain Boots]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Mail", -- [7]
+				1, -- [8]
+				"INVTYPE_FEET", -- [9]
+				973884, -- [10]
+				249919, -- [11]
+				4, -- [12]
+				3, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["|cffffffff|Hitem:6948::::::::100:263::::::|h[Hearthstone]|h|r"] = {
+				"Hearthstone", -- [1]
+				"|cffffffff|Hitem:6948::::::::100:263::::::|h[Hearthstone]|h|r", -- [2]
+				1, -- [3]
+				1, -- [4]
+				0, -- [5]
+				"Miscellaneous", -- [6]
+				"Junk", -- [7]
+				1, -- [8]
+				"", -- [9]
+				134414, -- [10]
+				0, -- [11]
+				15, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cffffffff|Hitem:110560::::::::100:263::::::|h[Garrison Hearthstone]|h|r"] = {
+				"Garrison Hearthstone", -- [1]
+				"|cffffffff|Hitem:110560::::::::100:263::::::|h[Garrison Hearthstone]|h|r", -- [2]
+				1, -- [3]
+				90, -- [4]
+				90, -- [5]
+				"Miscellaneous", -- [6]
+				"Junk", -- [7]
+				1, -- [8]
+				"", -- [9]
+				1041860, -- [10]
+				0, -- [11]
+				15, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff9d9d9d|Hitem:140283::::::::100:263::::::|h[Blackened Pamphlet]|h|r"] = {
+				"Blackened Pamphlet", -- [1]
+				"|cff9d9d9d|Hitem:140283::::::::100:263::::::|h[Blackened Pamphlet]|h|r", -- [2]
+				0, -- [3]
+				1, -- [4]
+				1, -- [5]
+				"Miscellaneous", -- [6]
+				"Junk", -- [7]
+				1, -- [8]
+				"", -- [9]
+				134329, -- [10]
+				1, -- [11]
+				15, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:129613::::::::100:263::::::"] = {
+				"Streamtalker Ring of Onslaught", -- [1]
+				"|cff1eff00|Hitem:129613::::::::100:263::::::|h[Streamtalker Ring of Onslaught]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_FINGER", -- [9]
+				629704, -- [10]
+				0, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff1eff00|Hitem:129619::::::::100:263::::::|h[Streamtalker Stone of Destruction]|h|r"] = {
+				"Streamtalker Stone of Destruction", -- [1]
+				"|cff1eff00|Hitem:129619::::::::100:263::::::|h[Streamtalker Stone of Destruction]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_TRINKET", -- [9]
+				643421, -- [10]
+				0, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff9d9d9d|Hitem:140284::::::::100:263::::::|h[Scrawled Pamphlet]|h|r"] = {
+				"Scrawled Pamphlet", -- [1]
+				"|cff9d9d9d|Hitem:140284::::::::100:263::::::|h[Scrawled Pamphlet]|h|r", -- [2]
+				0, -- [3]
+				1, -- [4]
+				1, -- [5]
+				"Miscellaneous", -- [6]
+				"Junk", -- [7]
+				1, -- [8]
+				"", -- [9]
+				134329, -- [10]
+				1, -- [11]
+				15, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff9d9d9d|Hitem:140262::::::::100:263::::::|h[Tattered Pamphlet]|h|r"] = {
+				"Tattered Pamphlet", -- [1]
+				"|cff9d9d9d|Hitem:140262::::::::100:263::::::|h[Tattered Pamphlet]|h|r", -- [2]
+				0, -- [3]
+				1, -- [4]
+				1, -- [5]
+				"Miscellaneous", -- [6]
+				"Junk", -- [7]
+				1, -- [8]
+				"", -- [9]
+				134329, -- [10]
+				1, -- [11]
+				15, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:128959::::::::100::::::"] = {
+				"Seal of House Wrynn", -- [1]
+				"|cff0070dd|Hitem:128959::::::::100:263::::::|h[Seal of House Wrynn]|h|r", -- [2]
+				3, -- [3]
+				685, -- [4]
+				0, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_TRINKET", -- [9]
+				646492, -- [10]
+				276316, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:128959"] = {
+				"Seal of House Wrynn", -- [1]
+				"|cff0070dd|Hitem:128959::::::::100:263::::::|h[Seal of House Wrynn]|h|r", -- [2]
+				3, -- [3]
+				685, -- [4]
+				0, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_TRINKET", -- [9]
+				646492, -- [10]
+				276316, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff1eff00|Hitem:129620::::::::100:263::::::|h[Streamtalker Claws]|h|r"] = {
+				"Streamtalker Claws", -- [1]
+				"|cff1eff00|Hitem:129620::::::::100:263::::::|h[Streamtalker Claws]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Weapon", -- [6]
+				"Fist Weapons", -- [7]
+				1, -- [8]
+				"INVTYPE_WEAPON", -- [9]
+				801001, -- [10]
+				3344, -- [11]
+				2, -- [12]
+				13, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cffffffff|Hitem:109693::::::::100:263::::::|h[Draenic Dust]|h|r"] = {
+				"Draenic Dust", -- [1]
+				"|cffffffff|Hitem:109693::::::::100:263::::::|h[Draenic Dust]|h|r", -- [2]
+				1, -- [3]
+				100, -- [4]
+				0, -- [5]
+				"Tradeskill", -- [6]
+				"Enchanting", -- [7]
+				200, -- [8]
+				"", -- [9]
+				1003597, -- [10]
+				0, -- [11]
+				7, -- [12]
+				12, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff1eff00|Hitem:129624::::::::100:263::::::|h[Streamtalker Coif]|h|r"] = {
+				"Streamtalker Coif", -- [1]
+				"|cff1eff00|Hitem:129624::::::::100:263::::::|h[Streamtalker Coif]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Mail", -- [7]
+				1, -- [8]
+				"INVTYPE_HEAD", -- [9]
+				133111, -- [10]
+				2031, -- [11]
+				4, -- [12]
+				3, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["|cff0070dd|Hitem:138178::::::::100:263:512:9:1:3387:100:::|h[Fel-Chain Spaulders]|h|r"] = {
+				"Fel-Chain Spaulders", -- [1]
+				"|cff0070dd|Hitem:138178::::::::100:263:512:9:1:3387:100:::|h[Fel-Chain Spaulders]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Mail", -- [7]
+				1, -- [8]
+				"INVTYPE_SHOULDER", -- [9]
+				973932, -- [10]
+				259375, -- [11]
+				4, -- [12]
+				3, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["item:141602::::::::100:263::9:3:3447:1815:1817:::"] = {
+				"Eredar Splitter", -- [1]
+				"|cff0070dd|Hitem:141602::::::::100:263::9:3:3447:1815:1817:::|h[Eredar Splitter]|h|r", -- [2]
+				3, -- [3]
+				710, -- [4]
+				1, -- [5]
+				"Weapon", -- [6]
+				"One-Handed Axes", -- [7]
+				1, -- [8]
+				"INVTYPE_WEAPON", -- [9]
+				342424, -- [10]
+				511613, -- [11]
+				2, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["|cffffffff|Hitem:118391::::::::100:263::::::|h[Worm Supreme]|h|r"] = {
+				"Worm Supreme", -- [1]
+				"|cffffffff|Hitem:118391::::::::100:263::::::|h[Worm Supreme]|h|r", -- [2]
+				1, -- [3]
+				100, -- [4]
+				0, -- [5]
+				"Consumable", -- [6]
+				"Other", -- [7]
+				20, -- [8]
+				"", -- [9]
+				970852, -- [10]
+				137, -- [11]
+				0, -- [12]
+				8, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:129617::::::::100:263::::::"] = {
+				"Streamtalker Ring of Destruction", -- [1]
+				"|cff1eff00|Hitem:129617::::::::100:263::::::|h[Streamtalker Ring of Destruction]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_FINGER", -- [9]
+				629704, -- [10]
+				0, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff1eff00|Hitem:129617::::::::100:263::::::|h[Streamtalker Ring of Destruction]|h|r"] = {
+				"Streamtalker Ring of Destruction", -- [1]
+				"|cff1eff00|Hitem:129617::::::::100:263::::::|h[Streamtalker Ring of Destruction]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_FINGER", -- [9]
+				629704, -- [10]
+				0, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:138178::::::::100:263:512:9:1:3387:100:::"] = {
+				"Fel-Chain Spaulders", -- [1]
+				"|cff0070dd|Hitem:138178::::::::100:263:512:9:1:3387:100:::|h[Fel-Chain Spaulders]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Mail", -- [7]
+				1, -- [8]
+				"INVTYPE_SHOULDER", -- [9]
+				973932, -- [10]
+				259375, -- [11]
+				4, -- [12]
+				3, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["item:141602::::::::100::::::"] = {
+				"Eredar Splitter", -- [1]
+				"|cff0070dd|Hitem:141602::::::::100:263::::::|h[Eredar Splitter]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				1, -- [5]
+				"Weapon", -- [6]
+				"One-Handed Axes", -- [7]
+				1, -- [8]
+				"INVTYPE_WEAPON", -- [9]
+				342424, -- [10]
+				497012, -- [11]
+				2, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:129618::::::::100:263::::::"] = {
+				"Streamtalker Band of Destruction", -- [1]
+				"|cff1eff00|Hitem:129618::::::::100:263::::::|h[Streamtalker Band of Destruction]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_FINGER", -- [9]
+				629698, -- [10]
+				0, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:129612::::::::100:263::::::"] = {
+				"Streamtalker Band of Onslaught", -- [1]
+				"|cff1eff00|Hitem:129612::::::::100:263::::::|h[Streamtalker Band of Onslaught]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_FINGER", -- [9]
+				629698, -- [10]
+				0, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["|cff1eff00|Hitem:71153:::::::85065856:100:263::::::|h[Magical Pet Biscuit]|h|r"] = {
+				"Magical Pet Biscuit", -- [1]
+				"|cff1eff00|Hitem:71153:::::::85065856:100:263::::::|h[Magical Pet Biscuit]|h|r", -- [2]
+				2, -- [3]
+				1, -- [4]
+				0, -- [5]
+				"Consumable", -- [6]
+				"Other", -- [7]
+				250, -- [8]
+				"", -- [9]
+				134372, -- [10]
+				65, -- [11]
+				0, -- [12]
+				8, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:139172::::::::100::::::"] = {
+				"Legionnaire's Fel Pendant", -- [1]
+				"|cff0070dd|Hitem:139172::::::::100:263::::::|h[Legionnaire's Fel Pendant]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_NECK", -- [9]
+				1083389, -- [10]
+				143098, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff1eff00|Hitem:129618::::::::100:263::::::|h[Streamtalker Band of Destruction]|h|r"] = {
+				"Streamtalker Band of Destruction", -- [1]
+				"|cff1eff00|Hitem:129618::::::::100:263::::::|h[Streamtalker Band of Destruction]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_FINGER", -- [9]
+				629698, -- [10]
+				0, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff0070dd|Hitem:138177::::::::100:263:512:9:1:3387:100:::|h[Fel-Chain Leggings]|h|r"] = {
+				"Fel-Chain Leggings", -- [1]
+				"|cff0070dd|Hitem:138177::::::::100:263:512:9:1:3387:100:::|h[Fel-Chain Leggings]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Mail", -- [7]
+				1, -- [8]
+				"INVTYPE_LEGS", -- [9]
+				973928, -- [10]
+				336320, -- [11]
+				4, -- [12]
+				3, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["item:139172"] = {
+				"Legionnaire's Fel Pendant", -- [1]
+				"|cff0070dd|Hitem:139172::::::::100:263::::::|h[Legionnaire's Fel Pendant]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_NECK", -- [9]
+				1083389, -- [10]
+				143098, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:129615::::::::100:263::::::"] = {
+				"Streamtalker Medallion", -- [1]
+				"|cff1eff00|Hitem:129615::::::::100:263::::::|h[Streamtalker Medallion]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_NECK", -- [9]
+				632840, -- [10]
+				0, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff0070dd|Hitem:141602::::::::100:263::9:3:3447:1815:1817:::|h[Eredar Splitter]|h|r"] = {
+				"Eredar Splitter", -- [1]
+				"|cff0070dd|Hitem:141602::::::::100:263::9:3:3447:1815:1817:::|h[Eredar Splitter]|h|r", -- [2]
+				3, -- [3]
+				710, -- [4]
+				1, -- [5]
+				"Weapon", -- [6]
+				"One-Handed Axes", -- [7]
+				1, -- [8]
+				"INVTYPE_WEAPON", -- [9]
+				342424, -- [10]
+				511613, -- [11]
+				2, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["|cff0070dd|Hitem:138450::::::::100:263:512:11:1:3387:100:::|h[Signet of Stormwind]|h|r"] = {
+				"Signet of Stormwind", -- [1]
+				"|cff0070dd|Hitem:138450::::::::100:263:512:11:1:3387:100:::|h[Signet of Stormwind]|h|r", -- [2]
+				3, -- [3]
+				685, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_FINGER", -- [9]
+				414293, -- [10]
+				192350, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["|cffffffff|Hitem:130192::::::::100:263::::::|h[Potato Axebeak Stew]|h|r"] = {
+				"Potato Axebeak Stew", -- [1]
+				"|cffffffff|Hitem:130192::::::::100:263::::::|h[Potato Axebeak Stew]|h|r", -- [2]
+				1, -- [3]
+				100, -- [4]
+				90, -- [5]
+				"Consumable", -- [6]
+				"Food & Drink", -- [7]
+				20, -- [8]
+				"", -- [9]
+				655707, -- [10]
+				1, -- [11]
+				0, -- [12]
+				5, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:129620::::::::100:263::::::"] = {
+				"Streamtalker Claws", -- [1]
+				"|cff1eff00|Hitem:129620::::::::100:263::::::|h[Streamtalker Claws]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Weapon", -- [6]
+				"Fist Weapons", -- [7]
+				1, -- [8]
+				"INVTYPE_WEAPON", -- [9]
+				801001, -- [10]
+				3344, -- [11]
+				2, -- [12]
+				13, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff0070dd|Hitem:141602::::::::100:263::9:3:1816:1814:3447:::|h[Eredar Splitter]|h|r"] = {
+				"Eredar Splitter", -- [1]
+				"|cff0070dd|Hitem:141602::::::::100:263::9:3:1816:1814:3447:::|h[Eredar Splitter]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				1, -- [5]
+				"Weapon", -- [6]
+				"One-Handed Axes", -- [7]
+				1, -- [8]
+				"INVTYPE_WEAPON", -- [9]
+				342424, -- [10]
+				497012, -- [11]
+				2, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["|cffffffff|Hitem:109222::::::::100:263::::::|h[Draenic Mana Potion]|h|r"] = {
+				"Draenic Mana Potion", -- [1]
+				"|cffffffff|Hitem:109222::::::::100:263::::::|h[Draenic Mana Potion]|h|r", -- [2]
+				1, -- [3]
+				100, -- [4]
+				90, -- [5]
+				"Consumable", -- [6]
+				"Potion", -- [7]
+				20, -- [8]
+				"", -- [9]
+				967557, -- [10]
+				6000, -- [11]
+				0, -- [12]
+				1, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff0070dd|Hitem:138174::::::::100:263:512:9:1:3387:100:::|h[Fel-Chain Grips]|h|r"] = {
+				"Fel-Chain Grips", -- [1]
+				"|cff0070dd|Hitem:138174::::::::100:263:512:9:1:3387:100:::|h[Fel-Chain Grips]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Mail", -- [7]
+				1, -- [8]
+				"INVTYPE_HAND", -- [9]
+				973893, -- [10]
+				167258, -- [11]
+				4, -- [12]
+				3, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["|cffffffff|Hitem:141527::::::::100:263::::::|h[Slightly Rusted Canteen]|h|r"] = {
+				"Slightly Rusted Canteen", -- [1]
+				"|cffffffff|Hitem:141527::::::::100:263::::::|h[Slightly Rusted Canteen]|h|r", -- [2]
+				1, -- [3]
+				105, -- [4]
+				95, -- [5]
+				"Consumable", -- [6]
+				"Food & Drink", -- [7]
+				20, -- [8]
+				"", -- [9]
+				132788, -- [10]
+				1250, -- [11]
+				0, -- [12]
+				5, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:138173::::::::100:263:512:9:1:3387:100:::"] = {
+				"Fel-Chain Bracers", -- [1]
+				"|cff0070dd|Hitem:138173::::::::100:263:512:9:1:3387:100:::|h[Fel-Chain Bracers]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Mail", -- [7]
+				1, -- [8]
+				"INVTYPE_WRIST", -- [9]
+				973887, -- [10]
+				166631, -- [11]
+				4, -- [12]
+				3, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["item:138179::::::::100:263:512:9:1:3387:100:::"] = {
+				"Fel-Chain Hauberk", -- [1]
+				"|cff0070dd|Hitem:138179::::::::100:263:512:9:1:3387:100:::|h[Fel-Chain Hauberk]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Mail", -- [7]
+				1, -- [8]
+				"INVTYPE_CHEST", -- [9]
+				973890, -- [10]
+				347740, -- [11]
+				4, -- [12]
+				3, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["|cff9d9d9d|Hitem:140270::::::::100:263::::::|h[Prophetic Pamphlet]|h|r"] = {
+				"Prophetic Pamphlet", -- [1]
+				"|cff9d9d9d|Hitem:140270::::::::100:263::::::|h[Prophetic Pamphlet]|h|r", -- [2]
+				0, -- [3]
+				1, -- [4]
+				1, -- [5]
+				"Miscellaneous", -- [6]
+				"Junk", -- [7]
+				1, -- [8]
+				"", -- [9]
+				134329, -- [10]
+				1, -- [11]
+				15, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:141602"] = {
+				"Eredar Splitter", -- [1]
+				"|cff0070dd|Hitem:141602::::::::100:263::::::|h[Eredar Splitter]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				1, -- [5]
+				"Weapon", -- [6]
+				"One-Handed Axes", -- [7]
+				1, -- [8]
+				"INVTYPE_WEAPON", -- [9]
+				342424, -- [10]
+				497012, -- [11]
+				2, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff9d9d9d|Hitem:140279::::::::100:263::::::|h[Scribbled Pamphlet]|h|r"] = {
+				"Scribbled Pamphlet", -- [1]
+				"|cff9d9d9d|Hitem:140279::::::::100:263::::::|h[Scribbled Pamphlet]|h|r", -- [2]
+				0, -- [3]
+				1, -- [4]
+				1, -- [5]
+				"Miscellaneous", -- [6]
+				"Junk", -- [7]
+				1, -- [8]
+				"", -- [9]
+				134329, -- [10]
+				1, -- [11]
+				15, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["|cff0070dd|Hitem:138172::::::::100:263:512:9:1:3387:100:::|h[Fel-Chain Cinch]|h|r"] = {
+				"Fel-Chain Cinch", -- [1]
+				"|cff0070dd|Hitem:138172::::::::100:263:512:9:1:3387:100:::|h[Fel-Chain Cinch]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Mail", -- [7]
+				1, -- [8]
+				"INVTYPE_WAIST", -- [9]
+				973881, -- [10]
+				166021, -- [11]
+				4, -- [12]
+				3, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["|cff1eff00|Hitem:129614::::::::100:263::::::|h[Streamtalker Stone of Rage]|h|r"] = {
+				"Streamtalker Stone of Rage", -- [1]
+				"|cff1eff00|Hitem:129614::::::::100:263::::::|h[Streamtalker Stone of Rage]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_TRINKET", -- [9]
+				643421, -- [10]
+				0, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507009,
+			},
+			["item:138175::::::::100:263:512:9:1:3387:100:::"] = {
+				"Fel-Chain Boots", -- [1]
+				"|cff0070dd|Hitem:138175::::::::100:263:512:9:1:3387:100:::|h[Fel-Chain Boots]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Mail", -- [7]
+				1, -- [8]
+				"INVTYPE_FEET", -- [9]
+				973884, -- [10]
+				249919, -- [11]
+				4, -- [12]
+				3, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["item:138188::::::::100:263::14::::"] = {
+				"Demon Commander's Drape", -- [1]
+				"|cff0070dd|Hitem:138188::::::::100:263::14::::|h[Demon Commander's Drape]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Cloth", -- [7]
+				1, -- [8]
+				"INVTYPE_CLOAK", -- [9]
+				1253671, -- [10]
+				243388, -- [11]
+				4, -- [12]
+				1, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["|cff1eff00|Hitem:129611::::::::100:263::::::|h[Streamtalker Idol of Rage]|h|r"] = {
+				"Streamtalker Idol of Rage", -- [1]
+				"|cff1eff00|Hitem:129611::::::::100:263::::::|h[Streamtalker Idol of Rage]|h|r", -- [2]
+				2, -- [3]
+				640, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Miscellaneous", -- [7]
+				1, -- [8]
+				"INVTYPE_TRINKET", -- [9]
+				643912, -- [10]
+				0, -- [11]
+				4, -- [12]
+				0, -- [13]
+				["timestamp"] = 1472507008,
+			},
+			["item:138177::::::::100:263:512:9:1:3387:100:::"] = {
+				"Fel-Chain Leggings", -- [1]
+				"|cff0070dd|Hitem:138177::::::::100:263:512:9:1:3387:100:::|h[Fel-Chain Leggings]|h|r", -- [2]
+				3, -- [3]
+				700, -- [4]
+				100, -- [5]
+				"Armor", -- [6]
+				"Mail", -- [7]
+				1, -- [8]
+				"INVTYPE_LEGS", -- [9]
+				973928, -- [10]
+				336320, -- [11]
+				4, -- [12]
+				3, -- [13]
+				["timestamp"] = 1472507008,
+			},
+		},
+		["itemCache"] = {
+		},
+	},
+	["factionrealm"] = {
+		["Alliance - Feathermoon"] = {
+			["altNames"] = {
+				["Sinister"] = "Sinister",
+			},
+		},
+	},
+	["realm"] = {
+		["Feathermoon"] = {
+			["gold_scan_data"] = {
+			},
+		},
+	},
+	["profileKeys"] = {
+		["Sinister - Feathermoon"] = "Default",
+	},
+	["profiles"] = {
+		["Sinister - Feathermoon"] = {
+			["gear_DEATHKNIGHT_2_MASTERY"] = "4.55",
+			["gear_DRUID_2_AGILITY"] = "12.08",
+			["gear_MAGE_2_VERSATILITY"] = "3.01",
+			["gear_DEATHKNIGHT_3_HASTE"] = "6.83",
+			["gear_PRIEST_1_INTELLECT"] = "9.04",
+			["gear_MONK_1_STAMINA"] = "12.05",
+			["gear_MAGE_3_HASTE"] = "7.52",
+			["gear_SHAMAN_1_INTELLECT"] = "9.04",
+			["gear_HUNTER_3_AGILITY"] = "9.06",
+			["gear_MAGE_2_CRIT"] = "7.51",
+			["gear_WARRIOR_3_MASTERY"] = "9.04",
+			["gear_MAGE_1_INTELLECT"] = "9.05",
+			["gear_PALADIN_3_STRENGTH"] = "9.02",
+			["gear_DEATHKNIGHT_1_STAMINA"] = "12.04",
+			["gear_DEMONHUNTER_2_HASTE"] = "9.02",
+			["gear_DEATHKNIGHT_2_HASTE"] = "6.8",
+			["show_ui"] = true,
+			["frame_positions"] = {
+				["ZygorGuidesViewerViewer"] = {
+				},
+			},
+			["gear_DRUID_3_CRIT"] = "9.03",
+			["gear_DRUID_3_AGILITY"] = "10.53",
+			["gear_DRUID_1_INTELLECT"] = "12.01",
+			["gear_WARLOCK_1_CRIT"] = "4.56",
+			["gear_DEMONHUNTER_1_MASTERY"] = "3.07",
+			["gear_HUNTER_3_MASTERY"] = "3.06",
+			["gear_WARRIOR_3_VERSATILITY"] = "7.54",
+			["gear_WARLOCK_1_MASTERY"] = "6.06",
+			["gear_DRUID_3_VERSATILITY"] = "12.03",
+			["gear_DRUID_4_HASTE"] = "7.58",
+			["gear_DRUID_1_VERSATILITY"] = "7.51",
+			["gear_MONK_1_CRIT"] = "7.55",
+			["gear_ROGUE_3_AGILITY"] = "9.03",
+			["gear_PALADIN_3_MASTERY"] = "7.52",
+			["gear_PRIEST_2_INTELLECT"] = "9.08",
+			["gear_SHAMAN_2_CRIT"] = "4.51",
+			["gear_DRUID_4_INTELLECT"] = "9.08",
+			["gear_DEMONHUNTER_2_AGILITY"] = "12.02",
+			["gear_DEATHKNIGHT_3_MASTERY"] = "7.58",
+			["gear_WARRIOR_1_HASTE"] = "6.02",
+			["gear_HUNTER_3_CRIT"] = "6.06",
+			["gear_WARRIOR_3_STAMINA"] = "12.04",
+			["gear_ROGUE_1_AGILITY"] = "9.05",
+			["gear_WARLOCK_2_CRIT"] = "6.04",
+			["fullness_search"] = 1,
+			["gear_WARRIOR_2_STRENGTH"] = "9.02",
+			["debug_flags"] = {
+				["display"] = {
+					["enabled"] = false,
+					["color"] = false,
+				},
+			},
+			["tmp__was_sheened"] = true,
+			["gear_HUNTER_2_HASTE"] = "6.01",
+			["gear_PALADIN_1_INTELLECT"] = "9.01",
+			["gear_MAGE_1_MASTERY"] = "7.55",
+			["gear_ROGUE_3_HASTE"] = "3.03",
+			["gear_PALADIN_2_VERSATILITY"] = "4.54",
+			["gear_PRIEST_1_VERSATILITY"] = "4.54",
+			["gear_WARLOCK_3_VERSATILITY"] = "4.56",
+			["gear_WARRIOR_2_HASTE"] = "7.52",
+			["gear_DEMONHUNTER_1_CRIT"] = "7.57",
+			["gear_HUNTER_3_VERSATILITY"] = "7.56",
+			["gear_WARRIOR_1_CRIT"] = "3.02",
+			["gear_HUNTER_2_CRIT"] = "3.01",
+			["load_mail"] = true,
+			["gear_MONK_1_AGILITY"] = "4.55",
+			["gear_WARLOCK_1_VERSATILITY"] = "3.06",
+			["gear_MAGE_3_INTELLECT"] = "9.02",
+			["gear_HUNTER_2_MASTERY"] = "7.51",
+			["gear_DEATHKNIGHT_1_VERSATILITY"] = "4.54",
+			["gear_SHAMAN_2_AGILITY"] = "9.01",
+			["gear_PALADIN_2_STAMINA"] = "12.04",
+			["gear_DEMONHUNTER_1_HASTE"] = "4.57",
+			["gear_DEMONHUNTER_2_STAMINA"] = "15.02",
+			["skin"] = "default",
+			["gear_HUNTER_1_VERSATILITY"] = "6.03",
+			["gear_MAGE_2_MASTERY"] = "6.01",
+			["gear_DEMONHUNTER_1_VERSATILITY"] = "6.07",
+			["gear_DEATHKNIGHT_1_HASTE"] = "7.54",
+			["gear_PRIEST_3_HASTE"] = "7.51",
+			["gear_PALADIN_2_CRIT"] = "34.21",
+			["gear_DRUID_3_STAMINA"] = "18.03",
+			["gear_MONK_3_HASTE"] = "6.03",
+			["gear_WARRIOR_3_STRENGTH"] = "3.04",
+			["gear_PRIEST_1_MASTERY"] = "3.04",
+			["gear_DEATHKNIGHT_3_VERSATILITY"] = "3.08",
+			["gear_WARLOCK_2_INTELLECT"] = "9.04",
+			["gear_ROGUE_3_VERSATILITY"] = "4.53",
+			["gear_DRUID_2_VERSATILITY"] = "9.08",
+			["gear_DEMONHUNTER_2_CRIT"] = "4.52",
+			["gear_MAGE_2_INTELLECT"] = "9.01",
+			["gear_PRIEST_3_MASTERY"] = "3.01",
+			["gear_MONK_3_AGILITY"] = "9.03",
+			["frame_anchor"] = {
+				"CENTER", -- [1]
+				{
+					[0] = nil --[[ skipped userdata ]],
+					["firstTimeLoaded"] = 1,
+					["variablesLoaded"] = true,
+				}, -- [2]
+				"CENTER", -- [3]
+				0, -- [4]
+				0, -- [5]
+			},
+			["gear_WARLOCK_3_MASTERY"] = "3.06",
+			["expired_elite_shown"] = false,
+			["gear_selected_class"] = 7,
+			["im_town_alert"] = false,
+			["im_always_wait"] = false,
+			["gear_MAGE_3_VERSATILITY"] = "4.52",
+			["Inventory Manager"] = {
+				["lastParentName"] = "Blizzard",
+				["showText"] = false,
+				["isSnapped"] = true,
+				["lastParent"] = {
+					[0] = nil --[[ skipped userdata ]],
+					["PortraitButton"] = {
+						[0] = nil --[[ skipped userdata ]],
+						["Highlight"] = {
+							[0] = nil --[[ skipped userdata ]],
+						},
+					},
+					["Portrait"] = {
+						[0] = nil --[[ skipped userdata ]],
+						["Show"] = nil --[[ skipped inline function ]],
+					},
+					["ClickableTitleFrame"] = {
+						[0] = nil --[[ skipped userdata ]],
+					},
+					["bags"] = {
+					},
+					["backdrop"] = {
+						[0] = nil --[[ skipped userdata ]],
+						["template"] = "Transparent",
+					},
+					["FilterDropDown"] = {
+						[0] = nil --[[ skipped userdata ]],
+						["displayMode"] = "MENU",
+						["initialize"] = nil --[[ skipped inline function ]],
+						["Button"] = {
+							[0] = nil --[[ skipped userdata ]],
+						},
+						["Text"] = {
+							[0] = nil --[[ skipped userdata ]],
+						},
+						["Icon"] = {
+							[0] = nil --[[ skipped userdata ]],
+						},
+					},
+					["bagsShown"] = 0,
+					["FilterIcon"] = {
+						[0] = nil --[[ skipped userdata ]],
+						["Icon"] = {
+							[0] = nil --[[ skipped userdata ]],
+						},
+					},
+				},
+				["isSnappedSize"] = 169,
+				["im_lastWidth"] = 169,
+			},
+			["Mail"] = {
+				["previousNames"] = {
+				},
+			},
+			["load_im"] = true,
+			["aucmode"] = "unit",
+			["gear_HUNTER_1_AGILITY"] = "9.03",
+			["gear_selected_spec"] = 2,
+			["hideguide"] = {
+			},
+			["gear_ROGUE_2_HASTE"] = "7.51",
+			["gear_DRUID_4_MASTERY"] = "3.08",
+			["gear_WARLOCK_3_CRIT"] = "6.06",
+			["skinstyle"] = "stealth",
+			["gear_PALADIN_3_VERSATILITY"] = "3.02",
+			["gear_DRUID_1_MASTERY"] = "7.51",
+			["gear_DRUID_1_CRIT"] = "9.01",
+			["magickey_bind"] = "",
+			["gear_ROGUE_1_HASTE"] = "3.05",
+			["gear_PRIEST_3_INTELLECT"] = "9.01",
+			["gear_PALADIN_1_VERSATILITY"] = "4.51",
+			["gear_MONK_2_INTELLECT"] = "9.03",
+			["gear_PRIEST_2_VERSATILITY"] = "0.5",
+			["gear_PALADIN_1_CRIT"] = "7.51",
+			["gear_SHAMAN_3_VERSATILITY"] = "3.04",
+			["gear_WARLOCK_3_INTELLECT"] = "9.06",
+			["gear_WARLOCK_3_HASTE"] = "7.56",
+			["gear_PALADIN_3_HASTE"] = "6.02",
+			["gear_WARRIOR_2_VERSATILITY"] = "3.02",
+			["gear_DRUID_4_VERSATILITY"] = "4.58",
+			["load_betaguides"] = true,
+			["gear_SHAMAN_3_CRIT"] = "6.04",
+			["gear_PRIEST_3_CRIT"] = "6.01",
+			["gear_MONK_2_MASTERY"] = "4.53",
+			["gear_HUNTER_1_HASTE"] = "7.53",
+			["gear_SHAMAN_3_INTELLECT"] = "9.04",
+			["gear_MAGE_1_CRIT"] = "4.55",
+			["gear_WARRIOR_1_STRENGTH"] = "9.02",
+			["gear_WARLOCK_2_MASTERY"] = "6.04",
+			["skipauxsteps"] = true,
+			["gear_DRUID_2_HASTE"] = "6.08",
+			["gear_HUNTER_2_AGILITY"] = "9.01",
+			["gear_ROGUE_2_CRIT"] = "4.51",
+			["gear_SHAMAN_2_MASTERY"] = "6.01",
+			["gear_MONK_2_VERSATILITY"] = "6.03",
+			["gear_ROGUE_1_CRIT"] = "6.05",
+			["gear_PALADIN_2_STRENGTH"] = "3.04",
+			["gear_DEMONHUNTER_2_MASTERY"] = "7.52",
+			["gear_MONK_1_HASTE"] = "9.05",
+			["gear_ROGUE_2_AGILITY"] = "9.01",
+			["gear_MAGE_2_HASTE"] = "4.51",
+			["gear_WARRIOR_3_HASTE"] = "6.04",
+			["gear_WARRIOR_1_VERSATILITY"] = "4.52",
+			["gear_MAGE_3_MASTERY"] = "3.02",
+			["gear_MONK_3_VERSATILITY"] = "7.53",
+			["gear_DRUID_3_MASTERY"] = "15.03",
+			["gear_SHAMAN_2_VERSATILITY"] = "3.01",
+			["minicons"] = true,
+			["gear_HUNTER_2_VERSATILITY"] = "4.51",
+			["gear_DRUID_2_CRIT"] = "10.58",
+			["visible"] = false,
+			["gear_MONK_2_CRIT"] = "7.53",
+			["gear_DEATHKNIGHT_2_CRIT"] = "7.55",
+			["gear_PALADIN_2_MASTERY"] = "6.04",
+			["gear_SHAMAN_3_MASTERY"] = "7.54",
+			["gear_DEMONHUNTER_1_AGILITY"] = "9.07",
+			["gear_PALADIN_1_HASTE"] = "3.01",
+			["stickycolored"] = false,
+			["gear_ROGUE_3_CRIT"] = "6.03",
+			["gear_DRUID_1_HASTE"] = "10.51",
+			["gear_ROGUE_3_MASTERY"] = "7.53",
+			["gear_SHAMAN_1_CRIT"] = "7.54",
+			["gear_MONK_3_CRIT"] = "6.03",
+			["gear_PRIEST_3_VERSATILITY"] = "4.51",
+			["gear_PRIEST_1_HASTE"] = "7.54",
+			["gear_ROGUE_1_MASTERY"] = "4.55",
+			["gear_WARLOCK_1_INTELLECT"] = "9.06",
+			["gear_SHAMAN_1_HASTE"] = "6.04",
+			["gear_WARLOCK_2_HASTE"] = "7.54",
+			["gear_DRUID_4_CRIT"] = "6.08",
+			["gear_DEATHKNIGHT_1_STRENGTH"] = "9.04",
+			["gear_MAGE_1_HASTE"] = "6.05",
+			["gear_ROGUE_2_VERSATILITY"] = "3.01",
+			["gear_HUNTER_3_HASTE"] = "4.56",
+			["gear_MONK_1_VERSATILITY"] = "6.05",
+			["gear_DEATHKNIGHT_2_STRENGTH"] = "9.05",
+			["gear_SHAMAN_1_VERSATILITY"] = "4.54",
+			["gear_PRIEST_2_HASTE"] = "3.08",
+			["gear_DEATHKNIGHT_3_CRIT"] = "4.58",
+			["gear_DEATHKNIGHT_1_CRIT"] = "7.54",
+			["gear_DEMONHUNTER_2_VERSATILITY"] = "6.02",
+			["gear_SHAMAN_2_HASTE"] = "7.51",
+			["gear_MONK_1_MASTERY"] = "3.05",
+			["load_gold"] = true,
+			["gear_PRIEST_2_MASTERY"] = "7.58",
+			["gear_WARLOCK_2_VERSATILITY"] = "3.04",
+			["gear_DEATHKNIGHT_2_VERSATILITY"] = "3.05",
+			["gear_WARLOCK_1_HASTE"] = "7.56",
+			["gear_WARRIOR_3_CRIT"] = "7.54",
+			["gear_ROGUE_2_MASTERY"] = "6.01",
+			["gear_ROGUE_1_VERSATILITY"] = "7.55",
+			["gear_MAGE_1_VERSATILITY"] = "3.05",
+			["gear_PALADIN_3_CRIT"] = "4.52",
+			["gear_HUNTER_1_MASTERY"] = "4.53",
+			["gear_SHAMAN_1_MASTERY"] = "3.04",
+			["gear_HUNTER_1_CRIT"] = "3.03",
+			["gear_DEATHKNIGHT_1_MASTERY"] = "6.04",
+			["gear_WARRIOR_2_CRIT"] = "6.02",
+			["gear_PRIEST_2_CRIT"] = "6.08",
+			["gear_PALADIN_1_MASTERY"] = "6.01",
+			["gear_MONK_2_HASTE"] = "3.03",
+			["multicolorants"] = true,
+			["gear_MONK_3_MASTERY"] = "6.03",
+			["gear_DRUID_3_HASTE"] = "13.53",
+			["gear_MAGE_3_CRIT"] = "6.02",
+			["singlecolorants__renamed"] = true,
+			["gear_PRIEST_1_CRIT"] = "6.04",
+			["gear_PALADIN_2_HASTE"] = "7.54",
+			["gear_SHAMAN_3_HASTE"] = "4.54",
+			["gear_DEATHKNIGHT_3_STRENGTH"] = "9.08",
+			["gear_DRUID_2_MASTERY"] = "7.58",
+			["gear_WARRIOR_1_MASTERY"] = "7.52",
+			["gear_WARRIOR_2_MASTERY"] = "4.52",
+		},
+		["Sinister"] = {
+			["autotaxi"] = true,
+			["frame_anchor"] = {
+				"CENTER", -- [1]
+				{
+					[0] = nil --[[ skipped userdata ]],
+					["firstTimeLoaded"] = 1,
+					["variablesLoaded"] = true,
+				}, -- [2]
+				"CENTER", -- [3]
+				0, -- [4]
+				0, -- [5]
+			},
+			["autoturnin"] = true,
+			["autosell"] = true,
+			["autoaccept"] = true,
+		},
+		["Default"] = {
+			["autotaxi"] = true,
+			["show_ui"] = true,
+			["load_gold"] = true,
+			["colorantsfly"] = {
+				["a"] = 0.8,
+			},
+			["colorantsother"] = {
+				["a"] = 0.8,
+			},
+			["tmp__was_sheened"] = true,
+			["usernamed"] = true,
+			["frame_anchor"] = {
+				"RIGHT", -- [1]
+				nil, -- [2]
+				"RIGHT", -- [3]
+				-280.000030517578, -- [4]
+				130.832962036133, -- [5]
+			},
+			["debug_flags"] = {
+				["display"] = {
+					["enabled"] = false,
+					["color"] = false,
+				},
+			},
+			["colorantsship"] = {
+				["a"] = 0.8,
+			},
+			["minicons"] = true,
+			["singlecolorantscolor"] = {
+				["a"] = 0.8,
+			},
+			["autoturnin"] = true,
+			["multicolorants"] = true,
+			["load_mail"] = true,
+			["stickycolored"] = false,
+			["load_betaguides"] = true,
+			["ranconfig2"] = true,
+			["load_im"] = true,
+			["colorantstaxi"] = {
+				["a"] = 0.8,
+			},
+			["autosell"] = true,
+			["autoaccept"] = true,
+			["singlecolorants__renamed"] = true,
+		},
+	},
+}

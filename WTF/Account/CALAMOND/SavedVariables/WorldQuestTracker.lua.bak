@@ -1,0 +1,147 @@
+
+WQTrackerDB = {
+	["profileKeys"] = {
+		["Sinister - Feathermoon"] = "Default",
+	},
+	["profiles"] = {
+		["Default"] = {
+			["GotTutorial"] = true,
+			["quests_tracked"] = {
+				["Player-118-02F1FF12"] = {
+				},
+			},
+			["quests_all_characters"] = {
+				["Player-118-02F1FF12"] = {
+					[42239] = {
+						["expireAt"] = 1473174043,
+						["rewardAmount"] = "820",
+						["rewardTexture"] = 1359992,
+					},
+					[42023] = {
+						["expireAt"] = 1472871643,
+						["rewardAmount"] = "805",
+						["rewardTexture"] = 136088,
+					},
+					[41622] = {
+						["expireAt"] = 1472893243,
+						["rewardAmount"] = 190,
+						["rewardTexture"] = "Interface\\AddOns\\WorldQuestTracker\\media\\icon_artifactpower_red_roundT",
+					},
+					[42277] = {
+						["expireAt"] = 1472936443,
+						["rewardAmount"] = 200,
+						["rewardTexture"] = "Interface\\AddOns\\WorldQuestTracker\\media\\icon_artifactpower_red_roundT",
+					},
+					[42124] = {
+						["expireAt"] = 1472936443,
+						["rewardAmount"] = "810",
+						["rewardTexture"] = 1137677,
+					},
+					[41257] = {
+						["expireAt"] = 1472860843,
+						["rewardAmount"] = 250,
+						["rewardTexture"] = "Interface\\AddOns\\WorldQuestTracker\\media\\icon_artifactpower_red_roundT",
+					},
+					[42963] = {
+						["expireAt"] = 1473001303,
+						["rewardAmount"] = "810",
+						["rewardTexture"] = 237422,
+					},
+					[39462] = {
+						["expireAt"] = 1472871643,
+						["rewardAmount"] = 220,
+						["rewardTexture"] = "Interface\\AddOns\\WorldQuestTracker\\media\\icon_artifactpower_red_roundT",
+					},
+					[43431] = {
+						["expireAt"] = 1472936503,
+						["rewardAmount"] = 170,
+						["rewardTexture"] = "Interface\\AddOns\\WorldQuestTracker\\media\\icon_artifactpower_red_roundT",
+					},
+					[43711] = {
+						["expireAt"] = 1473001243,
+						["rewardAmount"] = "820",
+						["rewardTexture"] = 1120362,
+					},
+					[42177] = {
+						["expireAt"] = 1472893243,
+						["rewardAmount"] = "810",
+						["rewardTexture"] = 237422,
+					},
+					[41824] = {
+						["expireAt"] = 1472914903,
+						["rewardAmount"] = 165,
+						["rewardTexture"] = "Interface\\AddOns\\WorldQuestTracker\\media\\icon_artifactpower_red_roundT",
+					},
+					[41701] = {
+						["expireAt"] = 1472936443,
+						["rewardAmount"] = "810",
+						["rewardTexture"] = 571554,
+					},
+					[42105] = {
+						["expireAt"] = 1472893243,
+						["rewardAmount"] = "810",
+						["rewardTexture"] = 133448,
+					},
+					[41145] = {
+						["expireAt"] = 1472914843,
+						["rewardAmount"] = "1",
+						["rewardTexture"] = 1417744,
+					},
+					[41828] = {
+						["expireAt"] = 1472893303,
+						["rewardAmount"] = 190,
+						["rewardTexture"] = "Interface\\AddOns\\WorldQuestTracker\\media\\icon_artifactpower_red_roundT",
+					},
+					[44193] = {
+						["expireAt"] = 1473087703,
+						["rewardAmount"] = 465,
+						["rewardTexture"] = "Interface\\AddOns\\WorldQuestTracker\\media\\icon_artifactpower_red_roundT",
+					},
+					[44033] = {
+						["expireAt"] = 1472893243,
+						["rewardAmount"] = "810",
+						["rewardTexture"] = 1137678,
+					},
+					[44002] = {
+						["expireAt"] = 1472914843,
+						["rewardAmount"] = 220,
+						["rewardTexture"] = "Interface\\AddOns\\WorldQuestTracker\\media\\icon_artifactpower_red_roundT",
+					},
+					[42173] = {
+						["expireAt"] = 1472914843,
+						["rewardAmount"] = "2",
+						["rewardTexture"] = 1417744,
+					},
+					[42174] = {
+						["expireAt"] = 1472871643,
+						["rewardAmount"] = 190,
+						["rewardTexture"] = "Interface\\AddOns\\WorldQuestTracker\\media\\icon_artifactpower_red_roundT",
+					},
+					[41958] = {
+						["expireAt"] = 1472914903,
+						["rewardAmount"] = "20",
+						["rewardTexture"] = 413584,
+					},
+					[42159] = {
+						["expireAt"] = 1472914903,
+						["rewardAmount"] = 100,
+						["rewardTexture"] = "Interface\\AddOns\\WorldQuestTracker\\media\\icon_artifactpower_red_roundT",
+					},
+					[43183] = {
+						["expireAt"] = 1472860843,
+						["rewardAmount"] = "810",
+						["rewardTexture"] = 1268947,
+					},
+				},
+			},
+			["player_names"] = {
+				["Player-118-02F1FF12"] = {
+					["class"] = "SHAMAN",
+					["name"] = "Sinister",
+					["realm"] = "Feathermoon",
+				},
+			},
+			["AlertTutorialStep"] = 5,
+		},
+	},
+}

@@ -5,7 +5,6 @@ local Sticky = LibStub("LibSimpleSticky-1.0")
 --Lua functions
 local _G = _G
 local type, unpack, pairs = type, unpack, pairs
-local min = math.min
 local format, split, find = string.format, string.split, string.find
 --WoW API / Variables
 local CreateFrame = CreateFrame
@@ -113,6 +112,7 @@ local function CreateMover(parent, name, text, overlay, snapOffset, postdrag)
 		end
 		local point, anchor, secondaryPoint, x, y = split(delim, anchorString)
 		f:Point(point, anchor, secondaryPoint, x, y)
+		f.anchor = anchor
 	else
 		f:Point(point, anchor, secondaryPoint, x, y)
 	end
@@ -141,7 +141,16 @@ local function CreateMover(parent, name, text, overlay, snapOffset, postdrag)
 
 		local x, y, point = E:CalculateMoverPoints(self)
 		self:ClearAllPoints()
-		self:Point(self.positionOverride or point, E.UIParent, self.positionOverride and "BOTTOMLEFT" or point, x, y)
+		local overridePoint;
+		if (self.positionOverride) then
+			if (self.positionOverride == "BOTTOM" or self.positionOverride == "TOP") then
+				overridePoint = "BOTTOM";
+			else
+				overridePoint = "BOTTOMLEFT";
+			end
+		end
+
+		self:Point(self.positionOverride or point, E.UIParent, overridePoint and overridePoint or point, x, y)
 		if self.positionOverride then
 			self.parent:ClearAllPoints()
 			self.parent:Point(self.positionOverride, self, self.positionOverride)
@@ -183,6 +192,8 @@ local function CreateMover(parent, name, text, overlay, snapOffset, postdrag)
 			--Allow resetting of anchor by Ctrl+RightClick
 			if IsControlKeyDown() and self.textString then
 				E:ResetMovers(self.textString)
+			elseif IsShiftKeyDown() then --Allow hiding a mover temporarily
+				self:Hide()
 			end
 		end
 	end
@@ -196,7 +207,7 @@ local function CreateMover(parent, name, text, overlay, snapOffset, postdrag)
 		self:SetBackdropBorderColor(unpack(E["media"].rgbvaluecolor))
 	end
 
-	local function OnMouseWheel(self, delta)
+	local function OnMouseWheel(_, delta)
 		if IsShiftKeyDown() then
 			E:NudgeMover(delta)
 		else
@@ -221,7 +232,7 @@ local function CreateMover(parent, name, text, overlay, snapOffset, postdrag)
 
 	if postdrag ~= nil and type(postdrag) == 'function' then
 		f:RegisterEvent("PLAYER_ENTERING_WORLD")
-		f:SetScript("OnEvent", function(self, event)
+		f:SetScript("OnEvent", function(self)
 			postdrag(f, E:GetScreenQuadrant(f))
 			self:UnregisterAllEvents()
 		end)
@@ -278,6 +289,12 @@ function E:CalculateMoverPoints(mover, nudgeX, nudgeY)
 		elseif(mover.positionOverride == "BOTTOMRIGHT") then
 			x = mover:GetRight() - E.diffGetRight
 			y = mover:GetBottom() - E.diffGetBottom
+		elseif(mover.positionOverride == "BOTTOM") then
+			x = mover:GetCenter() - screenCenter;
+			y = mover:GetBottom() - E.diffGetBottom;
+		elseif(mover.positionOverride == "TOP") then
+			x = mover:GetCenter() - screenCenter;
+			y = mover:GetTop() - E.diffGetTop;
 		end
 	end
 
@@ -306,7 +323,11 @@ function E:SaveMoverPosition(name)
 	if not _G[name] then return end
 	if not E.db.movers then E.db.movers = {} end
 
-	E.db.movers[name] = GetPoint(_G[name])
+	local mover = _G[name]
+	local _, anchor = mover:GetPoint()
+	mover.anchor = anchor:GetName()
+
+	E.db.movers[name] = GetPoint(mover)
 end
 
 function E:SetMoverSnapOffset(name, offset)
@@ -324,7 +345,6 @@ end
 
 function E:CreateMover(parent, name, text, overlay, snapoffset, postdrag, moverTypes)
 	if not moverTypes then moverTypes = 'ALL,GENERAL' end
-	local p, p2, p3, p4, p5 = parent:GetPoint()
 
 	if E.CreatedMovers[name] == nil then
 		E.CreatedMovers[name] = {}
@@ -421,7 +441,6 @@ function E:ResetMovers(arg)
 	else
 		for name, _ in pairs(E.CreatedMovers) do
 			for key, value in pairs(E.CreatedMovers[name]) do
-				local mover
 				if key == "text" then
 					if arg == value then
 						local f = _G[name]
@@ -472,6 +491,13 @@ function E:SetMoversPositions()
 			f:ClearAllPoints()
 			f:Point(point, anchor, secondaryPoint, x, y)
 		end
+	end
+end
+
+function E:SetMoversClampedToScreen(value)
+	for name, _ in pairs(E.CreatedMovers) do
+		local f = _G[name]
+		f:SetClampedToScreen(value)
 	end
 end
 

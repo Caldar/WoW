@@ -1,0 +1,11 @@
+BigWigs_BrokenIsles: enabled
+BigWigs_Core: enabled
+BigWigs_Nightmare: enabled
+Molinari: disabled
+PetTracker: enabled
+PetTracker_Breeds: enabled
+PetTracker_Config: enabled
+PetTracker_Journal: enabled
+PetTracker_Switcher: enabled
+PetTracker_Upgrades: enabled
+WorldQuestTracker: disabled

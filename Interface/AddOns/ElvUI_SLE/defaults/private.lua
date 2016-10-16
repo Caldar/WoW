@@ -37,12 +37,9 @@ V["sle"] = {
 		},
 		["setoverlay"] = false,
 		["lockbutton"] = false,
-	},
-	["Armory"] = {
-		["ItemLevel"] = {
-			["font"] = "PT Sans Narrow",
-			["size"] = 12,
-			["outline"] = "NONE",
+		["FishingRaft"] = {
+			["enable"] = false,
+			["set"] = "NONE",
 		},
 	},
 	--Minimap Module
@@ -53,6 +50,7 @@ V["sle"] = {
 		["mapicons"] = {
 			["enable"] = false,
 			["barenable"] = false,
+			["template"] = "Transparent",
 		},
 	},
 
@@ -168,25 +166,7 @@ V["sle"] = {
 			["class"] = false,
 			["color"] = {r = 0.26, g = 0.42, b = 1},
 			["underlineHeight"] = 1,
-		},
-		["QuestKing"] = {
-			["enable"] = false,
-			["tooltipAnchor"] = "ANCHOR_LEFT",
-			["tooltipScale"] = 0.9,
-			["clickTemplate"] = "QuestKing",
-			["trackerIcon"] = "DEFAULT",
-			["trackerIconCustom"] = "",
-			["trackerSize"] = 10,
-			["questTypes"] = {
-				["daily"] = "DEFAULT",
-				["weekly"] = "DEFAULT",
-				["group"] = "DEFAULT",
-				["raid"] = "DEFAULT",
-				["dungeon"] = "DEFAULT",
-				["heroic"] = "DEFAULT",
-				["legend"] = "DEFAULT",
-				["scenario"] = "DEFAULT",
-			},
+			["scenarioBG"] = false,
 		},
 		["petbattles"] = {
 			["enable"] = true,
@@ -196,6 +176,10 @@ V["sle"] = {
 			["style"] = "Default",
 			["subpages"] = 2,
 		},
+		["questguru"] = {
+			["enable"] = false,
+			["removeParchment"] = false,
+		},
 	},
 	["uibuttons"] = {
 		["style"] = "classic",
@@ -203,7 +187,9 @@ V["sle"] = {
 		["level"] = 5,
 		["transparent"] = "Default",
 	},
-}
+
+	["characterGoldsSorting"] = {},
+	}
 
 G["sle"] = {
 	["DE"] = {

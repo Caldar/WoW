@@ -16,7 +16,6 @@ local dtbarsList = {}
 local dtbarsTexts = {}
 
 local function DarthHeal()
-	E.db["unitframe"]["units"]["raid"]["GPSArrow"]["enable"] = true
 	E.db["unitframe"]["units"]["raid"]["health"]["frequentUpdates"] = true
 	E.db["unitframe"]["units"]["raid"]["height"] = 22
 
@@ -143,12 +142,9 @@ function PI:DarthSetup()
 	end
 	--Bags
 	do
-		E.db["bags"]["yOffsetBank"] = 175
 		E.db["bags"]["itemLevelFont"] = "PT Sans Narrow"
 		E.db["bags"]["currencyFormat"] = "ICON"
-		E.db["bags"]["yOffset"] = 175
 		E.db["bags"]["itemLevelFontSize"] = 11
-		E.db["bags"]["alignToChat"] = false
 		E.db["bags"]["bagWidth"] = 505
 		E.db["bags"]["countFont"] = "Univers"
 		E.db["bags"]["countFontOutline"] = "OUTLINE"
@@ -221,7 +217,8 @@ function PI:DarthSetup()
 	end
 	--Nameplates
 	do
-		E.db["nameplates"]["lowHealthThreshold"] = 0.2
+		E.db["nameplates"]["clampToScreen"] = true
+		E.db["nameplates"]["lowHealthThreshold"] = 0
 		E.db["nameplates"]["font"] = "PT Sans Narrow"
 		E.db["nameplates"]["fontOutline"] = "OUTLINE"
 		E.db["nameplates"]["threat"]["beingTankedByTank"] = false
@@ -246,13 +243,20 @@ function PI:DarthSetup()
 		E.db["nameplates"]["units"]["FRIENDLY_PLAYER"]["powerbar"]["height"] = 4
 		E.db["nameplates"]["units"]["FRIENDLY_NPC"]["powerbar"]["height"] = 4
 		E.db["nameplates"]["units"]["FRIENDLY_NPC"]["powerbar"]["enable"] = true
+		E.db["nameplates"]["units"]["ENEMY_NPC"]["debuffs"]["numAuras"] = 6
+		E.db["nameplates"]["units"]["ENEMY_NPC"]["healthbar"]["text"]["enable"] = true
+		E.db["nameplates"]["units"]["ENEMY_NPC"]["healthbar"]["text"]["format"] = "CURRENT_PERCENT"
 		E.db["nameplates"]["units"]["ENEMY_NPC"]["powerbar"]["height"] = 4
 		E.db["nameplates"]["units"]["ENEMY_NPC"]["powerbar"]["enable"] = true
-		E.db["nameplates"]["units"]["ENEMY_NPC"]["debuffs"]["numAuras"] = 6
-		E.db["nameplates"]["units"]["HEALER"]["powerbar"]["height"] = 4
+		E.db["nameplates"]["units"]["ENEMY_NPC"]["buffs"]["enable"] = false
+		E.db["nameplates"]["units"]["ENEMY_NPC"]["eliteIcon"]["enable"] = true
+		E.db["nameplates"]["units"]["ENEMY_NPC"]["eliteIcon"]["xOffset"] = 20
+		E.db["nameplates"]["units"]["ENEMY_NPC"]["eliteIcon"]["yOffset"] = 14
+		E.db["nameplates"]["units"]["ENEMY_PLAYER"]["debuffs"]["numAuras"] = 6
+		E.db["nameplates"]["units"]["ENEMY_PLAYER"]["healthbar"]["text"]["enable"] = true
+		E.db["nameplates"]["units"]["ENEMY_PLAYER"]["healthbar"]["text"]["format"] = "CURRENT_PERCENT"
 		E.db["nameplates"]["units"]["ENEMY_PLAYER"]["powerbar"]["height"] = 4
 		E.db["nameplates"]["units"]["ENEMY_PLAYER"]["powerbar"]["enable"] = true
-		E.db["nameplates"]["units"]["ENEMY_PLAYER"]["debuffs"]["numAuras"] = 6
 		E.db["nameplates"]["units"]["PLAYER"]["enable"] = true
 		E.db["nameplates"]["units"]["PLAYER"]["alwaysShow"] = true
 		E.db["nameplates"]["units"]["PLAYER"]["debuffs"]["enable"] = false
@@ -416,14 +420,13 @@ function PI:DarthSetup()
 		E.db["unitframe"]["units"]["raid"]["name"]["attachTextTo"] = "InfoPanel"
 		E.db["unitframe"]["units"]["raid"]["name"]["xOffset"] = 15
 		E.db["unitframe"]["units"]["raid"]["name"]["position"] = "LEFT"
-		E.db["unitframe"]["units"]["raid"]["GPSArrow"]["enable"] = false
 		E.db["unitframe"]["units"]["raid"]["health"]["xOffset"] = 4
 		E.db["unitframe"]["units"]["raid"]["health"]["yOffset"] = -4
 		E.db["unitframe"]["units"]["raid"]["health"]["text_format"] = ""
 		E.db["unitframe"]["units"]["raid"]["health"]["position"] = "TOPLEFT"
 		E.db["unitframe"]["units"]["raid"]["height"] = 28
-		E.db["unitframe"]["units"]["raid"]["power"]["enable"] = false
-		E.db["unitframe"]["units"]["raid"]["visibility"] = "[@raid31,exists][nogroup] hide;show"
+		E.db["unitframe"]["units"]["raid"]["power"]["height"] = 6
+		E.db["unitframe"]["units"]["raid"]["visibility"] = "[nogroup] hide;show"
 		E.db["unitframe"]["units"]["raid"]["raidicon"]["attachTo"] = "TOPRIGHT"
 		E.db["unitframe"]["units"]["raid"]["raidicon"]["xOffset"] = -2
 
@@ -433,6 +436,7 @@ function PI:DarthSetup()
 	do
 		E.db["sle"]["databars"]["artifact"]["longtext"] = true
 		E.db["sle"]["databars"]["artifact"]["chatfilter"]["enable"] = true
+		E.db["sle"]["databars"]["artifact"]["chatfilter"]["style"] = "STYLE2"
 		E.db["sle"]["databars"]["honor"]["chatfilter"]["awardStyle"] = "STYLE2"
 		E.db["sle"]["databars"]["honor"]["chatfilter"]["style"] = "STYLE8"
 		E.db["sle"]["databars"]["honor"]["chatfilter"]["enable"] = true
@@ -450,6 +454,8 @@ function PI:DarthSetup()
 		E.db["sle"]["dt"]["currency"]["Jewelcrafting"] = false
 		E.db["sle"]["dt"]["currency"]["Archaeology"] = false
 		E.db["sle"]["dt"]["currency"]["Unused"] = false
+		E.db["sle"]["dt"]["currency"]["gold"]["method"] = "amount"
+		E.db["sle"]["dt"]["currency"]["gold"]["direction"] = "reverced"
 		E.db["sle"]["dt"]["guild"]["hide_guildname"] = true
 		E.db["sle"]["dt"]["guild"]["totals"] = true
 		E.db["sle"]["dt"]["guild"]["hide_gmotd"] = true
@@ -461,6 +467,7 @@ function PI:DarthSetup()
 		E.db["sle"]["loot"]["enable"] = true
 		E.db["sle"]["loot"]["autoroll"]["autoconfirm"] = true
 		E.db["sle"]["loot"]["autoroll"]["autogreed"] = true
+		E.db["sle"]["orderhall"]["autoOrder"]["enable"] = true
 		E.db["sle"]["uibuttons"]["point"] = "TOPRIGHT"
 		E.db["sle"]["uibuttons"]["enable"] = true
 		E.db["sle"]["uibuttons"]["spacing"] = 1
@@ -481,8 +488,6 @@ function PI:DarthSetup()
 		E.db["sle"]["datatexts"]["panel7"]["enabled"] = true
 		E.db["sle"]["datatexts"]["panel7"]["width"] = 191
 		E.db["sle"]["datatexts"]["panel7"]["transparent"] = true
-		E.db["sle"]["datatexts"]["panel3"]["enabled"] = true
-		E.db["sle"]["datatexts"]["panel3"]["transparent"] = true
 		E.db["sle"]["datatexts"]["panel6"]["enabled"] = true
 		E.db["sle"]["datatexts"]["panel6"]["width"] = 421
 		E.db["sle"]["datatexts"]["panel6"]["transparent"] = true
@@ -506,6 +511,7 @@ function PI:DarthSetup()
 		E.db["sle"]["minimap"]["locPanel"]["enable"] = true
 		E.db["sle"]["minimap"]["locPanel"]["width"] = 310
 		E.db["sle"]["minimap"]["instance"]["enable"] = true
+		E.db["sle"]["quests"]["visibility"]["enable"] = true
 		E.db["sle"]["quests"]["visibility"]["rested"] = "COLLAPSED"
 		E.db["sle"]["quests"]["visibility"]["garrison"] = "COLLAPSED"
 		E.db["sle"]["quests"]["autoReward"] = true
@@ -532,7 +538,7 @@ function PI:DarthSetup()
 		E.db["movers"]["ElvUF_FocusCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,286,118"
 		E.db["movers"]["RaidMarkerBarAnchor"] = "BOTTOM,ElvUIParent,BOTTOM,0,137"
 		E.db["movers"]["ElvUF_PlayerCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,165"
-		E.db["movers"]["ElvUF_RaidMover"] = "TOPLEFT,ElvUIParent,BOTTOMLEFT,2,574"
+		E.db["movers"]["ElvUF_RaidMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,0,201"
 		E.db["movers"]["LeftChatMover"] = "BOTTOMLEFT,UIParent,BOTTOMLEFT,0,19"
 		E.db["movers"]["GMMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,285,0"
 		E.db["movers"]["GhostFrameMover"] = "TOP,ElvUIParent,TOP,288,0"
@@ -555,17 +561,17 @@ function PI:DarthSetup()
 		E.db["movers"]["AltPowerBarMover"] = "TOP,ElvUIParent,TOP,0,-65"
 		E.db["movers"]["ElvAB_3"] = "BOTTOM,ElvUIParent,BOTTOM,-125,19"
 		E.db["movers"]["ElvAB_5"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,444,19"
-		E.db["movers"]["ArtifactBarMover"] = "TOP,ElvUIParent,TOP,0,-39"
+		E.db["movers"]["ArtifactBarMover"] = "TOP,ElvUIParent,TOP,0,-20"
 		E.db["movers"]["TotemBarMover"] = "BOTTOM,ElvUIParent,BOTTOM,-3,188"
 		E.db["movers"]["ElvUF_PlayerMover"] = "BOTTOM,ElvUIParent,BOTTOM,-220,186"
 		E.db["movers"]["ObjectiveFrameMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,98,-4"
 		E.db["movers"]["BossHeaderMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-59,-299"
 		E.db["movers"]["ShiftAB"] = "TOPLEFT,ElvUIParent,BOTTOMLEFT,761,138"
-		E.db["movers"]["HonorBarMover"] = "TOP,ElvUIParent,TOP,0,-48"
+		E.db["movers"]["HonorBarMover"] = "TOP,ElvUIParent,TOP,0,-29"
 		E.db["movers"]["ArenaHeaderMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-59,-299"
 		E.db["movers"]["PetAB"] = "BOTTOM,ElvUIParent,BOTTOM,-267,142"
 		E.db["movers"]["PvPMover"] = "TOP,ElvUIParent,TOP,-5,-59"
-		E.db["movers"]["SLE_Location_Mover"] = "TOP,ElvUIParent,TOP,0,-19"
+		E.db["movers"]["SLE_Location_Mover"] = "TOP,ElvUIParent,TOP,0,1"
 		E.db["movers"]["ElvUF_PetMover"] = "BOTTOM,ElvUIParent,BOTTOM,-163,141"
 		E.db["movers"]["SLE_UIButtonsMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-3,-201"
 		E.db["movers"]["RightChatMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,0,19"
@@ -573,6 +579,8 @@ function PI:DarthSetup()
 		E.db["movers"]["DebuffsMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-187,-158"
 		E.db["movers"]["ElvUF_TargetMover"] = "BOTTOM,ElvUIParent,BOTTOM,211,189"
 		E.db["movers"]["PlayerNameplate"] = "BOTTOM,ElvUIParent,BOTTOM,0,426"
+		E.db["movers"]["ElvUIBankMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,153,199"
+		E.db["movers"]["ElvUIBagMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-152,199"
 	end
 	
 	if T.IsAddOnLoaded("ElvUI_AuraBarsMovers") then
@@ -587,12 +595,13 @@ function PI:DarthSetup()
 	if T.IsAddOnLoaded("AddOnSkins") then
 		E.private["addonskins"]["EmbedOoC"] = true
 		E.private["addonskins"]["EmbedOoCDelay"] = 5
-		E.private["addonskins"]["Blizzard_DraenorAbilityButton"] = true
+		E.private["addonskins"]["Blizzard_AbilityButton"] = true
 		E.private["addonskins"]["EmbedSystemDual"] = true
 		E.private["addonskins"]["LoginMsg"] = false
 		E.private["addonskins"]["Blizzard_ExtraActionButton"] = true
 		E.private["addonskins"]["DBMFont"] = "PT Sans Narrow"
 		E.private["addonskins"]["DBMSkinHalf"] = true
+		
 	end
 
 	E.private["general"]["normTex"] = "Ohi MetalSheet"
@@ -612,6 +621,7 @@ function PI:DarthSetup()
 	E.private["sle"]["chat"]["chatHistory"]["CHAT_MSG_EMOTE"] = false
 	E.private["sle"]["skins"]["merchant"]["enable"] = true
 	E.private["sle"]["skins"]["merchant"]["style"] = "List"
+	E.private["sle"]["skins"]["objectiveTracker"]["scenarioBG"] = true
 	E.private["sle"]["equip"]["setoverlay"] = true
 	E.private["sle"]["actionbars"]["transparentButtons"] = true
 
@@ -1199,7 +1209,6 @@ local function AffinitySetup()
 	E.db["unitframe"]["units"]["party"]["buffs"]["sizeOverride"] = 22
 	E.db["unitframe"]["units"]["party"]["buffs"]["xOffset"] = 30
 	E.db["unitframe"]["units"]["party"]["growthDirection"] = "LEFT_UP"
-	E.db["unitframe"]["units"]["party"]["GPSArrow"]["size"] = 40
 	E.db["unitframe"]["units"]["party"]["buffIndicator"]["size"] = 10
 	E.db["unitframe"]["units"]["party"]["roleIcon"]["enable"] = false
 	E.db["unitframe"]["units"]["party"]["roleIcon"]["position"] = "BOTTOMRIGHT"

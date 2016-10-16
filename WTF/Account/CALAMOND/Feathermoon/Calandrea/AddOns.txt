@@ -1,0 +1,16 @@
+WorldQuestTracker: enabled
+WorldQuestsList: disabled
+PetTracker: disabled
+PetTracker_Breeds: disabled
+PetTracker_Config: disabled
+PetTracker_Journal: disabled
+PetTracker_Switcher: disabled
+PetTracker_Upgrades: disabled
+Rematch: disabled
+ElvUI_EverySecondCounts: enabled
+LoggerHeadLite: enabled
+ZygorGuidesViewer: enabled
+Cartographer: enabled
+Cartographer3: enabled
+TellMeWhen: disabled
+TellMeWhen_Options: disabled

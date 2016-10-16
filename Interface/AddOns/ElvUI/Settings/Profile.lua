@@ -114,6 +114,7 @@ P['databars'] = {
 		["reverseFill"] = false,
 		["hideAtMaxLevel"] = true,
 		["hideInVehicle"] = false,
+		["hideInCombat"] = false,
 	},
 	['reputation'] = {
 		['enable'] = false,
@@ -125,6 +126,7 @@ P['databars'] = {
 		['orientation'] = 'VERTICAL',
 		["reverseFill"] = false,
 		["hideInVehicle"] = false,
+		["hideInCombat"] = false,
 	},
 	['artifact'] = {
 		['enable'] = true,
@@ -136,6 +138,7 @@ P['databars'] = {
 		['orientation'] = 'VERTICAL',
 		["reverseFill"] = false,
 		["hideInVehicle"] = false,
+		["hideInCombat"] = false,
 	},
 	['honor'] = {
 		['enable'] = true,
@@ -147,28 +150,24 @@ P['databars'] = {
 		['orientation'] = 'VERTICAL',
 		["reverseFill"] = false,
 		["hideInVehicle"] = false,
+		["hideInCombat"] = false,
 	},
 }
 
 --Bags
 P['bags'] = {
 	['sortInverted'] = true,
-	['xOffset'] = 0,
-	['yOffset'] = 0,
-	['xOffsetBank'] = 0,
-	['yOffsetBank'] = 0,
 	['bagSize'] = 34,
 	['bankSize'] = 34,
-	['alignToChat'] = true,
-	['bagWidth'] = 350,
-	['bankWidth'] = 350,
+	['bagWidth'] = 406,
+	['bankWidth'] = 406,
 	['currencyFormat'] = 'ICON_TEXT_ABBR',
 	['moneyFormat'] = 'SMART',
 	['moneyCoins'] = true,
 	["junkIcon"] = false,
-	['ignoreItems'] = '',
+	['ignoredItems'] = {},
 	['itemLevel'] = true,
-	["useTooltipScanning"] = false,
+	["useTooltipScanning"] = true,
 	['itemLevelThreshold'] = 1,
 	['itemLevelFont'] = 'Homespun',
 	['itemLevelFontSize'] = 10,
@@ -177,6 +176,10 @@ P['bags'] = {
 	["countFontSize"] = 10,
 	["countFontOutline"] = "MONOCHROMEOUTLINE",
 	["countFontColor"] = {r = 1, g = 1, b = 1},
+	["reverseLoot"] = false,
+	["clearSearchOnClose"] = false,
+	["disableBagSort"] = false,
+	["disableBankSort"] = false,
 	['bagBar'] = {
 		['growthDirection'] = 'VERTICAL',
 		['sortDirection'] = 'ASCENDING',
@@ -197,13 +200,14 @@ P["nameplates"] = {
 	['targetScale'] = 1.15,
 	['nonTargetTransparency'] = 0.35,
 	["motionType"] =  "STACKED",
-	["onlyShowTarget"] = false,
+	["displayStyle"] = "ALL",
 	["lowHealthThreshold"] = 0.4,
 	["showFriendlyCombat"] = "DISABLED",
 	["showEnemyCombat"] = "DISABLED",
 	["showNPCTitles"] = true,
 	["clampToScreen"] = false,
 	["loadDistance"] = 40,
+	["useTargetGlow"] = true,
 	["classbar"] = {
 		["enable"] = true,
 		["attachTo"] = "TARGET",
@@ -229,6 +233,10 @@ P["nameplates"] = {
 		["badScale"] = 1.2,
 		["useThreatColor"] = true,
 	},
+
+	["clickableWidth"] = 150,
+	["clickableHeight"] = 50,
+
 	['units'] = {
 		['PLAYER'] = {
 			['enable'] = false,
@@ -255,11 +263,15 @@ P["nameplates"] = {
 				['text'] = {
 					['enable'] = false,
 					['format'] = 'CURRENT',
-				}
+				},
 			},
 			['castbar'] = {
 				['enable'] = true,
 				['height'] = 8,
+				["hideSpellName"] = false,
+				["hideTime"] = false,
+				["castTimeFormat"] = "CURRENT",
+				["channelTimeFormat"] = "CURRENT",
 			},
 			['buffs'] = {
 				['enable'] = true,
@@ -309,11 +321,15 @@ P["nameplates"] = {
 				['text'] = {
 					['enable'] = false,
 					['format'] = 'CURRENT',
-				}
+				},
 			},
 			['castbar'] = {
 				['enable'] = true,
 				['height'] = 8,
+				["hideSpellName"] = false,
+				["hideTime"] = false,
+				["castTimeFormat"] = "CURRENT",
+				["channelTimeFormat"] = "CURRENT",
 			},
 			['buffs'] = {
 				['enable'] = true,
@@ -365,11 +381,15 @@ P["nameplates"] = {
 				['text'] = {
 					['enable'] = false,
 					['format'] = 'CURRENT',
-				}
+				},
 			},
 			['castbar'] = {
 				['enable'] = true,
 				['height'] = 8,
+				["hideSpellName"] = false,
+				["hideTime"] = false,
+				["castTimeFormat"] = "CURRENT",
+				["channelTimeFormat"] = "CURRENT",
 			},
 			['buffs'] = {
 				['enable'] = true,
@@ -420,11 +440,15 @@ P["nameplates"] = {
 				['text'] = {
 					['enable'] = false,
 					['format'] = 'CURRENT',
-				}
+				},
 			},
 			['castbar'] = {
 				['enable'] = true,
 				['height'] = 8,
+				["hideSpellName"] = false,
+				["hideTime"] = false,
+				["castTimeFormat"] = "CURRENT",
+				["channelTimeFormat"] = "CURRENT",
 			},
 			['buffs'] = {
 				['enable'] = true,
@@ -473,11 +497,15 @@ P["nameplates"] = {
 				['text'] = {
 					['enable'] = false,
 					['format'] = 'CURRENT',
-				}
+				},
 			},
 			['castbar'] = {
 				['enable'] = false,
 				['height'] = 8,
+				["hideSpellName"] = false,
+				["hideTime"] = false,
+				["castTimeFormat"] = "CURRENT",
+				["channelTimeFormat"] = "CURRENT",
 			},
 			['buffs'] = {
 				['enable'] = true,
@@ -500,6 +528,13 @@ P["nameplates"] = {
 					['maxDuration'] = 120,
 					['filter'] = 'CCDebuffs'
 				},
+			},
+			['eliteIcon'] = {
+				['enable'] = false,
+				['size'] = 20,
+				["position"] = "RIGHT",
+				['xOffset'] = 15,
+				['yOffset'] = 0,
 			},
 		},
 		['ENEMY_NPC'] = {
@@ -524,11 +559,15 @@ P["nameplates"] = {
 				['text'] = {
 					['enable'] = false,
 					['format'] = 'CURRENT',
-				}
+				},
 			},
 			['castbar'] = {
 				['enable'] = true,
 				['height'] = 8,
+				["hideSpellName"] = false,
+				["hideTime"] = false,
+				["castTimeFormat"] = "CURRENT",
+				["channelTimeFormat"] = "CURRENT",
 			},
 			['buffs'] = {
 				['enable'] = true,
@@ -551,6 +590,16 @@ P["nameplates"] = {
 					['maxDuration'] = 120,
 					['filter'] = 'CCDebuffs'
 				},
+			},
+			['eliteIcon'] = {
+				['enable'] = false,
+				['size'] = 20,
+				["position"] = "RIGHT",
+				['xOffset'] = 15,
+				['yOffset'] = 0,
+			},
+			["detection"] = {
+				["enable"] = true,
 			},
 		},
 	},
@@ -626,6 +675,8 @@ P['chat'] = {
 	["useAltKey"] = false,
 	["classColorMentionsChat"] = true,
 	["numAllowedCombatRepeat"] = 5,
+	["useCustomTimeColor"] = true,
+	["customTimeColor"] = {r = 0.7, g = 0.7, b = 0.7},
 
 	['tabFont'] = 'PT Sans Narrow',
 	['tabFontSize'] = 12,
@@ -643,7 +694,7 @@ P['datatexts'] = {
 		['LeftChatDataPanel'] = {
 			['left'] = 'Talent/Loot Specialization',
 			['middle'] = 'Durability',
-			['right'] = 'Garrison',
+			['right'] = 'Orderhall',
 		},
 		['RightChatDataPanel'] = {
 			['left'] = 'System',
@@ -659,14 +710,23 @@ P['datatexts'] = {
 		['TopRightMiniPanel'] = '',
 		['TopLeftMiniPanel'] = '',
 	},
-	['localtime'] = true,
-	['time24'] = false,
 	['battleground'] = true,
 	['panelTransparency'] = false,
-	['goldFormat'] = 'BLIZZARD',
-	['goldCoins'] = false,
 	["noCombatClick"] = false,
 	["noCombatHover"] = false,
+
+	--Datatext Options
+	--General
+	['goldFormat'] = 'BLIZZARD',
+	['goldCoins'] = false,
+	--Currencies Datatext
+	["currencies"] = {
+		["displayedCurrency"] = "GOLD",
+		["displayStyle"] = "ICON",
+	},
+	--Time Datatext
+	['localtime'] = true,
+	['time24'] = false,
 
 	--Enabled/Disabled Panels
 	['minimapPanels'] = true,
@@ -694,6 +754,7 @@ P['tooltip'] = {
 	["headerFontSize"] = 12,
 	["textFontSize"] = 12,
 	["smallTextFontSize"] = 12,
+	["colorAlpha"] = 0.8,
 	['visibility'] = {
 		['unitFrames'] = 'NONE',
 		["bags"] = "NONE",
@@ -2866,6 +2927,8 @@ P["actionbar"] = {
 
 	['noRangeColor'] = { r = 0.8, g = 0.1, b = 0.1 },
 	['noPowerColor'] = { r = 0.5, g = 0.5, b = 1 },
+	["usableColor"] = { r = 1, g = 1, b = 1 },
+	["notUsableColor"] = { r = 0.4, g = 0.4, b = 0.4 },
 
 	['keyDown'] = true,
 	['movementModifier'] = 'SHIFT',
@@ -3025,6 +3088,7 @@ P["actionbar"] = {
 		["backdropSpacing"] = 2,
 		['alpha'] = 1,
 		['inheritGlobalFade'] = false,
+		["usePositionOverride"] = true,
 	},
 	['extraActionButton'] = {
 		['alpha'] = 1,

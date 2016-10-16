@@ -3,17 +3,17 @@ VER 3 0100000000000001 "CS" "INV_Misc_QuestionMark"
 /stopcasting
 /cast Counterspell
 END
+VER 3 0100000000000006 "FB" "INV_Misc_QuestionMark"
+#showtooltip
+/cast Frostbolt
+/use Waterbolt
+END
 VER 3 0100000000000002 "FB" "INV_Misc_QuestionMark"
 #showtooltip Frostfire Bolt
 /script UIErrorsFrame:Hide()
 /use 13
 /script UIErrorsFrame:Clear(); UIErrorsFrame:Show()
 /cast Frostfire Bolt
-END
-VER 3 0100000000000006 "FB" "INV_Misc_QuestionMark"
-#showtooltip
-/cast Frostbolt
-/use Waterbolt
 END
 VER 3 0100000000000003 "FSt" "INV_Misc_QuestionMark"
 #showtooltip
@@ -29,8 +29,4 @@ VER 3 0100000000000005 "ST" "INV_Misc_QuestionMark"
 #showtooltip
 /stopcasting
 /cast Spellsteal
-END
-VER 3 0100000000000057 "ZGVMacro1" "0"
-/target Prophet Velen
-/run ZGV:MRM():CG(252,1)
 END

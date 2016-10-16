@@ -1,0 +1,15 @@
+Version: 1
+Frame: BagSync_MinimapButton
+FrameLevel: 5
+Anchor: TOPRIGHT
+X: -128
+Y: -164
+W: 32
+H: 32
+Frame: ColorPickerFrame
+FrameLevel: 1
+Anchor: CENTER
+X: 0
+Y: 0
+W: 345
+H: 240

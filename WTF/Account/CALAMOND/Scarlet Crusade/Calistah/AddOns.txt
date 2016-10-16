@@ -1,0 +1,8 @@
+Archy: enabled
+GatherMate2: enabled
+PetTracker: disabled
+PetTracker_Breeds: disabled
+PetTracker_Config: disabled
+PetTracker_Journal: disabled
+PetTracker_Switcher: disabled
+PetTracker_Upgrades: disabled

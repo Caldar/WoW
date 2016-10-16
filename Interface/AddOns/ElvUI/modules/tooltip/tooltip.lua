@@ -9,74 +9,74 @@ local twipe, tinsert, tconcat = table.wipe, table.insert, table.concat
 local floor = math.floor
 local find, format, sub = string.find, string.format, string.sub
 --WoW API / Variables
+local CanInspect = CanInspect
 local CreateFrame = CreateFrame
-local GetTime = GetTime
-local UnitGUID = UnitGUID
-local GetScreenWidth = GetScreenWidth
-local InCombatLockdown = InCombatLockdown
-local IsShiftKeyDown = IsShiftKeyDown
-local IsControlKeyDown = IsControlKeyDown
-local IsAltKeyDown = IsAltKeyDown
+local C_PetJournalGetPetTeamAverageLevel = C_PetJournal.GetPetTeamAverageLevel
+local GameTooltip_ClearMoney = GameTooltip_ClearMoney
+local GetAverageItemLevel = GetAverageItemLevel
+local GetGuildInfo = GetGuildInfo
+local GetInspectSpecialization = GetInspectSpecialization
 local GetInventoryItemLink = GetInventoryItemLink
 local GetInventorySlotInfo = GetInventorySlotInfo
-local GetSpecialization = GetSpecialization
-local GetInspectSpecialization = GetInspectSpecialization
-local GetSpecializationRoleByID = GetSpecializationRoleByID
-local GetSpecializationInfo = GetSpecializationInfo
-local UnitExists = UnitExists
-local CanInspect = CanInspect
-local GetAverageItemLevel = GetAverageItemLevel
-local NotifyInspect = NotifyInspect
+local GetItemCount = GetItemCount
 local GetMouseFocus = GetMouseFocus
-local GetSpecializationInfoByID = GetSpecializationInfoByID
-local UnitLevel = UnitLevel
-local UnitIsPlayer = UnitIsPlayer
-local UnitClass = UnitClass
-local UnitName = UnitName
-local GetGuildInfo = GetGuildInfo
-local UnitPVPName = UnitPVPName
-local UnitRealmRelationship = UnitRealmRelationship
-local UnitIsAFK = UnitIsAFK
-local UnitIsDND = UnitIsDND
+local GetNumGroupMembers = GetNumGroupMembers
 local GetQuestDifficultyColor = GetQuestDifficultyColor
-local UnitRace = UnitRace
-local UnitFactionGroup = UnitFactionGroup
-local UnitIsTapDenied = UnitIsTapDenied
-local UnitIsTapDeniedByPlayer = UnitIsTapDeniedByPlayer
-local UnitReaction = UnitReaction
-local UnitIsWildBattlePet = UnitIsWildBattlePet
-local UnitIsBattlePetCompanion = UnitIsBattlePetCompanion
-local UnitClassification = UnitClassification
-local UnitCreatureType = UnitCreatureType
-local UnitBattlePetLevel = UnitBattlePetLevel
 local GetRelativeDifficultyColor = GetRelativeDifficultyColor
-local UnitIsPVP = UnitIsPVP
-local UnitHasVehicleUI = UnitHasVehicleUI
+local GetScreenWidth = GetScreenWidth
+local GetSpecialization = GetSpecialization
+local GetSpecializationInfo = GetSpecializationInfo
+local GetSpecializationInfoByID = GetSpecializationInfoByID
+local GetSpecializationRoleByID = GetSpecializationRoleByID
+local GetTime = GetTime
+local InCombatLockdown = InCombatLockdown
+local IsAltKeyDown = IsAltKeyDown
+local IsControlKeyDown = IsControlKeyDown
 local IsInGroup = IsInGroup
 local IsInRaid = IsInRaid
-local GetNumGroupMembers = GetNumGroupMembers
-local UnitIsUnit = UnitIsUnit
-local UnitIsDeadOrGhost = UnitIsDeadOrGhost
-local GetItemCount = GetItemCount
-local UnitAura = UnitAura
-local GetRaidBuffTrayAuraInfo = GetRaidBuffTrayAuraInfo
-local C_PetJournalGetPetTeamAverageLevel = C_PetJournal.GetPetTeamAverageLevel
+local IsShiftKeyDown = IsShiftKeyDown
+local NotifyInspect = NotifyInspect
 local SetTooltipMoney = SetTooltipMoney
-local GameTooltip_ClearMoney = GameTooltip_ClearMoney
-local TARGET = TARGET
-local DEAD = DEAD
-local INTERACTIVE_SERVER_LABEL = INTERACTIVE_SERVER_LABEL
-local FOREIGN_SERVER_LABEL = FOREIGN_SERVER_LABEL
-local RAID_CLASS_COLORS = RAID_CLASS_COLORS
+local UnitAura = UnitAura
+local UnitBattlePetLevel = UnitBattlePetLevel
+local UnitBattlePetType = UnitBattlePetType
+local UnitClass = UnitClass
+local UnitClassification = UnitClassification
+local UnitCreatureType = UnitCreatureType
+local UnitExists = UnitExists
+local UnitFactionGroup = UnitFactionGroup
+local UnitGUID = UnitGUID
+local UnitHasVehicleUI = UnitHasVehicleUI
+local UnitIsAFK = UnitIsAFK
+local UnitIsBattlePetCompanion = UnitIsBattlePetCompanion
+local UnitIsDeadOrGhost = UnitIsDeadOrGhost
+local UnitIsDND = UnitIsDND
+local UnitIsPlayer = UnitIsPlayer
+local UnitIsPVP = UnitIsPVP
+local UnitIsTapDenied = UnitIsTapDenied
+local UnitIsUnit = UnitIsUnit
+local UnitIsWildBattlePet = UnitIsWildBattlePet
+local UnitLevel = UnitLevel
+local UnitName = UnitName
+local UnitPVPName = UnitPVPName
+local UnitRace = UnitRace
+local UnitReaction = UnitReaction
+local UnitRealmRelationship = UnitRealmRelationship
 local CUSTOM_CLASS_COLORS = CUSTOM_CLASS_COLORS
-local PVP = PVP
+local DEAD = DEAD
 local FACTION_ALLIANCE = FACTION_ALLIANCE
+local FACTION_BAR_COLORS = FACTION_BAR_COLORS
 local FACTION_HORDE = FACTION_HORDE
+local FOREIGN_SERVER_LABEL = FOREIGN_SERVER_LABEL
+local ID = ID
+local INTERACTIVE_SERVER_LABEL = INTERACTIVE_SERVER_LABEL
 local LEVEL = LEVEL
 local LE_REALM_RELATION_COALESCED = LE_REALM_RELATION_COALESCED
 local LE_REALM_RELATION_VIRTUAL = LE_REALM_RELATION_VIRTUAL
-local FACTION_BAR_COLORS = FACTION_BAR_COLORS
-local ID = ID
+local PET_TYPE_SUFFIX = PET_TYPE_SUFFIX
+local PVP = PVP
+local RAID_CLASS_COLORS = RAID_CLASS_COLORS
+local TARGET = TARGET
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: ElvUI_ContainerFrame, RightChatPanel, TooltipMover, UIParent, ElvUI_KeyBinder
@@ -93,7 +93,6 @@ local GameTooltip, GameTooltipStatusBar = _G["GameTooltip"], _G["GameTooltipStat
 local S_ITEM_LEVEL = ITEM_LEVEL:gsub( "%%d", "(%%d+)" )
 local playerGUID --Will be set in Initialize
 local targetList, inspectCache = {}, {}
-local NIL_COLOR = { r=1, g=1, b=1 }
 local TAPPED_COLOR = { r=.6, g=.6, b=.6 }
 local AFK_LABEL = " |cffFFFFFF[|r|cffFF0000"..L["AFK"].."|r|cffFFFFFF]|r"
 local DND_LABEL = " |cffFFFFFF[|r|cffFFFF00"..L["DND"].."|r|cffFFFFFF]|r"
@@ -110,7 +109,7 @@ local tooltips = {
 	ShoppingTooltip1,
 	ShoppingTooltip2,
 	ShoppingTooltip3,
-	WorldMapTooltip,
+	WorldMapTooltip.BackdropFrame, --Set template on backdrop because it is resized to cover potential item tooltips on worldmap
 	WorldMapCompareTooltip1,
 	WorldMapCompareTooltip2,
 	WorldMapCompareTooltip3,
@@ -138,7 +137,7 @@ function TT:GameTooltip_ShowCompareItem(tt, shift)
 	if ( not tt ) then
 		tt = GameTooltip;
 	end
-	local item, link = tt:GetItem();
+	local _, link = tt:GetItem();
 	if ( not link ) then
 		return;
 	end
@@ -250,6 +249,7 @@ end
 
 function TT:GameTooltip_SetDefaultAnchor(tt, parent)
 	if E.private.tooltip.enable ~= true then return end
+	if not self.db.visibility then return; end
 
 	if(tt:GetAnchorType() ~= "ANCHOR_NONE") then return end
 	if InCombatLockdown() and self.db.visibility.combat then
@@ -280,7 +280,6 @@ function TT:GameTooltip_SetDefaultAnchor(tt, parent)
 			return
 		else
 			tt:SetOwner(parent, "ANCHOR_NONE")
-			tt:ClearAllPoints()
 			if(GameTooltipStatusBar.anchoredToTop) then
 				GameTooltipStatusBar:ClearAllPoints()
 				GameTooltipStatusBar:Point("TOPLEFT", GameTooltip, "BOTTOMLEFT", E.Border, -(E.Spacing * 3))
@@ -291,24 +290,28 @@ function TT:GameTooltip_SetDefaultAnchor(tt, parent)
 		end
 	end
 
-	if(not E:HasMoverBeenMoved('TooltipMover')) then
-		if ElvUI_ContainerFrame and ElvUI_ContainerFrame:IsShown() then
-			tt:Point('BOTTOMRIGHT', ElvUI_ContainerFrame, 'TOPRIGHT', 0, 18)
-		elseif RightChatPanel:GetAlpha() == 1 and RightChatPanel:IsShown() then
-			tt:Point('BOTTOMRIGHT', RightChatPanel, 'TOPRIGHT', 0, 18)
+	local _, anchor = tt:GetPoint()
+	if (anchor == nil or (ElvUI_ContainerFrame and anchor == ElvUI_ContainerFrame) or anchor == RightChatPanel or anchor == TooltipMover or anchor == UIParent or anchor == E.UIParent) then
+		tt:ClearAllPoints()
+		if(not E:HasMoverBeenMoved('TooltipMover')) then
+			if ElvUI_ContainerFrame and ElvUI_ContainerFrame:IsShown() then
+				tt:Point('BOTTOMRIGHT', ElvUI_ContainerFrame, 'TOPRIGHT', 0, 18)
+			elseif RightChatPanel:GetAlpha() == 1 and RightChatPanel:IsShown() then
+				tt:Point('BOTTOMRIGHT', RightChatPanel, 'TOPRIGHT', 0, 18)
+			else
+				tt:Point('BOTTOMRIGHT', RightChatPanel, 'BOTTOMRIGHT', 0, 18)
+			end
 		else
-			tt:Point('BOTTOMRIGHT', RightChatPanel, 'BOTTOMRIGHT', 0, 18)
-		end
-	else
-		local point = E:GetScreenQuadrant(TooltipMover)
-		if point == "TOPLEFT" then
-			tt:Point("TOPLEFT", TooltipMover, "BOTTOMLEFT", 1, -4)
-		elseif point == "TOPRIGHT" then
-			tt:Point("TOPRIGHT", TooltipMover, "BOTTOMRIGHT", -1, -4)
-		elseif point == "BOTTOMLEFT" or point == "LEFT" then
-			tt:Point("BOTTOMLEFT", TooltipMover, "TOPLEFT", 1, 18)
-		else
-			tt:Point("BOTTOMRIGHT", TooltipMover, "TOPRIGHT", -1, 18)
+			local point = E:GetScreenQuadrant(TooltipMover)
+			if point == "TOPLEFT" then
+				tt:Point("TOPLEFT", TooltipMover, "BOTTOMLEFT", 1, -4)
+			elseif point == "TOPRIGHT" then
+				tt:Point("TOPRIGHT", TooltipMover, "BOTTOMRIGHT", -1, -4)
+			elseif point == "BOTTOMLEFT" or point == "LEFT" then
+				tt:Point("BOTTOMLEFT", TooltipMover, "TOPLEFT", 1, 18)
+			else
+				tt:Point("BOTTOMRIGHT", TooltipMover, "TOPRIGHT", -1, 18)
+			end
 		end
 	end
 end
@@ -405,7 +408,7 @@ function TT:GetTalentSpec(unit, isPlayer)
 	end
 end
 
-function TT:INSPECT_READY(event, GUID)
+function TT:INSPECT_READY(_, GUID)
 	if(self.lastGUID ~= GUID) then return end
 
 	local unit = "mouseover"
@@ -567,6 +570,13 @@ function TT:GameTooltip_OnTooltipSetUnit(tt)
 			if(isPetWild or isPetCompanion) then
 				level = UnitBattlePetLevel(unit)
 
+				local petType = PET_TYPE_SUFFIX[UnitBattlePetType(unit)]
+				if creatureType then
+					creatureType = format("%s %s", creatureType, petType)
+				else
+					creatureType = petType
+				end
+
 				local teamLevel = C_PetJournalGetPetTeamAverageLevel();
 				if(teamLevel) then
 					diffColor = GetRelativeDifficultyColor(teamLevel, level);
@@ -636,7 +646,7 @@ function TT:GameTooltipStatusBar_OnValueChanged(tt, value)
 		end
 	end
 
-	local min, max = tt:GetMinMaxValues()
+	local _, max = tt:GetMinMaxValues()
 	if(value > 0 and max == 1) then
 		tt.text:SetFormattedText("%d%%", floor(value * 100))
 		tt:SetStatusBarColor(TAPPED_COLOR.r, TAPPED_COLOR.g, TAPPED_COLOR.b) --most effeciant?
@@ -664,7 +674,7 @@ function TT:GameTooltip_OnTooltipSetItem(tt)
 	end
 
 	if not tt.itemCleared then
-		local item, link = tt:GetItem()
+		local _, link = tt:GetItem()
 		local num = GetItemCount(link)
 		local numall = GetItemCount(link,true)
 		local left = " "
@@ -696,7 +706,7 @@ function TT:GameTooltip_OnTooltipSetItem(tt)
 	end
 end
 
-function TT:GameTooltip_ShowStatusBar(tt, min, max, value, text)
+function TT:GameTooltip_ShowStatusBar(tt)
 	local statusBar = _G[tt:GetName().."StatusBar"..tt.shownStatusBars];
 	if statusBar and not statusBar.skinned then
 		statusBar:StripTextures()
@@ -708,10 +718,12 @@ function TT:GameTooltip_ShowStatusBar(tt, min, max, value, text)
 end
 
 function TT:SetStyle(tt)
-	tt:SetTemplate("Transparent")
+	tt:SetTemplate("Transparent", nil, true) --ignore updates
+	local r, g, b = tt:GetBackdropColor()
+	tt:SetBackdropColor(r, g, b, self.db.colorAlpha)
 end
 
-function TT:MODIFIER_STATE_CHANGED(event, key)
+function TT:MODIFIER_STATE_CHANGED(_, key)
 	if((key == "LSHIFT" or key == "RSHIFT") and UnitExists("mouseover")) then
 		GameTooltip:SetUnit('mouseover')
 	end
@@ -754,7 +766,7 @@ function TT:GameTooltip_OnTooltipSetSpell(tt)
 	end
 end
 
-function TT:SetItemRef(link, text, button, chatFrame)
+function TT:SetItemRef(link)
 	if find(link,"^spell:") and self.db.spellID then
 		local id = sub(link,7)
 		ItemRefTooltip:AddLine(("|cFFCA3C3C%s|r %d"):format(ID, id))
@@ -762,10 +774,10 @@ function TT:SetItemRef(link, text, button, chatFrame)
 	end
 end
 
-function TT:RepositionBNET(frame, point, anchor, anchorPoint, xOffset, yOffset)
+function TT:RepositionBNET(frame, _, anchor)
 	if anchor ~= BNETMover then
-		BNToastFrame:ClearAllPoints()
-		BNToastFrame:SetPoint('TOPLEFT', BNETMover, 'TOPLEFT');
+		frame:ClearAllPoints()
+		frame:SetPoint('TOPLEFT', BNETMover, 'TOPLEFT');
 	end
 end
 
@@ -774,7 +786,8 @@ function TT:CheckBackdropColor()
 	r = E:Round(r, 1)
 	g = E:Round(g, 1)
 	b = E:Round(b, 1)
-	local red, green, blue, alpha = unpack(E.media.backdropfadecolor)
+	local red, green, blue = unpack(E.media.backdropfadecolor)
+	local alpha = self.db.colorAlpha
 
 	if(r ~= red or g ~= green or b ~= blue) then
 		GameTooltip:SetBackdropColor(red, green, blue, alpha)
@@ -871,6 +884,7 @@ function TT:Initialize()
 	self:HookScript(GameTooltip, 'OnTooltipSetItem', 'GameTooltip_OnTooltipSetItem')
 	self:HookScript(GameTooltip, 'OnTooltipSetUnit', 'GameTooltip_OnTooltipSetUnit')
 	self:HookScript(GameTooltip, "OnSizeChanged", "CheckBackdropColor")
+	self:HookScript(GameTooltip, "OnUpdate", "CheckBackdropColor") --There has to be a more elegant way of doing this.
 
 	self:HookScript(GameTooltipStatusBar, 'OnValueChanged', 'GameTooltipStatusBar_OnValueChanged')
 
@@ -881,6 +895,14 @@ function TT:Initialize()
 		self:HookScript(tt, 'OnShow', 'SetStyle')
 		if tt.BackdropFrame then tt.BackdropFrame:Kill() end
 	end
+
+	--World Quest Reward Icon
+	WorldMapTooltip.ItemTooltip.IconBorder:SetAlpha(0)
+	WorldMapTooltip.ItemTooltip.Icon:SetTexCoord(unpack(E.TexCoords))
+	WorldMapTooltip.ItemTooltip:CreateBackdrop()
+	WorldMapTooltip.ItemTooltip.backdrop:SetOutside(WorldMapTooltip.ItemTooltip.Icon)
+	WorldMapTooltip.ItemTooltip.Count:ClearAllPoints()
+	WorldMapTooltip.ItemTooltip.Count:SetPoint("BOTTOMRIGHT", WorldMapTooltip.ItemTooltip.Icon, "BOTTOMRIGHT", 0, 2)
 
 	--Variable is localized at top of file, then set here when we're sure the frame has been created
 	--Used to check if keybinding is active, if so then don't hide tooltips on actionbars

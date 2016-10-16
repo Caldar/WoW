@@ -1,0 +1,93 @@
+VER 3 0100000000000008 "BS" "INV_MISC_QUESTIONMARK"
+#showtooltip Binding Shot
+/stopcasting
+/cast Binding Shot
+END
+VER 3 0100000000000017 "BW" "INV_MISC_QUESTIONMARK"
+#showtooltip Bestial Wrath
+/startattack [group:raid]
+/cast Bestial Wrath
+/cast [combat] Rabid
+/use [combat] 10
+/cast Rabid(Ferocity Ability)
+/cast heart of the phoenix
+END
+VER 3 010000000000000C "CA" "INV_MISC_QUESTIONMARK"
+#showtooltip Deterrence
+/cancelaura Deterrence
+/cancelaura Goblin Glider
+/cancelaura Hand of Protection
+/cancelaura Parachute
+/cancelaura Stampeding Roar
+/script VehicleExit()
+/run EjectPassengerFromSeat(1); 
+END
+VER 3 0100000000000019 "CbS" "INV_MISC_QUESTIONMARK"
+#showtooltip cobra shot
+/startattack [group:raid]
+/cast Rabid
+/use cobra shot
+/use heart of the phoenix
+END
+VER 3 010000000000000A "CS" "INV_MISC_QUESTIONMARK"
+#showtooltip Counter Shot
+/stopcasting
+/stopcasting
+/stopcasting
+/cast counter shot
+/cast Scatter Shot
+END
+VER 3 010000000000001C "FF" "INV_MISC_QUESTIONMARK"
+#showtooltip Focus Fire
+/startattack [group:raid]
+/cast Focus Fire
+/cast heart of the phoenix
+END
+VER 3 0100000000000018 "KC" "INV_MISC_QUESTIONMARK"
+#showtooltip Kill Command
+/use [combat] 10
+/startattack [group:raid]
+/cast [combat] Rabid
+/petattack
+/use Kill Command 
+/use heart of the phoenix
+END
+VER 3 010000000000001B "KS" "INV_MISC_QUESTIONMARK"
+#showtooltip Kill Shot
+/startattack [group:raid]
+/cast Kill Shot
+/cast heart of the phoenix
+END
+VER 3 0100000000000010 "MC" "INV_MISC_QUESTIONMARK"
+#showtooltip
+/cast [@mouseover,help][@player] Master's Call
+/cast Dash
+END
+VER 3 0100000000000011 "MD" "INV_MISC_QUESTIONMARK"
+/cast [@mouseover, help][@focus, exists, nodead, help][@pet] Misdirection
+/run n,_=UnitName('focus');if not n then n,_=UnitName('mouseover');end;if not n then n,_=UnitName('pet');end;SendChatMessage('casts MD on '..n..'.','EMOTE');
+/cast Mend Pet
+END
+VER 3 010000000000001A "MS" "INV_MISC_QUESTIONMARK"
+#showtooltip Multi-Shot
+/startattack [group:raid]
+/petattack
+/cast Multi-Shot
+/cast heart of the phoenix
+END
+VER 3 0100000000000004 "Pet Util" "INV_MISC_QUESTIONMARK"
+#showtooltip
+/cast [@mouseover, pet:Moth] Dust of Life
+/cast [@mouseover, pet:Quilen] Eternal Guardian
+/cast [pet:Core Hound][pet:Nether Ray] Ancient Hysteria
+/cast [pet:Nether Ray] Netherwinds
+/cast [@player, help, exists, pet:Spirit Beast] Spirit Mend
+END
+VER 3 0100000000000021 "StP" "INV_MISC_QUESTIONMARK"
+#showtooltip Stampede
+/cast Bestial Wrath
+/cast Stampede
+/cast Rapid Fire
+/cast Heart of the Phoenix
+/cast Misdirection
+END

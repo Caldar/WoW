@@ -1,0 +1,10 @@
+LoggerHeadLite: enabled
+PetTracker: disabled
+PetTracker_Breeds: disabled
+PetTracker_Config: disabled
+PetTracker_Journal: disabled
+PetTracker_Switcher: disabled
+PetTracker_Upgrades: disabled
+Rematch: disabled
+TellMeWhen: disabled
+TellMeWhen_Options: disabled

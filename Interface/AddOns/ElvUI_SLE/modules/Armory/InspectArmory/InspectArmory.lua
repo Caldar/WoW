@@ -712,7 +712,13 @@ function IA:CreateInspectFrame()
 			
 			Slot.Highlight = Slot:CreateTexture('Frame', nil, self)
 			Slot.Highlight:SetInside()
-			Slot.Highlight:SetTexture(1, 1, 1, 0.3)
+			Slot.Highlight:SetTexture("Interface\\AddOns\\ElvUI_SLE\\modules\\Armory\\Media\\Textures\\Gradation")
+			if Slot.Direction == 'LEFT' then
+				Slot.Highlight:SetTexCoord(0, 1, 0, 1)
+			else
+				Slot.Highlight:SetTexCoord(1, 0, 0, 1)
+			end
+			Slot.Highlight:SetAlpha(0.8)
 			Slot:SetHighlightTexture(Slot.Highlight)
 			
 			KF:TextSetting(Slot, nil, { Tag = 'ItemLevel', FontSize = 10, FontStyle = 'OUTLINE', }, 'TOP', Slot, 0, -3)
@@ -1915,13 +1921,19 @@ function IA:InspectFrame_DataSetting(DataTable)
 						end
 						]]
 						if E.db.sle.Armory.Inspect.NoticeMissing ~= false then
-							if not Slot.IsEnchanted and Info.Armory_Constants.EnchantableSlots[SlotName] and Slot.ItemEnchant then 
-								if (SlotName == 'SecondaryHandSlot' and ItemType ~= 'INVTYPE_SHIELD' and ItemType ~= 'INVTYPE_HOLDABLE' and ItemType ~= 'INVTYPE_WEAPONOFFHAND' and ItemType ~= 'INVTYPE_RANGEDRIGHT') or SlotName ~= 'SecondaryHandSlot' then
+							if not Slot.IsEnchanted and Info.Armory_Constants.EnchantableSlots[SlotName] and Slot.Gradation.ItemEnchant then 
+								local isValid = false
+								local isWeapon = Info.Armory_Constants.WeaponTypes[ItemType]
+								local isArtifact = (ItemRarity == 6)
+								if (isWeapon and not isArtifact) or (SlotName ~= 'SecondaryHandSlot' and not isWeapon) then
+									isValid = true
+								end
+								if isValid then
 									ErrorDetected = true
 									Slot.EnchantWarning:Show()
 									
 									if not E.db.sle.Armory.Character.Enchant.WarningIconOnly then
-										Slot.ItemEnchant:SetText('|cffff0000'..L["Not Enchanted"])
+										Slot.Gradation.ItemEnchant:SetText('|cffff0000'..L["Not Enchanted"])
 									end
 								end
 							end

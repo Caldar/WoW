@@ -22,7 +22,15 @@ function mod:UpdateElement_CastBarOnUpdate(elapsed)
 			return;
 		end
 		self:SetValue(self.value);
-		self.Time:SetFormattedText("%.1f ", self.value)
+
+		if self.castTimeFormat == "CURRENT" then
+			self.Time:SetFormattedText("%.1f", self.value)
+		elseif self.castTimeFormat == "CURRENT_MAX" then
+			self.Time:SetFormattedText("%.1f / %.1f", self.value, self.maxValue)
+		else --REMAINING
+			self.Time:SetFormattedText("%.1f", (self.maxValue - self.value))
+		end
+
 		if ( self.Spark ) then
 			local sparkPosition = (self.value / self.maxValue) * self:GetWidth();
 			self.Spark:SetPoint("CENTER", self, "LEFT", sparkPosition, 0);
@@ -34,7 +42,14 @@ function mod:UpdateElement_CastBarOnUpdate(elapsed)
 			return;
 		end
 		self:SetValue(self.value);
-		self.Time:SetFormattedText("%.1f ", self.value)
+
+		if self.channelTimeFormat == "CURRENT" then
+			self.Time:SetFormattedText("%.1f", (self.maxValue - self.value))
+		elseif self.channelTimeFormat == "CURRENT_MAX" then
+			self.Time:SetFormattedText("%.1f / %.1f", (self.maxValue - self.value), self.maxValue)
+		else --REMAINING
+			self.Time:SetFormattedText("%.1f", self.value)
+		end
 	end
 end
 
@@ -62,7 +77,7 @@ function mod:UpdateElement_Cast(frame, event, ...)
 	end
 
 	if ( event == "UNIT_SPELLCAST_START" ) then
-		local name, nameSubtext, text, texture, startTime, endTime, isTradeSkill, castID, notInterruptible = UnitCastingInfo(unit);
+		local name, _, text, texture, startTime, endTime, _, castID, notInterruptible = UnitCastingInfo(unit);
 		if ( not name) then
 			frame.CastBar:Hide();
 			return;
@@ -73,7 +88,7 @@ function mod:UpdateElement_Cast(frame, event, ...)
 		if ( frame.CastBar.Spark ) then
 			frame.CastBar.Spark:Show();
 		end
-		frame.CastBar.Name:SetText(text)
+		frame.CastBar.Name:SetText(name)
 		frame.CastBar.value = (GetTime() - (startTime / 1000));
 		frame.CastBar.maxValue = (endTime - startTime) / 1000;
 		frame.CastBar:SetMinMaxValues(0, frame.CastBar.maxValue);
@@ -129,14 +144,14 @@ function mod:UpdateElement_Cast(frame, event, ...)
 		end
 	elseif ( event == "UNIT_SPELLCAST_DELAYED" ) then
 		if ( frame:IsShown() ) then
-			local name, nameSubtext, text, texture, startTime, endTime, isTradeSkill, castID, notInterruptible = UnitCastingInfo(unit);
+			local name, _, _, _, startTime, endTime, _, _, notInterruptible = UnitCastingInfo(unit);
 			if ( not name ) then
 				-- if there is no name, there is no bar
 				frame.CastBar:Hide();
 				return;
 			end
-			frame.canInterrupt = not notInterruptible
-			frame.CastBar.Name:SetText(text)
+
+			frame.CastBar.Name:SetText(name)
 			frame.CastBar.value = (GetTime() - (startTime / 1000));
 			frame.CastBar.maxValue = (endTime - startTime) / 1000;
 			frame.CastBar:SetMinMaxValues(0, frame.CastBar.maxValue);
@@ -151,13 +166,13 @@ function mod:UpdateElement_Cast(frame, event, ...)
 			end
 		end
 	elseif ( event == "UNIT_SPELLCAST_CHANNEL_START" ) then
-		local name, nameSubtext, text, texture, startTime, endTime, isTradeSkill, notInterruptible = UnitChannelInfo(unit);
+		local name, _, text, texture, startTime, endTime, _, notInterruptible = UnitChannelInfo(unit);
 		if ( not name) then
 			frame.CastBar:Hide();
 			return;
 		end
 
-		frame.CastBar.Name:SetText(text)
+		frame.CastBar.Name:SetText(name)
 		frame.CastBar.value = (endTime / 1000) - GetTime();
 		frame.CastBar.maxValue = (endTime - startTime) / 1000;
 		frame.CastBar:SetMinMaxValues(0, frame.CastBar.maxValue);
@@ -179,12 +194,13 @@ function mod:UpdateElement_Cast(frame, event, ...)
 		frame.CastBar:Show();
 	elseif ( event == "UNIT_SPELLCAST_CHANNEL_UPDATE" ) then
 		if ( frame.CastBar:IsShown() ) then
-			local name, nameSubtext, text, texture, startTime, endTime, isTradeSkill = UnitChannelInfo(unit);
+			local name, _, _, _, startTime, endTime, _, notInterruptible = UnitChannelInfo(unit);
 			if ( not name ) then
 				frame.CastBar:Hide();
 				return;
 			end
-			frame.CastBar.Name:SetText(text)
+			frame.CastBar.canInterrupt = not notInterruptible
+			frame.CastBar.Name:SetText(name)
 			frame.CastBar.value = ((endTime / 1000) - GetTime());
 			frame.CastBar.maxValue = (endTime - startTime) / 1000;
 			frame.CastBar:SetMinMaxValues(0, frame.CastBar.maxValue);
@@ -231,8 +247,8 @@ function mod:ConfigureElement_CastBar(frame)
 	end
 	castBar.Icon.texture:SetTexCoord(unpack(E.TexCoords))
 
-	castBar.Name:SetPoint("TOPLEFT", castBar, "BOTTOMLEFT", 0, -E.Border*3)
 	castBar.Time:SetPoint("TOPRIGHT", castBar, "BOTTOMRIGHT", 0, -E.Border*3)
+	castBar.Name:SetPoint("TOPLEFT", castBar, "BOTTOMLEFT", 0, -E.Border*3)
 	castBar.Name:SetPoint("TOPRIGHT", castBar.Time, "TOPLEFT")
 
 	castBar.Name:SetJustifyH("LEFT")
@@ -242,8 +258,23 @@ function mod:ConfigureElement_CastBar(frame)
 	castBar.Time:SetJustifyV("TOP")
 	castBar.Time:SetFont(LSM:Fetch("font", self.db.font), self.db.fontSize, self.db.fontOutline)
 
+	if (self.db.units[frame.UnitType].castbar.hideSpellName) then
+		castBar.Name:Hide()
+	else
+		castBar.Name:Show()
+	end
+	if (self.db.units[frame.UnitType].castbar.hideTime) then
+		castBar.Time:Hide()
+	else
+		castBar.Time:Show()
+	end
+
 	--Texture
 	castBar:SetStatusBarTexture(LSM:Fetch("statusbar", self.db.statusbar))
+
+	--Castbar value formats
+	castBar.castTimeFormat = self.db.units[frame.UnitType].castbar.castTimeFormat
+	castBar.channelTimeFormat = self.db.units[frame.UnitType].castbar.channelTimeFormat
 end
 
 function mod:ConstructElement_CastBar(parent)

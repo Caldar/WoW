@@ -1,4 +1,0 @@
-VER 3 010000000000007C "ZGVMacro2" "0"
-/target Durotan
-/run ZGV:MRM():CG(127,2)
-END

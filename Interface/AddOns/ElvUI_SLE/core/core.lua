@@ -99,12 +99,12 @@ local _CompList = {
 	"oRA3",
 	"ElvUI_CustomTweaks",
 	"ElvUI_MerathilisUI",
-	"QuestKing",
 	"ElvUI_Enhanced",
 	"DejaCharacterStats",
 	"ElvUI_ExtraActionBars",
 	"ElvUI_KitUI",
 	"TradeSkillMaster",
+	"WorldQuestTracker",
 }
 for i = 1, #_CompList do
 	if GetAddOnEnableState(E.myname, _CompList[i]) == 0 then SLE._Compatibility[_CompList[i]] = nil else SLE._Compatibility[_CompList[i]] = true end
@@ -123,8 +123,6 @@ function SLE:Initialize()
 	self.initialized = true
 	self:InitializeModules(); --Load Modules
 
-	SLE:SetCompareItems() --Blizz cvar for item compare
-
 	hooksecurefunc(E, "UpdateAll", SLE.UpdateAll)
 	--Here goes installation script
 
@@ -139,6 +137,7 @@ function SLE:Initialize()
 	if E.private.sle.install_complete == nil or tonumber(E.private.sle.install_complete) < 3 then
 		E:GetModule("PluginInstaller"):Queue(SLE.installTable)
 	end
+	if not E.private.sle.characterGoldsSorting[E.myrealm] then E.private.sle.characterGoldsSorting[E.myrealm] = {} end
 
 	LibStub("LibElvUIPlugin-1.0"):RegisterPlugin(AddOnName, GetOptions) --Registering as plugin
 end

@@ -13,6 +13,8 @@ local format, strsub = string.format, string.sub
 --WoW API / Variables
 local CreateFrame = CreateFrame
 local InCombatLockdown = InCombatLockdown
+local CinematicFrame = CinematicFrame
+local MovieFrame = MovieFrame
 local MoveViewLeftStart = MoveViewLeftStart
 local MoveViewLeftStop = MoveViewLeftStop
 local CloseAllBags = CloseAllBags
@@ -59,7 +61,7 @@ function AFK:UpdateTimer()
 end
 
 function AFK:SetAFK(status)
-	if(InCombatLockdown()) then return end
+	if(InCombatLockdown() or CinematicFrame:IsShown() or MovieFrame:IsShown()) then return end
 	if(status) then
 		MoveViewLeftStart(CAMERA_SPEED);
 		self.AFKMode:Show()
@@ -85,7 +87,6 @@ function AFK:SetAFK(status)
 
 		self.AFKMode.chat:RegisterEvent("CHAT_MSG_WHISPER")
 		self.AFKMode.chat:RegisterEvent("CHAT_MSG_BN_WHISPER")
-		self.AFKMode.chat:RegisterEvent("CHAT_MSG_BN_CONVERSATION")
 		self.AFKMode.chat:RegisterEvent("CHAT_MSG_GUILD")
 
 		self.isAFK = true
@@ -180,7 +181,7 @@ local function Chat_OnEvent(self, event, arg1, arg2, arg3, arg4, arg5, arg6, arg
 	local type = strsub(event, 10);
 	local info = ChatTypeInfo[type];
 
-	if(event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_BN_CONVERSATION") then
+	if(event == "CHAT_MSG_BN_WHISPER") then
 		coloredName = CH:GetBNFriendColor(arg2, arg13)
 	end
 
@@ -229,7 +230,7 @@ local function Chat_OnEvent(self, event, arg1, arg2, arg3, arg4, arg5, arg6, arg
 		body = body:gsub("%[BN_CONVERSATION:", '%['.."")
 	end
 
-	self:AddMessage(CH:ConcatenateTimeStamp(body), info.r, info.g, info.b, info.id, false, accessID, typeID);
+	self:AddMessage(body, info.r, info.g, info.b, info.id, false, accessID, typeID);
 end
 
 function AFK:LoopAnimations()

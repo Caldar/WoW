@@ -26,7 +26,7 @@ LynInfoBar: enabled
 LynMinimap: enabled
 LynQuest: enabled
 LynTooltip: enabled
-Molinari: disabled
+Molinari: enabled
 oUF: enabled
 oUF_Lyn: enabled
 Postal: enabled
@@ -37,7 +37,7 @@ rBuffFrame_Lyn: enabled
 rButtonTemplate: enabled
 rButtonTemplate_Lyn: enabled
 rLib: enabled
-Skada: disabled
+Skada: enabled
 Skillet: disabled
 StatBlockCore: enabled
 tullaRange: enabled
@@ -47,10 +47,17 @@ WeakAurasModelPaths: enabled
 WeakAurasOptions: enabled
 WeakAurasTemplates: enabled
 WIM: enabled
-XIV_Databar: enabled
+XIV_Databar: disabled
 AddOnSkins: enabled
 ElvUI_Config: enabled
 ElvUI: enabled
 ElvUI_EverySecondCounts: enabled
 ElvUI_SLE: enabled
 ls_Toasts: enabled
+Rematch: disabled
+PetTracker_Upgrades: disabled
+PetTracker_Switcher: disabled
+PetTracker_Journal: disabled
+PetTracker_Config: disabled
+PetTracker_Breeds: disabled
+PetTracker: disabled

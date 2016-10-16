@@ -1,0 +1,2 @@
+
+EnemyGridDBChr = nil

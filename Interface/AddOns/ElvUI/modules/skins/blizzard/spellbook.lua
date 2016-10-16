@@ -95,8 +95,11 @@ local function LoadSkin()
 		if tab.isSkinned then return; end
 
 		tab:StripTextures()
-		tab:GetNormalTexture():SetTexCoord(unpack(E.TexCoords))
-		tab:GetNormalTexture():SetInside()
+		-- Avoid a lua error when using the character boost. The spells are learned through "combat training" and are not ready to be skinned.
+		if tab:GetNormalTexture() then
+			tab:GetNormalTexture():SetTexCoord(unpack(E.TexCoords))
+			tab:GetNormalTexture():SetInside()
+		end
 		tab.pushed = true;
 		tab:CreateBackdrop("Default")
 		tab.backdrop:SetAllPoints()
@@ -205,4 +208,4 @@ local function LoadSkin()
 	SpellBookFrameTabButton1:Point('TOPLEFT', SpellBookFrame, 'BOTTOMLEFT', 0, 2)
 end
 
-S:RegisterSkin('ElvUI', LoadSkin)
+S:AddCallback("Spellbook", LoadSkin)

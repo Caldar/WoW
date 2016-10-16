@@ -1,0 +1,19 @@
+
+HandyNotesDB = {
+	["profileKeys"] = {
+		["Sinister - Feathermoon"] = "Sinister - Feathermoon",
+	},
+	["profiles"] = {
+		["Sinister - Feathermoon"] = {
+		},
+	},
+}
+HandyNotes_HandyNotesDB = {
+	["profileKeys"] = {
+		["Sinister - Feathermoon"] = "Sinister - Feathermoon",
+	},
+	["profiles"] = {
+		["Sinister - Feathermoon"] = {
+		},
+	},
+}

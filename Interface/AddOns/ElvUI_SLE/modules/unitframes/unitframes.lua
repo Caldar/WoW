@@ -1,6 +1,6 @@
 local SLE, T, E, L, V, P, G = unpack(select(2, ...)) 
 local UF = E:GetModule('UnitFrames');
-local SUF = SLE:NewModule("UnitFrames")
+local SUF = SLE:NewModule("UnitFrames", "AceEvent-3.0")
 local RC = LibStub("LibRangeCheck-2.0")
 --GLOBALS: hooksecurefunc, CreateFrame
 local _G = _G
@@ -56,7 +56,8 @@ function SUF:ConfiguePortrait(frame, dontHide)
 		if not frame.Health.HigherPortrait then
 			frame.Health.HigherPortrait = CreateFrame("Frame", frame:GetName().."HigherPortrait", frame)
 			frame.Health.HigherPortrait:SetFrameLevel(frame.Health:GetFrameLevel() + 4)
-			frame.Health.HigherPortrait:SetAllPoints(frame.Health)
+			frame.Health.HigherPortrait:SetPoint("TOPLEFT", frame.Health, "TOPLEFT")
+			frame.Health.HigherPortrait:SetPoint("BOTTOMRIGHT", frame.Health, "BOTTOMRIGHT", 0, 0.5)
 		end
 		portrait:ClearAllPoints()
 		if frame.db.portrait.style == '3D' then portrait:SetFrameLevel(frame.Health.HigherPortrait:GetFrameLevel()) end
@@ -158,7 +159,7 @@ function SUF:Initialize()
 	SUF:InitStatus()
 
 	function SUF:ForUpdateAll()
-		UF:UpdateAllHeaders()
+		SUF:SetRoleIcons()
 		if E.private.sle.unitframe.statusbarTextures.power then SUF:BuildStatusTable() end
 	end
 end

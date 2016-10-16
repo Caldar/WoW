@@ -1,9 +1,19 @@
+local addonName, addonTable = ...
+
 -- Lua
 local _G = _G
-local tonumber, unpack, pairs, select, type, next = tonumber, unpack, pairs, select, type, next
-local tremove, tinsert, twipe = table.remove, table.insert, table.wipe
-local strformat, strsplit = string.format, string.split
-local mfloor = math.floor
+local string = _G.string
+local math = _G.math
+local table = _G.table
+local next = _G.next
+local pairs = _G.pairs
+local select = _G.select
+local tonumber = _G.tonumber
+local type = _G.type
+local unpack = _G.unpack
+
+-- Blizz
+local Lerp = _G.Lerp
 
 -- Mine
 local INLINE_NEED = "|TInterface\\Buttons\\UI-GroupLoot-Dice-Up:0:0:0:0:32:32:0:32:0:31|t"
@@ -18,6 +28,7 @@ local scenarioToasts = {}
 local miscToasts = {}
 local activeToasts = {}
 local queuedToasts = {}
+local textsToAnimate = {}
 local toastCounter = 0
 
 ------------
@@ -32,23 +43,55 @@ local DEFAULTS = {
 	sfx_enabled = true,
 	fadeout_delay = 2.8,
 	scale = 1,
+	colored_names_enabled = false,
 	dnd = {
 		achievement = false,
 		archaeology = false,
 		recipe = false,
-		garrison = true,
+		garrison_6_0 = false,
+		garrison_7_0 = true,
 		instance = false, -- dungeon completion
-		loot = false, -- includes blizz store items
+		loot_special = false, -- includes blizz store items
+		loot_common = false,
+		loot_currency = false,
 		world = false, -- world quest, invasion completion
+		transmog = false,
 	},
 	achievement_enabled = true,
 	archaeology_enabled = true,
-	garrison_enabled = true,
+	garrison_6_0_enabled = false,
+	garrison_7_0_enabled = true,
 	instance_enabled = true,
-	loot_enabled = true,
+	loot_special_enabled = true,
+	loot_common_enabled = false,
+	loot_common_quality_threshold = 1,
+	loot_currency_enabled = true,
 	recipe_enabled = true,
 	world_enabled = true,
+	transmog_enabled = true,
 }
+
+------------
+-- EXPORT --
+------------
+
+local F = {} -- F for Functions
+addonTable[1] = F
+
+_G[addonName] = addonTable
+
+-- XXX: This function can be overridden by other addons
+-- XXX: For toasts' structures, see definitions of CreateBaseToastButton and GetToast functions
+
+function F:SkinToast() end
+
+-- Parameters:
+-- 	toast
+-- 	toastType	- types: "item", "mission", "follower", "achievement", "ability", "scenario", "misc"
+
+-- Import:
+-- 	local toast_F = unpack(ls_Toasts)
+-- 	function toast_F:SkinToast(toast, toastType) --[[body]] end
 
 ----------------
 -- DISPATCHER --
@@ -67,47 +110,32 @@ dispatcher:SetScript("OnEvent", EventHandler)
 
 local function CalculatePosition(self)
 	local selfCenterX, selfCenterY = self:GetCenter()
-	local screenWidth = mfloor(_G.UIParent:GetRight() + 0.5)
-	local screenHeight = mfloor(_G.UIParent:GetTop() + 0.5)
-	local p, rP, x, y
+	local screenWidth = _G.UIParent:GetRight()
+	local screenHeight = _G.UIParent:GetTop()
+	local screenCenterX, screenCenterY = _G.UIParent:GetCenter()
+	local screenLeft = screenWidth / 3
+	local screenRight = screenWidth * 2 / 3
+	local p, x, y
 
-	if selfCenterX and selfCenterY then
-		selfCenterX, selfCenterY = mfloor(selfCenterX + 0.5), mfloor(selfCenterY + 0.5)
-
-		if selfCenterX >= screenWidth / 2 then
-			-- RIGHT
-			x = mfloor(self:GetRight() + 0.5) - screenWidth
-
-			if selfCenterY >= screenHeight / 2 then
-				-- TOP
-				p  = "TOPRIGHT"
-				rP  = "TOPRIGHT"
-				y = mfloor(self:GetTop() + 0.5) - screenHeight
-			else
-				-- BOTTOM
-				p  = "BOTTOMRIGHT"
-				rP  = "BOTTOMRIGHT"
-				y = mfloor(self:GetBottom() + 0.5)
-			end
-		else
-			-- LEFT
-			x = mfloor(self:GetLeft() + 0.5)
-
-			if selfCenterY >= screenHeight / 2 then
-				-- TOP
-				p  = "TOPLEFT"
-				rP  = "TOPLEFT"
-				y = mfloor(self:GetTop() + 0.5) - screenHeight
-			else
-				-- BOTTOM
-				p  = "BOTTOMLEFT"
-				rP  = "BOTTOMLEFT"
-				y = mfloor(self:GetBottom() + 0.5)
-			end
-		end
+	if selfCenterY >= screenCenterY then
+		p = "TOP"
+		y = self:GetTop() - screenHeight
+	else
+		p = "BOTTOM"
+		y = self:GetBottom()
 	end
 
-	return p, rP, x, y
+	if selfCenterX >= screenRight then
+		p = p.."RIGHT"
+		x = self:GetRight() - screenWidth
+	elseif selfCenterX <= screenLeft then
+		p = p.."LEFT"
+		x = self:GetLeft()
+	else
+		x = selfCenterX - screenCenterX
+	end
+
+	return p, p, math.floor(x + 0.5), math.floor(y + 0.5)
 end
 
 local function Anchor_OnDragStart(self)
@@ -164,6 +192,68 @@ local function Anchor_Disable()
 	anchorFrame.Text:Hide()
 end
 
+-----------
+-- UTILS --
+-----------
+
+local function FixItemLink(itemLink)
+	itemLink = string.match(itemLink, "|H(.+)|h.+|h")
+	local linkTable = {string.split(":", itemLink)}
+
+	if linkTable[1] ~= "item" then
+		return itemLink
+	end
+
+	if linkTable[12] ~= "" then
+		linkTable[12] = ""
+
+		table.remove(linkTable, 15 + (tonumber(linkTable[14]) or 0))
+	end
+
+	return table.concat(linkTable, ":")
+end
+
+local function DumpToasts()
+	if #activeToasts > 0 then
+		print("|cffffd200=== TOAST DUMP ===|r")
+	end
+
+	for _, toast in pairs(activeToasts) do
+		print("|cff00ccff"..toast.type.." toast info:|r", "\nid:", toast.id, "\nlink:", toast.link, "\nchat event:", toast.chat)
+	end
+end
+
+--------------------
+-- TEXT ANIMATION --
+--------------------
+
+local function ProcessAnimatedText()
+	for text, targetValue in pairs(textsToAnimate) do
+		local newValue
+
+		if text._value >= targetValue then
+			newValue = math.floor(Lerp(text._value, targetValue, 0.25))
+		else
+			newValue = math.ceil(Lerp(text._value, targetValue, 0.25))
+		end
+
+		if newValue == targetValue then
+			text._value = nil
+			textsToAnimate[text] = nil
+		end
+
+		text:SetText(newValue)
+		text._value = newValue
+	end
+end
+
+local function SetAnimatedText(self, value)
+	self._value = tonumber(self:GetText()) or 1
+	textsToAnimate[self] = value
+end
+
+_G.C_Timer.NewTicker(0.05, ProcessAnimatedText)
+
 ----------
 -- MAIN --
 ----------
@@ -184,7 +274,7 @@ local function HasNonDNDToast()
 	for i, queuedToast in pairs(queuedToasts) do
 		if not queuedToast.dnd then
 			-- XXX: I don't want to ruin non-DND toasts' order, k?
-			tinsert(queuedToasts, 1, tremove(queuedToasts, i))
+			table.insert(queuedToasts, 1, table.remove(queuedToasts, i))
 
 			return true
 		end
@@ -201,7 +291,7 @@ local function SpawnToast(toast, isDND)
 			toast.dnd = true
 		end
 
-		tinsert(queuedToasts, toast)
+		table.insert(queuedToasts, toast)
 
 		return false
 	end
@@ -209,14 +299,20 @@ local function SpawnToast(toast, isDND)
 	if #activeToasts > 0 then
 		if CFG.growth_direction == "DOWN" then
 			toast:SetPoint("TOP", activeToasts[#activeToasts], "BOTTOM", 0, -4)
-		else
+		elseif CFG.growth_direction == "UP" then
 			toast:SetPoint("BOTTOM", activeToasts[#activeToasts], "TOP", 0, 4)
+		elseif CFG.growth_direction == "LEFT" then
+			toast:SetPoint("RIGHT", activeToasts[#activeToasts], "LEFT", -8, 0)
+		elseif CFG.growth_direction == "RIGHT" then
+			toast:SetPoint("LEFT", activeToasts[#activeToasts], "RIGHT", 8, 0)
 		end
 	else
 		toast:SetPoint("TOPLEFT", anchorFrame, "TOPLEFT", 0, 0)
 	end
 
-	tinsert(activeToasts, toast)
+	table.insert(activeToasts, toast)
+
+	F:SkinToast(toast, toast.type)
 
 	toast:Show()
 
@@ -234,17 +330,21 @@ local function RefreshToasts()
 		else
 			if CFG.growth_direction == "DOWN" then
 				activeToast:SetPoint("TOP", activeToasts[i - 1], "BOTTOM", 0, -4)
-			else
+			elseif CFG.growth_direction == "UP" then
 				activeToast:SetPoint("BOTTOM", activeToasts[i - 1], "TOP", 0, 4)
+			elseif CFG.growth_direction == "LEFT" then
+				activeToast:SetPoint("RIGHT", activeToasts[i - 1], "LEFT", -8, 0)
+			elseif CFG.growth_direction == "RIGHT" then
+				activeToast:SetPoint("LEFT", activeToasts[i - 1], "RIGHT", 8, 0)
 			end
 		end
 	end
 
-	local queuedToast = tremove(queuedToasts, 1)
+	local queuedToast = table.remove(queuedToasts, 1)
 
 	if queuedToast then
 		if _G.InCombatLockdown() and queuedToast.dnd then
-			tinsert(queuedToasts, queuedToast)
+			table.insert(queuedToasts, queuedToast)
 
 			if HasNonDNDToast() then
 				RefreshToasts()
@@ -255,28 +355,96 @@ local function RefreshToasts()
 	end
 end
 
+local function ResetToast(toast)
+	toast.id = nil
+	toast.dnd = nil
+	toast.chat = nil
+	toast.link = nil
+	toast.itemCount = nil
+	toast.soundFile = nil
+	toast.usedRewards = nil
+	toast:ClearAllPoints()
+	toast:Hide()
+	toast.BG:SetTexture("Interface\\AddOns\\ls_Toasts\\media\\toast-bg-default")
+	toast.Icon:SetPoint("TOPLEFT", 7, -7)
+	toast.Icon:SetSize(44, 44)
+	toast.Title:SetText("")
+	toast.Text:SetText("")
+	toast.Text:SetTextColor(1, 1, 1)
+	toast.TextBG:SetVertexColor(0, 0, 0)
+	toast.AnimIn:Stop()
+	toast.AnimOut:Stop()
+
+	if toast.IconBorder then
+		toast.IconBorder:Show()
+		toast.IconBorder:SetVertexColor(1, 1, 1)
+	end
+
+	if toast.Count then
+		toast.Count:SetText("")
+	end
+
+	if toast.Dragon then
+		toast.Dragon:Hide()
+	end
+
+	if toast.Level then
+		toast.Level:SetText("")
+	end
+
+	if toast.Points then
+		toast.Points:SetText("")
+	end
+
+	if toast.Rank then
+		toast.Rank:SetText("")
+	end
+
+	if toast.IconText then
+		toast.IconText:SetText("")
+	end
+
+	if toast.Bonus then
+		toast.Bonus:Hide()
+	end
+
+	if toast.Heroic then
+		toast.Heroic:Hide()
+	end
+
+	if toast.Arrows then
+		toast.Arrows.Anim:Stop()
+	end
+
+	if toast.Reward1 then
+		for i = 1, 5 do
+			toast["Reward"..i]:Hide()
+		end
+	end
+end
+
 local function RecycleToast(toast)
 	for i, activeToast in pairs(activeToasts) do
 		if toast == activeToast then
-			tremove(activeToasts, i)
+			table.remove(activeToasts, i)
 
 			if toast.type == "item" then
-				tinsert(itemToasts, toast)
+				table.insert(itemToasts, toast)
 			elseif toast.type == "mission" then
-				tinsert(missonToasts, toast)
+				table.insert(missonToasts, toast)
 			elseif toast.type == "follower" then
-				tinsert(followerToasts, toast)
+				table.insert(followerToasts, toast)
 			elseif toast.type == "achievement" then
-				tinsert(achievementToasts, toast)
+				table.insert(achievementToasts, toast)
 			elseif toast.type == "ability" then
-				tinsert(abilityToasts, toast)
+				table.insert(abilityToasts, toast)
 			elseif toast.type == "scenario" then
-				tinsert(scenarioToasts, toast)
+				table.insert(scenarioToasts, toast)
 			elseif toast.type == "misc" then
-				tinsert(miscToasts, toast)
+				table.insert(miscToasts, toast)
 			end
 
-			toast:Hide()
+			ResetToast(toast)
 		end
 	end
 
@@ -285,13 +453,13 @@ end
 
 local function GetToastToUpdate(id, toastType)
 	for _, toast in pairs(activeToasts) do
-		if id == toast.id and toastType == toast.type then
+		if not toast.chat and toastType == toast.type and (id == toast.id or id == toast.link) then
 			return toast, false
 		end
 	end
 
 	for _, toast in pairs(queuedToasts) do
-		if id == toast.id and toastType == toast.type then
+		if not toast.chat and toastType == toast.type and (id == toast.id or id == toast.link) then
 			return toast, true
 		end
 	end
@@ -308,8 +476,12 @@ local function UpdateToast(id, toastType, itemLink)
 
 		if reward then
 			local _, _, _, _, texture = _G.GetItemInfoInstant(itemLink)
+			local isOK = pcall(_G.SetPortraitToTexture, reward.Icon, texture)
 
-			_G.SetPortraitToTexture(reward.Icon, texture)
+			if not isOK then
+				_G.SetPortraitToTexture(reward.Icon, "Interface\\Icons\\INV_Box_02")
+			end
+
 			reward.item = itemLink
 			reward:Show()
 		end
@@ -336,70 +508,6 @@ local function ToastButton_OnShow(self)
 	self.AnimOut:Play()
 end
 
-local function ToastButton_OnHide(self)
-	self.id = nil
-	self.dnd = nil
-	self.link = nil
-	self.soundFile = nil
-	self.usedRewards = nil
-	self:ClearAllPoints()
-	self.BG:SetTexture("Interface\\AddOns\\ls_Toasts\\media\\toast-bg-default")
-	self.Icon:SetPoint("TOPLEFT", 7, -7)
-	self.Icon:SetSize(44, 44)
-	self.Title:SetText("")
-	self.Text:SetText("")
-	self.TextBG:SetVertexColor(0, 0, 0)
-	self.AnimIn:Stop()
-	self.AnimOut:Stop()
-
-	if self.IconBorder then
-		self.IconBorder:Show()
-		self.IconBorder:SetVertexColor(1, 1, 1)
-	end
-
-	if self.Count then
-		self.Count:SetText("")
-	end
-
-	if self.Dragon then
-		self.Dragon:Hide()
-	end
-
-	if self.Level then
-		self.Level:SetText("")
-	end
-
-	if self.Points then
-		self.Points:SetText("")
-	end
-
-	if self.Rank then
-		self.Rank:SetText("")
-	end
-
-	if self.IconText then
-		self.IconText:SetText("")
-	end
-
-	if self.Bonus then
-		self.Bonus:Hide()
-	end
-
-	if self.Heroic then
-		self.Heroic:Hide()
-	end
-
-	if self.Arrows then
-		self.Arrows.Anim:Stop()
-	end
-
-	if self.Reward1 then
-		for i = 1, 5 do
-			self["Reward"..i]:Hide()
-		end
-	end
-end
-
 local function ToastButton_OnClick(self, button)
 	if button == "RightButton" then
 		RecycleToast(self)
@@ -413,7 +521,21 @@ local function ToastButton_OnClick(self, button)
 					_G.Garrison_LoadUI()
 				end
 
-				_G.ShowGarrisonLandingPage(_G.GarrisonFollowerOptions[_G.C_Garrison.GetFollowerInfo(self.id).followerTypeID].garrisonType)
+				if _G.GarrisonLandingPage then
+					_G.ShowGarrisonLandingPage(_G.GarrisonFollowerOptions[_G.C_Garrison.GetFollowerInfo(self.id).followerTypeID].garrisonType)
+				end
+			elseif self.type == "misc" then
+				if self.link then
+					if string.sub(self.link, 1, 18) == "transmogappearance" then
+						if not _G.CollectionsJournal then
+							_G.CollectionsJournal_LoadUI()
+						end
+
+						if _G.CollectionsJournal then
+							_G.WardrobeCollectionFrame_OpenTransmogLink(self.link)
+						end
+					end
+				end
 			end
 		end
 	end
@@ -429,7 +551,7 @@ local function ToastButton_OnEnter(self)
 			local link = _G.C_Garrison.GetFollowerLink(self.id)
 
 			if link then
-				local _, garrisonFollowerID, quality, level, itemLevel, ability1, ability2, ability3, ability4, trait1, trait2, trait3, trait4, spec1 = strsplit(":", link)
+				local _, garrisonFollowerID, quality, level, itemLevel, ability1, ability2, ability3, ability4, trait1, trait2, trait3, trait4, spec1 = string.split(":", link)
 				local followerType = _G.C_Garrison.GetFollowerTypeByID(tonumber(garrisonFollowerID))
 				_G.GarrisonFollowerTooltip_Show(tonumber(garrisonFollowerID), false, tonumber(quality), tonumber(level), 0, 0, tonumber(itemLevel), tonumber(spec1), tonumber(ability1), tonumber(ability2), tonumber(ability3), tonumber(ability4), tonumber(trait1), tonumber(trait2), tonumber(trait3), tonumber(trait4))
 
@@ -448,9 +570,16 @@ local function ToastButton_OnEnter(self)
 		end
 	elseif self.link then
 		if self.type == "item" then
-			_G.GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", -2, 2)
-			_G.GameTooltip:SetHyperlink(self.link)
-			_G.GameTooltip:Show()
+			if string.find(self.link, "battlepet:") then
+				local _, speciesID, level, breedQuality, maxHealth, power, speed = string.split(":", self.link)
+				_G.GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", -2, 2)
+				_G.GameTooltip:Show()
+				_G.BattlePetToolTip_Show(tonumber(speciesID), tonumber(level), tonumber(breedQuality), tonumber(maxHealth), tonumber(power), tonumber(speed))
+			else
+				_G.GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", -2, 2)
+				_G.GameTooltip:SetHyperlink(self.link)
+				_G.GameTooltip:Show()
+			end
 		end
 	end
 
@@ -461,6 +590,7 @@ local function ToastButton_OnLeave(self)
 	_G.GameTooltip:Hide()
 	_G.GarrisonFollowerTooltip:Hide()
 	_G.GarrisonShipyardFollowerTooltip:Hide()
+	_G.BattlePetTooltip:Hide()
 
 	self.AnimOut:Play()
 end
@@ -495,7 +625,6 @@ local function CreateBaseToastButton()
 	toast:RegisterForClicks("LeftButtonUp", "RightButtonUp")
 	toast:Hide()
 	toast:SetScript("OnShow", ToastButton_OnShow)
-	toast:SetScript("OnHide", ToastButton_OnHide)
 	toast:SetScript("OnClick", ToastButton_OnClick)
 	toast:SetScript("OnEnter", ToastButton_OnEnter)
 	toast:SetScript("OnLeave", ToastButton_OnLeave)
@@ -702,7 +831,7 @@ local function Reward_OnEnter(self)
 		_G.GameTooltip:SetLFGCompletionReward(self.rewardID)
 	elseif self.xp then
 		_G.GameTooltip:AddLine(_G.YOU_RECEIVED)
-		_G.GameTooltip:AddLine(strformat(_G.BONUS_OBJECTIVE_EXPERIENCE_FORMAT, self.xp), 1, 1, 1)
+		_G.GameTooltip:AddLine(string.format(_G.BONUS_OBJECTIVE_EXPERIENCE_FORMAT, self.xp), 1, 1, 1)
 	elseif self.money then
 		_G.GameTooltip:AddLine(_G.YOU_RECEIVED)
 		_G.GameTooltip:AddLine(_G.GetMoneyString(self.money), 1, 1, 1)
@@ -754,7 +883,7 @@ local function GetToast(toastType)
 	local toast
 
 	if toastType == "item" then
-		toast = tremove(itemToasts, 1)
+		toast = table.remove(itemToasts, 1)
 
 		if not toast then
 			toast = CreateBaseToastButton()
@@ -773,7 +902,32 @@ local function GetToast(toastType)
 			local count = toast:CreateFontString(nil, "ARTWORK", "GameFontHighlightOutline")
 			count:SetPoint("BOTTOMRIGHT", toast.Icon, "BOTTOMRIGHT", 0, 2)
 			count:SetJustifyH("RIGHT")
+			count.SetAnimatedText = SetAnimatedText
 			toast.Count = count
+
+			local countUpdate = toast:CreateFontString(nil, "ARTWORK", "GameFontHighlightOutline")
+			countUpdate:SetPoint("BOTTOMRIGHT", toast.Count, "TOPRIGHT", 0, 2)
+			countUpdate:SetJustifyH("RIGHT")
+			countUpdate:SetAlpha(0)
+			toast.CountUpdate = countUpdate
+
+			local ag = toast:CreateAnimationGroup()
+			toast.CountUpdateAnim = ag
+
+			local anim1 = ag:CreateAnimation("Alpha")
+			anim1:SetChildKey("CountUpdate")
+			anim1:SetOrder(1)
+			anim1:SetFromAlpha(0)
+			anim1:SetToAlpha(1)
+			anim1:SetDuration(0.2)
+
+			local anim2 = ag:CreateAnimation("Alpha")
+			anim2:SetChildKey("CountUpdate")
+			anim2:SetOrder(2)
+			anim2:SetFromAlpha(1)
+			anim2:SetToAlpha(0)
+			anim2:SetStartDelay(0.4)
+			anim2:SetDuration(0.8)
 
 			local dragon = toast:CreateTexture(nil, "OVERLAY", nil, 0)
 			dragon:SetPoint("TOPLEFT", -23, 13)
@@ -786,7 +940,7 @@ local function GetToast(toastType)
 			toast.type = "item"
 		end
 	elseif toastType == "mission" then
-		toast = tremove(missonToasts, 1)
+		toast = table.remove(missonToasts, 1)
 
 		if not toast then
 			toast = CreateBaseToastButton()
@@ -799,7 +953,7 @@ local function GetToast(toastType)
 			toast.type = "mission"
 		end
 	elseif toastType == "follower" then
-		toast = tremove(followerToasts, 1)
+		toast = table.remove(followerToasts, 1)
 
 		if not toast then
 			toast = CreateBaseToastButton()
@@ -816,7 +970,7 @@ local function GetToast(toastType)
 			toast.type = "follower"
 		end
 	elseif toastType == "achievement" then
-		toast = tremove(achievementToasts, 1)
+		toast = table.remove(achievementToasts, 1)
 
 		if not toast then
 			toast = CreateBaseToastButton()
@@ -836,7 +990,7 @@ local function GetToast(toastType)
 			toast.type = "achievement"
 		end
 	elseif toastType == "ability" then
-		toast = tremove(abilityToasts, 1)
+		toast = table.remove(abilityToasts, 1)
 
 		if not toast then
 			toast = CreateBaseToastButton()
@@ -856,7 +1010,7 @@ local function GetToast(toastType)
 			toast.type = "ability"
 		end
 	elseif toastType == "scenario" then
-		toast = tremove(scenarioToasts, 1)
+		toast = table.remove(scenarioToasts, 1)
 
 		if not toast then
 			toast = CreateBaseToastButton()
@@ -895,7 +1049,7 @@ local function GetToast(toastType)
 			toast.type = "scenario"
 		end
 	elseif toastType == "misc" then
-		toast = tremove(miscToasts, 1)
+		toast = table.remove(miscToasts, 1)
 
 		if not toast then
 			toast = CreateBaseToastButton()
@@ -938,7 +1092,7 @@ dispatcher:RegisterEvent("PLAYER_REGEN_DISABLED")
 
 function dispatcher:PLAYER_REGEN_ENABLED()
 	if IsDNDEnabled() and #queuedToasts > 0 then
-		for i = 1, CFG.max_active_toasts - #activeToasts do
+		for _ = 1, CFG.max_active_toasts - #activeToasts do
 			RefreshToasts()
 		end
 	end
@@ -952,7 +1106,7 @@ dispatcher:RegisterEvent("PLAYER_REGEN_ENABLED")
 
 local function AchievementToast_SetUp(achievementID, flag, isCriteria)
 	local toast = GetToast("achievement")
-	local _, name, points, _, _, _, _, _, _, icon, _, isGuildAch = _G.GetAchievementInfo(achievementID)
+	local _, name, points, _, _, _, _, _, _, icon = _G.GetAchievementInfo(achievementID)
 
 	if isCriteria then
 		toast.Title:SetText(_G.ACHIEVEMENT_PROGRESSED)
@@ -1032,7 +1186,6 @@ function dispatcher:ARTIFACT_DIGSITE_COMPLETE(...)
 	toast.Icon:SetPoint("TOPLEFT", 7, -3)
 	toast.Icon:SetSize(76, 76)
 	toast.Icon:SetTexture(raceTexture)
-
 	toast.soundFile = "UI_DigsiteCompletion_Toast"
 
 	SpawnToast(toast, CFG.dnd.archaeology)
@@ -1062,7 +1215,15 @@ end
 -- GARRISON --
 --------------
 
-local function GarrisonMissionToast_SetUp(missionID, isShipyard, isAdded)
+local function GetGarrisonTypeByFollowerType(followerType)
+	if followerType == _G.LE_FOLLOWER_TYPE_GARRISON_7_0 then
+		return _G.LE_GARRISON_TYPE_7_0
+	elseif followerType == _G.LE_FOLLOWER_TYPE_GARRISON_6_0 or followerType == _G.LE_FOLLOWER_TYPE_SHIPYARD_6_2 then
+		return _G.LE_GARRISON_TYPE_6_0
+	end
+end
+
+local function GarrisonMissionToast_SetUp(followerType, garrisonType, missionID, isAdded)
 	local toast = GetToast("mission")
 	local missionInfo = _G.C_Garrison.GetBasicMissionInfo(missionID)
 	local color = missionInfo.isRare and _G.ITEM_QUALITY_COLORS[3] or _G.ITEM_QUALITY_COLORS[1]
@@ -1074,6 +1235,10 @@ local function GarrisonMissionToast_SetUp(missionID, isShipyard, isAdded)
 		toast.Title:SetText(_G.GARRISON_MISSION_COMPLETE)
 	end
 
+	if CFG.colored_names_enabled then
+		toast.Text:SetTextColor(color.r, color.g, color.b)
+	end
+
 	toast.Text:SetText(missionInfo.name)
 	toast.Level:SetText(level)
 	toast.Border:SetVertexColor(color.r, color.g, color.b)
@@ -1081,28 +1246,48 @@ local function GarrisonMissionToast_SetUp(missionID, isShipyard, isAdded)
 	toast.soundFile = "UI_Garrison_Toast_MissionComplete"
 	toast.id = missionID
 
-	SpawnToast(toast, CFG.dnd.garrison)
+	SpawnToast(toast, garrisonType == _G.LE_GARRISON_TYPE_7_0 and CFG.dnd.garrison_7_0 or CFG.dnd.garrison_6_0)
 end
 
-function dispatcher:GARRISON_BUILDING_ACTIVATABLE(...)
-	local buildingName = ...
-	local toast = GetToast("misc")
+function dispatcher:GARRISON_MISSION_FINISHED(...)
+	local followerType, missionID = ...
+	local garrisonType = GetGarrisonTypeByFollowerType(followerType)
 
-	toast.Title:SetText(_G.GARRISON_UPDATE)
-	toast.Text:SetText(buildingName)
-	toast.Icon:SetTexture("Interface\\Icons\\Garrison_Build")
-	toast.soundFile = "UI_Garrison_Toast_BuildingComplete"
+	if (garrisonType == _G.LE_GARRISON_TYPE_7_0 and not CFG.garrison_7_0_enabled) or
+		(garrisonType == _G.LE_GARRISON_TYPE_6_0 and not CFG.garrison_6_0_enabled) then
+		return
+	end
 
-	SpawnToast(toast, CFG.dnd.garrison)
+	local _, instanceType = _G.GetInstanceInfo()
+	local validInstance = false
+
+	if instanceType == "none" or _G.C_Garrison.IsOnGarrisonMap() then
+		validInstance = true
+	end
+
+	if validInstance then
+		GarrisonMissionToast_SetUp(followerType, garrisonType, missionID)
+	end
 end
 
-function dispatcher:GARRISON_FOLLOWER_ADDED(...)
-	local followerID, name, class, level, quality, isUpgraded, texPrefix, followerType = ...
+function dispatcher:GARRISON_RANDOM_MISSION_ADDED(...)
+	local followerType, missionID = ...
+	local garrisonType = GetGarrisonTypeByFollowerType(followerType)
+
+	if (garrisonType == _G.LE_GARRISON_TYPE_7_0 and not CFG.garrison_7_0_enabled) or
+		(garrisonType == _G.LE_GARRISON_TYPE_6_0 and not CFG.garrison_6_0_enabled) then
+		return
+	end
+
+	GarrisonMissionToast_SetUp(followerType, garrisonType, missionID, true)
+end
+
+local function GarrisonFollowerToast_SetUp(followerType, garrisonType, followerID, name, texPrefix, level, quality, isUpgraded)
+	local toast = GetToast("follower")
 	local followerInfo = _G.C_Garrison.GetFollowerInfo(followerID)
 	local followerStrings = _G.GarrisonFollowerOptions[followerType].strings
 	local upgradeTexture = _G.LOOTUPGRADEFRAME_QUALITY_TEXTURES[quality] or _G.LOOTUPGRADEFRAME_QUALITY_TEXTURES[2]
 	local color = _G.ITEM_QUALITY_COLORS[quality]
-	local toast = GetToast("follower")
 
 	if followerType == _G.LE_FOLLOWER_TYPE_SHIPYARD_6_2 then
 		toast.Icon:SetSize(84, 44)
@@ -1117,9 +1302,9 @@ function dispatcher:GARRISON_FOLLOWER_ADDED(...)
 			portrait = "Interface\\Garrison\\Portraits\\FollowerPortrait_NoPortrait"
 		end
 
-		toast.Level:SetText(level)
 		toast.Icon:SetSize(44, 44)
 		toast.Icon:SetTexture(portrait)
+		toast.Level:SetText(level)
 	end
 
 	if isUpgraded then
@@ -1135,32 +1320,40 @@ function dispatcher:GARRISON_FOLLOWER_ADDED(...)
 		toast.Title:SetText(followerStrings.FOLLOWER_ADDED_TOAST)
 	end
 
+	if CFG.colored_names_enabled then
+		toast.Text:SetTextColor(color.r, color.g, color.b)
+	end
+
 	toast.Text:SetText(name)
 	toast.Border:SetVertexColor(color.r, color.g, color.b)
+	toast.soundFile = "UI_Garrison_Toast_FollowerGained"
 	toast.id = followerID
 
-	SpawnToast(toast, CFG.dnd.garrison)
+	SpawnToast(toast, garrisonType == _G.LE_GARRISON_TYPE_7_0 and CFG.dnd.garrison_7_0 or CFG.dnd.garrison_6_0)
 end
 
-function dispatcher:GARRISON_MISSION_FINISHED(...)
-	local validInstance = false
-	local _, instanceType = _G.GetInstanceInfo()
+function dispatcher:GARRISON_FOLLOWER_ADDED(...)
+	local followerID, name, _, level, quality, isUpgraded, texPrefix, followerType = ...
+	local garrisonType = GetGarrisonTypeByFollowerType(followerType)
 
-	if instanceType == "none" or _G.C_Garrison.IsOnGarrisonMap() then
-		validInstance = true
+	if (garrisonType == _G.LE_GARRISON_TYPE_7_0 and not CFG.garrison_7_0_enabled) or
+		(garrisonType == _G.LE_GARRISON_TYPE_6_0 and not CFG.garrison_6_0_enabled) then
+		return
 	end
 
-	if validInstance then
-		local followerTypeID, missionID = ...
-
-		GarrisonMissionToast_SetUp(missionID, followerTypeID == _G.LE_FOLLOWER_TYPE_SHIPYARD_6_2)
-	end
+	GarrisonFollowerToast_SetUp(followerType, garrisonType, followerID, name, texPrefix, level, quality, isUpgraded)
 end
 
-function dispatcher:GARRISON_RANDOM_MISSION_ADDED(...)
-	local followerTypeID, missionID = ...
+function dispatcher:GARRISON_BUILDING_ACTIVATABLE(...)
+	local buildingName = ...
+	local toast = GetToast("misc")
 
-	GarrisonMissionToast_SetUp(missionID, followerTypeID == _G.LE_FOLLOWER_TYPE_SHIPYARD_6_2, true)
+	toast.Title:SetText(_G.GARRISON_UPDATE)
+	toast.Text:SetText(buildingName)
+	toast.Icon:SetTexture("Interface\\Icons\\Garrison_Build")
+	toast.soundFile = "UI_Garrison_Toast_BuildingComplete"
+
+	SpawnToast(toast, CFG.dnd.garrison_6_0)
 end
 
 function dispatcher:GARRISON_TALENT_COMPLETE(...)
@@ -1174,7 +1367,7 @@ function dispatcher:GARRISON_TALENT_COMPLETE(...)
 	toast.Icon:SetTexture(talent.icon)
 	toast.soundFile = "UI_OrderHall_Talent_Ready_Toast"
 
-	SpawnToast(toast, CFG.dnd.garrison)
+	SpawnToast(toast, CFG.dnd.garrison_7_0)
 end
 
 local function EnableGarrisonToasts()
@@ -1184,21 +1377,35 @@ local function EnableGarrisonToasts()
 	_G.AlertFrame:UnregisterEvent("GARRISON_RANDOM_MISSION_ADDED")
 	_G.AlertFrame:UnregisterEvent("GARRISON_TALENT_COMPLETE")
 
-	if CFG.garrison_enabled then
-		dispatcher:RegisterEvent("GARRISON_BUILDING_ACTIVATABLE")
+	if CFG.garrison_6_0_enabled or CFG.garrison_7_0_enabled then
 		dispatcher:RegisterEvent("GARRISON_FOLLOWER_ADDED")
 		dispatcher:RegisterEvent("GARRISON_MISSION_FINISHED")
 		dispatcher:RegisterEvent("GARRISON_RANDOM_MISSION_ADDED")
-		dispatcher:RegisterEvent("GARRISON_TALENT_COMPLETE")
+
+		if CFG.garrison_6_0_enabled then
+			dispatcher:RegisterEvent("GARRISON_BUILDING_ACTIVATABLE")
+		end
+
+		if CFG.garrison_7_0_enabled then
+			dispatcher:RegisterEvent("GARRISON_TALENT_COMPLETE")
+		end
 	end
 end
 
 local function DisableGarrisonToasts()
-	dispatcher:UnregisterEvent("GARRISON_BUILDING_ACTIVATABLE")
-	dispatcher:UnregisterEvent("GARRISON_FOLLOWER_ADDED")
-	dispatcher:UnregisterEvent("GARRISON_MISSION_FINISHED")
-	dispatcher:UnregisterEvent("GARRISON_RANDOM_MISSION_ADDED")
-	dispatcher:UnregisterEvent("GARRISON_TALENT_COMPLETE")
+	if not CFG.garrison_6_0_enabled and not CFG.garrison_7_0_enabled then
+		dispatcher:UnregisterEvent("GARRISON_FOLLOWER_ADDED")
+		dispatcher:UnregisterEvent("GARRISON_MISSION_FINISHED")
+		dispatcher:UnregisterEvent("GARRISON_RANDOM_MISSION_ADDED")
+	end
+
+	if not CFG.garrison_6_0_enabled then
+		dispatcher:UnregisterEvent("GARRISON_BUILDING_ACTIVATABLE")
+	end
+
+	if not CFG.garrison_7_0_enabled then
+		dispatcher:UnregisterEvent("GARRISON_TALENT_COMPLETE")
+	end
 end
 
 --------------
@@ -1207,7 +1414,7 @@ end
 
 local function LFGToast_SetUp(isScenario)
 	local toast = GetToast("scenario")
-	local name, typeID, subtypeID, textureFilename, moneyBase, moneyVar, experienceBase, experienceVar, numStrangers, numRewards = _G.GetLFGCompletionReward()
+	local name, _, subtypeID, textureFilename, moneyBase, moneyVar, experienceBase, experienceVar, numStrangers, numRewards = _G.GetLFGCompletionReward()
 	-- local name, typeID, subtypeID, textureFilename, moneyBase, moneyVar, experienceBase, experienceVar, numStrangers, numRewards =
 		-- "The Vortex Pinnacle", 1, 2, "THEVORTEXPINNACLE", 308000, 0, 0, 0, 0, 0
 	local money = moneyBase + moneyVar * numStrangers
@@ -1243,8 +1450,12 @@ local function LFGToast_SetUp(isScenario)
 
 		if reward then
 			local icon = _G.GetLFGCompletionRewardItem(i)
+			local isOK = pcall(_G.SetPortraitToTexture, reward.Icon, icon)
 
-			_G.SetPortraitToTexture(reward.Icon, icon)
+			if not isOK then
+				_G.SetPortraitToTexture(reward.Icon, "Interface\\Icons\\INV_Box_02")
+			end
+
 			reward.rewardID = i
 			reward:Show()
 
@@ -1281,7 +1492,7 @@ local function LFGToast_SetUp(isScenario)
 	SpawnToast(toast, CFG.dnd.instance)
 end
 
-function dispatcher:LFG_COMPLETION_REWARD(...)
+function dispatcher:LFG_COMPLETION_REWARD()
 	if _G.C_Scenario.IsInScenario() and not _G.C_Scenario.TreatScenarioAsDungeon() then
 
 		if select(10, _G.C_Scenario.GetInfo()) ~= _G.LE_SCENARIO_TYPE_LEGION_INVASION then
@@ -1308,22 +1519,17 @@ end
 -- LOOT --
 ----------
 
-local function LootWonToast_Setup(itemLink, quantity, rollType, roll, showFaction, isItem, isCurrency, isMoney, lessAwesome, isUpgraded, isPersonal)
+local function LootWonToast_Setup(itemLink, quantity, rollType, roll, showFaction, isItem, isMoney, lessAwesome, isUpgraded, isPersonal)
 	local toast
 
-	if isCurrency or isItem then
+	if isItem then
 		if itemLink then
 			toast = GetToast("item")
+			itemLink = FixItemLink(itemLink)
 			local title = _G.YOU_WON_LABEL
-			local name, icon, quality, _
+			local name, _, quality, _, _, _, _, _, _, icon = _G.GetItemInfo(itemLink)
 
-			if isCurrency then
-				name, _, icon, _, _, _, _, quality = _G.GetCurrencyInfo(itemLink)
-			else
-				name, _, quality, _, _, _, _, _, _, icon = _G.GetItemInfo(itemLink)
-			end
-
-			if isPersonal or lessAwesome or isCurrency then
+			if isPersonal or lessAwesome then
 				title = _G.YOU_RECEIVED_LABEL
 			end
 
@@ -1357,6 +1563,10 @@ local function LootWonToast_Setup(itemLink, quantity, rollType, roll, showFactio
 
 			local color = _G.ITEM_QUALITY_COLORS[quality or 1]
 
+			if CFG.colored_names_enabled then
+				toast.Text:SetTextColor(color.r, color.g, color.b)
+			end
+
 			toast.Title:SetText(title)
 			toast.Text:SetText(name)
 			toast.Count:SetText(quantity > 1 and quantity or "")
@@ -1384,7 +1594,9 @@ local function LootWonToast_Setup(itemLink, quantity, rollType, roll, showFactio
 		toast.soundFile = 31578
 	end
 
-	SpawnToast(toast, CFG.dnd.loot)
+	if toast then
+		SpawnToast(toast, CFG.dnd.loot_special)
+	end
 end
 
 local function BonusRollFrame_FinishedFading_Disabled(self)
@@ -1396,20 +1608,20 @@ end
 local function BonusRollFrame_FinishedFading_Enabled(self)
 	local frame = self:GetParent()
 
-	LootWonToast_Setup(frame.rewardLink, frame.rewardQuantity, nil, nil, nil, frame.rewardType == "item" , nil, frame.rewardType == "money")
+	LootWonToast_Setup(frame.rewardLink, frame.rewardQuantity, nil, nil, nil, frame.rewardType == "item", frame.rewardType == "money")
 	_G.GroupLootContainer_RemoveFrame(_G.GroupLootContainer, frame)
 end
 
 function dispatcher:LOOT_ITEM_ROLL_WON(...)
 	local itemLink, quantity, rollType, roll, isUpgraded = ...
 
-	LootWonToast_Setup(itemLink, quantity, rollType, roll, nil, true, nil, nil, nil, isUpgraded)
+	LootWonToast_Setup(itemLink, quantity, rollType, roll, nil, true, nil, nil, isUpgraded)
 end
 
 function dispatcher:SHOW_LOOT_TOAST(...)
-	local typeID, itemLink, quantity, specID, sex, isPersonal, lootSource, lessAwesome, isUpgraded = ...
+	local typeID, itemLink, quantity, _, _, isPersonal, _, lessAwesome, isUpgraded = ...
 
-	LootWonToast_Setup(itemLink, quantity, nil, nil, nil, typeID == "item", typeID == "currency", typeID == "money", lessAwesome, isUpgraded, isPersonal)
+	LootWonToast_Setup(itemLink, quantity, nil, nil, nil, typeID == "item", typeID == "money", lessAwesome, isUpgraded, isPersonal)
 end
 
 function dispatcher:SHOW_LOOT_TOAST_LEGENDARY_LOOTED(...)
@@ -1417,8 +1629,13 @@ function dispatcher:SHOW_LOOT_TOAST_LEGENDARY_LOOTED(...)
 
 	if itemLink then
 		local toast = GetToast("item")
+		itemLink = FixItemLink(itemLink)
 		local name, _, quality, _, _, _, _, _, _, icon = _G.GetItemInfo(itemLink)
 		local color = _G.ITEM_QUALITY_COLORS[quality or 1]
+
+		if CFG.colored_names_enabled then
+			toast.Text:SetTextColor(color.r, color.g, color.b)
+		end
 
 		toast.Title:SetText(_G.LEGENDARY_ITEM_LOOT_LABEL)
 		toast.Text:SetText(name)
@@ -1428,28 +1645,35 @@ function dispatcher:SHOW_LOOT_TOAST_LEGENDARY_LOOTED(...)
 		toast.Count:SetText("")
 		toast.Icon:SetTexture(icon)
 		toast.Dragon:Show()
+		toast.soundFile = "UI_LegendaryLoot_Toast"
 		toast.link = itemLink
 
-		SpawnToast(toast, CFG.dnd.loot)
+		SpawnToast(toast, CFG.dnd.loot_special)
 	end
 end
 
 function dispatcher:SHOW_LOOT_TOAST_UPGRADE(...)
-	local itemLink, quantity, specID, sex, baseQuality, isPersonal, lessAwesome = ...
+	local itemLink, quantity = ...
 
 	if itemLink then
 		local toast = GetToast("item")
+		itemLink = FixItemLink(itemLink)
 		local name, _, quality, _, _, _, _, _, _, icon = _G.GetItemInfo(itemLink)
 		local upgradeTexture = _G.LOOTUPGRADEFRAME_QUALITY_TEXTURES[quality or 2]
 		local color = _G.ITEM_QUALITY_COLORS[quality or 1]
 
-		toast.Title:SetText(color.hex..strformat(_G.LOOTUPGRADEFRAME_TITLE, _G["ITEM_QUALITY"..quality.."_DESC"]).."|r")
+		if CFG.colored_names_enabled then
+			toast.Text:SetTextColor(color.r, color.g, color.b)
+		end
+
+		toast.Title:SetText(color.hex..string.format(_G.LOOTUPGRADEFRAME_TITLE, _G["ITEM_QUALITY"..quality.."_DESC"]).."|r")
 		toast.Text:SetText(name)
 		toast.Count:SetText(quantity > 1 and quantity or "")
 		toast.BG:SetTexture("Interface\\AddOns\\ls_Toasts\\media\\toast-bg-upgrade")
 		toast.Border:SetVertexColor(color.r, color.g, color.b)
 		toast.IconBorder:SetVertexColor(color.r, color.g, color.b)
 		toast.Icon:SetTexture(icon)
+		toast.soundFile = 51561
 		toast.link = itemLink
 
 		for i = 1, 5 do
@@ -1458,21 +1682,25 @@ function dispatcher:SHOW_LOOT_TOAST_UPGRADE(...)
 
 		toast.Arrows.requested = true
 
-		SpawnToast(toast, CFG.dnd.loot)
+		SpawnToast(toast, CFG.dnd.loot_special)
 	end
 end
 
 function dispatcher:SHOW_PVP_FACTION_LOOT_TOAST(...)
-	local typeID, itemLink, quantity, specID, sex, isPersonal, lessAwesome = ...
+	local typeID, itemLink, quantity, _, _, isPersonal, lessAwesome = ...
 
-	LootWonToast_Setup(itemLink, quantity, nil, nil, true, typeID == "item", typeID == "currency", typeID == "money", lessAwesome, nil, isPersonal)
+	LootWonToast_Setup(itemLink, quantity, nil, nil, true, typeID == "item", typeID == "money", lessAwesome, nil, isPersonal)
 end
 
 function dispatcher:STORE_PRODUCT_DELIVERED(...)
-	local type, icon, name, payloadID = ...
-	local _, _, quality =  _G.GetItemInfo(payloadID)
+	local _, icon, name, payloadID = ...
+	local _, _, quality = _G.GetItemInfo(payloadID)
 	local color = _G.ITEM_QUALITY_COLORS[quality or 4]
 	local toast = GetToast("item")
+
+	if CFG.colored_names_enabled then
+		toast.Text:SetTextColor(color.r, color.g, color.b)
+	end
 
 	toast.Title:SetText(_G.BLIZZARD_STORE_PURCHASE_COMPLETE)
 	toast.Text:SetText(name)
@@ -1480,12 +1708,13 @@ function dispatcher:STORE_PRODUCT_DELIVERED(...)
 	toast.Border:SetVertexColor(color.r, color.g, color.b)
 	toast.IconBorder:SetVertexColor(color.r, color.g, color.b)
 	toast.Icon:SetTexture(icon)
+	toast.soundFile = "UI_igStore_PurchaseDelivered_Toast_01"
 	toast.id = payloadID
 
-	SpawnToast(toast, CFG.dnd.loot)
+	SpawnToast(toast, CFG.dnd.loot_special)
 end
 
-local function EnableLootToasts()
+local function EnableSpecialLootToasts()
 	_G.AlertFrame:UnregisterEvent("LOOT_ITEM_ROLL_WON")
 	_G.AlertFrame:UnregisterEvent("SHOW_LOOT_TOAST")
 	_G.AlertFrame:UnregisterEvent("SHOW_LOOT_TOAST_LEGENDARY_LOOTED")
@@ -1493,7 +1722,7 @@ local function EnableLootToasts()
 	_G.AlertFrame:UnregisterEvent("SHOW_PVP_FACTION_LOOT_TOAST")
 	_G.AlertFrame:UnregisterEvent("STORE_PRODUCT_DELIVERED")
 
-	if CFG.loot_enabled then
+	if CFG.loot_special_enabled then
 		dispatcher:RegisterEvent("LOOT_ITEM_ROLL_WON")
 		dispatcher:RegisterEvent("SHOW_LOOT_TOAST")
 		dispatcher:RegisterEvent("SHOW_LOOT_TOAST_LEGENDARY_LOOTED")
@@ -1507,7 +1736,7 @@ local function EnableLootToasts()
 	end
 end
 
-local function DisableLootToasts()
+local function DisableSpecialLootToasts()
 	dispatcher:UnregisterEvent("LOOT_ITEM_ROLL_WON")
 	dispatcher:UnregisterEvent("SHOW_LOOT_TOAST")
 	dispatcher:UnregisterEvent("SHOW_LOOT_TOAST_LEGENDARY_LOOTED")
@@ -1518,13 +1747,160 @@ local function DisableLootToasts()
 	_G.BonusRollFrame.FinishRollAnim:SetScript("OnFinished", BonusRollFrame_FinishedFading_Disabled)
 end
 
+local LOOT_ITEM_PATTERN = (_G.LOOT_ITEM_SELF):gsub("%%s", "(.+)")
+local LOOT_ITEM_PUSHED_PATTERN = (_G.LOOT_ITEM_PUSHED_SELF):gsub("%%s", "(.+)")
+local LOOT_ITEM_MULTIPLE_PATTERN = (_G.LOOT_ITEM_SELF_MULTIPLE):gsub("%%s", "(.+)"):gsub("%%d", "(%%d+)")
+local LOOT_ITEM_PUSHED_MULTIPLE_PATTERN = (_G.LOOT_ITEM_PUSHED_SELF_MULTIPLE):gsub("%%s", "(.+)"):gsub("%%d", "(%%d+)")
+
+local function LootCommonToast_Setup(itemLink, quantity)
+	itemLink = FixItemLink(itemLink)
+
+	if not GetToastToUpdate(itemLink, "item") then
+		local name, quality, icon, _
+
+		if string.find(itemLink, "battlepet:") then
+			local _, speciesID, _, breedQuality = string.split(":", itemLink)
+			name, icon = _G.C_PetJournal.GetPetInfoBySpeciesID(speciesID)
+			quality = tonumber(breedQuality)
+		else
+			name, _, quality, _, _, _, _, _, _, icon = _G.GetItemInfo(itemLink)
+		end
+
+		if quality >= CFG.loot_common_quality_threshold then
+			local toast = GetToast("item")
+			local color = _G.ITEM_QUALITY_COLORS[quality or 4]
+
+			if CFG.colored_names_enabled then
+				toast.Text:SetTextColor(color.r, color.g, color.b)
+			end
+
+			toast.Title:SetText(_G.YOU_RECEIVED_LABEL)
+			toast.Text:SetText(name)
+			toast.Count:SetText(quantity > 1 and quantity or "")
+			toast.Border:SetVertexColor(color.r, color.g, color.b)
+			toast.IconBorder:SetVertexColor(color.r, color.g, color.b)
+			toast.Icon:SetTexture(icon)
+			toast.link = itemLink
+			toast.chat = true
+
+			SpawnToast(toast, CFG.dnd.loot_common)
+		end
+	end
+end
+
+function dispatcher:CHAT_MSG_LOOT(message)
+	local itemLink, quantity = message:match(LOOT_ITEM_MULTIPLE_PATTERN)
+
+	if not itemLink then
+		itemLink, quantity = message:match(LOOT_ITEM_PUSHED_MULTIPLE_PATTERN)
+
+		if not itemLink then
+			quantity, itemLink = 1, message:match(LOOT_ITEM_PATTERN)
+
+			if not itemLink then
+				quantity, itemLink = 1, message:match(LOOT_ITEM_PUSHED_PATTERN)
+
+				if not itemLink then
+					return
+				end
+			end
+		end
+	end
+
+	quantity = tonumber(quantity) or 0
+
+	_G.C_Timer.After(0.125, function() LootCommonToast_Setup(itemLink, quantity) end)
+end
+
+local function EnableCommonLootToasts()
+	if CFG.loot_common_enabled then
+		dispatcher:RegisterEvent("CHAT_MSG_LOOT")
+	end
+end
+
+local function DisableCommonLootToasts()
+	dispatcher:UnregisterEvent("CHAT_MSG_LOOT")
+end
+
+local CURRENCY_GAINED_PATTERN = (_G.CURRENCY_GAINED):gsub("%%s", "(.+)")
+local CURRENCY_GAINED_MULTIPLE_PATTERN = (_G.CURRENCY_GAINED_MULTIPLE):gsub("%%s", "(.+)"):gsub("%%d", "(%%d+)")
+
+function dispatcher:CHAT_MSG_CURRENCY(message)
+	local itemLink, quantity = message:match(CURRENCY_GAINED_MULTIPLE_PATTERN)
+
+	if not itemLink then
+		quantity, itemLink = 1, message:match(CURRENCY_GAINED_PATTERN)
+
+		if not itemLink then
+			return
+		end
+	end
+
+	itemLink = string.match(itemLink, "|H(.+)|h.+|h")
+	quantity = tonumber(quantity) or 0
+
+	local toast, isQueued = GetToastToUpdate(itemLink, "item")
+	local isUpdated = true
+
+	if not toast then
+		toast = GetToast("item")
+		isUpdated = false
+	end
+
+	if not isUpdated then
+		local name, _, icon, _, _, _, _, quality = _G.GetCurrencyInfo(itemLink)
+		local color = _G.ITEM_QUALITY_COLORS[quality or 1]
+
+		if CFG.colored_names_enabled then
+			toast.Text:SetTextColor(color.r, color.g, color.b)
+		end
+
+		toast.Title:SetText(_G.YOU_RECEIVED_LABEL)
+		toast.Text:SetText(name)
+		toast.Count:SetText(quantity > 1 and quantity or "")
+		toast.Border:SetVertexColor(color.r, color.g, color.b)
+		toast.IconBorder:SetVertexColor(color.r, color.g, color.b)
+		toast.Icon:SetTexture(icon)
+		toast.soundFile = 31578
+		toast.itemCount = quantity
+		toast.link = itemLink
+
+		SpawnToast(toast, CFG.dnd.loot_currency)
+	else
+		if isQueued then
+			toast.itemCount = toast.itemCount + quantity
+			toast.Count:SetText(toast.itemCount)
+		else
+			toast.itemCount = toast.itemCount + quantity
+			toast.Count:SetAnimatedText(toast.itemCount)
+
+			toast.CountUpdate:SetText("+"..quantity)
+			toast.CountUpdateAnim:Stop()
+			toast.CountUpdateAnim:Play()
+
+			toast.AnimOut:Stop()
+			toast.AnimOut:Play()
+		end
+	end
+end
+
+local function EnableCurrencyLootToasts()
+	if CFG.loot_currency_enabled then
+		dispatcher:RegisterEvent("CHAT_MSG_CURRENCY")
+	end
+end
+
+local function DisableCurrencyLootToasts()
+	dispatcher:UnregisterEvent("CHAT_MSG_CURRENCY")
+end
+
 ------------
 -- RECIPE --
 ------------
 
 function dispatcher:NEW_RECIPE_LEARNED(...)
 	local recipeID = ...
-	local tradeSkillID, skillLineName = _G.C_TradeSkillUI.GetTradeSkillLineForRecipe(recipeID)
+	local tradeSkillID = _G.C_TradeSkillUI.GetTradeSkillLineForRecipe(recipeID)
 
 	if tradeSkillID then
 		local recipeName = _G.GetSpellInfo(recipeID)
@@ -1629,8 +2005,8 @@ local function WorldQuestToast_SetUp(questID)
 	end
 
 	local toast = GetToast("scenario")
-	local isInArea, isOnMap, numObjectives, taskName, displayAsObjective = _G.GetTaskInfo(questID)
-	local tagID, tagName, worldQuestType, rarity, isElite, tradeskillLineIndex = _G.GetQuestTagInfo(questID)
+	local _, _, _, taskName = _G.GetTaskInfo(questID)
+	local _, _, worldQuestType, rarity, _, tradeskillLineIndex = _G.GetQuestTagInfo(questID)
 	local color = _G.WORLD_QUEST_QUALITY_COLORS[rarity]
 	local money = _G.GetQuestLogRewardMoney(questID)
 	local xp = _G.GetQuestLogRewardXP(questID)
@@ -1665,8 +2041,12 @@ local function WorldQuestToast_SetUp(questID)
 
 		if reward then
 			local _, texture = _G.GetQuestLogRewardCurrencyInfo(i, questID)
+			local isOK = pcall(_G.SetPortraitToTexture, reward.Icon, texture)
 
-			_G.SetPortraitToTexture(reward.Icon, texture)
+			if not isOK then
+				_G.SetPortraitToTexture(reward.Icon, "Interface\\Icons\\INV_Box_02")
+			end
+
 			reward.currency = i
 			reward:Show()
 		end
@@ -1682,6 +2062,10 @@ local function WorldQuestToast_SetUp(questID)
 		icon = "Interface\\Icons\\INV_Misc_Bone_Skull_02"
 	end
 
+	if CFG.colored_names_enabled then
+		toast.Text:SetTextColor(color.r, color.g, color.b)
+	end
+
 	toast.Title:SetText(_G.WORLD_QUEST_COMPLETE)
 	toast.Text:SetText(taskName)
 	toast.BG:SetTexture("Interface\\AddOns\\ls_Toasts\\media\\toast-bg-worldquest")
@@ -1689,9 +2073,8 @@ local function WorldQuestToast_SetUp(questID)
 	toast.Border:SetVertexColor(color.r, color.g, color.b)
 	toast.IconBorder:SetVertexColor(color.r, color.g, color.b)
 	toast.usedRewards = usedRewards
-	toast.id = questID
-
 	toast.soundFile = "UI_WorldQuest_Complete"
+	toast.id = questID
 
 	SpawnToast(toast, CFG.dnd.world)
 end
@@ -1745,61 +2128,127 @@ local function DisableWorldToasts()
 	dispatcher:UnregisterEvent("QUEST_LOOT_RECEIVED")
 end
 
+--------------
+-- TRANSMOG --
+--------------
+
+local LEARN_TRANSMOG_PATTERN = string.gsub(_G.ERR_LEARN_TRANSMOG_S , "%%s", "(.+)")
+local REVOKE_TRANSMOG_PATTERN = string.gsub(_G.ERR_REVOKE_TRANSMOG_S, "%%s", "(.+)")
+
+function dispatcher:CHAT_MSG_SYSTEM(message)
+	local transmogLink = string.match(message, LEARN_TRANSMOG_PATTERN)
+	local isKnown = true
+
+	if not transmogLink then
+		transmogLink = string.match(message, REVOKE_TRANSMOG_PATTERN)
+		isKnown = false
+
+		if not transmogLink then
+			return
+		end
+	end
+
+	local sourceID, name = string.match(transmogLink, "transmogappearance:(%d+)|h%[(.+)%]")
+
+	if sourceID then
+		local toast = GetToastToUpdate(sourceID, "misc")
+		local isUpdated = true
+
+		if not toast then
+			toast = GetToast("misc")
+			isUpdated = false
+		end
+
+		local _, _, _, icon, _, _ =_G.C_TransmogCollection.GetAppearanceSourceInfo(sourceID)
+
+		if isKnown then
+			toast.Title:SetText("Appearance Added")
+		else
+			toast.Title:SetText("Appearance Removed")
+		end
+
+		toast.Text:SetText(name)
+		toast.BG:SetTexture("Interface\\AddOns\\ls_Toasts\\media\\toast-bg-transmog")
+		toast.Border:SetVertexColor(1, 128 / 255, 1)
+		toast.IconBorder:SetVertexColor(1, 128 / 255, 1)
+		toast.Icon:SetTexture(icon)
+		toast.soundFile = "UI_DigsiteCompletion_Toast"
+		toast.id = sourceID
+		toast.link = string.match(transmogLink, "|H(.+)|h.+|h")
+
+		if not isUpdated then
+			SpawnToast(toast, CFG.dnd.transmog)
+		end
+	end
+end
+
+local function EnableTransmogToasts()
+	if CFG.transmog_enabled then
+		dispatcher:RegisterEvent("CHAT_MSG_SYSTEM")
+	end
+end
+
+local function DisableTransmogToasts()
+	dispatcher:UnregisterEvent("CHAT_MSG_SYSTEM")
+end
+
 -----------
 -- TESTS --
 -----------
 
 local function SpawnTestGarrisonToast()
 	-- follower
-	local followers = _G.C_Garrison.GetFollowers(1)
+	local followers = _G.C_Garrison.GetFollowers(_G.LE_FOLLOWER_TYPE_GARRISON_6_0)
 	local follower = followers and followers[1]
 
 	if follower then
-		dispatcher:GARRISON_FOLLOWER_ADDED(follower.followerID, follower.name, follower.className, follower.level, follower.quality, false, nil, follower.followerTypeID)
+		GarrisonFollowerToast_SetUp(follower.followerTypeID, _G.LE_GARRISON_TYPE_6_0, follower.followerID, follower.name, nil, follower.level, follower.quality, false)
 	end
 
 	-- ship
-	followers = _G.C_Garrison.GetFollowers(2)
+	followers = _G.C_Garrison.GetFollowers(_G.LE_FOLLOWER_TYPE_SHIPYARD_6_2)
 	follower = followers and followers[1]
 
 	if follower then
-		dispatcher:GARRISON_FOLLOWER_ADDED(follower.followerID, follower.name, follower.className, follower.level, follower.quality, false, follower.texPrefix, follower.followerTypeID)
-	end
-
-	-- champion
-	followers = _G.C_Garrison.GetFollowers(4)
-	follower = followers and followers[1]
-
-	if follower then
-		dispatcher:GARRISON_FOLLOWER_ADDED(follower.followerID, follower.name, follower.className, follower.level, follower.quality, false, nil, follower.followerTypeID)
+		GarrisonFollowerToast_SetUp(follower.followerTypeID, _G.LE_GARRISON_TYPE_6_0, follower.followerID, follower.name, follower.texPrefix, follower.level, follower.quality, false)
 	end
 
 	-- garrison mission
-	local missions = _G.C_Garrison.GetAvailableMissions(1)
+	local missions = _G.C_Garrison.GetAvailableMissions(_G.LE_FOLLOWER_TYPE_GARRISON_6_0)
 	local id = missions and (missions[1] and missions[1].missionID or nil) or nil
 
 	if id then
-		dispatcher:GARRISON_MISSION_FINISHED(1, id)
+		GarrisonMissionToast_SetUp(_G.LE_FOLLOWER_TYPE_GARRISON_6_0, _G.LE_GARRISON_TYPE_6_0, id)
 	end
 
 	-- shipyard mission
-	missions = _G.C_Garrison.GetAvailableMissions(2)
+	missions = _G.C_Garrison.GetAvailableMissions(_G.LE_FOLLOWER_TYPE_SHIPYARD_6_2)
 	id = missions and (missions[1] and missions[1].missionID or nil) or nil
 
 	if id then
-		dispatcher:GARRISON_MISSION_FINISHED(2, id)
-	end
-
-	-- order hall mission
-	missions = _G.C_Garrison.GetAvailableMissions(4)
-	id = missions and (missions[1] and missions[1].missionID or nil) or nil
-
-	if id then
-		dispatcher:GARRISON_MISSION_FINISHED(4, id)
+		GarrisonMissionToast_SetUp(_G.LE_FOLLOWER_TYPE_SHIPYARD_6_2, _G.LE_GARRISON_TYPE_6_0, id)
 	end
 
 	-- garrison building
 	dispatcher:GARRISON_BUILDING_ACTIVATABLE("Storehouse")
+end
+
+local function SpawnTestClassHallToast()
+	-- champion
+	local followers = _G.C_Garrison.GetFollowers(_G.LE_FOLLOWER_TYPE_GARRISON_7_0)
+	local follower = followers and followers[1]
+
+	if follower then
+		GarrisonFollowerToast_SetUp(follower.followerTypeID, _G.LE_GARRISON_TYPE_7_0, follower.followerID, follower.name, nil, follower.level, follower.quality, false)
+	end
+
+	-- order hall mission
+	local missions = _G.C_Garrison.GetAvailableMissions(_G.LE_FOLLOWER_TYPE_GARRISON_7_0)
+	local id = missions and (missions[1] and missions[1].missionID or nil) or nil
+
+	if id then
+		GarrisonMissionToast_SetUp(_G.LE_FOLLOWER_TYPE_GARRISON_7_0, _G.LE_GARRISON_TYPE_7_0, id)
+	end
 end
 
 local function SpawnTestAchievementToast()
@@ -1818,10 +2267,6 @@ local function SpawnTestArchaeologyToast()
 	dispatcher:ARTIFACT_DIGSITE_COMPLETE(408)
 end
 
-local function SpawnTestStoreToast()
-	dispatcher:STORE_PRODUCT_DELIVERED(1, 915544, "Pouch of Enduring Wisdom", 105911)
-end
-
 local function SpawnTestWorldEventToast()
 	-- invasion in Azshara
 	local _, link = _G.GetItemInfo(139049)
@@ -1832,10 +2277,10 @@ local function SpawnTestWorldEventToast()
 	end
 
 	-- world quests, have to be in zone to get info
-	local mapAreaID = _G.GetCurrentMapAreaID();
+	local mapAreaID = _G.GetCurrentMapAreaID()
 	local taskInfo = _G.C_TaskQuest.GetQuestsForPlayerByMapID(mapAreaID)
 
-	for i, info in pairs(taskInfo) do
+	for _, info in pairs(taskInfo) do
 		local questID = info.questId
 
 		if _G.QuestMapFrame_IsQuestWorldQuest(questID) and _G.HaveQuestData(questID) then
@@ -1843,7 +2288,7 @@ local function SpawnTestWorldEventToast()
 
 			if numRewards > 0 then
 				for i = 1, numRewards do
-					local itemName, itemTexture, quantity, quality, isUsable, itemID = _G.GetQuestLogRewardInfo(i, questID)
+					local _, _, _, _, _, itemID = _G.GetQuestLogRewardInfo(i, questID)
 
 					if itemID then
 						local _, itemLink = _G.GetItemInfo(itemID)
@@ -1861,18 +2306,11 @@ local function SpawnTestWorldEventToast()
 end
 
 local function SpawnTestLootToast()
-	-- currency
-	local link, _ = _G.GetCurrencyLink(824)
-
-	if link then
-		dispatcher:SHOW_LOOT_TOAST("currency", link, 500, 0, 2, true, 10, false, false)
-	end
-
 	-- money
 	dispatcher:SHOW_LOOT_TOAST("money", nil, 12345678, 0, 2, false, 0, false, false)
 
 	-- legendary
-	_, link = _G.GetItemInfo(132452)
+	local _, link = _G.GetItemInfo(132452)
 
 	if link then
 		dispatcher:SHOW_LOOT_TOAST_LEGENDARY_LOOTED(link)
@@ -1896,6 +2334,28 @@ local function SpawnTestLootToast()
 	if link then
 		dispatcher:SHOW_LOOT_TOAST_UPGRADE(link, 1)
 	end
+
+	-- store
+	dispatcher:STORE_PRODUCT_DELIVERED(1, 915544, "Pouch of Enduring Wisdom", 105911)
+end
+
+local function SpawnTestCurrencyToast()
+	-- currency
+	local link, _ = _G.GetCurrencyLink(824)
+
+	if link then
+		dispatcher:CHAT_MSG_CURRENCY(string.format(_G.CURRENCY_GAINED_MULTIPLE, link, math.random(300, 600)))
+	end
+end
+
+local function SpawnTestTransmogToast()
+	local appearance = _G.C_TransmogCollection.GetCategoryAppearances(1) and _G.C_TransmogCollection.GetCategoryAppearances(1)[1]
+	local source = _G.C_TransmogCollection.GetAppearanceSources(appearance.visualID) and _G.C_TransmogCollection.GetAppearanceSources(appearance.visualID)[1]
+	local _, _, _, _, _, _, transmogLink = _G.C_TransmogCollection.GetAppearanceSourceInfo(source.sourceID)
+
+	if transmogLink then
+		dispatcher:CHAT_MSG_SYSTEM(string.format(_G.ERR_LEARN_TRANSMOG_S, transmogLink))
+	end
 end
 
 -----------
@@ -1914,8 +2374,6 @@ end
 -- 	SpawnTestRecipeToast()
 
 -- 	SpawnTestArchaeologyToast()
-
--- 	SpawnTestStoreToast()
 
 -- 	SpawnTestLootToast()
 
@@ -1968,7 +2426,7 @@ local function DiffTable(src , dest)
 end
 
 local function SetConfigValue(valuePath, value)
-	local temp = {strsplit(".", valuePath)}
+	local temp = {string.split(".", valuePath)}
 	local t = CFG
 
 	if #temp > 0 then
@@ -1981,7 +2439,7 @@ local function SetConfigValue(valuePath, value)
 end
 
 local function GetConfigValue(valuePath)
-	local temp = {strsplit(".", valuePath)}
+	local temp = {string.split(".", valuePath)}
 	local t = CFG
 
 	if #temp > 0 then
@@ -1999,7 +2457,7 @@ local function RegisterControlForRefresh(parent, control)
 	end
 
 	parent.controls = parent.controls or {}
-	tinsert(parent.controls, control)
+	table.insert(parent.controls, control)
 end
 
 local function OptionsPanelRefresh(panel)
@@ -2031,7 +2489,7 @@ local function ToggleToasts(value, state)
 		else
 			DisableArchaeologyToasts()
 		end
-	elseif value == "garrison_enabled" then
+	elseif value == "garrison_6_0_enabled" or value == "garrison_7_0_enabled" then
 		if state then
 			EnableGarrisonToasts()
 		else
@@ -2043,11 +2501,23 @@ local function ToggleToasts(value, state)
 		else
 			DisableInstanceToasts()
 		end
-	elseif value == "loot_enabled" then
+	elseif value == "loot_special_enabled" then
 		if state then
-			EnableLootToasts()
+			EnableSpecialLootToasts()
 		else
-			DisableLootToasts()
+			DisableSpecialLootToasts()
+		end
+	elseif value == "loot_common_enabled" then
+		if state then
+			EnableCommonLootToasts()
+		else
+			DisableCommonLootToasts()
+		end
+	elseif value == "loot_currency_enabled" then
+		if state then
+			EnableCurrencyLootToasts()
+		else
+			DisableCurrencyLootToasts()
 		end
 	elseif value == "recipe_enabled" then
 		if state then
@@ -2061,16 +2531,22 @@ local function ToggleToasts(value, state)
 		else
 			DisableWorldToasts()
 		end
+	elseif value == "transmog_enabled" then
+		if state then
+			EnableTransmogToasts()
+		else
+			DisableTransmogToasts()
+		end
 	end
 end
 
 local function UpdateFadeOutDelay(delay)
-	for _, toast in pairs(queuedToasts) do
+	for _, toast in pairs(activeToasts) do
 		toast.AnimOut.Anim1:SetStartDelay(delay)
 	end
 
-	for i = 1, #activeToasts do
-		RecycleToast(activeToasts[1])
+	for _, toast in pairs(queuedToasts) do
+		toast.AnimOut.Anim1:SetStartDelay(delay)
 	end
 
 	for _, toast in pairs(abilityToasts) do
@@ -2103,14 +2579,14 @@ local function UpdateFadeOutDelay(delay)
 end
 
 local function UpdateScale(scale)
-	for _, toast in pairs(queuedToasts) do
+	anchorFrame:SetSize(234 * scale, 58 * scale)
+
+	for _, toast in pairs(activeToasts) do
 		toast:SetScale(scale)
 	end
 
-	anchorFrame:SetSize(234 * scale, 58 * scale)
-
-	for i = 1, #activeToasts do
-		RecycleToast(activeToasts[1])
+	for _, toast in pairs(queuedToasts) do
+		toast:SetScale(scale)
 	end
 
 	for _, toast in pairs(abilityToasts) do
@@ -2163,7 +2639,7 @@ local function CheckButton_OnEnter(self)
 	_G.GameTooltip:Show()
 end
 
-local function CheckButton_OnLeave(self)
+local function CheckButton_OnLeave()
 	_G.GameTooltip:Hide()
 end
 
@@ -2247,7 +2723,7 @@ end
 
 local function Slider_OnValueChanged(self, value, userInput)
 	if userInput then
-		value = tonumber(strformat("%.1f", value))
+		value = tonumber(string.format("%.1f", value))
 
 		if value ~= GetConfigValue(self.watchedValue) then
 			self:SetValue(value)
@@ -2310,34 +2786,75 @@ end
 
 ------
 
+local function SettingsButton_OnEnter(self)
+	self.Icon:SetAlpha(1)
+end
+
+local function SettingsButton_OnLeave(self)
+	self.Icon:SetAlpha(0.5)
+end
+
+local function SettingsButton_OnClick(self)
+	_G.ToggleDropDownMenu(nil, nil, self.DropDown, self, -2, 2, nil, nil, 10)
+end
+
 local function CheckButton_OnClickHook(self)
 	ToggleToasts(self.watchedValue, self:GetChecked())
 end
 
-local function CreateToastConfigLine(parent, cfg)
-	local name = parent:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-	name:SetPoint(unpack(cfg.point))
-	name:SetWidth(234)
-	name:SetJustifyH("LEFT")
+local function CreateToastConfigLine(parent, cfg, anchor)
+	local holder = _G.CreateFrame("Frame", "$parent"..cfg.name.."Line", parent)
+	holder:SetHeight(33)
+	holder:SetPoint("TOP", anchor, "BOTTOM", 0, -2)
+	holder:SetPoint("LEFT", parent, "LEFT", 16, 0)
+	holder:SetPoint("RIGHT", parent, "RIGHT", -16, 0)
+
+	local texture = holder:CreateTexture(nil, "BACKGROUND", nil, -8)
+	texture:SetAllPoints()
+	texture:SetColorTexture(0.3, 0.3, 0.3, 0.3)
+
+	local name = holder:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+	name:SetPoint("TOPLEFT", holder, "TOPLEFT", 6, 0)
+	name:SetHeight(33)
+	name:SetJustifyV("MIDDLE")
 	name:SetText(cfg.name)
 
-	local enabledCB = CreateConfigCheckButton(parent, cfg.name.."Toggle")
-	enabledCB:SetPoint("LEFT", name, "RIGHT", 44, 0)
+	if cfg.dropdown then
+		local settings = _G.CreateFrame("Button", "$parent"..cfg.name.."SettingsButton", holder)
+		settings:SetSize(22, 22)
+		settings:SetPoint("LEFT", name, "RIGHT", 0, 0)
+		settings:SetScript("OnEnter", SettingsButton_OnEnter)
+		settings:SetScript("OnLeave", SettingsButton_OnLeave)
+		settings:SetScript("OnClick", SettingsButton_OnClick)
+		settings.DropDown = cfg.dropdown
+
+		local icon = settings:CreateTexture(nil, "ARTWORK")
+		icon:SetTexture("Interface\\WorldMap\\GEAR_64GREY")
+		icon:SetAlpha(0.5)
+		icon:SetPoint("TOPLEFT", 1, -1)
+		icon:SetPoint("BOTTOMRIGHT", -1, 1)
+		settings.Icon = icon
+	end
+
+	local enabledCB = CreateConfigCheckButton(parent, cfg.name.."Toggle", nil, cfg.enable_tooltip)
+	enabledCB:SetPoint("TOPLEFT", holder, "TOPLEFT", 320, -4)
 	enabledCB:HookScript("OnClick", CheckButton_OnClickHook)
 	enabledCB.watchedValue = cfg.enabled
 
-	RegisterControlForRefresh(parent:GetParent(), enabledCB)
+	RegisterControlForRefresh(parent, enabledCB)
 
 	local dndCB = CreateConfigCheckButton(parent, cfg.name.."DNDToggle", nil, "Toasts in DND mode won't be displayed in combat, but will be queued up in the system instead. Once you leave combat, they'll start popping up.")
-	dndCB:SetPoint("LEFT", enabledCB, "RIGHT", 32, 0)
+	dndCB:SetPoint("LEFT", enabledCB, "RIGHT", 96, 0)
 	dndCB.watchedValue = cfg.dnd
 
-	RegisterControlForRefresh(parent:GetParent(), dndCB)
+	RegisterControlForRefresh(parent, dndCB)
 
 	if cfg.testFunc then
 		local testB = CreateConfigButton(parent, cfg.name.."TestButton", "Test", cfg.testFunc)
-		testB:SetPoint("LEFT", dndCB, "RIGHT", 32, 0)
+		testB:SetPoint("TOPRIGHT", holder, "TOPRIGHT", -6, -5)
 	end
+
+	return holder
 end
 
 ------
@@ -2346,7 +2863,7 @@ local function GrowthDirectionDropDownMenu_OnClick(self)
 	self.owner:SetValue(self.value)
 end
 
-local function GrowthDirectionDropDownMenu_Initialize(self, ...)
+local function GrowthDirectionDropDownMenu_Initialize(self)
 	local info = _G.UIDropDownMenu_CreateInfo()
 
 	info.text = "Up"
@@ -2362,13 +2879,27 @@ local function GrowthDirectionDropDownMenu_Initialize(self, ...)
 	info.owner = self
 	info.checked = nil
 	_G.UIDropDownMenu_AddButton(info)
+
+	info.text = "Left"
+	info.func = GrowthDirectionDropDownMenu_OnClick
+	info.value = "LEFT"
+	info.owner = self
+	info.checked = nil
+	_G.UIDropDownMenu_AddButton(info)
+
+	info.text = "Right"
+	info.func = GrowthDirectionDropDownMenu_OnClick
+	info.value = "RIGHT"
+	info.owner = self
+	info.checked = nil
+	_G.UIDropDownMenu_AddButton(info)
 end
 
 ------
 
 local function DelaySlider_OnValueChanged(self, value, userInput)
 	if userInput then
-		value = tonumber(strformat("%.1f", value))
+		value = tonumber(string.format("%.1f", value))
 
 		if value ~= GetConfigValue(self.watchedValue) then
 			self:SetValue(value)
@@ -2382,7 +2913,7 @@ end
 
 local function ScaleSlider_OnValueChanged(self, value, userInput)
 	if userInput then
-		value = tonumber(strformat("%.1f", value))
+		value = tonumber(string.format("%.1f", value))
 
 		if value ~= GetConfigValue(self.watchedValue) then
 			self:SetValue(value)
@@ -2396,7 +2927,7 @@ end
 
 local function SaveDefaultTemplate()
 	if _G.LS_TOASTS_CFG_GLOBAL["Default"] then
-		twipe(_G.LS_TOASTS_CFG_GLOBAL["Default"])
+		table.wipe(_G.LS_TOASTS_CFG_GLOBAL["Default"])
 	else
 		_G.LS_TOASTS_CFG_GLOBAL["Default"] = {}
 	end
@@ -2404,9 +2935,49 @@ local function SaveDefaultTemplate()
 	CopyTable(CFG, _G.LS_TOASTS_CFG_GLOBAL["Default"])
 end
 
+local function WipeDefaultTemplate()
+	table.wipe(_G.LS_TOASTS_CFG_GLOBAL)
+end
+
+------
+
+local function DropDown_Close()
+	_G.CloseDropDownMenus()
+end
+
+local function LootDropDown_SetLootThreshold(_, quality)
+	CFG.loot_common_quality_threshold = quality
+end
+
+local function LootDropDown_Initialize()
+	local info = _G.UIDropDownMenu_CreateInfo()
+
+	info.text = _G.LOOT_THRESHOLD
+	info.isTitle = 1
+	info.notCheckable = true
+	_G.UIDropDownMenu_AddButton(info)
+	table.wipe(info)
+
+	for i = 1, 7 do
+		info.text = _G.ITEM_QUALITY_COLORS[i].hex.._G["ITEM_QUALITY"..i.."_DESC"].."|r"
+		info.checked = i == CFG.loot_common_quality_threshold
+		info.arg1 = i
+		info.func = LootDropDown_SetLootThreshold
+		_G.UIDropDownMenu_AddButton(info)
+		table.wipe(info)
+	end
+
+	info.text = _G.CLOSE
+	info.func = DropDown_Close
+	info.notCheckable = 1
+	_G.UIDropDownMenu_AddButton(info)
+end
+
 ------
 
 local function CreateConfigPanel()
+	-- General Panel
+
 	local panel = _G.CreateFrame("Frame", "LSToastsConfigPanel", _G.InterfaceOptionsFramePanelContainer)
 	panel.name = "|cff1a9fc0ls:|r Toasts"
 	panel:Hide()
@@ -2420,12 +2991,12 @@ local function CreateConfigPanel()
 	local subtext = panel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 	subtext:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
 	subtext:SetPoint("RIGHT", -16, 0)
-	subtext:SetHeight(32)
+	subtext:SetHeight(44)
 	subtext:SetJustifyH("LEFT")
 	subtext:SetJustifyV("TOP")
 	subtext:SetNonSpaceWrap(true)
-	subtext:SetMaxLines(3)
-	subtext:SetText("Thome thettings, duh... |cffffd200They are saved per character.|r")
+	subtext:SetMaxLines(4)
+	subtext:SetText("Thome thettings, duh... |cffffd200They are saved per character.|r\nI strongly recommend to |cffe52626/reload|r UI after you're done setting up the addon. Even if you opened and closed this panel without changing anything, |cffe52626/reload|r UI. |cffffd200By doing so, you'll remove this config entry from the system and prevent possible taints.|r")
 
 	local acnhorButton = CreateConfigButton(panel, "AnchorToggle", "Anchor Frame", AnchorFrame_Toggle)
 	acnhorButton:SetPoint("TOPLEFT", subtext, "BOTTOMLEFT", 0, -8)
@@ -2455,45 +3026,12 @@ local function CreateConfigPanel()
 	growthDropdown:SetPoint("TOPLEFT", numSlider, "BOTTOMLEFT", -13, -32)
 	growthDropdown.watchedValue = "growth_direction"
 
-	divider = CreateConfigDivider(panel, "Toasts")
-	divider:SetPoint("TOP", growthDropdown, "BOTTOM", 0, -10)
-
-	local toastSettings = _G.CreateFrame("Frame", "$parentToastSettings", panel)
-	toastSettings:SetPoint("TOPLEFT", divider, "BOTTOMLEFT", 6, -32)
-	toastSettings:SetSize(441, 167)
-
-	local bg = toastSettings:CreateTexture(nil, "BACKGROUND")
-	bg:SetAllPoints()
-	bg:SetColorTexture(0.3, 0.3, 0.3, 0.3)
-
-	title = toastSettings:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-	title:SetPoint("BOTTOMLEFT", toastSettings, "TOPLEFT", 0, 4)
-	title:SetText("Type")
-
-	title = toastSettings:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-	title:SetPoint("BOTTOMLEFT", toastSettings, "TOPLEFT", 272, 4)
-	title:SetText("Enable")
-
-	title = toastSettings:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-	title:SetPoint("BOTTOMLEFT", toastSettings, "TOPLEFT", 336, 4)
-	title:SetText("DND")
-
-	local layout = {
-		[1] = {name = "Achievement", point = {"TOPLEFT", toastSettings, "TOPLEFT", 2, -5}, enabled = "achievement_enabled", dnd = "dnd.achievement", testFunc = SpawnTestAchievementToast},
-		[2] = {name = "Archaeology", point = {"TOPLEFT", toastSettings, "TOPLEFT", 2, -29}, enabled = "archaeology_enabled", dnd = "dnd.archaeology", testFunc = SpawnTestArchaeologyToast},
-		[3] = {name = "Garrison", point = {"TOPLEFT", toastSettings, "TOPLEFT", 2, -53}, enabled = "garrison_enabled", dnd = "dnd.garrison", testFunc = SpawnTestGarrisonToast},
-		[4] = {name = "Dungeon", point = {"TOPLEFT", toastSettings, "TOPLEFT", 2, -77}, enabled = "instance_enabled", dnd = "dnd.instance"},
-		[5] = {name = "Loot", point = {"TOPLEFT", toastSettings, "TOPLEFT", 2, -101}, enabled = "loot_enabled", dnd = "dnd.loot", testFunc = SpawnTestLootToast},
-		[6] = {name = "Recipe", point = {"TOPLEFT", toastSettings, "TOPLEFT", 2, -125}, enabled = "recipe_enabled", dnd = "dnd.recipe", testFunc = SpawnTestRecipeToast},
-		[7] = {name = "World Quest", point = {"TOPLEFT", toastSettings, "TOPLEFT", 2, -149}, enabled = "world_enabled", dnd = "dnd.world", testFunc = SpawnTestWorldEventToast},
-	}
-
-	for i = 1, 7 do
-		CreateToastConfigLine(toastSettings, layout[i])
-	end
+	local colorToggle = CreateConfigCheckButton(panel, "NameColorToggle", "Colour Names", "Colours item, follower names by quality, and world quest, mission titles by rarity.")
+	colorToggle:SetPoint("TOPLEFT", delaySlider, "BOTTOMLEFT", -3, -32)
+	colorToggle.watchedValue = "colored_names_enabled"
 
 	divider = CreateConfigDivider(panel, "Settings Transfer")
-	divider:SetPoint("TOP", toastSettings, "BOTTOM", 0, -10)
+	divider:SetPoint("TOP", growthDropdown, "BOTTOM", 0, -10)
 
 	subtext = panel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 	subtext:SetPoint("TOPLEFT", divider, "BOTTOMLEFT", 6, -8)
@@ -2503,17 +3041,87 @@ local function CreateConfigPanel()
 	subtext:SetJustifyV("TOP")
 	subtext:SetNonSpaceWrap(true)
 	subtext:SetMaxLines(4)
-	subtext:SetText("|cffff2020Experimental!|r To save current settings as a default preset click the button below. This feature may be quite handy, if you use more or less same layout on many characters. This way you'll need to tweak fewer things. |cffffd200Please note that there can be only 1 preset. Hitting this button on a different character will overwrite existing template.|r")
+	subtext:SetText("To save current settings as a default preset click the button below. This feature may be quite handy, if you use more or less same layout on many characters. This way you'll need to tweak fewer things. |cffffd200Please note that there can be only 1 preset. Hitting this button on a different character will overwrite existing template.|r")
 
-	local saveDefaults = CreateConfigButton(panel, "SaveDefaultsButton", "Save Settings", SaveDefaultTemplate)
+	local saveDefaults = CreateConfigButton(panel, "SaveDefaultsButton", "Save Preset", SaveDefaultTemplate)
 	saveDefaults:SetPoint("TOPLEFT", subtext, "BOTTOMLEFT", 0, -8)
 
-	panel.okay = function() end
-	panel.cancel = function() end
-	panel.refresh = OptionsPanelRefresh
-	panel.default = function() end
+	local wipeDefaults = CreateConfigButton(panel, "WipeDefaultsButton", "Wipe Preset", WipeDefaultTemplate)
+	wipeDefaults:SetPoint("LEFT", saveDefaults, "RIGHT", 4, 0)
 
-	_G.InterfaceOptions_AddCategory(panel)
+	panel.refresh = OptionsPanelRefresh
+
+	_G.InterfaceOptions_AddCategory(panel, true)
+
+	-- Toast Types Panel
+
+	panel = _G.CreateFrame("Frame", "LSToastsTypesConfigPanel", _G.InterfaceOptionsFramePanelContainer)
+	panel.name = "Toast Types"
+	panel.parent = "|cff1a9fc0ls:|r Toasts"
+	panel:Hide()
+
+	title = panel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+	title:SetPoint("TOPLEFT", 16, -16)
+	title:SetJustifyH("LEFT")
+	title:SetJustifyV("TOP")
+	title:SetText("Toast Types")
+
+	subtext = panel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+	subtext:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
+	subtext:SetPoint("RIGHT", -16, 0)
+	subtext:SetHeight(32)
+	subtext:SetJustifyH("LEFT")
+	subtext:SetJustifyV("TOP")
+	subtext:SetNonSpaceWrap(true)
+	subtext:SetMaxLines(3)
+	subtext:SetText("Moar thettings...")
+
+	local lootDropDown = _G.CreateFrame("Frame", "$parentLootCommonDropDown", panel, "UIDropDownMenuTemplate")
+	lootDropDown.displayMode = "MENU"
+	lootDropDown.point = "TOPLEFT"
+	lootDropDown.relativePoint = "BOTTOMRIGHT"
+	_G.UIDropDownMenu_Initialize(lootDropDown, LootDropDown_Initialize)
+
+	local layout = {
+		[1] = {name = "Achievement", enabled = "achievement_enabled", dnd = "dnd.achievement", testFunc = SpawnTestAchievementToast},
+		[2] = {name = "Archaeology", enabled = "archaeology_enabled", dnd = "dnd.archaeology", testFunc = SpawnTestArchaeologyToast},
+		[3] = {name = "Garrison", enabled = "garrison_6_0_enabled", dnd = "dnd.garrison_6_0", testFunc = SpawnTestGarrisonToast},
+		[4] = {name = "Class Hall", enabled = "garrison_7_0_enabled", dnd = "dnd.garrison_7_0", testFunc = SpawnTestClassHallToast},
+		[5] = {name = "Dungeon", enabled = "instance_enabled", dnd = "dnd.instance"},
+		[6] = {name = "Loot (Special)", enabled = "loot_special_enabled", enable_tooltip = "Toasts triggered by special loot events, e.g. won rolls, legendary drops, personal loot, etc.", dnd = "dnd.loot_special", testFunc = SpawnTestLootToast},
+		[7] = {name = "Loot (Common)", enabled = "loot_common_enabled", enable_tooltip = "Toasts triggered by chat events, e.g. greens, blues, some epics, everything that isn't handled by special loot toasts.", dnd = "dnd.loot_common", dropdown = lootDropDown},
+		[8] = {name = "Loot (Currency)", enabled = "loot_currency_enabled", dnd = "dnd.loot_currency", testFunc = SpawnTestCurrencyToast},
+		[9] = {name = "Recipe", enabled = "recipe_enabled", dnd = "dnd.recipe", testFunc = SpawnTestRecipeToast},
+		[10] = {name = "World Quest", enabled = "world_enabled", dnd = "dnd.world", testFunc = SpawnTestWorldEventToast},
+		[11] = {name = "Transmogrification", enabled = "transmog_enabled", dnd = "dnd.transmog", testFunc = SpawnTestTransmogToast},
+	}
+
+	local anchor = CreateToastConfigLine(panel, layout[1], subtext)
+	anchor:SetPoint("TOP", subtext, "BOTTOM", 0, -18)
+
+	title = panel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+	title:SetPoint("BOTTOMLEFT", anchor, "TOPLEFT", 6, 4)
+	title:SetText("Type")
+
+	title = panel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+	title:SetWidth(64)
+	title:SetJustifyH("CENTER")
+	title:SetPoint("BOTTOM", anchor, "TOPLEFT", 333, 4)
+	title:SetText(_G.ENABLE)
+
+	title = panel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+	title:SetWidth(64)
+	title:SetJustifyH("CENTER")
+	title:SetPoint("BOTTOM", anchor, "TOPLEFT", 455, 4)
+	title:SetText("DND")
+
+	for i = 2, #layout do
+		anchor = CreateToastConfigLine(panel, layout[i], anchor)
+	end
+
+	panel.refresh = OptionsPanelRefresh
+
+	_G.InterfaceOptions_AddCategory(panel, true)
 end
 
 -------------
@@ -2521,7 +3129,7 @@ end
 -------------
 
 function dispatcher:ADDON_LOADED(arg)
-	if arg ~= "ls_Toasts" then return end
+	if arg ~= addonName then return end
 
 	if not _G.LS_TOASTS_CFG_GLOBAL then
 		_G.LS_TOASTS_CFG_GLOBAL = {}
@@ -2535,9 +3143,36 @@ function dispatcher:ADDON_LOADED(arg)
 		CFG = CopyTable(DEFAULTS, _G.LS_TOASTS_CFG)
 	end
 
-	dispatcher:RegisterEvent("PLAYER_LOGIN")
-	dispatcher:RegisterEvent("PLAYER_LOGOUT")
-	dispatcher:UnregisterEvent("ADDON_LOADED")
+	if CFG.dnd.loot ~= nil then
+		CFG.dnd.loot_special = CFG.dnd.loot
+		CFG.dnd.loot = nil
+	end
+
+	if CFG.loot_enabled ~= nil then
+		CFG.loot_special_enabled = CFG.loot_enabled
+		CFG.loot_enabled = nil
+	end
+
+	if CFG.dnd.garrison ~= nil then
+		CFG.dnd.garrison_6_0 = CFG.dnd.garrison
+		CFG.dnd.garrison = nil
+	end
+
+	if CFG.garrison_enabled ~= nil then
+		CFG.garrison_6_0_enabled = CFG.garrison_enabled
+		CFG.garrison_enabled = nil
+	end
+
+	if _G.LS_TOASTS_CFG_GLOBAL["Default"] then
+		_G.LS_TOASTS_CFG_GLOBAL["Default"].dnd.loot = nil
+		_G.LS_TOASTS_CFG_GLOBAL["Default"].loot_enabled = nil
+		_G.LS_TOASTS_CFG_GLOBAL["Default"].dnd.garrison = nil
+		_G.LS_TOASTS_CFG_GLOBAL["Default"].garrison_enabled = nil
+	end
+
+	self:RegisterEvent("PLAYER_LOGIN")
+	self:RegisterEvent("PLAYER_LOGOUT")
+	self:UnregisterEvent("ADDON_LOADED")
 end
 
 function dispatcher:PLAYER_LOGIN()
@@ -2548,10 +3183,30 @@ function dispatcher:PLAYER_LOGIN()
 	EnableArchaeologyToasts()
 	EnableGarrisonToasts()
 	EnableInstanceToasts()
-	EnableLootToasts()
+	EnableSpecialLootToasts()
+	EnableCommonLootToasts()
+	EnableCurrencyLootToasts()
 	EnableRecipeToasts()
 	EnableWorldToasts()
-	CreateConfigPanel()
+	EnableTransmogToasts()
+
+	_G.SLASH_LSTOASTS1 = "/lstoasts"
+	_G.SlashCmdList["LSTOASTS"] = function(msg)
+		if msg == "" then
+			if not _G.LSToastsConfigPanel then
+				CreateConfigPanel()
+				_G.InterfaceOptionsFrame_OpenToCategory(_G.LSToastsConfigPanel)
+			end
+
+			if not _G.LSToastsConfigPanel:IsShown() then
+				_G.InterfaceOptionsFrame_OpenToCategory(_G.LSToastsConfigPanel)
+			else
+				_G.InterfaceOptionsFrameOkay_OnClick(_G.InterfaceOptionsFrame)
+			end
+		elseif msg == "dump" then
+			DumpToasts()
+		end
+	end
 end
 
 function dispatcher:PLAYER_LOGOUT()
