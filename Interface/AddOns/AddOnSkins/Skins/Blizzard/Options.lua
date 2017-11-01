@@ -16,7 +16,7 @@ function AS:Blizzard_BindingUI() -- ADDON_LOADED Blizzard_BindingUI
 	
 	AS:SkinCheckBox(KeyBindingFrameCharacterButton)
 	KeyBindingFrameHeaderText:ClearAllPoints()
-	KeyBindingFrameHeaderText:Point("TOP", KeyBindingFrame, "TOP", 0, -4)
+	KeyBindingFrameHeaderText:SetPoint("TOP", KeyBindingFrame, "TOP", 0, -4)
 	AS:StripTextures(KeyBindingFrame)
 	AS:SetTemplate(KeyBindingFrame, 'Default')
 	
@@ -31,8 +31,8 @@ function AS:Blizzard_BindingUI() -- ADDON_LOADED Blizzard_BindingUI
 		AS:SetTemplate(button2, 'Default', true)
 	end
 	
-	KeyBindingFrameUnbindButton:Point("RIGHT", KeyBindingFrameOkayButton, "LEFT", -3, 0)
-	KeyBindingFrameOkayButton:Point("RIGHT", KeyBindingFrameCancelButton, "LEFT", -3, 0)
+	KeyBindingFrameUnbindButton:SetPoint("RIGHT", KeyBindingFrameOkayButton, "LEFT", -3, 0)
+	KeyBindingFrameOkayButton:SetPoint("RIGHT", KeyBindingFrameCancelButton, "LEFT", -3, 0)
 	
 	AS:SkinScrollBar(KeyBindingFrameScrollFrameScrollBar)
 end
@@ -41,8 +41,8 @@ function AS:Blizzard_Options(event, addon)
 	if addon == 'Blizzard_GMSurveyUI' then
 		AS:StripTextures(GMSurveyHeader)
 		AS:SkinBackdropFrame(GMSurveyFrame)
-		GMSurveyFrame.Backdrop:Point("TOPLEFT", 0, 0)
-		GMSurveyFrame.Backdrop:Point("BOTTOMRIGHT", -44, 10)
+		GMSurveyFrame.Backdrop:SetPoint("TOPLEFT", 0, 0)
+		GMSurveyFrame.Backdrop:SetPoint("BOTTOMRIGHT", -44, 10)
 
 		AS:SkinFrame(GMSurveyCommentFrame)
 
@@ -266,11 +266,11 @@ function AS:Blizzard_Options(event, addon)
 
 		hooksecurefunc('ChatConfig_UpdateCheckboxes', function(frame)
 			if ( not FCF_GetCurrentChatFrame() ) then
-				return;
+				return
 			end
 			for index, value in ipairs(frame.checkBoxTable) do
-				local checkBoxNameString = frame:GetName().."CheckBox";
-				local checkBoxName = checkBoxNameString..index;
+				local checkBoxNameString = frame:GetName().."CheckBox"
+				local checkBoxName = checkBoxNameString..index
 				local checkBox = _G[checkBoxName]
 				local check = _G[checkBoxName.."Check"]
 				if checkBox and not checkBox.isSkinned then
@@ -285,16 +285,16 @@ function AS:Blizzard_Options(event, addon)
 		end)
 
 		hooksecurefunc('ChatConfig_UpdateTieredCheckboxes', function(frame, index)
-			local group = frame.checkBoxTable[index];
-			local groupChecked;
-			local baseName = frame:GetName().."CheckBox"..index;
-			local checkBox = _G[baseName];
+			local group = frame.checkBoxTable[index]
+			local groupChecked
+			local baseName = frame:GetName().."CheckBox"..index
+			local checkBox = _G[baseName]
 			if ( checkBox ) then
 				AS:SkinCheckBox(checkBox)
 			end
 			if ( group.subTypes ) then
 				for k, v in ipairs(group.subTypes) do
-					local subCheckBox = _G[baseName.."_"..k];
+					local subCheckBox = _G[baseName.."_"..k]
 					AS:SkinCheckBox(subCheckBox)
 				end
 			end
@@ -302,12 +302,12 @@ function AS:Blizzard_Options(event, addon)
 
 		hooksecurefunc('ChatConfig_UpdateSwatches', function(frame)
 			if ( not FCF_GetCurrentChatFrame() ) then
-				return;
+				return
 			end
-			local table = frame.swatchTable;
-			local nameString = frame:GetName().."Swatch";
+			local table = frame.swatchTable
+			local nameString = frame:GetName().."Swatch"
 			for index, value in ipairs(table) do
-				local baseName = nameString..index;
+				local baseName = nameString..index
 				AS:StripTextures(_G[baseName])
 			end
 		end)
@@ -374,8 +374,8 @@ function AS:Blizzard_Options(event, addon)
 
 		AS:SkinNextPrevButton(ChatConfigMoveFilterUpButton, true)
 		AS:SkinNextPrevButton(ChatConfigMoveFilterDownButton, true)
-		ChatConfigMoveFilterUpButton:Size(19)
-		ChatConfigMoveFilterDownButton:Size(19)
+		ChatConfigMoveFilterUpButton:SetSize(19, 19)
+		ChatConfigMoveFilterDownButton:SetSize(19, 19)
 		ChatConfigMoveFilterUpButton:SetPoint("TOPLEFT", "$parent", "BOTTOMLEFT", 0, -3)
 		ChatConfigMoveFilterDownButton:SetPoint("LEFT", ChatConfigMoveFilterUpButton, "RIGHT", 3, 0)
 

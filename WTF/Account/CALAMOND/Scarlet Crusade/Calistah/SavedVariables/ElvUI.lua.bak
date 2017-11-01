@@ -1,6 +1,13 @@
 
 ElvCharacterDB = {
 	["ChatEditHistory"] = {
+		"/g think that arcanocrystal is BiS for Destro locks", -- [1]
+		"/g yea lots of warlocks were annoyed cause you ge tlike 1 chance every 3 months or something", -- [2]
+		"/g afaik yea, once you have 2 and have the hall upgrade you can wear two for everything", -- [3]
+		"/g i use my resto one for enhance just cuase its a 895", -- [4]
+		"/zygor show", -- [5]
+		"/wa", -- [6]
+		"/g i think if you hearth out it will cancel it", -- [7]
 	},
 	["ChatLog"] = {
 	},

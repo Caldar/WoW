@@ -30,7 +30,7 @@ data.taxipoints = {
 		['Darkshore']={
 					{name="Grove of the Ancients",faction="A",npc="Delanea",npcid=33253,x=44.4,y=75.5},
 					{name="Lor'danel",faction="A",npc="Teldira Moonfeather",npcid=3841,x=51.7,y=17.6},
-					{name="Darkshore Cat 1",comment="name needs to be like that to connect a taxi tag. extitle can not be title b/c then only title gets put on the Pointer",extitle="Lor'danel",faction="A",npc="Nightsaber Rider",npcid=33359,x=52.2,y=22.3,taxioperator="blackcat"},
+					{name="Darkshore Cat 1",extitle="Lor'danel",faction="A",npc="Nightsaber Rider",npcid=33359,x=52.2,y=22.3,taxioperator="blackcat"}, -- name needs to be like that to connect a taxi tag. extitle can not be title b/c then only title gets put on the Pointer
 					{name="Darkshore Cat 2",extitle="Lor'danel",faction="A",npc="Nightsaber Rider",npcid=33359,x=51.0,y=22.7,taxioperator="blackcat"},
 					{name="Darkshore Cat 3",extitle="Ruins of Mathystra",faction="A",npc="Nightsaber Rider",npcid=33359,x=58.6,y=20.0,taxioperator="blackcat"},
 					{name="Darkshore Cat 4",extitle="Shatterspear Vale",faction="A",npc="Nightsaber Rider",npcid=33359,x=69.1,y=18.9,taxioperator="blackcat"},
@@ -55,7 +55,7 @@ data.taxipoints = {
 		['Dustwallow Marsh']={
 					{name="Brackenwall Village",faction="H",npc="Shardi",npcid=11899,x=35.6,y=31.8},
 					{name="Mudsprocket",faction="B",npc="Dyslix Silvergrub",npcid=40358,x=42.8,y=72.4},
-					{name="Theramore",comment="achievemissing: Only include this flight point if an achievement is *missing*. Used because this flight point disappears when Theramore is destroyed.",faction="A",npc="Baldruc",npcid=4321,x=67.4,y=51.4,achievemissing=7523}
+					{name="Theramore",faction="A",npc="Baldruc",npcid=4321,x=67.4,y=51.4,cond_fun=function() return not select(13,GetAchievementInfo(7523)) end}, -- only available if the player did not yet see Theramore destroyed.
 		},
 		['Felwood']={
 					{name="Emerald Sanctuary",faction="B",npc="Gorrim",npcid=22931,x=51.5,y=80.9},
@@ -90,7 +90,7 @@ data.taxipoints = {
 					{name="Bloodhoof Village",faction="H",npc="Tak",npcid=40809,x=47.4,y=58.6},
 		},
 		['Northern Barrens']={
-						{name="Nozzlepot's Outpost",faction="H",npc="Gazrix",npcid=40558,x=62.31,y=17.12},
+					{name="Nozzlepot's Outpost",faction="H",npc="Gazrix",npcid=40558,x=62.31,y=17.12},
 					{name="Ratchet",faction="B",npc="Bragok",npcid=16227,x=69.1,y=70.7,factionid=470,factionstanding=3},
 					{name="The Crossroads",faction="H",npc="Devrak",npcid=3615,x=48.6,y=58.6},
 					{name="The Mor'Shan Ramparts",faction="H",npc="Gort Goreflight",npcid=34927,x=41.98,y=15.87},
@@ -181,7 +181,7 @@ data.taxipoints = {
 					{name="Sunveil Excursion",faction="H",npc="Salena",npcid=43114,x=50.9,y=72.9,cond_fun=function() return UnitLevel('player')<90 or LibRover:HasBuff("Time Travelling",176111) end},
 					{name="Surwich",faction="A",npc="Graham McAllister",npcid=43107,x=47.1,y=89.3,cond_fun=function() return UnitLevel('player')<90 or LibRover:HasBuff("Time Travelling",176111) end},
 					{name="Shattered Landing",faction="H",npc="Ameri Windblade",npcid=85734,x=72.9,y=48.6,cond_fun=function() return UnitLevel('player')>89 and not LibRover:HasBuff("Time Travelling",176111) end},
-					{name="Shattered Beachhead",faction="A",npc="Araazi",npcid=85731,x=67.6,y=28.0,cond_fun=function() return UnitLevel('player')>89 and not LibRover:HasBuff("Time Travelling",176111) end}, -- ally iron invasion fp. needs testing
+					--{name="Shattered Beachhead",faction="A",npc="Araazi",npcid=85731,x=67.6,y=28.0,cond_fun=function() return UnitLevel('player')>89 and not LibRover:HasBuff("Time Travelling",176111) end}, -- ally iron invasion fp. needs testing  -- may not even be there anymore...
 		},
 		['Burning Steppes']={
 					{name="Chiselgrip",faction="B",npc="Grimly Singefeather",npcid=48321,x=46.2,y=41.8},
@@ -416,7 +416,7 @@ data.taxipoints = {
 					{name="Moa'ki",faction="B",npc="Cid Flounderfix",npcid=28196,x=48.51,y=74.39},
 		},
 		['Gilneas']={
-					{name="Forsaken Forward Command",comment="enabled after quest 27290, disabled after quest 27405, just assume we dont know it.",quest=999999,faction="H",npc="Bat Handler Doomair",npcid=45479,x=57.25,y=17.96},
+					{name="Forsaken Forward Command",quest=999999,faction="H",npc="Bat Handler Doomair",npcid=45479,x=57.25,y=17.96},  -- enabled after quest 27290, disabled after quest 27405 - quest set to 999999 to just assume we dont know it, ever.
 		},
 		['Grizzly Hills']={
 					{name="Amberpine Lodge",faction="A",npc="Vana Grey",npcid=26880,x=31.3,y=59.1},
@@ -478,8 +478,8 @@ data.taxipoints = {
 					{name="Dawn's Blossom",faction="B",npc="Keg Runner Lee",npcid=59186,x=47.0,y=46.2},
 					{name="The Arboretum",faction="B",npc="Injar'i Lakebloom",npcid=59732,x=57.0,y=44.0},
 					{name="Jade Temple Grounds",faction="B",npc="Ginsa Arroweye",npcid=59727,x=54.6,y=61.9},
-					{name="Serpent's Overlook",faction="A",npc="Sky Dancer Ji",quest=31362,npcid=64310,x=43.1,y=68.5,available=function() return IsSpellKnown(115913) end},
-					{name="Serpent's Overlook",faction="H",npc="Sky Dancer Ji",quest=30485,npcid=64310,x=43.1,y=68.5,available=function() return IsSpellKnown(115913) end},
+					{name="Serpent's Overlook",faction="A",npc="Sky Dancer Ji",quest=31362,npcid=64310,x=43.1,y=68.5,cond_fun=function() return IsSpellKnown(115913) end},
+					{name="Serpent's Overlook",faction="H",npc="Sky Dancer Ji",quest=30485,npcid=64310,x=43.1,y=68.5,cond_fun=function() return IsSpellKnown(115913) end},
 					{name="Paw'Don Village",faction="A",npc="Wing Kyo",npcid=487,x=46.0,y=85.1},
 					{name="Pearlfin Village",faction="A",npc="Ut-Nam",npcid=56737,x=58.0,y=82.5},
 					{name="Honeydew Village",faction="H",npc="Wing Hya",npcid=691,x=28.1,y=15.6},
@@ -656,12 +656,15 @@ data.taxipoints = {
 			{name="Watchers' Aerie",faction="B",npc="Trainee Starwhisper",npcid=111418,x=51.75,y=82.11},
 		},
 		['Broken Shore']={
-			{name="Illidari Camp",faction="B",npc="Izal Whitemoon",npcid=111323,x=49.67,y=21.02},
+			{name="Vengeance Point",faction="B",npc="Izal Whitemoon",npcid=111323,x=49.67,y=21.02}, -- renamed in 7.2 from Illidari Camp
+			{name="Aalgen Point",faction="B",npc="Heidirk the Scalekeeper",npcid=120118,x=70.76,y=47.62},
+			{name="Deliverance Point",faction="B",npc="Illidari Calia",npcid=120272,x=45.16,y=64.12},
+			{name="Acherus: The Ebon Hold, Broken Shore",faction="B",class="DEATHKNIGHT", npc="Grimwing",npcid=93465,x=25.51,y=28.79,f=2},
 		},
 		['Dalaran L']={
 			{name="Dalaran",faction="B",npc="Aludane Whitecloud",npcid=96813,x=69.83,y=51.11},
 		},
-		['Eye of Azshara']={
+		['Eye of Azshara Map']={
 			{name="Eye of Azshara",faction="B",npc="Razen Swingblade",npdid=112926,x=38.28,y=46.07},
 		},
 		['Highmountain']={
@@ -710,11 +713,35 @@ data.taxipoints = {
 			{name="The Dreamgrove",faction="B",npc="Danise Stargazer",npcid=107457,x=61.73,y=33.99, class="DRUID"},
 		},
 	},
+	[9]={
+		['Krokuun']={
+			{name="Vindicaar, Krokuun",faction="B",x=42.58,y=22.78,f=1,taxioperator="argusportal",argushub=true},
+			{name="Krokul Hovel, Krokuun",faction="B",x=55.48,y=67.35,taxioperator="argusportal"}, 
+			{name="Shattered Fields, Krokuun",faction="B",x=40.30,y=63.50,taxioperator="argusportal"},
+			{name="Destiny Point, Krokuun",faction="B",x=62.69,y=49.12,taxioperator="argusportal"},
+		},
+		['Mac\'Aree']={
+			{name="Vindicaar, Mac'Aree",faction="B",x=48.98,y=23.13,f=3,taxioperator="argusportal",argushub=true},
+			{name="Triumvirate's End, Mac'Aree",faction="B",x=52.86,y=75.46,taxioperator="argusportal"},
+			{name="Conservatory of the Arcane, Mac'Aree",faction="B",x=62.98,y=39.49,taxioperator="argusportal"},
+			{name="Prophet's Reflection, Mac'Aree",faction="B",x=43.87,y=14.53,taxioperator="argusportal"},
+			{name="Shadowguard Incursion, Mac'Aree",faction="B",x=30.16,y=49.56,taxioperator="argusportal"},
+			{name="City Center, Mac'Aree",faction="B",x=47.03,y=55.50,taxioperator="argusportal"},
+		},
+		['Antoran Wastes']={
+			{name="Vindicaar, Antoran Wastes",faction="B",x=32.32,y=56.57,f=5,taxioperator="argusportal",argushub=true},
+			{name="Hope's Landing, Antoran Wastes",faction="B",x=72.96,y=50.52,taxioperator="argusportal"},
+			{name="The Veiled Den, Antoran Wastes",faction="B",x=70.59,y=25.48,taxioperator="argusportal"},
+			{name="Light's Purchase, Antoran Wastes",faction="B",x=72.64,y=76.17,taxioperator="argusportal"},
+		},
+	},
 }
 
 
 -- NOTE: If two taxis have the same name but different factions then a factions field must be added in here. See Serpent's Spire.
 -- If not then one of the taxis will be marked with the wrong faction so will not properly get neighbors that it should.
+
+-- This data is regenerated when performing a Taxi Connections Dump. Any weird data edits may be lost. Comments containing neighbor location names ("-- Darkshore Cat 3, ....") will be regenerated. Any custom comments must be placed in comment="..." fields.
 
 data.flightcost = {
 	[1]={
@@ -722,6 +749,7 @@ data.flightcost = {
 			tag = "001:001",
 			name = "Darkshore Cat 1, Lor'danel, Darkshore",
 			taxioperator = "blackcat",
+			comment = "black cat ride",
 			neighbors = {
 				["003:003"] = 50, -- Darkshore Cat 3, Ruins of Mathystra, Darkshore
 			},
@@ -5783,7 +5811,8 @@ data.flightcost = {
 			tag = "246:-913",
 			name = "Eye of Azshara, Azsuna",
 			neighbors = {
-				["460:-252"] = 0, -- Illidari Camp, Broken Shore
+				["308:-326"] = 0, -- Dalaran
+				["460:-252"] = 0, -- Vengeance Point, Broken Shore
 			},
 		},
 		{
@@ -5797,8 +5826,8 @@ data.flightcost = {
 				["303:571"] = 51, -- Obsidian Overlook, Highmountain
 				["308:-326"] = 64, -- Dalaran
 				["382:579"] = 58, -- Ironhorn Enclave, Highmountain
-				["449:318"] = 43, -- Crimson Thicket, Suramar
-				["460:-252"] = 0, -- Illidari Camp, Broken Shore
+				["449:319"] = 43, -- Crimson Thicket, Suramar
+				["460:-252"] = 0, -- Vengeance Point, Broken Shore
 			},
 		},
 		{
@@ -5836,7 +5865,7 @@ data.flightcost = {
 				["254:253"] = 51, -- Meredil, Suramar
 				["299:849"] = 49, -- Thunder Totem, Highmountain
 				["382:579"] = 39, -- Ironhorn Enclave, Highmountain
-				["449:318"] = 55, -- Crimson Thicket, Suramar
+				["449:319"] = 55, -- Crimson Thicket, Suramar
 			},
 		},
 		{
@@ -5846,9 +5875,11 @@ data.flightcost = {
 				["059:-548"] = 68, -- Watchers' Aerie, Azsuna
 				["093:-308"] = 60, -- Shackle's Den, Azsuna
 				["152:004"] = 52, -- Felblaze Ingress, Azsuna
+				["246:-913"] = 0, -- Eye of Azshara, Azsuna
 				["254:253"] = 64, -- Meredil, Suramar
-				["449:318"] = 77, -- Crimson Thicket, Suramar
-				["460:-252"] = 0, -- Illidari Camp, Broken Shore
+				["439:-511"] = 0, -- Deliverance Point, Broken Shore
+				["449:319"] = 77, -- Crimson Thicket, Suramar
+				["460:-252"] = 0, -- Vengeance Point, Broken Shore
 				["599:296"] = 96, -- Hafr Fjall, Stormheim
 			},
 		},
@@ -5877,7 +5908,7 @@ data.flightcost = {
 				["303:571"] = 39, -- Obsidian Overlook, Highmountain
 				["347:1008"] = 51, -- Skyhorn, Highmountain
 				["402:787"] = 32, -- Stonehoof Watch, Highmountain
-				["449:318"] = 77, -- Crimson Thicket, Suramar
+				["449:319"] = 77, -- Crimson Thicket, Suramar
 				["451:629"] = 42, -- Skyfire Triage Camp, Stormheim
 				["470:810"] = 56, -- Forsaken Foothold, Stormheim
 				["477:509"] = 51, -- Lorna's Watch, Stormheim
@@ -5911,17 +5942,27 @@ data.flightcost = {
 			},
 		},
 		{
-			tag = "449:318",
+			tag = "439:-511",
+			name = "Deliverance Point, Broken Shore",
+			neighbors = {
+				["308:-326"] = 0, -- Dalaran
+				["460:-252"] = 0, -- Vengeance Point, Broken Shore
+				["555:-412"] = 0, -- Aalgen Point, Broken Shore
+			},
+		},
+		{
+			tag = "449:319",
 			name = "Crimson Thicket, Suramar",
 			neighbors = {
 				["254:253"] = 43, -- Meredil, Suramar
 				["303:571"] = 55, -- Obsidian Overlook, Highmountain
 				["308:-326"] = 77, -- Dalaran
 				["382:579"] = 77, -- Ironhorn Enclave, Highmountain
-				["460:-252"] = 0, -- Illidari Camp, Broken Shore
+				["460:-252"] = 0, -- Vengeance Point, Broken Shore
 				["477:509"] = 45, -- Lorna's Watch, Stormheim
 				["528:551"] = 38, -- Cullen's Post, Stormheim
 				["599:296"] = 48, -- Hafr Fjall, Stormheim
+				["676:-462"] = 0, -- Acherus: The Ebon Hold
 			},
 		},
 		{
@@ -5937,13 +5978,16 @@ data.flightcost = {
 		},
 		{
 			tag = "460:-252",
-			name = "Illidari Camp, Broken Shore",
+			name = "Vengeance Point, Broken Shore",
 			neighbors = {
 				["246:-913"] = 0, -- Eye of Azshara, Azsuna
 				["254:253"] = 0, -- Meredil, Suramar
 				["308:-326"] = 0, -- Dalaran
-				["449:318"] = 0, -- Crimson Thicket, Suramar
+				["439:-511"] = 0, -- Deliverance Point, Broken Shore
+				["449:319"] = 0, -- Crimson Thicket, Suramar
+				["555:-412"] = 0, -- Aalgen Point, Broken Shore
 				["599:296"] = 0, -- Hafr Fjall, Stormheim
+				["676:-462"] = 0, -- Acherus: The Ebon Hold
 			},
 		},
 		{
@@ -5963,7 +6007,7 @@ data.flightcost = {
 			name = "Lorna's Watch, Stormheim",
 			neighbors = {
 				["382:579"] = 51, -- Ironhorn Enclave, Highmountain
-				["449:318"] = 45, -- Crimson Thicket, Suramar
+				["449:319"] = 45, -- Crimson Thicket, Suramar
 				["451:629"] = 20, -- Skyfire Triage Camp, Stormheim
 				["576:774"] = 40, -- Stormtorn Foothills, Stormheim
 				["599:296"] = 46, -- Hafr Fjall, Stormheim
@@ -5976,11 +6020,20 @@ data.flightcost = {
 			neighbors = {
 				["382:579"] = 49, -- Ironhorn Enclave, Highmountain
 				["402:787"] = 45, -- Stonehoof Watch, Highmountain
-				["449:318"] = 38, -- Crimson Thicket, Suramar
+				["449:319"] = 38, -- Crimson Thicket, Suramar
 				["470:810"] = 34, -- Forsaken Foothold, Stormheim
 				["576:774"] = 36, -- Stormtorn Foothills, Stormheim
 				["593:427"] = 29, -- Dreadwake's Landing, Stormheim
 				["634:626"] = 28, -- Valdisdall, Stormheim
+			},
+		},
+		{
+			tag = "555:-412",
+			name = "Aalgen Point, Broken Shore",
+			neighbors = {
+				["439:-511"] = 0, -- Deliverance Point, Broken Shore
+				["460:-252"] = 0, -- Vengeance Point, Broken Shore
+				["676:-462"] = 0, -- Acherus: The Ebon Hold
 			},
 		},
 		{
@@ -6012,11 +6065,12 @@ data.flightcost = {
 			name = "Hafr Fjall, Stormheim",
 			neighbors = {
 				["308:-326"] = 96, -- Dalaran
-				["449:318"] = 48, -- Crimson Thicket, Suramar
-				["460:-252"] = 0, -- Illidari Camp, Broken Shore
+				["449:319"] = 48, -- Crimson Thicket, Suramar
+				["460:-252"] = 0, -- Vengeance Point, Broken Shore
 				["477:509"] = 46, -- Lorna's Watch, Stormheim
 				["593:427"] = 22, -- Dreadwake's Landing, Stormheim
 				["634:626"] = 38, -- Valdisdall, Stormheim
+				["676:-462"] = 0, -- Acherus: The Ebon Hold
 				["712:546"] = 41, -- Greywatch, Stormheim
 			},
 		},
@@ -6032,6 +6086,16 @@ data.flightcost = {
 				["599:296"] = 38, -- Hafr Fjall, Stormheim
 				["712:546"] = 24, -- Greywatch, Stormheim
 				["834:992"] = 62, -- Shield's Rest, Stormheim
+			},
+		},
+		{
+			tag = "676:-462",
+			name = "Acherus: The Ebon Hold, Broken Shore",
+			neighbors = {
+				["449:319"] = 0, -- Crimson Thicket, Suramar
+				["460:-252"] = 0, -- Vengeance Point, Broken Shore
+				["555:-412"] = 0, -- Aalgen Point, Broken Shore
+				["599:296"] = 0, -- Hafr Fjall, Stormheim
 			},
 		},
 		{
@@ -6052,6 +6116,277 @@ data.flightcost = {
 				["576:774"] = 61, -- Stormtorn Foothills, Stormheim
 				["634:626"] = 62, -- Valdisdall, Stormheim
 				["712:546"] = 51, -- Greywatch, Stormheim
+			},
+		},
+	},
+	[9]={
+		{
+			tag = "069:726",
+			name = "Shadowguard Incursion, Mac'Aree",
+			taxioperator = "argusportal",
+			neighbors = {
+				["087:757"] = 1, -- Prophet's Reflection, Mac'Aree
+				["091:720"] = 1, -- City Center, Mac'Aree
+				["097:692"] = 1, -- Vindicaar, Mac'Aree
+				["099:703"] = 1, -- Triumvirate's End, Mac'Aree
+				["113:734"] = 1, -- Conservatory of the Arcane, Mac'Aree
+				["140:356"] = 1, -- Light's Purchase, Antoran Wastes
+				["141:380"] = 1, -- Landing, Antoran Wastes
+				["407:544"] = 1, -- Shattered Fields, Krokuun
+				["430:540"] = 1, -- Krokul Hovel, Krokuun
+				["441:558"] = 1, -- Destiny Point, Krokuun
+				["138:403"] = 1, -- The Veiled Den, Antoran Wastes
+				["141:380"] = 1, -- Hope's Landing, Antoran Wastes
+			},
+		},
+		{
+			tag = "087:757",
+			name = "Prophet's Reflection, Mac'Aree",
+			taxioperator = "argusportal",
+			neighbors = {
+				["069:726"] = 1, -- Shadowguard Incursion, Mac'Aree
+				["091:720"] = 1, -- City Center, Mac'Aree
+				["097:692"] = 1, -- Vindicaar, Mac'Aree
+				["099:703"] = 1, -- Triumvirate's End, Mac'Aree
+				["113:734"] = 1, -- Conservatory of the Arcane, Mac'Aree
+				["140:356"] = 1, -- Light's Purchase, Antoran Wastes
+				["141:380"] = 1, -- Landing, Antoran Wastes
+				["407:544"] = 1, -- Shattered Fields, Krokuun
+				["430:540"] = 1, -- Krokul Hovel, Krokuun
+				["441:558"] = 1, -- Destiny Point, Krokuun
+				["138:403"] = 1, -- The Veiled Den, Antoran Wastes
+				["141:380"] = 1, -- Hope's Landing, Antoran Wastes
+			},
+		},
+		{
+			tag = "091:720",
+			name = "City Center, Mac'Aree",
+			taxioperator = "argusportal",
+			neighbors = {
+				["069:726"] = 1, -- Shadowguard Incursion, Mac'Aree
+				["087:757"] = 1, -- Prophet's Reflection, Mac'Aree
+				["097:692"] = 1, -- Vindicaar, Mac'Aree
+				["099:703"] = 1, -- Triumvirate's End, Mac'Aree
+				["113:734"] = 1, -- Conservatory of the Arcane, Mac'Aree
+				["140:356"] = 1, -- Light's Purchase, Antoran Wastes
+				["141:380"] = 1, -- Landing, Antoran Wastes
+				["407:544"] = 1, -- Shattered Fields, Krokuun
+				["430:540"] = 1, -- Krokul Hovel, Krokuun
+				["441:558"] = 1, -- Destiny Point, Krokuun
+				["138:403"] = 1, -- The Veiled Den, Antoran Wastes
+				["141:380"] = 1, -- Hope's Landing, Antoran Wastes
+			},
+		},
+		{
+			tag = "097:692",
+			name = "Vindicaar, Mac'Aree",
+			taxioperator = "argusportal",
+			neighbors = {
+				["440:520"] = 1, -- Vindicaar, Krokuun
+				["145:392"] = 1, -- Vindicaar, Antoran Wastes
+				["069:726"] = 1, -- Shadowguard Incursion, Mac'Aree
+				["087:757"] = 1, -- Prophet's Reflection, Mac'Aree
+				["091:720"] = 1, -- City Center, Mac'Aree
+				["099:703"] = 1, -- Triumvirate's End, Mac'Aree
+				["113:734"] = 1, -- Conservatory of the Arcane, Mac'Aree
+				["140:356"] = 1, -- Light's Purchase, Antoran Wastes
+				["141:380"] = 1, -- Landing, Antoran Wastes
+				["407:544"] = 1, -- Shattered Fields, Krokuun
+				["430:540"] = 1, -- Krokul Hovel, Krokuun
+				["441:558"] = 1, -- Destiny Point, Krokuun
+				["138:403"] = 1, -- The Veiled Den, Antoran Wastes
+				["141:380"] = 1, -- Hope's Landing, Antoran Wastes
+			},
+		},
+		{
+			tag = "099:703",
+			name = "Triumvirate's End, Mac'Aree",
+			taxioperator = "argusportal",
+			neighbors = {
+				["069:726"] = 1, -- Shadowguard Incursion, Mac'Aree
+				["087:757"] = 1, -- Prophet's Reflection, Mac'Aree
+				["091:720"] = 1, -- City Center, Mac'Aree
+				["097:692"] = 1, -- Vindicaar, Mac'Aree
+				["113:734"] = 1, -- Conservatory of the Arcane, Mac'Aree
+				["140:356"] = 1, -- Light's Purchase, Antoran Wastes
+				["141:380"] = 1, -- Landing, Antoran Wastes
+				["407:544"] = 1, -- Shattered Fields, Krokuun
+				["430:540"] = 1, -- Krokul Hovel, Krokuun
+				["441:558"] = 1, -- Destiny Point, Krokuun
+				["138:403"] = 1, -- The Veiled Den, Antoran Wastes
+				["141:380"] = 1, -- Hope's Landing, Antoran Wastes
+			},
+		},
+		{
+			tag = "113:734",
+			name = "Conservatory of the Arcane, Mac'Aree",
+			taxioperator = "argusportal",
+			neighbors = {
+				["069:726"] = 1, -- Shadowguard Incursion, Mac'Aree
+				["087:757"] = 1, -- Prophet's Reflection, Mac'Aree
+				["091:720"] = 1, -- City Center, Mac'Aree
+				["097:692"] = 1, -- Vindicaar, Mac'Aree
+				["099:703"] = 1, -- Triumvirate's End, Mac'Aree
+				["140:356"] = 1, -- Light's Purchase, Antoran Wastes
+				["141:380"] = 1, -- Landing, Antoran Wastes
+				["407:544"] = 1, -- Shattered Fields, Krokuun
+				["430:540"] = 1, -- Krokul Hovel, Krokuun
+				["441:558"] = 1, -- Destiny Point, Krokuun
+				["138:403"] = 1, -- The Veiled Den, Antoran Wastes
+				["141:380"] = 1, -- Hope's Landing, Antoran Wastes
+			},
+		},
+		{
+			tag = "140:356",
+			name = "Light's Purchase, Antoran Wastes",
+			taxioperator = "argusportal",
+			neighbors = {
+				["069:726"] = 1, -- Shadowguard Incursion, Mac'Aree
+				["087:757"] = 1, -- Prophet's Reflection, Mac'Aree
+				["091:720"] = 1, -- City Center, Mac'Aree
+				["099:703"] = 1, -- Triumvirate's End, Mac'Aree
+				["113:734"] = 1, -- Conservatory of the Arcane, Mac'Aree
+				["141:380"] = 1, -- Landing, Antoran Wastes
+				["145:392"] = 1, -- Vindicaar, Antoran Wastes
+				["407:544"] = 1, -- Shattered Fields, Krokuun
+				["430:540"] = 1, -- Krokul Hovel, Krokuun
+				["441:558"] = 1, -- Destiny Point, Krokuun
+				["138:403"] = 1, -- The Veiled Den, Antoran Wastes
+				["141:380"] = 1, -- Hope's Landing, Antoran Wastes
+			},
+		},
+		{
+			tag = "141:380",
+			name = "Hope's Landing, Antoran Wastes",
+			taxioperator = "argusportal",
+			neighbors = {
+				["069:726"] = 1, -- Shadowguard Incursion, Mac'Aree
+				["087:757"] = 1, -- Prophet's Reflection, Mac'Aree
+				["091:720"] = 1, -- City Center, Mac'Aree
+				["099:703"] = 1, -- Triumvirate's End, Mac'Aree
+				["113:734"] = 1, -- Conservatory of the Arcane, Mac'Aree
+				["140:356"] = 1, -- Light's Purchase, Antoran Wastes
+				["145:392"] = 1, -- Vindicaar, Antoran Wastes
+				["407:544"] = 1, -- Shattered Fields, Krokuun
+				["430:540"] = 1, -- Krokul Hovel, Krokuun
+				["441:558"] = 1, -- Destiny Point, Krokuun
+				["138:403"] = 1, -- The Veiled Den, Antoran Wastes
+			},
+		},
+		{
+			tag = "138:403",
+			name = "The Veiled Den, Antoran Wastes",
+			taxioperator = "argusportal",
+			neighbors = {
+				["069:726"] = 1, -- Shadowguard Incursion, Mac'Aree
+				["087:757"] = 1, -- Prophet's Reflection, Mac'Aree
+				["091:720"] = 1, -- City Center, Mac'Aree
+				["099:703"] = 1, -- Triumvirate's End, Mac'Aree
+				["113:734"] = 1, -- Conservatory of the Arcane, Mac'Aree
+				["145:392"] = 1, -- Vindicaar, Antoran Wastes
+				["407:544"] = 1, -- Shattered Fields, Krokuun
+				["430:540"] = 1, -- Krokul Hovel, Krokuun
+				["441:558"] = 1, -- Destiny Point, Krokuun
+				["141:380"] = 1, -- Hope's Landing, Antoran Wastes
+			},
+		},
+		{
+			tag = "145:392",
+			name = "Vindicaar, Antoran Wastes",
+			taxioperator = "argusportal",
+			neighbors = {
+				["440:520"] = 1, -- Vindicaar, Krokuun
+				["097:692"] = 1, -- Vindicaar, Mac'Aree
+				["069:726"] = 1, -- Shadowguard Incursion, Mac'Aree
+				["087:757"] = 1, -- Prophet's Reflection, Mac'Aree
+				["091:720"] = 1, -- City Center, Mac'Aree
+				["099:703"] = 1, -- Triumvirate's End, Mac'Aree
+				["113:734"] = 1, -- Conservatory of the Arcane, Mac'Aree
+				["140:356"] = 1, -- Light's Purchase, Antoran Wastes
+				["141:380"] = 1, -- Landing, Antoran Wastes
+				["407:544"] = 1, -- Shattered Fields, Krokuun
+				["430:540"] = 1, -- Krokul Hovel, Krokuun
+				["441:558"] = 1, -- Destiny Point, Krokuun
+				["138:403"] = 1, -- The Veiled Den, Antoran Wastes
+				["141:380"] = 1, -- Hope's Landing, Antoran Wastes
+			},
+		},
+		{
+			tag = "407:544",
+			name = "Shattered Fields, Krokuun",
+			taxioperator = "argusportal",
+			neighbors = {
+				["069:726"] = 1, -- Shadowguard Incursion, Mac'Aree
+				["087:757"] = 1, -- Prophet's Reflection, Mac'Aree
+				["091:720"] = 1, -- City Center, Mac'Aree
+				["099:703"] = 1, -- Triumvirate's End, Mac'Aree
+				["113:734"] = 1, -- Conservatory of the Arcane, Mac'Aree
+				["140:356"] = 1, -- Light's Purchase, Antoran Wastes
+				["141:380"] = 1, -- Landing, Antoran Wastes
+				["430:540"] = 1, -- Krokul Hovel, Krokuun
+				["440:520"] = 1, -- Vindicaar, Krokuun
+				["441:558"] = 1, -- Destiny Point, Krokuun
+				["138:403"] = 1, -- The Veiled Den, Antoran Wastes
+				["141:380"] = 1, -- Hope's Landing, Antoran Wastes
+			},
+		},
+		{
+			tag = "430:540",
+			name = "Krokul Hovel, Krokuun",
+			taxioperator = "argusportal",
+			neighbors = {
+				["069:726"] = 1, -- Shadowguard Incursion, Mac'Aree
+				["087:757"] = 1, -- Prophet's Reflection, Mac'Aree
+				["091:720"] = 1, -- City Center, Mac'Aree
+				["099:703"] = 1, -- Triumvirate's End, Mac'Aree
+				["113:734"] = 1, -- Conservatory of the Arcane, Mac'Aree
+				["140:356"] = 1, -- Light's Purchase, Antoran Wastes
+				["141:380"] = 1, -- Landing, Antoran Wastes
+				["407:544"] = 1, -- Shattered Fields, Krokuun
+				["440:520"] = 1, -- Vindicaar, Krokuun
+				["441:558"] = 1, -- Destiny Point, Krokuun
+				["138:403"] = 1, -- The Veiled Den, Antoran Wastes
+				["141:380"] = 1, -- Hope's Landing, Antoran Wastes
+			},
+		},
+		{
+			tag = "440:520",
+			name = "Vindicaar, Krokuun",
+			taxioperator = "argusportal",
+			neighbors = {
+				["097:692"] = 1, -- Vindicaar, Mac'Aree
+				["145:392"] = 1, -- Vindicaar, Antoran Wastes
+				["069:726"] = 1, -- Shadowguard Incursion, Mac'Aree
+				["087:757"] = 1, -- Prophet's Reflection, Mac'Aree
+				["091:720"] = 1, -- City Center, Mac'Aree
+				["099:703"] = 1, -- Triumvirate's End, Mac'Aree
+				["113:734"] = 1, -- Conservatory of the Arcane, Mac'Aree
+				["140:356"] = 1, -- Light's Purchase, Antoran Wastes
+				["141:380"] = 1, -- Landing, Antoran Wastes
+				["407:544"] = 1, -- Shattered Fields, Krokuun
+				["430:540"] = 1, -- Krokul Hovel, Krokuun
+				["441:558"] = 1, -- Destiny Point, Krokuun
+				["138:403"] = 1, -- The Veiled Den, Antoran Wastes
+				["141:380"] = 1, -- Hope's Landing, Antoran Wastes
+			},
+		},
+		{
+			tag = "441:558",
+			name = "Destiny Point, Krokuun",
+			taxioperator = "argusportal",
+			neighbors = {
+				["069:726"] = 1, -- Shadowguard Incursion, Mac'Aree
+				["087:757"] = 1, -- Prophet's Reflection, Mac'Aree
+				["091:720"] = 1, -- City Center, Mac'Aree
+				["099:703"] = 1, -- Triumvirate's End, Mac'Aree
+				["113:734"] = 1, -- Conservatory of the Arcane, Mac'Aree
+				["140:356"] = 1, -- Light's Purchase, Antoran Wastes
+				["141:380"] = 1, -- Landing, Antoran Wastes
+				["407:544"] = 1, -- Shattered Fields, Krokuun
+				["430:540"] = 1, -- Krokul Hovel, Krokuun
+				["440:520"] = 1, -- Vindicaar, Krokuun
+				["138:403"] = 1, -- The Veiled Den, Antoran Wastes
+				["141:380"] = 1, -- Hope's Landing, Antoran Wastes
 			},
 		},
 	},

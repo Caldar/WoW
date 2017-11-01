@@ -133,6 +133,8 @@ function Notification.AddButton(id, title, text, texture, texcoords, onClick, to
 
 	local button
 
+	if not frame then return end
+
 	if not frame.buttons[id] then
 		button = CHAIN(CreateFrame("Button", "", frame))
 			:SetPoint("TOPLEFT", frame, "TOPLEFT", 0,0)
@@ -190,7 +192,7 @@ function Notification.AddButton(id, title, text, texture, texcoords, onClick, to
 		
 		local count=32
 		local BUTTONTEXTURE = SkinData("TitleButtons")
-		ZGV.AssignButtonTexture(button.arrowButton,BUTTONTEXTURE,11,count)
+		ZGV.F.AssignButtonTexture(button.arrowButton,BUTTONTEXTURE,11,count)
 
 		button.frame = frame
 		button.texcoords = texcoords

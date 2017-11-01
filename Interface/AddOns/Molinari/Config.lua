@@ -1,14 +1,48 @@
 local addonName, L = ...
 local defaults = {
+	modifier = 'ALT',
+}
+
+local Options = LibStub('Wasabi'):New(addonName, 'MolinariDB', defaults)
+Options:AddSlash('/molinari')
+Options:Initialize(function(self)
+	local Title = self:CreateTitle()
+	Title:SetPoint('TOPLEFT', 16, -16)
+	Title:SetText(addonName)
+
+	local Modifier = self:CreateDropDown('modifier')
+	Modifier:SetPoint('TOPLEFT', Title, 'BOTTOMLEFT', 0, -8)
+	Modifier:SetFormattedText(L['Modifier to show enable %s'], addonName)
+	Modifier:SetValues({
+		ALT = L['ALT key'],
+		CTRL = L['ALT + CTRL key'],
+		SHIFT = L['ALT + SHIFT key']
+	})
+	Modifier:SetNewFeature(true)
+end)
+
+Options:On('Okay', function()
+	Molinari:UpdateModifier()
+end)
+
+local defaultBlacklist = {
 	items = {
 		[116913] = true, -- Peon's Mining Pick
 		[116916] = true, -- Gorepetal's Gentle Grasp
 	}
 }
 
-local Options = LibStub('Wasabi'):New(addonName, 'MolinariBlacklistDB', defaults)
-Options:AddSlash('/molinari')
-Options:Initialize(function(self)
+-- need this to get size of a pair table
+local function tLength(t)
+	local count = 0
+	for _ in next, t do
+		count = count + 1
+	end
+	return count
+end
+
+local Blacklist = Options:CreateChild('Item Blacklist', 'MolinariBlacklistDB', defaultBlacklist)
+Blacklist:Initialize(function(self)
 	local Title = self:CreateTitle()
 	Title:SetPoint('TOPLEFT', 20, -16)
 	Title:SetFontObject('GameFontNormalMed1')
@@ -40,12 +74,15 @@ Options:Initialize(function(self)
 		Object:SetScript('OnLeave', GameTooltip_Hide)
 	end)
 
+	local queryItems = {}
 	Items:On('ObjectUpdate', function(self, event, Object)
-		local _, _, _, _, _, _, _, _, _, textureFile = GetItemInfo(Object.key)
+		local itemID = Object.key
+
+		local _, _, _, _, _, _, _, _, _, textureFile = GetItemInfo(itemID)
 		if(textureFile) then
 			Object:SetNormalTexture(textureFile)
-		elseif(not self.queryItems[Object.key]) then
-			self.queryItems[Object.key] = true
+		elseif(not queryItems[itemID]) then
+			queryItems[itemID] = true
 			self:RegisterEvent('GET_ITEM_INFO_RECEIVED')
 		end
 	end)
@@ -58,11 +95,11 @@ Options:Initialize(function(self)
 
 	Items:HookScript('OnEvent', function(self, event, itemID)
 		if(event == 'GET_ITEM_INFO_RECEIVED') then
-			if(self.queryItems[itemID]) then
-				self.queryItems[itemID] = nil
+			if(queryItems[itemID]) then
+				queryItems[itemID] = nil
 				self:AddObject(itemID)
 
-				if(#self.queryItems == 0) then
+				if(tLength(queryItems) == 0) then
 					self:UnregisterEvent('GET_ITEM_INFO_RECEIVED')
 				end
 			end
@@ -78,6 +115,4 @@ Options:Initialize(function(self)
 			end
 		end
 	end)
-
-	Items.queryItems = {}
 end)

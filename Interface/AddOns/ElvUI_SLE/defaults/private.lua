@@ -5,42 +5,16 @@ V["skins"]["addons"] = {
 }
 
 V["sle"] = {
+	["Armory"] = {
+		["UseArtMonitor"] = true,
+	},
 	["equip"] = {
 		["enable"] = false,
 		["spam"] = false,
-		["instanceSet"] = false,
-		["pvpSet"] = false,
-		["timewalkingSet"] = false,
-		["firstSpec"] = {
-			["general"] = "NONE",
-			["pvp"] = "NONE",
-			["instance"] = "NONE",
-			["timewalking"] = "NONE",
-		},
-		["secondSpec"] = {
-			["general"] = "NONE",
-			["pvp"] = "NONE",
-			["instance"] = "NONE",
-			["timewalking"] = "NONE",
-		},
-		["thirdSpec"] = {
-			["general"] = "NONE",
-			["pvp"] = "NONE",
-			["instance"] = "NONE",
-			["timewalking"] = "NONE",
-		},
-		["forthSpec"] = {
-			["general"] = "NONE",
-			["pvp"] = "NONE",
-			["instance"] = "NONE",
-			["timewalking"] = "NONE",
-		},
+		["onlyTalent"] = false,
+		["conditions"] = "",
 		["setoverlay"] = false,
 		["lockbutton"] = false,
-		["FishingRaft"] = {
-			["enable"] = false,
-			["set"] = "NONE",
-		},
 	},
 	--Minimap Module
 	["minimap"] = {
@@ -51,6 +25,13 @@ V["sle"] = {
 			["enable"] = false,
 			["barenable"] = false,
 			["template"] = "Transparent",
+		},
+	},
+
+	["dt"] = {
+		["specswitch"] = {
+			["xOffset"] = -15,
+			["yOffset"] = -7,
 		},
 	},
 
@@ -108,6 +89,19 @@ V["sle"] = {
 				["stancebar"] = false,
 				["microbar"] = false,
 				["petbar"] = false,
+				["bar1buttons"] = false,
+				["bar2buttons"] = false,
+				["bar3buttons"] = false,
+				["bar4buttons"] = false,
+				["bar5buttons"] = false,
+				["bar6buttons"] = false,
+				["bar7buttons"] = false,
+				["bar8buttons"] = false,
+				["bar9buttons"] = false,
+				["bar10buttons"] = false,
+				["stancebarbuttons"] = false,
+				["microbarbuttons"] = false,
+				["petbarbuttons"] = false,
 			},
 		},
 	},
@@ -214,6 +208,9 @@ G["sle"] = {
 		["cyrillics"] = {
 			["commands"] = false,
 			["devCommands"] = false,
+		},
+		["chat"] = {
+			["setupDelay"] = 1,
 		},
 	},
 }

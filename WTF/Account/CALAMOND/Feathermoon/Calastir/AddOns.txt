@@ -1,4 +1,4 @@
-Archy: enabled
+Archy: disabled
 Clique: enabled
 FishermansFriend: enabled
 LoggerHeadLite: enabled
@@ -49,7 +49,7 @@ WeakAuras: enabled
 WeakAurasModelPaths: enabled
 WeakAurasOptions: enabled
 WeakAurasTemplates: enabled
-WIM: enabled
+WIM: disabled
 XIV_Databar: disabled
 ElvUI_Config: enabled
 ElvUI: enabled
@@ -67,3 +67,4 @@ WorldQuestsList: disabled
 ElvUI_LocLite: disabled
 TellMeWhen: disabled
 TellMeWhen_Options: disabled
+ZygorGuidesViewer: disabled

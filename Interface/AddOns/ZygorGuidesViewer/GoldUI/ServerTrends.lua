@@ -12,9 +12,12 @@ Trends.olddumps={}
 local TRENDS_OLD = 4 * 24 --h
 
 tinsert(ZGV.startups,{"Servertrends",function(self)
-	for i,dump in ipairs(Trends.dumps) do
-		Trends:DoImport(dump)
-	end
+			ZGV:Debug("&startup Importing server trends (in background)")
+			for i,dump in ipairs(Trends.dumps) do
+				Trends:DoImport(dump)
+			end
+			ZGV:Debug("&startup Importing server trends complete.")
+	--]]
 	--if not ZGV.db.profile.debug then Trends.dumps=nil end
 end})
 
@@ -49,8 +52,7 @@ function Trends:DoImport(dumpdata,loud)
 	ZGV:Debug("&trends Server Prices import starting...")
 
 	if type(dumpdata)~="table" then
-		Trends:DoOldImport(dumpdata,loud)
-		return
+		return Trends:DoOldImport(dumpdata,loud)
 	end
 
 	local data = {}
@@ -99,7 +101,7 @@ function Trends:DoImport(dumpdata,loud)
 end
 
 function Trends:DoOldImport(text,loud)
-	ZGV:Debug("&trends Server Prices import starting...")
+	ZGV:Debug("&trends Server Prices text import starting...")
 
 	text = text .. "\n"
 
@@ -117,6 +119,11 @@ function Trends:DoOldImport(text,loud)
 		if linecount>100000 then
 			ZGV:Print("More than 100000 lines!?")
 			break
+		end
+		if linecount%2000==0 then
+			if coroutine.running() then
+				coroutine.yield()
+			end
 		end
 
 		--[[
@@ -141,7 +148,7 @@ function Trends:DoOldImport(text,loud)
 		else
 			-- header is over, yay or nay?
 			if data.realm and data.realm~=GetRealmName() and data.realm~="GLOBAL" then
-				ZGV:Debug("&trends Wrong realm! This data is for the "..data.realm.." realm, you're on "..GetRealmName().."!")
+				ZGV:Debug("&trends Wrong realm! This data is for the %s realm, you're on %s!",data.realm,GetRealmName())
 				return
 			end
 

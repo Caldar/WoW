@@ -26,12 +26,6 @@ function arrow:CreateFrame()
 	return self.frame
 end
 
-local function BetterTexCoord(obj,x,w,y,h)  -- aka  n,w,h
-	if not h then  x,w,y,h=(x or 0),w,nil,y  y=math.floor(x/w)+1  x=(x%w)+1  end
-	obj:SetTexCoord((x-1)/w,x/w,(y-1)/h,y/h)
-end
-
-
 ------------ color
 local ar,ag,ab = 1.0,0.0,0.0
 local br,bg,bb = 0.8,0.7,0.0
@@ -199,7 +193,7 @@ function arrowframeproto:ShowTraveling (elapsed,angle,dist)
 
 end
 
-local specials={"here","waiting","upstairs","downstairs","error"}
+local specials={"here","waiting","upstairs","downstairs","error","instance","instancehide"}
 function arrowframeproto:ShowSpecial(spec)
 	if spec==nil or not self.special[spec] then self.arrow:Hide() self.special:Hide() return end
 	self.arrow:Hide() self.special:Show()
@@ -224,8 +218,20 @@ function arrowframeproto:ShowError()
 	self:ShowSpecial("error")
 end
 
+function arrowframeproto:ShowInstance()
+	self:ShowSpecial("instance")
+end
+
+function arrowframeproto:HideInstance()
+	self:ShowSpecial("instancehide")
+end
+
 function arrowframeproto:ShowWarning()
 	self.arrow.warning:Play()
+end
+
+function arrowframeproto:SetNotice (text)
+	self.notice = text
 end
 
 function arrowframeproto:ShowText (title,dist,eta,status)
@@ -247,14 +253,17 @@ function arrowframeproto:ShowText (title,dist,eta,status)
 	self.title:SetText(
 		(title and "|cffffffff"..title.."|r\n" or "") ..
 		(disttxt and distcolor..disttxt.."|r" or "") ..  (etatxt or "") ..
-		(status and "|n"..status or ""))
+		(status and "|n"..status or "") ..
+		(self.notice and "|n".. self.notice or "")
+	)
 end
 
 function arrowframeproto:OnMouseWheel(delta)
 	if IsControlKeyDown() then
-		if delta>0 then delta=1.1 else delta=1/1.1 end
-		ZGV.db.profile.arrowscale = ZGV.db.profile.arrowscale * delta
-		if ZGV.db.profile.arrowscale<0.4 then ZGV.db.profile.arrowscale=0.4 end
+		if delta>0 then delta=0.2 else delta=-0.2 end
+		ZGV.db.profile.arrowscale = ZGV.db.profile.arrowscale + delta
+		if ZGV.db.profile.arrowscale<0.8 then ZGV.db.profile.arrowscale=0.8 end
+		if ZGV.db.profile.arrowscale>1.6 then ZGV.db.profile.arrowscale=1.6 end
 		self:SetScale(ZGV.db.profile.arrowscale)
 	end
 end

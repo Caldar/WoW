@@ -5,3 +5,6 @@ MolinariBlacklistDB = {
 		[116916] = true,
 	},
 }
+MolinariDB = {
+	["modifier"] = "ALT",
+}

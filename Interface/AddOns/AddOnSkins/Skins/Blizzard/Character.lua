@@ -73,80 +73,80 @@ function AS:Blizzard_CharacterFrame()
 	ColorizeStatPane(CharacterStatsPane.ItemLevelFrame)
 
 	hooksecurefunc("PaperDollFrame_UpdateStats", function()
-		local level = UnitLevel("player");
-		local categoryYOffset = -5;
-		local statYOffset = 0;
+		local level = UnitLevel("player")
+		local categoryYOffset = -5
+		local statYOffset = 0
 
 		if ( level >= MIN_PLAYER_LEVEL_FOR_ITEM_LEVEL_DISPLAY ) then
-			PaperDollFrame_SetItemLevel(CharacterStatsPane.ItemLevelFrame, "player");
-			CharacterStatsPane.ItemLevelFrame.Value:SetTextColor(GetItemLevelColor());
-			CharacterStatsPane.ItemLevelCategory:Show();
-			CharacterStatsPane.ItemLevelFrame:Show();
-			CharacterStatsPane.AttributesCategory:SetPoint("TOP", 0, -76);
+			PaperDollFrame_SetItemLevel(CharacterStatsPane.ItemLevelFrame, "player")
+			CharacterStatsPane.ItemLevelFrame.Value:SetTextColor(GetItemLevelColor())
+			CharacterStatsPane.ItemLevelCategory:Show()
+			CharacterStatsPane.ItemLevelFrame:Show()
+			CharacterStatsPane.AttributesCategory:SetPoint("TOP", 0, -76)
 		else
-			CharacterStatsPane.ItemLevelCategory:Hide();
-			CharacterStatsPane.ItemLevelFrame:Hide();
-			CharacterStatsPane.AttributesCategory:SetPoint("TOP", 0, -20);
-			categoryYOffset = -12;
-			statYOffset = -6;
+			CharacterStatsPane.ItemLevelCategory:Hide()
+			CharacterStatsPane.ItemLevelFrame:Hide()
+			CharacterStatsPane.AttributesCategory:SetPoint("TOP", 0, -20)
+			categoryYOffset = -12
+			statYOffset = -6
 		end
 
-		local spec = GetSpecialization();
-		local role = GetSpecializationRole(spec);
+		local spec = GetSpecialization()
+		local role = GetSpecializationRole(spec)
 
-		CharacterStatsPane.statsFramePool:ReleaseAll();
-		local statFrame = CharacterStatsPane.statsFramePool:Acquire();
+		CharacterStatsPane.statsFramePool:ReleaseAll()
+		local statFrame = CharacterStatsPane.statsFramePool:Acquire()
 
-		local lastAnchor;
+		local lastAnchor
 
 		for catIndex = 1, #PAPERDOLL_STATCATEGORIES do
-			local catFrame = CharacterStatsPane[PAPERDOLL_STATCATEGORIES[catIndex].categoryFrame];
-			local numStatInCat = 0;
+			local catFrame = CharacterStatsPane[PAPERDOLL_STATCATEGORIES[catIndex].categoryFrame]
+			local numStatInCat = 0
 			for statIndex = 1, #PAPERDOLL_STATCATEGORIES[catIndex].stats do
-				local stat = PAPERDOLL_STATCATEGORIES[catIndex].stats[statIndex];
-				local showStat = true;
+				local stat = PAPERDOLL_STATCATEGORIES[catIndex].stats[statIndex]
+				local showStat = true
 				if ( showStat and stat.primary ) then
-					local primaryStat = select(7, GetSpecializationInfo(spec, nil, nil, nil, UnitSex("player")));
+					local primaryStat = select(6, GetSpecializationInfo(spec, nil, nil, nil, UnitSex("player")))
 					if ( stat.primary ~= primaryStat ) then
-						showStat = false;
+						showStat = false
 					end
 				end
 				if ( showStat and stat.roles ) then
-					local foundRole = false;
+					local foundRole = false
 					for _, statRole in pairs(stat.roles) do
 						if ( role == statRole ) then
-							foundRole = true;
-							break;
+							foundRole = true
+							break
 						end
 					end
-					showStat = foundRole;
+					showStat = foundRole
 				end
 				if ( showStat ) then
-					statFrame.onEnterFunc = nil;
-					PAPERDOLL_STATINFO[stat.stat].updateFunc(statFrame, "player");
+					statFrame.onEnterFunc = nil
+					PAPERDOLL_STATINFO[stat.stat].updateFunc(statFrame, "player")
 					if ( not stat.hideAt or stat.hideAt ~= statFrame.numericValue ) then
 						if ( numStatInCat == 0 ) then
 							if ( lastAnchor ) then
-								catFrame:SetPoint("TOP", lastAnchor, "BOTTOM", 0, categoryYOffset);
+								catFrame:SetPoint("TOP", lastAnchor, "BOTTOM", 0, categoryYOffset)
 							end
-							lastAnchor = catFrame;
-							statFrame:SetPoint("TOP", catFrame, "BOTTOM", 0, -2);
+							lastAnchor = catFrame
+							statFrame:SetPoint("TOP", catFrame, "BOTTOM", 0, -2)
 						else
-							statFrame:SetPoint("TOP", lastAnchor, "BOTTOM", 0, statYOffset);
+							statFrame:SetPoint("TOP", lastAnchor, "BOTTOM", 0, statYOffset)
 						end
-						numStatInCat = numStatInCat + 1;
-						statFrame.Background:SetShown(false);
+						numStatInCat = numStatInCat + 1
+						statFrame.Background:SetShown(false)
 						ColorizeStatPane(statFrame)
 						statFrame.leftGrad:SetShown((numStatInCat % 2) == 0)
 						statFrame.rightGrad:SetShown((numStatInCat % 2) == 0)
-						lastAnchor = statFrame;
-						statFrame = CharacterStatsPane.statsFramePool:Acquire();
+						lastAnchor = statFrame
+						statFrame = CharacterStatsPane.statsFramePool:Acquire()
 					end
 				end
 			end
-			catFrame:SetShown(numStatInCat > 0);
+			catFrame:SetShown(numStatInCat > 0)
 		end
-		CharacterStatsPane.statsFramePool:Release(statFrame);
+		CharacterStatsPane.statsFramePool:Release(statFrame)
 	end)
 
 	local function StatsPane(type)
@@ -221,15 +221,16 @@ function AS:Blizzard_CharacterFrame()
 	AS:SkinButton(PaperDollEquipmentManagerPaneSaveSet)
 	AS:SkinScrollBar(GearManagerDialogPopupScrollFrameScrollBar)
 	AS:SkinFrame(GearManagerDialogPopup)
-	GearManagerDialogPopup:Point("LEFT", PaperDollFrame, "RIGHT", 4, 0)
+	GearManagerDialogPopup:SetPoint("LEFT", PaperDollFrame, "RIGHT", 4, 0)
 	AS:StripTextures(GearManagerDialogPopupScrollFrame)
+	AS:StripTextures(GearManagerDialogPopup.BorderBox)
 	AS:SkinEditBox(GearManagerDialogPopupEditBox)
 	AS:SkinButton(GearManagerDialogPopupOkay)
 	AS:SkinButton(GearManagerDialogPopupCancel)
-	PaperDollEquipmentManagerPaneEquipSet:Width(PaperDollEquipmentManagerPaneEquipSet:GetWidth() - 8)
-	PaperDollEquipmentManagerPaneSaveSet:Width(PaperDollEquipmentManagerPaneSaveSet:GetWidth() - 8)
-	PaperDollEquipmentManagerPaneEquipSet:Point("TOPLEFT", PaperDollEquipmentManagerPane, "TOPLEFT", 8, 0)
-	PaperDollEquipmentManagerPaneSaveSet:Point("LEFT", PaperDollEquipmentManagerPaneEquipSet, "RIGHT", 4, 0)
+	PaperDollEquipmentManagerPaneEquipSet:SetWidth(PaperDollEquipmentManagerPaneEquipSet:GetWidth() - 8)
+	PaperDollEquipmentManagerPaneSaveSet:SetWidth(PaperDollEquipmentManagerPaneSaveSet:GetWidth() - 8)
+	PaperDollEquipmentManagerPaneEquipSet:SetPoint("TOPLEFT", PaperDollEquipmentManagerPane, "TOPLEFT", 8, 0)
+	PaperDollEquipmentManagerPaneSaveSet:SetPoint("LEFT", PaperDollEquipmentManagerPaneEquipSet, "RIGHT", 4, 0)
 	PaperDollEquipmentManagerPaneEquipSet.ButtonBackground:SetTexture(nil)
 	PaperDollEquipmentManagerPane:HookScript("OnShow", function(self)
 		for x, object in pairs(PaperDollEquipmentManagerPane.buttons) do
@@ -259,15 +260,15 @@ function AS:Blizzard_CharacterFrame()
 	for i = 1, #PAPERDOLL_SIDEBARS do
 		local tab = _G["PaperDollSidebarTab"..i]
 		tab.Highlight:SetColorTexture(1, 1, 1, 0.3)
-		tab.Highlight:Point("TOPLEFT", 3, -4)
-		tab.Highlight:Point("BOTTOMRIGHT", -1, 0)
+		tab.Highlight:SetPoint("TOPLEFT", 3, -4)
+		tab.Highlight:SetPoint("BOTTOMRIGHT", -1, 0)
 		tab.Hider:SetColorTexture(0.4,0.4,0.4,0.4)
-		tab.Hider:Point("TOPLEFT", 3, -4)
-		tab.Hider:Point("BOTTOMRIGHT", -1, 0)
+		tab.Hider:SetPoint("TOPLEFT", 3, -4)
+		tab.Hider:SetPoint("BOTTOMRIGHT", -1, 0)
 		tab.TabBg:Kill()
 		AS:CreateBackdrop(tab, 'Default')
-		tab.Backdrop:Point("TOPLEFT", 1, -2)
-		tab.Backdrop:Point("BOTTOMRIGHT", 1, -2)
+		tab.Backdrop:SetPoint("TOPLEFT", 1, -2)
+		tab.Backdrop:SetPoint("BOTTOMRIGHT", 1, -2)
 
 		if i == 1 then
 			for i = 1, tab:GetNumRegions() do
@@ -284,10 +285,10 @@ function AS:Blizzard_CharacterFrame()
 	AS:SkinNextPrevButton(PetModelFrameRotateRightButton)
 	AS:SkinNextPrevButton(PetModelFrameRotateLeftButton)
 	PetModelFrameRotateRightButton:ClearAllPoints()
-	PetModelFrameRotateRightButton:Point("LEFT", PetModelFrameRotateLeftButton, "RIGHT", 4, 0)
+	PetModelFrameRotateRightButton:SetPoint("LEFT", PetModelFrameRotateLeftButton, "RIGHT", 4, 0)
 
 	AS:CreateBackdrop(PetPaperDollPetInfo, 'Default')
-	PetPaperDollPetInfo:Size(24, 24)
+	PetPaperDollPetInfo:SetSize(24, 24)
 	PetPaperDollPetInfo:GetRegions():SetTexCoord(.12, .63, .15, .55)
 ]]
 
@@ -316,7 +317,7 @@ function AS:Blizzard_CharacterFrame()
 			local FactionName = _G["ReputationBar"..i.."FactionName"]
 			local factionIndex = factionOffset + i
 			if ( factionIndex <= numFactions ) then
-				local name, _, _, _, _, _, atWarWith, canToggleAtWar, _, isCollapsed = GetFactionInfo(factionIndex);
+				local name, _, _, _, _, _, atWarWith, canToggleAtWar, _, isCollapsed = GetFactionInfo(factionIndex)
 
 				if isCollapsed then
 					Button:GetNormalTexture():SetTexCoord(0, 0.4375, 0, 0.4375)
@@ -334,7 +335,7 @@ function AS:Blizzard_CharacterFrame()
 
 	AS:StripTextures(ReputationListScrollFrame)
 	AS:SkinFrame(ReputationDetailFrame)
-	ReputationDetailFrame:Point("TOPLEFT", ReputationFrame, "TOPRIGHT", 4, -28)
+	ReputationDetailFrame:SetPoint("TOPLEFT", ReputationFrame, "TOPRIGHT", 4, -28)
 	hooksecurefunc("ReputationFrame_Update", UpdateFaction)
 	AS:SkinCloseButton(ReputationDetailCloseButton)
 	AS:SkinCheckBox(ReputationDetailAtWarCheckBox)
@@ -349,7 +350,7 @@ function AS:Blizzard_CharacterFrame()
 	AS:SkinCloseButton(TokenFramePopupCloseButton)
 	AS:SkinCheckBox(TokenFramePopupInactiveCheckBox)
 	AS:SkinCheckBox(TokenFramePopupBackpackCheckBox)
-	TokenFramePopup:Point("TOPLEFT", TokenFrame, "TOPRIGHT", 4, -28)				
+	TokenFramePopup:SetPoint("TOPLEFT", TokenFrame, "TOPRIGHT", 4, -28)				
 	hooksecurefunc('TokenFrame_Update', function()
 		for i = 1, GetCurrencyListSize() do
 			local button = _G["TokenFrameContainerButton"..i]

@@ -21,6 +21,7 @@ local lurkingEruptionCount = 1
 local horrorCount = 1
 local isInDream = false
 local bladeList, bondList = mod:NewTargetList(), mod:NewTargetList()
+local dreamHealers = {}
 local dreamingCount = 1
 
 --------------------------------------------------------------------------------
@@ -29,19 +30,17 @@ local dreamingCount = 1
 
 local L = mod:GetLocale()
 if L then
-	L.custom_off_blade_marker = "Nightmare Blade marker"
-	L.custom_off_blade_marker_desc = "Mark the targets of Nightmare Blades with {rt1}{rt2}, requires promoted or leader."
-	L.custom_off_blade_marker_icon = 1
-
 	L.horror = -12973
 
 	L.linked = "Bonds of Terror on YOU! - Linked with %s!"
+	L.dreamHealers = "Dream Healers"
 end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
+local bladeMarker = mod:AddMarkerOption(false, "player", 1, 211802, 1, 2) -- Nightmare Blades
 function mod:GetOptions()
 	return {
 		--[[ General ]]--
@@ -50,7 +49,7 @@ function mod:GetOptions()
 		"altpower",
 		208431, -- Decent Into Madness
 		207409, -- Madness
-		206005, -- Dream Simulacrum
+		{206005, "INFOBOX"}, -- Dream Simulacrum
 		211634, -- The Infinite Dark
 
 		--[[ Corruption Horror ]]--
@@ -60,7 +59,7 @@ function mod:GetOptions()
 		--[[ Stage One: The Decent Into Madness ]]--
 		{206651, "TANK_HEALER"}, -- Darkening Soul
 		{211802, "SAY", "FLASH"}, -- Nightmare Blades
-		"custom_off_blade_marker",
+		bladeMarker,
 		210264, -- Manifest Corruption
 		205771, -- Tormenting Fixation
 		205741, -- Lurking Eruption (Lurking Terror)
@@ -135,6 +134,7 @@ function mod:OnEngage()
 	dreamingCount = 1
 	wipe(bladeList)
 	wipe(bondList)
+	wipe(dreamHealers)
 	isInDream = false
 	self:Bar(206651, 7.5) -- Darkening Soul
 	self:Bar(205741, 18) -- Lurking Eruption (Lurking Terror)
@@ -142,6 +142,7 @@ function mod:OnEngage()
 	self:Bar(210264, 59, CL.count:format(self:SpellName(210264), horrorCount)) -- Manifest Corruption
 
 	self:OpenAltPower("altpower", 208931) -- Nightmare Corruption
+	self:OpenInfo(206005, L.dreamHealers)
 end
 
 --------------------------------------------------------------------------------
@@ -152,26 +153,32 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	if spellId == 226193 then -- Xavius Energize Phase 2
 		phase = 2
-		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
+		self:Message("stages", "Neutral", "Long", "65% - ".. CL.stage:format(2), false)
 		self:StopBar(206651) -- Darkening Soul
 		self:StopBar(211802) -- Nightmare Blades
 		self:StopBar(CL.count:format(self:SpellName(210264), horrorCount)) -- Manifest Corruption
 		self:StopBar(CL.count:format(self:SpellName(205741), lurkingEruptionCount)) -- Lurking Eruption (Lurking Terror)
 		self:Bar(209158, 7) -- Blackening Soul
-		self:Bar(205588, 14.5) -- Call of Nightmares
-		self:Bar(209034, 15.5) -- Bonds of Terror
+		self:Bar(205588, (100 - UnitPower("boss1")) / 2.5) -- Call of Nightmares
+		if not self:Easy() then
+			self:Bar(209034, 15.5) -- Bonds of Terror
+		end
 		self:Bar(209443, 29) -- Nightmare Infusion
 	elseif spellId == 226185 then -- Xavius Energize Phase 3
-		self:Message("stages", "Neutral", "Long", CL.stage:format(3), false)
+		self:Message("stages", "Neutral", "Long", "30% - ".. CL.stage:format(3), false)
 		phase = 3
 		self:StopBar(209034) -- Bonds of Terror
 		self:StopBar(205588) -- Call of Nightmares
 		self:Bar(224508, 20.7) -- Corruption Meteor
 		self:Bar(211802, 33) -- Nightmare Blades
+		self:Bar(226194, (100 - UnitPower("boss1")) / 4.83) -- Writhing Deep
 	elseif spellId == 205843 then -- The Dreaming
-		local percentage = dreamingCount == 1 and "97% - " or dreamingCount == 2 and "80% - " or dreamingCount == 3 and "60% - " or "45% - "
+		local percentage = dreamingCount == 1 and "97% - " or "60% - "
+		if self:Mythic() then
+			percentage = dreamingCount == 1 and "97% - " or dreamingCount == 2 and "80% - " or dreamingCount == 3 and "60% - " or "45% - "
+			self:CastBar(spellId, 6, CL.count:format(spellName, dreamingCount))
+		end
 		self:Message(spellId, "Positive", "Long", percentage .. CL.count:format(spellName, dreamingCount))
-		self:Bar(spellId, 6, CL.cast:format(CL.count:format(spellName, dreamingCount)))
 		dreamingCount = dreamingCount + 1
 	end
 end
@@ -199,12 +206,20 @@ function mod:DreamSimulacrum(args)
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Info")
 		self:TargetBar(args.spellId, 180, args.destName)
 	end
+	if self:Healer(args.destName) then
+		dreamHealers[args.destName] = 1
+		self:SetInfoByTable(args.spellId, dreamHealers)
+	end
 end
 
 function mod:DreamSimulacrumRemoved(args)
 	if self:Me(args.destGUID) then
 		isInDream = false
 		self:StopBar(args.spellId, args.destName)
+	end
+	if self:Healer(args.destName) then
+		dreamHealers[args.destName] = nil
+		self:SetInfoByTable(args.spellId, dreamHealers)
 	end
 end
 
@@ -241,9 +256,9 @@ function mod:CorruptingNova(args)
 	self:Message(args.spellId, "Attention", nil, CL.casting:format(args.spellName))
 end
 
-function mod:HorrorDeath(args)
+function mod:HorrorDeath()
 	self:StopBar(207830) -- Corrupting Nova
-	self:CDBar(224649) -- Tormenting Swipe
+	self:StopBar(224649) -- Tormenting Swipe
 end
 
 --[[ Stage One: The Decent Into Madness ]]--
@@ -262,7 +277,7 @@ do
 		end
 
 		bladeList[#bladeList+1] = args.destName
-		if self:GetOption("custom_off_blade_marker") then
+		if self:GetOption(bladeMarker) then
 			SetRaidTarget(args.destName, #bladeList) -- 1,2
 		end
 
@@ -277,7 +292,7 @@ do
 	end
 
 	function mod:NightmareBladesRemoved(args)
-		if self:GetOption("custom_off_blade_marker") then
+		if self:GetOption(bladeMarker) then
 			SetRaidTarget(args.destName, 0)
 		end
 	end
@@ -349,7 +364,7 @@ function mod:BlackeningSoul(args)
 end
 
 function mod:NightmareInfusion(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", nil, nil, true)
 	self:Bar(args.spellId, phase == 2 and 62 or 31.6)
 end
 

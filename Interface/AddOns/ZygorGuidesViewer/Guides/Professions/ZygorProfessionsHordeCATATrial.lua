@@ -3,7 +3,7 @@ if not ZygorGuidesViewer then return end
 if UnitFactionGroup("player")~="Horde" then return end
 if ZGV:DoMutex("ProfessionsH") then return end
 ZygorGuidesViewer.GuideMenuTier = "TRI"
-ZygorGuidesViewer:RegisterGuide("Profession Guides\\Alchemy\\Alchemy 1-600 Leveling Guide",{
+ZygorGuidesViewer:RegisterGuide("Profession Guides\\Alchemy\\Leveling Guides\\Alchemy 1-600 Leveling Guide",{
 author="support@zygorguides.com",
 completion={"skill","Alchemy",600},
 condition_suggested="hasprof('Alchemy',1,600)",
@@ -14,7 +14,7 @@ step
 skillmax Alchemy,75
 |tip You must be at least level 5.
 step
-#include "H_Herb1"
+#include "PB_SL_ER_Path"
 #include "follow_path_herbs"
 collect 54 Peacebloom##2447 |condition skill("Alchemy")>=55
 collect 54 Silverleaf##765 |condition skill("Alchemy")>=55
@@ -56,7 +56,7 @@ step
 create 38 Elixir of Wisdom##3171,Alchemy,125
 #include end_of_prof_trial_125
 ]])
-ZygorGuidesViewer:RegisterGuide("Profession Guides\\Archaeology\\Archaeology 1-600 Leveling Guide",{
+ZygorGuidesViewer:RegisterGuide("Profession Guides\\Archaeology\\Leveling Guides\\Archaeology 1-600 Leveling Guide",{
 author="support@zygorguides.com",
 completion={"skill","Archaeology",600},
 condition_suggested="hasprof('Archaeology',1,600)",
@@ -66,7 +66,8 @@ step
 #include "trainer_Archaeology"
 Learn the Archaeology skill |skillmax Archaeology,75 |only if skill("Archaeology")<1 |tip You must be at least level 20.
 step
-#include "home_ValleyofStrength"
+talk Innkeeper Gryshka##6929
+home Valley of Strength |goto Orgrimmar 53.6,78.8
 step
 Open your world map, find dig sites in Kalimdor and go to them
 |tip They look like small shovel icons on your world map that spawn in random places.  Once you get to the zone where the dig site is located, you will see the dig site on your map as a red highlighted area.
@@ -91,7 +92,7 @@ Click artifacts to open them, then solve them once you have the required amounts
 skill Archaeology,125
 #include end_of_prof_trial_150
 ]])
-ZygorGuidesViewer:RegisterGuide("Profession Guides\\Blacksmithing\\Blacksmithing 1-600 Leveling Guide",{
+ZygorGuidesViewer:RegisterGuide("Profession Guides\\Blacksmithing\\Leveling Guides\\Blacksmithing 1-600 Leveling Guide",{
 author="support@zygorguides.com",
 completion={"skill","Blacksmithing",600},
 condition_suggested="hasprof('Blacksmithing',1,600)",
@@ -107,7 +108,7 @@ step
 #include vendor_Blacksmithing
 buy 1 Mining Pick##2901 |condition itemcount(2901) >= 1 or skill("Blacksmithing")>=75
 step
-#include "H_Copper"
+#include "Copper_Path"
 #include "follow_path_mine"
 collect 80 Rough Stone##2835 |condition skill("Blacksmithing")>=75
 collect 150 Copper Ore##2770 |condition skill("Blacksmithing")>=75
@@ -135,12 +136,12 @@ step
 #include "trainer_Blacksmithing"
 skillmax Blacksmithing,150
 step
-#include "H_Copper"
+#include "Copper_Path"
 #include "follow_path_mine"
 collect 210 Copper Ore##2770 |condition skill("Blacksmithing")>=125
 |tip You can also buy these materials from the Auction House.
 step
-#include "H_Tin"
+#include "Tin_Path"
 #include "follow_path_mine"
 collect 60 Coarse Stone##2836 |condition skill("Blacksmithing")>=125
 collect 60 Tin Ore##2771 |condition skill("Blacksmithing")>=125
@@ -182,7 +183,7 @@ step
 create Rough Bronze Leggings##2668,Blacksmithing,125
 #include end_of_prof_trial_125
 ]])
-ZygorGuidesViewer:RegisterGuide("Profession Guides\\Enchanting\\Enchanting 1-600 Leveling Guide",{
+ZygorGuidesViewer:RegisterGuide("Profession Guides\\Enchanting\\Leveling Guides\\Enchanting 1-600 Leveling Guide",{
 author="support@zygorguides.com",
 completion={"skill","Enchanting",600},
 condition_suggested="hasprof('Enchanting',1,600)",
@@ -192,8 +193,8 @@ step
 #include "trainer_Enchanting"
 skillmax Enchanting,75
 step
-#include "vendor_Enchanting"
-buy 1 Copper Rod##6217 |condition itemcount(6217) >= 1 or skill("Enchanting")>=75
+talk Kithas##3346
+buy 1 Copper Rod##6217 |goto Orgrimmar 53.3,48.9 |condition itemcount(6217) >= 1 or skill("Enchanting")>=75
 step
 Disenchant any _Uncommon Quality (Green)_ gear with an _Item Level of 1-25_ |cast Disenchant##13262
 collect 112 Strange Dust##10940 |goto Wailing Caverns 45.8,59.7 |condition skill("Enchanting")>=75
@@ -223,8 +224,8 @@ Disenchant any _Uncommon Quality (Green)_ gear with an _Item Level of 21-25_ |ca
 collect 25 Lesser Astral Essence##10998 |goto Blackfathom Deeps 44.29,10.66  |condition skill("Enchanting")>=135
 |tip You can also buy these materials from the Auction House.
 step
-#include "vendor_Enchanting"
-buy 9 Simple Wood##4470 |condition itemcount(4470) >= 9 or skill("Enchanting")>=135
+talk Kithas##3346
+buy 9 Simple Wood##4470 |goto Orgrimmar 53.3,48.9 |condition itemcount(4470) >= 9 or skill("Enchanting")>=135
 step
 #include "trainer_Enchanting"
 learn Enchant Bracer - Minor Stamina##7457 |condition skill("Enchanting")>=135
@@ -248,7 +249,7 @@ step
 create 25 Enchant Cloak - Minor Agility##13419,Enchanting,135
 #include end_of_prof_trial_125
 ]])
-ZygorGuidesViewer:RegisterGuide("Profession Guides\\Engineering\\Engineering 1-600 Leveling Guide",{
+ZygorGuidesViewer:RegisterGuide("Profession Guides\\Engineering\\Leveling Guides\\Engineering 1-600 Leveling Guide",{
 author="support@zygorguides.com",
 completion={"skill","Engineering",600},
 condition_suggested="hasprof('Engineering',1,600)",
@@ -258,10 +259,10 @@ step
 #include "trainer_Engineering"
 skillmax Engineering,75
 step
-#include "vendor_Engineering"
-buy 1 Blacksmith Hammer##5956 |condition itemcount(5956) >= 1 or skill("Engineering")>=75
+talk Sovik##3413
+buy 1 Blacksmith Hammer##5956 |goto Orgrimmar 56.8,56.4 |condition itemcount(5956) >= 1 or skill("Engineering")>=75
 step
-#include "H_Copper"
+#include "Copper_Path"
 #include "follow_path_mine"
 collect 38 Rough Stone##2835 |condition skill("Engineering")>=75
 collect 60 Copper Ore##2770 |condition skill("Engineering")>=75
@@ -305,12 +306,12 @@ kill Felweaver Scornn##5822+, Burning Blade Apprentice##3198+, Burning Blade Fan
 collect 5 Linen Cloth##2589 |goto Durotar/12 85.7,56.8  |condition skill("Engineering")>=130
 |tip You can also buy these materials from the Auction House.
 step
-#include "H_Copper"
+#include "Copper_Path"
 #include "follow_path_mine"
 collect 50 Copper Ore##2770 |condition skill("Engineering")>=130
 |tip You can also buy these materials from the Auction House.
 step
-#include "H_SilverTin"
+#include "Silver_Tin_Path"
 #include "follow_path_mine"
 collect 20 Coarse Stone##2836 |condition skill("Engineering")>=130
 collect 50 Tin Ore##2771 |condition skill("Engineering")>=130
@@ -359,7 +360,7 @@ step
 create 3 Flying Tiger Goggles##3934,Engineering,130
 #include end_of_prof_trial_125
 ]])
-ZygorGuidesViewer:RegisterGuide("Profession Guides\\First Aid\\First Aid 1-600 Leveling Guide",{
+ZygorGuidesViewer:RegisterGuide("Profession Guides\\First Aid\\Leveling Guides\\First Aid 1-600 Leveling Guide",{
 author="support@zygorguides.com",
 completion={"skill","First Aid",600},
 condition_suggested="hasprof('First Aid',1,600)",
@@ -407,7 +408,7 @@ step
 create Heavy Wool Bandage##3278+,First Aid,150
 #include end_of_prof_trial_150
 ]])
-ZygorGuidesViewer:RegisterGuide("Profession Guides\\Fishing\\Fishing 1-600 Leveling Guide",{
+ZygorGuidesViewer:RegisterGuide("Profession Guides\\Fishing\\Leveling Guides\\Fishing 1-600 Leveling Guide",{
 author="support@zygorguides.com",
 completion={"skill","Fishing",600},
 condition_suggested="hasprof('Fishing',1,600)",
@@ -442,7 +443,7 @@ Use your Fishing skill to fish in the water all around the wooden dock |cast Fis
 Get your Fishing skill to level 150 |skill Fishing,150
 #include end_of_prof_trial_150
 ]])
-ZygorGuidesViewer:RegisterGuide("Profession Guides\\Herbalism\\Herbalism 1-600 Leveling Guide",{
+ZygorGuidesViewer:RegisterGuide("Profession Guides\\Herbalism\\Leveling Guides\\Herbalism 1-600 Leveling Guide",{
 author="support@zygorguides.com",
 completion={"skill","Herbalism",600},
 condition_suggested="hasprof('Herbalism',1,600)",
@@ -452,7 +453,8 @@ step
 #include "trainer_Herbalism"
 skillmax Herbalism,75
 step
-#include "home_UC"
+talk Innkeeper Norman##6741
+home Trade Quarter |goto Undercity 67.7,37.9
 step
 map Tirisfal Glades
 path follow loose;loop;ants straight;dist 60
@@ -481,20 +483,9 @@ collect Mageroyal##785 |n
 collect Bruiseweed##2453 |n
 collect Briarthorn##2450 |n
 skill Herbalism,125
-step
-map Hillsbrad Foothills
-path follow loose;loop;ants straight;dist 60
-path 47.6,18.8	51.3,22.6	53.5,30.3
-path 48.6,33.7	47.0,35.8	43.2,41.1
-path 39.1,33.7	40.1,28.5	43.2,20.9
-path 47.6,18.1
-#include "follow_path_herbs"
-Click Frozen Herb
-|tip They look like herbs frozen in ice around this area.
-skill Herbalism,150
 #include end_of_prof_trial_150
 ]])
-ZygorGuidesViewer:RegisterGuide("Profession Guides\\Inscription\\Inscription 1-600 Leveling Guide",{
+ZygorGuidesViewer:RegisterGuide("Profession Guides\\Inscription\\Leveling Guides\\Inscription 1-600 Leveling Guide",{
 author="support@zygorguides.com",
 completion={"skill","Inscription",600},
 condition_suggested="hasprof('Inscription',1,600)",
@@ -509,7 +500,7 @@ step
 buy 1 Virtuoso Inking Set##39505 |condition itemcount(39505) >= 1 or skill("Inscription")>=75
 buy 30 Light Parchment##39354 |condition itemcount(39354) >= 30 or skill("Inscription")>=75
 step
-#include "H_Herb1"
+#include "PB_SL_ER_Path"
 #include "follow_path_herbs"
 collect Silverleaf##765 |n
 collect Peacebloom##2447 |n
@@ -527,7 +518,7 @@ step
 skillmax Inscription,150
 |tip You must be at least level 10.
 step
-#include "H_Herb2"
+#include "MR_BW_BT_SK_Path"
 #include "follow_path_herbs"
 You will need {_G.max(0 , (80-itemcount(2450,2453,785,3820,2452)))} herbs
 collect Mageroyal##785 |n
@@ -551,7 +542,7 @@ step
 create Research: Midnight Ink##165304,Inscription,128
 #include end_of_prof_trial_150
 ]])
-ZygorGuidesViewer:RegisterGuide("Profession Guides\\Jewelcrafting\\Jewelcrafting 1-600 Leveling Guide",{
+ZygorGuidesViewer:RegisterGuide("Profession Guides\\Jewelcrafting\\Leveling Guides\\Jewelcrafting 1-600 Leveling Guide",{
 author="support@zygorguides.com",
 completion={"skill","Jewelcrafting",600},
 condition_suggested="hasprof('Jewelcrafting',1,600)",
@@ -562,10 +553,10 @@ step
 #include "trainer_Jewelcrafting"
 skillmax Jewelcrafting,75
 step
-#include "vendor_Jewelcrafting"
-buy Jeweler's Kit##20815 |condition itemcount(20815) >= 1 or skill("Jewelcrafting")>=50
+talk Marith Lazuria##50482
+buy Jeweler's Kit##20815 |goto Orgrimmar 72.4,34.6 |condition itemcount(20815) >= 1 or skill("Jewelcrafting")>=50
 step
-#include "H_Copper"
+#include "Copper_Path"
 #include "follow_path_mine"
 collect Tigerseye##818 |n
 |tip You can use the prospect ability later on the Copper Ore in your bags to get this item.
@@ -607,7 +598,7 @@ step
 #include "trainer_Jewelcrafting"
 learn Bronze Setting##25278 |condition skill("Jewelcrafting")>=150
 step
-#include "H_SilverTin"
+#include "Silver_Tin_Path"
 #include "follow_path_mine"
 Prospect the ores you come across |cast Prospecting##31252
 collect 20 Shadowgem##1210  |condition skill("Jewelcrafting")>=150
@@ -619,7 +610,7 @@ collect Aquamarine##7909 |n
 |tip You can also buy these materials from the Auction House.
 Save the Citrine and Aquamarine for later
 step
-#include "Iron_Ore"
+#include "Iron_Ore_Path"
 #include "follow_path_mine"
 collect 80 Heavy Stone##2838 |condition skill("Jewelcrafting")>=150
 |tip Keep the Iron Ore you get for prospecting later.
@@ -664,7 +655,246 @@ step
 create Pendant of the Agate Shield##25610,Jewelcrafting,150
 #include end_of_prof_trial_150
 ]])
-ZygorGuidesViewer:RegisterGuide("Profession Guides\\Tailoring\\Tailoring 1-600 Leveling Guide",{
+ZygorGuidesViewer:RegisterGuide("Profession Guides\\Leatherworking\\Leveling Guides\\Leatherworking 1-600 Leveling Guide",{
+author="support@zygorguides.com",
+completion={"skill","Leatherworking",600},
+condition_suggested="hasprof('Leatherworking',1,600)",
+description="This guide will walk you through leveling your Leatherworking skill from 1-600.",
+},[[
+step
+#include "trainer_Leatherworking"
+skillmax Leatherworking,75 |tip You must be at least level 5.
+step
+#include "Ruined_Light_Leather"
+kill Armored Scorpid##3126+, Dire Mottled Boar##3099+, Bloodtalon Taillasher##3122+, Dreadmaw Toothgnasher##39452
+collect 57 Ruined Leather Scraps##2934 |condition skill("Leatherworking")>=55
+collect 250 Light Leather##2318 |condition skill("Leatherworking")>=55
+|tip You can also buy these materials from the Auction House.
+step
+#include "vendor_Leatherworking"
+buy 43 Coarse Thread##2320 |condition itemcount(2320) >= 43 or skill("Leatherworking")>=55
+step
+create 19 Light Leather##2881,Leatherworking,20
+step
+create Light Armor Kits##2152,Leatherworking,30
+step
+#include "trainer_Leatherworking"
+learn Handstitched Leather Belt##3753
+step
+create 20 Handstitched Leather Cloak##9058,Leatherworking,50
+step
+create 5 Handstitched Leather Belts##3753,Leatherworking,55
+step
+#include "trainer_Leatherworking"
+skillmax Leatherworking,150
+|tip You must be at least level 10.
+step
+#include "trainer_Leatherworking"
+learn Embossed Leather Gloves##3756
+step
+map Northern Stranglethorn
+path follow loose;loop;ants straight;dist 60
+path	41.1,45.2	37.1,38.6	36.5,30.9
+path	35.7,25.8	35.8,19.7	40.5,20.6
+path	45.8,25.4	48.3,30.0	48.2,35.5
+path	42.9,47.4
+Kill any beasts you see and skin them
+collect 15 Medium Hide##4232 |condition skill("Leatherworking")>=150
+collect 155 Medium Leather##2319 |condition skill("Leatherworking")>=150
+|tip You can also buy these materials from the Auction House.
+modelnpc River Crocolisk##1150
+modelnpc Young Panther##683
+modelnpc Young Stranglethorn Tiger##681
+modelnpc Lashtail Raptor##686
+modelnpc Elder Stranglethorn Tiger##1085
+modelnpc Panther##736
+step
+#include "vendor_Leatherworking"
+buy 75 Salt##4289 |condition itemcount(4289) >= 75 or skill("Leatherworking")>=150
+buy 32 Gray Dye##4340 |condition itemcount(4340) >= 32 or skill("Leatherworking")>=150
+buy 190 Fine Thread##2321 |condition itemcount(2321) >= 190 or skill("Leatherworking")>=150
+buy 92 Coarse Thread##2320 |condition itemcount(2320) >= 92 or skill("Leatherworking")>=150
+step
+create Embossed Leather Gloves##3756,Leatherworking,85
+step
+#include "trainer_Leatherworking"
+learn Fine Leather Belt##3763
+step
+create Fine Leather Belt##3763,Leatherworking,100
+Keep these for later
+step
+#include "trainer_Leatherworking"
+learn Cured Medium Hide##3817
+step
+create Cured Medium Hide##3817,Leatherworking,115
+step
+#include "trainer_Leatherworking"
+learn Dark Leather Boots##2167
+step
+create Dark Leather Boots##2167,Leatherworking,130
+step
+#include "trainer_Leatherworking"
+learn Dark Leather Belt##3766
+step
+#include "trainer_Leatherworking"
+create Dark Leather Belt##3766,Leatherworking,145
+step
+#include "trainer_Leatherworking"
+learn Hillman's Leather Gloves##3764
+step
+create Hillman's Leather Gloves##3764,Leatherworking,150
+#include end_of_prof_trial_150
+]])
+ZygorGuidesViewer:RegisterGuide("Profession Guides\\Mining\\Leveling Guides\\Classic Mining 1-600 Leveling Guide",{
+author="support@zygorguides.com",
+completion={"skill","Mining",600},
+condition_suggested="hasprof('Mining',1,600)",
+description="This guide will walk you through leveling your Mining skill from 1 - 600.",
+},[[
+step
+#include "trainer_Mining"
+skillmax Mining,75
+|tip You must be at least level 5.
+step
+#include "vendor_Mining"
+buy 1 Mining Pick##2901 |condition itemcount(2901) >= 1 or skill("Mining")>=50
+step
+#include "Copper_Path"
+#include follow_path_mine
+skill Mining,35
+step
+#include "maincity_anvil"
+create Copper Bar##2657,Mining,50
+|tip Keep all of the Copper Bars for Smelting later.
+step
+#include "trainer_Mining"
+skillmax Mining,150
+step
+#include "trainer_Mining"
+learn Smelt Bronze##2659 |condition skill("Mining")>=125
+step
+#include "trainer_Mining"
+learn Smelt Tin##3304 |condition skill("Mining")>=125
+step
+#include "Silver_Tin_Path"
+#include "follow_path_mine"
+skill Mining,125
+step
+#include "trainer_Mining"
+skillmax Mining,225
+step
+#include "trainer_Mining"
+learn Smelt Iron##3307 |condition skill("Mining")>=200
+step
+map Western Plaguelands
+path	42.6,80.9	39.3,79.9	36.1,77.2
+path	33.2,72.6	30.2,69.6	29.3,64.5
+path	33.5,63.9	32.5,59.9	31.2,55.5
+path	37.1,54.4	38.7,51.6	43.8,49.7
+path	48.0,47.8	45.0,41.3	45.0,36.1
+path	44.2,31.6	49.9,28.9	54.3,26.4
+path	54.8,33.7	51.6,40.2	50.2,45.8
+path	54.7,48.9	60.0,52.2	66.3,43.9
+path	68.8,45.9	67.4,52.5	65.6,59.7
+path	61.4,62.0	63.3,64.8	72.4,59.7
+path	80.7,77.4	73.0,83.5	64.4,84.0
+path	58.0,82.1	53.1,74.7
+#include "follow_path_mine"
+skill Mining,150
+]])
+ZygorGuidesViewer:RegisterGuide("Profession Guides\\Mining\\Leveling Guides\\Mining 1-600 Leveling Guide",{
+author="support@zygorguides.com",
+completion={"skill","Mining",600},
+condition_suggested="hasprof('Mining',1,600)",
+description="This guide will walk you through leveling your Mining skill from 1 - 600.",
+},[[
+step
+talk Stonebreaker Ruian##66979 |goto The Jade Forest/0 27.8,14.8
+skillmax Mining,75
+step
+map The Jade Forest/0
+path follow loose;loop;ants straight;dist 60
+path	49.2,94.1	50.2,89.4	54.6,92.8
+path	58.2,94.1	61.4,93.4	64.4,91.4
+path	67.2,88.6	69.3,83.5	66.2,76.8
+path	61.6,71.0	56.0,69.7	58.9,62.9
+path	60.8,57.6	58.5,48.9	53.9,39.9
+path	55.3,33.5	56.1,29.1	53.9,26.1
+path	51.4,21.8	46.2,17.1	38.4,8.7
+path	35.8,12.4	32.7,13.0	28.2,21.4
+path	30.3,25.6	30.9,29.5	30.2,37.0
+path	29.6,43.8	29.8,52.9	33.2,55.5
+path	36.2,64.9	39.8,69.5	39.0,78.4
+path	40.4,84.3	44.8,90.6
+#include "follow_path_mine"
+skill Mining,75
+step
+talk Stonebreaker Ruian##66979 |goto The Jade Forest/0 27.8,14.8
+skillmax Mining,150
+step
+map The Jade Forest/0
+path follow loose;loop;ants straight;dist 60
+path	49.2,94.1	50.2,89.4	54.6,92.8
+path	58.2,94.1	61.4,93.4	64.4,91.4
+path	67.2,88.6	69.3,83.5	66.2,76.8
+path	61.6,71.0	56.0,69.7	58.9,62.9
+path	60.8,57.6	58.5,48.9	53.9,39.9
+path	55.3,33.5	56.1,29.1	53.9,26.1
+path	51.4,21.8	46.2,17.1	38.4,8.7
+path	35.8,12.4	32.7,13.0	28.2,21.4
+path	30.3,25.6	30.9,29.5	30.2,37.0
+path	29.6,43.8	29.8,52.9	33.2,55.5
+path	36.2,64.9	39.8,69.5	39.0,78.4
+path	40.4,84.3	44.8,90.6
+#include "follow_path_mine"
+skill Mining,150
+#include end_of_prof_trial_150
+]])
+ZygorGuidesViewer:RegisterGuide("Profession Guides\\Skinning\\Leveling Guides\\Skinning 1-600 Leveling Guide",{
+author="support@zygorguides.com",
+completion={"skill","Skinning",600},
+condition_suggested="hasprof('Skinning',1,600)",
+description="This guide will walk you through leveling your Skinning skill from 1-600.",
+},[[
+step
+#include "trainer_Skinning"
+skillmax Skinning,75
+step
+#include "vendor_Leatherworking"
+buy 1 Skinning Knife##7005 |condition itemcount(7005) >= 1 or skill("Skinning")>=60
+step
+talk Innkeeper Nufa##46642
+home Valley of Honor |goto Orgrimmar 70.5,49.2
+step
+map Durotar
+path follow loose;loop;ants straight;dist 60
+path	56.2,31.4	58.1,23.9	56.3,15.5
+path	52.8,10.7	51.3,14.0	48.9,16.0
+path	49.7,17.9		53.8,18.6
+Kill any beasts you see and skin them
+skill Skinning,60
+step
+#include "trainer_Skinning"
+skillmax Skinning,150
+step
+map Northern Barrens
+path follow loose;loop;ants straight;dist 60
+path	65.2,57.4	67.8,63.9	63.9,67.0
+path	61.1,71.2	62.3,77.1	58.9,75.7
+path	55.7,71.1	57.9,65.2	62.2,63.1
+path	64.0,58.1
+Kill any beasts you see and skin them
+skill Skinning,120
+step
+map Ashenvale
+path follow loose;loop;ants straight;dist 60
+path	69.1,69.8	69.3,66.4	67.8,62.1
+path	64.8,64.0	63.2,68.2	66.1,70.6
+Kill any beasts you see and skin them
+skill Skinning,150
+#include end_of_prof_trial_150
+]])
+ZygorGuidesViewer:RegisterGuide("Profession Guides\\Tailoring\\Leveling Guides\\Tailoring 1-600 Leveling Guide",{
 author="support@zygorguides.com",
 completion={"skill","Tailoring",600},
 condition_suggested="hasprof('Tailoring',1,600)",
@@ -733,250 +963,14 @@ step
 #include "trainer_Tailoring"
 learn Bolt of Silk Cloth##3839 |condition skill("Tailoring")>=200
 step
-kill Grimtotem Marauder##39949+
-collect 644 Silk Cloth##4306 |goto Feralas/0 87.3,45.0 |condition skill("Tailoring")>=200
+kill Death's Step Putrifier##45443+, Death's Step Miscreation##45444+
+collect 644 Silk Cloth##4306 |goto Eastern Plaguelands/0 18.33,78.45 |condition skill("Tailoring")>=200
 |tip You may potentially be flagged farming here. Avoid attacking Feralas Sentinels.
-collect 480 Mageweave Cloth##4338 |n
-|tip You can also buy these materials from the Auction House.
-Save any Mageweave you collect
 step
-kill Irontree Chopper##48452+
-collect 480 Mageweave Cloth##4338 |goto Felwood 63.4,20.7 |condition skill("Tailoring")>=200
+kill Dunemaul Enforcer##5472+, Dunemaul Ogre##5471+, Dunemaul Brute##5474+, Dunemaul Warlock##5475+
+collect 480 Mageweave Cloth##4338 |goto Tanaris/0 40.49,55.80 |condition skill("Tailoring")>=200
 |tip You can also buy these materials from the Auction House.
 step
 create 161 Bolt of Silk Cloth##3839,Tailoring,161 total |n
 skill Tailoring,145
-]])
-ZygorGuidesViewer:RegisterGuide("Profession Guides\\Leatherworking\\Leatherworking 1-600 Leveling Guide",{
-author="support@zygorguides.com",
-completion={"skill","Leatherworking",600},
-condition_suggested="hasprof('Leatherworking',1,600)",
-description="This guide will walk you through leveling your Leatherworking skill from 1-600.",
-},[[
-step
-#include "trainer_Leatherworking"
-skillmax Leatherworking,75 |tip You must be at least level 5.
-step
-#include "Ruined_Light_Leather"
-kill Armored Scorpid##3126+, Dire Mottled Boar##3099+, Bloodtalon Taillasher##3122+, Dreadmaw Toothgnasher##39452
-collect 57 Ruined Leather Scraps##2934 |condition skill("Leatherworking")>=55
-collect 250 Light Leather##2318 |condition skill("Leatherworking")>=55
-|tip You can also buy these materials from the Auction House.
-step
-#include "vendor_Leatherworking"
-buy 43 Coarse Thread##2320 |condition itemcount(2320) >= 43 or skill("Leatherworking")>=55
-step
-create 19 Light Leather##2881,Leatherworking,20
-step
-create Light Armor Kits##2152,Leatherworking,30
-step
-#include trainer_Leatherworking
-learn Handstitched Leather Belt##3753
-step
-create 20 Handstitched Leather Cloak##9058,Leatherworking,50
-step
-create 5 Handstitched Leather Belts##3753,Leatherworking,55
-step
-#include trainer_Leatherworking
-skillmax Leatherworking,150
-|tip You must be at least level 10.
-step
-#include trainer_Leatherworking
-learn Embossed Leather Gloves##3756
-step
-#include "Medium_Leather"
-Kill any beasts you see and skin them
-collect 15 Medium Hide##4232 |condition skill("Leatherworking")>=150
-collect 155 Medium Leather##2319 |condition skill("Leatherworking")>=150
-|tip You can also buy these materials from the Auction House.
-modelnpc River Crocolisk##1150
-modelnpc Young Panther##683
-modelnpc Young Stranglethorn Tiger##681
-modelnpc Lashtail Raptor##686
-modelnpc Elder Stranglethorn Tiger##1085
-modelnpc Panther##736
-step
-#include "vendor_Leatherworking"
-buy 75 Salt##4289 |condition itemcount(4289) >= 75 or skill("Leatherworking")>=150
-buy 32 Gray Dye##4340 |condition itemcount(4340) >= 32 or skill("Leatherworking")>=150
-buy 190 Fine Thread##2321 |condition itemcount(2321) >= 190 or skill("Leatherworking")>=150
-buy 92 Coarse Thread##2320 |condition itemcount(2320) >= 92 or skill("Leatherworking")>=150
-step
-create Embossed Leather Gloves##3756,Leatherworking,85
-step
-#include "trainer_Leatherworking"
-learn Fine Leather Belt##3763
-step
-create Fine Leather Belt##3763,Leatherworking,100
-Keep these for later
-step
-#include "trainer_Leatherworking"
-learn Cured Medium Hide##3817
-step
-create Cured Medium Hide##3817,Leatherworking,115
-step
-#include "trainer_Leatherworking"
-learn Dark Leather Boots##2167
-step
-create Dark Leather Boots##2167,Leatherworking,130
-step
-#include "trainer_Leatherworking"
-learn Dark Leather Belt##3766
-step
-#include "trainer_Leatherworking"
-create Dark Leather Belt##3766,Leatherworking,145
-step
-#include "trainer_Leatherworking"
-learn Hillman's Leather Gloves##3764
-step
-create Hillman's Leather Gloves##3764,Leatherworking,150
-#include end_of_prof_trial_150
-]])
-ZygorGuidesViewer:RegisterGuide("Profession Guides\\Skinning\\Skinning 1-600 Leveling Guide",{
-author="support@zygorguides.com",
-completion={"skill","Skinning",600},
-condition_suggested="hasprof('Skinning',1,600)",
-description="This guide will walk you through leveling your Skinning skill from 1-600.",
-},[[
-step
-#include "trainer_Skinning"
-skillmax Skinning,75
-step
-#include "vendor_Leatherworking"
-buy 1 Skinning Knife##7005 |condition itemcount(7005) >= 1 or skill("Skinning")>=60
-step
-#include "home_ValleyofHonor"
-step
-map Durotar
-path follow loose;loop;ants straight;dist 60
-path	56.2,31.4	58.1,23.9	56.3,15.5
-path	52.8,10.7	51.3,14.0	48.9,16.0
-path	49.7,17.9		53.8,18.6
-Kill any beasts you see and skin them
-skill Skinning,60
-step
-#include trainer_Skinning
-skillmax Skinning,150
-step
-map Northern Barrens
-path follow loose;loop;ants straight;dist 60
-path	65.2,57.4	67.8,63.9	63.9,67.0
-path	61.1,71.2	62.3,77.1	58.9,75.7
-path	55.7,71.1	57.9,65.2	62.2,63.1
-path	64.0,58.1
-Kill any beasts you see and skin them
-skill Skinning,120
-step
-map Ashenvale
-path follow loose;loop;ants straight;dist 60
-path	69.1,69.8	69.3,66.4	67.8,62.1
-path	64.8,64.0	63.2,68.2	66.1,70.6
-Kill any beasts you see and skin them
-skill Skinning,150
-#include end_of_prof_trial_150
-]])
-ZygorGuidesViewer:RegisterGuide("Profession Guides\\Mining\\Mining 1-600 Leveling Guide",{
-author="support@zygorguides.com",
-completion={"skill","Mining",600},
-condition_suggested="hasprof('Mining',1,600)",
-description="This guide will walk you through leveling your Mining skill from 1 - 600.",
-},[[
-step
-talk Stonebreaker Ruian##66979 |goto The Jade Forest/0 27.8,14.8
-skillmax Mining,75
-step
-map The Jade Forest/0
-path follow loose;loop;ants straight;dist 60
-path	49.2,94.1	50.2,89.4	54.6,92.8
-path	58.2,94.1	61.4,93.4	64.4,91.4
-path	67.2,88.6	69.3,83.5	66.2,76.8
-path	61.6,71.0	56.0,69.7	58.9,62.9
-path	60.8,57.6	58.5,48.9	53.9,39.9
-path	55.3,33.5	56.1,29.1	53.9,26.1
-path	51.4,21.8	46.2,17.1	38.4,8.7
-path	35.8,12.4	32.7,13.0	28.2,21.4
-path	30.3,25.6	30.9,29.5	30.2,37.0
-path	29.6,43.8	29.8,52.9	33.2,55.5
-path	36.2,64.9	39.8,69.5	39.0,78.4
-path	40.4,84.3	44.8,90.6
-#include "follow_path_mine"
-skill Mining,75
-step
-talk Stonebreaker Ruian##66979 |goto The Jade Forest/0 27.8,14.8
-skillmax Mining,150
-step
-map The Jade Forest/0
-path follow loose;loop;ants straight;dist 60
-path	49.2,94.1	50.2,89.4	54.6,92.8
-path	58.2,94.1	61.4,93.4	64.4,91.4
-path	67.2,88.6	69.3,83.5	66.2,76.8
-path	61.6,71.0	56.0,69.7	58.9,62.9
-path	60.8,57.6	58.5,48.9	53.9,39.9
-path	55.3,33.5	56.1,29.1	53.9,26.1
-path	51.4,21.8	46.2,17.1	38.4,8.7
-path	35.8,12.4	32.7,13.0	28.2,21.4
-path	30.3,25.6	30.9,29.5	30.2,37.0
-path	29.6,43.8	29.8,52.9	33.2,55.5
-path	36.2,64.9	39.8,69.5	39.0,78.4
-path	40.4,84.3	44.8,90.6
-#include "follow_path_mine"
-skill Mining,150
-#include end_of_prof_trial_150
-]])
-ZygorGuidesViewer:RegisterGuide("Profession Guides\\Mining\\Classic Mining 1-600 Leveling Guide",{
-author="support@zygorguides.com",
-completion={"skill","Mining",600},
-condition_suggested="hasprof('Mining',1,600)",
-description="This guide will walk you through leveling your Mining skill from 1 - 600.",
-},[[
-step
-#include trainer_Mining
-skillmax Mining,75
-|tip You must be at least level 5.
-step
-#include "vendor_Mining"
-buy 1 Mining Pick##2901 |condition itemcount(2901) >= 1 or skill("Mining")>=50
-step
-#include "H_Copper"
-#include follow_path_mine
-skill Mining,35
-step
-#include "maincity_anvil"
-create Copper Bar##2657,Mining,50
-|tip Keep all of the Copper Bars for Smelting later.
-step
-#include trainer_Mining
-skillmax Mining,150
-step
-#include trainer_Mining
-learn Smelt Bronze##2659 |condition skill("Mining")>=125
-step
-#include trainer_Mining
-learn Smelt Tin##3304 |condition skill("Mining")>=125
-step
-#include "H_SilverTin"
-#include "follow_path_mine"
-skill Mining,125
-step
-#include trainer_Mining
-skillmax Mining,225
-step
-#include trainer_Mining
-learn Smelt Iron##3307 |condition skill("Mining")>=200
-step
-map Western Plaguelands
-path	42.6,80.9	39.3,79.9	36.1,77.2
-path	33.2,72.6	30.2,69.6	29.3,64.5
-path	33.5,63.9	32.5,59.9	31.2,55.5
-path	37.1,54.4	38.7,51.6	43.8,49.7
-path	48.0,47.8	45.0,41.3	45.0,36.1
-path	44.2,31.6	49.9,28.9	54.3,26.4
-path	54.8,33.7	51.6,40.2	50.2,45.8
-path	54.7,48.9	60.0,52.2	66.3,43.9
-path	68.8,45.9	67.4,52.5	65.6,59.7
-path	61.4,62.0	63.3,64.8	72.4,59.7
-path	80.7,77.4	73.0,83.5	64.4,84.0
-path	58.0,82.1	53.1,74.7
-#include "follow_path_mine"
-skill Mining,150
 ]])

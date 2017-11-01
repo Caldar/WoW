@@ -10,7 +10,7 @@ function AS:InvenMount(event, addon)
 			Button.checkbox:SetPoint("RIGHT", Button, "RIGHT", 0, 0)
 			AS:StripTextures(Button.checkbox)
 			AS:SetTemplate(Button.checkbox, 'Default')
-			Button.checkbox:Size(12)
+			Button.checkbox:SetSize(12, 12)
 
 			if Button.checkbox.SetCheckedTexture then
 				Button.checkbox:SetCheckedTexture("Interface\\Buttons\\UI-CheckBox-Check")
@@ -23,7 +23,7 @@ function AS:InvenMount(event, addon)
 			end
 
 			Button.checkbox:HookScript('OnDisable', function(self)
-				if not self.SetDisabledTexture then return; end
+				if not self.SetDisabledTexture then return end
 				if self:GetChecked() then
 					self:SetDisabledTexture("Interface\\Buttons\\UI-CheckBox-Check-Disabled")
 				else

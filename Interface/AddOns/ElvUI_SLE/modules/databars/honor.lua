@@ -20,6 +20,17 @@ DB.Honor ={
 		["STYLE8"] = "%s <%s> ("..E["media"].hexvaluecolor.."%s|r|T%s:%s|t)",
 		["STYLE9"] = E["media"].hexvaluecolor.."%s|r <%s> ("..E["media"].hexvaluecolor.."%s|r|T%s:%s|t)",
 	},
+	BonusStyles = {
+		["STYLE1"] = "%s <%s>: +%s (+%s)|T%s:%s|t",
+		["STYLE2"] = "%s <%s>: +"..E["media"].hexvaluecolor.."%s|r ("..E["media"].hexvaluecolor.."%s|r)|T%s:%s|t",
+		["STYLE3"] = E["media"].hexvaluecolor.."%s|r <%s>: +"..E["media"].hexvaluecolor.."%s|r ("..E["media"].hexvaluecolor.."%s|r) |T%s:%s|t",
+		["STYLE4"] = "%s <%s> +%s (%s)|T%s:%s|t",
+		["STYLE5"] = "%s <%s> +"..E["media"].hexvaluecolor.."%s|r ("..E["media"].hexvaluecolor.."%s|r)|T%s:%s|t",
+		["STYLE6"] = E["media"].hexvaluecolor.."%s|r <%s> +"..E["media"].hexvaluecolor.."%s|r ("..E["media"].hexvaluecolor.."%s|r)|T%s:%s|t",
+		["STYLE7"] = "%s <%s> (%s %s|T%s:%s|t)",
+		["STYLE8"] = "%s <%s> ("..E["media"].hexvaluecolor.."%s|r "..E["media"].hexvaluecolor.."%s|r|T%s:%s|t)",
+		["STYLE9"] = E["media"].hexvaluecolor.."%s|r <%s> ("..E["media"].hexvaluecolor.."%s|r"..E["media"].hexvaluecolor.."%s|r|T%s:%s|t)",
+	},
 	AwardStyles = {
 		["STYLE1"] = L["Award"]..": %s|T%s:%s|t",
 		["STYLE2"] = L["Award"]..": "..E["media"].hexvaluecolor.."%s|r|T%s:%s|t",
@@ -33,35 +44,16 @@ DB.Honor ={
 }
 
 local function UpdateHonor(self, event, unit)
+	if not E.db.databars.honor.enable then return end
 	if not E.db.sle.databars.honor.longtext then return end
-	if event == "HONOR_PRESTIGE_UPDATE"  and unit ~= "player" then return end
+	if event == "HONOR_PRESTIGE_UPDATE" and unit ~= "player" then return end
 	local bar = self.honorBar
 	local showHonor = T.UnitLevel("player") >= MAX_PLAYER_LEVEL
-	if not showHonor then
-		bar:Hide()
-	else
-		bar:Show()
-
+	if showHonor then
 		local current = T.UnitHonor("player");
 		local max = T.UnitHonorMax("player");
 		local level = T.UnitHonorLevel("player");
-        local levelmax = T.GetMaxPlayerHonorLevel();
-
-		
-        if (level == levelmax) then
-			-- Force the bar to full for the max level
-			bar.statusBar:SetMinMaxValues(0, 1)
-			bar.statusBar:SetValue(1)
-		else
-			bar.statusBar:SetMinMaxValues(0, max)
-			bar.statusBar:SetValue(current)
-		end
-
-		if self.db.honor.hideInVehicle then
-			E:RegisterObjectForVehicleLock(bar, E.UIParent)
-		else
-			E:UnregisterObjectForVehicleLock(bar)
-		end
+		local levelmax = T.GetMaxPlayerHonorLevel();
 
 		local text = ''
 		local textFormat = self.db.honor.textFormat
@@ -104,6 +96,9 @@ function DB:PopulateHonorStrings()
 	pattern = T.rgsub(COMBATLOG_HONORGAIN, T.unpack(symbols))
 	T.tinsert(DB.Honor.Strings, pattern)
 
+	pattern = T.rgsub(COMBATLOG_HONORGAIN_EXHAUSTION1, T.unpack(symbols))
+	T.tinsert(DB.Honor.Strings, pattern)
+
 	pattern = T.rgsub(COMBATLOG_HONORGAIN_NO_RANK, T.unpack(symbols))
 	T.tinsert(DB.Honor.Strings, pattern)
 
@@ -114,13 +109,17 @@ function DB:FilterHonor(event, message, ...)
 	local name, rank, honor
 	if DB.db.honor.chatfilter.enable then
 		for i, v in T.ipairs(DB.Honor.Strings) do
-			name, rank, honor = T.match(message,DB.Honor.Strings[i])
+			name, rank, honor, bonus = T.match(message,DB.Honor.Strings[i])
 			if name then
 				if not honor then
 					honor = rank
 					rank = PVP_RANK_0_0
 				end
-				message = T.format(DB.Honor.Styles[DB.db.honor.chatfilter.style or "STYLE1"], name, rank, honor, DB.Honor.Icon, DB.db.honor.chatfilter.iconsize)
+				if bonus then
+					message = T.format(DB.Honor.BonusStyles[DB.db.honor.chatfilter.style or "STYLE1"], name, rank, honor, bonus, DB.Honor.Icon, DB.db.honor.chatfilter.iconsize)
+				else
+					message = T.format(DB.Honor.Styles[DB.db.honor.chatfilter.style or "STYLE1"], name, rank, honor, DB.Honor.Icon, DB.db.honor.chatfilter.iconsize)
+				end
 				return false, message, ...
 			end
 		end
@@ -135,4 +134,5 @@ end
 function DB:HonorInit()
 	DB:PopulateHonorStrings()
 	hooksecurefunc(E:GetModule('DataBars'), "UpdateHonor", UpdateHonor)
+	E:GetModule('DataBars'):UpdateHonor()
 end

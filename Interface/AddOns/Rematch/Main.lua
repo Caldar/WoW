@@ -73,6 +73,8 @@ function rematch:InitModule(func) tinsert(initFuncs,func) end
 function rematch:UpdateUI()
 	local roster = rematch.Roster
 
+	rematch.petInfo:Reset() -- reset any petInfo from previous execution
+
 	-- some stuff is only done while the rematch is on screen
 	local isVisible = rematch.Frame:IsVisible() or rematch.Journal:IsVisible()
 
@@ -124,13 +126,37 @@ end
 
 --[[ Events ]]
 
+
+-- PLAYER_LOGIN will watch an independent PET_JOURNAL_LIST_UPDATE to watch for the journal
+-- unlocking
 function rematch:PLAYER_LOGIN()
-	rematch:InitSavedVars()
+   rematch:Start() -- set up the addon (the old PLAYER_LOGIN)
+   rematch:RegisterEvent("PET_JOURNAL_LIST_UPDATE")
+end
+
+-- when the journal is unlocked, this fires a PET_JOURNAL_LIST_UPDATE for the roster
+-- (this is made irrelevant in 5.0)
+function rematch:PET_JOURNAL_LIST_UPDATE()
+   if not rematch.isLoaded and C_PetJournal.IsJournalUnlocked() then
+      rematch.isLoaded = true
+      self:UnregisterEvent("PET_JOURNAL_LIST_UPDATE")
+      rematch.Roster.ownedNeedsUpdated = true -- force an update of owned pets as journal unlocks
+      --rematch.Roster.ownedPets = nil -- this probably isn't necessary, but if any problems, uncomment
+      rematch.Roster:PET_JOURNAL_LIST_UPDATE() -- let roster know an event fired
+   end
+end
+
+-- this initializes the addon; it was formerly PLAYER_LOGIN
+function rematch:Start()
+
 	-- check for the existence of an object that's in a new file and shut down rematch if it's not accessible.
 	-- this is caused by new files added and user updates the addon while logged in to the game
-	if rematch:AddonDidntCompletelyLoad(rematch.Battle) then
+	if rematch:AddonDidntCompletelyLoad(rematch.CreateODTable) or rematch:AddonUpdatedTooEarly() then
 		return
 	end
+
+	rematch:InitSavedVars()
+
 	rematch:FindBreedSource()
 	local locale = GetLocale()
 	if locale=="deDE" or locale=="frFR" then
@@ -189,15 +215,23 @@ function rematch:InitSavedVars()
 	settings = RematchSettings
 	saved = RematchSaved
 	-- create settings sub-tables and default values if they don't exist
-	for k,v in pairs({"TeamGroups","Filters","FavoriteFilters","Sort","Sanctuary","LevelingQueue","PetNotes","ScriptFilters","LevelingSlots"}) do
+	for k,v in pairs({"TeamGroups","Filters","FavoriteFilters","Sort","Sanctuary","LevelingQueue","PetNotes","ScriptFilters","SpecialSlots"}) do
 		if type(settings[v])~="table" then
 			if v=="TeamGroups" then -- TeamGroups starts with a default entry
 				settings[v] = {{GENERAL,"Interface\\Icons\\PetJournalPortrait"}}
 			elseif v=="Sort" then
 				settings[v] = {Order=1,FavoritesFirst=true}
-			elseif v=="LevelingSlots" then
+			elseif v=="SpecialSlots" then
 				settings[v] = {}
-				rematch:AssignLevelingSlots()
+            if settings.LevelingSlots then -- if old LevelingSlots system is used
+               -- convert old leveling slots to new special slot system
+               for i=1,3 do
+                  rematch:SetSpecialSlot(i,settings.LevelingSlots and "leveling" or nil)
+               end
+               settings.LevelingSlots = nil
+            else -- otherwise setup new slot handling
+               rematch:AssignSpecialSlots()
+            end
 			else
 				settings[v] = {}
 			end
@@ -329,6 +363,7 @@ end
 
 -- entering combat
 function rematch:PLAYER_REGEN_DISABLED()
+	rematch:HideWidgets(nil,true) -- completely close all widgets
 	local frame = rematch.Frame
 	if frame:IsVisible() then
 		frame:Hide()
@@ -338,6 +373,9 @@ function rematch:PLAYER_REGEN_DISABLED()
 		rematch.Journal:ConfigureJournal(true) -- this will hide the journal
 	end
 	rematch:UpdateAutoLoadState(true)
+	if UseRematchButton and PetJournal:IsVisible() then
+		UseRematchButton:Hide() -- hide checkbutton on default journal if journal is up
+	end
 end
 
 -- entering a pet battle
@@ -397,7 +435,9 @@ function rematch:PET_BATTLE_CLOSE()
 		if settings.ShowAfterBattle then
 			rematch:AutoShow() -- this is the "Show After Pet Battle" option
 		end
-		rematch:HideNotes()
+		if rematch.Notes:IsVisible() and not rematch.Notes.Content.ScrollFrame.EditBox:HasFocus() then
+			rematch:HideNotes()
+		end
 		C_Timer.After(0,rematch.UpdateQueue) -- waiting a frame (client thinks we can't swap pets right now)
 		rematch:UpdateAutoLoadState()
 	end
@@ -434,7 +474,7 @@ function rematch:CHAT_MSG_SYSTEM(message)
 					addID = petID
 				else
 					-- QueueAutoLearnOnly requires pet not have its species at 25 already or a version in queue
-					local at25orQueued = rematch.Roster:IsSpeciesAt25(speciesID,level)
+					local at25orQueued = rematch.speciesAt25[speciesID]
 					-- look through queue if QueueAutoLearnOnly checked to see if species is in queue already
 					if settings.QueueAutoLearnOnly and not at25orQueued then
 						for _,qPetID in ipairs(settings.LevelingQueue) do
@@ -526,6 +566,7 @@ end
 rematch.timerFuncs = {} -- indexed by arbitrary name, the func to run when timer runs out
 rematch.timerTimes = {} -- indexed by arbitrary name, the duration to run the timer
 rematch.timersRunning = {} -- indexed numerically, timers that are running
+rematch.timerStopped = nil -- name of timer that just stopped
 rematch:Hide()
 
 function rematch:StartTimer(name,duration,func)
@@ -548,8 +589,14 @@ function rematch:StopTimer(name)
 	end
 end
 
+-- returns whether a named timer is running
 function rematch:IsTimerRunning(name)
 	return tContains(rematch.timersRunning,name)
+end
+
+-- returns the name of the timer that just stopped
+function rematch:GetTimerStopped()
+	return rematch.timerStopped
 end
 
 -- timer handling; everything should go through rematch:StartTimer
@@ -564,6 +611,7 @@ rematch:SetScript("OnUpdate",function(self,elapsed)
 			if times[name] < 0 then
 				tremove(timers,i)
 				if rematch.timerFuncs[name] then
+					rematch.timerStopped = name
 					rematch.timerFuncs[name]()
 				end
 			end
@@ -575,6 +623,7 @@ rematch:SetScript("OnUpdate",function(self,elapsed)
 	if not tick then
 		self:Hide()
 	end
+	rematch.timerStopped = nil
 end)
 
 function rematch.SlashHandler(msg)
@@ -615,13 +664,27 @@ end
 -- this tests for the existence of a new object and throws up a warning dialog if the test does not exist
 function rematch:AddonDidntCompletelyLoad(test)
 	if not test then
-		StaticPopupDialogs["REMATCHUPDATE"] = { button1 = OKAY, timeout = 0, showAlert=1, text="You updated Rematch while you were logged in to the game.\n\nWhich is usually fine!\n\nHowever, this update has some new files that won't be recognized while the game is running.\n\n\124cffff4040Rematch is disabled until the next time you start the World of Warcraft client." }
+		StaticPopupDialogs["REMATCHUPDATE"] = { button1=OKAY, timeout=0, showAlert=1, text="You updated Rematch while you were logged in to the game.\n\nWhich is usually fine!\n\nHowever, this update has some new files that won't be recognized while the game is running.\n\n\124cffff4040Rematch is disabled until the next time you start the World of Warcraft client." }
 		StaticPopup_Show("REMATCHUPDATE")
-		RematchFrame.Toggle = function() end
-		Rematch.ToggleFrameTab = function() end
-		Rematch.ToggleNotes = function() end
+		rematch:ShutdownAddon()
 		return true
 	end
+end
+
+-- in case anyone downloads update before patch goes live
+function rematch:AddonUpdatedTooEarly()
+	if select(4,GetBuildInfo())<70100 then
+		StaticPopupDialogs["REMATCHTOOEARLY"] = { button1=OKAY, timeout=0, showAlert=1, text="Oops! You've updated Rematch to a version compatable with only WoW patch 7.1 but you are not on patch 7.1 yet.\n\nThis version of Rematch will not work until your client is patched to 7.1." }
+		StaticPopup_Show("REMATCHTOOEARLY")
+		rematch:ShutdownAddon()
+		return true
+	end
+end
+
+function rematch:ShutdownAddon()
+	RematchFrame.Toggle = function() end
+	Rematch.ToggleFrameTab = function() end
+	Rematch.ToggleNotes = function() end
 end
 
 -- /rematch debug displays a dialog containing enabled options and various settings the user can copy to a post/comment to help debug
@@ -784,8 +847,15 @@ end
 --[[ RematchFootnoteButtonTemplate: for the little round buttons on list buttons (notes, leveling, etc) ]]
 
 local footnoteCoords = { 
-	notes={0,0.25,0,0.5}, leveling={0.25,0.5,0,.5}, preferences={0.5,0.75,0,0.5},
-	ascending={0.75,1,0,0.5}, median={0,0.25,0.5,1}, descending={0.25,0.5,0.5,1}
+	notes={0,0.125,0,0.25}, leveling={0.125,0.25,0,0.25}, preferences={0.25,0.375,0,0.25},
+	ascending={0.375,0.5,0,0.25}, median={0,0.125,0.25,0.5}, descending={0.125,0.375,0.25,0.5},
+   random={0.375,0.5,0.25,0.5}, ignored={0,0.125,0.5,0.75},
+   ["random:0"]={0.375,0.5,0.25,0.5}, ["random:1"]={0.125,0.25,0.5,0.75},
+   ["random:2"]={0.25,0.375,0.5,0.75}, ["random:3"]={0.375,0.5,0.5,0.75},
+   ["random:4"]={0,0.125,0.75,1}, ["random:5"]={0.125,0.25,0.75,1},
+   ["random:6"]={0.25,0.375,0.75,1}, ["random:7"]={0.375,0.5,0.75,1},
+   ["random:8"]={0.5,0.625,0,0.25}, ["random:9"]={0.625,0.75,0,0.25},
+   ["random:10"]={0.75,0.875,0,0.25}, [0]={0.125,0.25,0,0.25},
 }
 
 function rematch:FootnoteButtonOnLoad()
@@ -798,6 +868,9 @@ function rematch:SetFootnoteIcon(button,icon)
 	if icon and footnoteCoords[icon] then
 		local left,right,top,bottom = unpack(footnoteCoords[icon])
 		button:GetNormalTexture():SetTexCoord(left,right,top,bottom)
-		button:GetPushedTexture():SetTexCoord(left,right,top,bottom)
+      local pushedTexture = button:GetPushedTexture()
+      if pushedTexture then
+		   button:GetPushedTexture():SetTexCoord(left,right,top,bottom)
+      end
 	end
 end

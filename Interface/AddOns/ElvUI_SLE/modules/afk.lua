@@ -353,7 +353,17 @@ end
 --Camera rotation script when entering or leaving afk
 function S:Event(event, unit)
 	if not E.db.general.afk then return end
+	if event == "PLAYER_REGEN_DISABLED" then 
+		SS:SetScript("OnUpdate", nil)
+		T.FlipCameraYaw(-degree)
+		degree = 0
+		TipsElapsed = 0
+		return
+	end
 	if (event == "PLAYER_FLAGS_CHANGED" and unit ~= "player") or event ~= "PLAYER_FLAGS_CHANGED" then return end
+	if (InCombatLockdown() or CinematicFrame:IsShown() or MovieFrame:IsShown()) then return; end
+	--Don't activate afk if player is crafting stuff
+	if (UnitCastingInfo("player") ~= nil) then return end
 	if T.UnitIsAFK("player") then
 		if not SS:GetScript("OnUpdate") then
 			SS:SetScript("OnUpdate", function(self, elapsed) 
@@ -404,7 +414,6 @@ function S:Initialize()
 	S:KeyScript()
 	--Overwriting to get rid of Elv's camera rotation and starting animation
 	function AFK:SetAFK(status)
-		if(T.InCombatLockdown()) then return end
 		if not E.db.general.afk then return end -- To prevent bs from happening
 		if(status) then
 			self.AFKMode:Show()
@@ -429,7 +438,6 @@ function S:Initialize()
 			end
 			self.AFKMode.chat:RegisterEvent("CHAT_MSG_WHISPER")
 			self.AFKMode.chat:RegisterEvent("CHAT_MSG_BN_WHISPER")
-			self.AFKMode.chat:RegisterEvent("CHAT_MSG_BN_CONVERSATION")
 			self.AFKMode.chat:RegisterEvent("CHAT_MSG_GUILD")
 
 			self.isAFK = true
@@ -480,7 +488,7 @@ function S:Initialize()
 
 	SS:HookScript("OnShow", S.Show)
 	SS:HookScript("OnHide", S.Hide)
-	SS.Model:SetScript("OnUpdateModel", nil)
+	SS.Model:SetScript("OnUpdate", nil)
 
 	AFK:OnEvent()
 end

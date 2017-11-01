@@ -9,14 +9,20 @@ local rematch = Rematch
 -- leveling: this is a leveling pet (0)
 -- table: this is a table of stats (for pet links and enemy battle unit pets)
 function rematch:GetIDType(id)
-	if type(id)=="string" and id:match("^BattlePet%-%x%-%x%x%x%x%x%x%x%x%x%x%x%x$") then
-		return "pet"
+	if type(id)=="string" then
+		if id:match("^BattlePet%-%x%-%x%x%x%x%x%x%x%x%x%x%x%x$") then
+			return "pet"
+		elseif id:match("battlepet:%d+:%d+:%d+:%d+:%d+:%d+:.+") then
+			return "link"
+		elseif id:match("battle:%d:%d") then
+			return "battle"
+		end
 	elseif id==0 then
 		return "leveling"
 	elseif type(id)=="number" then
 		return "species"
-	elseif type(id)=="table" then
-		return "table"
+--	elseif type(id)=="table" then
+--		return "table"
 	end
 end
 
@@ -56,17 +62,13 @@ function rematch:GetUnitNameandID(unit)
 	end
 end
 
+local utilsInfo -- GetPetIcon is used in so many places, using a unique petInfo for it
 function rematch:GetPetIcon(petID)
-	local idType = rematch:GetIDType(petID)
-	if idType=="pet" then
-		return (select(9,C_PetJournal.GetPetInfoByPetID(petID)))
-	elseif idType=="species" then
-		return (select(2,C_PetJournal.GetPetInfoBySpeciesID(petID)))
-	elseif idType=="leveling" then
-		return rematch.levelingIcon
-	else
-		return "Interface\\PaperDoll\\UI-Backpack-EmptySlot"
-	end
+   if not utilsInfo then
+      utilsInfo = rematch:CreatePetInfo()
+   end
+   utilsInfo:Fetch(petID)
+   return utilsInfo.icon or "Interface\\PaperDoll\\UI-Backpack-EmptySlot"
 end
 
 function rematch:GetPetName(petID)
@@ -93,29 +95,30 @@ function rematch:GetPetSpeciesID(petID)
 	end
 end
 
--- DesensitizedText doesn't work for Russian clients; use the less efficient string:lower() compare
-local ruLocale = GetLocale()=="ruRU"
+-- DesensitizedText doesn't work for Russian or German clients; use the less efficient string:lower() compare
+local locale = GetLocale()
+local useAltSensitivity = locale=="ruRU" or locale=="deDE"
 
 -- DesensitizeText returns text in a literal (magic characters escaped) and case-insensitive format
 local function literal(c) return "%"..c end
 local function caseinsensitive(c) return format("[%s%s]",c:lower(),c:upper()) end
 function rematch:DesensitizeText(text)
 	if type(text)=="string" then
-		if ruLocale then -- for ruRU clients use the lower case text
-			return text:lower()
+		if useAltSensitivity then -- for ruRU/deDE clients use the lower case text
+			return text:gsub("[%(%)%.%%%+%-%*%?%[%]%^%$]",literal):lower()
 		else
 			return text:gsub("[%(%)%.%%%+%-%*%?%[%]%^%$]",literal):gsub("%a",caseinsensitive)
 		end
 	end
 end
 
--- when doing a case-insensitive match, use this instead of a direct match; so it can handle ruRU matches
+-- when doing a case-insensitive match, use this instead of a direct match; so it can handle ruRU/deDE matches
 function rematch:match(candidate,pattern)
 	if candidate and pattern then
 		if type(candidate)~="string" then
 			candidate=tostring(candidate)
 		end
-		if ruLocale then -- match the lower case candidate to the pattern (which is also lower case)
+		if useAltSensitivity then -- match the lower case candidate to the pattern (which is also lower case)
 			return candidate:lower():match(pattern)
 		else
 			return candidate:match(pattern)
@@ -159,10 +162,12 @@ end
 -- hides all the pop-up and flyout widgets when doing any major event
 -- can pass name of function "HideMenu" or "HideFlyout" to hide everything but that
 -- if a menu item just clicked, it's automatically excluded from hiding (menu will take care of hiding itself)
+-- if completely is true, everything is hidden with no exceptions
 local hideWidgetFuncs = {"HideMenu","HideFlyout","HidePetCard","HideTooltip","HideWinRecord"}
-function rematch:HideWidgets(except)
+function rematch:HideWidgets(except,completely)
 	for _,funcName in pairs(hideWidgetFuncs) do
-		if funcName~=except and rematch[funcName] and (funcName~="HideMenu" or not rematch:UIJustChanged()) then
+		if rematch[funcName] and (completely or (funcName~=except and (funcName~="HideMenu" or not rematch:UIJustChanged()))) then
+--		if funcName~=except and rematch[funcName] and (funcName~="HideMenu" or not rematch:UIJustChanged()) then
 			rematch[funcName]()
 		end
 	end
@@ -257,13 +262,17 @@ function rematch:GetCorner(frame,reference,coords)
 end
 
 -- adds a leveling border to a button (only 3 main loadouts and queue leveling slot uses this)
-function rematch:AddLevelingBorder(button)
-	button.Leveling = button:CreateTexture(nil,"BACKGROUND")
+function rematch:AddSpecialBorder(button)
+	button.SpecialBorder = button:CreateTexture(nil,"BACKGROUND")
 	local cx,cy = button:GetSize()
-	button.Leveling:SetSize(cx+10,cy+10)
-	button.Leveling:SetPoint("CENTER")
-	button.Leveling:SetTexture("Interface\\PetBattles\\PetBattle-GoldSpeedFrame")
-	button.Leveling:SetTexCoord(0.1171875,0.7421875,0.1171875,0.734375)
+	button.SpecialBorder:SetSize(cx+10,cy+10)
+	button.SpecialBorder:SetPoint("CENTER")
+	button.SpecialBorder:SetTexture("Interface\\PetBattles\\PetBattle-GoldSpeedFrame")
+	button.SpecialBorder:SetTexCoord(0.1171875,0.7421875,0.1171875,0.734375)
+   button.SpecialFootnote = CreateFrame("Button",nil,button,"RematchFootnoteButtonTemplate,RematchTooltipScripts")
+   button.SpecialFootnote:SetPoint("TOPRIGHT",4,4)
+   button.SpecialFootnote:SetScript("OnClick",rematch.SpecialFootnoteOnClick)
+   button.SpecialFootnote:RegisterForClicks("AnyUp")
 end
 
 -- adds frameName to UISpecialFrames if value is true, removes it if value is false
@@ -310,12 +319,12 @@ end
 
 function rematch:ListScrollToTop(scrollFrame)
 	scrollFrame.scrollBar:SetValue(0)
-	PlaySound("UChatScrollButton")
+	PlaySound(PlaySoundKitID and "UChatScrollButton" or 1115)
 end
 
 function rematch:ListScrollToBottom(scrollFrame)
 	scrollFrame.scrollBar:SetValue(scrollFrame.range)
-	PlaySound("UChatScrollButton")
+	PlaySound(PlaySoundKitID and "UChatScrollButton" or 1115)
 end
 
 function rematch:ListScrollToIndex(scrollFrame,index)
@@ -626,4 +635,22 @@ end
 function rematch:SetRoundTexture(texture,filepath)
 	texture:SetMask("Textures\\MinimapMask")
 	texture:SetTexture(filepath)
+end
+
+-- for PetTags and and TeamStrings to store base-32 numbers in strings
+local digitsOut = {} -- to avoid garbage creation, this is reused to build a 32-base number
+local digitsIn = "0123456789ABCDEFGHIJKLMNOPQRSTUV"
+-- convert number to base 32: VV = 1023
+function rematch:ToBase32(number)
+	number = tonumber(number)
+	if number then
+		wipe(digitsOut)
+		number = math.abs(floor(number))
+		repeat
+			local digit = (number%32) + 1
+			number = floor(number/32)
+			tinsert(digitsOut, 1, digitsIn:sub(digit,digit))
+		until number==0
+		return table.concat(digitsOut,"")
+	end
 end

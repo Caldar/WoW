@@ -22,6 +22,8 @@ end
 local ui = ZGV.UI
 local SkinData = ui.SkinData
 
+local Scan = ZGV.Gold.Scan
+
 local HEADER_HEIGHT = 30		-- exported to GoldHelp.lua
 local FOOTER_HEIGHT = 25
 local SCROLL_WIDTH=15		-- read only
@@ -30,7 +32,7 @@ local TAB_NAVIGATION_INVENTORY = {"stacksize", "stackcount", "bidgold", "bidsilv
 local TAB_NAVIGATION_SEARCH = {"searchname", "pricegold", "pricesilver", "pricecopper", "maxcount"}
 
 local SELL_INVENTORY_COLUMS = {
-	{ title="", width=15, headerwidth=15, titlej="LEFT", textj="LEFT", name="icon", type="icon", onentertooltip=function(row) if row.item.bag then GameTooltip:SetBagItem(row.item.bag,row.item.slot) else GameTooltip:SetItemByID(row.item.itemid) end end},
+	{ title="", width=15, headerwidth=15, titlej="LEFT", textj="LEFT", name="icon", type="icon", onentertooltip=function(row) Appraiser:ShowItemTooltip(row.item) end},
 	{ title="ITEM", width=190, titlej="LEFT", textj="LEFT", name="name" },
 	{ title="PRICE", width=100, titlej="RIGHT", textj="RIGHT", name="price" },
 	{ title="", width=15, titlej="CENTER", textj="CENTER", name="status", type="icon", onentertooltip=function(row) GameTooltip:AddLine( row.item.statusText ) end },
@@ -43,11 +45,11 @@ local SELL_INVENTORY_DATA = {
 	POSX = 8,
 	POSY = -8,
 	STRATA = "HIGH",
+	HIDESCROLLBAR = true,
 }
 
 local SELL_AUCTIONS_COLUMNS = {
-	{ title="", width=15, headerwidth=15, titlej="LEFT", textj="LEFT", name="icon", type="icon", 
-		onentertooltip=function(row) if row.item.BattlePetName then GameTooltip:AddLine(row.item.BattlePetName) return end GameTooltip:SetHyperlink(row.item.itemlink) end},
+	{ title="", width=15, headerwidth=15, titlej="LEFT", textj="LEFT", name="icon", type="icon", onentertooltip=function(row) Appraiser:ShowItemTooltip(row.item) end},
 	{ title="STACK", width=180, titlej="LEFT", textj="LEFT", name="name" },
 	{ title="UNIT", width=100, titlej="RIGHT", textj="RIGHT", name="uprice" },
 	{ title="STACK", width=100, titlej="RIGHT", textj="RIGHT", name="sprice" },
@@ -63,7 +65,7 @@ local SELL_AUCTIONS_DATA = {
 }
 
 local BUY_INVENTORY_COLUMS = {
-	{ title="", width=15, headerwidth=15, titlej="LEFT", textj="LEFT", name="icon", type="icon", onentertooltip=function(row) if not row.item then return end if row.item.bag then GameTooltip:SetBagItem(row.item.bag,row.item.slot) else GameTooltip:SetItemByID(row.item.itemid) end end},
+	{ title="", width=15, headerwidth=15, titlej="LEFT", textj="LEFT", name="icon", type="icon", onentertooltip=function(row) Appraiser:ShowItemTooltip(row.item) end},
 	{ title="ITEM", width=170, titlej="LEFT", textj="LEFT", name="name" },
 	{ title="PRICE", width=120, titlej="RIGHT", textj="RIGHT", name="price" },
 	{ title="", width=15, titlej="CENTER", textj="CENTER", name="status", type="icon", onentertooltip=function(row) if not row.item then return end GameTooltip:AddLine( row.item.statusText ) end },
@@ -76,11 +78,11 @@ local BUY_INVENTORY_DATA = {
 	POSX = 8,
 	POSY = -8,
 	STRATA = "HIGH",
+	HIDESCROLLBAR = true,
 }
 
 local BUY_AUCTIONS_COLUMNS = {
-	{ title="", width=15, headerwidth=15, titlej="LEFT", textj="LEFT", name="icon", type="icon", 
-		onentertooltip=function(row) if row.item.BattlePetName then GameTooltip:AddLine(row.item.BattlePetName) return end GameTooltip:SetHyperlink(row.item.itemlink) end},
+	{ title="", width=15, headerwidth=15, titlej="LEFT", textj="LEFT", name="icon", type="icon", onentertooltip=function(row) Appraiser:ShowItemTooltip(row.item) end},
 	{ title="SIZE", width=180, titlej="LEFT", textj="LEFT", name="name" },
 	{ title="UNIT", width=100, titlej="RIGHT", textj="RIGHT", name="uprice" },
 	{ title="STACK", width=100, titlej="RIGHT", textj="RIGHT", name="sprice" },
@@ -96,8 +98,7 @@ local BUY_AUCTIONS_DATA = {
 }
 
 local BUY_SEARCH_COLUMNS = {
-	{ title="", width=15, headerwidth=15, titlej="LEFT", textj="LEFT", name="icon", type="icon", 
-		onentertooltip=function(row) GameTooltip:SetHyperlink(row.item.itemlink) end},
+	{ title="", width=15, headerwidth=15, titlej="LEFT", textj="LEFT", name="icon", type="icon", onentertooltip=function(row) Appraiser:ShowItemTooltip(row.item) end},
 	{ title="ITEM NAME", width=375, titlej="LEFT", textj="LEFT", name="name" },
 	{ title="", width=12, titlej="RIGHT", textj="RIGHT", name="action", type="button", 
 		texture=ZGV.DIR.."\\Skins\\goldpricestatusicons", 
@@ -122,7 +123,7 @@ function Appraiser:CreateMainFrame()
 		:SetFrameStrata("HIGH")
 		:SetFrameLevel(AuctionFrame:GetFrameLevel()+1)
 		:SetToplevel(enable)
-		:SetBackdropColor(ZGV.HTMLColor("#222222ff"))
+		:SetBackdropColor(ZGV.F.HTMLColor("#222222ff"))
 		.__END
 
 
@@ -161,7 +162,7 @@ function Appraiser:CreateMainFrame()
 			:SetSize(17,17)
 			:SetScript("OnClick", function() CloseAuctionHouse() end)
 			.__END
-		ZGV.AssignButtonTexture(MF.HeaderFrame.close,(SkinData("TitleButtons")),6,32)
+		ZGV.F.AssignButtonTexture(MF.HeaderFrame.close,(SkinData("TitleButtons")),6,32)
 
 		--[[
 		MF.HeaderFrame.info = CHAIN(CreateFrame("Button",nil,MF.HeaderFrame))
@@ -169,7 +170,7 @@ function Appraiser:CreateMainFrame()
 			:SetSize(17,17)
 			:SetScript("OnClick", function() Appraiser:ToggleHelpPage() end)
 			.__END
-		ZGV.AssignButtonTexture(MF.HeaderFrame.info,(SkinData("TitleButtons")),18,32)
+		ZGV.F.AssignButtonTexture(MF.HeaderFrame.info,(SkinData("TitleButtons")),18,32)
 		--]]
 
 		MF.HeaderFrame.goldguide = CHAIN(CreateFrame("Button", "ZA_Menu_GoldGuide" , MF.HeaderFrame))
@@ -187,7 +188,7 @@ function Appraiser:CreateMainFrame()
 			end)
 			:Show()
 		.__END
-		ZGV.AssignButtonTexture(MF.HeaderFrame.goldguide,(SkinData("TitleButtons")),22,32)
+		ZGV.F.AssignButtonTexture(MF.HeaderFrame.goldguide,(SkinData("TitleButtons")),22,32)
 
 
 	MF.ContentFrame = CHAIN(CreateFrame("Frame", "ZygorAppraiserContent", MF))
@@ -225,7 +226,7 @@ function Appraiser:CreateMainFrame()
 			:SetSize(15,15)
 			:SetScript("OnClick",function() ZGV:OpenOptions() end)
 		.__END
-		ZGV.AssignButtonTexture(MF.FooterSettingsButton,(SkinData("TitleButtons")),5,32)
+		ZGV.F.AssignButtonTexture(MF.FooterSettingsButton,(SkinData("TitleButtons")),5,32)
 
 		MF.progressFrame = CHAIN(CreateFrame("Frame","progressFrame",MF.FooterFrame))
 			:SetBackdrop(SkinData("ProgressBarBackdrop"))
@@ -247,8 +248,26 @@ function Appraiser:CreateMainFrame()
 		.__END 
 		
 		MF.progressFrame.SetPercent = function(self, percent)
-			self.tex:SetWidth((percent / 100)*(self:GetWidth()-2))
+			self.targetpercent = percent
+			if not self:IsShown() then self.percent=0 end
+			self:SetShown(percent>0)
 		end
+		MF.progressFrame.percent = 0
+		MF.progressFrame.targetpercent = 0
+		local speed=0.2
+		local throt=1/50
+		local thr=0
+		MF.progressFrame:SetScript("OnUpdate",function (self,elapsed)
+			thr=thr+elapsed
+			while thr>throt do
+				thr=thr-throt
+				local dif = self.targetpercent-self.percent
+				self.percent = math.floor(self.percent + dif * speed)
+				if self.percent>100 then self.percent=100 elseif self.percent<0 then self.percent=0 end
+				self.tex:SetWidth((self.percent / 100)*(self:GetWidth()-2))
+				if self.percent==0 then self:Hide() end
+			end
+		end)
 
 	Appraiser.Inventory_Frame = self:MakeInventoryTable()
 	Appraiser.Buy_Frame = self:MakeBuyTable()
@@ -319,13 +338,13 @@ function Appraiser:MakeInventoryTable()
 		Appraiser.needToUpdate=true
 	end)
 
-	for n=1,SELL_INVENTORY_DATA.ROW_COUNT do
-		container.InventoryList.rows[n].status:SetTexture(ZGV.DIR.."\\Skins\\goldpricestatusicons")
-		container.InventoryList.rows[n]:SetScript("OnClick",function(self,button)
-			if button == "LeftButton" and container.InventoryList.rows[n].item then
-				Appraiser:ActivateSellItem(container.InventoryList.rows[n].item)
+	for _,row in pairs(container.InventoryList.rows) do
+		row.status:SetTexture(ZGV.DIR.."\\Skins\\goldpricestatusicons")
+		row:SetScript("OnClick",function(self,button)
+			if button == "LeftButton" and row.item then
+				Appraiser:ActivateSellItem(row.item)
 			elseif button == "RightButton" then
-				Appraiser:InventoryRowMenu(container.InventoryList.rows[n])
+				Appraiser:InventoryRowMenu(row)
 			end
 		end)
 	end
@@ -342,9 +361,9 @@ function Appraiser:MakeInventoryTable()
 		Appraiser.InventoryAuctionOffset=math.round(offset)
 		Appraiser.needToUpdate=true
 	end)
-	for n=1,SELL_AUCTIONS_DATA.ROW_COUNT do
-		container.InventoryAuctionList.rows[n]:SetScript("OnClick",function()
-			Appraiser:SetUndercutToAuction(container.InventoryAuctionList.rows[n])
+	for _,row in pairs(container.InventoryAuctionList.rows) do
+		row:SetScript("OnClick",function()
+			Appraiser:SetUndercutToAuction(row)
 		end)
 	end
 
@@ -369,9 +388,9 @@ function Appraiser:MakeInventoryTable()
 		:SetPoint("TOPLEFT",container.InventoryList,"BOTTOMLEFT", 0, -6)
 		:SetFont(FONT,12)
 		:SetText("Appraise all")
-		:SetScript("OnClick", function() if not self.soft_disabled then Appraiser:StartManualScan() end end)
+		:SetScript("OnClick", function(self) if not self.soft_disabled then Appraiser:StartManualScan() end end)
 		:SetScript("OnEnter",function(self) 
-			CHAIN(GameTooltip):SetOwner(self, "ANCHOR_BOTTOM") 
+			CHAIN(GameTooltip):SetOwner(self, "ANCHOR_TOP") 
 			:SetText(type(self.tooltip)=="function" and self:tooltip() or tostring(self.tooltip)) 
 			:Show() 
 			end)
@@ -392,9 +411,9 @@ function Appraiser:MakeInventoryTable()
 		:SetPoint("TOPRIGHT",container.InventoryList,"BOTTOMRIGHT", 0, -6)
 		:SetFont(FONT,12)
 		:SetText("Scan")
-		:SetScript("OnClick", function() if not self.soft_disabled then Appraiser:Scan() end end)
+		:SetScript("OnClick", function(self) if not self.soft_disabled then Appraiser:Scan(self.action) end end)
 		:SetScript("OnEnter",function(self) 
-			CHAIN(GameTooltip):SetOwner(self, "ANCHOR_BOTTOM") 
+			CHAIN(GameTooltip):SetOwner(self, "ANCHOR_TOP") 
 			:SetText(type(self.tooltip)=="function" and self:tooltip() or tostring(self.tooltip)) 
 			:Show() 
 			end)
@@ -424,12 +443,13 @@ function Appraiser:MakeInventoryTable()
 		:SetScript("OnEnter",function()
 			if Appraiser.ActiveSellingItem then
 				GameTooltip:SetOwner(container.activeIconOverlay,"ANCHOR_RIGHT")
-				GameTooltip:SetItemByID(Appraiser.ActiveSellingItem.itemid )
+				Appraiser:ShowItemTooltip(Appraiser.ActiveSellingItem)
 				GameTooltip:Show()
 			end
 		end)
 		:SetScript("OnLeave",function()
 			GameTooltip:Hide()
+			BattlePetTooltip:Hide()
 		end)
 	.__END	
 	container.activeName = CHAIN(container:CreateFontString())
@@ -479,8 +499,9 @@ function Appraiser:MakeInventoryTable()
 			:SetBackdropBorderColor(0.5,0.5,0.5,1)
 			:SetTextColor(1,1,1,1)
 			:SetScript("OnTabPressed", function() Appraiser:TabKeyNavigation(container,TAB_NAVIGATION_INVENTORY,"stacksize") end)
-			:SetScript("OnTextChanged", function(self,user) if not user then return end  ZGV:ScheduleTimer(function() Appraiser:UpdateStackSize() end,0) end)
-			:SetScript("OnEditFocusLost", function(self) ZGV:ScheduleTimer(function() Appraiser:UpdateStackSize() end,0) end)
+			:SetScript("OnTextChanged", function(self,user) if not user then return end  ZGV:ScheduleTimer(function() Appraiser:UpdateStackCountsFromFields() end,0) end)
+			:SetScript("OnEditFocusGained", EditBox_HighlightText)
+			:SetScript("OnEditFocusLost", function(self) EditBox_ClearHighlight(self) Appraiser:UpdateStackFields() end)
 			:SetScript("OnEnter",function(self) if not self:IsEnabled() then Appraiser:ShowDisabledTooltip(self) end end)
 			:SetScript("OnLeave",function() GameTooltip:Hide() end)
 			.__END
@@ -508,8 +529,9 @@ function Appraiser:MakeInventoryTable()
 			:SetBackdropBorderColor(0.5,0.5,0.5,1)
 			:SetTextColor(1,1,1,1)
 			:SetScript("OnTabPressed", function() Appraiser:TabKeyNavigation(container,TAB_NAVIGATION_INVENTORY,"stackcount") end)
-			:SetScript("OnTextChanged", function(self,user) if not user then return end  ZGV:ScheduleTimer(function() Appraiser:UpdateStackCount() end,0) end)
-			:SetScript("OnEditFocusLost", function(self) ZGV:ScheduleTimer(function() Appraiser:UpdateStackCount() end,0) end)
+			:SetScript("OnTextChanged", function(self,user) if not user then return end  ZGV:ScheduleTimer(function() Appraiser:UpdateStackCountsFromFields() end,0) end)
+			:SetScript("OnEditFocusGained", EditBox_HighlightText)
+			:SetScript("OnEditFocusLost", function(self) EditBox_ClearHighlight(self) Appraiser:UpdateStackFields() end)
 			:SetScript("OnEnter",function(self) if not self:IsEnabled() then Appraiser:ShowDisabledTooltip(self) end end)
 			:SetScript("OnLeave",function() GameTooltip:Hide() end)
 			.__END
@@ -521,12 +543,14 @@ function Appraiser:MakeInventoryTable()
 			:SetScript("OnClick", function() Appraiser:SetMaxStackCount() end)
 			.__END
 
+	local initial_mode = ZGV.db.profile.aucmode or "unit"
+
 	container.bidlabel = CHAIN(container.details:CreateFontString())
 		:SetFont(FONT,12)
 		:SetPoint("TOPLEFT",0,-54)
 		:SetJustifyH("LEFT")
 		:SetWidth(110)
-		:SetText("Bid / unit")
+		:SetText("Bid / "..initial_mode)
 		.__END
 		container.bidgold = CHAIN(ui:Create("EditBox",container.details))
 			:SetSize(47,17)
@@ -537,8 +561,10 @@ function Appraiser:MakeInventoryTable()
 			:SetBackdropColor(0,0,0,1)
 			:SetBackdropBorderColor(0.5,0.5,0.5,1)
 			:SetTextColor(1,0.93,0,1)
+			:SetScript("OnEditFocusGained", EditBox_HighlightText)
+			:SetScript("OnEditFocusLost", EditBox_ClearHighlight)
 			:SetScript("OnTabPressed", function() Appraiser:TabKeyNavigation(container,TAB_NAVIGATION_INVENTORY,"bidgold") end)
-			:SetScript("OnTextChanged", function(self,user) if not user then return end  Appraiser:SellPriceManual() end)
+			:SetScript("OnTextChanged", function(self,user) if not user then return end  Appraiser:SetManualSellPrice() end)
 			.__END
 		container.bidsilver = CHAIN(ui:Create("EditBox",container.details))
 			:SetSize(20,17)
@@ -549,8 +575,10 @@ function Appraiser:MakeInventoryTable()
 			:SetBackdropColor(0,0,0,1)
 			:SetBackdropBorderColor(0.5,0.5,0.5,1)
 			:SetTextColor(0.97,0.97,1,1)
+			:SetScript("OnEditFocusGained", EditBox_HighlightText)
+			:SetScript("OnEditFocusLost", EditBox_ClearHighlight)
 			:SetScript("OnTabPressed", function() Appraiser:TabKeyNavigation(container,TAB_NAVIGATION_INVENTORY,"bidsilver") end)
-			:SetScript("OnTextChanged", function(self,user) if not user then return end  Appraiser:SellPriceManual() end)
+			:SetScript("OnTextChanged", function(self,user) if not user then return end  Appraiser:SetManualSellPrice() end)
 			.__END
 		container.bidcopper = CHAIN(ui:Create("EditBox",container.details))
 			:SetSize(20,17)
@@ -561,8 +589,10 @@ function Appraiser:MakeInventoryTable()
 			:SetBackdropColor(0,0,0,1)
 			:SetBackdropBorderColor(0.5,0.5,0.5,1)
 			:SetTextColor(1,0.66,0.60,1)
+			:SetScript("OnEditFocusGained", EditBox_HighlightText)
+			:SetScript("OnEditFocusLost", EditBox_ClearHighlight)
 			:SetScript("OnTabPressed", function() Appraiser:TabKeyNavigation(container,TAB_NAVIGATION_INVENTORY,"bidcopper") end)
-			:SetScript("OnTextChanged", function(self,user) if not user then return end  Appraiser:SellPriceManual() end)
+			:SetScript("OnTextChanged", function(self,user) if not user then return end  Appraiser:SetManualSellPrice() end)
 			.__END
 
 	container.buyoutlabel = CHAIN(container.details:CreateFontString())
@@ -570,7 +600,7 @@ function Appraiser:MakeInventoryTable()
 		:SetPoint("TOPLEFT",0,-76)
 		:SetJustifyH("LEFT")
 		:SetWidth(110)
-		:SetText("Buyout / unit")
+		:SetText("Buyout / "..initial_mode)
 		.__END
 		container.buyoutgold = CHAIN(ui:Create("EditBox",container.details))
 			:SetSize(47,17)
@@ -581,8 +611,10 @@ function Appraiser:MakeInventoryTable()
 			:SetBackdropColor(0,0,0,1)
 			:SetBackdropBorderColor(0.5,0.5,0.5,1)
 			:SetTextColor(1,0.93,0,1)
+			:SetScript("OnEditFocusGained", EditBox_HighlightText)
+			:SetScript("OnEditFocusLost", EditBox_ClearHighlight)
 			:SetScript("OnTabPressed", function() Appraiser:TabKeyNavigation(container,TAB_NAVIGATION_INVENTORY,"buyoutgold") end)
-			:SetScript("OnTextChanged", function(self,user) if not user then return end  Appraiser:SellPriceManual() end)
+			:SetScript("OnTextChanged", function(self,user) if not user then return end  Appraiser:SetManualSellPrice() end)
 			.__END
 		container.buyoutsilver = CHAIN(ui:Create("EditBox",container.details))
 			:SetSize(20,17)
@@ -593,8 +625,10 @@ function Appraiser:MakeInventoryTable()
 			:SetBackdropColor(0,0,0,1)
 			:SetBackdropBorderColor(0.5,0.5,0.5,1)
 			:SetTextColor(0.97,0.97,1,1)
+			:SetScript("OnEditFocusGained", EditBox_HighlightText)
+			:SetScript("OnEditFocusLost", EditBox_ClearHighlight)
 			:SetScript("OnTabPressed", function() Appraiser:TabKeyNavigation(container,TAB_NAVIGATION_INVENTORY,"buyoutsilver") end)
-			:SetScript("OnTextChanged", function(self,user) if not user then return end  Appraiser:SellPriceManual() end)
+			:SetScript("OnTextChanged", function(self,user) if not user then return end  Appraiser:SetManualSellPrice() end)
 			.__END
 		container.buyoutcopper = CHAIN(ui:Create("EditBox",container.details))
 			:SetSize(20,17)
@@ -605,8 +639,10 @@ function Appraiser:MakeInventoryTable()
 			:SetBackdropColor(0,0,0,1)
 			:SetBackdropBorderColor(0.5,0.5,0.5,1)
 			:SetTextColor(1,0.66,0.60,1)
+			:SetScript("OnEditFocusGained", EditBox_HighlightText)
+			:SetScript("OnEditFocusLost", EditBox_ClearHighlight)
 			:SetScript("OnTabPressed", function() Appraiser:TabKeyNavigation(container,TAB_NAVIGATION_INVENTORY,"buyoutcopper") end)
-			:SetScript("OnTextChanged", function(self,user) if not user then return end  Appraiser:SellPriceManual() end)
+			:SetScript("OnTextChanged", function(self,user) if not user then return end  Appraiser:SetManualSellPrice() end)
 			.__END
 
 	container.UndercutDropdownLabel = CHAIN(container.details:CreateFontString())
@@ -634,7 +670,7 @@ function Appraiser:MakeInventoryTable()
 		for optnum,opt in ipairs(AH_UNDERCUT_OPTIONS) do
 			local item = container.UndercutDropdown:AddItem(opt[1],opt[2],function(item)
 				ZGV.db.profile.appraiser_undercut = item.userdata.value
-				ZGV.Gold.Appraiser:UpdateSellPrice()
+				ZGV.Gold.Appraiser:UpdateSellPriceFields()
 				ZGV.Gold.Appraiser.needToUpdate = true
 			end)
 		end
@@ -678,7 +714,7 @@ function Appraiser:MakeInventoryTable()
 			:SetPoint("LEFT",container.demandlabel ,"RIGHT",5,0)
 			:SetJustifyH("RIGHT")
 			:SetWidth(100)
-			:SetText("n\\a")
+			:SetText("n/a")
 			.__END
 	container.histhighlabel = CHAIN(container.details:CreateFontString())
 		:SetFont(FONT,12)
@@ -692,7 +728,7 @@ function Appraiser:MakeInventoryTable()
 			:SetPoint("LEFT",container.histhighlabel ,"RIGHT",5,0)
 			:SetJustifyH("RIGHT")
 			:SetWidth(100)
-			:SetText("n\\a")
+			:SetText("n/a")
 			.__END
 	container.histmedlabel = CHAIN(container.details:CreateFontString())
 		:SetFont(FONT,12)
@@ -706,7 +742,7 @@ function Appraiser:MakeInventoryTable()
 			:SetPoint("LEFT",container.histmedlabel ,"RIGHT",5,0)
 			:SetJustifyH("RIGHT")
 			:SetWidth(100)
-			:SetText("n\\a")
+			:SetText("n/a")
 			.__END
 	container.histlowlabel = CHAIN(container.details:CreateFontString())
 		:SetFont(FONT,12)
@@ -720,7 +756,7 @@ function Appraiser:MakeInventoryTable()
 			:SetPoint("LEFT",container.histlowlabel ,"RIGHT",5,0)
 			:SetJustifyH("RIGHT")
 			:SetWidth(100)
-			:SetText("n\\a")
+			:SetText("n/a")
 			.__END
 	container.estvallabel = CHAIN(container.details:CreateFontString())
 		:SetFont(FONT,12)
@@ -734,7 +770,7 @@ function Appraiser:MakeInventoryTable()
 			:SetPoint("LEFT",container.estvallabel ,"RIGHT",5,0)
 			:SetJustifyH("RIGHT")
 			:SetWidth(100)
-			:SetText("n\\a")
+			:SetText("n/a")
 			.__END
 
 	container.aucmodelgroup = ui:Create("RadioButtonGroup")
@@ -768,7 +804,7 @@ function Appraiser:MakeInventoryTable()
 		:SetPoint("TOPLEFT",container.InventoryAuctionList ,"BOTTOMLEFT",0,-6)
 		:SetFont(FONT,12)
 		:SetText("Reset to Est. Value")
-		:SetScript("OnClick", function() Appraiser:ResetSellData() end)
+		:SetScript("OnClick", function() Appraiser:ResetSellFields() end)
 	.__END
 
 	container.postbutton = CHAIN(ui:Create("Button",container,nil,2))
@@ -776,7 +812,7 @@ function Appraiser:MakeInventoryTable()
 		:SetSize(100,20)
 		:SetText("Post")
 		:SetFont(FONTBOLD,14)
-		:SetScript("OnClick",function(me) Appraiser:StartAuction() end)
+		:SetScript("OnClick", function(self) if not self.soft_disabled then Appraiser:StartAuction() end end)    -- soft_disabled doesn't have a visual effect, but at least it works.
 	.__END
 
 	container.aucpostfee = CHAIN(container.details:CreateFontString())
@@ -810,14 +846,14 @@ function Appraiser:MakeBuyTable()
 		Appraiser.needToUpdate=true
 	end)
 
-	for n=1,BUY_INVENTORY_DATA.ROW_COUNT do
-		container.ShoppingList.rows[n].status:SetTexture(ZGV.DIR.."\\Skins\\goldpricestatusicons")
-		container.ShoppingList.rows[n]:SetScript("OnClick",function(self,button)
-			if container.ShoppingList.rows[n].item then
+	for _,row in pairs(container.ShoppingList.rows) do
+		row.status:SetTexture(ZGV.DIR.."\\Skins\\goldpricestatusicons")
+		row:SetScript("OnClick",function(self,button)
+			if row.item then
 				if button == "LeftButton" then
-					Appraiser:ActivateBuyItem(container.ShoppingList.rows[n].item)
+					Appraiser:ActivateBuyItem(row.item)
 				elseif button == "RightButton" then
-					Appraiser:ShoppingRowMenu(container.ShoppingList.rows[n])
+					Appraiser:ShoppingRowMenu(row)
 				end
 			end
 		end)
@@ -842,9 +878,11 @@ function Appraiser:MakeBuyTable()
 		Appraiser.ShoppingAuctionOffset=math.round(offset)
 		Appraiser.needToUpdate=true
 	end)
-	for n=1,BUY_AUCTIONS_DATA.ROW_COUNT do
-		container.ShoppingAuctionList.rows[n]:SetScript("OnClick",function()
-			Appraiser:SetBuyoutToAuction(container.ShoppingAuctionList.rows[n])
+	for _,row in pairs(container.ShoppingAuctionList.rows) do
+		row:SetScript("OnClick",function()
+			if CanSendAuctionQuery() then
+				Appraiser:SetBuyoutToAuction(row)
+			end
 		end)
 	end
 
@@ -869,9 +907,9 @@ function Appraiser:MakeBuyTable()
 		:SetPoint("TOPLEFT",container.ShoppingList,"BOTTOMLEFT", 0, -6)
 		:SetFont(FONT,12)
 		:SetText("Appraise all")
-		:SetScript("OnClick", function() if not self.soft_disabled then Appraiser:UpdateBuyPrices() end end)
+		:SetScript("OnClick", function(self) if not self.soft_disabled then Appraiser:UpdateBuyPrices() end end)
 		:SetScript("OnEnter",function(self) 
-			CHAIN(GameTooltip):SetOwner(self, "ANCHOR_BOTTOM") 
+			CHAIN(GameTooltip):SetOwner(self, "ANCHOR_TOP") 
 			:SetText(type(self.tooltip)=="function" and self:tooltip() or tostring(self.tooltip)) 
 			:Show() 
 			end)
@@ -891,9 +929,9 @@ function Appraiser:MakeBuyTable()
 		:SetPoint("TOPRIGHT",container.ShoppingList,"BOTTOMRIGHT", 0, -6)
 		:SetFont(FONT,12)
 		:SetText("Add item")
-		:SetScript("OnClick", function() Appraiser:ToggleSearchFrame() end)
+		:SetScript("OnClick", function(self) Appraiser:ShowSearchFrame(true) end)
 		:SetScript("OnEnter",function(self) 
-			CHAIN(GameTooltip):SetOwner(self, "ANCHOR_BOTTOM") 
+			CHAIN(GameTooltip):SetOwner(self, "ANCHOR_TOP") 
 			:SetText("Add item to shopping list") 
 			:Show() 
 			end)
@@ -911,9 +949,9 @@ function Appraiser:MakeBuyTable()
 		:SetBackdropColor(0,0,0,0)
 		:SetBackdropBorderColor(0,0,0,0)
 		:SetScript("OnEnter",function()
-			if Appraiser.ActiveShoppingItem and Appraiser.ActiveShoppingItem.itemid then
+			if Appraiser.SelectedShoppingItem and Appraiser.SelectedShoppingItem.itemid then
 				GameTooltip:SetOwner(container.activeIconOverlay,"ANCHOR_RIGHT")
-				GameTooltip:SetItemByID(Appraiser.ActiveShoppingItem.itemid )
+				GameTooltip:SetItemByID(Appraiser.SelectedShoppingItem.itemid )
 				GameTooltip:Show()
 			end
 		end)
@@ -964,7 +1002,7 @@ function Appraiser:MakeBuyTable()
 			:SetPoint("LEFT",container.nextbuyoutlabel ,"RIGHT",5,0)
 			:SetJustifyH("LEFT")
 			:SetWidth(150)
-			:SetText("n\\a")
+			:SetText("n/a")
 			.__END
 	container.amountbuyout = CHAIN(container.details:CreateFontString())
 		:SetFont(FONT,12)
@@ -994,7 +1032,7 @@ function Appraiser:MakeBuyTable()
 			:SetPoint("LEFT",container.histhighlabel ,"RIGHT",5,0)
 			:SetJustifyH("RIGHT")
 			:SetWidth(100)
-			:SetText("n\\a")
+			:SetText("n/a")
 			.__END
 	container.histmedlabel = CHAIN(container.details:CreateFontString())
 		:SetFont(FONT,12)
@@ -1008,7 +1046,7 @@ function Appraiser:MakeBuyTable()
 			:SetPoint("LEFT",container.histmedlabel ,"RIGHT",5,0)
 			:SetJustifyH("RIGHT")
 			:SetWidth(100)
-			:SetText("n\\a")
+			:SetText("n/a")
 			.__END
 	container.histlowlabel = CHAIN(container.details:CreateFontString())
 		:SetFont(FONT,12)
@@ -1022,7 +1060,7 @@ function Appraiser:MakeBuyTable()
 			:SetPoint("LEFT",container.histlowlabel ,"RIGHT",5,0)
 			:SetJustifyH("RIGHT")
 			:SetWidth(100)
-			:SetText("n\\a")
+			:SetText("n/a")
 			.__END
 	container.estvallabel = CHAIN(container.details:CreateFontString())
 		:SetFont(FONT,12)
@@ -1036,7 +1074,7 @@ function Appraiser:MakeBuyTable()
 			:SetPoint("LEFT",container.estvallabel ,"RIGHT",5,0)
 			:SetJustifyH("RIGHT")
 			:SetWidth(100)
-			:SetText("n\\a")
+			:SetText("n/a")
 			.__END
 
 	container.estvalreset = CHAIN(ui:Create("Button",container.details))
@@ -1044,10 +1082,10 @@ function Appraiser:MakeBuyTable()
 		:SetPoint("TOPLEFT",container.ShoppingAuctionList ,"BOTTOMLEFT",0,-6)
 		:SetFont(FONT,12)
 		:SetText("Reset to suggested buyout")
-		:SetScript("OnClick", function() Appraiser:ResetBuyoutToAuction() end)
+		:SetScript("OnClick", function()  Appraiser:ResetBuyoutToAuction() end)
 	.__END
 
-	container.postbutton = CHAIN(ui:Create("Button",containerDetails,nil,2))
+	container.buybutton = CHAIN(ui:Create("Button",containerDetails,nil,2))
 		:SetPoint("TOPRIGHT",container.ShoppingAuctionList ,"BOTTOMRIGHT",0,-6)
 		:SetSize(100,20)
 		:SetText("Buy")
@@ -1059,6 +1097,15 @@ function Appraiser:MakeBuyTable()
 			:Show() 
 			end)
 		:SetScript("OnLeave",function(self) GameTooltip:Hide() end)
+	.__END
+
+	container.debugbutton = CHAIN(ui:Create("Button",container))
+		:SetPoint("BOTTOMRIGHT",container.ShoppingList ,"TOPRIGHT",0,-6)
+		:SetSize(100,20)
+		:SetText("DEBUG")
+		:SetFont(FONTBOLD,14)
+		:SetScript("OnClick",function(me) if Spoo then Spoo(nil,nil,Appraiser.ShoppingItems) end end)
+		:SetShown(ZGV.db.profile.debug_display)
 	.__END
 
 
@@ -1086,7 +1133,7 @@ function Appraiser:MakeBuyTable()
 		:SetWordWrap(false)
 		:SetText("No results.")
 		.__END
-	containerSearch.decor = CHAIN(ui:Create("Frame",containerSearch,"ZASDASDADASD"))
+	containerSearch.decor = CHAIN(ui:Create("Frame",containerSearch))
 		:SetPoint("TOPLEFT",containerSearch.activeName	,"BOTTOMLEFT",0,-6)
 		:SetSize(438,1)
 		:SetFrameLevel(containerSearch:GetFrameLevel()+3)
@@ -1118,6 +1165,8 @@ function Appraiser:MakeBuyTable()
 			:SetBackdropColor(0,0,0,1)
 			:SetBackdropBorderColor(0.5,0.5,0.5,1)
 			:SetTextColor(1,1,1,1)
+			:SetScript("OnEditFocusGained", EditBox_HighlightText)
+			:SetScript("OnEditFocusLost", EditBox_ClearHighlight)
 			:SetScript("OnTabPressed", function() Appraiser:TabKeyNavigation(containerSearch,TAB_NAVIGATION_SEARCH,"searchname") end)
 			:SetScript("OnEnterPressed",function(me) Appraiser:FindMatchingAuctions() end)
 			.__END
@@ -1138,6 +1187,8 @@ function Appraiser:MakeBuyTable()
 			:SetBackdropColor(0,0,0,1)
 			:SetBackdropBorderColor(0.5,0.5,0.5,1)
 			:SetTextColor(1,0.93,0,1)
+			:SetScript("OnEditFocusGained", EditBox_HighlightText)
+			:SetScript("OnEditFocusLost", EditBox_ClearHighlight)
 			:SetScript("OnTabPressed", function() Appraiser:TabKeyNavigation(containerSearch,TAB_NAVIGATION_SEARCH,"pricegold") end)
 			.__END
 		containerSearch.pricesilver = CHAIN(ui:Create("EditBox",containerSearch))
@@ -1149,6 +1200,8 @@ function Appraiser:MakeBuyTable()
 			:SetBackdropColor(0,0,0,1)
 			:SetBackdropBorderColor(0.5,0.5,0.5,1)
 			:SetTextColor(0.97,0.97,1,1)
+			:SetScript("OnEditFocusGained", EditBox_HighlightText)
+			:SetScript("OnEditFocusLost", EditBox_ClearHighlight)
 			:SetScript("OnTabPressed", function() Appraiser:TabKeyNavigation(containerSearch,TAB_NAVIGATION_SEARCH,"pricesilver") end)
 			.__END
 		containerSearch.pricecopper = CHAIN(ui:Create("EditBox",containerSearch))
@@ -1160,6 +1213,8 @@ function Appraiser:MakeBuyTable()
 			:SetBackdropColor(0,0,0,1)
 			:SetBackdropBorderColor(0.5,0.5,0.5,1)
 			:SetTextColor(1,0.66,0.60,1)
+			:SetScript("OnEditFocusGained", EditBox_HighlightText)
+			:SetScript("OnEditFocusLost", EditBox_ClearHighlight)
 			:SetScript("OnTabPressed", function() Appraiser:TabKeyNavigation(containerSearch,TAB_NAVIGATION_SEARCH,"pricecopper") end)
 			.__END
 
@@ -1193,12 +1248,12 @@ function Appraiser:MakeBuyTable()
 		Appraiser.SearchResultsOffset=math.round(offset)
 		Appraiser.needToUpdate=true
 	end)
-	for n=1,BUY_SEARCH_DATA.ROW_COUNT do
-		containerSearch.SearchResultList.rows[n].action:SetScript("OnClick",function()
-			Appraiser:SaveSearchItem(containerSearch.SearchResultList.rows[n].item)
+	for _,row in pairs(containerSearch.SearchResultList.rows) do
+		row.action:SetScript("OnClick",function()
+			Appraiser:SaveSearchItem(row.item)
 		end)
-		containerSearch.SearchResultList.rows[n]:SetScript("OnClick",function()
-			Appraiser:SaveSearchItem(containerSearch.SearchResultList.rows[n].item)
+		row:SetScript("OnClick",function()
+			Appraiser:SaveSearchItem(row.item)
 		end)
 	end
 
@@ -1223,7 +1278,7 @@ function Appraiser:MakeBuyTable()
 		:SetPoint("TOPLEFT",containerSearch.SearchResultList ,"BOTTOMLEFT",0,-6)
 		:SetFont(FONT,12)
 		:SetText("Clear search results")
-		:SetScript("OnClick", function() Appraiser:ClearSearchData() end)
+		:SetScript("OnClick", function() Appraiser:ClearSearchLabels() end)
 	.__END
 
 	containerSearch.searchbutton = CHAIN(ui:Create("Button",containerSearch,nil,2))
@@ -1254,6 +1309,30 @@ function Appraiser:MakeBuyTable()
 	container.containerSearch:Show()
 
 	return container
+end
+
+function Appraiser:ShowItemTooltip(item)
+	if not item then return end
+
+	local link = item.link or item.itemlink
+	local BattlePetId,BattlePetLevel,BattlePetRarity,BattlePetHP,BattlePetAtt,BattlePetSpeed,_,BattlePetName
+
+	if link then 
+		_,_,_,BattlePetId,BattlePetLevel,BattlePetRarity,BattlePetHP,BattlePetAtt,BattlePetSpeed,_,BattlePetName = string.find(link,"(.*)battlepet:(%d+):(%d+):(%d+):(%d+):(%d+):(%d+):(.*)%[(.*)%]")
+	end
+
+	if BattlePetId then -- battle pet
+		BattlePetToolTip_Show(tonumber(BattlePetId), tonumber(BattlePetLevel), tonumber(BattlePetRarity), tonumber(BattlePetHP), tonumber(BattlePetAtt), tonumber(BattlePetSpeed), BattlePetName) 
+		return 
+	else
+		if item.bag then 
+			GameTooltip:SetBagItem(item.bag,item.slot) 
+		elseif link then
+			GameTooltip:SetHyperlink(link)
+		else
+			GameTooltip:SetItemByID(item.itemid) 
+		end
+	end
 end
 
 function Appraiser:ActivateTab(tabname)
@@ -1321,6 +1400,21 @@ local function OldColor(timestamp,red,yellow)
 	end
 end
 
+local locale_hourly_intervals = {
+	enUS = 2,
+	esMX = 2,
+	ptBR = 2,
+	enGB = 1,
+	frFR = 1,
+	deDE = 1,
+	ruRU = 1,
+	itIT = 1,
+	esES = 1,
+	koKR = 0.5,
+	zhTW = 0.5,
+	zhCN = 0.5
+}
+
 function Appraiser:UpdateTimeStamp()
 	if not self.MainFrame then return end
 	if not self.lastScanTime then self.lastScanTime = time() end
@@ -1330,7 +1424,12 @@ function Appraiser:UpdateTimeStamp()
 
 	if ZGVG.Scan.db.realm.LastScan then
 		updateTitletext = "LAST UPDATED:"
-		timestamptext = ("|c%s%s|r"):format(OldColor(ZGV.db.realm.LastScan,3600*2,60*10), ui.GetTimeStamp(ZGV.db.realm.LastScan))
+		local hourly_interval = locale_hourly_intervals[GetLocale()] or 1
+		if ZGV.do_hourly_intervals then
+			timestamptext = ("|c%s%s|r"):format(OldColor(ZGV.db.realm.LastScan,hourly_interval*3600*2,hourly_interval*3600), ui.GetTimeStamp(ZGV.db.realm.LastScan))
+		else
+			timestamptext = ("|c%s%s|r"):format(OldColor(ZGV.db.realm.LastScan,3600*2,60*10), ui.GetTimeStamp(ZGV.db.realm.LastScan))
+		end
 		if time()-ZGV.db.realm.LastScan > 3600*2 then
 			timestamptext = timestamptext .. "|r - " .. L["gold_app_old_scan_data"]
 		end
@@ -1354,67 +1453,141 @@ function Appraiser:UpdateTimeStamp()
 		end
 	end
 
-	local local_time = debugprofilestop()
-	local progress_dots = ""
+	local Scan = ZGV.Gold.Scan
 
-	if (math.floor(local_time%1500) < 500) then
-		progress_dots = "."
-	elseif local_time%1500 < 1000 then
-		progress_dots = ".."
-	else
-		progress_dots = "..."
-	end
 
-	local data_text = "auctions"
-
+	local page_text = ""
+	--[[
 	if Appraiser.oldstate ~= ZGV.Gold.Scan.state then
 		Appraiser.oldstate = ZGV.Gold.Scan.state
 		if Appraiser.oldstate == "SS_QUERYING" then
 			Appraiser.pagenum = (Appraiser.pagenum or 0) + 1
 		end
 	end
-
-	local page_text = ""
 	if Appraiser.pagenum then
-		page_text = "page "..Appraiser.pagenum.." of "
+		page_text = " - page "..Appraiser.pagenum
+	end
+	--]]
+	if (Scan.queried_by_name or Scan.queried_by_partial_name or Scan.queried_by_link) and Scan.scan_pages>1 then
+		page_text = (" - page %d of %d"):format(Scan.scan_page,Scan.scan_pages)
+	end
+	--page_text = Scan.scan_page
+
+	local data_text = "All auctions"
+	if (Scan.queried_by_name or Scan.queried_by_partial_name or Scan.queried_by_link) then
+		data_text = (Scan.queried_by_name or Scan.queried_by_partial_name or Scan.queried_by_link) or ""
+	elseif self.manualScanning then
+		data_text = self.manualScanningName or ""
+		page_text = ""
+	elseif self.UpdateScanRunningName then
+		data_text = self.UpdateScanRunningName
+		page_text = ""
+	elseif self.BuyOutSearchName then
+		data_text = self.BuyOutSearchName
+		page_text = ""
 	end
 
-	if Appraiser.manualScanning then
-		data_text = page_text..(Appraiser.manualScanningName or "")
-	end
-	if Appraiser.UpdateScanRunningName then
-		data_text = page_text..self.UpdateScanRunningName
-	end
-	if Appraiser.BuyOutSearchName then
-		data_text = page_text..Appraiser.BuyOutSearchName
+
+	local progress_dots = math.floor((debugprofilestop()-Scan.last_scan_start_time)%2000 / 500)+1  -- 1..4
+	local progress = string.rep(".",progress_dots)
+	local preprogress = ""
+
+	if not (Scan.queried_by_name or Scan.queried_by_partial_name or Scan.queried_by_link) then
+		-- long scan, provide progress %
+		if Scan.state =="SS_SCANNING" then
+			progress = (" %d%%"):format((Scan.scan_progress or 0)*100)
+		elseif Scan.state =="SS_ANALYZING" then
+			progress = (" %d%%"):format((Scan.analysis_progress or 0)*100)
+		end
+	elseif self.manualScanning then
+		preprogress = ("%d/%d: "):format(self.manualScanningDone,self.manualScanningTotal)
+	elseif self.manualBuyScanning then
+		preprogress = ("%d/%d: "):format(self.manualBuyScanningDone,self.manualBuyScanningTotal)
 	end
 
-
-
-	if ZGV.Gold.Scan.state == "SS_QUERYING" then
+	if Scan.state == "SS_QUERYING" then
 		updateTitletext = "|cffff0000SCANNING:|r"
-		timestamptext = "Querying "..data_text.." data (stage 1/4)" .. progress_dots
-	elseif ZGV.Gold.Scan.state =="SS_RECEIVING" then
+		if (Scan.queried_by_name or Scan.queried_by_partial_name or Scan.queried_by_link) then
+			timestamptext = preprogress .. data_text .. page_text .. (ZGV.db.profile.debug_display and " [stage 1/3: querying]" or "") .. progress
+		else
+			timestamptext = preprogress .. data_text .. (ZGV.db.profile.debug_display and " [stage 1/3: querying]" or " (initiating)") .. progress
+		end
+	elseif Scan.state =="SS_RECEIVING" then
+		-- stage deprecated.
+		--updateTitletext = "|cffff0000SCANNING:|r"
+		--timestamptext = data_text .. page_text .. " (stage 2/4: receiving)" .. progress
+	elseif Scan.state =="SS_SCANNING" then
 		updateTitletext = "|cffff0000SCANNING:|r"
-		timestamptext = "Receiving "..data_text.." data (stage 2/4)"  .. progress_dots
-	elseif ZGV.Gold.Scan.state =="SS_SCANNING" then
+		timestamptext = preprogress .. data_text .. page_text .. (ZGV.db.profile.debug_display and " [stage 2/3: scanning]" or "") .. progress
+	elseif Scan.state =="SS_ANALYZING" then
 		updateTitletext = "|cffff0000SCANNING:|r"
-		timestamptext = "Scanning "..data_text.." data (stage 3/4, " .. ("%d"):format((ZGV.Gold.Scan.scan_progress or 0)*100) .. "%)" .. progress_dots
-	elseif ZGV.Gold.Scan.state =="SS_ANALYZING" then
-		updateTitletext = "|cffff0000SCANNING:|r"
-		timestamptext = "Analyzing "..data_text.." data (stage 4/4)" .. progress_dots
-	elseif Appraiser.ScanIsRunning or Appraiser.ActiveShoppingAddItem or Appraiser.ScanItems and next(Appraiser.ScanItems) then
+		timestamptext = preprogress .. data_text .. page_text .. (ZGV.db.profile.debug_display and " [stage 3/3: analyzing]" or "") .. progress
+	elseif Appraiser.ScanIsRunning or Appraiser.ActiveShoppingAddItem or (Appraiser.ScanItems and next(Appraiser.ScanItems)) then
 		-- show Analyzing to avoid idle flashes
 		updateTitletext = "|cffff0000SCANNING:|r"
-		timestamptext = "Analyzing "..data_text.." data" .. progress_dots
-	elseif ZGV.Gold.Scan.state =="SS_IDLE" then
-		Appraiser.pagenum = nil
+		timestamptext = preprogress .. data_text .. page_text .. " (awaiting next item)" .. progress
+	elseif Scan.state =="SS_IDLE" then
 	end
 
-
+	if ZGV.db.profile.debug_display then  updateTitletext = updateTitletext .. " [" .. Scan.state .. ", " .. (Appraiser.manualScanning and "manual " or "") .. (Appraiser.manualBuyScanning and "manualbuy " or "") .. "]"  end
 
 	self.MainFrame.FooterUpdated:SetText(updateTitletext)
 	self.MainFrame.FooterUpdatedTime:SetText(timestamptext)
+end
+
+local last_pages=0
+function Appraiser:UpdateProgressBar()
+	local pf = self.MainFrame.progressFrame
+
+	local scanprogress
+	local Scan = ZGV.Gold.Scan
+	if Scan.state=="SS_QUERYING" then
+		scanprogress=0.1
+	elseif Scan.state=="SS_NEEDTOQUERY" then
+			scanprogress=0.1
+	elseif Scan.state=="SS_RECEIVING" then
+		scanprogress=0.1
+	elseif Scan.state=="SS_SCANNING" then
+		scanprogress=0.1+0.8*(Scan.scan_progress or 0) -- 10 to 90
+		--[[
+		local total_pages = math.ceil((Scan.total_count or 0)/50)
+		if total_pages and total_pages>0 then
+			local current_page = Scan.scan_page or 0
+			pf:SetPercent(current_page/total_pages*100)
+		else
+			pf:SetPercent(0)
+		end
+		--]]
+	elseif Scan.state =="SS_ANALYZING" then
+		scanprogress=0.9+0.1*(Scan.analysis_progress or 0) -- 90 to 100
+	else
+		scanprogress=0
+	end
+
+	--print(("msd=%d mst=%d mbsd=%d mbst=%d  %s + scanprogress %.1f"):format(self.manualScanningDone or -1,self.manualScanningTotal or -1, self.manualBuyScanningDone or -1,self.manualBuyScanningTotal or -1,Scan.state,scanprogress))
+
+	if Scan.scan_pages and Scan.scan_pages>0 then last_pages=Scan.scan_pages end -- make sure it doesn't reset to 0. Just reuse the last value...
+	local page=max(1,Scan.scan_page)
+	local pages=max(page,last_pages)
+
+	--if self.ActiveTab == "Inventory" then
+		if self.manualScanning then
+			if Scan.state=="SS_IDLE" then scanprogress=0.9 end  -- SS_IDLE happens AFTER a scan, not before
+			if pages>1 and pages<1000 then scanprogress = (((page-2)/pages) + (1/pages))*scanprogress end
+			pf:SetPercent(((self.manualScanningDone-1+scanprogress)/self.manualScanningTotal) * 100)
+		elseif self.manualBuyScanning then
+			if Scan.state=="SS_IDLE" then scanprogress=0.9 end
+			if pages>1 and pages<1000 then scanprogress = (((page-2)/pages) + (1/pages))*scanprogress end
+			pf:SetPercent(((self.manualBuyScanningDone-1+scanprogress)/self.manualBuyScanningTotal) * 100)
+		elseif pages>1 and pages<1000 and (Scan.state=="SS_QUERYING" or Scan.state=="SS_NEEDTOQUERY" or Scan.state=="SS_RECEIVING" or Scan.state=="SS_SCANNING" or Scan.state=="SS_ANALYZING") then
+			scanprogress = (((page-2)/pages) + (1/pages))
+			pf:SetPercent(scanprogress*100)
+		else
+			pf:SetPercent(scanprogress*100)
+		end
+	--else
+--		pf:SetPercent(0)
+--	end
 end
 
 function Appraiser:ShowDisabledTooltip(object)
@@ -1451,6 +1624,11 @@ function Appraiser:OnNonZygorClick()
 	AuctionFrameMoneyFrame:Show()
 	AuctionFrameCloseButton:Show()
 	AuctionPortraitTexture:Show()
+	if not IsShiftKeyDown() then
+		self:DeactivateBuyItem()
+		self:AbortManualScan()
+		Scan:SetState("SS_IDLE")
+	end
 	self.MainFrame:Hide()
 end
 
@@ -1533,5 +1711,27 @@ function Appraiser:ToggleHelpPage()
 		Appraiser:ShowHelpPage()
 	else
 		Appraiser:HideHelpPage()
+	end
+end
+
+function Appraiser:ApplyDebugDisplay()
+	if self.Buy_Frame then self.Buy_Frame.debugbutton:SetShown(ZGV.db.profile.debug_display) end
+end
+
+function Appraiser:ScrollToSellingItem()
+	for ri,row in ipairs(self.Inventory_Frame.InventoryList.rows) do
+		if row.item==self.ActiveSellingItem then return end  -- it's visible, never mind
+	end
+	-- scroll to show index'th row
+	local index = self:GetSellingItemIndex(self.ActiveSellingItem)
+	local count=#self.InventoryItems
+	local halfrows=floor(self.Inventory_Frame.InventoryList:CountRows()/2)
+	self.InventoryOffset=min(max(index,halfrows),count-halfrows)-halfrows
+	self.needToUpdate=true
+end
+
+function Appraiser:GetSellingItemIndex(curitem)
+	for ri,item in ipairs(self.InventoryItems) do
+		if item==curitem then return ri end
 	end
 end

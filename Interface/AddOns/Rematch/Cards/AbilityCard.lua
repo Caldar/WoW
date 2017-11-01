@@ -38,15 +38,12 @@ function rematch:ShowAbilityCard(parent,petID,abilityID)
 
 	local tooltip = FloatingPetBattleAbilityTooltip
 	if petID and abilityID then
-		local _,maxHealth,power,speed
-		if type(petID)=="table" then
-			maxHealth,power,speed = petID.health, petID.power, petID.speed
-		elseif type(petID)=="string" then
-			_,maxHealth,power,speed = C_PetJournal.GetPetStats(petID)
+		local petInfo = rematch.petInfo:Fetch(petID)
+		local maxHealth,power,speed = petInfo.maxHealth or 100,petInfo.power or 0,petInfo.speed or 0
+		if petInfo.owned then		
 			card.TitleBG:SetDesaturated(false)
 			card.Hints.HintsBG:SetDesaturated(false)
 		else
-			maxHealth,power,speed = 100,0,0 -- missing pets are weak!
 			card.TitleBG:SetDesaturated(true)
 			card.Hints.HintsBG:SetDesaturated(true)
 		end
@@ -85,7 +82,11 @@ function rematch:ShowAbilityCard(parent,petID,abilityID)
 		end
 		card.Cooldown:SetShown(hasCooldown)
 
-		card.Description:SetText(tooltip.Description:GetText())
+      local description = tooltip.Description:GetText()
+      if RematchSettings.ShowSpeciesID and abilityID then
+         description = format(L["%s\n\n\124TInterface\\WorldMap\\Gear_64Grey:16:16:0:0:64:64:8:56:6:57\124t %sAbility ID: %d"],description,rematch.hexGrey,abilityID)
+      end
+		card.Description:SetText(description)
 		if not bottom then
 			card.Description:SetPoint("TOPLEFT",card.Duration,"TOPLEFT")
 		else
@@ -144,7 +145,16 @@ function rematch:ChatLinkAbility()
 		if rematch:GetIDType(petID)=="pet" then
 			_,maxHealth,power,speed = C_PetJournal.GetPetStats(petID)
 		end
-		ChatEdit_InsertLink(GetBattlePetAbilityHyperlink(abilityID,maxHealth,power,speed))
+		local link = GetBattlePetAbilityHyperlink(abilityID,maxHealth,power,speed)
+		if link then
+			local _,abilityName = C_PetBattles.GetAbilityInfoByID(abilityID)
+			-- fix for [Brackets] not being in ability links in 7.2
+			if abilityName and not link:match("%[.+%]\124h\124r") then
+				-- add []s around abilityName if they don't already exist
+				link = link:gsub(rematch:DesensitizeText(abilityName),"["..abilityName.."]")
+			end
+			ChatEdit_InsertLink(link)
+		end
 		return true
 	end
 end

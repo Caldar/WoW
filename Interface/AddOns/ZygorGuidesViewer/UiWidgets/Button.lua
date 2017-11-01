@@ -62,21 +62,36 @@ function Button:New(parent,name,style)
 		:SetText(" ") -- Creates the fontstring for a button. Can't be nil or ""
 		:RegisterForClicks("LeftButtonUp")
 		-- No Highlight texture because it looks funny with text on the button.
-		:SetScript("OnEnter",function(self) self:SetBackdropColor(unpack(self.bdhcolor or SkinData(buttonHighlightColor))) end)
-		:SetScript("OnLeave",function(self) self:SetBackdropColor(unpack(self.bdcolor or SkinData(buttonBackdropColor))) end)
+		:EnableMouse(true)
+		:SetScript("OnEnter",function(self)
+			self:SetBackdropColor(unpack(self.bdhcolor or SkinData(buttonHighlightColor)))
+			if self.tooltip then
+				GameTooltip:SetOwner(self,"ANCHOR_BOTTOMLEFT")
+				GameTooltip:ClearAllPoints()
+				GameTooltip:ClearLines()
+				GameTooltip:SetText(type(self.tooltip)=="function" and self.tooltip(self) or self.tooltip)
+				GameTooltip:Show()
+				GameTooltip:SetWidth(300)
+				GameTooltip:Show()
+			end
+		end)
+		:SetScript("OnLeave",function(self)
+			self:SetBackdropColor(unpack(self.bdcolor or SkinData(buttonBackdropColor)))
+			if self.tooltip then GameTooltip:Hide() end
+		end)
 	.__END
 
 	if buttonBackdropEdgeColor then button:SetBackdropBorderColor(unpack(SkinData(buttonBackdropEdgeColor))) end
 
-	button.savedSetText = button.SetText
+	button.super = {}
+	for f,fun in pairs(self) do  if type(fun)=="function" then
+		if button[f] then button.super[f]=button[f] end
+		button[f]=fun
+	end end
 
 	CHAIN(button:GetFontString())
 		:SetFont(FONT,12)
 		:SetTextColor(1.0,1.0,1.0)
-
-	for f,fun in pairs(self) do
-		button[f]=fun
-	end
 
 	return button
 end
@@ -87,6 +102,11 @@ end
 
 function Button:EnableIf(condition)
 	if condition then self:Enable() else self:Disable() end 
+end
+
+function Button:SetEnabledIf(set)
+	self:GetNormalTexture():SetDesaturated(not set)
+	self.soft_disabled = not set
 end
 
 
@@ -107,6 +127,9 @@ function Button:SetHighlightBackdropColor(r,g,b,a)
 	self.bdhcolor[4] = a
 end
 
+function Button:SetTooltip(tooltip)
+	self.tooltip=tooltip
+end
 
 
 -- This can be used to make the button just big enough to hold the text. Updates the button size on text change.
@@ -143,7 +166,7 @@ function Button:SetTexture(tex)
 end
 
 function Button:SetText(text)
-	self:savedSetText(text)
+	self.super.SetText(self,text)
 	if self.matchSize then self:SetSize(self:GetStringWidth() + TEXTBUFFER,self:GetStringHeight() + TEXTBUFFER) end
 end
 

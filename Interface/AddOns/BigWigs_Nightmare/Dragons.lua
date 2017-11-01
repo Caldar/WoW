@@ -35,17 +35,13 @@ local markStacks = {
 	[203121] = 0, -- Mark of Taerar
 }
 local mythicAdd = 1
-
---------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:GetLocale()
+local infectionMarkerCount = 1
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
+local infectionMarker = mod:AddMarkerOption(false, "player", 1, 203787, 1, 2, 3, 4) -- Volatile Infection
 function mod:GetOptions()
 	return {
 		--[[ General ]]--
@@ -60,6 +56,7 @@ function mod:GetOptions()
 
 		--[[ Emeriss ]]--
 		{203787, "PROXIMITY", "SAY"}, -- Volatile Infection
+		infectionMarker,
 		205298, -- Essence of Corruption
 		205300, -- Corruption
 		204245, -- Corruption of the Dream
@@ -132,6 +129,7 @@ function mod:OnEngage()
 		[203121] = 0, -- Mark of Taerar
 	}
 	mythicAdd = 1
+	infectionMarkerCount = 1
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	self:Bar(203028, 17) -- Corrupted Breath
@@ -274,6 +272,12 @@ do
 			self:Bar(args.spellId, 45)
 		end
 
+		if self:GetOption(infectionMarker) then
+			SetRaidTarget(args.destName, infectionMarkerCount)
+			infectionMarkerCount = infectionMarkerCount + 1
+			if infectionMarkerCount > 4 then infectionMarkerCount = 1 end
+		end
+
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 			self:OpenProximity(args.spellId, 10)
@@ -286,6 +290,9 @@ function mod:VolatileInfectionRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CloseProximity(args.spellId)
 		self:StopBar(args.spellId, args.destName)
+	end
+	if self:GetOption(infectionMarker) then
+		SetRaidTarget(args.destName, 0)
 	end
 end
 
@@ -339,12 +346,12 @@ end
 
 function mod:BellowingRoar(args)
 	self:Message(args.spellId, "Important", "Alarm", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 6, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 6)
 	self:Bar(args.spellId, 51)
 end
 
 --[[ Mythic ]]--
-function mod:NightmareSouls(args)
+function mod:NightmareSouls()
 	local spell = mythicAdd == 1 and 214610 or mythicAdd == 2 and 214588 or 214604 -- Dream Essence: Hinterlands / Ashenvale / Feralas
 	local percentage = mythicAdd == 1 and "90% - " or mythicAdd == 2 and "60% - " or "30% - "
 	self:Message(-13460, "Neutral", "Long", percentage .. self:SpellName(spell), spell)

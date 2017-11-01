@@ -6,7 +6,7 @@ local unpack = unpack
 --WoW API / Variables
 local CreateFrame = CreateFrame
 
-function UF:Construct_Threat(frame, glow)
+function UF:Construct_Threat(frame)
 	local threat = CreateFrame("Frame", nil, frame)
 
 	--Main ThreatGlow
@@ -35,12 +35,12 @@ end
 
 function UF:Configure_Threat(frame)
 	if not frame.VARIABLES_SET then return end
-	local threat = frame.Threat
+	local threat = frame.ThreatIndicator
 	local db = frame.db
 
 	if db.threatStyle ~= 'NONE' and db.threatStyle ~= nil then
-		if not frame:IsElementEnabled('Threat') then
-			frame:EnableElement('Threat')
+		if not frame:IsElementEnabled('ThreatIndicator') then
+			frame:EnableElement('ThreatIndicator')
 		end
 
 		if db.threatStyle == "GLOW" then
@@ -71,7 +71,8 @@ function UF:Configure_Threat(frame)
 				end
 			end
 		elseif db.threatStyle == "ICONTOPLEFT" or db.threatStyle == "ICONTOPRIGHT" or db.threatStyle == "ICONBOTTOMLEFT" or db.threatStyle == "ICONBOTTOMRIGHT" or db.threatStyle == "ICONTOP" or db.threatStyle == "ICONBOTTOM" or db.threatStyle == "ICONLEFT" or db.threatStyle == "ICONRIGHT" then
-			threat:SetFrameStrata('HIGH')
+			threat:SetFrameStrata('LOW')
+			threat:SetFrameLevel(75) --Inset power uses 50, we want it to appear above that
 			local point = db.threatStyle
 			point = point:gsub("ICON", "")
 
@@ -86,8 +87,8 @@ function UF:Configure_Threat(frame)
 				frame.InfoPanel:SetFrameLevel(frame.Health:GetFrameLevel() + 3)
 			end
 		end
-	elseif frame:IsElementEnabled('Threat') then
-		frame:DisableElement('Threat')
+	elseif frame:IsElementEnabled('ThreatIndicator') then
+		frame:DisableElement('ThreatIndicator')
 	end
 end
 
@@ -131,7 +132,7 @@ function UF:UpdateThreat(unit, status, r, g, b)
 			self.texIcon:SetVertexColor(r, g, b)
 		end
 	else
-		r, g, b = unpack(E.media.bordercolor)
+		r, g, b = unpack(E.media.unitframeBorderColor)
 		if db.threatStyle == 'GLOW' then
 			self.glow:Hide()
 			self.powerGlow:Hide()

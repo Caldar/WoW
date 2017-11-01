@@ -20,8 +20,6 @@ function AS:Blizzard_Quest()
 	AS:SkinScrollBar(QuestRewardScrollFrameScrollBar)
 
 	AS:SkinButton(QuestFrameAcceptButton, true)
-	AS:SkinButton(QuestFrameDetailPanel.IgnoreButton, true)
-	AS:SkinButton(QuestFrameDetailPanel.UnignoreButton, true)
 	AS:SkinButton(QuestFrameDeclineButton, true)
 	AS:SkinButton(QuestFrameCompleteButton, true)
 	AS:SkinButton(QuestFrameGoodbyeButton, true)
@@ -34,7 +32,7 @@ function AS:Blizzard_Quest()
 
 	AS:StripTextures(QuestInfoRewardsFrame.SkillPointFrame)
 	AS:SkinTexture(QuestInfoRewardsFrame.SkillPointFrame.Icon)
-	QuestInfoRewardsFrame.SkillPointFrame.Icon:Size(QuestInfoRewardsFrame.SkillPointFrame.Icon:GetSize() - 4)
+	QuestInfoRewardsFrame.SkillPointFrame.Icon:SetSize(QuestInfoRewardsFrame.SkillPointFrame.Icon:GetSize() - 4, QuestInfoRewardsFrame.SkillPointFrame.Icon:GetSize() - 4)
 	AS:CreateBackdrop(QuestInfoRewardsFrame.SkillPointFrame)
 	QuestInfoRewardsFrame.SkillPointFrame.Backdrop:SetPoint('TOPLEFT', QuestInfoRewardsFrame.SkillPointFrame.Icon, 'TOPRIGHT', 0, 0)
 	QuestInfoRewardsFrame.SkillPointFrame.Backdrop:SetPoint('BOTTOMLEFT', QuestInfoRewardsFrame.SkillPointFrame.Icon, 'BOTTOMRIGHT', 0, 0)
@@ -44,14 +42,14 @@ function AS:Blizzard_Quest()
 	AS:SetTemplate(QuestInfoRewardsFrame.SkillPointFrame.Icon.Backdrop)
 	QuestInfoRewardsFrame.SkillPointFrame.Icon.Backdrop:SetBackdropColor(0, 0, 0, 0)
 	QuestInfoRewardsFrame.SkillPointFrame.Icon.Backdrop:SetOutside(QuestInfoRewardsFrame.SkillPointFrame.Icon)
-	QuestInfoRewardsFrame.SkillPointFrame:Width(QuestInfoRewardsFrame.SkillPointFrame.Icon:GetWidth() - 4)
+	QuestInfoRewardsFrame.SkillPointFrame:SetWidth(QuestInfoRewardsFrame.SkillPointFrame.Icon:GetWidth() - 4)
 	QuestInfoRewardsFrame.SkillPointFrame.ValueText:SetDrawLayer('OVERLAY', 7)
 
 	for i = 1, 6 do
 		local Button = _G["QuestProgressItem"..i]
 		AS:StripTextures(Button)
 		AS:SkinTexture(Button.Icon)
-		Button.Icon:Size(Button.Icon:GetSize() - 4)
+		Button.Icon:SetSize(Button.Icon:GetSize() - 4, Button.Icon:GetSize() - 4)
 		AS:CreateBackdrop(Button)
 		Button.Backdrop:SetPoint('TOPLEFT', Button.Icon, 'TOPRIGHT', 0, 0)
 		Button.Backdrop:SetPoint('BOTTOMLEFT', Button.Icon, 'BOTTOMRIGHT', 0, 0)
@@ -60,19 +58,19 @@ function AS:Blizzard_Quest()
 		AS:SetTemplate(Button.Icon.Backdrop)
 		Button.Icon.Backdrop:SetBackdropColor(0, 0, 0, 0)
 		Button.Icon.Backdrop:SetOutside(Button.Icon)
-		Button:Width(_G["QuestProgressItem"..i]:GetWidth() - 4)
+		Button:SetWidth(_G["QuestProgressItem"..i]:GetWidth() - 4)
 	end
 
-    hooksecurefunc("QuestInfo_GetRewardButton", function(rewardsFrame, index)
-    	local RewardButton = rewardsFrame.RewardButtons[index];
-    	if (not RewardButton.skinned) then
-    		RewardButton.NameFrame:Hide()
+	hooksecurefunc("QuestInfo_GetRewardButton", function(rewardsFrame, index)
+		local RewardButton = rewardsFrame.RewardButtons[index]
+		if (not RewardButton.skinned) then
+			RewardButton.NameFrame:Hide()
 			AS:CreateBackdrop(RewardButton)
 			RewardButton.Backdrop:SetPoint('TOPLEFT', RewardButton.Icon, 'TOPRIGHT', 0, 0)
 			RewardButton.Backdrop:SetPoint('BOTTOMLEFT', RewardButton.Icon, 'BOTTOMRIGHT', 0, 0)
 			RewardButton.Backdrop:SetPoint('RIGHT', RewardButton, 'RIGHT', -5, 0)
-    		AS:SkinTexture(RewardButton.Icon)
-			RewardButton.Icon:Size(RewardButton.Icon:GetSize() - 4)
+			AS:SkinTexture(RewardButton.Icon)
+			RewardButton.Icon:SetSize(RewardButton.Icon:GetSize() - 4, RewardButton.Icon:GetSize() - 4)
 			RewardButton.Icon.Backdrop = CreateFrame('Frame', nil, RewardButton)
 			AS:SetTemplate(RewardButton.Icon.Backdrop)
 			RewardButton.Icon.Backdrop:SetBackdropColor(0, 0, 0, 0)
@@ -105,13 +103,13 @@ function AS:Blizzard_Quest()
 				end
 			end)
 			RewardButton.skinned = true
-    	end
-    end)
+		end
+	end)
 
 	AS:SkinFrame(QuestNPCModel)
 	AS:SkinBackdropFrame(QuestNPCModelTextFrame)
-	QuestNPCModelTextFrame.Backdrop:Point("TOPLEFT", QuestNPCModel, "BOTTOMLEFT", 0, -2)
-	QuestNPCModelTextFrame.Backdrop:Point("TOPRIGHT", QuestNPCModel, "BOTTOMRIGHT", 0, -2)
+	QuestNPCModelTextFrame.Backdrop:SetPoint("TOPLEFT", QuestNPCModel, "BOTTOMLEFT", 0, -2)
+	QuestNPCModelTextFrame.Backdrop:SetPoint("TOPRIGHT", QuestNPCModel, "BOTTOMRIGHT", 0, -2)
 
 	AS:SkinFrame(QuestLogPopupDetailFrame)
 	AS:SkinButton(QuestLogPopupDetailFrameAbandonButton)
@@ -123,9 +121,15 @@ function AS:Blizzard_Quest()
 	AS:SkinScrollBar(QuestLogPopupDetailFrameScrollFrameScrollBar)
 	AS:SkinCloseButton(QuestLogPopupDetailFrameCloseButton)
 
+	AS:StripTextures(QuestLogPopupDetailFrame.ShowMapButton)
+ 	AS:SkinButton(QuestLogPopupDetailFrame.ShowMapButton)
+ 	QuestLogPopupDetailFrame.ShowMapButton.Text:ClearAllPoints()
+ 	QuestLogPopupDetailFrame.ShowMapButton.Text:SetPoint("CENTER", AS.Mult, 0)
+ 	QuestLogPopupDetailFrame.ShowMapButton:SetSize(QuestLogPopupDetailFrame.ShowMapButton:GetWidth() - 30, QuestLogPopupDetailFrame.ShowMapButton:GetHeight() - 5)
+
 	hooksecurefunc("QuestFrame_ShowQuestPortrait", function(parentFrame, portrait, text, name, x, y)
-		QuestNPCModel:ClearAllPoints();
-		QuestNPCModel:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", x + 18, y);			
+		QuestNPCModel:ClearAllPoints()
+		QuestNPCModel:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", x + 18, y)			
 	end)
 
 	if AS.ParchmentEnabled then
@@ -178,11 +182,19 @@ function AS:Blizzard_Quest()
 			QuestInfoObjectivesText:SetTextColor(1, 1, 1)
 			QuestInfoGroupSize:SetTextColor(1, 1, 1)
 			QuestInfoRewardText:SetTextColor(1, 1, 1)
-			QuestInfoRewardsFrame.ItemChooseText:SetTextColor(1, 1, 1);
-			QuestInfoRewardsFrame.ItemReceiveText:SetTextColor(1, 1, 1);
-			--QuestInfoRewardsFrame.SpellLearnText:SetTextColor(1, 1, 1);
-			QuestInfoRewardsFrame.PlayerTitleText:SetTextColor(1, 1, 1);
-			QuestInfoRewardsFrame.XPFrame.ReceiveText:SetTextColor(1, 1, 1);
+			QuestInfoRewardsFrame.ItemChooseText:SetTextColor(1, 1, 1)
+			QuestInfoRewardsFrame.ItemReceiveText:SetTextColor(1, 1, 1)
+
+			QuestInfoQuestType:SetTextColor(1, 1, 1)
+
+			if QuestInfoRewardsFrame.SpellLearnText then
+				QuestInfoRewardsFrame.SpellLearnText:SetTextColor(1, 1, 1)
+			end
+
+			QuestInfoRewardsFrame.spellHeaderPool.textR, QuestInfoRewardsFrame.spellHeaderPool.textG, QuestInfoRewardsFrame.spellHeaderPool.textB = 1, 1, 1
+
+			QuestInfoRewardsFrame.PlayerTitleText:SetTextColor(1, 1, 1)
+			QuestInfoRewardsFrame.XPFrame.ReceiveText:SetTextColor(1, 1, 1)
 			local numObjectives = GetNumQuestLeaderBoards()
 			local numVisibleObjectives = 0
 			for i = 1, numObjectives do

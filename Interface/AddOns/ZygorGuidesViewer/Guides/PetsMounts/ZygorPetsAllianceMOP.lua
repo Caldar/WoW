@@ -4,61 +4,22 @@ if UnitFactionGroup("player")~="Alliance" then return end
 if ZGV:DoMutex("PetsAMOP") then return end
 ZGV.CommonPets=true
 ZygorGuidesViewer.GuideMenuTier = "MOP"
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Dancing Water Skimmer",{
-pet=751,
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Aquatic Pets\\Dancing Water Skimmer",{
+author="support@zygorguides.com",
 description="This guide will walk you through obtaining the Aquatic pet: Dancing Water Skimmer",
+model={40584},
+pet=751,
 },[[
 step
 Challenge one to a pet battle and capture it
 |tip The Dancing Water Skimmers are around level 24.
 learnpet Dancing Water Skimmer##63847 |goto Vale of Eternal Blossoms 33.4,64.8
-modelnpc 63847
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Chi-Ji Kite",{
-pet=849,
-description="This guide will walk you through obtaining the Flying pet: Chi-ji Kite",
-},[[
-step
-|tip This pet requires you to either have level 600 Inscription, or purchase it from the Auction House.
-Click here to gather and create the pet yourself |confirm |next "create"
-Click here to be taken to the Auctioneer to purchase it |confirm |next "buy"
-step
-label "create"
-talk Catarina Stanford##30713
-learn Chi-Ji Kite##127009 |goto Stormwind City 49.8,74.0
-step
-map Valley of the Four Winds
-path 81.4,21.5	76.4,29.2	68.2,33.3
-path 70.6,41.8	65.1,60.1	57.6,65.6
-path 50.8,58.6	48.0,65.9	46.9,61.3
-path 42.5,58.3	33.6,62.1	28.1,72.7
-path 25.7,78.4	18.5,51.0	15.4,53.9
-path 12.8,44.7	14.3,41.2	14.8,35.8
-path 19.6,34.4	24.0,42.2	25.0,50.2
-path 30.1,55.7	35.8,54.8	41.5,48.9
-#include "follow_path_herbs"
-You need about 15 Shadow-giving herbs total
-collect Green Tea leaf##72234 |n
-collect Silkweed##72235 |n
-Mill the 15 herbs you gathered into Shadow Pigment |cast Milling##51005
-collect 4 Shadow Pigment##79251
-step
-talk Stanly McCormick##30730
-buy 1 Light Parchment##39354 |goto Stormwind City 49.8,74.2
-step
-create 1 Chi-ji Kite##89368
-next "done"
-step
-label "buy"
-talk Auctioneer Chilton##8670
-buy 1 Chi-ji Kite##89368 |goto Stormwind City 61.0,71.6
-step
-label "done"
-learnpet Chi-ji Kite##66104 |use Chi-ji Kite##89368
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Fishy",{
-pet=847,
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Aquatic Pets\\Fishy",{
+author="support@zygorguides.com",
 description="This guide will walk you through obtaining the Aquatic pet: Fishy",
+model={42721},
+pet=847,
 },[[
 step
 |tip This pet is obtained through completing part of the Jade Forest main questline.
@@ -83,7 +44,6 @@ _My duty is to protect..._ = Give them a shield.
 _There are too few..._ = Give them Book of Healing Prayers.
 _While the enemies are focused..._ = Give them a shield.
 #9# Pearlfin Aqualytes equipped |q 29903/1 |goto 59.1,84.52
-modelnpc Pealfin Aqualyte##56585
 step
 talk Admiral Taylor##60970
 turnin A Perfect Match##29903 |goto 58.9,81.7
@@ -97,323 +57,28 @@ turnin Bigger Fish to Fry##29904 |goto 58.9,81.7
 accept Let Them Burn##29905 |goto 58.9,81.7
 step
 kill 15 Slingtail Recruit##61760 |q 29905/1 |goto 54.6,82.2
-modelnpc 55461
 step
 talk Elder Lusshan##54960
 turnin Let Them Burn##29905 |goto 58.9,81.5
 step
 learnpet Fishy##62829 |use Fishy##84105
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Jade Crane Chick", {
-pet=792,
-description="This guide will walk you through obtaining the Flying pet: Jade Crane Chick",
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Aquatic Pets\\Swamp Croaker",{
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining the Aquatic pet: Swamp Croaker",
+model={47989},
+pet=1182,
 },[[
 step
-|tip You must be a Pandaren in order to obtain this pet.
-confirm
-step
-talk Audrey Burnhep##63596
-buy Jade Crane Chick##88148 |goto Stormwind City 69.4,25.1
-step
-learnpet Jade Crane Chick##65314 |use Jade Crane Chick##88148
+Challenge one to a pet battle and capture it.
+|tip The Swamp Croakers are around level 25 and share a spawn with Thundertail Flappers.
+learnpet Swamp Croaker##69819 |goto Isle of Thunder 55.3,70.8
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Jade Owl", {
-pet=845,
-description="This guide will walk you through obtaining the Magic pet: Jade Owl",
-},[[
-step
-Click here to gather and create the pet yourself |confirm |next "create"
-Click here to be taken to the Auctioneer to purchase it |confirm |next "buy"
-|tip This pet requires you to either have level 600 Inscription, or purchase it from the Auction House.
-step
-label "create"
-Click here for the _Golden Lotus Pre Quests_. |next GLPQ |confirm |tip The Pattern comes from the Treasures of the Vale given during Golden Lotus dailies.
-Click here for the daily quests. |next "Zygor's Alliance Dailies Guides\\Pandaria (85 - 90)\\The Golden Lotus Dailies" |only if ZGV.guidesets["DailiesAMOP"]
-|tip You have to complete the Dailies for the Golden Lotus and open Treasures of the Vale (quest rewards)to get the recipe for this pet.
-step
-label "GLPQ"
-#include "Golden_Lotus_PreQuests"
-step
-map Vale of Eternal Blossoms
-path	54.6,23.7	52.8,23.1	47.0,18.7
-path	42.6,15.0	41.8,17.8	36.9,18.0
-path	353.5,21.3	35.0,28.7	35.6,34.5
-path	42.2,29.1	45.4,29.6	47.9,26.5
-path	50.8,31.5	53.6,28.6
-Follow the path, mining any node you see.
-Use your _Prospecting_ skill on any 5 ore you gather. |cast Prospecting##31252
-collect 3 Wild Jade##76139step
-step
-create 1 Jade Owl##82774
-next "done"
-step
-label "buy"
-talk Auctioneer Chilton##8670
-buy 1 Jade Owl##82774 |goto Stormwind City 61.0,71.6
-step
-label "done"
-learnpet Jade Owl##61877 |use Jade Owl##82774
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Pandaren Air Spirit",{
-pet=1125,
-description="This guide will walk you through obtaining the Elemental pet: Pandaren Air Spirit",
-},[[
-step
-This pet is only obtainable after defeating all of the pet battle master trainers.
-confirm
-step
-talk Sara Finkleswitch##64572
-accept Pandaren Spirit Tamer##32428 |goto Vale of Eternal Blossoms/0 86.6,60.0
-only if not completedq(32428)
-step
-talk Thundering Pandaren Spirit##68465
-|tip Challenge him to a pet battle.
-Defeat Thundering Pandaren Spirit |q 32428/2 |goto Kun-Lai Summit/0 65.0,93.9
-only if not completedq(32428)
-step
-talk Burning Pandaren Spirit##68463
-|tip Challenge him to a pet battle.
-Defeat Burning Pandaren Spirit |q 32428/1 |goto Townlong Steppes 57.0,42.2
-only if not completedq(32428)
-step
-talk Flowing Pandaren Spirit##68462
-|tip Challenge him to a pet battle.
-Defeat Flowing Pandaren Spirit |q 32428/4 |goto Dread Wastes 61.2,87.6
-only if not completedq(32428)
-step
-talk Whispering Pandaren Spirit##68464
-|tip Challenge him to a pet battle.
-Defeat Whispering Pandaren Spirit |q 32428/3 |goto The Jade Forest 28.8,36.0
-only if not completedq(32428)
-step
-talk Sara Finkleswitch##64572
-turnin Pandaren Spirit Tamer##32428 |goto Vale of Eternal Blossoms/0 86.6,60.0
-|tip You will only be able to accept one of the four pets. You will be able to complete daily quests to get the others.
-only if not completedq(32428)
-step
-You can obtain this pet by completing the daily quest given by Whispering Pandaren Spirit.
-confirm
-only if completedq(32428)
-step
-talk Whispering Pandaren Spirit##68464
-accept Whispering Pandaren Spirit##32440 |goto The Jade Forest 28.8,36.0
-step
-talk Whispering Pandaren Spirit##68464
-Challenge him to a pet battle and defeat him. |q 32440/1 |goto The Jade Forest 28.8,36.0
-step
-talk Whispering Pandaren Spirit##68464
-turnin Whispering Pandaren Spirit##32440 |goto The Jade Forest 28.8,36.0
-step
-Loot the Pandaren Spirit Pet Supplies you just received |use Pandaren Spirit Pet Supplies##93148
-collect 1 Pandaren Air Spirit##92799
-|tip This item doesn't always drop from this quest reward. You may have to repeat this daily a few times before you get the pet.
-step
-learnpet Pandaren Air Spirit##68467 |use Pandaren Air Spirit##92799
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Pandaren Earth Spirit",{
-pet=1126,
-description="This guide will walk you through obtaining the Elemental pet: Pandaren Earth Spirit",
-},[[
-step
-This pet is only obtainable after defeating all of the pet battle master trainers.
-confirm
-step
-talk Sara Finkleswitch##64572
-accept Pandaren Spirit Tamer##32428 |goto Vale of Eternal Blossoms/0 86.6,60.0
-only if not completedq(32428)
-step
-talk Thundering Pandaren Spirit##68465
-|tip Challenge him to a pet battle.
-Defeat Thundering Pandaren Spirit |q 32428/2 |goto Kun-Lai Summit/0 65.0,93.9
-only if not completedq(32428)
-step
-talk Burning Pandaren Spirit##68463
-|tip Challenge him to a pet battle.
-Defeat Burning Pandaren Spirit |q 32428/1 |goto Townlong Steppes 57.0,42.2
-only if not completedq(32428)
-step
-talk Flowing Pandaren Spirit##68462
-|tip Challenge him to a pet battle.
-Defeat Flowing Pandaren Spirit |q 32428/4 |goto Dread Wastes 61.2,87.6
-only if not completedq(32428)
-step
-talk Whispering Pandaren Spirit##68464
-|tip Challenge him to a pet battle.
-Defeat Whispering Pandaren Spirit |q 32428/3 |goto The Jade Forest 28.8,36.0
-only if not completedq(32428)
-step
-talk Sara Finkleswitch##64572
-turnin Pandaren Spirit Tamer##32428 |goto Vale of Eternal Blossoms/0 86.6,60.0
-|tip You will only be able to accept one of the four pets. You will be able to complete daily quests to get the others.
-only if not completedq(32428)
-step
-You can obtain this pet by completing the daily quest given by Whispering Pandaren Spirit.
-confirm
-only if completedq(32428)
-step
-talk Thundering Pandaren Spirit##68465
-accept Thundering Pandaren Spirit##32441 |goto Kun-Lai Summit/0 65.0,93.9
-step
-talk Thundering Pandaren Spirit##68465
-Challenge him to a pet battle and defeat him. |q 32441/1 |goto Kun-Lai Summit/0 65.0,93.9
-step
-talk Thundering Pandaren Spirit##68465
-turnin Thundering Pandaren Spirit##32441 |goto Kun-Lai Summit/0 65.0,93.9
-step
-Loot the Pandaren Spirit Pet Supplies you just received |use Pandaren Spirit Pet Supplies##93149
-collect 1 Pandaren Earth Spirit##92800
-|tip This item doesn't always drop from this quest reward. You may have to repeat this daily a few times before you get the pet.
-step
-learnpet Pandaren Earth Spirit##68468 |use Pandaren Earth Spirit##92800
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Pandaren Fire Spirit",{
-pet=1124,
-description="This guide will walk you through obtaining the Elemental pet: Pandaren Fire Spirit",
-},[[
-step
-This pet is only obtainable after defeating all of the pet battle master trainers.
-confirm
-step
-talk Sara Finkleswitch##64572
-accept Pandaren Spirit Tamer##32428 |goto Vale of Eternal Blossoms/0 86.6,60.0
-only if not completedq(32428)
-step
-talk Thundering Pandaren Spirit##68465
-|tip Challenge him to a pet battle.
-Defeat Thundering Pandaren Spirit |q 32428/2 |goto Kun-Lai Summit/0 65.0,93.9
-only if not completedq(32428)
-step
-talk Burning Pandaren Spirit##68463
-|tip Challenge him to a pet battle.
-Defeat Burning Pandaren Spirit |q 32428/1 |goto Townlong Steppes 57.0,42.2
-only if not completedq(32428)
-step
-talk Flowing Pandaren Spirit##68462
-|tip Challenge him to a pet battle.
-Defeat Flowing Pandaren Spirit |q 32428/4 |goto Dread Wastes 61.2,87.6
-only if not completedq(32428)
-step
-talk Whispering Pandaren Spirit##68464
-|tip Challenge him to a pet battle.
-Defeat Whispering Pandaren Spirit |q 32428/3 |goto The Jade Forest 28.8,36.0
-only if not completedq(32428)
-step
-talk Sara Finkleswitch##64572
-turnin Pandaren Spirit Tamer##32428 |goto Vale of Eternal Blossoms/0 86.6,60.0
-|tip You will only be able to accept one of the four pets. You will be able to complete daily quests to get the others.
-only if not completedq(32428)
-step
-|tip You can obtain this pet by completing the daily quest given by Whispering Pandaren Spirit.
-confirm
-only if completedq(32428)
-step
-talk Burning Pandaren Spirit##68463
-accept Burning Pandaren Spirit##32434 |goto Townlong Steppes 57.0,42.2
-step
-talk Burning Pandaren Spirit##68463
-Challenge him to a pet battle and defeat him. |q 32434/1 |goto Townlong Steppes 57.0,42.2
-step
-talk Burning Pandaren Spirit##68463
-turnin Burning Pandaren Spirit##32434 |goto Townlong Steppes 57.0,42.2
-step
-Loot the Pandaren Spirit Pet Supplies you just received |use Pandaren Spirit Pet Supplies##93146
-collect 1 Pandaren Fire Spirit##92798
-|tip This item doesn't always drop from this quest reward. You may have to repeat this daily a few times before you get the pet.
-step
-learnpet Pandaren Fire Spirit##68466 |use Pandaren Fire Spirit##92798
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Pandaren Water Spirit",{
-pet=868,
-description="This guide will walk you through obtaining the Elemental pet: Pandaren Water Spirit",
-},[[
-step
-This pet is only obtainable after defeating all of the pet battle master trainers.
-confirm
-step
-talk Sara Finkleswitch##64572
-accept Pandaren Spirit Tamer##32428 |goto Vale of Eternal Blossoms/0 86.6,60.0
-only if not completedq(32428)
-step
-talk Thundering Pandaren Spirit##68465
-|tip Challenge him to a pet battle.
-Defeat Thundering Pandaren Spirit |q 32428/2 |goto Kun-Lai Summit/0 65.0,93.9
-only if not completedq(32428)
-step
-talk Burning Pandaren Spirit##68463
-|tip Challenge him to a pet battle.
-Defeat Burning Pandaren Spirit |q 32428/1 |goto Townlong Steppes 57.0,42.2
-only if not completedq(32428)
-step
-talk Flowing Pandaren Spirit##68462
-|tip Challenge him to a pet battle.
-Defeat Flowing Pandaren Spirit |q 32428/4 |goto Dread Wastes 61.2,87.6
-only if not completedq(32428)
-step
-talk Whispering Pandaren Spirit##68464
-|tip Challenge him to a pet battle.
-Defeat Whispering Pandaren Spirit |q 32428/3 |goto The Jade Forest 28.8,36.0
-only if not completedq(32428)
-step
-talk Sara Finkleswitch##64572
-turnin Pandaren Spirit Tamer##32428 |goto Vale of Eternal Blossoms/0 86.6,60.0
-|tip You will only be able to accept one of the four pets. You will be able to complete daily quests to get the others.
-only if not completedq(32428)
-step
-You can obtain this pet by completing the daily quest given by Whispering Pandaren Spirit.
-confirm
-only if completedq(32428)
-step
-talk Flowing Pandaren Spirit##68462
-accept Flowing Pandaren Spirit##32439 |goto Dread Wastes 61.2,87.6
-step
-talk Flowing Pandaren Spirit##68462
-Challenge him to a pet battle and defeat him. |q 32439/1 |goto Dread Wastes 61.2,87.6
-step
-talk Flowing Pandaren Spirit##68462
-turnin Flowing Pandaren Spirit##32439 |goto Dread Wastes 61.2,87.6
-step
-Loot the Pandaren Spirit Pet Supplies you just received |use Pandaren Spirit Pet Supplies##93147
-collect 1 Pandaren Water Spirit##90173
-|tip This item doesn't always drop from this quest reward. You may have to repeat this daily a few times before you get the pet.
-step
-learnpet Pandaren Water Spirit##66950 |use Pandaren Water Spirit##90173
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Sapphire Cub",{
-pet=846,
-description="This guide will walk you through obtaining the Elemental pet: Sapphire Cub",
-},[[
-step
-Click here to gather and create the pet yourself |confirm |next "create"
-Click here to be taken to the Auctioneer to purchase it |confirm |next "buy"
-|tip This pet requires you to either have level 600 Inscription, or purchase it from the Auction House.
-step
-label "create"
-|tip You have to complete the Dailies for the Golden Lotus to get the recipe for this pet.
-confirm
-step
-map Vale of Eternal Blossoms
-path	54.6,23.7	52.8,23.1	47.0,18.7
-path	42.6,15.0	41.8,17.8	36.9,18.0
-path	353.5,21.3	35.0,28.7	35.6,34.5
-path	42.2,29.1	45.4,29.6	47.9,26.5
-path	50.8,31.5	53.6,28.6
-Follow the path, mining any node you see.
-Use your _Prospecting_ skill on any 5 ore you gather. |cast Prospecting##31252
-collect 3 Wild Jade##76138
-step
-create 1 Sapphire Cub##82775
-next "done"
-step
-label "buy"
-talk Auctioneer Chilton##8670
-buy 1 Sapphire Cub##82775 |goto Stormwind City 61.0,71.6
-step
-label "done"
-learnpet Sapphire Cub##61883 |use Sapphire Cub##82775
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Tiny Goldfish",{
-pet=652,
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Aquatic Pets\\Tiny Goldfish",{
+author="support@zygorguides.com",
 description="This guide will walk you through obtaining the Aquatic pet: Tiny Goldfish",
+model={47955},
+pet=652,
 },[[
 step
 Click here to be taken to the guide that will raise your reputation with _The Anglers_. |confirm |next "reputation"
@@ -532,7 +197,7 @@ collect 5 Prickly Puffer Spine##80529 |q 30658/1 |goto 51.4,62.2
 only if havequest(30658)
 step
 click Goblin Fishing Raft
-Ride a Goblin Fishing Raft |havebuff Rafting |goto 57.5,53.5
+Ride a Goblin Fishing Raft |havebuff 534592 |goto 57.5,53.5
 only if havequest(30698)
 step
 Use you fishing skill in the Shipwreck Debris pools to fish up 15 Rusty Shipwreck Debris.
@@ -582,17 +247,392 @@ step
 talk Fo Fook##60675
 turnin Piranha!##30763 |goto 67.2,41.2
 turnin Viseclaw Soup##30701 |goto 67.2,41.2
-next "DStart" |only if rep("The Anglers")<=Honoroed
-next |only if default |only if rep("The Anglers")<=Honored
+next "DStart" |only if rep("The Anglers")<=Honored
+next |only if default
 step
 talk Nat Pagle##63721
 buy 1 Tiny Goldfish##85447 |goto 68.4,43.5
 step
 learnpet Tiny Goldfish##63559 |use Tiny Goldfish##85447
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Yu'lon Kite",{
-pet=850,
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Beast Pets\\Elder Python",{
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining the Beast pet: Elder Python",
+model={47887},
+pet=1181,
+},[[
+step
+Challenge one to a pet battle and capture it
+|tip The Elder Python are around level 25 and share a spawn with Thundertail Flappers and Swamp Croakers.
+You can also find them around [Isle of Thunder 53.5,56.5]
+learnpet Elder Python##69818 |goto Isle of Thunder 51.8,63.8
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Beast Pets\\Sumprush Rodent",{
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining the Beast pet: Sumprush Rodent",
+model={40714},
+pet=1128,
+},[[
+step
+You need 2000 of them in order to purchase the item that contains this pet.
+collect 2000 Domination Point Commission##91877 |next buy
+|tip In order to get this pet, you will need to collect Domination Point Commissions.
+Click here to farm commision points. |confirm
+step
+kill Domination Point Raider##67826+, Dominance Grunt##67357+, Dominance Shaman##67520+
+You can find more enemies to kill around [goto Krasarang Wilds 11.7,64.5]
+kill Dominance Battlemage##67330+, Dominance Raider##67346+, Heavy Mook##67399+, Dominance Grunt##67357+, Bloodhilt Honorguard##67334+
+collect 2000 Domination Point Commission##91877 |goto Krasarang Wilds 77.4,27.8
+step
+label "buy"
+talk Proveditor Grantley##67881
+buy Rodent Crate##92532 |n
+You will need to search for a _Sumprush Rodent_ around the area.
+Use your Rodent Crate to capture the _Sumprush Rodent_. |use Rodent Crate##92532
+learnpet Sumprush Rodent##68506 |goto Krasarang Wilds 89.5,33.5
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Elemental Pets\\Pandaren Air Spirit",{
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining the Elemental pet: Pandaren Air Spirit",
+model={46810},
+pet=1125,
+},[[
+step
+This pet is only obtainable after defeating all of the pet battle master trainers.
+confirm
+step
+talk Sara Finkleswitch##64572
+accept Pandaren Spirit Tamer##32428 |goto Vale of Eternal Blossoms/0 86.6,60.0
+only if not completedq(32428)
+step
+talk Thundering Pandaren Spirit##68465
+|tip Challenge him to a pet battle.
+Defeat Thundering Pandaren Spirit |q 32428/2 |goto Kun-Lai Summit/0 65.0,93.9
+only if not completedq(32428)
+step
+talk Burning Pandaren Spirit##68463
+|tip Challenge him to a pet battle.
+Defeat Burning Pandaren Spirit |q 32428/1 |goto Townlong Steppes 57.0,42.2
+only if not completedq(32428)
+step
+talk Flowing Pandaren Spirit##68462
+|tip Challenge him to a pet battle.
+Defeat Flowing Pandaren Spirit |q 32428/4 |goto Dread Wastes 61.2,87.6
+only if not completedq(32428)
+step
+talk Whispering Pandaren Spirit##68464
+|tip Challenge him to a pet battle.
+Defeat Whispering Pandaren Spirit |q 32428/3 |goto The Jade Forest 28.8,36.0
+only if not completedq(32428)
+step
+talk Sara Finkleswitch##64572
+turnin Pandaren Spirit Tamer##32428 |goto Vale of Eternal Blossoms/0 86.6,60.0
+|tip You will only be able to accept one of the four pets. You will be able to complete daily quests to get the others.
+only if not completedq(32428)
+step
+You can obtain this pet by completing the daily quest given by Whispering Pandaren Spirit.
+confirm
+only if completedq(32428)
+step
+talk Whispering Pandaren Spirit##68464
+accept Whispering Pandaren Spirit##32440 |goto The Jade Forest 28.8,36.0
+step
+talk Whispering Pandaren Spirit##68464
+Challenge him to a pet battle and defeat him. |q 32440/1 |goto The Jade Forest 28.8,36.0
+step
+talk Whispering Pandaren Spirit##68464
+turnin Whispering Pandaren Spirit##32440 |goto The Jade Forest 28.8,36.0
+step
+Loot the Pandaren Spirit Pet Supplies you just received |use Pandaren Spirit Pet Supplies##93148
+collect 1 Pandaren Air Spirit##92799
+|tip This item doesn't always drop from this quest reward. You may have to repeat this daily a few times before you get the pet.
+step
+learnpet Pandaren Air Spirit##68467 |use Pandaren Air Spirit##92799
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Elemental Pets\\Pandaren Earth Spirit",{
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining the Elemental pet: Pandaren Earth Spirit",
+model={46811},
+pet=1126,
+},[[
+step
+This pet is only obtainable after defeating all of the pet battle master trainers.
+confirm
+step
+talk Sara Finkleswitch##64572
+accept Pandaren Spirit Tamer##32428 |goto Vale of Eternal Blossoms/0 86.6,60.0
+only if not completedq(32428)
+step
+talk Thundering Pandaren Spirit##68465
+|tip Challenge him to a pet battle.
+Defeat Thundering Pandaren Spirit |q 32428/2 |goto Kun-Lai Summit/0 65.0,93.9
+only if not completedq(32428)
+step
+talk Burning Pandaren Spirit##68463
+|tip Challenge him to a pet battle.
+Defeat Burning Pandaren Spirit |q 32428/1 |goto Townlong Steppes 57.0,42.2
+only if not completedq(32428)
+step
+talk Flowing Pandaren Spirit##68462
+|tip Challenge him to a pet battle.
+Defeat Flowing Pandaren Spirit |q 32428/4 |goto Dread Wastes 61.2,87.6
+only if not completedq(32428)
+step
+talk Whispering Pandaren Spirit##68464
+|tip Challenge him to a pet battle.
+Defeat Whispering Pandaren Spirit |q 32428/3 |goto The Jade Forest 28.8,36.0
+only if not completedq(32428)
+step
+talk Sara Finkleswitch##64572
+turnin Pandaren Spirit Tamer##32428 |goto Vale of Eternal Blossoms/0 86.6,60.0
+|tip You will only be able to accept one of the four pets. You will be able to complete daily quests to get the others.
+only if not completedq(32428)
+step
+You can obtain this pet by completing the daily quest given by Whispering Pandaren Spirit.
+confirm
+only if completedq(32428)
+step
+talk Thundering Pandaren Spirit##68465
+accept Thundering Pandaren Spirit##32441 |goto Kun-Lai Summit/0 65.0,93.9
+step
+talk Thundering Pandaren Spirit##68465
+Challenge him to a pet battle and defeat him. |q 32441/1 |goto Kun-Lai Summit/0 65.0,93.9
+step
+talk Thundering Pandaren Spirit##68465
+turnin Thundering Pandaren Spirit##32441 |goto Kun-Lai Summit/0 65.0,93.9
+step
+Loot the Pandaren Spirit Pet Supplies you just received |use Pandaren Spirit Pet Supplies##93149
+collect 1 Pandaren Earth Spirit##92800
+|tip This item doesn't always drop from this quest reward. You may have to repeat this daily a few times before you get the pet.
+step
+learnpet Pandaren Earth Spirit##68468 |use Pandaren Earth Spirit##92800
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Elemental Pets\\Pandaren Fire Spirit",{
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining the Elemental pet: Pandaren Fire Spirit",
+model={46809},
+pet=1124,
+},[[
+step
+This pet is only obtainable after defeating all of the pet battle master trainers.
+confirm
+step
+talk Sara Finkleswitch##64572
+accept Pandaren Spirit Tamer##32428 |goto Vale of Eternal Blossoms/0 86.6,60.0
+only if not completedq(32428)
+step
+talk Thundering Pandaren Spirit##68465
+|tip Challenge him to a pet battle.
+Defeat Thundering Pandaren Spirit |q 32428/2 |goto Kun-Lai Summit/0 65.0,93.9
+only if not completedq(32428)
+step
+talk Burning Pandaren Spirit##68463
+|tip Challenge him to a pet battle.
+Defeat Burning Pandaren Spirit |q 32428/1 |goto Townlong Steppes 57.0,42.2
+only if not completedq(32428)
+step
+talk Flowing Pandaren Spirit##68462
+|tip Challenge him to a pet battle.
+Defeat Flowing Pandaren Spirit |q 32428/4 |goto Dread Wastes 61.2,87.6
+only if not completedq(32428)
+step
+talk Whispering Pandaren Spirit##68464
+|tip Challenge him to a pet battle.
+Defeat Whispering Pandaren Spirit |q 32428/3 |goto The Jade Forest 28.8,36.0
+only if not completedq(32428)
+step
+talk Sara Finkleswitch##64572
+turnin Pandaren Spirit Tamer##32428 |goto Vale of Eternal Blossoms/0 86.6,60.0
+|tip You will only be able to accept one of the four pets. You will be able to complete daily quests to get the others.
+only if not completedq(32428)
+step
+|tip You can obtain this pet by completing the daily quest given by Whispering Pandaren Spirit.
+confirm
+only if completedq(32428)
+step
+talk Burning Pandaren Spirit##68463
+accept Burning Pandaren Spirit##32434 |goto Townlong Steppes 57.0,42.2
+step
+talk Burning Pandaren Spirit##68463
+Challenge him to a pet battle and defeat him. |q 32434/1 |goto Townlong Steppes 57.0,42.2
+step
+talk Burning Pandaren Spirit##68463
+turnin Burning Pandaren Spirit##32434 |goto Townlong Steppes 57.0,42.2
+step
+Loot the Pandaren Spirit Pet Supplies you just received |use Pandaren Spirit Pet Supplies##93146
+collect 1 Pandaren Fire Spirit##92798
+|tip This item doesn't always drop from this quest reward. You may have to repeat this daily a few times before you get the pet.
+step
+learnpet Pandaren Fire Spirit##68466 |use Pandaren Fire Spirit##92798
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Elemental Pets\\Pandaren Water Spirit",{
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining the Elemental pet: Pandaren Water Spirit",
+model={45942},
+pet=868,
+},[[
+step
+This pet is only obtainable after defeating all of the pet battle master trainers.
+confirm
+step
+talk Sara Finkleswitch##64572
+accept Pandaren Spirit Tamer##32428 |goto Vale of Eternal Blossoms/0 86.6,60.0
+only if not completedq(32428)
+step
+talk Thundering Pandaren Spirit##68465
+|tip Challenge him to a pet battle.
+Defeat Thundering Pandaren Spirit |q 32428/2 |goto Kun-Lai Summit/0 65.0,93.9
+only if not completedq(32428)
+step
+talk Burning Pandaren Spirit##68463
+|tip Challenge him to a pet battle.
+Defeat Burning Pandaren Spirit |q 32428/1 |goto Townlong Steppes 57.0,42.2
+only if not completedq(32428)
+step
+talk Flowing Pandaren Spirit##68462
+|tip Challenge him to a pet battle.
+Defeat Flowing Pandaren Spirit |q 32428/4 |goto Dread Wastes 61.2,87.6
+only if not completedq(32428)
+step
+talk Whispering Pandaren Spirit##68464
+|tip Challenge him to a pet battle.
+Defeat Whispering Pandaren Spirit |q 32428/3 |goto The Jade Forest 28.8,36.0
+only if not completedq(32428)
+step
+talk Sara Finkleswitch##64572
+turnin Pandaren Spirit Tamer##32428 |goto Vale of Eternal Blossoms/0 86.6,60.0
+|tip You will only be able to accept one of the four pets. You will be able to complete daily quests to get the others.
+only if not completedq(32428)
+step
+You can obtain this pet by completing the daily quest given by Whispering Pandaren Spirit.
+confirm
+only if completedq(32428)
+step
+talk Flowing Pandaren Spirit##68462
+accept Flowing Pandaren Spirit##32439 |goto Dread Wastes 61.2,87.6
+step
+talk Flowing Pandaren Spirit##68462
+Challenge him to a pet battle and defeat him. |q 32439/1 |goto Dread Wastes 61.2,87.6
+step
+talk Flowing Pandaren Spirit##68462
+turnin Flowing Pandaren Spirit##32439 |goto Dread Wastes 61.2,87.6
+step
+Loot the Pandaren Spirit Pet Supplies you just received |use Pandaren Spirit Pet Supplies##93147
+collect 1 Pandaren Water Spirit##90173
+|tip This item doesn't always drop from this quest reward. You may have to repeat this daily a few times before you get the pet.
+step
+learnpet Pandaren Water Spirit##66950 |use Pandaren Water Spirit##90173
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Elemental Pets\\Sapphire Cub",{
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining the Elemental pet: Sapphire Cub",
+model={42297},
+pet=846,
+},[[
+step
+Click here to gather and create the pet yourself |confirm |next "create"
+Click here to be taken to the Auctioneer to purchase it |confirm |next "buy"
+|tip This pet requires you to either have level 600 Inscription, or purchase it from the Auction House.
+step
+label "create"
+|tip You have to complete the Dailies for the Golden Lotus to get the recipe for this pet.
+confirm
+step
+map Vale of Eternal Blossoms
+path	54.6,23.7	52.8,23.1	47.0,18.7
+path	42.6,15.0	41.8,17.8	36.9,18.0
+path	353.5,21.3	35.0,28.7	35.6,34.5
+path	42.2,29.1	45.4,29.6	47.9,26.5
+path	50.8,31.5	53.6,28.6
+Follow the path, mining any node you see.
+Use your _Prospecting_ skill on any 5 ore you gather. |cast Prospecting##31252
+collect 3 Wild Jade##76138
+step
+create 1 Sapphire Cub##82775
+next "done"
+step
+label "buy"
+talk Auctioneer Chilton##8670
+buy 1 Sapphire Cub##82775 |goto Stormwind City 61.0,71.6
+step
+label "done"
+learnpet Sapphire Cub##61883 |use Sapphire Cub##82775
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Elemental Pets\\Thundertail Flapper",{
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining the Elemental pet: Thundertail Flapper",
+model={47633},
+pet=1175,
+},[[
+step
+Challenge one to a pet battle and capture it
+|tip The Swamp Croakers are around level 25 and share a spawn with Thundertail Flappers.
+learnpet Thundertail Flapper##69648 |goto Isle of Thunder 45.3,64.7
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Flying Pets\\Chi-ji Kite",{
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining the Flying pet: Chi-ji Kite",
+model={44791},
+pet=849,
+},[[
+step
+|tip This pet requires you to either have level 600 Inscription, or purchase it from the Auction House.
+Click here to gather and create the pet yourself |confirm |next "create"
+Click here to be taken to the Auctioneer to purchase it |confirm |next "buy"
+step
+label "create"
+talk Catarina Stanford##30713
+learn Chi-Ji Kite##127009 |goto Stormwind City 49.8,74.0
+step
+map Valley of the Four Winds
+path 81.4,21.5	76.4,29.2	68.2,33.3
+path 70.6,41.8	65.1,60.1	57.6,65.6
+path 50.8,58.6	48.0,65.9	46.9,61.3
+path 42.5,58.3	33.6,62.1	28.1,72.7
+path 25.7,78.4	18.5,51.0	15.4,53.9
+path 12.8,44.7	14.3,41.2	14.8,35.8
+path 19.6,34.4	24.0,42.2	25.0,50.2
+path 30.1,55.7	35.8,54.8	41.5,48.9
+#include "follow_path_herbs"
+You need about 15 Shadow-giving herbs total
+collect Green Tea leaf##72234 |n
+collect Silkweed##72235 |n
+Mill the 15 herbs you gathered into Shadow Pigment |cast Milling##51005
+collect 4 Shadow Pigment##79251
+step
+talk Stanly McCormick##30730
+buy 1 Light Parchment##39354 |goto Stormwind City 49.8,74.2
+step
+create 1 Chi-ji Kite##89368
+next "done"
+step
+label "buy"
+talk Auctioneer Chilton##8670
+buy 1 Chi-ji Kite##89368 |goto Stormwind City 61.0,71.6
+step
+label "done"
+learnpet Chi-ji Kite##66104 |use Chi-ji Kite##89368
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Flying Pets\\Jade Crane Chick", {
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining the Flying pet: Jade Crane Chick",
+model={43868},
+pet=792,
+},[[
+step
+|tip You must be a Pandaren in order to obtain this pet.
+confirm
+step
+talk Audrey Burnhep##63596
+buy Jade Crane Chick##88148 |goto Stormwind City 69.4,25.1
+step
+learnpet Jade Crane Chick##65314 |use Jade Crane Chick##88148
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Flying Pets\\Yu'lon Kite",{
+author="support@zygorguides.com",
 description="This guide will walk you through obtaining the Flying pet: Yu'lon Kite",
+model={44792},
+pet=850,
 },[[
 step
 Click here to gather and create the pet yourself |confirm |next "create"
@@ -632,27 +672,11 @@ step
 label "done"
 learnpet Yu'lon Kite##66105 |use Yu'lon Kite##89367
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Red Panda",{
-pet=1176,
-description="This guide will walk you through obtaining the Humanoid pet: Red Panda",
-},[[
-step
-Click here to proceed to the Battle Pet Questline. |confirm
-Click here to proceed to the Fabled Beast hunt. |confirm |next "fable"
-|tip In order to attain this pet, you will need to complete the Battle Pet Questline and defeating 10 Fabled beasts.
-step
-#include "Alliance_Battlepet_Quests"
-step
-label "fable"
-#include "A_Beasts_of_Fable"
-step
-learnpet Red Panda##69649 |use Red Panda##94025
-step
-Congratulations, you have obtained the _Red Panda_ pet!
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Mountain Panda",{
-pet=1198,
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Humanoid Pets\\Mountain Panda",{
+author="support@zygorguides.com",
 description="This guide will walk you through obtaining the Humanoid pet: Mountain Panda",
+model={47748},
+pet=1198,
 },[[
 step
 Click here to be routed to  the _Battle Pet Questline_. |confirm
@@ -676,9 +700,31 @@ learnpet Mountain Panda##69892 |use Mountain Panda##94210
 step
 Congratulations, you have attainted the _Mountain Panda_ pet!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Snowy Panda",{
-pet=1197,
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Humanoid Pets\\Red Panda",{
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining the Humanoid pet: Red Panda",
+model={47634},
+pet=1176,
+},[[
+step
+Click here to proceed to the Battle Pet Questline. |confirm
+Click here to proceed to the Fabled Beast hunt. |confirm |next "fable"
+|tip In order to attain this pet, you will need to complete the Battle Pet Questline and defeating 10 Fabled beasts.
+step
+#include "Alliance_Battlepet_Quests"
+step
+label "fable"
+#include "A_Beasts_of_Fable"
+step
+learnpet Red Panda##69649 |use Red Panda##94025
+step
+Congratulations, you have obtained the _Red Panda_ pet!
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Humanoid Pets\\Snowy Panda",{
+author="support@zygorguides.com",
 description="This guide will walk you through obtaining the Humanoid pet: Snowy Panda",
+model={47749},
+pet=1197,
 },[[
 step
 Click here to be routed to  the _Battle Pet Questline_. |confirm
@@ -702,9 +748,11 @@ learnpet Snowy Panda##69893 |use Snowy Panda##94209
 step
 Congratulations, you have attainted the _Snowy Panda_ pet!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Sunfur Panda",{
-pet=1196,
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Humanoid Pets\\Sunfur Panda",{
+author="support@zygorguides.com",
 description="This guide will walk you through obtaining the Humanoid pet: Sunfur Panda",
+model={47747},
+pet=1196,
 },[[
 step
 Click here to be routed to  the _Battle Pet Questline_. |confirm
@@ -728,60 +776,50 @@ learnpet Sunfur Panda##69891 |use Sunfur Panda##94208
 step
 Congratulations, you have attainted the _Sunfur Panda_ pet!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Sumprush Rodent",{
-pet=1128,
-description="This guide will walk you through obtaining the Beast pet: Sumprush Rodent",
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Magic Pets\\Jade Owl",{
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining the Magic pet: Jade Owl",
+model={15905},
+pet=845,
 },[[
 step
-You need 2000 of them in order to purchase the item that contains this pet.
-collect 2000 Domination Point Commission##91877 |next buy
-|tip In order to get this pet, you will need to collect Domination Point Commissions.
-Click here to farm commision points. |confirm
+Click here to gather and create the pet yourself |confirm |next "create"
+Click here to be taken to the Auctioneer to purchase it |confirm |next "buy"
+|tip This pet requires you to either have level 600 Inscription, or purchase it from the Auction House.
 step
-kill Domination Point Raider##67826+, Dominance Grunt##67357+, Dominance Shaman##67520+
-You can find more enemies to kill around [goto Krasarang Wilds 11.7,64.5]
-kill Dominance Battlemage##67330+, Dominance Raider##67346+, Heavy Mook##67399+, Dominance Grunt##67357+, Bloodhilt Honorguard##67334+
-collect 2000 Domination Point Commission##91877 |goto Krasarang Wilds 77.4,27.8
+label "create"
+Click here for the _Golden Lotus Pre Quests_. |next GLPQ |confirm |tip The Pattern comes from the Treasures of the Vale given during Golden Lotus dailies.
+Click here for the daily quests. |next "Zygor's Dailies Guides\\Mists of Pandaria Dailies\\The Golden Lotus Dailies" |only if ZGV.guidesets["DailiesAMOP"]
+|tip You have to complete the Dailies for the Golden Lotus and open Treasures of the Vale (quest rewards)to get the recipe for this pet.
+step
+label "GLPQ"
+#include "Golden_Lotus_PreQuests"
+step
+map Vale of Eternal Blossoms
+path	54.6,23.7	52.8,23.1	47.0,18.7
+path	42.6,15.0	41.8,17.8	36.9,18.0
+path	353.5,21.3	35.0,28.7	35.6,34.5
+path	42.2,29.1	45.4,29.6	47.9,26.5
+path	50.8,31.5	53.6,28.6
+Follow the path, mining any node you see.
+Use your _Prospecting_ skill on any 5 ore you gather. |cast Prospecting##31252
+collect 3 Wild Jade##76139step
+step
+create 1 Jade Owl##82774
+next "done"
 step
 label "buy"
-talk Proveditor Grantley##67881
-buy Rodent Crate##92532 |n
-You will need to search for a _Sumprush Rodent_ around the area.
-Use your Rodent Crate to capture the _Sumprush Rodent_. |use Rodent Crate##92532
-learnpet Sumprush Rodent##68506 |goto Krasarang Wilds 89.5,33.5
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Swamp Croaker",{
-pet=1182,
-description="This guide will walk you through obtaining the Aquatic pet: Swamp Croaker",
-},[[
+talk Auctioneer Chilton##8670
+buy 1 Jade Owl##82774 |goto Stormwind City 61.0,71.6
 step
-Challenge one to a pet battle and capture it.
-|tip The Swamp Croakers are around level 25 and share a spawn with Thundertail Flappers.
-learnpet Swamp Croaker##69819 |goto Isle of Thunder 55.3,70.8
+label "done"
+learnpet Jade Owl##61877 |use Jade Owl##82774
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Thundertail Flapper",{
-pet=1175,
-description="This guide will walk you through obtaining the Elemental pet: Thundertail Flapper",
-},[[
-step
-Challenge one to a pet battle and capture it
-|tip The Swamp Croakers are around level 25 and share a spawn with Thundertail Flappers.
-learnpet Thundertail Flapper##69648 |goto Isle of Thunder 45.3,64.7
-modeldisplay 47633
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Elder Python",{
-pet=1181,
-description="This guide will walk you through obtaining the Beast pet: Elder Python",
-},[[
-step
-Challenge one to a pet battle and capture it
-|tip The Elder Python are around level 25 and share a spawn with Thundertail Flappers and Swamp Croakers.
-You can also find them around [Isle of Thunder 53.5,56.5]
-learnpet Elder Python##69818 |goto Isle of Thunder 51.8,63.8
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Clock'em",{
-pet=1142,
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Mechanical Pets\\Clock'em",{
+author="support@zygorguides.com",
 description="This guide will walk you through obtaining the Mechanical pet: Clock'em",
+model={46882},
+pet=1142,
 },[[
 step
 This pet will require you to reach Rank 4 in the Brawler's Guild.
@@ -806,7 +844,6 @@ Fight 1: _Bruce_
 |tip Bruce is a very easy fight, meant to get you started in the Brawler's Guild. He has 1 ability:
 |tip Chomp, chomp, chomp is an ability that he uses in front of him. When he begins casting, run to the side or behind him to avoid getting hit by this attack.
 |tip The best strategy for this fight is to dps him as fast as you can, making sure to avoid being directly in front of him whenever he begins to cast his ability.
-modelnpc Bruce##67262
 Defeat Bruce in the Brawler's Guild |condition ZGV:GetReputation(1419).friendRep>=250
 step
 talk Bizmo's Brawlpub Bouncer##68408 |goto Deeprun Tram/2 39.2,34.1
@@ -818,7 +855,6 @@ Fight 2: _Vian the Volatile_
 |tip Fire Orbs will bounce around the arena, doing damage to you if they touch you, and causing an enrage effect on Vian if they touch him.
 |tip Lava Burst is a normal spell, you should not worry about this one.
 |tip The best strategy for this fight is to stay on him while avoiding both the orbs and the Fire Line spell, interrupting them if possible.
-modelnpc Vian the Volatile##67579
 Defeat Vian the Volatile in the Brawler's Guild |condition ZGV:GetReputation(1419).friendRep>=500
 step
 talk Bizmo's Brawlpub Bouncer##68408 |goto Deeprun Tram/2 39.2,34.1
@@ -828,7 +864,6 @@ Fight 3: _Goredome_
 |tip Goredome is very similar to Bruce. He has 1 ability:
 |tip Lumbering Charge is a relatively quick cast, but it's easily avoidable. He will lay a red circle on the ground as he begins casting it. Make sure to get out of the circle before he charges.
 |tip If you are in the circle, you will instantly be killed.
-modelnpc Goredome##68257
 Defeat Goredome in the Brawler's Guild |condition ZGV:GetReputation(1419).friendRep>=750
 step
 talk Bizmo's Brawlpub Bouncer##68408 |goto Deeprun Tram/2 39.2,34.1
@@ -838,7 +873,6 @@ Fight 4: _Dungeon Master Vishas_
 |tip Dungeon Master Vishas is the boss of this Rank. He has 2 abilities:
 |tip Naughty Secrets is a 2.5-second cast debuff that inflicts damage and increases vulnerability to future shadow damage for 1 minute. This isn't a big concern, but this spell can be interrupted.
 |tip Heated Pokers is a 2.5-second cast that causes Vishas' attacks to do massive damage. This spell cannot be interrupted except using a stun. If he does cast this, make sure to run away until the buff wears off.
-modelnpc Dungeon Master Vishas##67572
 Defeat Dungeon Master Vishas in the Brawler's Guild |condition ZGV:GetReputation(1419).friendRep>=1000
 step
 talk Bizmo's Brawlpub Bouncer##68408 |goto Deeprun Tram/2 39.2,34.1
@@ -849,7 +883,6 @@ Fight 5: _Dippy_
 |tip Slippy is a constant debuff that causes him to fall down with every direct hit. This interrupts the current cast of Peck. This will not happen if Dippy is next to a wall.
 |tip Peck is a very quick casted spell that will instantly kill you. Unless you are strictly a melee class, the best option in this fight is to kite him and kill him from range.
 |tip The best strategy for this fight is to keep pressue on Dippy, and never give him a chance to cast his Peck. Any direct strike will do, so don't rely on DoTs to knock him over.
-modelnpc Dippy##68255
 Defeat Dippy in the Brawler's Guild |condition ZGV:GetReputation(1419).friendRep>=1250
 step
 talk Bizmo's Brawlpub Bouncer##68408 |goto Deeprun Tram/2 39.2,34.1
@@ -862,7 +895,6 @@ Fight 6: _Kirrawk_
 |tip Tornado is an ability that summons a twister that will toss you up somewhere in the arena, and will make a straight line towards you. The only way to avoid this is to have the tornado touch Kirrawk before it touches you.
 |tip Lightning Flurry is an ability that he will only cast if you are tossed up by his Tornado. This attack does considerable damage.
 |tip The best strategy for this fight is to pay attention to the tornado, and make sure it hits him instead of you. Also, pay attention to his casts and interrupt Storm Cloud any way you can.
-modelnpc Kirrawk##67269
 Defeat Kirrawk in the Brawler's Guild |condition ZGV:GetReputation(1419).friendRep>=1500
 step
 talk Bizmo's Brawlpub Bouncer##68408 |goto Deeprun Tram/2 39.2,34.1
@@ -877,8 +909,6 @@ Fight 7: _Fran_ and _Riddoh_
 |tip Throw Dynamite is his basic ability. He throws a stick of dynamite in the air that can be avoided.
 |tip Goblin Device is an ability that summons a a ring of bombs around you. You will have to run out of the circle before they explode.
 |tip The best strategy for this fight is to kill Riddoh first to prevent him from becoming frenzied, while making sure to avoid the AoE attacks that Fran throws at you.
-modelnpc Fran##67525
-modelnpc Riddoh##67524
 Defeat Fran and Riddoh in the Brawler's Guild |condition ZGV:GetReputation(1419).friendRep>=1750
 step
 talk Bizmo's Brawlpub Bouncer##68408 |goto Deeprun Tram/2 39.2,34.1
@@ -888,7 +918,6 @@ Fight 8: _King Kulaka_
 |tip King Kulaka is the boss of this Rank. He has 1 ability:
 |tip Dash is an instant cast spell that increases his movement speed by 60% for 5 seconds.
 |tip The best strategy for this is to dps him before he can kill you. His melee attacks hit hard, so be sure to have some potions handy and do your best to kite him if possible.
-modelnpc King Kulaka##68254
 Defeat King Kulaka in the Brawler's Guild |condition ZGV:GetReputation(1419).friendRep>=2000
 step
 talk Bizmo's Brawlpub Bouncer##68408 |goto Deeprun Tram/2 39.2,34.1
@@ -898,7 +927,6 @@ Fight 9: _Blat_
 |tip Blat is where the difficulty starts to raise a bit. He has 1 ability:
 |tip Split is a 0.5 second cast spell that causes him to create a copy of himself. He will use this several times throughout the fight.
 |tip The best strategy for this fight is to kite him away, and focus on the main version of him. If you can't kite, then just try and do as much dps as possible. All of the other versions have as much health as he does, so you will not be able to kill them fast enough to avoid the enrage timer.
-modelnpc Blat##67594
 Defeat Blat in the Brawler's Guild |condition ZGV:GetReputation(1419).friendRep>=2250
 step
 talk Bizmo's Brawlpub Bouncer##68408 |goto Deeprun Tram/2 39.2,34.1
@@ -910,7 +938,6 @@ Sanoriak is basically a more powerful version of Vian the Volatile. He has 4 abi
 |tip Flame Buffet is a strong move that does a lot of damage and increases any fire damage taken for 15 seconds. Interrupt this as much as possible.
 |tip Firewall is his most powerful move. It will not show a casting bar, but he will show the animation. This spawns a rain of fireballs down on your location. Be sure to move out of this, because it does a ton of damage.
 |tip The best strategy for this fight is to keep pressure on him, avoid his AoE meteor attack, and interrupt/stun whenever possible.
-modelnpc Sanoriak##67268
 Defeat Sanoriak in the Brawler's Guild |condition ZGV:GetReputation(1419).friendRep>=2500
 step
 talk Bizmo's Brawlpub Bouncer##68408 |goto Deeprun Tram/2 39.2,34.1
@@ -920,7 +947,6 @@ Fight 11: _Ixx_
 Ixx is very similar to _Mogu Warriors_ in Pandaria. He has 1 ability:
 |tip Conal Cleave is a average cast spell that shows a large cone in front of him when he begins casting. If this hits you, you will die.
 |tip The best strategy for this fight is to keep pressure on him, and run through him when he begins casting his cleave.
-modelnpc Ixx##68253
 Defeat Ixx in the Brawler's Guild |condition ZGV:GetReputation(1419).friendRep>=2750
 step
 talk Bizmo's Brawlpub Bouncer##68408 |goto Deeprun Tram/2 39.2,34.1
@@ -929,63 +955,10 @@ step
 Fight 12: _Mazhareen_
 Mazhareen is a pretty straightforward fight. She does not have any abiilities, but Mazhareen does more damage as she loses health.
 |tip The best strategy for this fight is to DPS her down as quickly as possible, saving any cooldowns for the end of the fight.
-modelnpc Mazhareen##68251
 Defeat Mazhareen in the Brawler's Guild |condition ZGV:GetReputation(1419).friendRep>=3000
 step
 talk Quackenbush##68363
 buy 1 Clock'em##93025 |goto Deeprun Tram/2 54.4,29.8
 step
 learnpet Clock'em##68601 |use Clock'em##93025
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Gu'chi Swarmling",{
-pet=1345,
-description="This guide will walk you through obtaining\nthe Critter pet:Gu'chi Swarmling",
-},[[
-step
-kill Gu'chi the Swarmbringer##72909
-|tip He walks around the village here, so some searching may be necessary.
-collect 1 Gu'chi Swarmling##104291 |goto Timeless Isle/0 40.4,78.0
-step
-Use the _Gu'chi Swarmling_ in your bags. |use Gu'chi Swarmling##104291
-learnpet Gu'chi Swarmling##73730
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Jademist Dancer",{
-pet=1333,
-description="This guide will walk you through obtaining\nthe Elemental pet:Jademist Dancer",
-},[[
-step
-kill Jademist Dancer##72767+
-collect 1 Jademist Dancer##104164 |goto Timeless Isle/0 26.3,29.7
-|tip This item is a rare drop, so you may need to grind for a while.
-step
-Use the Jademist Dancer in your bags! |use Jademist Dancer##104164
-learnpet Jademist Dancer##73355
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Ashwing Moth",{
-pet=1333,
-description="This guide will walk you through obtaining\nthe Flying pet: Ashwing Moth",
-},[[
-step
-The _Ashwing Moths_ in this area are level 25. Challenge one to a pet battle and capture it.
-learnpet Ashwing Moth##73542 |goto Townlong Steppes 47.3,78.7
-|modeldisplay 51305
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Pets\\Azure Crane Chick",{
-pet=1321,
-description="This guide will walk you through obtaining\nthe Flying pet:Azure Crane Chick",
-},[[
-step
-This pet is looted from _Crane Nests_ on the Timeless Isle.
-|confirm
-step
-map Timeless Isle
-path	33.1,66.2	31.6,64.6	29.7,67.2
-path	43.2,66.0	32.6,69.4	41.4,69.6
-click Crane Nest
-collect 1 Azure Crane Chick##104157
-step
-Use the _Azure Crane Chick_ in your bags. |use Azure Crane Chick##104157
-learnpet Azure Crane Chick##73534
-step
-Congratulations, you have learned the _Azure Crane Chick_ companion!
 ]])

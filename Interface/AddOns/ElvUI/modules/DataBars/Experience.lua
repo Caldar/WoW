@@ -1,5 +1,6 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local mod = E:GetModule('DataBars');
+local LSM = LibStub("LibSharedMedia-3.0")
 
 --Cache global variables
 --Lua functions
@@ -11,7 +12,6 @@ local GetPetExperience, UnitXP, UnitXPMax = GetPetExperience, UnitXP, UnitXPMax
 local UnitLevel = UnitLevel
 local IsXPUserDisabled, GetXPExhaustion = IsXPUserDisabled, GetXPExhaustion
 local GetExpansionLevel = GetExpansionLevel
-local MAX_PLAYER_LEVEL = MAX_PLAYER_LEVEL
 local MAX_PLAYER_LEVEL_TABLE = MAX_PLAYER_LEVEL_TABLE
 local InCombatLockdown = InCombatLockdown
 
@@ -30,7 +30,7 @@ function mod:UpdateExperience(event)
 	if not mod.db.experience.enable then return end
 
 	local bar = self.expBar
-	local hideXP = ((UnitLevel('player') == MAX_PLAYER_LEVEL and self.db.experience.hideAtMaxLevel) or IsXPUserDisabled())
+	local hideXP = ((UnitLevel('player') == MAX_PLAYER_LEVEL_TABLE[GetExpansionLevel()] and self.db.experience.hideAtMaxLevel) or IsXPUserDisabled())
 
 	if hideXP or (event == "PLAYER_REGEN_DISABLED" and self.db.experience.hideInCombat) then
 		E:DisableMover(self.expBar.mover:GetName())
@@ -46,6 +46,7 @@ function mod:UpdateExperience(event)
 		end
 
 		local cur, max = self:GetXP('player')
+		if max <= 0 then max = 1 end
 		bar.statusBar:SetMinMaxValues(0, max)
 		bar.statusBar:SetValue(cur - 1 >= 0 and cur - 1 or 0)
 		bar.statusBar:SetValue(cur)
@@ -70,6 +71,8 @@ function mod:UpdateExperience(event)
 				text = format('%s R:%s', E:ShortValue(max - cur), E:ShortValue(rested))
 			elseif textFormat == 'CURREM' then
 				text = format('%s - %s R:%s', E:ShortValue(cur), E:ShortValue(max - cur), E:ShortValue(rested))
+			elseif textFormat == 'CURPERCREM' then
+				text = format('%s - %d%% (%s) R:%s', E:ShortValue(cur), cur / max * 100, E:ShortValue(max - cur), E:ShortValue(rested))
 			end
 		else
 			bar.rested:SetMinMaxValues(0, 1)
@@ -87,6 +90,8 @@ function mod:UpdateExperience(event)
 				text = format('%s', E:ShortValue(max - cur))
 			elseif textFormat == 'CURREM' then
 				text = format('%s - %s', E:ShortValue(cur), E:ShortValue(max - cur))
+			elseif textFormat == 'CURPERCREM' then
+				text = format('%s - %d%% (%s)', E:ShortValue(cur), cur / max * 100, E:ShortValue(max - cur))
 			end
 		end
 
@@ -124,7 +129,7 @@ function mod:UpdateExperienceDimensions()
 	self.expBar:Width(self.db.experience.width)
 	self.expBar:Height(self.db.experience.height)
 
-	self.expBar.text:FontTemplate(nil, self.db.experience.textSize)
+	self.expBar.text:FontTemplate(LSM:Fetch("font", self.db.experience.font), self.db.experience.textSize, self.db.experience.fontOutline)
 	self.expBar.rested:SetOrientation(self.db.experience.orientation)
 	self.expBar.statusBar:SetReverseFill(self.db.experience.reverseFill)
 

@@ -14,8 +14,8 @@ AdiBagsDB = {
 			["profiles"] = {
 				["Default"] = {
 					["splitBySubclass"] = {
-						["Tradeskill"] = false,
 						["Consumable"] = true,
+						["Tradeskill"] = false,
 						["Trade Goods"] = false,
 						["Miscellaneous"] = false,
 					},
@@ -28,7 +28,9 @@ AdiBagsDB = {
 		},
 		["Legion"] = {
 		},
-		["MoneyFrame"] = {
+		["Equipment"] = {
+		},
+		["DataSource"] = {
 		},
 		["ItemSets"] = {
 		},
@@ -45,55 +47,48 @@ AdiBagsDB = {
 						["Artifact Fragment"] = false,
 						["Warforged Seal"] = false,
 						["Mote of Darkness"] = false,
+						["Timewarped Badge"] = false,
 						["Curious Coin"] = false,
-						["Oil"] = false,
+						["Mogu Rune of Fate"] = false,
 						["Epicurean's Award"] = false,
-						["Tol Barad Commendation"] = false,
-						["Seal of Inevitable Fate"] = false,
+						["Ironpaw Token"] = false,
+						["Garrison Resources"] = false,
 						["Timeless Coin"] = false,
 						["Essence of Corrupted Deathwing"] = false,
 						["Apexis Crystal"] = false,
 						["Darkmoon Prize Ticket"] = false,
-						["Garrison Resources"] = false,
-						["Ironpaw Token"] = false,
-						["Mogu Rune of Fate"] = false,
+						["Seal of Inevitable Fate"] = false,
+						["Tol Barad Commendation"] = false,
+						["Oil"] = false,
 						["Champion's Seal"] = false,
-						["Timewarped Badge"] = false,
+						["Legionfall War Supplies"] = false,
 					},
 				},
 			},
-		},
-		["DataSource"] = {
 		},
 		["Junk"] = {
-			["profiles"] = {
-				["Default"] = {
-					["exclude"] = {
-						[140192] = true,
-					},
-				},
-			},
 		},
-		["Equipment"] = {
+		["MoneyFrame"] = {
 		},
 	},
 	["profileKeys"] = {
-		["Caldar - Feathermoon"] = "Default",
-		["Nothing - Feathermoon"] = "Default",
-		["Calastir - Feathermoon"] = "Default",
-		["Censure - Kirin Tor"] = "Default",
-		["Aristedes - Feathermoon"] = "Default",
-		["Calastir - Kirin Tor"] = "Default",
+		["Sinister - Feathermoon"] = "Default",
 		["Calastir - Scarlet Crusade"] = "Default",
-		["Caladyth - Feathermoon"] = "Default",
-		["Calandrea - Feathermoon"] = "Default",
 		["Calanthea - Feathermoon"] = "Default",
 		["Pyric - Feathermoon"] = "Default",
+		["Caldar - Feathermoon"] = "Default",
+		["Failure - Feathermoon"] = "Default",
+		["Aristedes - Feathermoon"] = "Default",
 		["Calistah - Scarlet Crusade"] = "Default",
-		["Sinister - Feathermoon"] = "Default",
+		["Caladyth - Feathermoon"] = "Default",
+		["Nothing - Feathermoon"] = "Default",
+		["Calastir - Kirin Tor"] = "Default",
+		["Calastir - Feathermoon"] = "Default",
+		["Calandrea - Feathermoon"] = "Default",
+		["Censure - Kirin Tor"] = "Default",
 		["Calandrea - Scarlet Crusade"] = "Default",
 		["Souptruck - Feathermoon"] = "Default",
-		["Failure - Feathermoon"] = "Default",
+		["Censure - Feathermoon"] = "Default",
 	},
 	["profiles"] = {
 		["Default"] = {
@@ -101,10 +96,7 @@ AdiBagsDB = {
 				["stackable"] = true,
 				["notWhenTrading"] = 3,
 			},
-			["columnWidth"] = {
-				["Bank"] = 8,
-				["Backpack"] = 8,
-			},
+			["scale"] = 0.9,
 			["maxHeight"] = 0.5,
 			["positions"] = {
 				["anchor"] = {
@@ -115,7 +107,10 @@ AdiBagsDB = {
 			["compactLayout"] = true,
 			["rightClickConfig"] = false,
 			["autoDeposit"] = true,
-			["scale"] = 0.9,
+			["columnWidth"] = {
+				["Backpack"] = 8,
+				["Bank"] = 8,
+			},
 		},
 	},
 }

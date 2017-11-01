@@ -46,6 +46,15 @@ local function LoadSkin()
 	InstanceSelect.LootJournalTab:ClearAllPoints()
 	InstanceSelect.LootJournalTab:Point("BOTTOMLEFT", InstanceSelect.raidsTab, "BOTTOMRIGHT", 0, 0)
 
+	--Skin the tab text
+	for i = 1, #InstanceSelect.Tabs do
+		local tab = InstanceSelect.Tabs[i]
+		local text = tab:GetFontString()
+
+		text:FontTemplate()
+		text:SetPoint("CENTER")
+	end
+
 	--Encounter Info Frame
 	local EncounterInfo = EJ.encounter.info
 	EncounterJournalEncounterFrameInfoBG:Kill()
@@ -59,6 +68,7 @@ local function LoadSkin()
 	EncounterInfo.instanceTitle:ClearAllPoints()
 	EncounterInfo.instanceTitle:Point("BOTTOM", EncounterInfo.bossesScroll, "TOP", 10, 15)
 
+	S:HandleButton(EncounterJournalEncounterFrameInfoLootScrollFrameSlotFilterToggle, true)
 	EncounterInfo.difficulty:StripTextures()
 	EncounterInfo.reset:StripTextures()
 	S:HandleButton(EncounterInfo.reset)
@@ -73,7 +83,6 @@ local function LoadSkin()
 	EncounterInfo.bossesScroll:CreateBackdrop("Transparent")
 	EncounterInfo.bossesScroll.backdrop:Point("TOPLEFT", EncounterInfo.bossesScroll, "TOPLEFT", -25, E.Border)
 	S:HandleScrollBar(EncounterInfo.bossesScroll.ScrollBar, 4)
-
 
 	local scrollFrames = {
 		EncounterInfo.overviewScroll,
@@ -159,6 +168,7 @@ local function LoadSkin()
 	S:HandleScrollBar(EncounterJournalScrollBar)
 	S:HandleButton(EncounterJournal.LootJournal.LegendariesFrame.ClassButton, true)
 	S:HandleButton(EncounterJournal.LootJournal.LegendariesFrame.SlotButton, true)
+	S:HandleButton(EncounterJournal.LootJournal.ItemSetsFrame.ClassButton, true)
 	S:HandleDropDownBox(LootJournalViewDropDown)
 	LootJournalViewDropDownText:ClearAllPoints()
 	LootJournalViewDropDownText:Point("CENTER", LootJournalViewDropDown, "CENTER", 0, 3)
@@ -213,18 +223,20 @@ local function LoadSkin()
 	--Boss selection buttons
 	local function SkinBosses()
 		local bossIndex = 1;
-		local name, description, bossID, _, link = EJ_GetEncounterInfoByIndex(bossIndex);
+		local _, _, bossID = EJ_GetEncounterInfoByIndex(bossIndex);
 		local bossButton;
 
 		while bossID do
 			bossButton = _G["EncounterJournalBossButton"..bossIndex];
 			if bossButton and not bossButton.isSkinned then
 				S:HandleButton(bossButton)
+				bossButton.creature:ClearAllPoints()
+				bossButton.creature:Point("TOPLEFT", 1, -4)
 				bossButton.isSkinned = true
 			end
 
 			bossIndex = bossIndex + 1;
-			name, description, bossID, _, link = EJ_GetEncounterInfoByIndex(bossIndex);
+			_, _, bossID = EJ_GetEncounterInfoByIndex(bossIndex);
 		end
 	end
 	hooksecurefunc("EncounterJournal_DisplayInstance", SkinBosses)
@@ -262,7 +274,7 @@ local function LoadSkin()
 	end
 
 	--Overview Info (From Aurora)
-	local function SkinOverviewInfo(self, role, index)
+	local function SkinOverviewInfo(self, _, index)
 		local header = self.overviews[index]
 		if not header.isSkinned then
 
@@ -285,7 +297,7 @@ local function LoadSkin()
 	hooksecurefunc("EncounterJournal_SetUpOverview", SkinOverviewInfo)
 
 	--Overview Info Bullets (From Aurora)
-	local function SkinOverviewInfoBullets(object, description)
+	local function SkinOverviewInfoBullets(object)
 		local parent = object:GetParent()
 
 		if parent.Bullets then
@@ -341,12 +353,12 @@ local function LoadSkin()
 		end
 	end
 	hooksecurefunc("EncounterJournal_ToggleHeaders", SkinAbilitiesInfo)
-	
+
 	-- Search
 	EncounterJournalSearchResults:StripTextures()
 	EncounterJournalSearchResults:SetTemplate("Default")
 	EncounterJournalSearchBox.searchPreviewContainer:StripTextures()
-	
+
 	S:HandleCloseButton(EncounterJournalSearchResultsCloseButton)
 	S:HandleScrollBar(EncounterJournalSearchResultsScrollFrameScrollBar)
 end

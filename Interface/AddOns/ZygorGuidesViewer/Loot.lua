@@ -86,7 +86,7 @@ function Loot:CreateFrame()
 		:SetScript("OnClick",function() Loot:CloseFrame() end) 
 		:Hide()
 	.__END
-	ZGV.AssignButtonTexture(F.Close,ZGV.CurrentSkinStyle:SkinData("TitleButtons"),6,32)
+	ZGV.F.AssignButtonTexture(F.Close,ZGV.CurrentSkinStyle:SkinData("TitleButtons"),6,32)
 end
 
 function Loot:ToggleFrame()
@@ -111,7 +111,7 @@ function Loot:UpdateSkin()
 	self.GreyFrame:SetBackdrop(SkinData("MoneyBackdrop"))
 	self.GreyFrame:SetBackdropColor(unpack(SkinData("MoneyBackdropColor")))
 	self.GreyFrame:SetBackdropBorderColor(unpack(SkinData("MoneyBackdropBorderColor")))
-	ZGV.AssignButtonTexture(self.GreyFrame.Close,ZGV.CurrentSkinStyle:SkinData("TitleButtons"),6,32)
+	ZGV.F.AssignButtonTexture(self.GreyFrame.Close,ZGV.CurrentSkinStyle:SkinData("TitleButtons"),6,32)
 end
 
 function Loot:SellGreyItems() --Auto Sell Grey Items
@@ -139,11 +139,8 @@ function Loot:SellGreyItems() --Auto Sell Grey Items
 end
 
 function Loot:SellUnusableItems()
-	 if not (ZGV.db.profile.im_enable and ZGV.db.profile.enable_vendor_tools) then return end -- This is considered a part of the Inventory Manager right now.
-
-	local SellItemsPopup = Loot.SellItemsPopup 
-	SellItemsPopup:SetItems(IM:GetUnusableItems())
-	SellItemsPopup:Show()
+	if not ZGV.db.profile.enable_vendor_tools then return end -- Checks for IM are depreciated, removed them. 
+	Loot.SellItemsPopup:SetItems()
 end
 
 --Buying items from steps in guide
@@ -282,28 +279,28 @@ function Loot:FindItemsToBuy()
 	end
 end
 
+function Loot:SetUpGreySellButton()
+	if self.greysellbutton then return end
+	self.greysellbutton = CHAIN(CreateFrame("Button", "ZygorGuidesViewerSellButton", MerchantFrame, "OptionsButtonTemplate"))
+		:SetPoint("TOPLEFT", 60, -30)
+		:SetText(L['loot_sellgreybutton'])
+		:SetScript("OnClick",Loot.SellGreyItems)
+	.__END
+end
+
 local function OnEvent(self,event)
 	if event=="BAG_UPDATE_DELAYED" and ZGV.db.profile.showgreyvalue and ZGV.db.profile.enable_vendor_tools then
 		Loot:GetGreyBagValue()
 	elseif event=="MERCHANT_SHOW" then
-		if ZGV.db.profile.showgreysellbutton then
-			if not Loot.greysell then
-				Loot.greysell = CHAIN(CreateFrame("Button", "ZygorGuidesViewerSellButton", MerchantFrame, "OptionsButtonTemplate"))
-					:SetPoint("TOPLEFT", 60, -30)
-					:SetText(L['loot_sellgreybutton'])
-					:SetScript("OnClick",Loot.SellGreyItems)
-				.__END
-			end
-			Loot.greysell:Show()
-		elseif Loot.greysell then 
-			Loot.greysell:Hide()
-		end
+		Loot:SetUpGreySellButton()
+		Loot.greysellbutton:SetShown(ZGV.db.profile.showgreysellbutton)
 
 		if ZGV.db.profile.autosell and ZGV.db.profile.enable_vendor_tools then Loot:SellGreyItems() end
 		if ZGV.db.profile.autosellother and ZGV.db.profile.enable_vendor_tools then Loot:SellUnusableItems() end
 		if ZGV.db.profile.autobuy and ZGV.db.profile.enable_vendor_tools then  Loot:FindItemsToBuy() end
 	elseif event=="MERCHANT_CLOSED" then
 		if Loot.popup then Loot.popup:Hide() end 
+		if Loot.SellItemsPopup and Loot.SellItemsPopup.Popup then Loot.SellItemsPopup.Popup:Hide() end 
 	end
 end
 

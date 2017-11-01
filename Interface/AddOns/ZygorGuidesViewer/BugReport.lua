@@ -7,7 +7,7 @@ local table,string,tonumber,tostring,ipairs,pairs,setmetatable = table,string,to
 local FONT=ZGV.Font
 local FONTBOLD=ZGV.FontBold
 local CHAIN = ZGV.ChainCall
-local AceGUI = LibStub("AceGUI-3.0")
+local AceGUI = LibStub("AceGUI-3.0-Z")
 local ui = ZGV.UI
 
 local BZL,BZR=ZGV.BZL,ZGV.BZR
@@ -99,7 +99,7 @@ local function CreateDumpFrameBasic()
 		:SetSize(15,15)
 		:SetScript("OnClick",function() frame:Hide() end)
 	.__END
-	ZGV.AssignButtonTexture(close,(SkinData("TitleButtons")),6,32)
+	ZGV.F.AssignButtonTexture(close,(SkinData("TitleButtons")),6,32)
 
 	local title = CHAIN(frame:CreateFontString(nil,"OVERLAY"))
 		:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -10)
@@ -196,7 +196,7 @@ local function CreateDumpFrameReport()
 		frame.scroll1 = CHAIN(ui:Create("ScrollChild",frame,name.."Scroll1","editbox"))
 			:SetBackdrop(SkinData("BugBackdrop"))
 			:SetBackdropColor(unpack(SkinData("BugBackdropColor")))
-			:SetHideWhenUnless(1)
+			--:SetHideWhenUseless(1)
 			:SetSize(480,135)
 			:SetPoint("TOPLEFT", frame.header1, "BOTTOMLEFT", 0, -10)
 			:MySetPoint("BOTTOMRIGHT", frame, "RIGHT", -10, 0)
@@ -223,7 +223,7 @@ local function CreateDumpFrameReport()
 		frame.scroll2 = CHAIN(ui:Create("ScrollChild",frame,name.."Scroll2","editbox"))
 			:SetBackdrop(SkinData("BugBackdrop"))
 			:SetBackdropColor(unpack(SkinData("BugBackdropColor")))
-			:SetHideWhenUnless(1)
+			--:SetHideWhenUnless(1)
 			:SetSize(480,135)
 			:SetPoint("TOPLEFT", frame.header2, "BOTTOMLEFT", 0, -10)
 			:MySetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -10, 35)
@@ -278,7 +278,7 @@ local function CreateDumpFrameReport()
 		:SetSize(15,15)
 		:SetScript("OnClick",function() frame:Hide() end)
 	.__END
-	ZGV.AssignButtonTexture(close,(SkinData("TitleButtons")),6,32)
+	ZGV.F.AssignButtonTexture(close,(SkinData("TitleButtons")),6,32)
 
 	frame.OKButton = CHAIN(ui:Create("Button",frame))
 		:SetSize(200,25)
@@ -354,7 +354,7 @@ function ZGV:GetBugReport(maint)
 		local maptex,mapx,mapy,ismicro,microname = GetMapInfo()
 		microname=microname or ""
 		s = s .. ("Position: |cffffeeaa%s /%s %.2f,%.2f|r (#%s, zone:'%s', realzone:'%s', subzone:'%s', minimapzone:'%s', micro:'%s', texture:'%s')\n"):format(
-		 ZGV.Pointer.GetMapNameByID2(ZGV.CurrentMapID or 0) or "?",ZGV.CurrentMapFloor or "?", x*100,y*100,
+		 ZGV.Pointer.GetMapNameByID2(ZGV.CurrentMapID or 0) or "?",ZGV.CurrentMapFloor or "?", (x or 0)*100,(y or 0)*100,
 		 ZGV.CurrentMapID or "?",GetZoneText(),GetRealZoneText(),GetSubZoneText(),GetMinimapZoneText(),microname,maptex)
 		if GetLocale()~="enUS" then
 			--s = s .. ("    enUS: realzone:'%s' zone:'%s' subzone:'%s' minimapzone:'%s')\n"):format(tostring(BZR[GetRealZoneText()]),tostring(BZR[GetZoneText()]),BZR[GetSubZoneText()] or "("..GetSubZoneText()..")",BZR[GetMinimapZoneText()] or "("..GetMinimapZoneText()..")")
@@ -891,16 +891,13 @@ function ZGV:Serialize(val,lev)
 				else s = s .. '[' .. escape(k) .. ']'
 				end
 			end
-			s = s .. " = "
-			if type(v)=="number" then s = s .. tostring(v)
-			elseif type(v)=="string" then s = s .. escape(v)
-			elseif type(v)=="table" then s = s .. ZGV:Serialize(v,lev+1)
-			end
-			s = s .. ","
+			s = s .. " = " .. self:Serialize(v,lev+1) .. ","
 		end
 		s = s .. "\n" .. indent .. "}"
 	elseif type(val)=="nil" then
 		s = "nil"
+	elseif type(val)=="boolean" then
+		s = tostring(val)
 	end
 
 	return s

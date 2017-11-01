@@ -79,7 +79,13 @@ end
 function rematch:SetSideline(key,team,loadout)
 	wipe(sideline)
 	wipe(context)
+
 	key = key or uniqueKey(L["New Team"])
+
+	-- special case for an imported team being sidelined
+	if key==1 and team then
+		key = team.teamName or rematch:GetNameFromNpcID(1)
+	end
 
 	sideline[key] = {}
 
@@ -96,8 +102,13 @@ function rematch:SetSideline(key,team,loadout)
 	if loadout then
 		for i=1,3 do
 			local petID,ability1,ability2,ability3 = C_PetJournal.GetPetLoadOutInfo(i)
-			if rematch:IsSlotQueueControlled(i) then -- if this is slot is queue controlled
+         local specialPetID = rematch:GetSpecialSlot(i)
+         if specialPetID==0 then -- if this slot is queue controlled
 				sideline[key][i] = {0}
+         elseif specialPetID=="ignored" then -- ignored slot
+            sideline[key][i] = {"ignored"}
+         elseif specialPetID and rematch:GetSpecialPetIDType(specialPetID)=="random" then
+            sideline[key][i] = {specialPetID}
 			elseif petID then -- for normal pets, get its speciesID and add it too
 				local speciesID = C_PetJournal.GetPetInfoByPetID(petID)
 				sideline[key][i] = {petID,ability1,ability2,ability3,speciesID}
@@ -167,7 +178,7 @@ function rematch:PushSideline()
 		end
 	end
 
-	if (loadout or settings.loadedTeam==originalKey) and (not rematch:GetSidelineContext("receivedTeam") or settings.loadedTeam==key) then
+	if (loadout or settings.loadedTeam==originalKey) and (not rematch:GetSidelineContext("receivedTeam") or settings.loadedTeam==key) and not (InCombatLockdown() or C_PetBattles.IsInBattle() or C_PetBattles.GetPVPMatchmakingInfo()) then
 		-- this is the current pets being pushed, do anything related to loaded team here
 		settings.loadedTeam = key
 		-- Loadteam in case any funny business with imported/received teams (changed loaded team)
@@ -186,6 +197,8 @@ function rematch:PushSideline()
 	if type(key)=="string" then
 		saved[key].teamName = nil -- don't keep redundant teamName when a team is keyed by its name
 	end
+
+   rematch.petsInTeams:Invalidate() -- next time petsInTeams used, get new data
 	rematch:UpdateUI()
 end
 

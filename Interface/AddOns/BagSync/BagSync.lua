@@ -13,12 +13,6 @@ local BSYC = select(2, ...) --grab the addon namespace
 BSYC = LibStub("AceAddon-3.0"):NewAddon(BSYC, "BagSync", "AceEvent-3.0", "AceConsole-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("BagSync", true)
 
-local strsub, strsplit, strlower, strmatch, strtrim, gsub, strrep = string.sub, string.split, string.lower, string.match, string.trim, string.gsub, string.rep
-local format, tonumber, tostring, tostringall = string.format, tonumber, tostring, tostringall
-local tsort, tinsert, unpack = table.sort, table.insert, unpack
-local select, pairs, next, type = select, pairs, next, type
-local error, assert = error, assert
-
 local debugf = tekDebug and tekDebug:GetFrame("BagSync")
 
 function BSYC:Debug(...)
@@ -190,6 +184,7 @@ function BSYC:StartupDB()
 	if self.options.enableRealmIDTags == nil then self.options.enableRealmIDTags = true end
 	if self.options.enableRealmAstrickName == nil then self.options.enableRealmAstrickName = false end
 	if self.options.enableRealmShortName == nil then self.options.enableRealmShortName = false end
+	if self.options.enableLoginVersionInfo == nil then self.options.enableLoginVersionInfo = true end
 	
 	--setup the default colors
 	if self.options.colors == nil then self.options.colors = {} end
@@ -448,11 +443,6 @@ function BSYC:GetRealmTags(srcName, srcRealm, isGuild)
 	if self.db.realmkey[srcRealm] then fullRealmName = self.db.realmkey[srcRealm] end --second, if we have a realmkey with a true realm name then use it
 	
 	if not isGuild then
-		--check just in case!  we only want the name not the realm
-		local yName, yRealm  = strsplit("^", srcName)
-
-		srcName = yName
-		
 		local ReadyCheck = [[|TInterface\RaidFrame\ReadyCheck-Ready:0|t]]
 		--local NotReadyCheck = [[|TInterface\RaidFrame\ReadyCheck-NotReady:0|t]]
 		
@@ -798,10 +788,12 @@ function BSYC:ShowMoneyTooltip(objTooltip)
 	local xDB = self:FilterDB()
 
 	for k, v in pairs(xDB) do
+		local yName, yRealm  = strsplit("^", k)
+		local playerName = BSYC:GetRealmTags(yName, yRealm)
+		
 		if v.gold then
-			k = self:GetRealmTags(k, v.realm)
-			k = self:GetClassColor(k or "Unknown", v.class)
-			table.insert(usrData, { name=k, gold=v.gold } )
+			playerName = self:GetClassColor(playerName or "Unknown", v.class)
+			table.insert(usrData, { name=playerName, gold=v.gold } )
 		end
 	end
 	table.sort(usrData, function(a,b) return (a.name < b.name) end)
@@ -1085,10 +1077,14 @@ function BSYC:AddItemToTooltip(frame, link) --workaround
 					
 					--check to make sure we didn't already add a guild from a connected-realm
 					local trueRealmList = self.db.realmkey[0][v.realm] --get the connected realms
-					table.sort(trueRealmList, function(a,b) return (a < b) end) --sort them alphabetically
-					trueRealmList = table.concat(trueRealmList, "|") --concat them together
+					if trueRealmList then
+						table.sort(trueRealmList, function(a,b) return (a < b) end) --sort them alphabetically
+						trueRealmList = table.concat(trueRealmList, "|") --concat them together
+					else
+						trueRealmList = v.realm
+					end
 					trueRealmList = guildN.."-"..trueRealmList --add the guild name in front of concat realm list
-					
+
 					if not previousGuilds[gName] and not previousGuildsXRList[trueRealmList] then
 						--we only really need to see this information once per guild
 						local tmpCount = 0
@@ -1110,12 +1106,12 @@ function BSYC:AddItemToTooltip(frame, link) --workaround
 			end
 			
 			--get class for the unit if there is one
-			local pClass = v.class or nil
 			infoString = self:CreateItemTotals(allowList)
 
 			if infoString then
-				k = self:GetRealmTags(k, v.realm)
-				table.insert(self.PreviousItemTotals, self:GetClassColor(k or "Unknown", pClass).."@"..(infoString or "unknown"))
+				local yName, yRealm  = strsplit("^", k)
+				local playerName = self:GetRealmTags(yName, yRealm)
+				table.insert(self.PreviousItemTotals, self:GetClassColor(playerName or "Unknown", v.class).."@"..(infoString or "unknown"))
 			end
 			
 		end
@@ -1526,8 +1522,10 @@ function BSYC:OnEnable()
 	--register the slash command
 	self:RegisterChatCommand("bgs", "ChatCommand")
 	self:RegisterChatCommand("bagsync", "ChatCommand")
-
-	self:Print("[v|cFFDF2B2B"..ver.."|r] /bgs, /bagsync")
+	
+	if self.options.enableLoginVersionInfo then
+		self:Print("[v|cFFDF2B2B"..ver.."|r] /bgs, /bagsync")
+	end
 end
 
 ------------------------------

@@ -8,6 +8,7 @@ local select, unpack = select, unpack
 
 local function LoadSkin()
 	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.spellbook ~= true then return end
+
 	S:HandleCloseButton(SpellBookFrameCloseButton)
 	SpellBookFrame:SetTemplate("Transparent")
 
@@ -56,8 +57,8 @@ local function LoadSkin()
 				for i=1, button:GetNumRegions() do
 					local region = select(i, button:GetRegions())
 					if region:GetObjectType() == "Texture" then
-						if region ~= button.FlyoutArrow and region ~= button.GlyphIcon
-							and region ~= button.GlyphActivate and region ~= button.AbilityHighlight then
+						if region ~= button.FlyoutArrow and region ~= button.GlyphIcon and region ~= button.GlyphActivate
+						  and region ~= button.AbilityHighlight and region ~= button.SpellHighlightTexture then
 							region:SetTexture(nil)
 						end
 					end
@@ -116,7 +117,7 @@ local function LoadSkin()
 			end
 		end)
 
-		local point, relatedTo, point2, x, y = tab:GetPoint()
+		local point, relatedTo, point2, _, y = tab:GetPoint()
 		tab:Point(point, relatedTo, point2, 1, y)
 
 		tab.isSkinned = true
@@ -162,20 +163,18 @@ local function LoadSkin()
 	end
 
 	for _, button in pairs(professionbuttons) do
-		local icon = _G[button.."IconTexture"]
-		local button = _G[button]
+		button = _G[button]
 		button:StripTextures()
+		button:SetTemplate("Transparent")
+		button.iconTexture:SetTexCoord(unpack(E.TexCoords))
+		button.iconTexture:SetInside()
+		button.highlightTexture:SetInside()
 
-		if icon then
-			icon:SetTexCoord(unpack(E.TexCoords))
-			icon:SetInside()
-
-			button:SetFrameLevel(button:GetFrameLevel() + 2)
-			if not button.backdrop then
-				button:CreateBackdrop("Default", true)
-				button.backdrop:SetAllPoints()
+		hooksecurefunc(button.highlightTexture, "SetTexture", function(self, texture)
+			if texture == "Interface\\Buttons\\ButtonHilight-Square" then
+				self:SetColorTexture(1, 1, 1, 0.3)
 			end
-		end
+		end)
 	end
 
 	local professionstatusbars = {
@@ -188,7 +187,7 @@ local function LoadSkin()
 	}
 
 	for _, statusbar in pairs(professionstatusbars) do
-		local statusbar = _G[statusbar]
+		statusbar = _G[statusbar]
 		statusbar:StripTextures()
 		statusbar:SetStatusBarTexture(E["media"].normTex)
 		E:RegisterStatusBar(statusbar)

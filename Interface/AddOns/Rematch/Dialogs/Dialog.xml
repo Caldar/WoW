@@ -60,7 +60,7 @@
 		</Frames>
 	</Frame>
 
-	<Frame name="RematchDialog" frameStrata="DIALOG" parent="UIParent" clampedToScreen="true" enableMouse="true" movable="true"  inherits="BasicFrameTemplateWithInset" hidden="true">
+	<Frame name="RematchDialog" frameStrata="DIALOG" parent="UIParent" clampedToScreen="true" enableMouse="true" movable="true"  toplevel="true" inherits="BasicFrameTemplateWithInset" hidden="true">
 		<Size x="420" y="200"/>
 		<Anchors>
 			<Anchor point="CENTER"/>
@@ -155,7 +155,7 @@
 				</Layers>
 			</Frame>
 			<!-- this is a PetListButtonTemplate pet slot -->
-			<Frame parentKey="Pet" useParentLevel="true" inherits="RematchBasePetListButtonTemplate">
+			<Button parentKey="Pet" useParentLevel="true" inherits="RematchBasePetListButtonTemplate">
 				<Size x="236" y="44"/>
 				<Layers>
 					<Layer level="ARTWORK">
@@ -168,7 +168,7 @@
 						</Texture>
 					</Layer>
 				</Layers>
-			</Frame>
+			</Button>
 			<!-- warning -->
 			<Frame parentKey="Warning" useParentLevel="true">
 				<Size x="268" y="32"/>
@@ -329,18 +329,6 @@
 			<OnHide>
 				RematchDialog:OnHide()
 			</OnHide>
-		</Scripts>
-	</Frame>
-
-	<Frame name="RematchKBTest" frameStrata="DIALOG" parent="UIParent" clampedToScreen="true" enableMouse="true" movable="true"  inherits="BasicFrameTemplateWithInset" hidden="true">
-		<Size x="420" y="200"/>
-		<Anchors>
-			<Anchor point="CENTER"/>
-		</Anchors>
-		<Scripts>
-			<OnKeyDown>
-				RematchDialog.OnKeyDown(self,key)
-			</OnKeyDown>
 		</Scripts>
 	</Frame>
 

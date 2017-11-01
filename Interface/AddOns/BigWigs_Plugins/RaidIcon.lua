@@ -11,7 +11,7 @@ if not plugin then return end
 
 local lastplayer = {}
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Plugins")
+local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local icons = {
 	RAID_TARGET_1,
 	RAID_TARGET_2,
@@ -117,7 +117,7 @@ end
 -- Event Handlers
 --
 
-function plugin:BigWigs_SetRaidIcon(message, player, icon)
+function plugin:BigWigs_SetRaidIcon(_, player, icon)
 	if not player or self.db.profile.disabled then return end
 	local index = (not icon or icon == 1) and self.db.profile.icon or self.db.profile.secondIcon
 	if not index then return end
@@ -129,7 +129,7 @@ function plugin:BigWigs_SetRaidIcon(message, player, icon)
 	end
 end
 
-function plugin:BigWigs_RemoveRaidIcon(message, icon)
+function plugin:BigWigs_RemoveRaidIcon(_, icon)
 	if not lastplayer[icon or 1] or self.db.profile.disabled then return end
 	SetRaidTarget(lastplayer[icon or 1], 0)
 	lastplayer[icon or 1] = nil

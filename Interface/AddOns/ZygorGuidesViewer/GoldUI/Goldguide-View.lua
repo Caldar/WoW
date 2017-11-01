@@ -60,7 +60,7 @@ local ENTRIES_DATA = {
 	POSY = -HEADER_MENU_HEIGHT,
 	STRATA = "HIGH",
 	BORDER = {0,0,0,0},
-	BACKGROUND = {HTMLColor("#222222ff")},
+	BACKGROUND = {ZGV.F.HTMLColor("#222222ff")},
 	ROWHIGHLIGHT = true,
 	ROWBACKGROUND = true,
 }
@@ -214,7 +214,7 @@ local function MakeImgButton(name,texture,x,w,y,h,caption)
 		:SetTexture(texture)
 	.__END
 
-	ZGV.BetterTexCoord(but.texture,x,w,y,h)
+	ZGV.F.SetSpriteTexCoord(but.texture,x,w,y,h)
 	
 	but.caption = CHAIN(but:CreateFontString(but:GetName().."_c","LOW")) 
 		--:SetSize(200,20) 
@@ -231,13 +231,13 @@ function Goldguide:CreateMainFrame()
 	self.MainFrame = CHAIN(ui:Create("Frame",UIParent,"ZygorGoldguide"))
 		:SetFrameStrata("HIGH")
 		:SetToplevel(enable)
-		:SetBackdropColor(HTMLColor("#222222ff"))
+		:SetBackdropColor(ZGV.F.HTMLColor("#222222ff"))
 		:SetSize(820,560)
 		:SetPoint("TOPLEFT",UIParent,"TOPLEFT",20,-100)
 		:SetFrameLevel(10)
 		:CanDrag(1)
-		:SetScript("OnEvent",Goldguide.EventHandler)
-		:SetScript("OnUpdate",Goldguide.UpdateHandler)
+		:SetScript("OnEvent",Goldguide.MainFrame_EventHandler)
+		:SetScript("OnUpdate",Goldguide.MainFrame_UpdateHandler)
 		.__END
 
 	local MF = self.MainFrame 
@@ -260,26 +260,40 @@ function Goldguide:CreateMainFrame()
 			:SetTexture(SkinData("TitleLogo"))
 		.__END
 
+		MF.HeaderFrame.menu = CHAIN(CreateFrame("Button",nil,MF.HeaderFrame))
+			:SetPoint("TOPLEFT",5,-5)
+			:SetSize(17,17)
+			:SetScript("OnClick", function() 
+				ZGV.GuideMenu:Show("Home") 
+				Goldguide:HideWindow() 
+			end)
+			:SetScript("OnEnter", function() Goldguide:ShowMenuTooltip(MF.HeaderFrame.menu,"Go back to main menu") end)
+			:SetScript("OnLeave", function() Goldguide:HideMenuTooltip() end)
+			.__END
+
+		ZGV.F.AssignButtonTexture(MF.HeaderFrame.menu,(SkinData("TitleButtons")),16,32)
+
+
 		MF.HeaderFrame.close = CHAIN(CreateFrame("Button",nil,MF.HeaderFrame))
 			:SetPoint("TOPRIGHT",-5,-5)
 			:SetSize(17,17)
 			:SetScript("OnClick", function() Goldguide:HideWindow() end)
 			.__END
-		ZGV.AssignButtonTexture(MF.HeaderFrame.close,(SkinData("TitleButtons")),6,32)
+		ZGV.F.AssignButtonTexture(MF.HeaderFrame.close,(SkinData("TitleButtons")),6,32)
 
 		MF.HeaderFrame.info = CHAIN(CreateFrame("Button",nil,MF.HeaderFrame))
 			:SetPoint("TOPRIGHT",MF.HeaderFrame.close,"TOPLEFT",-5,0)
 			:SetSize(17,17)
 			:SetScript("OnClick", function() Goldguide:ToggleInfoPage() end)
 			.__END
-		ZGV.AssignButtonTexture(MF.HeaderFrame.info,(SkinData("TitleButtons")),18,32)
+		ZGV.F.AssignButtonTexture(MF.HeaderFrame.info,(SkinData("TitleButtons")),18,32)
 
 		MF.HeaderFrame.help = CHAIN(CreateFrame("Button",nil,MF.HeaderFrame))
 			:SetPoint("TOPRIGHT",MF.HeaderFrame.info,"TOPLEFT",-5,0)
 			:SetSize(17,17)
 			:SetScript("OnClick", function() Goldguide:ToggleHelpPage() end)
 			.__END
-		ZGV.AssignButtonTexture(MF.HeaderFrame.help,(SkinData("TitleButtons")),1,32)
+		ZGV.F.AssignButtonTexture(MF.HeaderFrame.help,(SkinData("TitleButtons")),1,32)
 
 		MF.HeaderFrame.Tabs = {}
 
@@ -402,7 +416,7 @@ function Goldguide:CreateMainFrame()
 			:SetSize(15,15)
 			:SetScript("OnClick",function() ZGV:OpenOptions() end)
 		.__END
-		ZGV.AssignButtonTexture(MF.FooterSettingsButton,(SkinData("TitleButtons")),5,32)
+		ZGV.F.AssignButtonTexture(MF.FooterSettingsButton,(SkinData("TitleButtons")),5,32)
 
 		MF.progressFrame = CHAIN(CreateFrame("Frame","progressFrame",MF.FooterFrame))
 			:SetBackdrop(SkinData("ProgressBarBackdrop"))
@@ -440,6 +454,18 @@ function Goldguide:CreateMainFrame()
 	Goldguide:MakeInfoPages()
 
 	MF:Hide()
+end
+
+function Goldguide:ShowMenuTooltip(parent,text)
+	GameTooltip:SetOwner(parent, "ANCHOR_BOTTOM")
+	GameTooltip:ClearAllPoints()
+	GameTooltip:ClearLines()
+	GameTooltip:SetText(text)
+	GameTooltip:Show()
+end
+
+function Goldguide:HideMenuTooltip()
+	GameTooltip:Hide()
 end
 
 function Goldguide:MakeTable_Farming()
@@ -536,7 +562,7 @@ function Goldguide:MakeTable_Gathering()
 	
 	for optnum,opt in ipairs(DEFAULT_MODES) do
 		local item = container.ModeDropdown:AddItem(opt[1],opt[2],function(item)
-			ZGV.db.profile.gathering_mode = item.userdata.value
+			ZGV.db.profile.gold_gathering_mode = item.userdata.value
 			if container:IsVisible() then Goldguide:Update() end
 		end, opt[3])
 	end
@@ -608,7 +634,7 @@ function Goldguide:MakeTable_Crafting()
 		
 	for _,skillname in ipairs(CRAFTING_SKILLS) do
 		if skillname=="All" or ZGV:GetSkill(skillname).level>0 then
-			local skillid = (skillname=="All" and 0) or ZGV.skillIDs[skillname]
+			local skillid = (skillname=="All" and 0) or ZGV.Professions.skillIDs[skillname]
 			local item = container.TypeDropdown:AddItem(skillname,skillid,function(item)
 				ZGV.db.profile.gold_crafting_type = item.userdata.value
 				if container:IsVisible() then Goldguide:Update() end
@@ -896,7 +922,7 @@ function Goldguide:UpdateSortingArrows()
 		if column.sortable then
 			frame.Entries["col_"..column.name].texture:SetTexture("")
 			frame.Entries["col_"..column.name]:SetText(string.gsub(frame.Entries["col_"..column.name]:GetText(),ARROW_SPACE,""))
-			frame.Entries["col_"..column.name].tooltip = "Click to sort by "..column.title:lower().." descending"
+			frame.Entries["col_"..column.name].tooltip = ZGV.L['gold_clicktosort_desc']:format(column.title:lower())
 		end
 		if column.name==sort_col then sort_col_data=column end
 	end
@@ -906,7 +932,7 @@ function Goldguide:UpdateSortingArrows()
 	local button = frame.Entries["col_"..sort_col]
 	if sort_dir == "desc" then
 		button.texture:SetTexture(ZGV.DIR.."\\Skins\\arrowdown")
-		button.tooltip = "Click to sort by ".. sort_col_data.title:lower().." ascending"
+		button.tooltip = ZGV.L['gold_clicktosort_asc']:format(sort_col_data.title:lower())
 	else
 		button.texture:SetTexture(ZGV.DIR.."\\Skins\\arrowup")
 	end
@@ -1058,12 +1084,15 @@ function Goldguide:MakeTooltip(name,COLUMNS)
 		end
 		frame.separator:Hide()
 
-		local data=row.chore:GetTooltipData()
+		local data=row.chore:GetTooltipData(IsControlKeyDown()) -- force refresh
+
+		ZGV.Gold.FOCUSED_GUIDE = row.chore
 
 		-- set up header and status values and position
 		if data.header then
+			self.statustext:SetHeight(100) -- make space for multiline
 			self.statustext:SetText(data.header)
-			self.statustext:SetHeight(self.statustext:GetStringHeight())
+			self.statustext:SetHeight(self.statustext:GetStringHeight()) -- set to true height
 			self.header:SetPoint("TOPLEFT",self.statustext,"BOTTOMLEFT",0,0)
 		else
 			self.statustext:SetText()

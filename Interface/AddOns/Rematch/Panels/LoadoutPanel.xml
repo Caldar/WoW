@@ -5,7 +5,11 @@
 		<Size x="36" y="36"/>
 		<Layers>
 			<Layer level="OVERLAY">
-				<Texture parentKey="Cover" setAllPoints="true" hidden="true">
+				<Texture parentKey="Cover" hidden="true">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="3" y="-3"/>
+						<Anchor point="BOTTOMRIGHT" x="-3" y="3"/>
+					</Anchors>
 					<Color r="0" g="0" b="0" a="0.6"/>
 				</Texture>
 			</Layer>
@@ -23,6 +27,19 @@
 
 	<CheckButton name="RematchLoadoutAbilityTemplate" inherits="RematchFlyoutAbilityTemplate" virtual="true">
 		<Layers>
+			<Layer level="ARTWORK">
+				<Texture parentKey="NumberBG" file="Interface\Common\Icon-Shadow" alpha="0.75">
+					<Size x="18" y="18"/>
+					<Anchors>
+						<Anchor point="BOTTOM" relativePoint="BOTTOMRIGHT" x="-9" y="1"/>
+					</Anchors>
+				</Texture>
+				<FontString parentKey="Number" inherits="GameFontHighlight" text="2">
+					<Anchors>
+						<Anchor point="BOTTOM" relativePoint="BOTTOMRIGHT" x="-9" y="4"/>
+					</Anchors>
+				</FontString>
+			</Layer>
 			<Layer level="OVERLAY" textureSubLevel="1">
 				<Texture parentKey="Arrow" file="Interface\Buttons\ActionBarFlyoutButton">
 					<Size x="23" y="11"/>	
@@ -55,6 +72,9 @@
 				</Texture>
 			</Layer>
 		</Layers>
+      <KeyValues>
+         <KeyValue key="isLoadoutSlot" value="true"/>
+      </KeyValues>
 		<Frames>
 			<StatusBar parentKey="XP" inherits="RematchStatusBarTemplate">
 				<Anchors>
@@ -119,30 +139,23 @@
 				<BarTexture file="Interface\TargetingFrame\UI-StatusBar"/>
 				<BarColor r="0.1" g="1.0" b="0.1" />
 			</StatusBar>
-			<PlayerModel parentKey="Model" useParentLevel="true">
-				<Size x="75" y="55"/>
+			<ModelScene parentKey="ModelScene" useParentLevel="true" inherits="ModelSceneMixinTemplate">
+				<Size x="88" y="100"/>
 				<Anchors>
-					<Anchor point="BOTTOMRIGHT" x="-1" y="12"/>
+					<Anchor point="BOTTOMRIGHT" x="-1" y="1"/>
 				</Anchors>
 				<Layers>
 					<Layer level="ARTWORK">
 						<Texture parentKey="Shadows" atlas="PetJournal-BattleSlot-Shadow">
 							<Size x="69" y="42"/>
 							<Anchors>
-								<Anchor point="BOTTOM" x="4" y="-12"/>
+								<Anchor point="BOTTOM" x="4" y="8"/>
 							</Anchors>
 						</Texture>
 					</Layer>
 				</Layers>
-				<Scripts>
-					<OnLoad>
-						Model_OnLoad(self)
-						self:SetRotation(-MODELFRAME_DEFAULT_ROTATION)
-					</OnLoad>
-					<OnEvent function="Model_OnEvent"/>
-				</Scripts>
-			</PlayerModel>
-			<Frame parentKey="Pet" useParentLevel="true" inherits="RematchBasePetListButtonTemplate">
+			</ModelScene>
+			<Button parentKey="Pet" useParentLevel="true" enableMouse="false" inherits="RematchBasePetListButtonTemplate">
 				<Size x="209" y="44"/>
 				<Anchors>
 					<Anchor point="TOPRIGHT" x="-8" y="-16"/>
@@ -150,7 +163,7 @@
 				<Layers>
 					<Layer level="ARTWORK">
 						<!-- the same function that fills the pet/queue listbutton array fills this TypeIcons -->
-		        <Texture parentKey="TypeIcon">
+		            <Texture parentKey="TypeIcon">
 							<Size x="77" y="77"/>
 							<Anchors>
 								<Anchor point="TOPRIGHT" x="5" y="12"/>
@@ -160,7 +173,7 @@
 						</Texture>
 					</Layer>
 				</Layers>
-			</Frame>
+			</Button>
 			<!-- ability buttons -->
 			<CheckButton parentArray="Abilities" inherits="RematchLoadoutAbilityTemplate" id="1">
 				<Anchors>
@@ -422,16 +435,15 @@
 						</Anchors>
 						<Layers>
 							<Layer level="ARTWORK">
-								<Texture parentKey="NumberBG" file="Interface\Common\buff-bg">
-									<Size x="12" y="15"/>
+								<Texture parentKey="NumberBG" file="Interface\Common\Icon-Shadow" alpha="0.75">
+									<Size x="18" y="18"/>
 									<Anchors>
-										<Anchor point="BOTTOM" relativePoint="BOTTOMRIGHT" x="-8" y="2"/>
+										<Anchor point="BOTTOM" relativePoint="BOTTOMRIGHT" x="-9" y="0"/>
 									</Anchors>
-									<TexCoords left="0" right="1" top="0" bottom="0.9375"/>
 								</Texture>
 								<FontString parentKey="Number" inherits="GameFontHighlight" text="1">
 									<Anchors>
-										<Anchor point="BOTTOM" relativePoint="BOTTOMRIGHT" x="-9" y="4"/>
+										<Anchor point="BOTTOM" relativePoint="BOTTOMRIGHT" x="-9" y="3"/>
 									</Anchors>
 								</FontString>
 							</Layer>
@@ -448,16 +460,15 @@
 						</Anchors>
 						<Layers>
 							<Layer level="ARTWORK">
-								<Texture parentKey="NumberBG" file="Interface\Common\buff-bg">
-									<Size x="12" y="15"/>
+								<Texture parentKey="NumberBG" file="Interface\Common\Icon-Shadow" alpha="0.75">
+									<Size x="18" y="18"/>
 									<Anchors>
-										<Anchor point="BOTTOM" relativePoint="BOTTOMRIGHT" x="-8" y="2"/>
+										<Anchor point="BOTTOM" relativePoint="BOTTOMRIGHT" x="-9" y="0"/>
 									</Anchors>
-									<TexCoords left="0" right="1" top="0" bottom="0.9375"/>
 								</Texture>
 								<FontString parentKey="Number" inherits="GameFontHighlight" text="2">
 									<Anchors>
-										<Anchor point="BOTTOM" relativePoint="BOTTOMRIGHT" x="-8" y="4"/>
+										<Anchor point="BOTTOM" relativePoint="BOTTOMRIGHT" x="-9" y="3"/>
 									</Anchors>
 								</FontString>
 							</Layer>

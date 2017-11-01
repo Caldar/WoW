@@ -12,6 +12,8 @@ Goldguide.Crafting = {}
 local Crafting=Goldguide.Crafting
 
 Goldguide.CraftingItemToSpell = {}
+Goldguide.SkillLevels = {}
+setmetatable(Goldguide.SkillLevels,{__index=function() return 0 end}) -- if not defined skill level is at 0
 
 local vendor_reagents = {
 	[65893] = 30000000, -- Sands of time
@@ -20,17 +22,38 @@ local vendor_reagents = {
 	[44500] = 15000000, -- Elementium-Plated Exhaust Pipe
 	}
 
+local bop_reagents = {
+	[124124] = true, -- Blood of Sargeras
+	[120945] = true, -- Primal Spirit
+	[111366] = true, -- Gearspring Parts
+	[111556] = true, -- Hexweave Cloth
+	[110611] = true, -- Burnished Leather
+	[108257] = true, -- Truesteel Ingot
+	[98717] = true, -- Balanced Trillium Ingot
+	[98619] = true, -- Celestial Cloth
+	[94111] = true, -- Lightning Steel Ingot
+	[82447] = true, -- Imperial Silk
+	[54440] = true, -- Dreamcloth
+	}
+
 function Goldguide:InitialiseCraftingChores()
 	table.wipe(Goldguide.Chores.Crafting)
 	table.wipe(Goldguide.CraftingItemToSpell)
+
+	-- get current skill levels
+	local profs={GetProfessions()}
+	for i,prof in pairs(profs) do
+		local _,_,rank,_,_,_,skillline = GetProfessionInfo(prof)
+		Goldguide.SkillLevels[skillline] = rank
+	end
 
 	for skillid,recipelist in pairs(ZGV.db.char.RecipesKnown) do
 		for _,recipe in pairs(recipelist) do
 			recipe.reagentcount=nil
 			Crafting:New(recipe)
 			
-			if recipe.producttype=="item" then
-				Goldguide.CraftingItemToSpell[recipe.productid]=recipe.spell
+			if recipe.producttype=="enchant" then -- remap enchant to scroll
+				recipe.productid = Goldguide.EnchantToScroll[recipe.spell] or recipe.productid
 			end
 		end
 	end
@@ -59,21 +82,8 @@ function Crafting:GetRecipeReagents(debug)
 	self.actions={}
 
 	for reagentid,reagentcount in pairs(self.reagents) do
-
 		if debug then  print("Testing",reagentid,reagentcount) end
-
-		local name = ZGV:GetItemInfo(reagentid)
-		if Goldguide.CraftingItemToSpell[reagentid] and (self.name and not string.match(self.name, "Transmute:")) then
-		-- don't check reagent crafting for transmutes to avoid looping
-			local subreagent = Goldguide.Chores.Crafting[Goldguide.CraftingItemToSpell[reagentid]]
-			for subreagentid,subreagentcount in pairs(subreagent:GetRecipeReagents()) do
-				local subname = ZGV:GetItemInfo(subreagentid)
-				self.reagentcount[subreagentid]=(self.reagentcount[subreagentid] or 0)+(subreagentcount*reagentcount)
-			end
-			table.insert(self.actions,{skill=subreagent.skill, productid=subreagent.productid, spell=subreagent.spell, link=subreagent.link, count=reagentcount, replaces=reagentid})
-		else
-			self.reagentcount[reagentid]=(self.reagentcount[reagentid] or 0)+reagentcount
-		end
+		self.reagentcount[reagentid]=(self.reagentcount[reagentid] or 0)+reagentcount
 	end
 	return self.reagentcount
 end
@@ -103,12 +113,12 @@ function Crafting:CalculateDetails(refresh)
 		self.demand = trend.sold
 	end
 
-	if self.learned and self.demand then
+	if self.learned and self.demand and self.demand>0 then
 		self.status = 0 -- known, in demand - easy mode
-	elseif self.demand>0 then
-		self.status = 1 -- unknown, in demand - adv mode
+	elseif self.demand and self.demand>0 then
+		self.status = 1 -- unknown, in demand, valid skill level - adv mode
 	else
-		self.status = 2 -- unknown, not in demand - expert mode
+		self.status = 2 -- unknown, not in demand, or above skill level - expert mode
 	end
 
 	local ahstatus = 0
@@ -187,10 +197,12 @@ function Crafting:IsValidChore()
 	-- 0 is All proffs
 	if ZGV.db.profile.gold_crafting_type~=0 and ZGV.db.profile.gold_crafting_type~=self.skill then return false,"type filter" end
 
+	local valid_level = Goldguide.SkillLevels[self.skill] > Goldguide.RecipeLevels[self.spell]
+
 	-- easy 0 - recipe, profit, demand
 	-- adv 1  -	    profit, demand
 	-- expert 2 -	    profit
-	if ZGV.db.profile.gold_crafting_mode<2 and self.demand==0 then return false,"no demand, not expert" end
+	if ZGV.db.profile.gold_crafting_mode<2 and (not valid_level or self.demand==0) then return false,"no demand or above skill, not expert" end
 	if ZGV.db.profile.gold_crafting_mode<1 and not self.learned then return false,"unknown recipe, not advanced" end
 
 	self.valid=true
@@ -205,6 +217,15 @@ function Crafting:add_line(txt) self.guide = self.guide .. txt .. " \n" end
 
 function Crafting:GenerateGuide()
 	local productname = ZGV:GetItemInfo(self.productid)
+
+	local static_guide = nil
+	for i,v in pairs(ZGV.registeredguides) do
+		if v.craft_item==self.productid then
+			static_guide=v
+			break
+		end
+	end
+
 	self.guide = ""
 	-- Step 1 - intro
 	self:add_line("step")
@@ -214,7 +235,7 @@ function Crafting:GenerateGuide()
 	self:add_line("'You will need following reagents:")
 	for itemid,itemcount in pairs(self.reagentcount) do
 		local name = ZGV:GetItemInfo(itemid)
-		self:add_line(". "..itemcount.." "..name)
+		self:add_line(". "..itemcount.." "..(name or itemid))
 	end
 	if not self.learned then
 		self:add_line("'You will need to get the recipe.")
@@ -229,21 +250,35 @@ function Crafting:GenerateGuide()
 		self:add_line("confirm")
 	end
 
-	-- Step 3 -- show reagent sources
+	-- Step 3a -- optional questline
+	if static_guide then
+		for line in string.gmatch(static_guide.rawdata, ".*$") do
+			self:add_line(line)
+		end
+	end
+
+	-- Step 3b -- show reagent sources
 	self:add_line("step reagents_buy")
-	self:add_line("'Buy the following reagents:")
+	self:add_line("'Obtain the following reagents:")
 	local farms_found = false
 	for itemid,itemcount in pairs(self.reagentcount) do
-		local name = ZGV:GetItemInfo(itemid)
-		local price = ZGVG:GetSellPrice(itemid)
+		if not (static_guide and static_guide.craft_reagents[itemid]) then
+			local name = ZGV:GetItemInfo(itemid)
+			local price = ZGVG:GetSellPrice(itemid)
 
-		self:add_line(("buy %d %s##%d maxprice %d"):format(itemcount,name,itemid,price))
-		self:add_line(("tip Pay no more than %s each"):format(ZGV.GetMoneyString(price):gsub("|","%%PIPE%%")))
+			if not bop_reagents[itemid] then
+				self:add_line(("buy %d %s##%d maxprice %d"):format(itemcount,name,itemid,price))
+				self:add_line(("tip Pay no more than %s each"):format(ZGV.GetMoneyString(price):gsub("|","%%PIPE%%")))
+			else
+				self:add_line(("get %d %s##%d"):format(itemcount,name,itemid))
+			end
 
-		if name and Goldguide.farming_guides and not self.reagentfarmable[subreagentid] then
-			for i,guide in pairs(Goldguide.farming_guides) do
-				if string.match(guide.title_short, name) and Goldguide.Common.AreRequirementsMet(guide) then
-					farms_found=true
+			if name and Goldguide.farming_guides and not self.reagentfarmable[itemid] then
+				for i,guide in pairs(Goldguide.farming_guides) do
+					if string.match(guide.title_short, name) and Goldguide.Common.AreRequirementsMet(guide) then
+						farms_found=true
+						self.reagentfarmable[itemid]=true
+					end
 				end
 			end
 		end
@@ -344,7 +379,7 @@ function Crafting:GetTooltipData(refresh)
 	if flags_string_bad~="" then flags_description = flags_description.. " |r|cffff0000(CONS: "..flags_string_bad.. ")|r" end
 
 	-- Demand
-	local trends = ZGV.Gold.servertrends.items[self.productid]
+	local trends = ZGV.Gold.servertrends and ZGV.Gold.servertrends.items[self.productid]
 	local demand=trends and (trends.sold or trends.q_md or (trends.q_lo+trends.q_hi)/2) or 0
 	local demand_description = ("Daily demand for item: %s"):format(self.demand or "unknown");
 
@@ -356,6 +391,9 @@ function Crafting:GetTooltipData(refresh)
 		else
 			recipe_description = "|cffffff77You do not know the recipe to make this item."
 		end
+
+		local valid_level = Goldguide.SkillLevels[self.skill] > Goldguide.RecipeLevels[self.spell]
+		if not valid_level then recipe_description = recipe_description.." You need to have skill level "..Goldguide.RecipeLevels[self.spell].." to learn it." end
 	end
 
 	--tooltip.header = flags_description .. "\n" .. demand_description .. (recipe_description and "\n" .. recipe_description or "")

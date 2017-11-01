@@ -11,15 +11,10 @@ P.sle.Armory.Character = {
 	NoticeMissing = true,
 	MissingIcon = true,
 	
-	ItemLevel = {
-		font = "PT Sans Narrow",
-		size = 12,
-		outline = "NONE",
-	},
-	
 	Backdrop = {
 		SelectedBG = 'Space',
-		CustomAddress = ''
+		CustomAddress = '',
+		Overlay = true,
 	},
 	
 	Gradation = {
@@ -56,12 +51,22 @@ P.sle.Armory.Character = {
 		SocketSize = 10,
 		WarningSize = 12
 	},
-	
+	Artifact = {
+		Font = "PT Sans Narrow",
+		FontSize = 9,
+		FontStyle = "OUTLINE",
+		ShortValues = true,
+	},
 	Stats = {
 		IlvlFull = false,
 		IlvlColor = false,
 		AverageColor = {r = 0, g = 1, b = .59},
 		OnlyPrimary = true,
+		ItemLevel = {
+			font = "PT Sans Narrow",
+			size = 12,
+			outline = "NONE",
+		},
 		List = {
 			HEALTH = false,
 			POWER = false,

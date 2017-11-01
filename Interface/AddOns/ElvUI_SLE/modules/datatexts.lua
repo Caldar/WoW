@@ -163,9 +163,17 @@ function DTP:ChatResize()
 	_G["LeftChatToggleButton"]:SetAlpha(DTP.db.leftchat.alpha)
 	_G["RightChatDataPanel"]:SetAlpha(DTP.db.rightchat.alpha)
 	_G["RightChatToggleButton"]:SetAlpha(DTP.db.rightchat.alpha)
-	if not DTP.db.chathandle then return end
-	_G["LeftChatDataPanel"]:Width(DTP.db.leftchat.width - E.Spacing*2)
-	_G["RightChatDataPanel"]:Width(DTP.db.rightchat.width  - E.Spacing*2)
+	--A lot of weird math to prevent chat frames from flying around the place
+	if DTP.db.chathandle and E.db.datatexts.leftChatPanel then 
+		_G["LeftChatDataPanel"]:Width(DTP.db.leftchat.width - E.Spacing*2)
+	else
+		_G["LeftChatDataPanel"]:Width(E.db.chat.panelWidth - (2*(E.Border*3 - E.Spacing) + 16))
+	end
+	if DTP.db.chathandle and E.db.datatexts.rightChatPanel then 
+		_G["RightChatDataPanel"]:Width(DTP.db.rightchat.width  - E.Spacing*2)
+	else
+		_G["RightChatDataPanel"]:Width(((E.db.chat.separateSizes and E.db.chat.panelWidthRight) or E.db.chat.panelWidth) - (2*(E.Border*3 - E.Spacing) + 16))
+	end
 end
 
 function DTP:CreateAndUpdatePanels()
@@ -216,6 +224,7 @@ function DTP:Initialize()
 	DTP:HookDurabilityDT()
 	DTP:CreateMailDT()
 	DTP:CreateCurrencyDT()
+	DTP:ReplaceSpecSwitch()
 
 	--Remove char
 	local popup = E.PopupDialogs['SLE_CONFIRM_DELETE_CURRENCY_CHARACTER']

@@ -12,6 +12,8 @@ rematch:InitModule(function()
 	settings = RematchSettings
 	saved = RematchSaved
 
+   panel.Top.Team.Label:SetText(L["Loaded Team"])
+
 	local scrollFrame = panel.List.ScrollFrame
 	scrollFrame.update = panel.UpdateList
 	scrollFrame.ScrollBar.doNotHide = true
@@ -147,7 +149,9 @@ function panel:PopulateTeamList()
 			saved[key].tab = nil
 			tab = nil
 		end
-		if not searchText then -- not searching for a team, fill with teams in the selected tab
+		if key==1 then
+			-- do nothing for imported teams; don't list them
+		elseif not searchText then -- not searching for a team, fill with teams in the selected tab
 			if (tab and tab==selected) or (not tab and selected==1) then
 				tinsert(workingList,key)
 			end
@@ -338,7 +342,9 @@ function panel:FillTeamButton(button,key)
 	end
 	for i=1,3 do
 		local petID = saved[key][i][1]
-		local icon = rematch:GetPetIcon(petID)
+      local petInfo = rematch.petInfo:Fetch(petID)
+      local icon = petInfo.icon
+		--local icon = rematch:GetPetIcon(petID)
 		if not icon then -- pet is not found, get its species instead
 			petID = saved[key][i][5]
 			icon = rematch:GetPetIcon(petID)

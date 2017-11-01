@@ -6,266 +6,161 @@ local ZGV = ZygorGuidesViewer
 if not ZGV then return end
 local Loot = ZGV.Loot 
 local CHAIN = ZGV.ChainCall
+local ui = ZGV.UI
+local SkinData = ui.SkinData
 
 Loot.SellItemsPopup = {}
 local SIP = Loot.SellItemsPopup
-SIP.availableFrames={}
-SIP.items={}
-SIP.itemCount=0
-SIP.textSize = 7
-SIP.textSpacing = 5
-SIP.verticalAdjust=72 -- humm, off by about 70 with 24 items? Calculated I'm off by about 3 per row.
-SIP.fudgePerRow=6 -- Theoretically not needed, but my equation for dialog box size insists on being off.
-SIP.textAdjust=20
-SIP.horizontalAdjust=24
-SIP.minWidth=300
-SIP.longestLine = SIP.minWidth
+SIP.textSize = 12
 
-tinsert(ZGV.startups,{"Loot-SellItemsPopup startup",function(self) SIP:InitDialog() end})
-
-local Events = CreateFrame("Frame")
-Events:RegisterEvent("MERCHANT_CLOSED")
-
-local function OnEvent(self, event)
-	if event == "MERCHANT_CLOSED" then
-		SIP:Hide()
-	else
-		error("No handler made for event: "..event..". Create a new handler in Loot-SellItemsPopup.lua.")
-	end
-end
-
-Events:SetScript("OnEvent", OnEvent)
-
-local SkinData = ZGV.UI.SkinData
-
-function SIP:SetItems(unusable)
-	self:CreateUIItems(unusable)
-	self:SetHooks()
-end
-	
-function SIP:CreateUIItems(unusable)
-	local SIP = Loot.SellItemsPopup
-	assert(SIP.itemCount)
-	
-	local removeTable = {} -- pairs(SIP.items) and table.remove(SIP.items, i) interfere with each other
-	if SIP.items and SIP.itemCount > 0 then -- hide any existing items
-		for i,v in pairs(SIP.items) do
-			if type(v)=="table" and v.Hide then
-				v:Hide()
-				v.listRemove:Hide()
-				table.insert(availableFrames,SIP.items[i])
-				table.insert(removeTable,i)
-				SIP.itemCount = SIP.itemCount - 1
-			end
-		end
-	end
-
-	for i, v in pairs(removeTable) do
-		table.remove(SIP.items, i)
-	end
-	
-	SIP.items={}
-	SIP.itemCount=0
-	
-	if availableFrames == nil then availableFrames = {} end
-	
-	local numAvailableFrames=0
-	for i,v in pairs(availableFrames) do
-		numAvailableFrames=numAvailableFrames+1
-	end
-	
-	SIP.longestLine = SIP.minWidth
-	for i,inventoryItem in pairs(unusable) do
-		if numAvailableFrames > 0 then -- recycle the frame
-			recycledItem = table.remove(availableFrames)
-			numAvailableFrames = numAvailableFrames - 1
-			assert(recycledItem ~= nil)
-			SIP.items[i] = CHAIN(recycledItem)
-				:SetHeight(SIP.textSize)
-				:SetFont(ZGV.Font,SIP.textSize)
-				:SetBackdrop(SkinData("Backdrop"))
-				--:SetBackdropColor(1,0,0,0.5)
-				:SetBackdropColor(0,0,0,0)
-				--:SetBackdropColor(unpack(SkinData("BackdropColor")))
-				:SetBackdropBorderColor(nil)
-				:SetFrameStrata("DIALOG")
-				:Hide()
-				--:Show()
-			.__END
-			SIP.items[i].ID = inventoryItem.ID
-
-			SIP.items[i].listRemove:SetScript("OnClick", function(self)
-				IM:addKeptItem(unusable[i].ID,unusable[i])
-				SIP:Hide()
-				SIP:CreateUIItems(IM:GetUnusableItems())
-				SIP:Show()
-			end)
-		else
-			SIP.items[i]=CHAIN(ZGV.UI:Create("HyperEditBox",nil,SIP.Popup.frame))
-				:SetHeight(SIP.textSize)
-				:SetFont(ZGV.Font,SIP.textSize)
-				:SetBackdrop(SkinData("Backdrop"))
-				:SetBackdropColor(0,0,0,0)
-				--:SetBackdropColor(unpack(SkinData("BackdropColor")))
-				:SetBackdropBorderColor(nil)
-				:SetFrameStrata("DIALOG")
-				:Hide()
-			.__END
-
-			SIP.items[i].ID = inventoryItem.ID
-			
-			SIP.items[i].listRemove = {}
-			SIP.items[i].listRemove=CHAIN(CreateFrame("Button",nil,self.Popup.frame))
-				:SetHeight(8)
-				:SetWidth(8)
-				:SetPoint("LEFT",SIP.items[i],"RIGHT",0,0)
-				:SetFrameStrata("DIALOG")
-				:Hide()
-			.__END
-			
-			SIP.items[i].listRemoveIcon = {}
-			SIP.items[i].listRemoveIcon=CHAIN(SIP.items[i].listRemove:CreateTexture())
-				:SetPoint("CENTER",SIP.items[i].listRemove,"CENTER",0,0)
-				:SetSize(7,7)
-				:SetTexture(ZGV.DIR.."\\Skins\\ban")
-				--:SetTexCoord(0.125,0.25,0,0.5)
-			.__END
-			
-			SIP.items[i].listRemove:SetScript("OnClick", function(self)
-				IM:addKeptItem(unusable[i].ID,unusable[i])
-				SIP:Hide()
-				SIP:CreateUIItems(IM:GetUnusableItems())
-				SIP:Show()
-			end)
-		end
-		
-		if not SIP.text1 then 
-			SIP.text1=CHAIN(SIP.Popup:CreateFontString(nil,"ARTWORK"))
-				:SetPoint("TOP",SIP.Popup,"TOP", 0, -4)
-				--:SetWidth(MAXWIDTH)
-				:SetFont(ZGV.FontBold,16)
-				:SetText("Zygor Inventory Manager")
-			.__END		
-			
-			SIP.text2=CHAIN(SIP.Popup:CreateFontString(nil,"ARTWORK"))
-				:SetPoint("TOP",SIP.Popup,"TOP", 0, -26)
-				--:SetWidth(MAXWIDTH)
-				:SetFont(ZGV.Font,12)
-				:SetText("The following items can be sold:")
-			.__END
-		end
-
-		if SIP.items[i]:GetWidth() > SIP.longestLine then
-			SIP.longestLine = SIP.items[i]:GetWidth()
-		end
-		SIP.items[i]:ClearAllPoints()
-		newPoint = {self.Popup:GetPoint()}
-		newPoint[1]="TOPLEFT"
-		newPoint[2]=SIP.Popup
-		newPoint[3]="TOPLEFT"
-		newPoint[4]=newPoint[4]+2
-		newPoint[5]=newPoint[5]-SIP.itemCount*(SIP.textSize+SIP.textSpacing)+SIP.textAdjust
-		SIP.items[i]:SetPoint(unpack(newPoint)) --Move the text to the top
-		SIP.items[i]:SetText(unusable[i].itemLink)
-		SIP.itemCount=SIP.itemCount+1
-		
-	end
-	
-	SIP.Popup:SetHeight(SIP.itemCount*(SIP.textSize+SIP.textSpacing+SIP.fudgePerRow)+SIP.verticalAdjust)
-	
-	if not oldHide then
-		oldHide = SIP.Popup.Hide
-		SIP.Popup.Hide = function(...)
-			oldHide(...)
-			SIP:Hide()
-		end
-	end
-	
-	if not oldShow then
-		oldShow = SIP.Popup.SavedShow
-		SIP.Popup.SavedShow = function(...)
-			oldShow(...)
-			SIP:InnerShow()
-		end
-	end
-end
+SIP.rows={}
+SIP.rowSpace = 5
+SIP.headerHeight = 60
+SIP.footerHeight = 20
+SIP.CurrentList = {}
 
 
-function SIP:Show()
-	if SIP.itemCount==0 then return end -- No need to display dialog if there's nothing to sell.
-	local SIP = Loot.SellItemsPopup
-	SIP.InitDialog()
-	SIP.Popup:Show()
-end
-
-function SIP:InnerShow()
-	local SIP = Loot.SellItemsPopup
-	assert(SIP.items)
-	for i,v in pairs(SIP.items) do
-		SIP.items[i]:Show()
-		SIP.items[i].listRemove:Show()
-	end
-
-end
-
-
-function SIP:Hide()
-	local SIP = Loot.SellItemsPopup
-	for i,v in pairs(SIP.items) do
-		SIP.items[i]:Hide()
-		SIP.items[i].listRemove:Hide()
-	end
-	
-	if SIP.Popup:IsShown() then
-		SIP.Popup:Hide()
-	end
-end
-	
-function SIP:InitDialog()
-	local SIP = Loot.SellItemsPopup
-	if SIP.Popup then return end
-	-- Don't add to notification center. It's not relevant outside of talking to the vendor.
+function SIP:CreateFrame()
+	-- make popup, we will attach frame to it
 	SIP.Popup = ZGV.PopupHandler:NewPopup("ZygorSellPopup","loot")
 	SIP.Popup.noMinimize = 1
-	SIP.Popup.logo:Hide() --No logo
-	SIP.Popup.text:SetPoint(self.Popup.logo:GetPoint(1)) --Move the text to the top
-	--SIP.Popup:SetText("Zygor Inventory Manager","The following items can be safely sold:")
-	SIP.Popup:SetText("","")
+	SIP.Popup.logo:Hide() -- no default logo
+	SIP.Popup.text:Hide() -- no default text
+	SIP.Popup:Hide()
 
-	function SIP.Popup:OnDecline()
-		local SIP = Loot.SellItemsPopup
-		SIP:Hide()
-	end
-	
-	function SIP.Popup:OnAccept()
-		-- Destroy trash.
-		local unusable = IM:GetUnusableItems()
-		local totalprice=0
-		local numItems=0
-		local bag, slot
-		for i, v in pairs(unusable) do
-			bag = v.bagID
-			slot = v.bagSlotID
-			local item=GetContainerItemID(bag,slot)
+	function SIP.Popup:OnDecline() SIP.Popup:Hide() end
+	function SIP.Popup:OnAccept() 
+		for i, v in pairs(SIP.CurrentList) do
+			local item = GetContainerItemID(v.bagID,v.bagSlotID)
 			if item  then
-				local name, link, quality=ZGV:GetItemInfo(item)
-				local price=select(11,ZGV:GetItemInfo(item))
-				if price > 0 then
-					local count=select(2,GetContainerItemInfo(bag,slot))
-					UseContainerItem(bag,slot) -- Will use an item and since vendor is open, will sell the item.
-					totalprice=totalprice+price*count
+				local name,link = ZGV:GetItemInfo(item)
+				if link and link==v.itemLink then -- make sure it is what we think it is
+					UseContainerItem(v.bagID,v.bagSlotID) -- Will use an item and since vendor is open, will sell the item.
 				end
 			end
 		end
 	end
 
+	-- frame that keeps sip specific stuff
+	SIP.Frame = CHAIN(ui:Create("Frame",SIP.Popup))
+		:SetPoint("CENTER")
+		:SetSize(300,300)
+		:SetBackdropColor(0.1,0.1,0.1,1)
+		:SetBackdropBorderColor(0.1,0.1,0.1,1)
+	.__END
+
+	SIP.Frame.text1=CHAIN(SIP.Frame:CreateFontString(nil,"ARTWORK"))
+		:SetPoint("TOP",SIP.Frame,"TOP", 0, -4)
+		:SetFont(ZGV.FontBold,16)
+		:SetText("Zygor Inventory Manager")
+	.__END		
+	
+	SIP.Frame.text2=CHAIN(SIP.Frame:CreateFontString(nil,"ARTWORK"))
+		:SetPoint("TOP",SIP.Frame,"TOP", 0, -26)
+		:SetFont(ZGV.Font,12)
+		:SetText("The following items can be sold:")
+	.__END
+
+	SIP.Frame:SetPoint("TOPLEFT",SIP.Popup,1,-1)
+	SIP.Frame:SetFrameStrata(SIP.Popup:GetFrameStrata())
+	SIP.Frame:SetFrameLevel(SIP.Popup:GetFrameLevel()+1)
 end
 
-function SIP:SetHooks()
-	local SIP = Loot.SellItemsPopup
-	self.Popup.AdjustSize = function(self)
-		self:SetHeight(SIP.itemCount*(SIP.textSize+SIP.textSpacing+SIP.fudgePerRow)+SIP.verticalAdjust)
-		self:SetWidth(SIP.longestLine+SIP.horizontalAdjust)
-	end
-	
+local function create_row()
+	local row = CHAIN(ui:Create("Frame",SIP.Frame))
+		:SetFrameLevel(SIP.Frame:GetFrameLevel()+1)
+		:SetBackdropColor(0,0,0,0)
+		:SetBackdropBorderColor(0,0,0,0)
+		:SetHeight(SIP.textSize)
+	.__END
+	row:SetScript("OnEnter",function()
+		GameTooltip:SetOwner(row, "ANCHOR_CURSOR")
+		GameTooltip:SetHyperlink(row.item.itemLink)
+		GameTooltip:Show()
+	end)
+	row:SetScript("OnLeave",function()
+		GameTooltip:FadeOut()
+	end)
+
+	row.itemString = CHAIN(row:CreateFontString())
+		:SetJustifyV("TOP")
+		:SetJustifyH("LEFT")
+		:SetFont(ZGV.Font,SIP.textSize)
+		:SetText("item name")
+		:SetPoint("TOPLEFT",row,"TOPLEFT",0,0)
+		:SetPoint("BOTTOMRIGHT",row,"BOTTOMRIGHT",-12,0)
+	.__END
+	row.remove = CHAIN(ui:Create("Button",row))
+		:SetSize(12,12)
+		:RegisterForClicks("AnyUp")
+		:SetNormalTexture(ZGV.DIR.."\\Skins\\ban")
+		:SetPoint("TOPLEFT",row.itemString,"TOPRIGHT",0,0)
+		:SetBackdropColor(0,0,0,0)
+		:SetBackdropBorderColor(0,0,0,0)
+		:SetScript("OnClick", function(self) 
+			ZGV.IM:addKeptItem(row.item.ID,row.item) 
+			SIP:SetItems()
+		end)
+		:SetScript("OnEnter",function()
+			GameTooltip:SetOwner(row, "ANCHOR_CURSOR")
+			GameTooltip:AddLine("Remove "..row.item.itemLink)
+			GameTooltip:Show()
+		end)
+		:SetScript("OnLeave",function()
+			GameTooltip:FadeOut()
+		end)
+	.__END
+
+	return row
 end
+
+
+function SIP:SetItems()
+	local data = ZGV.IM:GetUnusableItems()
+	SIP.Popup:Hide()
+
+	SIP.Frame:SetWidth(1000) -- we need to have enough space to show full names, will resize everything when we know how much real estate we need
+
+	if not data then print("set items a1") return end -- we did not get anything, most likely started before itemscore finished its task
+	if #data==0 then print("set items a2") return end -- empty array, nothing to show
+
+	for _,row in pairs(SIP.rows) do row:Hide() end
+
+	local prev = nil
+	local height = 0
+	local width = 300 -- minimum width for popup
+	for i,item in ipairs(data) do
+		if not SIP.rows[i] then SIP.rows[i] = create_row() end
+		local row = SIP.rows[i]
+		row.item = item
+		row.itemString:SetText(item.itemLink)
+		row:ClearAllPoints()
+		if not prev then
+			row:SetPoint("TOP",SIP.Frame.text2,"BOTTOM",0,-SIP.rowSpace * 2)
+		else
+			row:SetPoint("TOPLEFT",prev,"BOTTOMLEFT",0,-SIP.rowSpace)
+		end
+		row:SetPoint("LEFT",SIP.Frame,"LEFT",SIP.rowSpace,0)
+		row:SetPoint("RIGHT",SIP.Frame,"RIGHT",-SIP.rowSpace,0)
+
+		width = max(width,row.itemString:GetStringWidth()+12)
+		height = height + row:GetHeight() + SIP.rowSpace
+
+		row:Show()
+		prev=row
+
+	end
+
+	SIP.CurrentList = data
+
+	height = height + SIP.headerHeight + SIP.footerHeight
+
+	SIP.Popup:Show()
+	SIP.Frame:SetSize(width,height)
+	SIP.Popup:SetSize(width+2,height+2)
+end
+
+
+tinsert(ZGV.startups,{"Loot sell popup startup",function(self)
+	SIP:CreateFrame()
+end})

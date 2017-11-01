@@ -1,24 +1,26 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames');
+local _, ns = ...
+local ElvUF = ns.oUF
+assert(ElvUF, "ElvUI was unable to locate oUF.")
 
 --Cache global variables
 --Lua functions
 local _G = _G
-local pairs = pairs
 local tinsert = table.insert
-local format = format
 --WoW API / Variables
+local CreateFrame = CreateFrame
 local MAX_BOSS_FRAMES = MAX_BOSS_FRAMES
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: BossHeaderMover
 
-local _, ns = ...
-local ElvUF = ns.oUF
-assert(ElvUF, "ElvUI was unable to locate oUF.")
-
 local BossHeader = CreateFrame('Frame', 'BossHeader', UIParent)
 function UF:Construct_BossFrames(frame)
+	frame.RaisedElementParent = CreateFrame('Frame', nil, frame)
+	frame.RaisedElementParent.TextureParent = CreateFrame('Frame', nil, frame.RaisedElementParent)
+	frame.RaisedElementParent:SetFrameLevel(frame:GetFrameLevel() + 100)
+
 	frame.Health = self:Construct_HealthBar(frame, true, true, 'RIGHT')
 
 	frame.Power = self:Construct_PowerBar(frame, true, true, 'LEFT')
@@ -38,10 +40,10 @@ function UF:Construct_BossFrames(frame)
 	frame:RegisterEvent('PLAYER_ENTERING_WORLD', UF.UpdateTargetGlow)
 	frame:RegisterEvent('GROUP_ROSTER_UPDATE', UF.UpdateTargetGlow)
 
-	frame.Castbar = self:Construct_Castbar(frame, 'RIGHT')
-	frame.RaidIcon = UF:Construct_RaidIcon(frame)
-	frame.AltPowerBar = self:Construct_AltPowerBar(frame)
-	frame.ClassBar = "AltPowerBar"
+	frame.Castbar = self:Construct_Castbar(frame)
+	frame.RaidTargetIndicator = UF:Construct_RaidIcon(frame)
+	frame.AlternativePower = self:Construct_AltPowerBar(frame)
+	frame.ClassBar = "AlternativePower"
 	frame.Range = UF:Construct_Range(frame)
 	frame:SetAttribute("type2", "focus")
 	frame.customTexts = {}
@@ -78,7 +80,7 @@ function UF:Update_BossFrames(frame, db)
 		frame.CAN_HAVE_CLASSBAR = true
 		frame.MAX_CLASS_BAR = 0
 		frame.USE_CLASSBAR = true
-		frame.CLASSBAR_SHOWN = frame.AltPowerBar:IsShown()
+		frame.CLASSBAR_SHOWN = frame.AlternativePower:IsShown()
 		frame.CLASSBAR_DETACHED = false
 		frame.USE_MINI_CLASSBAR = false
 		frame.CLASSBAR_HEIGHT = frame.CLASSBAR_SHOWN and db.power.height or 0
@@ -126,7 +128,7 @@ function UF:Update_BossFrames(frame, db)
 	--Raid Icon
 	UF:Configure_RaidIcon(frame)
 
-	--AltPowerBar
+	--AlternativePower
 	UF:Configure_AltPower(frame)
 
 	UF:Configure_DebuffHighlight(frame)

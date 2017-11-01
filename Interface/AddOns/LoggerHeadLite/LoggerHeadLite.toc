@@ -1,16 +1,12 @@
-﻿## Interface: 70000
+## Interface: 70300
 ## Title: LoggerHead Lite
 ## Notes: Automatically turns on the combat log for selected raid and mythic+ instances.
 ## Author: Neb
-## Version: 1.3
+## Version: 1.4.3
 ## SavedVariables: LoggerHeadNDB
 ## OptionalDeps: Ace3, LibDBIcon-1.0
 ## X-Category: Raid
 ## X-Credits: Sano/rsmozang for LoggerHead
-## X-Curse-Packaged-Version: 1.3
-## X-Curse-Project-Name: LoggerHeadLite
-## X-Curse-Project-ID: loggerheadlite
-## X-Curse-Repository-ID: wow/loggerheadlite/mainline
 
 embeds.xml
 locales.xml

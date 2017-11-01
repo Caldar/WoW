@@ -14,59 +14,79 @@ RP.playerGUID = UnitGUID("player")
 RP.highestKill = 0
 
 RP.bosses = {
-	{ -- HFC
+	{ -- Emerald Nightmare
 		{ --Mythic
-			10204, 10208, 10212, 10216, 10220, 10224, 10228, 10232, 10236, 10240, 10244, 10248, 10252,
+			10914, 10923, 10927, 10919, 10931, 10935, 10939, 
 		},
 		{ -- Herioc
-			10203, 10207, 10211, 10215, 10219, 10223, 10227, 10231, 10235, 10239, 10243, 10247, 10251,
+			10913, 10922, 10926, 10917, 10930, 10934, 10938, 
 		},
 		{ -- Normal
-			10202, 10206, 10210, 10214, 10218, 10222, 10226, 10230, 10234, 10238, 10242, 10246, 10250,
+			10912, 10921, 10925, 10916, 10929, 10933, 10937, 
 		},
 		{ -- LFR
-			10201, 10205, 10209, 10213, 10217, 10221, 10225, 10229, 10233, 10237, 10241, 10245, 10249,
+			10911, 10920, 10924, 10915, 10928, 10932, 10936, 
 		},
+		"nightmare",
 	},
-	{ -- Blackrock Foundry
+	{ --Trial of Valor
 		{ --Mythic
-			9319, 9323, 9329, 9333, 9338, 9342, 9353, 9357, 9361, 9365, 
+			11410, 11414, 11418,
 		},
-		{ -- Herioc
-			9318, 9322, 9328, 9332, 9337, 9341, 9351, 9356, 9360, 9364, 
+		{ -- Heroic
+			11409, 11413, 11417,
 		},
 		{ -- Normal
-			9317, 9321, 9327, 9331, 9336, 9340, 9349, 9355, 9359, 9363, 
+			11408, 11412, 11416,
 		},
 		{ -- LFR
-			9316, 9320, 9324, 9330, 9334, 9339, 9343, 9354, 9358, 9362, 
+			11407, 11411, 11415,
 		},
+		"trial",
 	},
-	{ -- HighMaul
+	{ -- Nighthold
+		{ --Mythic
+			10943, 10947, 10951, 10955, 10960, 10964, 10968, 10972, 10976, 10980
+		},
+		{ -- Heroic
+			10942, 10946, 10950, 10954, 10959, 10963, 10967, 10971, 10975, 10979
+		},
+		{ -- Normal
+			10941, 10945, 10949, 10953, 10957, 10962, 10966, 10970, 10974, 10978
+		},
+		{ -- LFR
+			10940, 10944, 10948, 10952, 10956, 10961, 10965, 10969, 10973, 10977
+		},
+		"nighthold",
+	},
+	{ -- Tomb of Sargeras
 		{ -- Mythic
-			9285, 9289, 9294, 9300, 9304, 9311, 9315,
+			11880, 11884, 11888, 11892, 11896, 11900, 11904, 11908, 11912
 		},
-		{ -- Herioc
-			9284, 9288, 9293, 9298, 9303, 9310, 9314,
+		{ -- Heroic
+			11879, 11883, 11887, 11891, 11895, 11899, 11903, 11907, 11911
 		},
-		{ --Normal
-			9282, 9287, 9292, 9297, 9302, 9308, 9313,
+		{ -- Normal
+			11878, 11882, 11886, 11890, 11894, 11898, 11902, 11906, 11910
 		},
-		{ --LFR
-			9280, 9286, 9290, 9295, 9301, 9306, 9312,
+		{ -- LFR
+			11877, 11881, 11885, 11889, 11893, 11897, 11901, 11905, 11909
 		},
+		"sargeras",
 	},
 }
 RP.Raids = {
 	["LONG"] = {
-		T.GetMapNameByID(1026),
-		T.GetMapNameByID(988),
-		T.GetMapNameByID(994)
+		T.GetMapNameByID(1094),
+		T.GetMapNameByID(1114),
+		T.GetMapNameByID(1088),
+		T.GetMapNameByID(1147),
 	},
 	["SHORT"] = {
-		L["RAID_HFC"],
-		L["RAID_BRF"],
-		L["RAID_HM"],
+		L["RAID_EN"],
+		L["RAID_TOV"],
+		L["RAID_NH"],
+		L["RAID_TOS"],
 	},
 }
 RP.modes = { 
@@ -77,10 +97,10 @@ RP.modes = {
 		PLAYER_DIFFICULTY3,
 	},
 	["SHORT"] = {
-		utf8sub (PLAYER_DIFFICULTY6, 1 , 1),
-		utf8sub (PLAYER_DIFFICULTY2, 1 , 1),
-		utf8sub (PLAYER_DIFFICULTY1, 1 , 1),
-		utf8sub (PLAYER_DIFFICULTY3, 1 , 1),
+		utf8sub(PLAYER_DIFFICULTY6, 1 , 1),
+		utf8sub(PLAYER_DIFFICULTY2, 1 , 1),
+		utf8sub(PLAYER_DIFFICULTY1, 1 , 1),
+		utf8sub(PLAYER_DIFFICULTY3, 1 , 1),
 	},
 }
 
@@ -89,26 +109,30 @@ function RP:GetProgression(guid)
 	local statFunc = guid == RP.playerGUID and T.GetStatistic or T.GetComparisonStatistic
 	
 	for raid = 1, #RP.Raids["LONG"] do
-		RP.Cache[guid].header[raid] = {}
-		RP.Cache[guid].info[raid] = {}
-		for level = 1, 4 do
-			RP.highestKill = 0
-			for statInfo = 1, #RP.bosses[raid][level] do
-				kills = T.tonumber((statFunc(RP.bosses[raid][level][statInfo])))
-				if kills and kills > 0 then
-					RP.highestKill = RP.highestKill + 1
+		local option = RP.bosses[raid][5]
+		if E.db.sle.tooltip.RaidProg.raids[option] then
+			RP.Cache[guid].header[raid] = {}
+			RP.Cache[guid].info[raid] = {}
+			for level = 1, 4 do
+				RP.highestKill = 0
+				for statInfo = 1, #RP.bosses[raid][level] do
+					local bossTable = RP.bosses[raid][level][statInfo]
+					kills = T.tonumber((statFunc(bossTable)))
+					if kills and kills > 0 then
+						RP.highestKill = RP.highestKill + 1
+					end
 				end
-			end
-			pos = RP.highestKill
-			if (RP.highestKill > 0) then
-				RP.Cache[guid].header[raid][level] = T.format("%s [%s]:", RP.Raids[E.db.sle.tooltip.RaidProg.NameStyle][raid], RP.modes[E.db.sle.tooltip.RaidProg.DifStyle][level])
-				RP.Cache[guid].info[raid][level] = T.format("%d/%d", RP.highestKill, #RP.bosses[raid][level])
-				if RP.highestKill == #RP.bosses[raid][level] then
-					break
+				pos = RP.highestKill
+				if (RP.highestKill > 0) then
+					RP.Cache[guid].header[raid][level] = T.format("%s [%s]:", RP.Raids[E.db.sle.tooltip.RaidProg.NameStyle][raid], RP.modes[E.db.sle.tooltip.RaidProg.DifStyle][level])
+					RP.Cache[guid].info[raid][level] = T.format("%d/%d", RP.highestKill, #RP.bosses[raid][level])
+					if RP.highestKill == #RP.bosses[raid][level] then
+						break
+					end
 				end
 			end
 		end
-	end		
+	end
 end
 
 function RP:UpdateProgression(guid)
@@ -141,8 +165,11 @@ function RP:SetProgressionInfo(guid, tt)
 		-- add progression tooltip line
 		if RP.highestKill > 0 then tt:AddLine(" ") end
 		for raid = 1, #RP.Raids["LONG"] do
-			for level = 1, 4 do
-				tt:AddDoubleLine(RP.Cache[guid].header[raid][level], RP.Cache[guid].info[raid][level], nil, nil, nil, 1, 1, 1)
+			local option = RP.bosses[raid][5]
+			if E.db.sle.tooltip.RaidProg.raids[option] then
+				for level = 1, 4 do
+					tt:AddDoubleLine(RP.Cache[guid].header[raid][level], RP.Cache[guid].info[raid][level], nil, nil, nil, 1, 1, 1)
+				end
 			end
 		end
 	end

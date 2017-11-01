@@ -16,6 +16,24 @@ local IsShiftKeyDown = IsShiftKeyDown
 local bossName, _, isKilled, isIneligible
 local ExpackColor = "|cff9482c9"
 
+--For 3 boss raid
+local function ThreeKill(id)
+	local killNum = 0
+	for i =1,3 do
+		_, _, isKilled = T.GetLFGDungeonEncounterInfo(id, i);
+		if (isKilled) then killNum = killNum + 1 end
+	end
+
+	LFR:BossCount(killNum, 3)
+end
+
+local function ThreeShift(id)
+	for i =1,3 do --1st part
+		bossName, _, isKilled, isIneligible = T.GetLFGDungeonEncounterInfo(id, i);
+		LFR:BossStatus(bossName, isKilled, isIneligible)
+	end
+end
+
 --For 4 boss raid
 local function FourKill(id)
 	local killNum = 0
@@ -93,6 +111,39 @@ local function SevenShift(id1, id2, id3)
 	LFR:BossStatus(bossName, isKilled, isIneligible)
 end
 
+-- For Emarald Nightmare
+-- What the actual fuck, Blizz? What the fuck is this shit? You can't fucking make all your LFR following the same fucking pattern?
+-- Do I need to make an exclusive function or every raid in existance now?
+local function NightmareKill(id1, id2, id3)
+	local killNum = 0
+	for i =1,3 do --1st part
+		_, _, isKilled = T.GetLFGDungeonEncounterInfo(id1, i);
+		if (isKilled) then killNum = killNum + 1 end
+	end
+	for i =1,3 do --2nd part
+		_, _, isKilled = T.GetLFGDungeonEncounterInfo(id2, i);
+		if (isKilled) then killNum = killNum + 1 end
+	end
+	-- 3rd part
+	_, _, isKilled = T.GetLFGDungeonEncounterInfo(id3, 1);
+	if (isKilled) then killNum = killNum + 1 end
+	LFR:BossCount(killNum, 7)
+end
+
+local function NightmareShift(id1, id2, id3)
+	for i =1,3 do --1st part
+		bossName, _, isKilled, isIneligible = T.GetLFGDungeonEncounterInfo(id1, i);
+		LFR:BossStatus(bossName, isKilled, isIneligible)
+	end
+	for i =1,3 do --2nd part
+		bossName, _, isKilled, isIneligible = T.GetLFGDungeonEncounterInfo(id2, i);
+		LFR:BossStatus(bossName, isKilled, isIneligible)
+	end
+	-- 3rd part
+	bossName, _, isKilled, isIneligible = T.GetLFGDungeonEncounterInfo(id3, 1);
+	LFR:BossStatus(bossName, isKilled, isIneligible)
+end
+
 --For 8 boss raid
 local function EightKill(id1, id2)
 	local killNum = 0
@@ -117,6 +168,61 @@ local function EightShift(id1, id2)
 		bossName, _, isKilled, isIneligible = T.GetLFGDungeonEncounterInfo(id2, i);
 		LFR:BossStatus(bossName, isKilled, isIneligible)
 	end
+end
+
+--For 9 boss raid
+local function NineKill(id1, id2, id3, id4)
+	local killNum = 0
+	local bosses = {} --cause fuck blizz ordering
+	--1st part
+	bosses = {1, 3, 5}
+	for i =1, #bosses do
+		_, _, isKilled = T.GetLFGDungeonEncounterInfo(id1, bosses[i]);
+		if (isKilled) then killNum = killNum + 1 end
+	end
+	T.twipe(bosses)
+	--2nd part
+	bosses = {2, 4, 6}
+	for i =1, #bosses do 
+		_, _, isKilled = T.GetLFGDungeonEncounterInfo(id2, bosses[i]);
+		if (isKilled) then killNum = killNum + 1 end
+	end
+	T.twipe(bosses)
+	--3nd part
+	for i =7,8 do 
+		_, _, isKilled = T.GetLFGDungeonEncounterInfo(id3, i);
+		if (isKilled) then killNum = killNum + 1 end
+	end
+	-- 4th part
+	_, _, isKilled = T.GetLFGDungeonEncounterInfo(id4, 9);
+	if (isKilled) then killNum = killNum + 1 end
+
+	LFR:BossCount(killNum, 9)
+end
+
+local function NineShift(id1, id2, id3, id4)
+	local bosses = {} --cause fuck blizz ordering
+	-- 1st part
+	bosses = {1, 3, 5}
+	for i =1, #bosses do 
+		bossName, _, isKilled, isIneligible = T.GetLFGDungeonEncounterInfo(id1, bosses[i]);
+		LFR:BossStatus(bossName, isKilled, isIneligible)
+	end
+	T.twipe(bosses)
+	--2nd part
+	bosses = {2, 4, 6}
+	for i =1, #bosses do  
+		bossName, _, isKilled, isIneligible = T.GetLFGDungeonEncounterInfo(id2, bosses[i]);
+		LFR:BossStatus(bossName, isKilled, isIneligible)
+	end
+	T.twipe(bosses)
+	for i =7,8 do --3nd part
+		bossName, _, isKilled, isIneligible = T.GetLFGDungeonEncounterInfo(id3, i);
+		LFR:BossStatus(bossName, isKilled, isIneligible)
+	end
+	-- 4rd part
+	bossName, _, isKilled, isIneligible = T.GetLFGDungeonEncounterInfo(id4, 9);
+	LFR:BossStatus(bossName, isKilled, isIneligible)
 end
 
 --For 10 boss raid
@@ -382,9 +488,9 @@ end
 
 local function Nightmare()
 	if IsShiftKeyDown() then
-		SevenShift(1287,1288,1289);
+		NightmareShift(1287,1288,1289);
 	else
-		SevenKill(1287,1288,1289);
+		NightmareKill(1287,1288,1289);
 	end
 end
 
@@ -393,6 +499,22 @@ local function Suramar()
 		TenShift(1290,1291,1292,1293);
 	else
 		TenKill(1290,1291,1292,1293);
+	end
+end
+
+local function Trial()
+	if IsShiftKeyDown() then
+		ThreeShift(1411);
+	else
+		ThreeKill(1411);
+	end
+end
+
+local function TombOfSargeras()
+	if IsShiftKeyDown() then
+		NineShift(1494,1495,1496,1497);
+	else
+		NineKill(1494,1495,1496,1497);
 	end
 end
 
@@ -470,10 +592,22 @@ LFR.Legion = {
 		["func"] = Nightmare,
 	},
 	[2] = {
+		["name"] = 'trial',
+		["ilevel"] = 825,
+		["map"] = 1114,
+		["func"] = Trial,
+	},
+	[3] = {
 		["name"] = 'palace',
 		["ilevel"] = 835,
 		["map"] = 1088,
 		["func"] = Suramar,
+	},
+	[4] = {
+		["name"] = "tomb",
+		["ilevel"] = 860,
+		["map"] = 1147,
+		["func"] = TombOfSargeras,
 	},
 }
 

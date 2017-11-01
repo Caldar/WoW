@@ -19,7 +19,7 @@ local function configTable()
 			header = {
 				order = 1,
 				type = "description",
-				name = L["These options are for modifing the Shadow & Light Mail datatext."],
+				name = L["These options are for modifying the Shadow & Light Mail datatext."],
 			},
 			icon = {
 				order = 2,
@@ -71,6 +71,29 @@ local function configTable()
 				desc = L["Changes the text string to a shorter variant."],
 				get = function(info) return E.db.sle.dt.regen.short end,
 				set = function(info, value) E.db.sle.dt.regen.short = value; DT:LoadDataTexts(); end,
+			},
+		},
+	}
+	E.Options.args.sle.args.modules.args.datatext.args.sldatatext.args.specswitch = {
+		type = "group",
+		name = SPECIALIZATION,
+		order = 8,
+		get = function(info) return E.private.sle.dt.specswitch[ info[#info] ] end,
+		set = function(info, value) E.private.sle.dt.specswitch[ info[#info] ] = value; end,
+		args = {
+			xOffset = {
+				order = 1,
+				type = "range",
+				min = -100, max = 100, step = 1,
+				name = L["X-Offset"],
+				-- desc = L["Datatext will flash if durability shown will be equal or lower that this value. Set to -1 to disable"],
+			},
+			yOffset = {
+				order = 1,
+				type = "range",
+				min = -100, max = 100, step = 1,
+				name = L["Y-Offset"],
+				-- desc = L["Datatext will flash if durability shown will be equal or lower that this value. Set to -1 to disable"],
 			},
 		},
 	}

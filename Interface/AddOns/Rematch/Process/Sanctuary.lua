@@ -67,23 +67,20 @@ end
 -- loadout and summoned pets if they exist.
 -- if level has a value, then no need to re-pull value
 function rematch:UpdatePetInSanctuary(petID)
-	if type(petID)=="string" and sanctuary[petID] then
-		local	_,_,level = C_PetJournal.GetPetInfoByPetID(petID)
-		if level then
-			local _, maxHealth, power, speed, rarity = C_PetJournal.GetPetStats(petID)
-			sanctuary[petID][4] = level
-			sanctuary[petID][5] = maxHealth
-			sanctuary[petID][6] = power
-			sanctuary[petID][7] = speed
-			sanctuary[petID][8] = rarity
-		end
+   local petInfo = rematch.petInfo:Fetch(petID)
+   if petInfo.idType=="pet" and sanctuary[petID] and petInfo.level then
+      sanctuary[petID][4] = petInfo.level
+      sanctuary[petID][5] = petInfo.maxHealth
+      sanctuary[petID][6] = petInfo.power
+      sanctuary[petID][7] = petInfo.speed
+      sanctuary[petID][8] = petInfo.rarity
 	end
 end
 
 -- this is safe to call anytime, but should be called after an UpdateOwned() which
 -- flags whether a petID is known to exist
 function rematch:UpdateSanctuary(force)
-	if rematch.sanctuaryNeedsUpdated or force then
+	if rematch.isLoaded and (rematch.sanctuaryNeedsUpdated or force) then
 		-- reset counters for all pets
 		for petID,info in pairs(sanctuary) do
 			sanctuary[petID][1] = 0 -- team counter

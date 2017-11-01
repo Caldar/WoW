@@ -3,8 +3,8 @@ if not ZygorGuidesViewer then return end
 if UnitFactionGroup("player")~="Alliance" then return end
 if ZGV:DoMutex("LevelingAWOD") then return end
 ZygorGuidesViewer.GuideMenuTier = "TRI"
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Leveling Guides\\Draenor (90-100)\\Tanaan Jungle (90-90)",{
-next="Zygor's Alliance Leveling Guides\\Draenor (90-100)\\Shadowmoon Valley (90-92)",
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Tanaan Jungle (90-90)",{
+next="Zygor's Leveling Guides\\Draenor (90-100)\\Shadowmoon Valley (90-92)",
 image=ZGV.DIR.."\\Guides\\Images\\TanaanJungle",
 condition_suggested_exclusive=true,
 startlevel=90,
@@ -327,8 +327,8 @@ step
 talk Prophet Velen##79206
 accept Step Three: Prophet!##34575 |goto Shadowmoon Valley D 27.0,8.1
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Leveling Guides\\Draenor (90-100)\\Shadowmoon Valley (90-92)",{
-next="Zygor's Alliance Leveling Guides\\Draenor (90-100)\\Gorgrond (92-94)",
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Shadowmoon Valley (90-92)",{
+next="Zygor's Leveling Guides\\Draenor (90-100)\\Gorgrond (92-94)",
 image=ZGV.DIR.."\\Guides\\Images\\ShadowmoonValleyDraenor",
 condition_suggested_exclusive=true,
 startlevel=90.5,
@@ -449,7 +449,7 @@ step
 confirm |condition completedq(34587)
 |tip This step is needed for the next step to function correctly.
 step
-#include "A_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Select the _Large_ tab at the top
 Drag _Barracks_ to a _Large Plot_
 Build your Barracks |q Build Your Barracks##34587/3 |goto 41.22,48.96
@@ -505,21 +505,21 @@ _Cross_ the open field |goto Shadowmoon Valley D/0 27.6,31.2 < 30 |only if walki
 _Run back_ towards your garrison |goto Lunarfall 62.4,89.4 < 20 |only if walking
 _Go through_ the doorway |goto Lunarfall 49.6,63.9 < 10 |only if walking
 _Enter_ the small house |goto Lunarfall 42.2,53.1 < 10 |walk
-#include "A_Garrison_QMoonshadow"
+#include "Garrison_QMoonshadow"
 turnin Qiana Moonshadow##34646 |goto 40.48,53.99
 step
-#include "A_Garrison_LtThorn"
+#include "Garrison_LtThorn"
 accept Delegating on Draenor##34692 |goto Lunarfall 40.29,53.76
 step
-#include "A_Garrison_CommandTable"
+#include "Garrison_CommandTable"
 Click the _Killing the Corrupted_ mission
 Assign _Qiana Moonshadow_ to the mission and start it
 Use the Command Table |q Delegating on Draenor##34692/1 |goto 40.47,53.53
 step
-#include "A_Garrison_LtThorn"
+#include "Garrison_LtThorn"
 turnin Delegating on Draenor##34692 |goto 40.23,53.58
 step
-#include "A_Garrison_Yrel"
+#include "Garrison_Yrel"
 accept A Hero's Welcome##33075 |goto 47.11,51.05
 step
 Find Samaara at Embaari Village |q A Hero's Welcome##33075/1 |goto Shadowmoon Valley D 45.67,38.84
@@ -578,7 +578,8 @@ accept Shadows Awaken##34019 |goto 49.12,38.51
 step
 Confront Ner'zhul |q Shadows Awaken##34019/1
 kill Karnoth##75043 |q Shadows Awaken##34019/2 |goto 49.43,36.87
-|tip He will drop an item for each crafting profession you have that will start a quest for that profession. Gathering and Secondary professions do not get a quest item. You will do the quest(s) for your item(s) later in the guide.
+|tip He will drop an item for each crafting profession you have that will start a quest for that profession.
+|tip Gathering and Secondary professions do not get a quest item. You will do the quest(s) for your item(s) later in the guide.
 step
 talk Prophet Velen##74043
 turnin Shadows Awaken##34019 |goto 49.30,37.40
@@ -861,19 +862,19 @@ accept Invisible Ramparts##34780 |goto 56.24,32.62
 step
 click Charged Resonance Crystal
 |tip They look like pink crystals on pedastals.
-Get a Crystal |havebuff Interface\Icons\INV_Enchant_VoidCrystal |q 34780 |goto Shadowmoon Valley D 56.8,34.3
+Get a Crystal |havebuff 132885 |q 34780 |goto Shadowmoon Valley D 56.8,34.3
 step
 Carry a Crystal to the Tertiary Pylon |q Invisible Ramparts##34780/3 |goto 56.18,33.44
 step
 click Charged Resonance Crystal
 |tip They look like pink crystals on pedastals.
-Get a Crystal |havebuff Interface\Icons\INV_Enchant_VoidCrystal |q 34780 |goto Shadowmoon Valley D 56.8,34.3
+Get a Crystal |havebuff 132885 |q 34780 |goto Shadowmoon Valley D 56.8,34.3
 step
 Carry a Crystal to the Secondary Pylon |q Invisible Ramparts##34780/2 |goto 56.62,33.13
 step
 click Charged Resonance Crystal
 |tip They look like pink crystals on pedastals.
-Get a Crystal |havebuff Interface\Icons\INV_Enchant_VoidCrystal |q 34780 |goto Shadowmoon Valley D 56.8,34.3
+Get a Crystal |havebuff 132885 |q 34780 |goto Shadowmoon Valley D 56.8,34.3
 step
 Carry a Crystal to the Primary Pylon |q Invisible Ramparts##34780/1 |goto 56.25,32.76
 step
@@ -909,12 +910,12 @@ stickystart "gorenscales"
 step
 _Enter_ the cave |goto Shadowmoon Valley D 62.0,28.1 < 20 |walk
 click Override Lever##7393
-Disable the Crystal |q Shut 'er Down##35070/1 |goto 64.44,26.23
+Disable the Crystal |q Shut 'er Down##35070/1 |goto 64.44,26.23 |indoors Elodor Dig
 step "gorenscales"
 kill Crystalmaw Goren##81156+, Crystalmaw Spitter##81157+
-collect 20 Crystallized Goren Scale##112738 |q Engorged Goren##34786/1 |goto 62.62,25.54
+collect 20 Crystallized Goren Scale##112738 |q Engorged Goren##34786/1 |goto 62.62,25.54 |indoors Elodor Dig
 step
-_Go up_ the ramp in the cave |goto Shadowmoon Valley D 63.2,27.5 < 20 |walk
+_Go up_ the ramp in the cave |goto Shadowmoon Valley D 63.2,27.5 < 20 |walk |indoors Elodor Dig
 _Leave_ the cave |goto 62.1,27.9 < 20 |walk
 talk Apprentice Artificer Andren##81140
 turnin Engorged Goren##34786 |goto 61.87,29.15
@@ -950,7 +951,7 @@ stickystart "stinger"
 step
 click Shimmershroom
 |tip They look like orange glowing mushrooms on the ground all around this area. Continue clicking Shimmershrooms to maintain the Shimmershroom Aura.
-Gain the Shimmershroom Aura |havebuff INTERFACE\ICONS\druid_ability_wildmushroom_a |q 34784
+Gain the Shimmershroom Aura |havebuff 464341 |q 34784
 While you have the buff:
 clicknpc Volatile Spore##82328
 Collect the Volatile Spores |q Fun with Fungus##34784/1 |goto 53.82,21.81
@@ -1175,8 +1176,8 @@ step
 _Enter_ Shaz'gul through the wooden gates |goto Shadowmoon Valley D 38.6,60.5 < 20 |only if walking
 use Sylene's Amulet of Illusion##107076
 |tip Use this if you lose your disguise. Also, Void Wolves can see through your disguise, so be careful around them.
-Gain the _Shadowmoon Orc Disguise_ |havebuff Interface\Icons\achievement_character_orc_male |q 33080 |only if _G.UnitSex("player")==2
-Gain the _Shadowmoon Orc Disguise_ |havebuff Interface\Icons\Achievement_Character_Orc_Female |q 33080 |only if _G.UnitSex("player")==3
+Gain the _Shadowmoon Orc Disguise_ |havebuff 236452 |q 33080 |only if _G.UnitSex("player")==2
+Gain the _Shadowmoon Orc Disguise_ |havebuff 236451 |q 33080 |only if _G.UnitSex("player")==3
 clicknpc Explosives##74811
 |tip It looks like a yellow bomb with bumps all over it, sitting on the ground.
 Plant Explosives at the Supply Hut |q Going Undercover##33080/2 |goto Shadowmoon Valley D 37.17,59.25
@@ -1184,16 +1185,16 @@ step
 _Enter_ the building |goto Shadowmoon Valley D 36.7,61.3 < 10 |walk
 use Sylene's Amulet of Illusion##107076
 |tip Use this if you lose your disguise. Also, Void Wolves can see through your disguise, so be careful around them.
-Gain the _Shadowmoon Orc Disguise_ |havebuff Interface\Icons\achievement_character_orc_male |q 33080 |only if _G.UnitSex("player")==2
-Gain the _Shadowmoon Orc Disguise_ |havebuff Interface\Icons\Achievement_Character_Orc_Female |q 33080 |only if _G.UnitSex("player")==3
+Gain the _Shadowmoon Orc Disguise_ |havebuff 236452 |q 33080 |only if _G.UnitSex("player")==2
+Gain the _Shadowmoon Orc Disguise_ |havebuff 236451 |q 33080 |only if _G.UnitSex("player")==3
 clicknpc Explosives##74811
 |tip It looks like a yellow bomb with bumps all over it, sitting on the ground.
 Plant Explosives at the Main Lodge |q Going Undercover##33080/3 |goto Shadowmoon Valley D 36.37,61.44
 step
 use Sylene's Amulet of Illusion##107076
 |tip Use this if you lose your disguise. Also, Void Wolves can see through your disguise, so be careful around them.
-Gain the _Shadowmoon Orc Disguise_ |havebuff Interface\Icons\achievement_character_orc_male |q 33080 |only if _G.UnitSex("player")==2
-Gain the _Shadowmoon Orc Disguise_ |havebuff Interface\Icons\Achievement_Character_Orc_Female |q 33080 |only if _G.UnitSex("player")==3
+Gain the _Shadowmoon Orc Disguise_ |havebuff 236452 |q 33080 |only if _G.UnitSex("player")==2
+Gain the _Shadowmoon Orc Disguise_ |havebuff 236451 |q 33080 |only if _G.UnitSex("player")==3
 _Head_ through the gates to the Chieftains' seat |goto Shadowmoon Valley D 37.8,62.6 < 20
 clicknpc Explosives##74811
 |tip It looks like a yellow bomb with bumps all over it, sitting on the ground behind a huge stone.
@@ -1201,8 +1202,8 @@ Plant Explosives at the Chieftain's Seat |q Going Undercover##33080/4 |goto Shad
 step
 use Sylene's Amulet of Illusion##107076
 |tip Use this if you lose your disguise. Also, Void Wolves can see through your disguise, so be careful around them.
-Gain the _Shadowmoon Orc Disguise_ |havebuff Interface\Icons\achievement_character_orc_male |q 33080 |only if _G.UnitSex("player")==2
-Gain the _Shadowmoon Orc Disguise_ |havebuff Interface\Icons\Achievement_Character_Orc_Female |q 33080 |only if _G.UnitSex("player")==3
+Gain the _Shadowmoon Orc Disguise_ |havebuff 236452 |q 33080 |only if _G.UnitSex("player")==2
+Gain the _Shadowmoon Orc Disguise_ |havebuff 236451 |q 33080 |only if _G.UnitSex("player")==3
 clicknpc Explosives##74811
 |tip It looks like a yellow bomb with bumps all over it, sitting on the ground.
 Plant Explosives at the Training Pit |q Going Undercover##33080/5 |goto Shadowmoon Valley D 36.5,65.5
@@ -1443,9 +1444,9 @@ _Leave_ the cave |goto Shadowmoon Valley D 46.3,27.2 < 20 |walk
 _Continue_ along the path going up the hill |goto Shadowmoon Valley D 51.0,25.2 < 20 |only if walking
 _Follow_ the path through the cliffs |goto Shadowmoon Valley D 50.4,15.2 < 20 |only if walking
 _Enter_ the cave |goto Shadowmoon Valley D 48.3,14.1 < 10 |walk
-Find Kral'za |q Forbidden Love##34847/1 |goto 48.12,14.96
-kill Dol'mak##80250 |q Forbidden Love##34847/2 |goto 48.12,14.96
-kill Dark Apparition##76295 |q Forbidden Love##34847/3 |goto 48.12,14.96
+Find Kral'za |q Forbidden Love##34847/1 |goto 48.12,14.96 |indoors Dol'mak's Hideout
+kill Dol'mak##80250 |q Forbidden Love##34847/2 |goto 48.12,14.96 |indoors Dol'mak's Hideout
+kill Dark Apparition##76295 |q Forbidden Love##34847/3 |goto 48.12,14.96 |indoors Dol'mak's Hideout
 step "lunarblossom"
 _Leave_ the cave |goto Shadowmoon Valley D 48.2,14.1 < 10 |walk
 click Lunarblossom##230901
@@ -1490,7 +1491,7 @@ _Go through_ the doorway |goto Lunarfall 49.6,63.9 < 20 |only if walking
 talk Arsenio Zerep##80159
 turnin Gloomshade Game Hunter##33461 |goto Lunarfall 37.3,64.5
 step
-#include "A_Garrison_KenLoggin"
+#include "Garrison_KenLoggin"
 accept Lost Lumberjacks##34820
 step
 talk Lost Packmule##79966
@@ -1582,7 +1583,7 @@ kill Essence of Shadow##76209 |q Harbingers of the Void##33793/1 |goto 33.89,43.
 step
 _Go through_ the stone gate |goto Shadowmoon Valley D 34.9,42.2 < 20 |only if walking
 _Enter_ the cave |goto 35.3,44.0 < 20 |walk
-kill Essence of Anguish##76210 |q Harbingers of the Void##33793/3 |goto Shadowmoon Valley D 34.8,45.5
+kill Essence of Anguish##76210 |q Harbingers of the Void##33793/3 |goto Shadowmoon Valley D 34.8,45.5 |indoors Ancestor's Grotto
 step
 _Leave_ the cave |goto 35.3,44.0 < 20 |walk
 _Go through_ the stone gate |goto Shadowmoon Valley D 34.9,42.2 < 20 |only if walking
@@ -1635,7 +1636,8 @@ accept Darkness Falls##33837 |goto Shadowmoon Valley D 46.37,38.69
 step
 Enter the Waning Crescent |q Darkness Falls##33837/1 |goto Shadowmoon Valley D 46.48,45.25
 step
-_Follow_ the path through the cave |goto Shadowmoon Valley D 49.2,46.4 < 10 |walk
+_Follow_ the path through the cave |goto Shadowmoon Valley D 49.2,46.4 < 10 |walk |indoors Waning Crescent
+_Leave_ the cave |goto Shadowmoon Valley D/0 49.83,46.24 < 10 |indoors Waning Crescent
 Find Ner'zhul |q Darkness Falls##33837/2 |goto Shadowmoon Valley D 51.55,46.22
 step
 kill Ner'zhul##76172

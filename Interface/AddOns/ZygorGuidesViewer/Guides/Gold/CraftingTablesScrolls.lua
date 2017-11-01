@@ -1,13 +1,10 @@
 local ZGV = ZygorGuidesViewer
 if not ZGV then return end
 
-local ZGVG=ZGV.Gold
+local ZGVG=ZGV.Goldguide
 if not ZGVG then return end
 
-if not ZGV.Gold.Crafting then ZGV.Gold.Crafting = {} end
-local Crafting = ZGV.Gold.Crafting
-
-Crafting.EnchantToScroll = {
+ZGVG.EnchantToScroll = {
 	-- 2H Weapons
 	[7745] = 38772,   -- Minor Impact
 	[7793] = 38781,   -- Lesser Intellect
@@ -386,10 +383,4 @@ Crafting.EnchantToScroll = {
 	[158894] = 110626, -- Enchant Neck - Breath of Mastery
 	[158895] = 110627, -- Enchant Neck - Breath of Multistrike
 	[158896] = 110628, -- Enchant Neck - Breath of Versatility
-
-	-- Conflicting entries, hardcoding
-	[116497] = 74250, -- mysterious-essence
-	[116498] = 74247, -- ethereal-shard
-	[116499] = 74248, -- Sha Crystal
-	[25126] = 20745, -- Lesser Wizard Oil
 }

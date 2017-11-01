@@ -96,6 +96,11 @@ function Mailtools:GetListOfInbox()
 				local mi_id = tonumber(itemlink:match("item:(%d+)"))
 				local mi_name,mi_itemID,mi_icon, mi_count, quality, canUse = GetInboxItem(mi_mail,mi_slot)
 
+				if mi_name == "" or not mi_name then
+					Mailtools.ForceInboxRefresh = true
+					return
+				end
+
 				if (mi_quality == -1) then -- Mailbox sometimes does not return proper quality
 					_,_,mi_quality = ZGV:GetItemInfo(itemlink);
 				end
@@ -180,7 +185,7 @@ function Mailtools:AddItemToIncoming(mi_mail,mi_slot,mi_id,mi_name,mi_icon,mi_co
 			id = mi_id,
 			name = mi_name,
 			icon = mi_icon,
-			count = mi_count,
+			count = mi_count or 0,
 			gold = mi_gold,
 			source = mi_source,
 			selected = selected,
@@ -194,10 +199,10 @@ function Mailtools:AddItemToIncoming(mi_mail,mi_slot,mi_id,mi_name,mi_icon,mi_co
 		self.InboxItems[newslot].position[mi_mail][mi_slot] = mi_count or 0
 		self.InboxItems[newslot].count = mi_count or 0
 	else
-		self.InboxItems[existing].count = self.InboxItems[existing].count + mi_count
+		self.InboxItems[existing].count = self.InboxItems[existing].count + (mi_count or 0)
 		self.InboxItems[existing].gold = self.InboxItems[existing].gold + mi_gold
 		self.InboxItems[existing].position[mi_mail] = self.InboxItems[existing].position[mi_mail] or {}
-		self.InboxItems[existing].position[mi_mail][mi_slot] = mi_count
+		self.InboxItems[existing].position[mi_mail][mi_slot] = (mi_count or 0)
 	end
 end
 

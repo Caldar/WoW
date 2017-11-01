@@ -24,7 +24,7 @@ local function configTable()
 					enable = {
 						order = 1,
 						name = L["Enable"],
-						desc = L["Create a button in your bag frame to switch to deconstrution mode allowing you to easily disenchant/mill/prospect and pick locks."],
+						desc = L["Create a button in your bag frame to switch to deconstruction mode allowing you to easily disenchant/mill/prospect and pick locks."],
 						type = "toggle",
 						get = function(info) return E.private.sle.professions.deconButton.enable end,
 						set = function(info, value) E.private.sle.professions.deconButton.enable = value; E:StaticPopup_Show("PRIVATE_RL") end,
@@ -33,7 +33,7 @@ local function configTable()
 						order = 2,
 						type = "select",
 						name = L["Style"],
-						desc = L["Sets style of glow around item available for deconstruction while in deconstruct mode. Autocast is less intence but also less noticeable."],
+						desc = L["Sets style of glow around item available for deconstruction while in deconstruct mode. Autocast is less intense but also less noticeable."],
 						disabled = function() return not E.private.sle.professions.deconButton.enable end,
 						get = function(info) return E.private.sle.professions.deconButton.style end,
 						set = function(info, value) E.private.sle.professions.deconButton.style = value; end,
@@ -193,7 +193,7 @@ local function configTable()
 					},
 					IgnorePole = {
 						order = 4,
-						name = L["Ingore Poles"],
+						name = L["Ignore Poles"],
 						desc = L["If enabled will start fishing even if you don't have fishing pole equipped. Will not work if you have fish key set to \"None\"."],
 						type = "toggle",
 						disabled = function() return not E.private.sle.professions.fishing.EasyCast or E.private.sle.professions.fishing.CastButton == "None" end,

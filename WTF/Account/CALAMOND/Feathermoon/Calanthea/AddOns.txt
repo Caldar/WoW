@@ -8,3 +8,6 @@ PetTracker_Upgrades: disabled
 Rematch: disabled
 TellMeWhen: disabled
 TellMeWhen_Options: disabled
+Archy: disabled
+WIM: disabled
+ZygorGuidesViewer: disabled

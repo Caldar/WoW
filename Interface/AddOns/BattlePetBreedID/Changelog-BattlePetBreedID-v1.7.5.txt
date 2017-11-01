@@ -1,8 +1,0 @@
-2016-09-26  MMOSimca  <mmosimca@gmail.com>
-
-[db14b6b567d0] [v1.7.5]
-* BreedTooltips.lua:
-
-Improved workaround for overlap issues with TradeSkillMaster.
-
-

@@ -168,7 +168,9 @@ function panel:UpdateList()
 			button:Hide()
 		end
 	end
-	HybridScrollFrame_Update(scrollFrame, scrollFrame.buttonHeight*numData, scrollFrame.buttonHeight)
+	local buttonHeight = scrollFrame.buttonHeight
+	scrollFrame.stepSize = floor(scrollFrame:GetHeight()/buttonHeight)*buttonHeight
+	HybridScrollFrame_Update(scrollFrame,buttonHeight*numData,buttonHeight)
 	rematch:UpdatePetListHighlights(scrollFrame)
 end
 

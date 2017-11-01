@@ -14,20 +14,28 @@ function B:Initialize()
 	self:PositionGMFrames()
 	self:SkinBlizzTimers()
 	self:PositionVehicleFrame()
-	self:PositionAltPowerBar()
 	self:PositionTalkingHead()
+	self:Handle_LevelUpDisplay_BossBanner()
 
 	if not IsAddOnLoaded("DugisGuideViewerZ") then
 		self:MoveObjectiveFrame()
 	end
 
+	if not IsAddOnLoaded("SimplePowerBar") then
+		self:PositionAltPowerBar()
+	end
+
 	E:CreateMover(LossOfControlFrame, 'LossControlMover', L["Loss Control Icon"])
 
-	CreateFrame("Frame"):SetScript("OnUpdate", function(self, elapsed)
+	CreateFrame("Frame"):SetScript("OnUpdate", function(self)
 		if LFRBrowseFrame.timeToClear then
 			LFRBrowseFrame.timeToClear = nil
 		end
 	end)
 end
 
-E:RegisterModule(B:GetName())
+local function InitializeCallback()
+	B:Initialize()
+end
+
+E:RegisterModule(B:GetName(), InitializeCallback)

@@ -55,7 +55,7 @@ panel.opts = {
 	{ "check", "PromptAlways", L["Always Prompt"], L["Prompt every time you interact with a target with a saved team not already loaded, instead of only the first time."], "PromptToLoad" },
 	{ "check", "AutoLoad", L["Auto Load"], L["When you mouseover a new target that has a saved team not already loaded, immediately load it.\n\nThis is only for the first interaction with a target. You can always load a target's team from the target panel."], nil, true },
 	{ "check", "AutoLoadShow", L["Show After Loading"], L["After a team auto loads, show the Rematch window."], "AutoLoad" },
-	{ "check", "ShowOnInjured", L["Show On Injured"], L["When a team auto loads, show the Rematch window if any pets are injured."], "AutoLoad" },
+	{ "check", "ShowOnInjured", L["Show On Injured"], L["When a team auto loads, show the Rematch window if any pets in the team are injured."], "AutoLoad" },
 	{ "check", "AutoLoadTargetOnly", L["On Target Only"], L["Auto load upon targeting only, not mouseover.\n\n\124cffff4040WARNING!\124r This is not recommended! It can be too late to load pets if you target with right click!"], "AutoLoad", true },
 	{ "check", "ShowOnTarget", L["Always Show When Targeting"], L["Regardless whether a target's team is already loaded, show the Rematch window when you target something with a saved team."] },
 	{ "header", L["Preferred Window Mode"], 7 },
@@ -72,6 +72,7 @@ panel.opts = {
 	{ "check", "StayForBattle", L["Even For Pet Battles"], L["Keep the standalone window on the screen even when you enter pet battles."], "LockWindow" },
 	{ "check", "StayOnLogout", L["Even Across Sessions"], L["If the standalone window was on screen when logging out, automatically summon it on next login."], "LockWindow" },
 	{ "check", "LockDrawer", L["Don't Minimize With ESC Key"], L["Don't minimize the standalone window when the ESCape key is pressed."], nil, true, true },
+	{ "check", "DontMinTabToggle", L["Or With Panel Tabs"], L["Don't let the Pets, Teams, Queue or Options tabs minimize the standalone window."], "LockDrawer" },
 	{ "check", "LowerStrata", L["Lower Window Behind UI"], L["Push the standalone window back behind other parts of the UI so other parts of the UI can appear ontop."], nil, true, true },
 	{ "check", "PanelTabsToRight", L["Move Panel Tabs To Right"], L["Align the Pets, Teams, Queue and Options tabs to the right side of the standalone window."], nil, true, true },
 	{ "check", "MiniMinimized", L["Minimal Minimized Window"], L["Remove the titlebar and tabs when the standalone window is minimized."] },
@@ -81,7 +82,8 @@ panel.opts = {
 	{ "check", "ColorPetNames", L["Color Pet Names By Rarity"], L["Make the names of pets you own the same color as its rarity. Blue for rare, green for uncommon, etc."], nil, true },
 	{ "check", "HideRarityBorders", L["Hide Rarity Borders"], L["Don't color the icon border for pets you own in the same color as its rarity."], nil, true },
 	{ "check", "HideLevelBubbles", L["Hide Level At Max Level"], L["If a pet is level 25, don't show its level on the pet icon."], nil, true },
-	{ "check", "ShowAbilityNumbers", L["Show Ability Numbers"], L["In the ability flyout, show the numbers 1 and 2 to help with the common notation such as \"Pet Name 122\" to know which abilities to use."] },
+	{ "check", "ShowAbilityNumbers", L["Show Ability Numbers"], L["In the ability flyout, show the numbers 1 and 2 to help with the common notation such as \"Pet Name 122\" to know which abilities to use."], nil, true },
+	{ "check", "ShowAbilityNumbersLoaded", L["On Loaded Abilities Too"], L["In addition to the flyouts, show the numbers 1 and 2 on loaded abilities."], "ShowAbilityNumbers", true },
 	{ "header", L["Toolbar Options"], 9 },
 	{ "check", "BottomToolbar", L["Move Toolbar To Bottom"], L["Move the toolbar buttons (Revive Battle Pets, Battle Pet Bandages, Safari Hat, etc) to the bottom of the standalone window.\n\nAlso convert the red panel buttons (Save, Save As, Find Battle) to toolbar buttons."], nil, true },
 	{ "check", "ReverseToolbar", L["Reverse Toolbar Buttons"], L["Reverse the order of the toolbar buttons (Revive Battle Pets, Battle Pet Bandages, Safari Hat, etc)."], nil, true },
@@ -93,14 +95,14 @@ panel.opts = {
 	{ "check", "FastPetCard", L["Faster Pet Cards & Notes"], L["Instead of a small delay before showing pet cards and notes, immediately show them as you mouseover pets and notes buttons."] },
 	{ "check", "PetCardInBattle", L["Use Pet Cards In Battle"], L["Use the pet card on the unit frames during a pet battle instead of the default tooltip."] },
 	{ "check", "PetCardForLinks", L["Use Pet Cards For Links"], L["Use the pet card when viewing a link of a pet someone else sent you instead of the default link."] },
---	{ "check", "ShowTeamCard", L["Show Team Cards"], format(L["Show a card with team details when you mouseover a team.\n\n%sIMPORTANT:\124r While this option is enabled, clicking a team will lock the team card instead of loading it. %sDouble-Click\124r to load a team with this option enabled, just as you would Double-Click a pet to summon it."],rematch.hexWhite,rematch.hexWhite) },
 	{ "check", "NotesNoESC", L["Keep Notes On Screen"], L["Don't hide notes when the ESCape key is pressed or other times it would hide, such as changing tabs or closing Rematch."], nil, true, true },
 	{ "check", "ShowNotesOnTarget", L["Show Notes Upon Targeting"], L["When your target has a saved team with notes, automatically display and lock the notes."] },
 	{ "check", "ShowNotesInBattle", L["Show Notes In Battle"], L["If the loaded team has notes, display and lock the notes when you enter a pet battle."] },
 	{ "check", "ShowNotesOnce", L["Only Once Per Team"], L["Only display notes automatically the first time entering battle, until another team is loaded."], "ShowNotesInBattle" },
 	{ "check", "BoringLoreFont", L["Alternate Lore Font"], L["Use a more normal-looking font for lore text on the back of the pet card."], nil, true, true },
-	{ "check", "ShowSpeciesID", L["Show Species ID On Pet Cards"], L["Display the numerical species ID of a pet as a stat on their pet card."] },
+	{ "check", "ShowSpeciesID", L["Show Species ID & Ability ID"], L["Display the numerical species ID of a pet as a stat on their pet card and the numerical ability ID on ability tooltips."] },
 	{ "header", L["Team Options"], 10 },
+	{ "check", "LoadHealthiest", L["Load Healthiest Pets"], L["When a team loads, if any pet is injured or dead and there's another version with more health \124cffffffffand identical stats\124r, load the healthier version.\n\nPets in the leveling queue are exempt from this option.\n\n\124cffffffffNote:\124r This is only when a team loads. It will not automatically swap in healthier pets when you leave battle."] },
 	{ "check", "HideTargetNames", L["Hide Targets Below Teams"], L["Hide the target name that appears beneath a team that is not named the same as its target."] },
 	{ "check", "AlwaysTeamTabs", L["Always Show Team Tabs"], L["Show team tabs along the right side of the window even if you're not on the team panel."], nil, true },
 	{ "check", "TeamTabsToLeft", L["Move Team Tabs To Left"], L["Move the team tabs along the right side of the standalone window to the left side."], "AlwaysTeamTabs", true },
@@ -108,6 +110,9 @@ panel.opts = {
 	{ "check", "AutoWinRecordPVPOnly", L["For PVP Battles Only"], L["Automatically track whether the loaded team won or lost only in a PVP battle and never for a PVE battle."], "AutoWinRecord" },
 	{ "check", "AlternateWinRecord", L["Display Total Wins Instead"], L["Instead of displaying the win percentage of a team on the win record button, display the total number of wins.\n\nTeam tabs that are sorted by win record will sort by total wins also."], nil, true },
 	{ "check", "HideWinRecord", L["Hide Win Record Buttons"], L["Hide the win record button displayed to the right of each team.\n\nYou can still manually edit a team's win record from its right-click menu and automatic tracking will continue if enabled."], nil, true },
+   { "check", "UseLegacyExport", L["Share In Legacy Format"], L["When exporting teams or sending to another Rematch user, use the old format.\n\nUse this option when sharing teams with someone on an older Rematch that's unable to import or receive newer teams."] },
+   { "check", "PrioritizeBreedOnImport", L["Prioritize Breed On Import"], L["When importing or receiving teams, fill the team with the best matched breed as the first priority instead of the highest level."] },
+   { "check", "RandomAbilitiesToo", L["Randomize Abilities Too"], L["For random pets, randomize the pets' abilities also."]},
 	{ "header", L["Leveling Queue Options"], 5 },
 	{ "check", "QueueSkipDead", L["Prefer Living Pets"], L["When loading pets from the queue, skip dead pets and load living ones first."], nil, true },
 	{ "check", "QueuePreferFullHP", L["And At Full Health"], L["Also prefer uninjured pets when loading pets from the queue."], "QueueSkipDead", true },
@@ -122,15 +127,17 @@ panel.opts = {
 	{ "check", "ResetExceptSearch", L["Don't Reset Search With Filters"], L["When manually clearing filters, don't clear the search box too.\n\nSome actions, such as logging in or Find Similar, will always clear search regardless of this setting."] },
 	{ "check", "SortByNickname", L["Sort By Chosen Name"], L["When pets are sorted by name, sort them by the name given with the Rename option instead of their original name."], nil, true },
 	{ "check", "DontSortByRelevance", L["Don't Sort By Relevance"], L["When searching for something by name in the search box, do not sort the results by relevance.\n\nWhen sorted by relevance, pets with the search term in their name are listed first, followed by terms in notes, then abilities and then source text last."], nil, true },
-	{ "header", L["Confirmation Options"]..newIcon, 11 },
+   { "check", "HideNonBattlePets", L["Hide Non-Battle Pets"], L["Only list pets that can battle. Do not list pets like balloons, squires and other companion pets that cannot battle."], nil, true },
+	{ "header", L["Confirmation Options"], 11 },
 	{ "check", "DontWarnMissing", L["Don't Warn About Missing Pets"], L["Don't display a popup when a team loads and a pet within the team can't be found."] },
 	{ "check", "DontConfirmHidePets", L["Don't Ask When Hiding Pets"], L["Don't ask for confirmation when hiding a pet.\n\nYou can view hidden pets in the 'Other' pet filter."] },
-	{ "check", "NoBackupReminder", L["Don't Remind About Backups"]..newIcon, L["Don't show a popup offering to backup teams every once in a while. Generally, the popup appears sometime after the number of teams increases by 50."] },
+	{ "check", "NoBackupReminder", L["Don't Remind About Backups"], L["Don't show a popup offering to backup teams every once in a while. Generally, the popup appears sometime after the number of teams increases by 50."] },
 	{ "header", L["Miscellaneous Options"], 6 },
 	{ "check", "ShowAfterBattle", L["Show After Pet Battle"], L["Show the Rematch window after leaving a pet battle."] },
 	{ "check", "DisableShare", L["Disable Sharing"], L["Disable the Send button and also block any incoming pets sent by others. Import and Export still work."] },
 	{ "check", "UseMinimapButton", L["Use Minimap Button"], L["Place a button on the minimap to toggle Rematch and load favorite teams."], nil, true, true },
 	{ "check", "KeepSummoned", L["Keep Companion"], L["After a team is loaded, summon back the companion that was at your side before the load; or dismiss the pet if you had none summoned."] },
+	{ "check", "NoSummonOnDblClick", L["No Summon On Double Click"], L["Do nothing when pets within Rematch are double-clicked. The normal behavior of double click throughout Rematch is to summon or dismiss the pet."] },
 	{ "check", "HideTooltips", L["Hide Tooltips"], L["Hide the more common tooltips in Rematch."] },
 	{ "check", "HideMenuHelp", L["Hide Extra Help"], L["Hide the informational \"Help\" items found in many menus and on the pet card."] },
 	{ "check", "UseDefaultJournal", L["Use Default Pet Journal"], L["Turn off Rematch integration with the default pet journal.\n\nYou can still use Rematch in its standalone window, accessed via key binding, /rematch command or from the Minimap button if enabled in options."], nil, true },
@@ -170,6 +177,20 @@ rematch:InitModule(function()
 
 	panel.CustomScale.ScaleButton:SetNormalFontObject(GameFontNormal)
 	panel.CustomScale.ScaleButton:SetHighlightFontObject(GameFontHighlight)
+
+	-- remove leveling toast option if ElvUI is enabled
+	if IsAddOnLoaded("ElvUI") then
+		for i=#panel.opts,1,-1 do
+			if panel.opts[i][2]=="HidePetToast" then
+				panel.opts[i][4] = format(L["%s\n\n%sWARNING!\124r There may be an issue with pet toasts in ElvUI not positioning properly. While using ElvUI it's recommended pet toasts remain hidden unless you've moved alerts in ElvUI."],panel.opts[i][4],rematch.hexRed)
+				-- when ElvUI is enabled, if we've not set a default for toast yet, define it to true
+				if not settings.ElvUIToastDefaulted then
+					settings.ElvUIToastDefaulted = true
+					settings.HidePetToast = true
+				end
+			end
+		end
+	end
 
 	panel:PopulateList()
 
@@ -373,6 +394,8 @@ end
 panel.funcs.ColorPetNames = rematch.UpdateUI
 panel.funcs.HideRarityBorders = rematch.UpdateUI
 panel.funcs.HideLevelBubbles = rematch.UpdateUI
+panel.funcs.ShowAbilityNumbers = rematch.UpdateUI
+panel.funcs.ShowAbilityNumbersLoaded = rematch.UpdateUI
 panel.funcs.ResetSortWithFilters = rematch.UpdateUI
 panel.funcs.SortByNickname = rematch.UpdateRoster
 panel.funcs.AlwaysTeamTabs = function()
@@ -398,8 +421,7 @@ panel.funcs.PromptToLoad = function()
 	panel:Update()
 end
 panel.funcs.LowerStrata = function()
-	RematchFrame:SetFrameStrata(settings.LowerStrata and "MEDIUM" or "HIGH")
-	RematchFrame:SetToplevel(settings.LowerStrata and true)
+	RematchFrame:SetFrameStrata(settings.LowerStrata and "LOW" or "MEDIUM")
 end
 panel.funcs.UseMinimapButton = function()
 	if settings.UseMinimapButton then
@@ -478,6 +500,11 @@ panel.funcs.HideWinRecord = rematch.UpdateUI
 panel.funcs.AlternateWinRecord = rematch.UpdateUI
 panel.funcs.ShowActualHealth = rematch.UpdateUI
 panel.funcs.DontSortByRelevance = rematch.UpdateRoster
+panel.funcs.HideNonBattlePets = function()
+   rematch:HideMenu() -- in case pet filter menu open
+   rematch.Roster:ClearAllFilters() -- to clear any existing Can Battle/Can't Battle filter
+   rematch:UpdateRoster() -- to update list
+end
 
 -- collapses or expands an option header
 function panel:HeaderOnClick()

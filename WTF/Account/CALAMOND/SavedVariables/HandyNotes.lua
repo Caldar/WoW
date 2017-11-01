@@ -1,109 +1,115 @@
 
 HandyNotesDB = {
 	["profileKeys"] = {
-		["Caldar - Feathermoon"] = "Caldar - Feathermoon",
-		["Nothing - Feathermoon"] = "Nothing - Feathermoon",
-		["Calastir - Feathermoon"] = "Calastir - Feathermoon",
-		["Censure - Kirin Tor"] = "Censure - Kirin Tor",
-		["Aristedes - Feathermoon"] = "Aristedes - Feathermoon",
-		["Calastir - Kirin Tor"] = "Calastir - Kirin Tor",
+		["Sinister - Feathermoon"] = "Sinister - Feathermoon",
 		["Calastir - Scarlet Crusade"] = "Calastir - Scarlet Crusade",
-		["Caladyth - Feathermoon"] = "Caladyth - Feathermoon",
-		["Calandrea - Feathermoon"] = "Calandrea - Feathermoon",
 		["Calanthea - Feathermoon"] = "Calanthea - Feathermoon",
 		["Pyric - Feathermoon"] = "Pyric - Feathermoon",
+		["Caldar - Feathermoon"] = "Caldar - Feathermoon",
+		["Failure - Feathermoon"] = "Failure - Feathermoon",
+		["Aristedes - Feathermoon"] = "Aristedes - Feathermoon",
 		["Calistah - Scarlet Crusade"] = "Calistah - Scarlet Crusade",
-		["Sinister - Feathermoon"] = "Sinister - Feathermoon",
+		["Caladyth - Feathermoon"] = "Caladyth - Feathermoon",
+		["Nothing - Feathermoon"] = "Nothing - Feathermoon",
+		["Calastir - Kirin Tor"] = "Calastir - Kirin Tor",
+		["Calastir - Feathermoon"] = "Calastir - Feathermoon",
+		["Calandrea - Feathermoon"] = "Calandrea - Feathermoon",
+		["Censure - Kirin Tor"] = "Censure - Kirin Tor",
 		["Calandrea - Scarlet Crusade"] = "Calandrea - Scarlet Crusade",
 		["Souptruck - Feathermoon"] = "Souptruck - Feathermoon",
-		["Failure - Feathermoon"] = "Failure - Feathermoon",
+		["Censure - Feathermoon"] = "Censure - Feathermoon",
 	},
 	["profiles"] = {
-		["Caldar - Feathermoon"] = {
-		},
-		["Nothing - Feathermoon"] = {
-		},
-		["Calastir - Feathermoon"] = {
-		},
-		["Censure - Kirin Tor"] = {
-		},
-		["Aristedes - Feathermoon"] = {
-		},
-		["Calastir - Kirin Tor"] = {
+		["Sinister - Feathermoon"] = {
 		},
 		["Calastir - Scarlet Crusade"] = {
-		},
-		["Caladyth - Feathermoon"] = {
-		},
-		["Calandrea - Feathermoon"] = {
 		},
 		["Calanthea - Feathermoon"] = {
 		},
 		["Pyric - Feathermoon"] = {
 		},
+		["Caldar - Feathermoon"] = {
+		},
+		["Failure - Feathermoon"] = {
+		},
+		["Aristedes - Feathermoon"] = {
+		},
 		["Calistah - Scarlet Crusade"] = {
 		},
-		["Sinister - Feathermoon"] = {
+		["Caladyth - Feathermoon"] = {
+		},
+		["Nothing - Feathermoon"] = {
+		},
+		["Calastir - Kirin Tor"] = {
+		},
+		["Calastir - Feathermoon"] = {
+		},
+		["Calandrea - Feathermoon"] = {
+		},
+		["Censure - Kirin Tor"] = {
 		},
 		["Calandrea - Scarlet Crusade"] = {
 		},
 		["Souptruck - Feathermoon"] = {
 		},
-		["Failure - Feathermoon"] = {
+		["Censure - Feathermoon"] = {
 		},
 	},
 }
 HandyNotes_HandyNotesDB = {
 	["profileKeys"] = {
-		["Caldar - Feathermoon"] = "Caldar - Feathermoon",
-		["Nothing - Feathermoon"] = "Nothing - Feathermoon",
-		["Calastir - Feathermoon"] = "Calastir - Feathermoon",
-		["Censure - Kirin Tor"] = "Censure - Kirin Tor",
-		["Aristedes - Feathermoon"] = "Aristedes - Feathermoon",
-		["Calastir - Kirin Tor"] = "Calastir - Kirin Tor",
+		["Sinister - Feathermoon"] = "Sinister - Feathermoon",
 		["Calastir - Scarlet Crusade"] = "Calastir - Scarlet Crusade",
-		["Caladyth - Feathermoon"] = "Caladyth - Feathermoon",
-		["Calandrea - Feathermoon"] = "Calandrea - Feathermoon",
 		["Calanthea - Feathermoon"] = "Calanthea - Feathermoon",
 		["Pyric - Feathermoon"] = "Pyric - Feathermoon",
+		["Caldar - Feathermoon"] = "Caldar - Feathermoon",
+		["Failure - Feathermoon"] = "Failure - Feathermoon",
+		["Aristedes - Feathermoon"] = "Aristedes - Feathermoon",
 		["Calistah - Scarlet Crusade"] = "Calistah - Scarlet Crusade",
-		["Sinister - Feathermoon"] = "Sinister - Feathermoon",
+		["Caladyth - Feathermoon"] = "Caladyth - Feathermoon",
+		["Nothing - Feathermoon"] = "Nothing - Feathermoon",
+		["Calastir - Kirin Tor"] = "Calastir - Kirin Tor",
+		["Calastir - Feathermoon"] = "Calastir - Feathermoon",
+		["Calandrea - Feathermoon"] = "Calandrea - Feathermoon",
+		["Censure - Kirin Tor"] = "Censure - Kirin Tor",
 		["Calandrea - Scarlet Crusade"] = "Calandrea - Scarlet Crusade",
 		["Souptruck - Feathermoon"] = "Souptruck - Feathermoon",
-		["Failure - Feathermoon"] = "Failure - Feathermoon",
+		["Censure - Feathermoon"] = "Censure - Feathermoon",
 	},
 	["profiles"] = {
-		["Caldar - Feathermoon"] = {
-		},
-		["Nothing - Feathermoon"] = {
-		},
-		["Calastir - Feathermoon"] = {
-		},
-		["Censure - Kirin Tor"] = {
-		},
-		["Aristedes - Feathermoon"] = {
-		},
-		["Calastir - Kirin Tor"] = {
+		["Sinister - Feathermoon"] = {
 		},
 		["Calastir - Scarlet Crusade"] = {
-		},
-		["Caladyth - Feathermoon"] = {
-		},
-		["Calandrea - Feathermoon"] = {
 		},
 		["Calanthea - Feathermoon"] = {
 		},
 		["Pyric - Feathermoon"] = {
 		},
+		["Caldar - Feathermoon"] = {
+		},
+		["Failure - Feathermoon"] = {
+		},
+		["Aristedes - Feathermoon"] = {
+		},
 		["Calistah - Scarlet Crusade"] = {
 		},
-		["Sinister - Feathermoon"] = {
+		["Caladyth - Feathermoon"] = {
+		},
+		["Nothing - Feathermoon"] = {
+		},
+		["Calastir - Kirin Tor"] = {
+		},
+		["Calastir - Feathermoon"] = {
+		},
+		["Calandrea - Feathermoon"] = {
+		},
+		["Censure - Kirin Tor"] = {
 		},
 		["Calandrea - Scarlet Crusade"] = {
 		},
 		["Souptruck - Feathermoon"] = {
 		},
-		["Failure - Feathermoon"] = {
+		["Censure - Feathermoon"] = {
 		},
 	},
 }

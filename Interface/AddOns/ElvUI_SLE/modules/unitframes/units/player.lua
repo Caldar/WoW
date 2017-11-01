@@ -20,30 +20,32 @@ SUF.RestedTextures = {
 }
 
 function SUF:CombatIcon_PostUpdate(inCombat)
-	local frame = self:GetParent()
 	self:ClearAllPoints()
 	self:SetTexture(SUF.CombatTextures[E.db.sle.unitframes.unit.player.combatico.texture])
+
 	if E.db.sle.unitframes.unit.player.combatico.texture == "DEFAULT" or E.db.sle.unitframes.unit.player.combatico.texture == "SVUI" then self:SetTexCoord(.5, 1, 0, .49) else self:SetTexCoord(0,1,0,1) end
 	self:Size(E.db.sle.unitframes.unit.player.combatico.size)
-	self:Point("CENTER", frame.Health, "CENTER", E.db.sle.unitframes.unit.player.combatico.xoffset, E.db.sle.unitframes.unit.player.combatico.yoffset)
+
+	self:Point("CENTER", _G["ElvUF_Player"].Health, "CENTER", E.db.sle.unitframes.unit.player.combatico.xoffset, E.db.sle.unitframes.unit.player.combatico.yoffset)
 	if not E.db.sle.unitframes.unit.player.combatico.red then self:SetVertexColor(1, 1, 1) end
 end
 
 function SUF:TestCombat()
 	if SUF.CombatTest.Timer then SUF.CombatTest.Timer:Cancel() end
 
-	SUF.CombatTest:Point("CENTER", _G["ElvUF_Player"].Combat)
+	SUF.CombatTest:Point("CENTER", _G["ElvUF_Player"].CombatIndicator)
 	SUF.CombatTest:Size(E.db.sle.unitframes.unit.player.combatico.size)
 
 	SUF.CombatTest.texture:SetTexture(SUF.CombatTextures[E.db.sle.unitframes.unit.player.combatico.texture])
 	if E.db.sle.unitframes.unit.player.combatico.texture == "DEFAULT" or E.db.sle.unitframes.unit.player.combatico.texture == "SVUI" then SUF.CombatTest.texture:SetTexCoord(.5, 1, 0, .49) else SUF.CombatTest.texture:SetTexCoord(0,1,0,1) end
 	if not E.db.sle.unitframes.unit.player.combatico.red then SUF.CombatTest.texture:SetVertexColor(1, 1, 1) else SUF.CombatTest.texture:SetVertexColor(0.69, 0.31, 0.31) end
 	SUF.CombatTest:Show()
+
 	SUF.CombatTest.Timer = C_TimerNewTimer(10, function() SUF.CombatTest:Hide() end)
 end
 
 function SUF:UpdateRested(frame)
-	local rIcon = frame.Resting
+	local rIcon = frame.RestingIndicator
 	local db = frame.db
 	local Sdb = E.db.sle.unitframes.unit.player.rested
 	if db.restIcon then
@@ -68,12 +70,12 @@ function SUF:UpdateRested(frame)
 end
 
 function SUF:InitPlayer()
-	SUF.CombatTest = CreateFrame("Frame", "SLE_CombatIconTest", UIParent)
-	SUF.CombatTest:Point("CENTER", _G["ElvUF_Player"].Combat)
+	SUF.CombatTest = CreateFrame("Frame", "SLE_CombatIconTest", _G["ElvUF_Player"])
+	SUF.CombatTest:Point("CENTER", _G["ElvUF_Player"].CombatIndicator)
 	SUF.CombatTest.texture = SUF.CombatTest:CreateTexture(nil, "OVERLAY")
 	SUF.CombatTest.texture:SetAllPoints()
 	SUF.CombatTest:Hide()
-	_G["ElvUF_Player"].Combat.PostUpdate = SUF.CombatIcon_PostUpdate
+	_G["ElvUF_Player"].CombatIndicator.PostUpdate = SUF.CombatIcon_PostUpdate
 
 	hooksecurefunc(UF, "Configure_RestingIndicator", SUF.UpdateRested)
 end

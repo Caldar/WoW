@@ -8,4 +8,4 @@ PetTracker_Config: enabled
 PetTracker_Journal: enabled
 PetTracker_Switcher: enabled
 PetTracker_Upgrades: enabled
-WorldQuestTracker: disabled
+WorldQuestTracker: enabled

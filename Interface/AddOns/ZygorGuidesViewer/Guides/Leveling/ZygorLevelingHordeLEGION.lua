@@ -3,8 +3,9 @@ if not ZygorGuidesViewer then return end
 if UnitFactionGroup("player")~="Horde" then return end
 if ZGV:DoMutex("LevelingHLEGION") then return end
 ZygorGuidesViewer.GuideMenuTier = "LEG"
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Starter Guides\\Demon Hunter Intro & Artifacts",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Starter Guides\\Demon Hunter Intro & Artifacts",{
 author="support@zygorguides.com",
+description="This guide will walk you through completing the introductory Demon Hunter quests and unlocking the Havoc and Vengeance artifacts.",
 condition_suggested="raceclass('DemonHunter') and level>=98",
 condition_suggested_exclusive=true,
 image=ZGV.DIR.."\\Guides\\Images\\Mardum",
@@ -64,6 +65,7 @@ step
 click Jailer Cage##103381
 Free Mannethrel Darkstar |q 38759/5 |goto 41.57,66.68
 step
+Enter the cave |goto 39.10,68.55 < 5 |walk
 click Jailer Cage##103381
 |tip Inside the small room.
 Free Izal Whitemoon |q 38759/4 |goto 38.62,67.90
@@ -488,8 +490,8 @@ Take the Portal to Dalaran over Karazhan in the Cleft of Shadow |q 44184/1 |goto
 step
 Enter the building |goto Deadwind Pass/21 45.72,43.28 < 10
 Watch the dialogue
-Witness Dalaran's Teleportation |q 44663/1 |goto Deadwind Pass/21 49.15,47.86 |only if havequest(44663) or completedq(44663)
-Witness Dalaran's Teleportation |q 44184/1 |goto Deadwind Pass/21 49.15,47.86 |only if havequest(44184) or completedq(44184)
+Witness Dalaran's Teleportation |q 44663/2 |goto Deadwind Pass/21 49.15,47.86 |only if havequest(44663) or completedq(44663)
+Witness Dalaran's Teleportation |q 44184/2 |goto Deadwind Pass/21 49.15,47.86 |only if havequest(44184) or completedq(44184)
 step
 talk Emissary Auldbridge##111109
 turnin In the Blink of an Eye##44663 |goto Dalaran L/10 57.57,45.75 |only if havequest(44663) or completedq(44663)
@@ -655,8 +657,8 @@ turnin Establishing a Connection##41807 |goto 74.42,51.26
 step
 talk Kayn Sunfury##99247
 |tip It may be Altruis the Sufferer.
-accept Vengeance Will Be Ours##41863 |goto 74.99,49.02
-accept Vengeance Will Be Ours##40249 |goto 74.99,49.02
+accept Vengeance Will Be Ours##41863 |goto 74.99,49.02 |or
+accept Vengeance Will Be Ours##40249 |goto 74.99,49.02 |or
 |tip You will only be able to accept one of these quests.
 step
 talk Illidari Fel Bat##99250
@@ -745,11 +747,11 @@ Board the Fel Hammer |q 41033/1 |goto 98.04,69.31 |only if havequest(41033) or c
 step
 talk Kayn Sunfury##95240
 |tip It may be Altruis the Sufferer.
-turnin Return to Mardum##41221 |goto Mardum, the Shattered Abyss/1 57.68,67.38 |only if havequest(41221) or completedq(41221)
-turnin Return to Mardum##41033 |goto Mardum, the Shattered Abyss/1 57.68,67.38 |goto 97.0,67.8 |only if havequest(41033) or completedq(41033)
+turnin Return to Mardum##41221 |goto Mardum, the Shattered Abyss/2 57.68,67.38 |only if havequest(41221) or completedq(41221)
+turnin Return to Mardum##41033 |goto Mardum, the Shattered Abyss/2 57.68,67.38 |goto 97.0,67.8 |only if havequest(41033) or completedq(41033)
 |tip You will accept one of these quests.
-accept Unbridled Power##41037 |goto Mardum, the Shattered Abyss/1 57.68,67.38 |or
-accept Unbridled Power##41060 |goto Mardum, the Shattered Abyss/1 57.68,67.38 |or
+accept Unbridled Power##41037 |goto Mardum, the Shattered Abyss/2 57.68,67.38 |or
+accept Unbridled Power##41060 |goto Mardum, the Shattered Abyss/2 57.68,67.38 |or
 step
 click Control Console
 Watch the dialogue
@@ -768,10 +770,8 @@ talk Battlelord Gaardoun##98650
 Speak to Battlelord Gaardoun |q 41062/1 |goto 55.88,54.08 |only if havequest(41062) or completedq(41062)
 Speak to Battlelord Gaardoun |q 41070/1 |goto 55.88,54.08 |only if havequest(41070) or completedq(41070)
 step
-Follow the path down |goto 49.08,41.64 < 20
-Follow the path down |goto 47.43,54.20 < 20
-Follow Battlelord Gaardoun |q 41062/2 |goto Mardum, the Shattered Abyss/2 59.68,45.66 |only if havequest(41062) or completedq(41062)
-Follow Battlelord Gaardoun |q 41070/2 |goto Mardum, the Shattered Abyss/2 59.68,45.66 |only if havequest(41070) or completedq(41070)
+Follow Battlelord Gaardoun |q 41062/2 |goto Mardum, the Shattered Abyss/3 59.68,45.66 |only if havequest(41062) or completedq(41062)
+Follow Battlelord Gaardoun |q 41070/2 |goto Mardum, the Shattered Abyss/3 59.68,45.66 |only if havequest(41070) or completedq(41070)
 step
 talk Battlelord Gaardoun##103025
 turnin Spoils of Victory##41062 |goto 59.68,45.66 |only if havequest(41062) or completedq(41062)
@@ -801,11 +801,11 @@ step
 talk Kayn Sunfury##95240
 |tip Upstairs.
 |tip It may be Altruis the Sufferer.
-turnin Time is of the Essence##41067 |goto Mardum, the Shattered Abyss/1 58.66,57.94 |only if havequest(41067) or completedq(41067)
-turnin Time is of the Essence##41096 |goto Mardum, the Shattered Abyss/1 58.66,57.94 |only if havequest(41096) or completedq(41096)
+turnin Time is of the Essence##41067 |goto Mardum, the Shattered Abyss/2 58.66,57.94 |only if havequest(41067) or completedq(41067)
+turnin Time is of the Essence##41096 |goto Mardum, the Shattered Abyss/2 58.66,57.94 |only if havequest(41096) or completedq(41096)
 |tip You will accept one of these quests.
-accept Direct Our Wrath##41069 |goto Mardum, the Shattered Abyss/1 58.66,57.94 |or
-accept Direct Our Wrath##41099 |goto Mardum, the Shattered Abyss/1 58.66,57.94 |or
+accept Direct Our Wrath##41069 |goto Mardum, the Shattered Abyss/2 58.66,57.94 |or
+accept Direct Our Wrath##41099 |goto Mardum, the Shattered Abyss/2 58.66,57.94 |or
 step
 click Scouting Map
 |tip You are choosing the zone you wish to do quests in first.
@@ -822,7 +822,7 @@ turnin Direct Our Wrath##41069 |goto 58.60,57.79 |only if havequest(41069) or co
 turnin Direct Our Wrath##41099 |goto 58.60,57.79 |only if havequest(41099) or completedq(41099)
 step
 click Illidari Gateway
-Travel to Dalaran |q 39718/1 |goto Mardum, the Shattered Abyss/1 59.31,91.97
+Travel to Dalaran |q 39718/1 |goto Mardum, the Shattered Abyss/2 59.31,91.97
 |only if havequest(39718) or completedq(39718)
 step
 talk Archmage Khadgar##86563
@@ -831,11 +831,11 @@ accept Down to Azsuna##41220 |goto Dalaran L/10 72.49,45.67
 |only if havequest(39718) or completedq(39718)
 step
 talk Archmage Khadgar##86563
-Fly Down with Khadgar |q 41220/1 |goto 72.49,45.67 |next Zygor's Horde Leveling Guides\\Legion (100-110)\\Azsuna (100-)
+Fly Down with Khadgar |q 41220/1 |goto 72.49,45.67 |next Zygor's Leveling Guides\\Legion (100-110)\\Azsuna
 |only if havequest(41220) and not completedq(41220)
 step
 click Illidari Gateway
-Travel to Dalaran |q 39731/1 |goto Mardum, the Shattered Abyss/1 59.31,91.97
+Travel to Dalaran |q 39731/1 |goto Mardum, the Shattered Abyss/2 59.31,91.97
 |only if havequest(39731) or completedq(39731)
 step
 talk Archmage Khadgar##86563
@@ -845,17 +845,17 @@ accept Tying Up Loose Ends##39861 |goto Dalaran L/10 72.49,45.67
 step
 talk Aludane Whitecloud##96813
 Tell him _"Aludance, I have urgent business in Val'sharah. Can you secure a flight for me?"
-Take a Flight to Val'sharah |q 39861/1 |goto 69.83,51.16 |next Zygor's Horde Leveling Guides\\Legion (100-110)\\Val'sharah (100-)
+Take a Flight to Val'sharah |q 39861/1 |goto 69.83,51.16 |next Zygor's Leveling Guides\\Legion (100-110)\\Val'sharah
 |only if havequest(39861) and not completedq(39861)
 step
-click Illidari Gateway |goto Mardum, the Shattered Abyss/1 59.31,91.97 > 100
+click Illidari Gateway |goto Mardum, the Shattered Abyss/2 59.31,91.97 > 100
 talk Warbrave Oro##97666
 turnin The Lone Mountain##39733 |goto Dalaran L/10 70.58,44.47
 accept Keepers of the Hammer##38907 |goto Dalaran L/10 70.58,44.47
 |only if havequest(39733) or completedq(39733)
 step
 talk Aludane Whitecloud##96813
-Fly to Thunder Totem in Highmountain |q 38907/1	|goto 69.84,51.11 |next Zygor's Horde Leveling Guides\\Legion (100-110)\\Highmountain (100-)
+Fly to Thunder Totem in Highmountain |q 38907/1	|goto 69.84,51.11 |next Zygor's Leveling Guides\\Legion (100-110)\\Highmountain
 |only if havequest(38907) and not completedq(38907)
 step
 talk Nathanos Blightcaller##96683
@@ -946,19 +946,20 @@ step
 kill Genn Greymane##95451
 |tip Upstairs, on the deck of the airship.
 Defeat Genn Greymane |scenarioend |goto 69.76,80.21 |q 39801
-Complete Nathanos Blightcaller's Mission |q 39801/1 |goto 69.76,80.21 |next Zygor's Horde Leveling Guides\\Legion (100-110)\\Stormheim
+Complete Nathanos Blightcaller's Mission |q 39801/1 |goto 69.76,80.21 |next Zygor's Leveling Guides\\Legion (100-110)\\Stormheim
 |only if havequest(39801) or completedq(39801)
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Legion (100-110)\\Legion Intro & Artifacts",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Legion (100-110)\\Legion Intro & Artifacts",{
 author="support@zygorguides.com",
+description="This guide will walk you through completing the introductory Legion quests and unlocking your class artifacts.",
 condition_suggested="not raceclass('DemonHunter') and level>=100",
 image=ZGV.DIR.."\\Guides\\Images\\The_Broken_Shore",
 startlevel=100.0,
 },[[
 step
 _Checking for Boosted Character..._
-|next "Boosted_Start" |only if _G.IsBoostTutorialScenario()
-|next "Non_Boosted_Start" |only if not _G.IsBoostTutorialScenario()
+|next "Boosted_Start" |only if intutorial
+|next "Non_Boosted_Start" |only if not intutorial
 step
 label "Boosted_Start"
 _On the Deck of the Airship:_
@@ -966,47 +967,47 @@ You Can Skip the Combat Training Scenario
 |tip Use your Hearthstone now if you want to skip the Combat Training scenario.
 |tip You can complete it or skip it, it doesn't matter, and is purely personal preference.
 Click Here to Complete the Combat Training Scenario |confirm |q 44543 |future
-|only if _G.IsBoostTutorialScenario()
+|only if intutorial
 step
 _On the Deck of the Airship:_
 talk Warlord Zakgra##105317
 Talk to Warlord Zakgra |scenariostage 1 |q 44543 |future
-|only if _G.IsBoostTutorialScenario()
+|only if intutorial
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Charge ability on the Target Dummy
 |tip It appears on your action bar.
 Use Charge on the Target Dummy |scenariostage 2 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warrior")
+|only if intutorial() and raceclass("Warrior")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Mortal Strike ability on the Target Dummy
 |tip It appears on your action bar.
 Use Mortal Strike on the Target Dummy #3# Times |scenariogoal 3/30116 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warrior")
+|only if intutorial() and raceclass("Warrior")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Slam ability on the Target Dummy
 |tip It appears on your action bar.
 Use Slam on the Target Dummy #3# Times |scenariogoal 4/30117 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warrior")
+|only if intutorial() and raceclass("Warrior")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Colossus Smash ability on the Target Dummy
 |tip It appears on your action bar.
 Use Colossus Smash on the Target Dummy |scenariostage 5 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warrior")
+|only if intutorial() and raceclass("Warrior")
 step
 _On the Deck of the Airship:_
 Use your abilities on the Target Dummy
 Use Colossus Smash #2# Times |scenariogoal 6/30118 |q 44543 |future
 Use Mortal Strike #3# Times |scenariogoal 6/30116 |q 44543 |future
 Use Slam #6# Times |scenariogoal 6/30117 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warrior")
+|only if intutorial() and raceclass("Warrior")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1015,7 +1016,7 @@ Use your Victory Rush ability on Arcane Constructs
 |tip It appears on your action bar.
 |tip You can only use the Victory Rush ability after killing an enemy.
 Kill an Arcane Construct and then Use Victory Rush on the Others #2# Times |scenariogoal 7/30119 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warrior")
+|only if intutorial() and raceclass("Warrior")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1023,12 +1024,12 @@ Use your Whirlwind ability on Arcane Constructs
 |tip It appears on your action bar.
 |tip Stand in the middle of the group of Arcane Constructs.
 Use Whirlwind on the Arcane Constructs |scenariogoal 8/30120 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warrior")
+|only if intutorial() and raceclass("Warrior")
 step
 _On the Deck of the Airship:_
 kill Arcane Construct##101738+
 Destroy the Arcane Constructs |scenariostage 8 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warrior")
+|only if intutorial() and raceclass("Warrior")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1036,54 +1037,54 @@ Use your Heroic Leap ability
 |tip It appears on your action bar.
 |tip It doesn't matter where you leap to.
 Use Heroic Leap |scenariostage 9 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warrior")
+|only if intutorial() and raceclass("Warrior")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592
 Defeat the Soldier |scenariostage 10 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warrior")
+|only if intutorial() and raceclass("Warrior")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592+
 |tip Two of them will attack you.
 Defeat the Attacking Soldiers |scenariostage 11 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warrior")
+|only if intutorial() and raceclass("Warrior")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Kill enemies around this area
 Defend the Airship |scenariostage 12 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warrior")
+|only if intutorial() and raceclass("Warrior")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Judgement ability on the Target Dummy
 |tip It appears on your action bar.
 Use Judgement on the Target Dummy #2# Times |scenariogoal 2/29793 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Paladin")
+|only if intutorial() and raceclass("Paladin")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Blade of Justice ability on the Target Dummy
 |tip It appears on your action bar.
 Use Blade of Justice on the Target Dummy #2# Times |scenariogoal 3/29773 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Paladin")
+|only if intutorial() and raceclass("Paladin")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Crusader Strike ability on the Target Dummy
 |tip It appears on your action bar.
 Use Crusader Strike on the Target Dummy #3# Times |scenariogoal 4/29769 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Paladin")
+|only if intutorial() and raceclass("Paladin")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Templar's Verdict ability on the Target Dummy
 |tip It appears on your action bar.
 Use Templar's Verdict on the Target Dummy #3# Times |scenariogoal 5/29770 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Paladin")
+|only if intutorial() and raceclass("Paladin")
 step
 _On the Deck of the Airship:_
 Use your abilities on the Target Dummy
@@ -1091,7 +1092,7 @@ Use Judgement #2# Times |scenariogoal 6/29793 |q 44543 |future
 Use Blade of Justice #2# Times |scenariogoal 6/29773 |q 44543 |future
 Use Crusader Strike #2# Times |scenariogoal 6/29769 |q 44543 |future
 Use Templar's Verdict #2# Times |scenariogoal 6/29770 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Paladin")
+|only if intutorial() and raceclass("Paladin")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1100,19 +1101,19 @@ Use your Divine Storm ability on Arcane Constructs
 |tip Use your other abilities on the Arcane Constructs to earn 3 Holy Power so that you can use Divine Storm.
 |tip Stand in the middle of the group of Arcane Constructs.
 Earn 3 Holy Power and then Use Divine Storm |scenariogoal 7/32067 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Paladin")
+|only if intutorial() and raceclass("Paladin")
 step
 _On the Deck of the Airship:_
 kill Arcane Construct##101738+
 Destroy the Arcane Constructs |scenariostage 7 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Paladin")
+|only if intutorial() and raceclass("Paladin")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Divine Shield ability
 |tip It appears on your action bar.
 Use Divine Shield |scenariostage 8 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Paladin")
+|only if intutorial() and raceclass("Paladin")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1120,61 +1121,61 @@ Use your Flash of Light ability
 |tip It appears on your action bar.
 |tip Make sure you're not targeting an NPC.
 Use Flash of Light to Heal Yourself #3# Times |scenariogoal 9/29772 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Paladin")
+|only if intutorial() and raceclass("Paladin")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592
 Defeat the Soldier |scenariostage 10 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Paladin")
+|only if intutorial() and raceclass("Paladin")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592+
 |tip Two of them will attack you.
 Defeat the Attacking Soldiers |scenariostage 11 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Paladin")
+|only if intutorial() and raceclass("Paladin")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Kill enemies around this area
 Defend the Airship |scenariostage 12 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Paladin")
+|only if intutorial() and raceclass("Paladin")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Call Pet ability
 |tip It is already on your action bar.
 Use Call Pet |scenariostage 2 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Hunter")
+|only if intutorial() and raceclass("Hunter")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Kill Command ability on the Target Dummy
 |tip It appears on your action bar.
 Use Kill Command to Command your Pet to Attack the Target Dummy #3# Times |scenariogoal 3/29829 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Hunter")
+|only if intutorial() and raceclass("Hunter")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Dire Beast ability on the Target Dummy
 |tip It appears on your action bar.
 Use Dire Beast on the Target Dummy #2# Times |scenariogoal 4/29830 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Hunter")
+|only if intutorial() and raceclass("Hunter")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Cobra Shot ability on the Target Dummy
 |tip It appears on your action bar.
 Use Cobra Shot on the Target Dummy #3# Times |scenariogoal 5/29831 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Hunter")
+|only if intutorial() and raceclass("Hunter")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Bestial Wrath ability
 |tip It appears on your action bar.
 Use Bestial Wrath |scenariostage 6 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Hunter")
+|only if intutorial() and raceclass("Hunter")
 step
 _On the Deck of the Airship:_
 Use your abilities on the Target Dummy
@@ -1182,80 +1183,80 @@ Use Kill Command #2# Times |scenariogoal 7/29829 |q 44543 |future
 Use Dire Beast #2# Times |scenariogoal 7/29830 |q 44543 |future
 Use Cobra Shot #5# Times |scenariogoal 7/29831 |q 44543 |future
 Use Beastial Wrath |scenariogoal 7/29832 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Hunter")
+|only if intutorial() and raceclass("Hunter")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Multi-Shot ability on Arcane Constructs
 |tip It appears on your action bar.
 Use Multi-Shot on the Arcane Constructs |scenariogoal 8/29839 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Hunter")
+|only if intutorial() and raceclass("Hunter")
 step
 _On the Deck of the Airship:_
 kill Arcane Construct##101738+
 Destroy the Arcane Constructs |scenariostage 8 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Hunter")
+|only if intutorial() and raceclass("Hunter")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Feign Death ability
 |tip It appears on your action bar.
 Use Feign Death |scenariostage 9 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Hunter")
+|only if intutorial() and raceclass("Hunter")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592
 Defeat the Attacker |scenariostage 10 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Hunter")
+|only if intutorial() and raceclass("Hunter")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592+
 |tip Two of them will attack you.
 Defeat Both Attackers |scenariostage 11 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Hunter")
+|only if intutorial() and raceclass("Hunter")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Kill enemies around this area
 Defend the Airship |scenariostage 12 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Hunter")
+|only if intutorial() and raceclass("Hunter")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Deadly Poison ability
 |tip It is already on your action bar.
 Use Deadly Poison |scenariostage 2 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Rogue")
+|only if intutorial() and raceclass("Rogue")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Stealth ability
 |tip It appears on your action bar.
 Use Stealth |scenariostage 3 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Rogue")
+|only if intutorial() and raceclass("Rogue")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Garrote ability on the Target Dummy
 |tip It appears on your action bar.
 Use Garrote on the Target Dummy |scenariostage 4 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Rogue")
+|only if intutorial() and raceclass("Rogue")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Mutilate ability on the Target Dummy
 |tip It appears on your action bar.
 Use Mutilate on the Target Dummy #3# Times |scenariogoal 5/30646 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Rogue")
+|only if intutorial() and raceclass("Rogue")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Rupture ability on the Target Dummy
 |tip It appears on your action bar.
 Use Rupture on the Target Dummy |scenariostage 6 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Rogue")
+|only if intutorial() and raceclass("Rogue")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1263,7 +1264,7 @@ Use your Envenom ability on the Target Dummy
 |tip It appears on your action bar.
 |tip Use your other abilities on the target dummy to build combo points so that you can use Envenom.
 Use Envenom on the Target Dummy |scenariostage 7 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Rogue")
+|only if intutorial() and raceclass("Rogue")
 step
 _On the Deck of the Airship:_
 Use your abilities on the Target Dummy
@@ -1271,122 +1272,122 @@ Use Garrote #2# Times |scenariogoal 8/30645 |q 44543 |future
 Use Mutilate #4# Times |scenariogoal 8/30646 |q 44543 |future
 Use Rupture |scenariogoal 8/30647 |q 44543 |future
 Use Envenom |scenariogoal 8/30648 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Rogue")
+|only if intutorial() and raceclass("Rogue")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Vanish ability
 |tip It appears on your action bar.
 Use Vanish |scenariostage 9 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Rogue")
+|only if intutorial() and raceclass("Rogue")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592
 Defeat the Soldier |scenariostage 10 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Rogue")
+|only if intutorial() and raceclass("Rogue")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592+
 |tip Two of them will attack you.
 Defeat the Attacking Soldiers |scenariostage 11 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Rogue")
+|only if intutorial() and raceclass("Rogue")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Kill enemies around this area
 Defend the Airship |scenariostage 12 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Rogue")
+|only if intutorial() and raceclass("Rogue")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Shadow Word: Pain ability on the Target Dummy
 |tip It appears on your action bar.
 Cast Shadow Word: Pain on the Target Dummy |scenariostage 2 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Priest")
+|only if intutorial() and raceclass("Priest")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Penance ability on the Target Dummy
 |tip It appears on your action bar.
 Cast Penance on the Target Dummy #2# Times |scenariogoal 3/30503 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Priest")
+|only if intutorial() and raceclass("Priest")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Smite ability on the Target Dummy
 |tip It appears on your action bar.
 Cast Smite on the Target Dummy #3# Times |scenariogoal 4/30504 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Priest")
+|only if intutorial() and raceclass("Priest")
 step
 _On the Deck of the Airship:_
 Use your abilities on the Target Dummy
 Cast Shadow Word: Pain |scenariogoal 5/30502 |q 44543 |future
 Cast Penance #2# Times |scenariogoal 5/30503 |q 44543 |future
 Cast Smite #4# Times |scenariogoal 5/30504 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Priest")
+|only if intutorial() and raceclass("Priest")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Psychic Scream ability
 |tip It appears on your action bar.
 Cast Psychic Scream to Fear the Enemies Around You |scenariostage 6 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Priest")
+|only if intutorial() and raceclass("Priest")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Power Word: Shield ability
 |tip It appears on your action bar.
 Cast Power Word: Shield on Yourself |scenariostage 7 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Priest")
+|only if intutorial() and raceclass("Priest")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Plea ability
 |tip It appears on your action bar.
 Cast Plea to Heal Yourself #3# Times |scenariogoal 8/30523 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Priest")
+|only if intutorial() and raceclass("Priest")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592
 Defeat the Soldier |scenariostage 9 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Priest")
+|only if intutorial() and raceclass("Priest")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592+
 |tip Two of them will attack you.
 Defeat the Attacking Soldiers |scenariostage 10 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Priest")
+|only if intutorial() and raceclass("Priest")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Kill enemies around this area
 Defend the Airship |scenariostage 11 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Priest")
+|only if intutorial() and raceclass("Priest")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Flame Shock ability on the Target Dummy
 |tip It appears on your action bar.
 Cast Flame Shock on the Target Dummy |scenariostage 2 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Shaman")
+|only if intutorial() and raceclass("Shaman")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Lava Burst ability on the Target Dummy
 |tip It appears on your action bar.
 Cast Lava Burst on the Target Dummy #3# Times |scenariogoal 3/29960 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Shaman")
+|only if intutorial() and raceclass("Shaman")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Lightning Bolt ability on the Target Dummy
 |tip It appears on your action bar.
 Cast Lightning Bolt on the Target Dummy #3# Times |scenariogoal 4/29961 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Shaman")
+|only if intutorial() and raceclass("Shaman")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1394,7 +1395,7 @@ Use your Earth Shock ability on the Target Dummy
 |tip It appears on your action bar.
 |tip Use your other abilities on the Target Dummy to generat Maelstrom, so that you can use Earth Shock.
 Cast Earth Shock on the Target Dummy #2# Times |scenariogoal 5/29962 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Shaman")
+|only if intutorial() and raceclass("Shaman")
 step
 _On the Deck of the Airship:_
 Use your abilities on the Target Dummy
@@ -1402,26 +1403,26 @@ Cast Flame Shock |scenariogoal 6/29959 |q 44543 |future
 Cast Lava Burst #2# Times |scenariogoal 6/29960 |q 44543 |future
 Cast Lightning Bolt #4# Times |scenariogoal 6/29961 |q 44543 |future
 Cast Earth Shock #2# Times |scenariogoal 6/29962 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Shaman")
+|only if intutorial() and raceclass("Shaman")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Hex ability on the Alliance Infantry
 |tip It appears on your action bar.
 Cast Hex on the Soldier |scenariostage 7 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Shaman")
+|only if intutorial() and raceclass("Shaman")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Chain Lightning ability on the Arcane Constructs
 |tip It appears on your action bar.
 Cast Chain Lightning on the Arcane Constructs |scenariogoal 8/29964 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Shaman")
+|only if intutorial() and raceclass("Shaman")
 step
 _On the Deck of the Airship:_
 kill Arcane Construct##101738+
 Destroy the Arcane Constructs |scenariostage 8 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Shaman")
+|only if intutorial() and raceclass("Shaman")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1429,54 +1430,54 @@ Use your Healing Surge ability
 |tip It appears on your action bar.
 |tip Make sure you are not targeting an NPC.
 Cast Healing Surge to Heal Yourself #3# Times |scenariogoal 9/32737 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Shaman")
+|only if intutorial() and raceclass("Shaman")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Fire Elemental ability
 |tip It appears on your action bar.
 Cast Fire Elemental |scenariostage 10 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Shaman")
+|only if intutorial() and raceclass("Shaman")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592
 Defeat the Soldier |scenariostage 11 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Shaman")
+|only if intutorial() and raceclass("Shaman")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592+
 |tip Two of them will attack you.
 Defeat the Attacking Soldiers |scenariostage 12 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Shaman")
+|only if intutorial() and raceclass("Shaman")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Kill enemies around this area
 Defend the Airship |scenariostage 13 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Shaman")
+|only if intutorial() and raceclass("Shaman")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Summon Water Elemental ability
 |tip It is already on your action bar.
 Cast Summon Water Elemental |scenariostage 2 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Mage")
+|only if intutorial() and raceclass("Mage")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Frostbolt ability on the Target Dummy
 |tip It appears on your action bar.
 Cast Frostbolt on the Target Dummy #3# Times |scenariogoal 3/30560 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Mage")
+|only if intutorial() and raceclass("Mage")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Ice Lance ability on the Target Dummy
 |tip It appears on your action bar.
 Cast Ice Lance on the Target Dummy #3# Times |scenariogoal 4/30561 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Mage")
+|only if intutorial() and raceclass("Mage")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1485,20 +1486,20 @@ Use your Ice Lance ability on the Target Dummy
 |tip Fingers of Frost appears as a buff to your character at the top right of the screen.
 |tip The icon for Fingers of Frost is a blue hand.
 Cast Ice Lance with Fingers of Frost #2# Times |scenariogoal 5/30614 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Mage")
+|only if intutorial() and raceclass("Mage")
 step
 _On the Deck of the Airship:_
 Use your abilities on the Target Dummy
 Cast Frostbolt #6# Times |scenariogoal 6/30560 |q 44543 |future
 Cast Ice Lance #2# Times |scenariogoal 6/30561 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Mage")
+|only if intutorial() and raceclass("Mage")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Blink ability
 |tip It appears on your action bar.
 Cast Blink |scenariostage 7 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Mage")
+|only if intutorial() and raceclass("Mage")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1506,66 +1507,66 @@ Use your Frost Nova ability
 |tip It appears on your action bar.
 |tip Wait untilt he enemy is text to you.
 Cast Frost Nova to Freeze the Enemy |scenariostage 8 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Mage")
+|only if intutorial() and raceclass("Mage")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Blizzard ability on the Arcane Constructs
 |tip It appears on your action bar.
 Cast Blizzard on the Arcane Constructs |scenariogoal 9/30622 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Mage")
+|only if intutorial() and raceclass("Mage")
 step
 _On the Deck of the Airship:_
 kill Arcane Construct##101738+
 Destroy the Arcane Constructs |scenariostage 9 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Mage")
+|only if intutorial() and raceclass("Mage")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592
 Defeat the Soldier |scenariostage 10 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Mage")
+|only if intutorial() and raceclass("Mage")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592+
 |tip Two of them will attack you.
 Defeat the Attacking Soldiers |scenariostage 11 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Mage")
+|only if intutorial() and raceclass("Mage")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Kill enemies around this area
 Defend the Airship |scenariostage 12 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Mage")
+|only if intutorial() and raceclass("Mage")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Summon Voidwalker ability
 |tip It is already on your action bar.
 Cast Summon Voidwalker |scenariostage 2 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warlock")
+|only if intutorial() and raceclass("Warlock")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Agony ability on the Target Dummy
 |tip It appears on your action bar.
 Cast Agony on the Target Dummy |scenariostage 3 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warlock")
+|only if intutorial() and raceclass("Warlock")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Corruption ability on the Target Dummy
 |tip It appears on your action bar.
 Cast Corruption on the Target Dummy |scenariostage 4 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warlock")
+|only if intutorial() and raceclass("Warlock")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Drain Life ability on the Target Dummy
 |tip It appears on your action bar.
 Cast Drain Life on the Target Dummy #2# Times |scenariogoal 5/29813 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warlock")
+|only if intutorial() and raceclass("Warlock")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1573,7 +1574,7 @@ Use your Unstable Affliction ability on the Target Dummy
 |tip It appears on your action bar.
 |tip Use your Agony ability on the Target Dummy to generate Soul Shards, so you can use Unstable Affliction.
 Cast Unstable Affliction on the Target Dummy #3# Times |scenariogoal 6/29814 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warlock")
+|only if intutorial() and raceclass("Warlock")
 step
 _On the Deck of the Airship:_
 Use your abilities on the Target Dummy
@@ -1581,54 +1582,54 @@ Cast Agony |scenariogoal 7/29811 |q 44543 |future
 Cast Corruption |scenariogoal 7/29812 |q 44543 |future
 Cast Unstable Affliction #2# Times |scenariogoal 7/29814 |q 44543 |future
 Cast Drain Life #2# Times |scenariogoal 7/29813 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warlock")
+|only if intutorial() and raceclass("Warlock")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Life Tap ability
 |tip It appears on your action bar.
 Cast Life Tap #2# Times |scenariogoal 8/29816 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warlock")
+|only if intutorial() and raceclass("Warlock")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Fear ability on the Alliance Infantry
 |tip It appears on your action bar.
 Cast Fear on the Soldier |scenariostage 9 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warlock")
+|only if intutorial() and raceclass("Warlock")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Summon Doomguard ability on the Target Dummy
 |tip It appears on your action bar.
 Cast Summon Doomguard |scenariostage 10 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warlock")
+|only if intutorial() and raceclass("Warlock")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592
 Defeat the Attacker |scenariostage 11 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warlock")
+|only if intutorial() and raceclass("Warlock")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592+
 |tip Two of them will attack you.
 Defeat Both Attackers |scenariostage 12 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warlock")
+|only if intutorial() and raceclass("Warlock")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Kill enemies around this area
 Defend the Airship |scenariostage 13 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Warlock")
+|only if intutorial() and raceclass("Warlock")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Tiger Palm ability on the Target Dummy
 |tip It appears on your action bar.
 Use Tiger Palm on the Target Dummy #3# Times |scenariogoal 2/30392 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Monk")
+|only if intutorial() and raceclass("Monk")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1636,7 +1637,7 @@ Use your Rising Sun Kick ability on the Target Dummy
 |tip It appears on your action bar.
 |tip Use your Tiger Palm ability to generate Chi, so you can use Rising Sun Kick.
 Use Rising Sun Kick on the Target Dummy #2# Times |scenariogoal 3/30393 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Monk")
+|only if intutorial() and raceclass("Monk")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1644,7 +1645,7 @@ Use your Blackout Kick ability on the Target Dummy
 |tip It appears on your action bar.
 |tip Use your Tiger Palm ability to generate Chi, so you can use Blackout Kick.
 Use Blackout Kick on the Target Dummy #3# Times |scenariogoal 4/30395 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Monk")
+|only if intutorial() and raceclass("Monk")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1652,7 +1653,7 @@ Use your Fists of Fury ability on the Target Dummy
 |tip It appears on your action bar.
 |tip Use your Tiger Palm ability to generate Chi, so you can use Fists of Fury.
 Use Fists of Fury on the Target Dummy |scenariostage 5 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Monk")
+|only if intutorial() and raceclass("Monk")
 step
 _On the Deck of the Airship:_
 Use your abilities on the Target Dummy
@@ -1660,14 +1661,14 @@ Use Tiger Palm #5# Times |scenariogoal 6/30392 |q 44543 |future
 Use Rising Sun Kick #2# Times |scenariogoal 6/30393 |q 44543 |future
 Use Blackout Kick #3# Times |scenariogoal 6/30395 |q 44543 |future
 Use Fists of Fury |scenariogoal 6/30396 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Monk")
+|only if intutorial() and raceclass("Monk")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Roll ability
 |tip It appears on your action bar.
 Use Roll #2# Times |scenariogoal 7/30397 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Monk")
+|only if intutorial() and raceclass("Monk")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1675,54 +1676,54 @@ Use your Effuse ability
 |tip It appears on your action bar.
 |tip Make sure you are not targeting an NPC.
 Use Effuse to Heal Yourself #3# Times |scenariogoal 8/30409 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Monk")
+|only if intutorial() and raceclass("Monk")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592
 Defeat the Soldier |scenariostage 9 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Monk")
+|only if intutorial() and raceclass("Monk")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592+
 |tip Two of them will attack you.
 Defeat the Attacking Soldiers |scenariostage 10 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Monk")
+|only if intutorial() and raceclass("Monk")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Kill enemies around this area
 Defend the Airship |scenariostage 11 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Monk")
+|only if intutorial() and raceclass("Monk")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Moonkin Form ability
 |tip It is already on your action bar.
 Cast Moonkin Form |scenariostage 2 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(24858)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(24858)
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Moonfire ability on the Target Dummy
 |tip It appears on your action bar.
 Cast Moonfire on the Target Dummy |scenariogoal 3/32841 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(24858)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(24858)
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Sunfire ability on the Target Dummy
 |tip It is already on your action bar.
 Cast Sunfire on the Target Dummy |scenariostage 3 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(24858)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(24858)
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Solar Wrath ability on the Target Dummy
 |tip It appears on your action bar.
 Cast Solar Wrath on the Target Dummy #3# Times |scenariogoal 4/32843 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(24858)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(24858)
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1730,7 +1731,7 @@ Use your Starsurge ability on the Target Dummy
 |tip It appears on your action bar.
 |tip Use your other abilties on the Target Dummy to generate Astral Power, so you can cast Starsurge.
 Cast Starsurge on the Target Dummy #3# Times |scenariogoal 5/32844 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(24858)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(24858)
 step
 _On the Deck of the Airship:_
 Use your abilities on the Target Dummy
@@ -1738,7 +1739,7 @@ Cast Moonfire |scenariogoal 6/32841 |q 44543 |future
 Cast Sunfire |scenariogoal 6/32842 |q 44543 |future
 Cast Solar Wrath #6# Times |scenariogoal 6/32843 |q 44543 |future
 Cast Starsurge #2# Times |scenariogoal 6/32844 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(24858)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(24858)
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1746,61 +1747,61 @@ Use your Healing Touch ability
 |tip It appears on your action bar.
 |tip Make sure you are not targeting an NPC.
 Use Healing Touch to Heal Yourself #3# Times |scenariogoal 7/30432 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(24858)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(24858)
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Entangling Roots ability on the Alliance Infantry
 |tip It appears on your action bar.
 Cast Entangling Roots |scenariostage 8 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(24858)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(24858)
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592
 Defeat the Soldier |scenariostage 9 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(24858)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(24858)
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592+
 |tip Two of them will attack you.
 Defeat the Attacking Soldiers |scenariostage 10 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(24858)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(24858)
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Kill enemies around this area
 Defend the Airship |scenariostage 11 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(24858)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(24858)
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Cat Form ability
 |tip It is already on your action bar.
 Use Cat Form to Shapeshift into a Cat |scenariostage 2 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(768)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(768)
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Prowl ability on the Target Dummy
 |tip It is already on your action bar.
 Use Prowl to Enter Stealth |scenariostage 3 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(768)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(768)
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Rake ability on the Target Dummy
 |tip It appears on your action bar.
 Use Rake on the Target Dummy |scenariostage 4 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(768)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(768)
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Shred ability on the Target Dummy
 |tip It appears on your action bar.
 Use Shred on the Target Dummy #3# Times |scenariogoal 5/30427 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(768)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(768)
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1808,7 +1809,7 @@ Use your Ferocious Bite ability on the Target Dummy
 |tip It appears on your action bar.
 |tip Use your other abilities on the Target Dummy to generate Combo Points, so that you can use Ferocious Bite.
 Use Ferocious Bite with Combo Points on the Target Dummy #3# Times |scenariogoal 6/30430 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(768)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(768)
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1816,7 +1817,7 @@ Use your Rip ability on the Target Dummy
 |tip It appears on your action bar.
 |tip Use your other abilities on the Target Dummy to generate Combo Points, so that you can use Rip.
 Use Rip with Combo Points on the Target Dummy |scenariostage 7 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(768)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(768)
 step
 _On the Deck of the Airship:_
 Use your abilities on the Target Dummy
@@ -1824,14 +1825,14 @@ Use Rake |scenariogoal 8/30428 |q 44543 |future
 Use Shred #4# Times |scenariogoal 8/30427 |q 44543 |future
 Use Ferocious Bite |scenariogoal 8/30430 |q 44543 |future
 Use Rip |scenariogoal 8/30429 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(768)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(768)
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Dash ability
 |tip It appears on your action bar.
 Use Dash to Move Faster in Cat Form |scenariostage 9 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(768)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(768)
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1839,47 +1840,47 @@ Use your Healing Touch ability
 |tip It appears on your action bar.
 |tip Make sure you are not targeting an NPC.
 Use Healing Touch to Heal Yourself |scenariostage 10 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(768)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(768)
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592
 Defeat the Soldier |scenariostage 11 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(768)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(768)
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592+
 |tip Two of them will attack you.
 Defeat the Attacking Soldiers |scenariostage 12 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(768)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(768)
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Kill enemies around this area
 Defend the Airship |scenariostage 13 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("Druid") and _G.IsPlayerSpell(768)
+|only if intutorial() and raceclass("Druid") and _G.IsPlayerSpell(768)
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Raise Dead ability
 |tip It is already on your action bar.
 Cast Raise Dead |scenariostage 2 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("DeathKnight")
+|only if intutorial() and raceclass("DeathKnight")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Outbreak ability on the Target Dummy
 |tip It appears on your action bar.
 Use Outbreak on the Target Dummy |scenariostage 3 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("DeathKnight")
+|only if intutorial() and raceclass("DeathKnight")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Festering Strike ability on the Target Dummy
 |tip It appears on your action bar.
 Use Festering Strike on the Target Dummy #3# Times |scenariogoal 4/30664 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("DeathKnight")
+|only if intutorial() and raceclass("DeathKnight")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1887,7 +1888,7 @@ Use your Scourge Strike ability on the Target Dummy
 |tip It appears on your action bar.
 |tip Use Festering Strike on the Target Dummy, then use Scourge Strike on the Target Dummy.
 Use Festering Strike then Scourge Strike on the Target Dummy #3# Times |scenariogoal 5/30665 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("DeathKnight")
+|only if intutorial() and raceclass("DeathKnight")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
@@ -1895,7 +1896,7 @@ Use your Death Coil ability on the Target Dummy
 |tip It appears on your action bar.
 |tip Use your other abilities to generate Runic Power, so you can use Death Coil.
 Use Death Coil on the Target Dummy #3# Times |scenariogoal 6/30666 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("DeathKnight")
+|only if intutorial() and raceclass("DeathKnight")
 step
 _On the Deck of the Airship:_
 Use your abilities on the Target Dummy
@@ -1903,47 +1904,47 @@ Use Outbreak |scenariogoal 7/30663 |q 44543 |future
 Use Festering Strike #2# Times |scenariogoal 7/30664 |q 44543 |future
 Use Scourge Strike #4# Times |scenariogoal 7/30665 |q 44543 |future
 Use Death Coil #4# Times |scenariogoal 7/30666 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("DeathKnight")
+|only if intutorial() and raceclass("DeathKnight")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Death Strike ability on the Target Dummy
 |tip It appears on your action bar.
 Use Death Strike #2# Times |scenariogoal 8/31703 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("DeathKnight")
+|only if intutorial() and raceclass("DeathKnight")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Death Grip ability on the Alliance Infantry
 |tip It appears on your action bar.
 Use Death Grip |scenariostage 9 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("DeathKnight")
+|only if intutorial() and raceclass("DeathKnight")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Use your Army of the Dead ability
 |tip It appears on your action bar.
 Use Army of the Dead |scenariostage 10 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("DeathKnight")
+|only if intutorial() and raceclass("DeathKnight")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592
 Defeat the Soldier |scenariostage 11 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("DeathKnight")
+|only if intutorial() and raceclass("DeathKnight")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 kill Alliance Infantry##102592+
 |tip Two of them will attack you.
 Defeat the Attacking Soldiers |scenariostage 12 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("DeathKnight")
+|only if intutorial() and raceclass("DeathKnight")
 step
 _On the Deck of the Airship:_
 Watch the dialogue
 Kill enemies around this area
 Defend the Airship |scenariostage 13 |q 44543 |future
-|only if _G.IsBoostTutorialScenario() and raceclass("DeathKnight")
+|only if intutorial() and raceclass("DeathKnight")
 step
 _On the Airship:_
 Prepare Your Character
@@ -1952,7 +1953,7 @@ Prepare Your Character
 clicknpc Armored Wind Rider##112565
 |tip On the right side at the back of the airship.
 Take the Wind Rider on the Back of the Airship and Join the Fleet |scenarioend |q 44543 |future
-|only if _G.IsBoostTutorialScenario()
+|only if intutorial
 step
 accept The Battle for Broken Shore##44543
 |tip You will accept this quest automatically.
@@ -2116,8 +2117,8 @@ Take the Portal to Dalaran over Karazhan in the Cleft of Shadow |q 44184/1 |goto
 step
 Enter the building |goto Deadwind Pass/21 45.72,43.28 < 10
 Watch the dialogue
-Witness Dalaran's Teleportation |q 44663/1 |goto Deadwind Pass/21 49.15,47.86 |only if havequest(44663) or completedq(44663)
-Witness Dalaran's Teleportation |q 44184/1 |goto Deadwind Pass/21 49.15,47.86 |only if havequest(44184) or completedq(44184)
+Witness Dalaran's Teleportation |q 44663/2 |goto Deadwind Pass/21 49.15,47.86 |only if havequest(44663) or completedq(44663)
+Witness Dalaran's Teleportation |q 44184/2 |goto Deadwind Pass/21 49.15,47.86 |only if havequest(44184) or completedq(44184)
 step
 talk Emissary Auldbridge##111109
 turnin In the Blink of an Eye##44663 |goto Dalaran L/10 57.57,45.75 |only if havequest(44663) or completedq(44663)
@@ -2183,7 +2184,7 @@ Go to the Great Mead Hall |q 39654/2 |goto 58.45,76.79
 step
 _Choose What to Do Next:_
 |tip Click the line below for the activity you would like to do.
-Pursue Artifact Weapons |confirm |next "Artifacts_Warrior" |only if level >= 102
+Pursue Artifact Weapons |confirm |next "Artifacts_Warrior"
 Choose Next Leveling Zone |confirm |next "Choose_Leveling_Zone_Warrior"
 |only if raceclass("Warrior") and level >= 101
 step
@@ -2201,8 +2202,8 @@ Now you will Choose Your Artifact Weapon:
 |tip Choose Protection if your Warrior has the Protection specialization.
 |tip Choose Fury if your Warrior has the Fury specialization.
 Choose your Artifact |q 40579/1 |goto 58.35,84.67 |only if havequest(40579)
-Choose your Artifact |q 43949/1 |goto 58.35,84.67 |only if havequest(43949)
-Choose your Artifact |q 44417/1 |goto 58.35,84.67 |only if havequest(44417)
+Choose your Artifact |q 43949/1 |goto 58.35,84.67 |only if havequest(43949) and level >= 102
+Choose your Artifact |q 44417/1 |goto 58.35,84.67 |only if havequest(44417) and level >= 102
 |only Warrior
 step
 talk Odyn##96469
@@ -2482,7 +2483,7 @@ Gather Orik Trueheart |q 38710/2 |goto 41.57,37.37
 step
 _Choose What to Do Next:_
 |tip Click the line below for the activity you would like to do.
-Pursue Artifact Weapons |confirm |next "Artifacts_Paladin" |only if level >= 102
+Pursue Artifact Weapons |confirm |next "Artifacts_Paladin"
 Choose Next Leveling Zone |confirm |next "Choose_Leveling_Zone_Paladin"
 |only if raceclass("Paladin") and level >= 101
 step
@@ -2499,8 +2500,8 @@ Now you will Choose Your Artifact Weapon:
 |tip Choose Protection if your Paladin has the Protection specialization.
 |tip Choose Retribution if your Paladin has the Retribution specialization.
 Choose your Artifact Weapon |q 40408/1 |goto Dalaran L/10 74.93,48.24 |only if havequest(40408)
-Choose your Artifact Weapon |q 44063/1 |goto Eastern Plaguelands/20 49.84,72.31 |only if havequest(44063)
-Choose your Artifact Weapon |q 44370/1 |goto Eastern Plaguelands/20 49.84,72.31 |only if havequest(44370)
+Choose your Artifact Weapon |q 44063/1 |goto Eastern Plaguelands/20 49.84,72.31 |only if havequest(44063) and level >= 102
+Choose your Artifact Weapon |q 44370/1 |goto Eastern Plaguelands/20 49.84,72.31 |only if havequest(44370) and level >= 102
 |only Paladin
 step
 talk Lord Maxwell Tyrosus##90369
@@ -2528,8 +2529,6 @@ Enter the Chamber of the Guardian |q 42770/1 |goto Dalaran L/10 49.29,47.60
 step
 Run down the stairs |goto Dalaran L/12 41.14,65.04 < 10
 click Portal to Dalaran Crater
-|tip Before clicking the portal, talk to Ricket, the goblin standing near the portal, and purchase a glider.
-|tip Use the Goblin Glider Kit after taking the portal to avoid dying from the fall.
 Take the Dalaran Portal to Dalaran Crater |q 42770/2 |goto Dalaran L/12 28.81,77.47
 |only Paladin
 step
@@ -3047,7 +3046,7 @@ Speak to Courier Larkspur |q 41415/2 |goto 42.3,56.6
 step
 _Choose What to Do Next:_
 |tip Click the line below for the activity you would like to do.
-Pursue Artifact Weapons |confirm |next "Artifacts_Hunter" |only if level >= 102
+Pursue Artifact Weapons |confirm |next "Artifacts_Hunter"
 Choose Next Leveling Zone |confirm |next "Choose_Leveling_Zone_Hunter"
 |only if raceclass("Hunter") and level >= 101
 step
@@ -3065,8 +3064,8 @@ Now you will Choose Your Artifact Weapon:
 |tip Choose Survival if your Hunter has the Survival specialization.
 |tip Choose Marksmanship if your Hunter has the Marksmanship specialization.
 Choose your Artifact Weapon |q 40618/1 |goto Dalaran L/10 60.0,53.4 |only if havequest(40618)
-Choose a Second Artifact to Pursue |q 44043/1 |goto Trueshot Lodge/0 43.40,26.31 |only if havequest(44043)
-Choose a Third Artifact to Pursue |q 44366/1 |goto Trueshot Lodge/0 43.40,26.31 |only if havequest(44366)
+Choose a Second Artifact to Pursue |q 44043/1 |goto Trueshot Lodge/0 43.40,26.31 |only if havequest(44043) and level >= 102
+Choose a Third Artifact to Pursue |q 44366/1 |goto Trueshot Lodge/0 43.40,26.31 |only if havequest(44366) and level >= 102
 |only Hunter
 step
 talk Emmarel Shadewarden##102478
@@ -3322,8 +3321,8 @@ Return to Dalaran |q 40385/3 |goto 58.58,33.66
 step
 talk Emmarel Shadewarden##102478
 |tip Inside the building.
-turnin The Spear in the Shadow##40385 |goto Dalaran L/10 60.05,53.46
-accept On Eagle's Wings##40953 |goto Dalaran L/10 60.05,53.46 |next "All_Hunters"
+turnin The Spear in the Shadow##40385 |goto Trueshot Lodge/0 43.38,26.32
+accept On Eagle's Wings##40953 |goto 43.38,26.32 |next "All_Hunters"
 |only Hunter
 step
 label "Marksmanship_Artifact"
@@ -3346,15 +3345,18 @@ Speak to Vereesa Windrunner |q 40392/2 |goto Broken Shore/0 32.29,32.43
 step
 talk Vereesa Windrunner##100190
 turnin Call of the Marksman##40392 |goto 32.29,32.43
-accept Clandestine Operation##40400 |goto 32.29,32.43
+accept Clandestine Operation##40400 |goto 32.29,32.43 |or
+accept Clandestine Operation##40402 |goto 32.29,32.43 |or
 |only Hunter
 step
 Watch the dialogue
-Listen to Vereesa Windrunner |q 40400/1 |goto 32.29,32.43
+Listen to Vereesa Windrunner |q 40400/1 |goto 32.29,32.43 |only if havequest(40400) |or
+Listen to Vereesa Windrunner |q 40402/1 |goto 32.29,32.43 |only if havequest(40402) |or
 |only Hunter
 step
 talk Vereesa Windrunner##100190
-turnin Clandestine Operation##40400 |goto 32.29,32.43
+turnin Clandestine Operation##40400 |goto 32.29,32.43 |only if havequest(40400) |or
+turnin Clandestine Operation##40402 |goto 32.29,32.43 |only if havequest(40402) |or
 accept Rescue Mission##40419 |goto 32.29,32.43
 |only Hunter
 step
@@ -3363,7 +3365,7 @@ Watch for the Portal to Open |q 40419/1 |goto 32.29,32.43
 |only Hunter
 step
 Enter the portal |goto 32.03,31.97 |n
-Travel to Niskara |goto Niskara/0 16.49,53.88 < 50 |noway |c |q 40419
+Travel to Niskara |goto Niskara B/0 16.49,53.88 < 50 |noway |c |q 40419
 |only Hunter
 step
 Travel through the Portal to Niskara |q 40419/2 |goto 16.45,52.53
@@ -3539,7 +3541,7 @@ Get Inducted into the Uncrowned |q 40839/2 |goto 42.31,77.13
 step
 _Choose What to Do Next:_
 |tip Click the line below for the activity you would like to do.
-Pursue Artifact Weapons |confirm |next "Artifacts_Rogue" |only if level >= 102
+Pursue Artifact Weapons |confirm |next "Artifacts_Rogue"
 Choose Next Leveling Zone |confirm |next "Choose_Leveling_Zone_Rogue"
 |only if raceclass("Rogue") and level >= 101
 step
@@ -3569,8 +3571,8 @@ Now you will Choose Your Artifact Weapon:
 |tip Choose Outlaw if your Rogue has the Outlaw specialization.
 |tip Choose Subtlety if your Rogue has the Subtlety specialization.
 Choose your Artifact Weapon |q 40840/4 |goto 41.39,78.10 |only if havequest(40840)
-Choose a Second Artifact to Pursue |q 44034/1 |goto 41.39,78.10 |only if havequest(44034)
-Choose a Third Artifact to Pursue |q 44375/1 |goto 41.39,78.10 |only if havequest(44375)
+Choose a Second Artifact to Pursue |q 44034/1 |goto 41.39,78.10 |only if havequest(44034) and level >= 102
+Choose a Third Artifact to Pursue |q 44375/1 |goto 41.39,78.10 |only if havequest(44375) and level >= 102
 |only Rogue
 step
 talk Lord Jorach Ravenholdt##101513
@@ -3665,36 +3667,36 @@ accept Preparation##42568
 step
 talk Garona Halforcen##107979
 turnin Preparation##42568 |goto Elwynn Forest/0 36.78,52.57
-accept The Unseen Blade##42504 |goto Elwynn Forest/0 36.77,52.62
+accept The Unseen Blade##42627 |goto Elwynn Forest/0 36.77,52.62
 |only Rogue
 step
-Begin the Scenario |scenariostart |q 42504
+Begin the Scenario |scenariostart |q 42627
 |only Rogue
 step
 Watch the dialogue
-Confront Mathias Shaw |scenariostage 1 |goto 32.17,49.43 |q 42504
+Confront Mathias Shaw |scenariostage 1 |goto 32.17,49.43 |q 42627
 |only Rogue
 step
-Follow the path |goto 69.37,79.17 < 15
+Follow the path |goto Stormwind City/0 69.37,79.17 < 15
 |tip Sneak passed the enemies, be careful.
 click Smoke Bombs
 |tip Upstairs inside the building.
-Obtain a Smoke Bomb from Elling Trias |scenariostage 2 |goto Stormwind City/0 66.18,74.43 |q 42504
+Obtain a Smoke Bomb from Elling Trias |scenariostage 2 |goto Stormwind City/0 66.18,74.43 |q 42627
 |only Rogue
 step
 Follow the path |goto 63.83,75.02 < 10
 |tip Sneak passed the enemies, be careful.
 Use the Smoke Bomb
 |tip Click the Smoke Bomb ability button in the quest goal tracker.
-Use the Smoke Bomb in the Trader's Hall |scenariostage 3 |goto 61.43,71.82 |q 42504
+Use the Smoke Bomb in the Trader's Hall |scenariostage 3 |goto 61.43,71.82 |q 42627
 |only Rogue
 step
-Pickpocket Guards until you Find Information |scenariogoal 4/30966 |goto 62.12,74.36 |q 42504
+Pickpocket Guards until you Find Information |scenariogoal 4/30966 |goto 62.12,74.36 |q 42627
 |tip All around this area. The ones holding the item you need will be glowing.
 |only Rogue
 step
 _Move to a safe location:_
-Read the Coded Message |scenariostage 4 |q 42504
+Read the Coded Message |scenariostage 4 |q 42627
 |tip Click the Read Coded Message ability button in the quest goal tracker.
 |only Rogue
 step
@@ -3703,16 +3705,16 @@ Follow the path |goto 64.26,66.58 < 15
 Cross the bridge |goto 67.07,64.67 < 15
 Follow the path |goto 69.87,62.44 < 15
 Follow the path |goto 71.36,59.53 < 15
-Meet Garona at the Pig and Whistle Tavern |scenariostage 5 |goto 74.93,55.78 |q 42504
+Meet Garona at the Pig and Whistle Tavern |scenariostage 5 |goto 74.93,55.78 |q 42627
 |only Rogue
 step
 click Door##214836
-Open the Tavern Door |scenariogoal 6/30480 |goto 75.06,55.34 |q 42504
+Open the Tavern Door |scenariogoal 6/30480 |goto 75.06,55.34 |q 42627
 |only Rogue
 step
 kill Sister Althea Ebonlocke##108218
 Watch the dialogue
-Make Althea Ebonlocke Talk |scenariostage 6 |goto 75.35,54.07 |q 42504
+Make Althea Ebonlocke Talk |scenariostage 6 |goto 75.35,54.07 |q 42627
 |only Rogue
 step
 Follow the path |goto 71.50,55.79 < 15
@@ -3722,25 +3724,25 @@ Sneak up on the rail |goto 74.93,42.69 < 10
 Follow the path |goto 80.54,37.95 < 15
 Sprint through here |goto 84.36,31.47 < 15
 |tip When Lucas Severing throws down his hammer and the light starts pulsing, wait for a break in the pulse, then run through quickly, and then Vanish on the other side of the guards.
-Find the Herald in Stormwind Keep |scenariostage 7 |goto 83.53,29.84 |q 42504
+Find the Herald in Stormwind Keep |scenariostage 7 |goto 83.53,29.84 |q 42627
 |only Rogue
 step
 kill Melris Malagan##107831
-Assassinate Melris Malagan |scenariostage 8 |goto 82.40,28.12 |q 42504
+Assassinate Melris Malagan |scenariostage 8 |goto 82.40,28.12 |q 42627
 |only Rogue
 step
 click The Kingslayers
-Wield the Kingslayers |scenariostage 9 |goto 82.83,27.94 |q 42504
+Wield the Kingslayers |scenariostage 9 |goto 82.83,27.94 |q 42627
 |only Rogue
 step
 click Portal to Dalaran
-Take the Portal to Dalaran |scenarioend |goto 86.94,37.30 |q 42504
+Take the Portal to Dalaran |scenarioend |goto 86.94,37.30 |q 42627
 Obtain the Kingslayers |q 42504/1 |goto 82.83,27.94
 |only Rogue
 step
 talk "Red" Jack Findle##97004 |goto Dalaran L/10 53.21,71.08 < 5
 _<Lay your Insignia on the table.>_
-Return to the Hall of Shadows |q 42504/2 |goto 53.18,69.94
+Return to the Hall of Shadows |q 42627/2 |goto 53.18,69.94
 |only Rogue
 step
 Run down the stairs |goto Dalaran L/4 82.87,81.59 < 15
@@ -3749,7 +3751,7 @@ Follow the path |goto Dalaran L/4 79.08,65.53 < 20
 Cross the bridge |goto Dalaran L/4 49.14,35.73 < 20
 Click the Torch and go through the doorway |goto Dalaran L/4 44.85,55.02 < 15
 talk Garona Halforcen##94141
-turnin The Unseen Blade##42504 |goto Dalaran L/4 42.42,74.62 |next "AllRogues"
+turnin The Unseen Blade##42627 |goto Dalaran L/4 42.42,74.62 |next "AllRogues"
 |only Rogue
 step
 label "Subtlety_Artifact"
@@ -4068,7 +4070,7 @@ Listen to Alonsus Faol |q 40705/3 |goto Tirisfal Glades/0 79.09,41.05
 step
 _Choose What to Do Next:_
 |tip Click the line below for the activity you would like to do.
-Pursue Artifact Weapons |confirm |next "Artifacts_Priest" |only if level >= 102
+Pursue Artifact Weapons |confirm |next "Artifacts_Priest"
 Choose Next Leveling Zone |confirm |next "Choose_Leveling_Zone_Priest"
 |only if raceclass("Priest") and level >= 101
 step
@@ -4085,8 +4087,8 @@ Now you will Choose Your Artifact Weapon:
 |tip Choose Shadow if your Priest has the Shadow specialization.
 |tip Choose Discipline if your Priest has the Discipline specialization.
 Choose your Artifact |q 40706/1 |goto Tirisfal Glades/0 78.95,40.99 |only if havequest(40706)
-Choose your Artifact |q 43935/1 |goto Netherlight Temple/1 51.62,47.79 |only if havequest(43935)
-Choose your Artifact |q 44407/1 |goto Netherlight Temple/1 51.62,47.79 |only if havequest(44407)
+Choose your Artifact |q 43935/1 |goto Netherlight Temple/1 51.62,47.79 |only if havequest(43935) and level >= 102
+Choose your Artifact |q 44407/1 |goto Netherlight Temple/1 51.62,47.79 |only if havequest(44407) and level >= 102
 |only Priest
 step
 talk Alonsus Faol##101314
@@ -4204,12 +4206,6 @@ accept The Light's Wrath##41625 |goto Tirisfal Glades/0 78.95,40.99 |only if not
 accept The Light's Wrath##41625 |goto Netherlight Temple/1 51.62,47.79 |only if completedq(43935)
 |only Priest
 step
-talk Brother Larry##105769 |goto Tirisfal Glades/0 78.49,41.08 |n
-Travel to Dalaran |goto Dalaran L/10 69.68,43.57 < 100 |noway |c |q 41625
-|only Priest
-step
-click Portal to Dalaran
-Enter the portal to Dalaran |goto Netherlight Temple/1 49.83,80.78
 talk Archmage Kalec##105081
 |tip Inside the building.
 turnin The Light's Wrath##41625 |goto Dalaran L/10 28.64,49.87
@@ -4304,6 +4300,7 @@ step
 Kill the enemies surrounding Azuregos
 |tip Use your Mass Dispell ability to kill Illusory Wyrmlings.
 Free Azuregos |scenariogoal 1/29798 |goto The Beyond/1 36.19,67.55 |q 41631
+|tip It's the on on the very bottom floor.
 |only Priest
 step
 Use your Healing Abilities on Azuregos
@@ -4370,7 +4367,7 @@ accept A Gift of Time##41632 |goto Dalaran L/10 28.65,49.90
 |only Priest
 step
 talk Alonsus Faol##102363
-turnin A Gift of Time##41632 |goto 46.25,20.95 |next "All_Priests"
+turnin A Gift of Time##41632 |goto Netherlight Temple/1 51.57,47.81 |next "All_Priests"
 |only Priest
 step
 label "Holy_Artifact"
@@ -4613,7 +4610,7 @@ Aid the Shaman at the Maelstrom |q 39746/2 |goto 30.01,77.45
 step
 _Choose What to Do Next:_
 |tip Click the line below for the activity you would like to do.
-Pursue Artifact Weapons |confirm |next "Artifacts_Shaman" |only if level >= 102
+Pursue Artifact Weapons |confirm |next "Artifacts_Shaman"
 Choose Next Leveling Zone |confirm |next "Choose_Leveling_Zone_Shaman"
 |only if raceclass("Shaman") and level >= 101
 step
@@ -4633,8 +4630,8 @@ Now you will Choose Your Artifact Weapon:
 |tip Choose Elemental if your Shaman has the Elemental specialization.
 |tip Choose Restoration if your Shaman has the Restoration specialization.
 Choose your Artifact |q 41335/1 |goto The Maelstrom L A/0 36.12,74.96 |only if havequest(41335)
-Choose a Second Artifact to Pursue |q 43945/1 |goto The Maelstrom L/0 36.15,80.09 |only if havequest(43945)
-Choose a Third Artifact to Pursue |q 44006/1 |goto The Maelstrom L/0 36.15,80.09 |only if havequest(44006)
+Choose a Second Artifact to Pursue |q 43945/1 |goto The Maelstrom L/0 36.15,80.09 |only if havequest(43945) and level >= 102
+Choose a Third Artifact to Pursue |q 44006/1 |goto The Maelstrom L/0 36.15,80.09 |only if havequest(44006) and level >= 102
 |only Shaman
 step
 talk Thrall##96527
@@ -5125,7 +5122,7 @@ Listen to Meryl |q 41036/3 |goto Hall of the Guardian/2 59.66,46.46
 step
 _Choose What to Do Next:_
 |tip Click the line below for the activity you would like to do.
-Pursue Artifact Weapons |confirm |next "Artifacts_Mage" |only if level >= 102
+Pursue Artifact Weapons |confirm |next "Artifacts_Mage"
 Choose Next Leveling Zone |confirm |next "Choose_Leveling_Zone_Mage"
 |only if raceclass("Mage") and level >= 101
 step
@@ -5143,8 +5140,8 @@ Now you will Choose Your Artifact Weapon:
 |tip Choose Fire if your Mage has the Fire specialization.
 |tip Choose Frost if your Mage has the Frost specialization.
 Choose your Artifact |q 41085/1 |goto 61.24,25.63 |only if havequest(41085)
-Choose a Second Artifact to Pursue |q 43441/1 |goto 55.29,38.16 |only if havequest(43441)
-Select your Final Artifact to Pursue |q 44310/1 |goto 55.29,38.16 |only if havequest(44310)
+Choose a Second Artifact to Pursue |q 43441/1 |goto 55.29,38.16 |only if havequest(43441) and level >= 102
+Select your Final Artifact to Pursue |q 44310/1 |goto 55.29,38.16 |only if havequest(44310) and level >= 102
 |only Mage
 step
 talk Meryl Felstorm##102700
@@ -5782,7 +5779,7 @@ Escape from Jagganoth's Lair |q 40729/2 |goto 74.36,38.08
 step
 _Choose What to Do Next:_
 |tip Click the line below for the activity you would like to do.
-Pursue Artifact Weapons |confirm |next "Artifacts_Warlock" |only if level >= 102
+Pursue Artifact Weapons |confirm |next "Artifacts_Warlock"
 Choose Next Leveling Zone |confirm |next "Choose_Leveling_Zone_Warlock"
 |only if raceclass("Warlock") and level >= 101
 step
@@ -5799,8 +5796,8 @@ Now you will Choose Your Artifact Weapon:
 |tip Choose Demonology if your Warlock has the Demonology specialization.
 |tip Choose Destruction if your Warlock has the Destruction specialization.
 Choose your Artifact |q 40684/1 |goto Dalaran L/11 |only if havequest(40684)
-Choose a Second Artifact to Pursue |q 43984/1 |goto Dreadscar Rift/0 37.65,31.23 |only if havequest(43984)
-Choose your Artifact |q 44089/1 |goto Dreadscar Rift/0 37.65,31.23 |only if havequest(44089)
+Choose a Second Artifact to Pursue |q 43984/1 |goto Dreadscar Rift/0 37.65,31.23 |only if havequest(43984) and level >= 102
+Choose your Artifact |q 44089/1 |goto Dreadscar Rift/0 37.65,31.23 |only if havequest(44089) and level >= 102
 |only Warlock
 step
 talk Calydus##101097
@@ -6219,7 +6216,7 @@ Escape to Dalaran and Meet Calydus |q 43254/6 |goto 58.94,26.85
 |only Warlock
 step
 talk Calydus##101097
-turnin Ritual Ruination##43254 |goto Dalaran L/11 55.87,65.28 |next "All_Warlocks"
+turnin Ritual Ruination##43254 |goto Dreadscar Rift/0 37.63,31.22 |next "All_Warlocks"
 |only Warlock
 step
 label "All_Warlocks"
@@ -6364,7 +6361,7 @@ Establish the Order of the Broken Temple |q 40236/2 |goto 51.45,48.56
 step
 _Choose What to Do Next:_
 |tip Click the line below for the activity you would like to do.
-Pursue Artifact Weapons |confirm |next "Artifacts_Monk" |only if level >= 102
+Pursue Artifact Weapons |confirm |next "Artifacts_Monk"
 Choose Next Leveling Zone |confirm |next "Choose_Leveling_Zone_Monk"
 |only if raceclass("Monk") and level >= 101
 step
@@ -6381,8 +6378,8 @@ Now you will Choose Your Artifact Weapon:
 |tip Choose Mistweaver if your Monk has the Mistweaver specialization.
 |tip Choose Windwalker if your Monk has the Windwalker specialization.
 Choose your Artifact Weapon |q 40636/1 |goto 51.41,48.38 |only if havequest(40636)
-Choose a Second Artifact to Pursue |q 43973/1 |goto 51.41,48.38 |only if havequest(43973)
-Choose a Third Artifact to Pursue |q 44424/1 |goto 51.41,48.38 |only if havequest(44424)
+Choose a Second Artifact to Pursue |q 43973/1 |goto 51.41,48.38 |only if havequest(43973) and level >= 102
+Choose a Third Artifact to Pursue |q 44424/1 |goto 51.41,48.38 |only if havequest(44424) and level >= 102
 |only Monk
 step
 talk Iron-Body Ponshu##100356
@@ -6819,7 +6816,7 @@ Meet the Archdruid |q 40645/5 |goto The Dreamgrove/0 44.46,51.09
 step
 _Choose What to Do Next:_
 |tip Click the line below for the activity you would like to do.
-Pursue Artifact Weapons |confirm |next "Artifacts_Druid" |only if level >= 102
+Pursue Artifact Weapons |confirm |next "Artifacts_Druid"
 Choose Next Leveling Zone |confirm |next "Choose_Leveling_Zone_Druid"
 |only if raceclass("Druid") and level >= 101
 step
@@ -6838,9 +6835,9 @@ Now you will Choose Your Artifact Weapon:
 |tip Choose Guardian if your Druid has the Guardian specialization.
 |tip Choose Restoration if your Druid has the Restoration specialization.
 Choose your Artifact Weapon |q 40646/1 |goto 44.46,51.09 |only if havequest(40646)
-Choose a Second Artifact to Pursue |q 43980/1 |goto 44.65,51.98 |only if havequest(43980)
-Choose a Third Artifact to Pursue |q 44431/1 |goto 44.65,51.98 |only if havequest(44431)
-Choose a Fourth Artifact to Pursue |q 44443/1 |goto 44.65,51.98 |only if havequest(44443)
+Choose a Second Artifact to Pursue |q 43980/1 |goto 44.65,51.98 |only if havequest(43980) and level >= 102
+Choose a Third Artifact to Pursue |q 44431/1 |goto 44.65,51.98 |only if havequest(44431) and level >= 102
+Choose a Fourth Artifact to Pursue |q 44443/1 |goto 44.65,51.98 |only if havequest(44443) and level >= 102
 |only Druid
 step
 talk Rensar Greathoof##101195
@@ -7477,7 +7474,7 @@ accept The Call To War##40714 |goto Dalaran L/10 57.57,45.75
 step
 _Choose What to Do Next:_
 |tip Click the line below for the activity you would like to do.
-Pursue Artifact Weapons |confirm |next "Artifacts_DeathKnight" |only if level >= 102
+Pursue Artifact Weapons |confirm |next "Artifacts_DeathKnight"
 Choose Next Leveling Zone |confirm |next "Choose_Leveling_Zone_DeathKnight"
 |only if raceclass("DeathKnight") and level >= 101
 step
@@ -7494,8 +7491,8 @@ Now you will Choose Your Artifact Weapon:
 |tip Choose Frost if your Death Knight has the Frost specialization.
 |tip Choose Unholy if your Death Knight has the Unholy specialization.
 Choose your Artifact Weapon |q 40715/1 |goto Dalaran L/10 73.06,46.54 |only if havequest(40715)
-Choose a Second Artifact to Pursue |q 43962/1 |goto Broken Shore/1 57.79,60.33 |only if havequest(43962)
-Choose a Third Artifact to Pursue |q 44401/1 |goto Broken Shore/1 57.79,60.33 |only if havequest(44401)
+Choose a Second Artifact to Pursue |q 43962/1 |goto Broken Shore/1 57.79,60.33 |only if havequest(43962) and level >= 102
+Choose a Third Artifact to Pursue |q 44401/1 |goto Broken Shore/1 57.79,60.33 |only if havequest(44401) and level >= 102
 |only DeathKnight
 step
 talk Duke Lankral##101441
@@ -7899,7 +7896,7 @@ accept Down to Azsuna##41220 |goto Dalaran L/10 72.5,45.6
 |only if havequest(39718) or completedq(39718)
 step
 talk Archmage Khadgar##86563
-Fly Down with Khadgar |q 41220/1 |goto 72.5,45.6 |next Zygor's Horde Leveling Guides\\Legion (100-110)\\Azsuna
+Fly Down with Khadgar |q 41220/1 |goto 72.5,45.6 |next Zygor's Leveling Guides\\Legion (100-110)\\Azsuna
 |only if havequest(41220)
 step
 talk Aerylia##96679
@@ -7956,7 +7953,7 @@ accept Tying Up Loose Ends##39861 |goto Dalaran L/10 70.52,44.10
 step
 talk Aludane Whitecloud##96813
 Tell him _"Aludane, I have urgent business in Val'sharah. Can you secure a flight for me?"_
-Take a Flight to Val'sharah |q 39861/1 |goto 69.83,51.16 |next Zygor's Horde Leveling Guides\\Legion (100-110)\\Val'sharah
+Take a Flight to Val'sharah |q 39861/1 |goto 69.83,51.16 |next Zygor's Leveling Guides\\Legion (100-110)\\Val'sharah
 |only if havequest(39861)
 step
 talk Aerylia##96679
@@ -7977,7 +7974,7 @@ Fly to Thunder Totem in Highmountain |q 38907/1 |goto 69.84,51.11
 |only if havequest(38907)
 step
 talk Aludane Whitecloud##96813 |goto 69.84,51.11 |n
-Fly to Thunder Totem in Highmountain |goto 69.84,51.11 > 30 |noway |c |next Zygor's Horde Leveling Guides\\Legion (100-110)\\Highmountain
+Fly to Thunder Totem in Highmountain |goto 69.84,51.11 > 30 |noway |c |next Zygor's Leveling Guides\\Legion (100-110)\\Highmountain
 |only if havequest(38907)
 step
 talk Aerylia##96679
@@ -8115,11 +8112,12 @@ step
 kill Genn Greymane##95451
 |tip Upstairs, on the deck of the airship.
 Defeat Genn Greymane |scenarioend |goto 69.76,80.21 |q 39801
-Complete Nathanos Blightcaller's Mission |q 39801/1 |goto 69.76,80.21 |next Zygor's Horde Leveling Guides\\Legion (100-110)\\Stormheim
+Complete Nathanos Blightcaller's Mission |q 39801/1 |goto 69.76,80.21 |next Zygor's Leveling Guides\\Legion (100-110)\\Stormheim
 |only if havequest(39801) or completedq(39801)
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Legion (100-110)\\Azsuna",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Legion (100-110)\\Azsuna",{
 author="support@zygorguides.com",
+description="This guide will walk you through completing the Azsuna zone in the Broken Isles.",
 image=ZGV.DIR.."\\Guides\\Images\\Azsuna",
 startlevel=100.0,
 endlevel=110.0,
@@ -8200,11 +8198,13 @@ talk Kayn Sunfury##89362
 |tip You will only be able to accept one of these quests.
 accept From Within##36920 |or |goto 43.55,43.47
 accept From Within##44140 |or |goto 43.55,43.47
+accept From Within##40815 |or |goto 43.55,43.47
 step
 Follow the path |goto 40.91,48.15 < 20 |only if walking
 talk Kor'vas Bloodthorn##90255
 turnin From Within##36920 |goto 41.24,50.51 |only if havequest(36920) or completedq(36920)
 turnin From Within##44140 |goto 41.24,50.51 |only if havequest(44140) or completedq(44140)
+turnin From Within##40815 |goto 41.24,50.51 |only if havequest(40815) or completedq(40815)
 accept Retake Faronaar##36811 |goto 41.24,50.51 |only if level < 110
 step
 _Next to you:_
@@ -9088,7 +9088,7 @@ talk Adept Sunwing##111624
 fpath Felblaze Ingress |goto 63.83,28.47
 step
 clicknpc Eye of Kilrogg##107252
-Control the Eye of Kilrogg |havebuff Interface\Icons\Spell_Shadow_EvilEye |q 42375 |goto 63.85,28.99
+Control the Eye of Kilrogg |havebuff 136155 |q 42375 |goto 63.85,28.99
 step
 _Go East as the Eye of Kilrogg:_
 |tip Go to the big green swirling portal.
@@ -9150,11 +9150,12 @@ Run up the stairs |goto Dalaran L/10 60.07,30.85 < 10 |only if walking
 Run up the stairs |goto Dalaran L/10 60.76,22.49 < 10 |only if walking
 talk Advisor Stillwater##106951
 |tip Inside the building.
-turnin Fate of the Queen's Reprisal##42244 |goto Dalaran L/10 61.11,16.99 |next "Zygor's Horde Leveling Guides\\Legion (100-110)\\Legion Intro & Artifacts" |only if not raceclass("DemonHunter")
-turnin Fate of the Queen's Reprisal##42244 |goto Dalaran L/10 61.11,16.99 |next "Zygor's Horde Leveling Guides\\Starter Guides\\Demon Hunter Intro & Artifacts" |only if raceclass("DemonHunter")
+turnin Fate of the Queen's Reprisal##42244 |goto Dalaran L/10 61.11,16.99 |next "Zygor's Leveling Guides\\Legion (100-110)\\Legion Intro & Artifacts" |only if not raceclass("DemonHunter")
+turnin Fate of the Queen's Reprisal##42244 |goto Dalaran L/10 61.11,16.99 |next "Zygor's Leveling Guides\\Starter Guides\\Demon Hunter Intro & Artifacts" |only if raceclass("DemonHunter")
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Legion (100-110)\\Val'sharah",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Legion (100-110)\\Val'sharah",{
 author="support@zygorguides.com",
+description="This guide will walk you through completing the Val'sharah zone in the Broken Isles.",
 image=ZGV.DIR.."\\Guides\\Images\\Valsharah",
 startlevel=100.0,
 endlevel=110.0,
@@ -9188,7 +9189,7 @@ accept Archdruid of Lore##44106 |goto 54.38,73.56 |or
 step
 Enter the building |goto 55.28,73.13 < 10 |walk
 talk Feonir Cloudthistle##93460
-home The Traveler's Den |goto 56.07,73.50
+home The Traveler's Den |goto 56.07,73.50 |q 38842 |future
 step
 accept Faerie Fracas##38842 |goto 54.15,79.64
 |tip You will accept this quest automatically.
@@ -9599,11 +9600,11 @@ accept The Temple of Elune##38641 |goto 52.47,63.39
 step
 Follow the path up |goto 55.02,63.90 < 20 |only if walking
 Follow the road |goto 56.64,62.29 < 20 |only if walking
-talk Darcy Heathrow##92688
-accept A Village in Peril##38643 |goto 54.78,52.77
-step
 talk Brinlanya Moonstone##100459
 fpath Garden of the Moon |goto 56.74,57.72
+step
+talk Darcy Heathrow##92688
+accept A Village in Peril##38643 |goto 54.78,52.77
 step
 Run up the stairs |goto 55.19,54.84 < 15 |only if walking
 Enter the building |goto 52.40,56.52 < 15 |only if walking
@@ -9698,7 +9699,7 @@ talk Aldos Duskwing##95117
 accept Wormtalon Wreckage##41707 |goto 69.48,49.33
 step
 talk Faeolas Nightwhisper##95118
-home Starsong Refuge |goto 69.57,49.42
+home Starsong Refuge |goto 69.57,49.42 |q 41707 |future
 stickystart "Shadowfen_Heirlooms"
 stickystart "Wormtalon_Harpies"
 step
@@ -10050,11 +10051,12 @@ Enter the building |goto Dalaran L/10 52.88,51.99 < 10 |walk
 Use the Central Dalaran Teleport |q 40890/1 |goto Dalaran L/10 49.28,47.59
 step
 click Tears of Elune
-turnin The Tears of Elune##40890 |goto Dalaran L/12 45.86,65.15 |next "Zygor's Horde Leveling Guides\\Legion (100-110)\\Legion Intro & Artifacts" |only if not raceclass("DemonHunter")
-turnin The Tears of Elune##40890 |goto Dalaran L/12 45.86,65.15 |next "Zygor's Horde Leveling Guides\\Starter Guides\\Demon Hunter Intro & Artifacts" |only if raceclass("DemonHunter")
+turnin The Tears of Elune##40890 |goto Dalaran L/12 45.86,65.15 |next "Zygor's Leveling Guides\\Legion (100-110)\\Legion Intro & Artifacts" |only if not raceclass("DemonHunter")
+turnin The Tears of Elune##40890 |goto Dalaran L/12 45.86,65.15 |next "Zygor's Leveling Guides\\Starter Guides\\Demon Hunter Intro & Artifacts" |only if raceclass("DemonHunter")
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Legion (100-110)\\Highmountain",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Legion (100-110)\\Highmountain",{
 author="support@zygorguides.com",
+description="This guide will walk you through completing the Highmountain zone in the Broken Isles.",
 image=ZGV.DIR.."\\Guides\\Images\\Highmountain",
 startlevel=100.0,
 endlevel=110.0,
@@ -10375,14 +10377,17 @@ Slay #25# Legion |q 39983/2 |goto Azshara L/0 30.00,41.83
 step
 Follow the path |goto 29.94,40.50 < 20 |walk
 talk Unng Ak##97891
+|tip Do not click the arrow to leave the vehicle before turning in the quests.
 turnin Huln's War - The Arrival##39983 |goto 29.45,39.32
 accept Huln's War - Malorne's Favored##40112 |goto 29.45,39.32
 step
 talk Eche'ro##98794
+|tip Do not click the arrow to leave the vehicle before turning in the quests.
 turnin Huln's War - Malorne's Favored##40112 |goto 27.95,47.35
 accept Huln's War - Stormrage##39988 |goto 27.95,47.35
 step
 talk Malfurion Stormrage##97892
+|tip Do not click the arrow to leave the vehicle before turning in the quests.
 turnin Huln's War - Stormrage##39988 |goto 27.89,51.77
 accept Huln's War - Reinforcements##39990 |goto 27.89,51.77
 step
@@ -10390,10 +10395,12 @@ Kill the enemies coming through the portal
 Defend Malfurion |q 39990/1 |goto 25.02,51.37
 step
 talk Malfurion Stormrage##97892
+|tip Do not click the arrow to leave the vehicle before turning in the quests.
 turnin Huln's War - Reinforcements##39990 |goto 27.89,51.77
 accept Huln's War - Shadowsong##40388 |goto 27.89,51.77
 step
 talk Jarod Shadowsong##97903
+|tip Do not click the arrow to leave the vehicle before turning in the quests.
 turnin Huln's War - Shadowsong##40388 |goto 31.35,52.47
 accept Huln's War - The Nathrezim##39992 |goto 31.35,52.47
 step
@@ -11376,11 +11383,12 @@ kill Wrath of Dargrul##97266 |q 39780/2 |goto 53.07,70.52
 step
 talk Mayla Highmountain##93846
 turnin The Underking##39780 |goto 53.20,70.02
-accept Neltharion's Lair##39781 |goto 53.20,70.02 |next "Zygor's Horde Leveling Guides\\Legion (100-110)\\Legion Intro & Artifacts" |only if not raceclass("DemonHunter")
-accept Neltharion's Lair##39781 |goto 53.20,70.02 |next "Zygor's Horde Leveling Guides\\Starter Guides\\Demon Hunter Intro & Artifacts" |only if raceclass("DemonHunter")
+accept Neltharion's Lair##39781 |goto 53.20,70.02 |next "Zygor's Leveling Guides\\Legion (100-110)\\Legion Intro & Artifacts" |only if not raceclass("DemonHunter")
+accept Neltharion's Lair##39781 |goto 53.20,70.02 |next "Zygor's Leveling Guides\\Starter Guides\\Demon Hunter Intro & Artifacts" |only if raceclass("DemonHunter")
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Legion (100-110)\\Stormheim",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Legion (100-110)\\Stormheim",{
 author="support@zygorguides.com",
+description="This guide will walk you through completing the Stormheim zone in the Broken Isles.",
 image=ZGV.DIR.."\\Guides\\Images\\Stormheim",
 startlevel=100.0,
 endlevel=110.0,
@@ -12251,7 +12259,7 @@ turnin Paid in Lifeblood##39855 |goto Stormheim/0 60.14,50.74
 accept A Heavy Burden##40078 |goto Stormheim/0 60.14,50.74
 step
 click Fish Barrel
-Collect the Fish |havebuff Interface\Icons\INV_Misc_Fish_04 |q 40078 |goto 59.96,50.62
+Collect the Fish |havebuff 133890 |q 40078 |goto 59.96,50.62
 step
 click Spear
 Carry Havi's Fish to the Fire |q 40078/1 |goto 60.54,51.24
@@ -12639,11 +12647,12 @@ turnin Spilling Bad Blood##42645 |goto 74.91,55.58
 step
 Cross the bridge |goto 56.74,51.16 < 20 |only if walking
 click Snaggle's Note
-turnin Put It All on Red##42483 |goto 51.42,57.35 |next "Zygor's Horde Leveling Guides\\Legion (100-110)\\Legion Intro & Artifacts" |only if not raceclass("DemonHunter")
-turnin Put It All on Red##42483 |goto 51.42,57.35 |next "Zygor's Horde Leveling Guides\\Starter Guides\\Demon Hunter Intro & Artifacts" |only if raceclass("DemonHunter")
+turnin Put It All on Red##42483 |goto 51.42,57.35 |next "Zygor's Leveling Guides\\Legion (100-110)\\Legion Intro & Artifacts" |only if not raceclass("DemonHunter")
+turnin Put It All on Red##42483 |goto 51.42,57.35 |next "Zygor's Leveling Guides\\Starter Guides\\Demon Hunter Intro & Artifacts" |only if raceclass("DemonHunter")
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Legion (100-110)\\Suramar (110)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Legion (100-110)\\Suramar (110)",{
 author="support@zygorguides.com",
+description="This guide will walk you through completing the Suramar zone in the Broken Isles.",
 image=ZGV.DIR.."\\Guides\\Images\\Suramar",
 startlevel=100.0,
 endlevel=110.0,
@@ -12749,7 +12758,7 @@ talk First Arcanist Thalyssra##97140
 turnin Ancient Mana##44672 |goto 36.58,46.91 |region suramar_shalaran
 step
 talk First Arcanist Thalyssra##97140
-home Shal'Aran |goto 36.58,46.91 |region suramar_shalaran
+home Shal'Aran |goto 36.58,46.91 |region suramar_shalaran |q 41149
 step
 Leave the cave |goto 35.04,47.62 < 10 |walk
 Follow the road |goto 33.20,47.89 < 20 |only if walking
@@ -13236,7 +13245,7 @@ accept First Contact##42147 |goto 43.38,78.74
 step
 Use the Masquerade ability
 |tip It appears as a button on the screen.
-Gain the Masquerade Disguise |havebuff Interface\Icons\inv_helm_mask_fittedalpha_b_01_nightborne_02 |goto 43.38,78.74 |q 42147
+Gain the Masquerade Disguise |havebuff 1354190 |goto 43.38,78.74 |q 42147
 step
 Follow the path |goto 42.75,78.61 < 15 |only if walking
 Follow the path |goto 42.91,76.78 < 15 |only if walking
@@ -13470,9 +13479,11 @@ talk Valewalker Farodin##107126
 accept Seed of Hope##44561 |goto 36.85,46.56 |region suramar_shalaran
 step
 talk Arcanist Valtrois##103155
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
 accept Leyline Apprentice##44492 |goto 37.00,46.35 |region suramar_shalaran
 step
 talk Arcanist Valtrois##103155
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
 turnin Leyline Apprentice##44492 |goto 37.00,46.35 |region suramar_shalaran
 step
 talk Mayruna Moonwing##103568
@@ -13701,8 +13712,6 @@ Slay #50# Nightborne |q 40965/1 |goto 35.43,21.49
 step
 label "Volatile_Spell_Focus"
 Kill enemies around this area
-collect 10 Spell Focus Fragment##133957 |n
-Use the Spell Focus Fragments |use Spell Focus Fragment#133957
 collect Volatile Spell Focus##133956 |q 40968/1 |goto 35.43,21.49
 step
 Click the Complete Quest Box:
@@ -13779,12 +13788,15 @@ Watch the dialogue
 Abandon the Stronghold |q 40972/1 |goto 30.08,10.34
 step
 talk First Arcanist Thalyssra##97140
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
 turnin Last Stand of the Moon Guard##40972 |goto 36.88,46.61 |region suramar_shalaran
 step
 talk Arcanist Valtrois##103155
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
 accept Leyline Proficiency##44493 |goto 37.00,46.35 |region suramar_shalaran
 step
 talk Arcanist Valtrois##103155
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
 turnin Leyline Proficiency##44493 |goto 37.00,46.35 |region suramar_shalaran
 step
 Run up the stairs |goto 35.27,50.86 < 20 |only if walking
@@ -13838,19 +13850,23 @@ Follow the path down |goto 64.53,46.78 < 20 |only if walking
 talk Toryl##102309
 |tip She walks around, so you may need to search a bit for her.
 accept Removing Obstacles##40907 |goto 65.10,51.11
+_WARNING_: If you complete this quest, you will be unable to tame a Jandvik Ripfang for the unique Auburn Wolf pet! |only Hunter
 step
 Follow the path |goto 65.87,51.16 < 15 |only if walking
 Follow the path |goto 68.48,51.15 < 20 |only if walking
 kill Calder##102738 |q 40907/1 |goto 69.07,53.21
+_WARNING_: If you complete this quest, you will be unable to tame a Jandvik Ripfang for the unique Auburn Wolf pet! |only Hunter
 step
 Follow the path |goto 68.93,50.96 < 20 |only if walking
 Follow the path |goto 68.62,48.10 < 20 |only if walking
 kill Eynar##102739 |q 40907/2 |goto 69.20,46.82
+_WARNING_: If you complete this quest, you will be unable to tame a Jandvik Ripfang for the unique Auburn Wolf pet! |only Hunter
 step
 Follow the path |goto 69.59,47.91 < 20 |only if walking
 talk Toryl##99948
 turnin Removing Obstacles##40907 |goto 70.58,48.81
 accept Jarl Come Back Now##40908 |goto 70.58,48.81
+_WARNING_: If you complete this quest, you will be unable to tame a Jandvik Ripfang for the unique Auburn Wolf pet! |only Hunter
 step
 Follow the path |goto 71.12,50.19 < 20 |only if walking
 Follow the path |goto 70.78,53.56 < 20 |only if walking
@@ -14101,12 +14117,15 @@ click Leyline Feed
 turnin Leyline Feed: Elor'shan##43587 |goto 46.93,47.17
 step
 talk First Arcanist Thalyssra##97140
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
 accept Lady Lunastre##41877 |goto Suramar/0 36.88,46.61 |region suramar_shalaran
 step
 talk Arcanist Valtrois##103155
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
 accept Leyline Master##44495 |goto 37.00,46.35 |region suramar_shalaran
 step
 talk Arcanist Valtrois##103155
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
 turnin Leyline Master##44495 |goto 37.00,46.35 |region suramar_shalaran
 step
 Run up the stairs |goto 35.26,50.85 < 20 |only if walking
@@ -14256,11 +14275,13 @@ click Portal to Shal'Aran |goto 47.73,81.35 |n
 Travel to Shal'Aran |goto 36.40,45.09 > 700 |noway |c |q 42487
 step
 talk First Arcanist Thalyssra##97140
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
 Choose _<Offer the Gift-Wrapped Arcwine Bottle.>_
 Watch the dialogue
 Deliver Vanthir's Gift to Thalyssra |q 42487/2 |goto 36.89,46.61 |region suramar_shalaran
 step
 talk First Arcanist Thalyssra##97140
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
 turnin Friends On the Outside##42487 |goto 36.89,46.61 |region suramar_shalaran
 accept Thalyssra's Abode##42488 |goto 36.89,46.61 |region suramar_shalaran
 step
@@ -14322,13 +14343,26 @@ click Unpowered Telemancy Beacon
 turnin Felsoul Teleporter Online!##41575 |goto 53.61,36.78
 step
 talk First Arcanist Thalyssra##97140
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
 Report to Thalyssra |q 40470/3 |goto Suramar/0 36.89,46.61 |region suramar_shalaran
 step
 talk First Arcanist Thalyssra##97140
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
 turnin Quality of Life##40470 |goto 36.89,46.61 |region suramar_shalaran
-accept Building an Army##44636 |goto 36.88,46.61 |region suramar_shalaran
+step
+accept Uniting the Isles##43341
+|tip You will accept this quest automatically when you reach level 110.
+step
+talk Archmage Khadgar##90417
+|tip Inside the building.
+turnin Uniting the Isles##43341 |goto Dalaran L/10 28.47,48.34
 step
 talk First Arcanist Thalyssra##97140
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
+accept Building an Army##44636 |goto Suramar/0 36.88,46.61 |region suramar_shalaran
+step
+talk First Arcanist Thalyssra##97140
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
 Tell her _"I've come to help the withered with their combat training."_
 Speak with Thalyssra to Start Training your Withered |q 44636/1 |goto 36.88,46.60 |region suramar_shalaran
 step
@@ -14339,10 +14373,10 @@ turnin Building an Army##44636
 step
 talk First Arcanist Thalyssra##109008
 Speak with Thalyssra |scenariostage 1 |goto 22.85,36.20
-|only if _G.C_Scenario.IsInScenario()
+|only if inscenario
 step
 Enter the building |goto 22.88,35.62 > 1000 |c
-|only if _G.C_Scenario.IsInScenario()
+|only if inscenario
 step
 _Follow the path and kill all enemies:_
 |tip As your withereds get more powerful from training, you'll be able to make it further through this area.
@@ -14355,13 +14389,13 @@ talk Withered Exile##110141+
 |tip Talk to them to recruit them to your army.
 |tip Your withered will sometimes run away when they are hurt. Click them to prevent them from leaving.
 Proceed as Far as you can into the Collapse |scenariostage 2
-|only if _G.C_Scenario.IsInScenario()
+|only if inscenario
 step
 click Glimmering Treasure Chest
 |tip There may be more chests, depending on how far you got into the Collapse.
 Receive the Spoils of War |scenarioend |goto Suramar/0 22.79,36.15
 |tip Use the items you get in your bags to increase your reputation with The Nightfallen.
-|only if _G.C_Scenario.IsInScenario()
+|only if inscenario
 stickystart "Arcane_Amplifier"
 step
 Follow the path up |goto 65.18,52.05 < 20 |only if walking
@@ -14389,6 +14423,7 @@ Use the Amplifier Fragments |use Amplifier Fragment##138392
 collect Arcane Amplifier##138391 |q 42488/1 |goto 66.88,62.74
 step
 talk First Arcanist Thalyssra##97140
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
 turnin Thalyssra's Drawers##42489 |goto 36.89,46.61 |region suramar_shalaran
 turnin Thalyssra's Abode##42488 |goto 36.89,46.61 |region suramar_shalaran
 step
@@ -14735,10 +14770,6 @@ step
 talk Brambley Morrison##104161
 turnin Mangelrath##41309 |goto 35.78,72.41
 step
-Reach Honored Reputation with the Nightfallen Faction |condition rep("The Nightfallen")>=Honored
-|tip Use "The Nightfallen Reputation" guide to accomplish this.
-|tip Use the "Legion World Quests" guide and complete Suramar world quests to accomplish this.
-step
 talk Valewalker Farodin##107126
 turnin Seed of Hope##44561 |goto 36.85,46.55 |region suramar_shalaran
 accept Moths to a Flame##42828 |goto 36.85,46.55 |region suramar_shalaran
@@ -14902,6 +14933,8 @@ turnin Balance to Spare##42837 |goto 61.39,55.10
 turnin Silkwing Sabotage##42836 |goto 61.39,55.10
 accept Reversal##42838 |goto 61.39,55.10
 step
+Find Margaux |q 42838/1 |goto Suramar/0 60.43,54.93
+step
 talk Sylverin##108870
 turnin Reversal##42838 |goto 61.39,55.10
 accept Vengeance for Margaux##44084 |goto 61.39,55.10
@@ -14913,6 +14946,7 @@ Cross the bridge |goto 61.32,56.21 < 20 |only if walking
 Escape the Vineyard |q 44084/2 |goto 64.00,60.43
 step
 talk First Arcanist Thalyssra##97140
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
 turnin Vengeance for Margaux##44084 |goto 36.88,46.61 |region suramar_shalaran
 accept Seek the Unsavory##42839 |goto 36.88,46.61 |region suramar_shalaran
 stickystart "Shadowbloom"
@@ -15031,13 +15065,11 @@ turnin Make Your Mark##42792 |goto 48.40,83.29
 accept And They Will Tremble##44052 |goto 48.40,83.29
 step
 talk First Arcanist Thalyssra##97140
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
 turnin And They Will Tremble##44052 |goto 36.89,46.61 |region suramar_shalaran
 step
-Reach 8000 Honored Reputation with the Nightfallen Faction |condition repval("The Nightfallen","Honored")>=8000
-|tip Use "The Nightfallen Reputation" guide to accomplish this.
-|tip Use the "Legion World Quests" guide and complete Suramar world quests to accomplish this.
-step
 talk First Arcanist Thalyssra##97140
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
 accept The Perfect Opportunity##43309 |goto 36.88,46.61 |region suramar_shalaran
 step
 Follow the path |goto 47.53,83.29 < 15 |only if walking
@@ -15159,20 +15191,19 @@ talk Lunastre Attendant##111903
 accept Friends With Benefits##44053 |goto 47.80,82.86
 step
 talk First Arcanist Thalyssra##97140
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
 turnin Friends With Benefits##44053 |goto 36.51,46.76 |region suramar_shalaran
 accept Opening the Arcway##42490 |goto 36.51,46.76 |region suramar_shalaran
 accept Beware the Fury of a Patient Elf##43314 |goto 36.51,46.76 |region suramar_shalaran
 step
 talk Arcanist Valtrois##103155
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
 |tip Downstairs.
 accept Long Buried Knowledge##42491 |goto 37.01,46.23 |region suramar_shalaran
 step
-Follow the path |goto 42.77,61.25 < 15 |walk |region suramar_sanctum_of_order
-Follow the path |goto 41.51,60.63 < 15 |walk |region suramar_sanctum_of_order
-Walk into the swirling portal |goto 41.04,61.83 |n |region suramar_sanctum_of_order
-Enter the Arcway Dungeon |goto The Arcway/1 47.99,21.47 < 10000 |noway |c |q 42490
-|tip You cannot use the Group Finder to enter this dungeon, since this is a Mythic dungeon.
-|tip You will need to create a group yourself, composed of friends or guildmates, etc.
+Press _I_ and queue for Arcway or enter the dungeon with your group |goto The Arcway/1 47.99,21.47 < 10000 |noway |c |q 42490
+_Or_
+Click here to skip this dungeon |confirm |next "Skip_Arcway"
 step
 click Suramar Leyline Map
 |tip It looks like a big scroll laying on the ground next to the wall.
@@ -15191,15 +15222,13 @@ talk Arcanist Valtrois##103155
 |tip Downstairs.
 turnin Long Buried Knowledge##42491 |goto 37.01,46.23 |region suramar_shalaran
 step
-Jump down here |goto 48.34,65.22 < 20 |only if walking
-Enter the building |goto 48.99,65.02 < 20 |walk
-Walk into the swirling portal |goto 50.99,65.59 |n
-Enter the Court of Stars Dungeon |goto Court of Stars/1 6.84,68.64 < 10000 |noway |c |q 43314
-|tip You cannot use the Group Finder to enter this dungeon, since this is a Mythic dungeon.
-|tip You will need to create a group yourself, composed of friends or guildmates, etc.
+label "Skip_Arcway"
+Press _I_ and queue for Court of Stars or enter the dungeon with your group |goto Court of Stars/1 6.84,68.64 < 10000 |noway |c |q 43314
+_Or_
+Click here to skip this dungeon |confirm |next "Skip_Court_of_Stars"
 step
 kill Advisor Melandrus##104218
-|tip He's inside the Court  dungeon.
+|tip He's inside the Court of Stars dungeon.
 |tip Use the Court of Stars dungeon guide to complete the Court of Stars dungeon.
 Slay Advisor Melandrus |q 43314/1 |goto Court of Stars/3 65.85,78.15
 collect Melandrus' Spellstone##140757 |q 43314/2 |goto Court of Stars/3 65.85,78.15
@@ -15207,17 +15236,10 @@ step
 talk First Arcanist Thalyssra##97140
 turnin Beware the Fury of a Patient Elf##43314 |goto Suramar/0 36.51,46.76 |region suramar_shalaran
 step
-Reach Revered Reputation with the Nightfallen Faction |condition rep("The Nightfallen")>=Revered
-|tip Use "The Nightfallen Reputation" guide to accomplish this.
-|tip Use the "Legion World Quests" guide and complete Suramar world quests to accomplish this.
-step
+label "Skip_Court_of_Stars"
 talk Valewalker Farodin##107126
 turnin Growing Strong##44562 |goto 36.54,46.81 |region suramar_shalaran
 accept Redemption for the Fallen##44563 |goto 36.54,46.81 |region suramar_shalaran
-step
-Reach 7000 Revered Reputation with the Nightfallen Faction |condition repval("The Nightfallen","Revered")>=7000
-|tip Use "The Nightfallen Reputation" guide to accomplish this.
-|tip Use the "Legion World Quests" guide and complete Suramar world quests to accomplish this.
 step
 talk Valewalker Farodin##107126
 accept A Growing Crisis##44152 |goto 36.53,46.81 |region suramar_shalaran
@@ -15256,24 +15278,1290 @@ turnin Another Arcan'dor Closes...##44156 |goto 36.54,46.81 |region suramar_shal
 accept The Stuff of Dreams##43362 |goto 36.54,46.81 |region suramar_shalaran
 step
 talk First Arcanist Thalyssra##97140
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
 accept Branch of the Arcan'dor##40125 |goto 36.51,46.75 |region suramar_shalaran
 step
 talk First Arcanist Thalyssra##97140
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
 turnin Branch of the Arcan'dor##40125 |goto 36.51,46.75 |region suramar_shalaran
 step
-|confirm
+Enter the Emerald Nightmare Raid |goto The Emerald Nightmare/12 36.52,78.53 < 10000 |noway |c |q 43362
+|tip Use the Group Finder to enter the raid.
+|tip Choose the "Rift of Aln" in the Raid Finder section.
 step
-Reach Exalted Reputation with the Nightfallen Faction |condition rep("The Nightfallen")>=Exalted
-|tip Use "The Nightfallen Reputation" guide to accomplish this.
-|tip Use the "Legion World Quests" guide and complete Suramar world quests to accomplish this.
+Kill the enemies that attack in waves
+kill Xavius##30108 |q 43362/1
+step
+Enter the Emerald Dream |goto The Emerald Nightmare/13 -124.00,649.80 < 10000 |noway |c |q 43362
+step
+clicknpc Purified Life Essence##111298
+Collect the Purified Life Essence |q 43362/2 |goto The Emerald Nightmare/13 -129.74,674.12
 step
 talk Valewalker Farodin##107126
-turnin Redemption for the Fallen##44563 |goto 36.54,46.81 |region suramar_shalaran
+turnin The Stuff of Dreams##43362 |goto Suramar/0 36.53,46.81 |region suramar_shalaran
 step
-|confirm
+talk Valewalker Farodin##107126
+accept A Change of Seasons##43502 |goto 36.85,46.55 |region suramar_shalaran
+step
+talk Arcanist Valtrois##103155
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
+|tip Downstairs.
+turnin A Change of Seasons##43502 |goto 37.02,46.23 |region suramar_shalaran
+accept Giving It All We've Got##43562 |goto 37.02,46.23 |region suramar_shalaran
+step
+Activate the Elor'shan Leyline |q 43562/1
+|tip You accomplished this earlier in the Suramar questing guide.
+step
+Activate the Kel'balor Leyline |q 43562/2
+|tip You accomplished this earlier in the Suramar questing guide.
+step
+Activate the Ley Station Moonfall Leyline |q 43562/3
+|tip You accomplished this earlier in the Suramar questing guide.
+step
+Activate the Ley Station Aethenar Leyline |q 43562/4
+|tip You accomplished this earlier in the Suramar questing guide.
+step
+Activate the Falanaar Arcway Leyline |q 43562/5
+|tip You accomplished this earlier in the Suramar questing guide.
+step
+Activate the Falanaar Depths Leyline |q 43562/6
+|tip You accomplished this earlier in the Suramar questing guide.
+step
+Activate the Halls of the Eclipse Leyline |q 43562/7
+|tip You accomplished this earlier in the Suramar questing guide.
+step
+talk Arcanist Valtrois##103155
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
+Tell her _"All the conduits are active. Can you amplify the feed?"_
+Ask Valtrois to Amplify the Feed |q 43562/8 |goto 37.02,46.23 |region suramar_shalaran
+step
+Watch the dialogue
+talk Arcanist Valtrois##103155
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
+|tip Downstairs.
+turnin Giving It All We've Got##43562 |goto 37.09,46.56 |region suramar_shalaran
+accept Ephemeral Manastorm Projector##43563 |goto 37.09,46.56 |region suramar_shalaran
+accept Flow Control##43564 |goto 37.09,46.56 |region suramar_shalaran
+step
+talk Chief Telemancer Oculeth##98548
+|tip He will need to be fed in order for you to attain this quest. It costs 50 mana.
+|tip Downstairs.
+accept Bring Home the Beacon##43565 |goto 37.14,46.62 |region suramar_shalaran
+step
+Cross the bridge |goto 48.38,80.46 < 20 |only if walking
+Run up the stairs |goto 48.49,79.06 < 20 |only if walking
+Follow the path |goto 49.34,76.27 < 20 |only if walking
+Use the Advanced Telemancy Beacon |use Advanced Telemancy Beacon##140257
+|tip Use it repeatedly.
+Survey Evermoon Commons |q 43565/1 |goto 49.18,75.43
+step
+Use the Advanced Telemancy Beacon |use Advanced Telemancy Beacon##140257
+|tip Use it repeatedly.
+Survey Evermoon Bazaar |q 43565/2 |goto 49.33,76.09
+step
+Run down the stairs |goto 48.43,78.83 < 20 |only if walking
+Cross the bridge |goto 51.20,82.53 < 20 |only if walking
+Use the Advanced Telemancy Beacon |use Advanced Telemancy Beacon##140257
+|tip Use it repeatedly.
+Survey Siren's Vigil |q 43565/3 |goto 50.91,83.55
+step
+Cross the bridge |goto 50.10,83.78 < 20 |only if walking
+Cross the bridge |goto 46.75,80.30 < 20 |only if walking
+Follow the path down |goto 45.70,77.50 < 20 |only if walking
+click Arcway Outlet
+Seal the Lunastre Lane Outlet |q 43564/1 |goto 45.68,76.03
+step
+Follow the water |goto 46.50,75.30 < 20 |only if walking
+Continue following the water |goto 46.62,67.76 < 30 |only if walking
+click Arcway Outlet
+Seal the Parade Grounds Outlet |q 43564/2 |goto 49.71,62.67
+step
+Follow the water |goto 51.89,61.23 < 30 |only if walking
+kill Chronarch Defender##109670+
+|tip You can find more to the southeast.
+|tip Pull them into the water from the walkway nearby around this area.
+|tip They patrol, so kill a few enemies to clear the path, so you can pull them by themselves.
+|tip These are elite enemies, so you may need help.
+collect 4 Warp-Resistant Plating##139689 |q 43563/1 |goto 53.36,62.92
+step
+Leave the water here |goto 56.17,64.97 < 30 |only if walking
+Run up the stairs |goto 56.31,63.34 < 30 |only if walking
+Run through the bushes |goto 58.05,63.05 < 30 |only if walking
+Cross the bridge |goto 58.38,62.39 < 30 |only if walking
+click Arcway Outlet##3365
+|tip This area is packed with elite enemies, so you may need help.
+Seal the Midnight Court Outlet |q 43564/3 |goto 59.89,59.20
+step
+talk Arcanist Valtrois##103155
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
+|tip Downstairs.
+turnin Ephemeral Manastorm Projector##43563 |goto 37.09,46.56 |region suramar_shalaran
+turnin Flow Control##43564 |goto 37.09,46.56 |region suramar_shalaran
+step
+talk Chief Telemancer Oculeth##98548
+|tip He will need to be fed in order for you to attain this quest. It costs 50 mana.
+|tip Downstairs.
+turnin Bring Home the Beacon##43565 |goto 37.13,46.62 |region suramar_shalaran
+step
+talk Valewalker Farodin##107126
+|tip Upstairs.
+turnin Redemption for the Fallen##44563 |goto 36.86,46.55 |region suramar_shalaran
+step
+talk First Arcanist Thalyssra##97140
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
+|tip Downstairs.
+accept All In##43567 |goto 37.13,46.55 |region suramar_shalaran
+step
+Watch the dialogue
+Begin the All In Scenario |scenariostart |q 43567
+step
+kill Duskwatch Archivist##113191 |scenariogoal 1/31058 |count 1 |goto 1102 21.50,75.56 |q 43567
+|tip He walks back and forth.
+step
+kill Duskwatch Archivist##113191 |scenariogoal 1/31058 |count 2 |goto 20.86,66.84 |q 43567
+step
+Cross the bridge |goto 25.74,68.19 < 20 |walk
+kill Duskwatch Archivist##113191 |scenariogoal 1/31058 |count 3 |goto 31.50,68.09 |q 43567
+step
+Follow the path |goto 32.93,62.46 < 15 |walk
+Reach the Door to the Nightflow Conduit |scenariostage 2 |goto 37.29,65.72 |q 43567
+step
+Kill the enemies that attack in waves
+Defend Arluin While He Opens the  Door to the Nightflow Conduit |scenariostage 3 |goto 36.69,63.85 |q 43567
+step
+Follow the path |goto 37.87,67.54 < 20 |walk
+click Place E.M.P.
+Place the E.M.P. |scenariostage 4 |goto 39.16,78.11 |q 43567
+step
+Watch the dialogue
+Kill the enemies that attack in waves
+Survive the Manastorm |scenarioend |goto 40.19,74.44 |q 43567
+Sabotage the Nightflow Conduit |q 43567/1 |goto 40.19,74.44
+step
+clicknpc Arluin##113062
+Check on Arluin |q 43567/2 |goto Suramar/0 34.60,47.89
+step
+Enter Shal'Aran |q 43567/3 |goto 36.51,46.83 |region suramar_shalaran
+step
+talk Valewalker Farodin##107126
+turnin All In##43567 |goto 36.84,46.53 |region suramar_shalaran
+accept Arcan'dor, Gift of the Ancient Magi##43568 |goto 36.84,46.53 |region suramar_shalaran
+step
+talk Chief Telemancer Oculeth##112147
+|tip He will need to be fed in order for you to attain this quest. It costs 50 mana.
+|tip Click the blue Fruit of the Arcan'dor hanging on the tree nearby to get the fruit.
+Watch the dialogue
+Share the Fruit with Oculeth |q 43568/1 |goto 36.49,46.77 |region suramar_shalaran
+step
+talk Arcanist Valtrois##112145
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
+|tip Click the blue Fruit of the Arcan'dor hanging on the tree nearby to get the fruit.
+Watch the dialogue
+Share the Fruit with Valtrois |q 43568/2 |goto 36.52,46.84 |region suramar_shalaran
+step
+talk First Arcanist Thalyssra##112146
+|tip She will need to be fed in order for you to attain this quest. It costs 50 mana.
+|tip Click the blue Fruit of the Arcan'dor hanging on the tree nearby to get the fruit.
+Watch the dialogue
+Share the Fruit with Thalyssra |q 43568/3 |goto 36.53,46.79 |region suramar_shalaran
+step
+Watch the dialogue
+talk First Arcanist Thalyssra##112146
+turnin Arcan'dor, Gift of the Ancient Magi##43568 |goto 36.53,46.79 |region suramar_shalaran
+step
+talk Vanthir##107598
+accept Arluin's Request##43569 |goto 36.47,46.61 |region suramar_shalaran
+step
+Run down the stairs |goto 46.01,66.46 < 20 |only if walking
+Follow the path |goto 47.87,66.59 < 15 |walk
+Watch the dialogue
+|tip She's in a side room under the bridge.
+Locate Arluelle |q 43569/1 |goto 48.27,66.86
+step
+talk Arluelle##110698
+|tip She's in a side room under the bridge.
+Share the Arcan'dor Fruit with Arluelle |q 43569/2 |goto 48.27,66.86
+step
+talk Arluelle##110698
+|tip She's in a side room under the bridge.
+turnin Arluin's Request##43569 |goto 48.27,66.86
+step
+talk First Arcanist Thalyssra##115736
+accept One Day at a Time##45260 |goto 36.50,46.73 |region suramar_shalaran
+step
+Use the Fruit of the Arcan'dor on a Suramar Refugee |use Fruit of the Arcan'dor##143597
+|tip There are Suramar Refugees all around inside the cave.
+Cure a Suramar Refugee |q 45260/1 |goto 37.49,47.44 |region suramar_shalaran
+step
+talk First Arcanist Thalyssra##115736
+turnin One Day at a Time##45260 |goto 36.50,46.73 |region suramar_shalaran
+accept Silence in the City##38649 |goto 36.50,46.73 |region suramar_shalaran
+step
+talk Chief Telemancer Oculeth##115710
+turnin Silence in the City##38649 |goto 36.62,45.09 |region suramar_shalaran
+accept Crackdown##38695 |goto 36.62,45.09 |region suramar_shalaran
+step
+Watch the dialogue
+Allow Oculeth to Teleport You |q 38695/1 |goto 36.50,44.75 |region suramar_shalaran
+step
+Follow the path |goto 46.17,79.08 < 20 |only if walking
+click Broken Telemancy Beacon
+Examine the Broken Telemancy Beacon |q 38695/2 |goto 47.74,81.36
+step
+Follow the path |goto 47.53,83.29 < 20 |only if walking
+Search the Waning Crescent |q 38695/3 |goto 48.38,83.61
+step
+talk Silgryn##114948
+|tip Inside the building.
+turnin Crackdown##38695 |goto 47.84,82.93
+accept Answering Aggression##38692 |goto 47.84,82.93
+accept No Reason to Stay##38720 |goto 47.84,82.93
+stickystart "Answering_Aggression"
+step
+talk Brigitte##115992
+|tip Upstairs inside the building.
+Click Here After You Talk to Brigitte |confirm |goto 49.08,83.79 |q 38720
+step
+talk Emille##115991
+|tip Upstairs inside the building.
+Click Here After You Talk to Emille |confirm |goto 49.31,83.95 |q 38720
+step
+talk Eneas##116001
+|tip Downstairs inside the building.
+Evacuate Eneas' Family |q 38720/1 |goto 49.11,83.79
+step
+Cross the bridge |goto 49.64,83.36 < 20 |only if walking
+Follow the path |goto 50.80,85.03 < 20 |only if walking
+click Master's Vase
+|tip Inside the building.
+Evacuate Master Devlyn |q 38720/4 |goto 50.55,85.00
+step
+Follow the path |goto 50.64,85.61 < 20 |only if walking
+Cross the bridge |goto 50.09,83.77 < 20 |only if walking
+talk Thorvos##114983
+|tip Inside the building.
+kill Duskwatch Punisher##116013
+Evacuate Thorvos and Valanth |q 38720/2 |goto 48.97,81.66
+step
+talk Scarleth##114985
+|tip Inside the building.
+Evacuate Scarleth's Girls |q 38720/3 |goto 47.97,80.24
+step
+label "Answering_Aggression"
+Kill enemies around this area
+Slay #12# Elisandre's Forces |q 38692/1 |goto 47.72,81.38
+step
+Follow the path |goto 48.34,81.82 < 30 |only if walking
+Cross the bridge |goto 49.64,83.36 < 20 |only if walking
+Follow the path |goto 50.80,85.03 < 20 |only if walking
+talk Silgryn##114948
+|tip Inside the building.
+turnin Answering Aggression##38692 |goto 49.68,85.38
+turnin No Reason to Stay##38720 |goto 49.68,85.38
+accept Regroup##38694 |goto 49.68,85.38
+step
+Watch the dialogue
+Follow Silgryn |q 38694/1 |goto 51.01,87.01
+step
+click Deline's Gondola
+Ride on Deline's Gondola |q 38694/2 |goto 51.02,87.08
+step
+Teleport to the Top of the Terrace |q 38694/3 |goto 51.54,78.96
+step
+talk Silgryn##114948
+|tip At the top of the tower.
+turnin Regroup##38694 |goto 52.11,79.15
+step
+click Telemancy Beacon
+accept The Way Back Home##42889 |goto 51.99,78.77
+step
+click Telemancy Beacon
+Activate the Beacon |q 42889/1 |goto 51.99,78.77
+step
+click Portal to Shal'Aran |goto 51.98,78.75 |n
+Teleport to Shal'Aran |goto 36.40,45.09 |region suramar_shalaran |noway |c |q 42889
+step
+talk First Arcanist Thalyssra##115736
+turnin The Way Back Home##42889 |goto 36.49,46.73 |region suramar_shalaran
+accept Visitor in Shal'Aran##44955 |goto 36.49,46.73 |region suramar_shalaran
+step
+click Arluelle##116085
+Meet the Stranger |q 44955/1 |goto 34.60,47.93
+step
+talk Arluelle##116085 |goto 34.60,47.91 |n
+Run into the Shal'Aran Cave |goto 34.90,47.86 < 10 |noway |c |q 44955
+step
+Introduce Arluelle to Thalyssra |q 44955/2 |goto 36.50,46.73 |region suramar_shalaran
+step
+talk First Arcanist Thalyssra##115736
+turnin Visitor in Shal'Aran##44955 |goto 36.49,46.73 |region suramar_shalaran
+step
+talk First Arcanist Thalyssra##115736
+accept Continuing the Cure##45261 |goto 36.50,46.73 |region suramar_shalaran
+step
+Use the Fruit of the Arcan'dor on a Suramar Refugee |use Fruit of the Arcan'dor##143597
+|tip There are Suramar Refugees all around inside the cave.
+Cure a Suramar Refugee |q 45261/1 |goto 37.49,47.44 |region suramar_shalaran
+step
+talk First Arcanist Thalyssra##115736
+turnin Continuing the Cure##45261 |goto 36.50,46.73 |region suramar_shalaran
+accept Disillusioned Defector##44722 |goto 36.50,46.73 |region suramar_shalaran
+step
+talk Silgryn##114948
+|tip At the top of the tower.
+turnin Disillusioned Defector##44722 |goto 52.11,79.15
+accept Missing Persons##44724 |goto 52.11,79.15
+step
+talk Victoire##116256
+|tip At the top of the tower.
+accept More Like Me##44723 |goto 52.07,79.20
+step
+Leave the water here |goto 52.80,74.33 < 20 |only if walking
+Kill Soul Engine enemies around this area
+collect Legion Communicator##142066 |q 44724/1 |goto 53.32,71.59
+step
+Use the Dusk Lily Sigil on Duskwatch Subjugators |use Dusk Lily Sigil##142065
+|tip They are all around this area.
+|tip Some of them will attack you.
+Identify #5# Deserters |q 44723/1 |goto 53.32,71.59
+step
+Leave the water here |goto 51.59,78.25 < 15 |only if walking
+Walk onto the teleport pad |goto 51.55,78.96 < 7 |only if walking
+talk Silgryn##114948
+|tip At the top of the tower.
+turnin Missing Persons##44724 |goto 52.11,79.15
+step
+talk Victoire##116256
+|tip At the top of the tower.
+turnin More Like Me##44723 |goto 52.07,79.20
+step
+talk Silgryn##114948
+|tip At the top of the tower.
+accept Hostage Situation##44725 |goto 52.11,79.15
+step
+Leave the water here |goto 52.80,74.33 < 20 |only if walking
+talk Shal'dorei Civilian##107600
+Join the Group of Captives |q 44725/1 |goto 52.62,74.60
+step
+Watch the dialogue
+Find the Staging Area |q 44725/2 |goto 52.62,74.60
+step
+talk Silgryn##115067
+turnin Hostage Situation##44725 |goto 24.86,88.70
+accept In the Business of Souls##44726 |goto 24.86,88.70
+step
+talk Maribeth##115002
+accept Smuggled!##44727 |goto 25.80,88.55
+step
+click Felsoul Cage
+Release Maribeth |q 44727/1 |goto 25.80,88.55
+step
+click Felsoul Cage
+Release the Citizen from the Cage |q 44727/2 |count 1 |goto 25.78,86.97
+step
+Follow the path |goto 25.05,86.57 < 20 |only if walking
+click Felsoul Cage
+Release the Citizen from the Cage |q 44727/2 |count 2 |goto 25.19,85.68
+step
+Follow the path up |goto 25.78,89.04 < 20 |only if walking
+click Felsoul Cage
+Release the Citizen from the Cage |q 44727/2 |count 3 |goto 26.53,88.63
+step
+click Felsoul Cage
+Release the Citizen from the Cage |q 44727/2 |count 4 |goto 26.29,90.01
+step
+click Felsoul Cage
+Release the Citizen from the Cage |q 44727/2 |count 5 |goto 26.97,89.79
+step
+kill Aargoss##114998 |q 44726/1 |goto 27.26,89.71
+step
+talk Maribeth##115376
+turnin Smuggled!##44727 |goto 24.75,88.89
+step
+talk Silgryn##114948
+turnin In the Business of Souls##44726 |goto 24.86,88.70
+accept Waning Refuge##44814 |goto 24.86,88.70
+step
+click Deline's Gondola
+Ride Deline's Gondola |q 44814/1 |goto 24.56,88.98
+step
+talk Silgryn##114948
+turnin Waning Refuge##44814 |goto 52.38,80.18
+step
+talk First Arcanist Thalyssra##115736
+accept A Message From Ly'leth##45262 |goto 36.50,46.73 |region suramar_shalaran
+step
+Use the Fruit of the Arcan'dor on a Suramar Refugee |use Fruit of the Arcan'dor##143597
+|tip There are Suramar Refugees all around inside the cave.
+Cure a Suramar Refugee |q 45262/1 |goto 37.49,47.44 |region suramar_shalaran
+step
+talk First Arcanist Thalyssra##115736
+turnin A Message From Ly'leth##45262 |goto 36.50,46.73 |region suramar_shalaran
+accept Tavernkeeper's Fate##44742 |goto 36.50,46.73 |region suramar_shalaran
+step
+click Portal to Lunastre Estate
+Take the Portal to Lunastre Estate |q 44742/1 |goto 36.15,45.05 |region suramar_shalaran
+step
+Watch the dialogue
+Learn of Vanthir's Fate |q 44742/2 |goto 43.29,78.76
+step
+talk Ly'leth Lunastre##115247
+turnin Tavernkeeper's Fate##44742 |goto 43.29,78.76
+step
+talk First Arcanist Thalyssra##115248
+accept Essence Triangulation##44752 |goto 43.32,78.79
+step
+Follow the path |goto 42.74,78.51 < 20 |only if walking
+Follow the path |goto 42.91,76.82 < 20 |only if walking
+Jump down here |goto 41.99,71.58 < 30 |only if walking
+Follow the path |goto 41.41,69.97 < 20 |only if walking
+click Echo of Vanthir##115258
+|tip Inside the building.
+Watch the dialogue
+Collect the Promenade Essence |q 44752/1 |goto 41.75,69.77
+step
+click Portal to Sanctum of Order |goto 36.69,44.66 |n |region suramar_shalaran
+Teleport to the Sanctum of Order |goto 43.40,60.72 < 20 |noway |c |q 44752
+step
+Run down the stairs |goto 46.01,66.45 < 20 |only if walking
+Cross the bridge |goto 45.35,67.88 < 20 |only if walking
+click Echo of Vanthir##115259
+Watch the dialogue
+Collect the Shimmershade Garden Essence |q 44752/2 |goto 45.56,72.23
+step
+Cross the bridge |goto 44.88,73.17 < 20 |only if walking
+Follow the path up |goto 45.55,77.04 < 20 |only if walking
+Cross the bridge |goto 46.46,79.69 < 20 |only if walking
+Follow the path |goto 48.07,80.89 < 20 |only if walking
+Follow the path |goto 49.68,80.51 < 20 |only if walking
+Run up the stairs |goto 50.55,79.76 < 20 |only if walking
+click Echo of Vanthir##115260
+|tip Inside the building.
+Watch the dialogue
+Collect the Evermoon Bazaar Essence |q 44752/3 |goto 50.86,79.20
+step
+Run down the stairs |goto 51.02,78.58 < 20 |only if walking
+Walk onto the teleport pad |goto 51.55,78.96 < 7 |only if walking
+talk First Arcanist Thalyssra##115248
+|tip At the top of the tower.
+turnin Essence Triangulation##44752 |goto 52.09,79.18
+accept On Public Display##44753 |goto 52.09,79.18
+step
+talk First Arcanist Thalyssra##115557
+Talk to Thalyssra |q 44753/1 |goto 52.23,79.04
+step
+Watch the dialogue
+click Echo of Vanthir##115584
+|tip Click all of them that appear nearby as First Arcanist Thalyssra talks.
+Track Vanthir's Location |q 44753/2 |goto 52.29,79.01
+step
+talk First Arcanist Thalyssra##115557
+turnin On Public Display##44753 |goto 52.23,79.04
+accept Waxing Crescent##44754 |goto 52.23,79.04
+step
+click Portal to Sanctum of Order |goto 36.69,44.66 |n |region suramar_shalaran
+Teleport to the Sanctum of Order |goto 43.40,60.72 < 20 |noway |c |q 44754
+step
+kill Thoramir##115607
+|tip Allies will appear to help you fight him.
+collect Thoramir's Control Orb##142281 |q 44754/1 |goto 46.96,65.46
+step
+click Containment Field
+Free Vanthir |q 44754/2 |goto 48.89,67.10
+step
+talk Vanthir##115604
+turnin Waxing Crescent##44754 |goto 48.89,67.10
+step
+Watch the dialogue
+talk Vanthir##115604
+accept Sign of the Dusk Lily##44756 |goto 48.87,67.08
+step
+click Dusk Lily Sigil
+Place the Dusk Lily Sigil |q 44756/1 |goto 48.89,67.10
+step
+talk First Arcanist Thalyssra##115736
+turnin Sign of the Dusk Lily##44756 |goto 36.50,46.73 |region suramar_shalaran
+accept Stabilizing Suramar##45316 |goto 36.50,46.73 |region suramar_shalaran
+step
+Complete #10# World Quests in Suramar |q 45316/1
+|tip Use the "World Quests" dailies guide to accomplish this.
+step
+talk First Arcanist Thalyssra##115736
+turnin Stabilizing Suramar##45316 |goto 36.50,46.73 |region suramar_shalaran
+step
+talk First Arcanist Thalyssra##115736
+accept Eating Before the Meeting##45263 |goto 36.50,46.72 |region suramar_shalaran
+step
+Use the Fruit of the Arcan'dor on a Suramar Refugee |use Fruit of the Arcan'dor##143597
+|tip There are Suramar Refugees all around inside the cave.
+Cure a Suramar Refugee |q 45263/1 |goto 37.49,47.44 |region suramar_shalaran
+step
+talk First Arcanist Thalyssra##115736
+turnin Eating Before the Meeting##45263 |goto 36.50,46.73 |region suramar_shalaran
+accept Take Me To Your Leader##40632 |goto 36.50,46.73 |region suramar_shalaran
+step
+Cross the bridge |goto 34.42,49.99 < 20 |only if walking
+Run up the stairs |goto 35.29,50.86 < 20 |only if walking
+Cross the bridge |goto 36.30,50.61 < 20 |only if walking
+Follow the path |goto 37.42,49.52 < 20 |only if walking
+Follow the road |goto 39.46,49.49 < 30 |only if walking
+talk Archmage Khadgar##114909
+turnin Take Me To Your Leader##40632 |goto 40.56,53.11
+step
+talk First Arcanist Thalyssra##114908
+accept A Better Future##41916 |goto 40.55,53.06
+step
+talk Lady Liadrin##114841
+accept Down to Business##43812 |goto 40.49,53.07
+step
+talk Grand Magister Rommath##114883
+accept Taking a Promenade##41607 |goto 40.50,53.13
+stickystart "Slay_Suramar_Defenders"
+stickystart "Rally_Shaldorei_Insurgents"
+step
+Follow the path |goto 42.37,53.84 < 30 |only if walking
+Follow the path |goto 40.90,57.15 < 30 |only if walking
+Find Sentinel Moonshade |q 41607/2 |goto 40.62,64.48
+step
+talk Sentinel Moonshade##115521
+accept Crystal Clearing##44843 |goto 40.62,64.48
+accept Powering Down the Portal##44844 |goto 40.62,64.48
+stickystart "Destroy_Portal_Crystals"
+step
+kill Overseer Ingra##107217 |q 44844/1 |goto 40.95,66.34
+step
+label "Destroy_Portal_Crystals"
+click Portal Crystals
+|tip They look like big green floating crystals around this area.
+Destroy #4# Portal Crystals |q 44843/1 |goto 40.40,65.85
+step
+talk Sentinel Moonshade##115521
+turnin Crystal Clearing##44843 |goto 40.63,64.48
+turnin Powering Down the Portal##44844 |goto 40.63,64.48
+step
+label "Rally_Shaldorei_Insurgents"
+talk Shal'dorei Insurgent##115279+
+|tip They look like nightfallen NPC's around this area.
+|tip You may have to search a bit for them.
+Rally #8# Shal'dorei Insurgents |q 41916/1 |goto 40.42,66.17
+step
+Follow the path |goto 42.39,59.31 < 30 |only if walking
+Follow the path |goto 45.28,55.75 < 20 |only if walking
+Find Magus Sendath |q 41607/1 |goto 46.44,58.17
+step
+talk Magus Sendath##115517
+accept Nullified##44834 |goto 46.44,58.17
+stickystart "Volatile_Construct_Core"
+step
+Follow the path |goto 46.55,55.65 < 20 |only if walking
+Follow the path |goto 45.94,53.62 < 20 |only if walking
+click Charged Arcshaper Staff
+collect Charged Arcshaper Staff##142245 |q 44834/2 |goto 45.47,52.28
+step
+label "Volatile_Construct_Core"
+kill Arcane Sentinel##114926+
+collect Volatile Construct Core##142244 |q 44834/1 |goto 45.98,53.88
+step
+label "Slay_Suramar_Defenders"
+Kill enemies around this area
+Slay #15# Suramar Defenders |q 43812/1 |goto 45.98,53.88
+step
+Follow the path |goto 45.28,55.75 < 20 |only if walking
+talk Magus Sendath##115517
+turnin Nullified##44834 |goto 46.44,58.17
+accept Shield, Meet Spell##44842 |goto 46.44,58.17
+step
+Follow the path |goto 45.98,56.61 < 20 |only if walking
+Follow the path |goto 45.13,54.58 < 20 |only if walking
+Use the Arcane Nullifier on Arcshaper Thorendis |use Arcane Nullifier##142260
+kill Arcshaper Thorendis##115526 |q 44842/1 |goto 44.48,53.61
+step
+Follow the path |goto 45.12,54.61 < 20 |only if walking
+Follow the path |goto 45.28,55.75 < 20 |only if walking
+talk Magus Sendath##115517
+turnin Shield, Meet Spell##44842 |goto 46.44,58.17
+step
+Follow the path |goto 45.94,56.56 < 20 |only if walking
+Follow the path |goto 44.92,56.00 < 20 |only if walking
+Follow the path |goto 42.39,53.87 < 20 |only if walking
+talk First Arcanist Thalyssra##114908
+turnin A Better Future##41916 |goto 40.55,53.05
+step
+talk Lady Liadrin##114841
+turnin Down to Business##43812 |goto 40.49,53.07
+step
+talk Grand Magister Rommath##114883
+turnin Taking a Promenade##41607 |goto 40.50,53.13
+step
+talk First Arcanist Thalyssra##114908
+accept Break An Arm##44845 |goto 40.55,53.05
+step
+Follow the path |goto 44.54,51.65 < 30 |only if walking
+Cross the bridge |goto 46.16,50.71 < 30 |only if walking
+Cross the bridge |goto 49.76,49.59 < 30 |only if walking
+Follow the path |goto 55.04,49.44 < 30 |only if walking
+kill Arm of the Magistrix##116068 |q 44845/1 |goto 56.94,49.01
+|tip He walks around this small area.
+|tip You may need help, this is a group quest.
+step
+Follow the path |goto 56.56,50.37 < 30 |only if walking
+Cross the bridge |goto 51.63,49.59 < 30 |only if walking
+Cross the bridge |goto 47.82,50.04 < 30 |only if walking
+Follow the path |goto 44.17,51.54 < 30 |only if walking
+talk First Arcanist Thalyssra##114908
+turnin Break An Arm##44845 |goto 40.54,53.05
+step
+talk First Arcanist Thalyssra##115736
+accept Feeding the Rebellion##45265 |goto 36.50,46.72 |region suramar_shalaran
+step
+Use the Fruit of the Arcan'dor on a Suramar Refugee |use Fruit of the Arcan'dor##143597
+|tip There are Suramar Refugees all around inside the cave.
+Cure a Suramar Refugee |q 45265/1 |goto 37.49,47.44 |region suramar_shalaran
+step
+talk First Arcanist Thalyssra##115736
+turnin Feeding the Rebellion##45265 |goto 36.50,46.72 |region suramar_shalaran
+accept Liadrin's Command##44859 |goto 36.50,46.72 |region suramar_shalaran
+accept Mouths to Feed##44870 |goto 36.50,46.72 |region suramar_shalaran
+step
+talk Arcanist Valtrois##115371
+|tip Downstairs.
+turnin Mouths to Feed##44870 |goto 37.07,46.59 |region suramar_shalaran
+accept Oculeth Ex Machina##44873 |goto 37.07,46.59 |region suramar_shalaran
+step
+talk Chief Telemancer Oculeth##115710
+Tell him _"Let's go!"_
+Watch the dialogue
+Speak with Oculeth |q 44873/1 |goto 37.12,46.63 |region suramar_shalaran
+step
+talk Arcanist Valtrois##115693
+turnin Oculeth Ex Machina##44873 |goto Azsuna/0 59.81,14.07
+step
+Watch the dialogue
+talk Arcanist Valtrois##115693
+accept Unbeleyvable##44874 |goto 59.81,14.07
+step
+click Ley Line Tap
+Place the Ley Line Tap |q 44874/1 |goto 59.90,14.34
+step
+Watch the dialogue
+Follow Valtrois |q 44874/2 |goto 60.22,14.39
+step
+Watch the dialogue
+Place the Ley Line Tap |q 44874/3 |goto 60.22,14.39
+step
+Watch the dialogue
+Place the Ley Line Tap |q 44874/4 |goto 60.22,14.39
+step
+Watch the dialogue
+Place the Ley Line Tap |q 44874/5 |goto 60.22,14.39
+step
+click Ley Line Tap
+Place the Ley Line Tap |q 44874/6 |goto 60.22,14.39
+step
+Watch the dialogue
+Follow Valtrois |q 44874/7 |goto 60.14,13.94
+step
+click Ley Line Tap
+Place the Ley Line Tap |q 44874/8 |goto 60.14,13.94
+step
+talk Arcanist Valtrois##115693
+turnin Unbeleyvable##44874 |goto 60.14,13.97
+accept The Art of Flow##44875 |goto 60.14,13.97
+step
+talk Arcanist Valtrois##115693
+Tell him _"I am ready, Valtrois."_
+Watch the dialogue
+Kill the enemies that attack
+Complete the First Beacon Ritual |q 44875/1 |goto 60.14,13.97
+step
+talk Arcanist Valtrois##115693
+Tell him _"I am ready, Valtrois."_
+Kill the enemies that attack
+Complete the Second Beacon Ritual |q 44875/2 |goto 60.20,14.44
+step
+talk Arcanist Valtrois##115693
+Tell him _"I am ready, Valtrois."_
+Kill the enemies that attack
+Complete the Third Beacon Ritual |q 44875/3 |goto 59.93,14.33
+step
+talk Arcanist Valtrois##115693
+turnin The Art of Flow##44875 |goto 59.81,14.05
+step
+talk Stellagosa##115701
+accept A Dance With Dragons##44876 |goto 59.81,13.99
+step
+Follow the path up |goto 59.66,13.43 < 20 |walk |n
+Leave the cave |goto 59.33,13.11 < 15 |walk |n
+talk Stellagosa##89794 |goto 59.18,12.94 |n
+Speak with Stellagosa to Ride Back to Shal'aran |goto 59.18,12.94 > 150 |noway |c |q 44876
+step
+talk First Arcanist Thalyssra##115736
+turnin A Dance With Dragons##44876 |goto Suramar/0 36.50,46.72 |region suramar_shalaran
+step
+Run up the stairs |goto 35.29,50.88 < 20 |only if walking
+Cross the bridge |goto 36.31,50.61 < 20 |only if walking
+Follow the path |goto 37.40,49.54 < 20 |only if walking
+talk Absolon##101848
+accept Noressa##45056 |goto 39.52,51.17
+step
+talk Lady Liadrin##114841
+turnin Liadrin's Command##44859 |goto 40.50,53.07
+accept Trolling Them##44860 |goto 40.50,53.07
+step
+talk Archmage Khadgar##114909
+accept Something's Not Quite Right...##44928 |goto 40.6,53.0
+stickystart "Discover_Shaldorei_Infiltrators"
+step
+click "Your Ancestors"
+Remove the Insult |q 44860/1 |count 1 |goto 42.59,51.33
+step
+click "Just wanted you to feel at home, mon."
+Remove the Insult |q 44860/1 |count 2 |goto 41.99,50.99
+step
+click "We found your mounts..."
+Remove the Insult |q 44860/1 |count 3 |goto 40.61,51.86
+step
+click "Didn't want you to get the shakes."
+Remove the Insult |q 44860/1 |count 4 |goto 40.29,52.07
+step
+click Replacement Sunwell
+Remove the Insult |q 44860/1 |count 5 |goto 40.81,53.33
+step
+label "Discover_Shaldorei_Infiltrators"
+Use your Dispelling Crystal on Infiltrators |use Dispelling Crystal##142375
+|tip They look like npc's engulfed in purple fire around this area.
+Discover #5# Shal'dorei Infiltrators |q 44928/1 |goto 41.63,51.13
+step
+talk Archmage Khadgar##114909
+turnin Something's Not Quite Right...##44928 |goto 40.6,53.0
+step
+talk Lady Liadrin##114841
+turnin Trolling Them##44860 |goto 40.50,53.07
+accept Arming the Rebels##44862 |goto 40.50,53.07
+step
+talk Victoire##116256
+|tip She walks back and forth.
+turnin Arming the Rebels##44862 |goto 39.76,51.37
+accept Citizens' Army##44827 |goto 39.76,51.37
+step
+talk Chief Telemancer Oculeth##115342
+accept We Need Weapons##44829 |goto 39.90,51.39
+step
+talk Silgryn##107997
+accept Learning From the Dead##44830 |goto 39.93,50.97
+step
+click Dusktalon##115500 |goto 39.96,51.20 |n
+Fly to Black Rook Hold |goto 39.96,51.20 > 100 |noway |c |q 44829
+stickystart "Books_of_Tactics"
+stickystart "Slay_Black_Rook_Forces"
+step
+Follow the path |goto Val'sharah/0 44.28,50.01 < 15 |only if walking
+click Weapon Cache
+Place the Telemancy Beacon |q 44829/1 |count 1 |goto Val'sharah/0 44.60,49.31
+step
+Follow the path |goto 44.28,49.85 < 15 |only if walking
+Run down the stairs |goto 44.41,52.17 < 15 |only if walking
+Continue down the stairs |goto 44.60,51.32 < 10 |only if walking
+Continue down the stairs |goto 44.54,50.32 < 10 |only if walking
+Follow the path |goto 43.70,50.07 < 20 |only if walking
+click Weapon Cache
+Place the Telemancy Beacon |q 44829/1 |count 2 |goto 41.61,49.53
+step
+Follow the path |goto 42.87,50.19 < 20 |only if walking
+Run up the stairs |goto 41.81,52.99 < 20 |only if walking
+click Weapon Cache
+Place the Telemancy Beacon |q 44829/1 |count 3 |goto 40.01,53.97
+step
+label "Books_of_Tactics"
+click Various Books
+|tip They look like dark colored closed books sitting on objects around this area.
+|tip They all have different names.
+Collect #5# Books of Tactics |q 44830/1 |goto 41.03,53.12
+step
+label "Slay_Black_Rook_Forces"
+Kill enemies around this area
+Slay #20# Black Rook Forces |q 44827/1 |goto 41.03,53.12
+step
+Run up the stairs |goto Suramar/0 35.29,50.88 < 20 |only if walking
+Cross the bridge |goto Suramar/0 36.31,50.61 < 20 |only if walking
+Follow the path |goto Suramar/0 37.40,49.54 < 20 |only if walking
+talk Victoire##116256
+|tip She walks back and forth.
+turnin Citizens' Army##44827 |goto 39.76,51.37
+step
+talk Chief Telemancer Oculeth##115342
+turnin We Need Weapons##44829 |goto Suramar/0 39.90,51.39
+step
+talk Silgryn##107997
+turnin Learning From the Dead##44830 |goto 39.93,50.97
+accept Trial by Demonfire##44790 |goto 39.93,50.97
+step
+Follow the path |goto 37.84,49.47 < 20 |only if walking
+Cross the bridge |goto 36.91,49.84 < 20 |only if walking
+Run down the stairs |goto 35.61,51.12 < 20 |only if walking
+kill Rozzeleth##116257 |q 44790/1 |goto 33.52,48.61
+step
+Run up the stairs |goto 35.29,50.88 < 20 |only if walking
+Cross the bridge |goto 36.31,50.61 < 20 |only if walking
+Follow the path |goto 37.40,49.54 < 20 |only if walking
+talk Silgryn##107997
+turnin Trial by Demonfire##44790 |goto 39.93,50.97
+step
+Follow the path |goto 42.38,53.84 < 20 |only if walking
+Cross the bridge |goto 39.70,59.73 < 20 |only if walking
+Follow the path |goto 39.65,65.05 < 30 |only if walking
+talk Noressa##115951
+|tip Inside the building.
+Find Noressa |q 45056/1 |goto 40.88,69.63
+step
+talk Absolon##101848
+turnin Noressa##45056 |goto 37.73,47.85 |region suramar_shalaran
+step
+talk First Arcanist Thalyssra##115736
+accept A United Front##45266 |goto 36.50,46.72 |region suramar_shalaran
+step
+Use the Fruit of the Arcan'dor on a Suramar Refugee |use Fruit of the Arcan'dor##143597
+|tip There are Suramar Refugees all around inside the cave.
+Cure a Suramar Refugee |q 45266/1 |goto 37.49,47.44 |region suramar_shalaran
+step
+talk First Arcanist Thalyssra##115736
+turnin A United Front##45266 |goto 36.50,46.72 |region suramar_shalaran
+accept Ready for Battle##44739 |goto 36.50,46.72 |region suramar_shalaran
+step
+Run up the stairs |goto 35.29,50.88 < 20 |only if walking
+Cross the bridge |goto 36.31,50.61 < 20 |only if walking
+Follow the path |goto 37.40,49.54 < 20 |only if walking
+talk Lady Liadrin##114841
+Speak to Lady Liadrin |q 44739/3 |goto 40.49,53.07
+step
+talk Tyrande Whisperwind##114838
+Speak to Tyrande Whisperwind |q 44739/2 |goto 41.63,51.48
+step
+talk Vereesa Windrunner##114963
+Speak to Vereesa Windrunner |q 44739/1 |goto 42.96,51.42
+step
+talk Archmage Khadgar##114909
+turnin Ready for Battle##44739 |goto 41.07,51.79
+accept Full Might of the Elves##44738 |goto 41.07,51.79
+step
+Begin the Siege of Suramar Scenario |scenariostart |goto 42.26,53.64 |q 44738
+step
+Kill enemies around this area
+|tip Kill all of them.
+Defeat the Promenade Defenders |scenariogoal 1/34580 |goto 43.60,55.67 |q 44738
+Defeat the Promenade Vanguard |scenariogoal 1/34581 |goto 43.60,55.67 |q 44738
+step
+kill Ancient Shieldguard##115271
+|tip It appears after you kill all of the enemies.
+Defeat the Ancient Shieldguard |scenariostage 2 |goto 44.02,56.28 |q 44738
+step
+Run down the stairs |goto 44.27,57.40 < 30 |only if walking
+Run down the stairs |goto 46.89,61.10 < 20 |only if walking
+Kill enemies around this area
+|tip Kill all of them.
+Defeat the Concourse Defenders |scenariostage 3 |goto 49.70,64.89 |q 44738
+step
+click Telemancy Trap
+Place the Telemancy Trap |scenarioend |goto 50.75,66.42 |q 44738
+March on Suramar City |q 44738/1 |goto 50.75,66.42
+step
+talk Archmage Khadgar##115039
+turnin Full Might of the Elves##44738 |goto 52.24,68.73
+accept Staging Point##44740 |goto 52.24,68.73
+step
+Follow the path |goto 52.87,69.30 < 20 |walk
+click Telemancy Beacon
+Activate the Telemancy Beacon |q 44740/1 |goto 54.47,69.44
+step
+Follow the path |goto 54.61,72.01 < 20 |walk
+talk Archmage Khadgar##115039
+turnin Staging Point##44740 |goto 54.89,72.87
+accept Fighting on All Fronts##45317 |goto 54.89,72.87
+step
+click Eye of Odyn |goto Skyhold/1 59.21,13.44 |only Warrior
+click Scouting Map |goto Eastern Plaguelands/20 53.49,78.43 |only Paladin
+click Scouting Map |goto Trueshot Lodge/0 42.49,46.59 |only Hunter
+click Scouting Map |goto Dalaran L/4 37.37,44.15 |only Rogue
+click Command Map |goto Netherlight Temple/1 50.54,48.23 |only Priest
+click Scouting Map |goto The Maelstrom L/0 33.49,59.35 |only Shaman
+click Scouting Map |goto Hall of the Guardian/1 81.36,60.95 |only Mage
+click Scouting Map |goto Mardum, the Shattered Abyss/1 58.88,54.94 |only DemonHunter
+click Dreadscar Battle Plans |goto Dreadscar Rift/0 66.26,46.95 |only Warlock
+click Scouting Map |goto The Wandering Isle L/0 52.92,60.16 |only Monk
+click Scouting Map |goto The Dreamgrove/0 52.65,51.18 |only Druid
+click Scouting Map |goto Broken Shore/2 49.87,51.41 |only DeathKnight
+|tip You can also use the Legion Companion smartphone app to complete the missions.
+Begin Order Hall Missions
+|tip Any order hall missions will count, so just complete whichever ones you want to.
+Complete #5# Missions |q 45317/1
+step
+Cross the water |goto Suramar/0 52.40,77.48 < 30 |only if walking
+Leave the water |goto Suramar/0 52.79,74.31 < 20 |only if walking
+Follow the path |goto Suramar/0 52.85,73.50 < 20 |only if walking
+Walk onto the teleport pad |goto Suramar/0 53.12,71.50 < 7 |only if walking
+Follow the path |goto Suramar/0 54.46,72.23 < 20 |only if walking
+talk Archmage Khadgar##115039
+turnin Fighting on All Fronts##45317 |goto Suramar/0 54.89,72.87
+step
+talk First Arcanist Thalyssra##115736
+accept Before the Siege##45267 |goto 36.50,46.72 |region suramar_shalaran
+step
+Use the Fruit of the Arcan'dor on a Suramar Refugee |use Fruit of the Arcan'dor##143597
+|tip There are Suramar Refugees all around inside the cave.
+Cure a Suramar Refugee |q 45267/1 |goto 37.49,47.44 |region suramar_shalaran
+step
+talk First Arcanist Thalyssra##115736
+turnin Before the Siege##45267 |goto 36.50,46.72 |region suramar_shalaran
+accept Gates of the Nighthold##44736 |goto 36.50,46.72 |region suramar_shalaran
+step
+Follow the path |goto 54.60,71.96 < 20 |only if walking
+talk Archmage Khadgar##115039
+Tell him _"I'm ready for the siege."_
+Speak with Archmage Khadgar at Astravar Harbor |q 44736/1 |goto 54.88,72.84
+step
+talk Archmage Khadgar##115039
+turnin Gates of the Nighthold##44736 |goto 54.88,72.84
+accept Temporal Investigations##44822 |goto 54.88,72.84
+step
+Watch the dialogue
+|tip Run with Archmage Khadgar.
+Kill the enemies that attack
+Help Khadgar Investigate the Time Lock |q 44822/1 |goto 56.64,75.43
+step
+talk Archmage Khadgar##115039
+turnin Temporal Investigations##44822 |goto 54.88,72.84
+step
+talk First Arcanist Thalyssra##115506
+accept Those Scrying Eyes##45209 |goto 54.97,72.76
+step
+Follow the path |goto 54.81,72.52 < 20 |only if walking
+Continue following the path |goto 49.54,64.62 < 20 |only if walking
+Run up the stairs |goto 47.47,61.14 < 15 |only if walking
+Run down the stairs |goto 46.75,59.88 < 20 |only if walking
+Continue down the stairs |goto 47.27,59.43 < 15 |only if walking
+Follow the path |goto 48.72,62.28 < 20 |only if walking
+click Duskwatch Scrying Orb
+|tip Inside the building.
+Inspect the Duskwatch Scrying Orb |q 45209/1 |count 1 |goto 49.96,62.04
+step
+click Duskwatch Scrying Orb
+|tip Inside the building.
+Inspect the Duskwatch Scrying Orb |q 45209/1 |count 2 |goto 50.39,63.15
+step
+click Duskwatch Scrying Orb
+|tip Inside the building.
+Inspect the Duskwatch Scrying Orb |q 45209/1 |count 3 |goto 51.31,62.31
+step
+click Duskwatch Scrying Orb
+|tip Inside the building.
+Inspect the Duskwatch Scrying Orb |q 45209/1 |count 4 |goto 50.88,61.17
+step
+talk First Arcanist Thalyssra##115736
+turnin Those Scrying Eyes##45209 |goto 36.49,45.85 |region suramar_shalaran
+accept Scouting the Breach##44832 |goto 36.49,45.85 |region suramar_shalaran
+step
+click Portal to Sanctum of Order
+Take the Sanctum of Order Teleporter |q 44832/1 |goto 36.69,44.66 |region suramar_shalaran
+step
+Meet with Valtrois Below the Sanctum of Order |q 44832/2 |goto 42.65,60.96 |region suramar_sanctum_of_order
+step
+Follow the path |goto 42.14,60.87 < 20 |walk |region suramar_sanctum_depths
+Run down the ramp |goto 42.11,60.28 < 15 |walk |region suramar_sanctum_depths
+Continue down the ramp |goto 43.04,59.01 < 15 |walk |region suramar_sanctum_depths
+Clear a Path to the Barrier Beneath the Sanctum of Order |q 44832/3 |goto 43.93,59.80 |region suramar_sanctum_depths
+|tip Kill all of the enemies as you walk.
+step
+Watch the dialogue
+Wait with Valtrois While She Examines the Barrier |q 44832/4 |goto 44.06,59.96 |region suramar_sanctum_depths
+step
+talk Arcanist Valtrois##115524
+turnin Scouting the Breach##44832 |goto 44.01,59.76 |region suramar_sanctum_depths
+accept The Seal's Power##44833 |goto 44.01,59.76 |region suramar_sanctum_depths
+step
+Run up the ramp |goto 42.66,58.99 < 15 |walk |region suramar_sanctum_depths |n
+Follow the path |goto 42.09,60.86 < 15 |walk |region suramar_sanctum_depths |n
+click Portal to Shal'Aran |goto 43.41,60.56 |region suramar_sanctum_of_order |n
+Teleport to Shal'Aran |goto 36.40,45.09 |region suramar_shalaran |noway |c |q 44833
+step
+Follow the path |goto 63.63,43.09 < 20 |only if walking
+Continue following the path |goto 61.90,45.82 < 20 |only if walking
+Run down the stairs |goto 59.20,44.62 < 20 |only if walking
+Meet Valtrois in Kel'balor |q 44833/1 |goto Suramar/35 42.43,54.44
+step
+Kill the enemies that attack
+Protect Valtrois While She Investigates the Ley Line Device |q 44833/2 |goto Suramar/35 50.46,44.36
+step
+talk First Arcanist Thalyssra##115736
+turnin The Seal's Power##44833 |goto Suramar/0 36.49,45.85 |region suramar_shalaran
+step
+talk First Arcanist Thalyssra##115736
+accept The Advisor and the Arcanist##45268 |goto 36.49,45.83 |region suramar_shalaran
+step
+Use the Fruit of the Arcan'dor on a Suramar Refugee |use Fruit of the Arcan'dor##143597
+|tip There are Suramar Refugees all around inside the cave.
+Cure a Suramar Refugee |q 45268/1 |goto 37.49,47.44 |region suramar_shalaran
+step
+talk First Arcanist Thalyssra##115736
+turnin The Advisor and the Arcanist##45268 |goto 36.49,45.83 |region suramar_shalaran
+accept A Message From Our Enemies##44918 |goto 36.49,45.83 |region suramar_shalaran
+step
+click Mysterious Crystal
+Listen to Andaris's Message |q 44918/1 |goto 36.47,45.79 |region suramar_shalaran
+step
+Watch the dialogue
+talk First Arcanist Thalyssra##115736
+turnin A Message From Our Enemies##44918 |goto 36.49,45.83 |region suramar_shalaran
+accept A Challenge From Our Enemies##44919 |goto 36.49,45.83 |region suramar_shalaran
+step
+click Portal to Lunastre Estate
+Take the Lunastre Estate Teleporter |q 44919/1 |goto 36.16,45.05 |region suramar_shalaran
+step
+Watch the dialogue
+Confront Andaris |q 44919/2 |goto 43.43,78.92
+step
+Follow the path |goto 42.73,78.55 < 20 |only if walking
+Follow the path |goto 42.25,77.17 < 20 |only if walking
+Talk to Terrified Lunastre NPC's
+|tip They look like cowering nightfallen NPC's all around this area.
+Rescue #6# Terrified Citizens |q 44919/3 |goto 42.04,74.83
+step
+talk First Arcanist Thalyssra##115736
+turnin A Challenge From Our Enemies##44919 |goto 36.49,45.83 |region suramar_shalaran
+accept The Felsoul Experiments##45063 |goto 36.49,45.83 |region suramar_shalaran
+accept Telemantic Expanse##45067 |goto 36.49,45.83 |region suramar_shalaran
+step
+talk Chief Telemancer Oculeth##115710
+turnin Telemantic Expanse##45067 |goto 36.62,45.09 |region suramar_shalaran
+accept Survey the City##45065 |goto 36.62,45.09 |region suramar_shalaran
+step
+Cross the bridge |goto 34.45,50.02 < 20 |only if walking
+Follow the path up |goto 34.08,54.36 < 20 |only if walking
+Follow the path |goto 33.10,56.55 < 30 |only if walking
+Follow the path down |goto 33.02,58.64 < 20 |only if walking
+Use the Experimental Targeting Orb near the Felsoul Shard |use use Experimental Targeting Orb##142399
+Destroy the Felsoul Shard |q 45063/1 |count 1 |goto 30.90,65.41
+step
+Use the Experimental Targeting Orb near the Felsoul Shard |use use Experimental Targeting Orb##142399
+Destroy the Felsoul Shard |q 45063/1 |count 2 |goto 32.06,66.45
+step
+Follow the path up |goto 30.64,65.10 < 20 |only if walking
+Use the Experimental Targeting Orb near the Felsoul Shard |use use Experimental Targeting Orb##142399
+Destroy the Felsoul Shard |q 45063/1 |count 3 |goto 28.43,61.23
+step
+Click the Complete Quest Box:
+turnin The Felsoul Experiments##45063
+accept Resisting Arrest##45062
+step
+Follow the path |goto 30.05,61.77 < 30 |only if walking
+Follow the path |goto 31.49,63.51 < 20 |only if walking
+Enter the building |goto 33.98,66.99 < 20 |only if walking
+Use the Advanced Targeting Orb near the Fel Power Source |use Advanced Targeting Orb##142400
+|tip Inside the building.
+Disable the Power Source |q 45062/1 |goto 34.62,67.64
+step
+talk First Arcanist Thalyssra##115736
+turnin Resisting Arrest##45062 |goto 36.49,45.83 |region suramar_shalaran
+step
+Use the Advanced Telemancy Beacon |use Advanced Telemancy Beacon##142405
+|tip WARNING: Using this item will remove your Masquerade disguise, so be careful.
+|tip Use the item multiple times.
+|tip You can run behind the beacon as you survey to make it survey for longer, so you get it done faster.
+Survey the Terrace of Order #100# Times |q 45065/1 |goto 46.06,64.66
+step
+talk Chief Telemancer Oculeth##115710
+turnin Survey the City##45065 |goto 36.62,45.08 |region suramar_shalaran
+accept Experimental Instability##45066 |goto 36.62,45.08 |region suramar_shalaran
+step
+Cross the bridge |goto 34.43,50.00 < 20 |only if walking
+Run up the stairs |goto 35.27,50.87 < 20 |only if walking
+Cross the bridge |goto 36.32,50.59 < 20 |only if walking
+Follow the path |goto 37.53,49.51 < 20 |only if walking
+Follow the path |goto 44.16,51.67 < 30 |only if walking
+Cross the bridge |goto 46.07,50.75 < 20 |only if walking
+Follow the path up |goto 48.55,49.26 < 20 |only if walking
+Follow the path |goto 48.66,47.16 < 20 |only if walking
+Take the Portal to Oculeth's Test Chamber |q 45066/1 |goto 49.37,48.35
+|tip Inside the building.
+step
+click Discarded Orb
+Collect the Discarded Orb |q 45066/3 |count 1 |goto 58.76,37.75
+step
+click Discarded Orb
+Collect the Discarded Orb |q 45066/3 |count 2 |goto 58.33,37.99
+step
+click Discarded Orb
+Collect the Discarded Orb |q 45066/3 |count 3 |goto 58.15,37.54
+step
+click Discarded Orb
+Collect the Discarded Orb |q 45066/3 |count 4 |goto 58.11,37.14
+step
+click Telemancy Notes
+Collect the Telemancy Notes |q 45066/2 |goto 58.48,35.71
+step
+click Portal to Shal'Aran
+Take the Portal to Shal'Aran |q 45066/4 |goto 59.06,36.16
+step
+talk Chief Telemancer Oculeth##115710
+turnin Experimental Instability##45066 |goto 36.62,45.08 |region suramar_shalaran
+step
+talk First Arcanist Thalyssra##115736
+accept Felborne No More##45064 |goto 36.49,45.83 |region suramar_shalaran
+stickystart "Slay_Felbourne"
+step
+Follow the path down |goto 64.22,43.12 < 20 |only if walking
+Continue down the path |goto 64.51,46.72 < 30 |only if walking
+Follow the path up |goto 65.20,52.24 < 20 |only if walking
+Follow the path |goto 65.09,53.65 < 20 |only if walking
+Run up the stairs |goto 65.59,55.45 < 20 |only if walking
+kill Valthis Ama'ran##115954 |q 45064/1 |goto 66.05,55.98
+step
+label "Slay_Felbourne"
+Kill enemies around this area
+Use the Experimental Telemancy Orb |use Experimental Telemancy Orb##142491
+|tip Withered allies will spawn to help you fight.
+Slay #8# Felbourne |q 45064/2 |goto 65.48,55.02
+step
+talk First Arcanist Thalyssra##115736
+turnin Felborne No More##45064 |goto 36.49,45.83 |region suramar_shalaran
+step
+talk First Arcanist Thalyssra##115736
+accept A Taste of Freedom##45269 |goto 36.49,45.83 |region suramar_shalaran
+step
+Use the Fruit of the Arcan'dor on a Suramar Refugee |use Fruit of the Arcan'dor##143597
+|tip There are Suramar Refugees all around inside the cave.
+Cure a Suramar Refugee |q 45269/1 |goto 37.49,47.44 |region suramar_shalaran
+step
+talk First Arcanist Thalyssra##115736
+turnin A Taste of Freedom##45269 |goto 36.49,45.83 |region suramar_shalaran
+accept I'll Just Leave This Here##44964 |goto 36.49,45.83 |region suramar_shalaran
+step
+Follow the path |goto 65.00,41.70 < 20 |only if walking
+Follow the path |goto Suramar/34 49.74,75.14 < 15 |walk
+Follow the path |goto Suramar/34 52.85,59.06 < 15 |walk
+Follow the path |goto Suramar/34 50.17,42.89 < 15 |walk
+Follow the path |goto Suramar/34 52.94,33.08 < 15 |walk
+click Energy Disruptor
+Place the Elor'shan Disruptor |q 44964/3 |goto Suramar/34 46.28,16.31
+step
+Follow the path up |goto Suramar/0 65.46,43.52 < 20 |only if walking
+Follow the road |goto Suramar/0 63.71,42.71 < 20 |only if walking
+Continue following the road |goto Suramar/0 61.65,45.94 < 20 |only if walking
+Run down the stairs |goto Suramar/0 59.23,44.59 < 20 |only if walking
+Follow the path |goto Suramar/35 50.67,70.28 < 15 |walk
+Follow the path |goto Suramar/35 56.30,58.64 < 15 |walk
+Follow the path |goto Suramar/35 56.19,42.58 < 15 |walk
+Follow the path |goto Suramar/35 61.19,33.56 < 15 |walk
+click Energy Disruptor
+|tip Wait for breaks in the pink energy lines.  They deal massive damage.
+Place the Kel'balor Disruptor |q 44964/2 |goto Suramar/35 54.39,14.11
+step
+Follow the path |goto Suramar/0 59.10,44.80 < 20 |only if walking
+Follow the path |goto Suramar/0 58.07,46.58 < 20 |only if walking
+Follow the road |goto Suramar/0 54.95,47.28 < 20 |only if walking
+Follow the path |goto Suramar/22 42.96,75.85 < 15 |walk
+Follow the path |goto Suramar/22 58.10,77.76 < 15 |walk
+Run down the stairs |goto Suramar/22 62.42,54.51 < 15 |walk
+Follow the path |goto Suramar/22 57.26,33.13 < 15 |walk
+click Energy Disruptor
+Place the Teloth'aran Disruptor |q 44964/1 |goto Suramar/22 49.26,47.97
+step
+talk First Arcanist Thalyssra##115736
+turnin I'll Just Leave This Here##44964 |goto Suramar/0 36.64,44.97 |region suramar_shalaran
+step
+talk Chief Telemancer Oculeth##115710
+accept Breaching the Sanctum##44719 |goto 36.62,45.09 |region suramar_shalaran
+step
+talk Chief Telemancer Oculeth##115710
+Tell him _"I am ready to enter the Sanctum."_
+Watch the dialogue
+Speak with Oculeth |q 44719/1 |goto 36.62,45.09 |region suramar_shalaran
+step
+click Portal to Sanctum of Order
+Enter the Portal |q 44719/2 |goto 36.66,45.04 |region suramar_shalaran
+step
+Begin the Assault of the Sanctum of Order Scenario |scenariostart |q 44719
+step
+Run up the stairs |goto 46.31,66.88 < 20 |only if walking
+Use the Telemancy Orbs |use Telemancy Orbs##142118
+|tip Angry Withered will spawn to help you fight.
+Find a Way Into the Sanctum of Order |scenariostage 1 |goto 45.92,66.06 |q 44719
+step
+Use the Telemancy Orbs |use Telemancy Orbs##142118
+|tip Angry Withered will spawn to help you fight.
+kill Duskwatch Warcaster##114911+
+|tip Kill all 4 of them at this location.
+Find a Weakness to the Barrier |scenariostage 2 |goto 47.11,65.75 |q 44719
+step
+Use the Telemancy Orbs |use Telemancy Orbs##142118
+|tip Angry Withered will spawn to help you fight.
+kill Duskwatch Warcaster##114911+
+|tip Kill all 4 of them at this location.
+Shut Down the Mana Generator |scenariogoal 3/34584 |count 2 |goto 48.06,68.11 |q 44719
+step
+Use the Telemancy Orbs |use Telemancy Orbs##142118
+|tip Angry Withered will spawn to help you fight.
+kill Duskwatch Warcaster##114911+
+|tip Kill all 4 of them at this location.
+Shut Down the Mana Generator |scenariogoal 3/34584 |count 3 |goto 49.24,67.49 |q 44719
+step
+Use the Telemancy Orbs |use Telemancy Orbs##142118
+|tip Angry Withered will spawn to help you fight.
+kill Dalion##114914 |scenariostage 4 |goto 46.00,64.60 |q 44719
+step
+Follow the path |goto 45.57,63.53 < 20 |region suramar_sanctum_of_order
+Follow the path |goto 44.74,63.45 < 20 |region suramar_sanctum_of_order
+Use the Telemancy Orbs |use Telemancy Orbs##142118
+|tip Angry Withered will spawn to help you fight.
+Reach the Bottom of the Sanctum of Order |scenariostage 5 |goto 43.63,62.54 |region suramar_sanctum_of_order |q 44719
+step
+Use the Telemancy Orbs |use Telemancy Orbs##142118
+|tip Angry Withered will spawn to help you fight.
+|tip Use the Telemancy Orbs repeatedly to drain Andaris's Shield.
+Use the Withered to Drain Andaris's Shield |scenariostage 6 |goto 43.63,62.54 |region suramar_sanctum_of_order |q 44719
+step
+Run down the stairs |goto 43.72,62.19 < 15 |walk |region suramar_sanctum_of_order
+Follow the path |goto 43.44,61.52 < 20 |walk |region suramar_sanctum_of_order
+Use the Telemancy Orbs |use Telemancy Orbs##142118
+|tip Angry Withered will spawn to help you fight.
+kill Andaris Narassin##114915 |scenariostage 7 |goto 42.60,61.63 |region suramar_sanctum_of_order |q 44719
+step
+Meet with Thalyssra |goto 42.33,61.42 < 20 |noway |c |region suramar_sanctum_of_order |q 44719
+step
+Watch the dialogue |goto 42.33,61.42 |n |region suramar_sanctum_of_order
+Begin Following Thalyssra |goto 42.33,61.42 > 25 |noway |c |region suramar_sanctum_of_order |q 44719
+step
+Run down the ramp |goto 42.12,60.27 < 20 |region suramar_sanctum_depths
+Continue down the ramp |goto 43.05,59.04 < 20 |region suramar_sanctum_depths
+Watch the dialogue
+Reach the Entrance to the Nighthold |scenarioend |goto 44.10,59.99 |region suramar_sanctum_depths |q 44719
+Secure the Breach |q 44719/3 |goto 44.10,59.99 |region suramar_sanctum_depths
+step
+talk Archmage Khadgar##115367
+turnin Breaching the Sanctum##44719 |goto 44.19,60.13 |region suramar_sanctum_depths
+accept Lord of the Shadow Council##45417 |goto 44.19,60.13 |region suramar_sanctum_depths
+step
+Enter _The Nighthold_ raid:
+kill Gul'dan##105503 |q 45417/1
+|tip He is the final boss of The Nighthold raid.
+|tip He can be found in the Betrayer's Rise section of LFR.
+step
+_In Betrayer's Rise:_
+talk Archmage Khadgar##115367
+turnin Lord of the Shadow Council##45417
+accept The Eye of Aman'Thul##45420
+step
+talk Archmage Khadgar##115367
+Tell him _"I'm ready to take the Eye of Aman'thul to Dalaran."_
+|tip Follow him to the center of the platform and click on him when you are ready to return.
+clicknpc Archmage Khadgar##115367
+Return to Dalaran |q 45420/1
+step
+talk Archmage Khadgar##106522
+turnin The Eye of Aman'Thul##45420 |goto Dalaran L/12 46.22,55.94
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Leveling Guides\\Legion (100-110)\\Order Hall Quests",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Legion (100-110)\\Order Hall Quests",{
 author="support@zygorguides.com",
+description="This guide will walk you through completing the various quests available in your Class Order Hall.",
 startlevel=101.0,
 },[[
 step
@@ -15565,18 +16853,18 @@ stickystart "Fel_Portals_Warrior"
 step
 accept Fel Annihilation##43483 |goto 37.64,57.64
 |tip You will accept this quest automatically.
-|only Warrior
+|only if ZGV:RaceClassMatch("Warrior") and _G.C_Scenario.IsInScenario()
 stickystart "Fel_Annihilation_Warrior"
 step
 Follow the path |goto 35.51,48.86 < 15 |walk
 Follow the path  |goto 43.65,17.18 < 15 |walk
 talk Farseer Nobundo##110695
 accept Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only Warrior
+|only if ZGV:RaceClassMatch("Warrior") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 Speak to Nobundo to Begin the Assault |q 43705/1 |goto 44.91,9.26
-|only Warrior
+|only if ZGV:RaceClassMatch("Warrior") and _G.C_Scenario.IsInScenario()
 step
 Kill the enemies that attack in waves
 |tip Focus on keeping Farseer Nobundo alive.
@@ -15585,11 +16873,11 @@ Defeat the Second Assault |q 43705/3 |goto 44.88,9.34
 Defeat the Third Wave of Demons |q 43705/4 |goto 44.88,9.34
 kill Karzak the Impaler##110781 |q 43705/5 |goto 44.88,9.34
 Defend Farseer Nobundo from the Legion Assault |q 43705/6 |goto 44.88,9.34
-|only Warrior
+|only if ZGV:RaceClassMatch("Warrior") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 turnin Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only Warrior
+|only if ZGV:RaceClassMatch("Warrior") and _G.C_Scenario.IsInScenario()
 step
 label "Fel_Portals_Warrior"
 click Legion Portal
@@ -15855,7 +17143,7 @@ collect Greater Demonic Runestone##139453 |q 43506/1
 step
 label "World_Quests_Warrior"
 Complete #30# World Quests |q 44667/1
-|tip Use the World Quests guide to accomplish this.
+|tip Use the "World Quests" dailies guide to accomplish this.
 |only Warrior
 step
 talk Odyn##96469
@@ -15950,8 +17238,6 @@ turnin A Hero's Weapon##43425 |goto 43.96,33.48
 step
 Run up the stairs |goto Skyhold/1 52.42,36.17 < 20 |walk
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept Awakenings##44464 |goto Skyhold/1 45.32,30.18
 |only Warrior
 stickystart "World_Quests_Warrior"
@@ -15967,8 +17253,6 @@ turnin Awakenings##44464 |goto Skyhold/1 45.32,30.18
 |only Warrior
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept An Unclear Path##44466 |goto 45.32,30.12
 |only Warrior
 step
@@ -15986,8 +17270,6 @@ turnin An Unclear Path##44466 |goto Skyhold/1 45.32,30.12
 |only Warrior
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept Ravencrest's Legacy##44479 |goto Skyhold/1 45.32,30.12
 |only Warrior
 step
@@ -16062,8 +17344,6 @@ turnin Ravencrest's Legacy##44479 |goto Skyhold/1 45.32,30.12
 |only Warrior
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept In My Father's House##44480 |goto Skyhold/1 45.32,30.12
 |only Warrior
 step
@@ -16078,49 +17358,76 @@ turnin In My Father's House##44480 |goto Skyhold/1 45.32,30.12
 |only Warrior
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
-accept Destiny Unfulfilled##44496 |goto Skyhold/1 45.32,30.12
+accept Destiny Unfulfilled##44481 |goto Skyhold/1 45.32,30.12 |only if achieved(697)
+accept Destiny Unfulfilled##44496 |goto Skyhold/1 45.32,30.12 |only if not achieved(697)
 |only Warrior
 step
 Use the Call to Xe'ra ability
 |tip It appears as a button on the screen.
-Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44481 |only if achieved(697)
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496 |only if not achieved(697)
 |only Warrior
 step
 Watch the dialogue
-Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44481 |only if achieved(697)
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Warrior
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Warrior
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Warrior
 step
 Use the Metamorphosis ability
 |tip It's on your action bar.
-Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Warrior
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Warrior
 step
 kill Maiev Shadowsong##112867
 |tip She will defeat you.
-Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496
-Experience True Betrayal |q 44496/1 |goto 52.70,71.25
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496 |only if not achieved(697)
+Experience True Betrayal |q 44481/1 |goto 52.70,71.25 |only if achieved(697)
+Experience True Betrayal |q 44496/1 |goto 52.70,71.25 |only if not achieved(697)
 |only Warrior
 step
 Run up the stairs |goto Skyhold/1 52.48,36.13 < 20 |only if walking
 click Light's Heart
-turnin Destiny Unfulfilled##44496 |goto Skyhold/1 45.32,30.12
+turnin Destiny Unfulfilled##44481 |goto Skyhold/1 45.32,30.12 |only if achieved(697)
+turnin Destiny Unfulfilled##44496 |goto Skyhold/1 45.32,30.12 |only if not achieved(697)
+|only Warrior
+step
+click Light's Heart
+accept The Hunt for Illidan Stormrage##45174 |goto 45.32,30.12
+|only Warrior
+step
+talk Allari the Souleater##89398
+turnin The Hunt for Illidan Stormrage##45174 |goto Azsuna/0 43.29,43.16
+accept Soul Prism of the Illidari##45175 |goto Azsuna/0 43.29,43.16
+|only Warrior
+step
+Claim #40# Lingering Soul Fragments |q 45175/1
+|tip These have a chance to drop from the final boss of every dungeon.
+|tip Higher difficulty dungeons have a higher chance to drop them, as well as drop multiple at a time.
+|tip You can only get 20 per week, so this quest will take a minimum of 2 weeks to complete.
+|only Warrior
+step
+talk Allari the Souleater##89398
+turnin Soul Prism of the Illidari##45175 |goto 43.29,43.16
 |only Warrior
 step
 talk Haklang Ulfsson##110437
@@ -16266,18 +17573,18 @@ stickystart "Fel_Portals_Paladin"
 step
 accept Fel Annihilation##43483 |goto 37.64,57.64
 |tip You will accept this quest automatically.
-|only Paladin
+|only if ZGV:RaceClassMatch("Paladin") and _G.C_Scenario.IsInScenario()
 stickystart "Fel_Annihilation_Paladin"
 step
 Follow the path |goto 35.51,48.86 < 15 |walk
 Follow the path  |goto 43.65,17.18 < 15 |walk
 talk Farseer Nobundo##110695
 accept Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only Paladin
+|only if ZGV:RaceClassMatch("Paladin") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 Speak to Nobundo to Begin the Assault |q 43705/1 |goto 44.91,9.26
-|only Paladin
+|only if ZGV:RaceClassMatch("Paladin") and _G.C_Scenario.IsInScenario()
 step
 Kill the enemies that attack in waves
 |tip Focus on keeping Farseer Nobundo alive.
@@ -16286,11 +17593,11 @@ Defeat the Second Assault |q 43705/3 |goto 44.88,9.34
 Defeat the Third Wave of Demons |q 43705/4 |goto 44.88,9.34
 kill Karzak the Impaler##110781 |q 43705/5 |goto 44.88,9.34
 Defend Farseer Nobundo from the Legion Assault |q 43705/6 |goto 44.88,9.34
-|only Paladin
+|only if ZGV:RaceClassMatch("Paladin") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 turnin Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only Paladin
+|only if ZGV:RaceClassMatch("Paladin") and _G.C_Scenario.IsInScenario()
 step
 label "Fel_Portals_Paladin"
 click Legion Portal
@@ -16757,7 +18064,7 @@ stickystart "Lumenstones_Paladin"
 step
 collect 10 Blood of Sargeras##124124 |q 43534/1
 |tip Complete world quests and kill bosses in dungeons.
-|tip Use the World Quests guide to complete world quests.
+|tip Use the "World Quests" guide to complete world quests.
 |tip Use the Dungeon guides to complete dungeons.
 |tip If you have a Gathering profession leveled to at least Rank 2, you can get them from gathering.
 |only Paladin
@@ -16768,7 +18075,7 @@ turnin Blood of Sargeras##43534 |goto Eastern Plaguelands/20 52.30,78.05
 step
 label "World_Quests_Paladin"
 Complete #30# World Quests |q 43699/1
-|tip Use the World Quests guide to accomplish this.
+|tip Use the "World Quests" dailies guide to accomplish this.
 |only Paladin
 step
 talk Lord Grayson Shadowbreaker##90250
@@ -16867,8 +18174,6 @@ accept Champion: Lothraxion##43701 |instant |goto 73.05,23.02
 |only Paladin
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept Awakenings##44464 |goto Eastern Plaguelands/20 52.19,69.55
 |only Paladin
 step
@@ -16882,8 +18187,6 @@ turnin Awakenings##44464 |goto Eastern Plaguelands/20 52.19,69.55
 |only Paladin
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept An Unclear Path##44466 |goto 52.20,69.51
 |only Paladin
 step
@@ -16900,8 +18203,6 @@ turnin An Unclear Path##44466 |goto Eastern Plaguelands/20 52.31,69.37
 |only Paladin
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept Ravencrest's Legacy##44479 |goto Eastern Plaguelands/20 52.31,69.37
 |only Paladin
 step
@@ -16975,8 +18276,6 @@ turnin Ravencrest's Legacy##44479 |goto Eastern Plaguelands/20 52.31,69.37
 |only Paladin
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept In My Father's House##44480 |goto 52.31,69.37
 |only Paladin
 step
@@ -16990,48 +18289,102 @@ turnin In My Father's House##44480 |goto Eastern Plaguelands/20 52.31,69.37
 |only Paladin
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
-accept Destiny Unfulfilled##44496 |goto Eastern Plaguelands/20 52.31,69.37
+accept Destiny Unfulfilled##44481 |goto Eastern Plaguelands/20 52.31,69.37 |only if achieved(697)
+accept Destiny Unfulfilled##44496 |goto Eastern Plaguelands/20 52.31,69.37 |only if not achieved(697)
 |only Paladin
 step
 Use the Call to Xe'ra ability
 |tip It appears as a button on the screen.
-Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44481 |only if achieved(697)
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496 |only if not achieved(697)
 |only Paladin
 step
 Watch the dialogue
-Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44481 |only if achieved(697)
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Paladin
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Paladin
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Paladin
 step
 Use the Metamorphosis ability
 |tip It's on your action bar.
-Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Paladin
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Paladin
 step
 kill Maiev Shadowsong##112867
 |tip She will defeat you.
-Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496
-Experience True Betrayal |q 44496/1 |goto 52.70,71.25
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496 |only if not achieved(697)
+Experience True Betrayal |q 44481/1 |goto 52.70,71.25 |only if achieved(697)
+Experience True Betrayal |q 44496/1 |goto 52.70,71.25 |only if not achieved(697)
 |only Paladin
 step
 click Light's Heart
-turnin Destiny Unfulfilled##44496 |goto Eastern Plaguelands/20 52.31,69.37
+turnin Destiny Unfulfilled##44481 |goto Eastern Plaguelands/20 52.31,69.37 |only if achieved(697)
+turnin Destiny Unfulfilled##44496 |goto Eastern Plaguelands/20 52.31,69.37 |only if not achieved(697)
+|only Paladin
+step
+click Light's Heart
+accept The Hunt for Illidan Stormrage##45174 |goto 52.31,69.37
+|only Paladin
+step
+talk Allari the Souleater##89398
+turnin The Hunt for Illidan Stormrage##45174 |goto Azsuna/0 43.29,43.16
+accept Soul Prism of the Illidari##45175 |goto Azsuna/0 43.29,43.16
+|only Paladin
+step
+Claim #40# Lingering Soul Fragments |q 45175/1
+|tip These have a chance to drop from the final boss of every dungeon.
+|tip Higher difficulty dungeons have a higher chance to drop them, as well as drop multiple at a time.
+|tip You can only get 20 per week, so this quest will take a minimum of 2 weeks to complete.
+|only Paladin
+step
+talk Allari the Souleater##89398
+turnin Soul Prism of the Illidari##45175 |goto 43.29,43.16
+|only Paladin
+step
+talk Allari the Souleater##89398
+accept The Once and Future Lord of Shadows##45176 |goto 43.29,43.16
+|only Paladin
+step
+Enter Trial of Valor |goto Stormheim/0 71.15,72.76
+|tip Press I to queue for the LFR version or enter it with a raid on any other difficulty.
+confirm
+|only Paladin
+step
+Defeat Helya |q 45176/1
+|only Paladin
+step
+click Lord Illidan Stormrage##116697
+Use your Soul Prism of the Illidari to capture Illidan Soul
+Capture Illidans Soul |use Soul Prism of the Illidari##143661 |q 45176/2
+|tip This will be located up the right steps in Helyas room after you defeat her.
+|only Paladin
+step
+click Light's Heart
+turnin The Once and Future Lord of Shadows##45176 |goto Eastern Plaguelands/20 52.15,69.42
+accept The Nighthold##45177 |goto Eastern Plaguelands/20 52.15,69.42
+|only Paladin
+step
+talk Archmage Khadgar##90417
+turnin The Nighthold##45177 |goto Dalaran L/10 28.54,48.31
 |only Paladin
 step
 Follow the path |goto 48.03,61.90 < 15 |walk
@@ -17046,6 +18399,22 @@ Place a Work Order for Champion Armaments |q 44218/1 |goto 54.09,49.73
 step
 talk Kristoff##110434
 turnin Champion Armaments##44218 |goto 54.09,49.73
+|only Paladin
+step
+talk Injured Shieldbearer##118348
+accept An Urgent Warning##45974 |goto Eastern Plaguelands/20 42.59,70.27
+|only Paladin
+step
+talk Lord Maxwell Tyrosus##90259
+turnin An Urgent Warning##45974 |goto 49.77,72.27
+|tip If Lord Maxwell Tyrosus is on a mission, you will have to wait until it is completed to turn this quest in.
+accept Investigate the Broken Shore##45975
+|only Paladin
+step
+click Scouting Map
+Start the Menace on the Broken Shore Mission
+|tip You will need followers with 830 item level to efficiently complete this.
+"Menace on the Broken Shore" mission completed |q 45975/1 |goto Eastern Plaguelands/20 53.46,78.61
 |only Paladin
 step
 talk Snowfeather##113327
@@ -17152,13 +18521,13 @@ accept Rising Troubles##42386 |goto Val'sharah/0 41.70,60.00
 |only Hunter
 stickystart "Risen_Hounds"
 step
-Use your Flare ability
+Use the Stealth Trap quest item to place a trap and then use your Flare ability
 |tip Inside the building.
 kill Captain Tevaris##109189 |q 42387/1 |goto 39.56,61.64
 |only Hunter
 step
 label "Risen_Hounds"
-kill Risen Hound##91847 |q 42386/1 |goto 40.82,60.09
+kill 8 Risen Hound##91847 |q 42386/1 |goto 40.82,60.09
 |only Hunter
 step
 talk Hudson Crawford##107372
@@ -17374,18 +18743,18 @@ stickystart "Fel_Portals_Hunter"
 step
 accept Fel Annihilation##43483 |goto 37.64,57.64
 |tip You will accept this quest automatically.
-|only Hunter
+|only if ZGV:RaceClassMatch("Hunter") and _G.C_Scenario.IsInScenario()
 stickystart "Fel_Annihilation_Hunter"
 step
 Follow the path |goto 35.51,48.86 < 15 |walk
 Follow the path  |goto 43.65,17.18 < 15 |walk
 talk Farseer Nobundo##110695
 accept Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only Hunter
+|only if ZGV:RaceClassMatch("Hunter") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 Speak to Nobundo to Begin the Assault |q 43705/1 |goto 44.91,9.26
-|only Hunter
+|only if ZGV:RaceClassMatch("Hunter") and _G.C_Scenario.IsInScenario()
 step
 Kill the enemies that attack in waves
 |tip Focus on keeping Farseer Nobundo alive.
@@ -17394,11 +18763,11 @@ Defeat the Second Assault |q 43705/3 |goto 44.88,9.34
 Defeat the Third Wave of Demons |q 43705/4 |goto 44.88,9.34
 kill Karzak the Impaler##110781 |q 43705/5 |goto 44.88,9.34
 Defend Farseer Nobundo from the Legion Assault |q 43705/6 |goto 44.88,9.34
-|only Hunter
+|only if ZGV:RaceClassMatch("Hunter") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 turnin Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only Hunter
+|only if ZGV:RaceClassMatch("Hunter") and _G.C_Scenario.IsInScenario()
 step
 label "Fel_Portals_Hunter"
 click Legion Portal
@@ -17660,7 +19029,7 @@ accept Requesting Reinforcements##42402 |goto Trueshot Lodge/0 43.41,26.33
 step
 click Scouting Map
 Begin the "Requesting Reinforcements" Mission
-|tip This mission will take 12 hours to complete.
+|tip This mission will take 1 hour to complete.
 Complete the "Requesting Reinforcements" Mission |q 42402/1 |goto 42.50,46.63
 |only Hunter
 step
@@ -17702,17 +19071,17 @@ stickystart "Arkhana_Hunter"
 stickystart "Arcane_Vessel_Fragments_Hunter"
 step
 Complete #30# World Quests |q 44680/1
-|tip Use the World Quests guide to accomplish this.
+|tip Use the "World Quests" dailies guide to accomplish this.
 |only Hunter
 step
 label "Arkhana_Hunter"
-collect 20 Arkhana##124440 |q 42408/1
+collect 20 Arkhana##124440 |q 42408/1 |goto Orgrimmar/1 53.99,73.26
 |tip Buy it from the auction house.
 |tip If you are an Enchanter, you can disenchant Uncommon (green) Legion gear items to get it.
 |only Hunter
 step
 talk Emmarel Shadewarden##107973
-turnin Leading by Example##44680 |goto 43.39,26.33
+turnin Leading by Example##44680 |goto Trueshot Lodge/0 43.39,26.33
 |only Hunter
 step
 talk Halduron Brightwing##108456
@@ -17789,7 +19158,7 @@ label "Arcane_Vessel_Fragments_Hunter"
 click Scouting Map
 |tip Inside the building.
 Complete "The Missing Vessel" Missions
-|tip Each of these missions will take up to 24 hours to complete.
+|tip Each of these missions will take up to 1 hours to complete.
 |tip They are the missions that reward Arcane Vessel Fragments.
 collect 4 Arcane Vessel Fragment##139041 |q 43182/1 |goto Trueshot Lodge/0 42.48,46.63
 |only Hunter
@@ -17868,9 +19237,7 @@ turnin A Hero's Weapon##43423 |goto 47.64,49.35
 step
 click Light's Heart
 |tip Inside the building.
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
-accept Awakenings##44464 |goto 47.49,43.51
+accept Awakenings##44464 |goto 47.31,43.44
 |only Hunter
 step
 Use the Call to Xe'ra ability
@@ -17880,14 +19247,12 @@ Witness the Awakening of Illidan Stormrage |q 44464/1 |goto Val'sharah/0 54.40,7
 step
 click Light's Heart
 |tip Inside the building.
-turnin Awakenings##44464 |goto 47.49,43.51
+turnin Awakenings##44464 |goto Trueshot Lodge/0 47.31,43.44
 |only Hunter
 step
 click Light's Heart
 |tip Inside the building.
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
-accept An Unclear Path##44466 |goto 47.42,43.49
+accept An Unclear Path##44466 |goto 47.31,43.44
 |only Hunter
 step
 Follow the path |goto Val'sharah/0 54.96,53.43 < 20 |only if walking
@@ -17900,14 +19265,12 @@ Witness Illidan's Resilience |q 44466/1 |goto Val'sharah/0 45.54,34.75
 step
 click Light's Heart
 |tip Inside the building.
-turnin An Unclear Path##44466 |goto Trueshot Lodge/0 47.42,43.49
+turnin An Unclear Path##44466 |goto Trueshot Lodge/0 47.31,43.44
 |only Hunter
 step
 click Light's Heart
 |tip Inside the building.
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
-accept Ravencrest's Legacy##44479 |goto Trueshot Lodge/0 47.42,43.49
+accept Ravencrest's Legacy##44479 |goto Trueshot Lodge/0 47.31,43.44
 |only Hunter
 step
 Follow the path |goto Val'sharah/0 54.96,53.43 < 20 |only if walking
@@ -17977,14 +19340,12 @@ Return to Val'sharah |goto Val'sharah/0 41.44,45.63 < 10000 |noway |c |q 44479
 step
 click Light's Heart
 |tip Inside the building.
-turnin Ravencrest's Legacy##44479 |goto Trueshot Lodge/0 47.42,43.49
+turnin Ravencrest's Legacy##44479 |goto Trueshot Lodge/0 47.31,43.44
 |only Hunter
 step
 click Light's Heart
 |tip Inside the building.
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
-accept In My Father's House##44480 |goto 34.44,51.14
+accept In My Father's House##44480 |goto 47.31,43.44
 |only Hunter
 step
 Use the Call to Xe'ra ability
@@ -17994,54 +19355,81 @@ Witness Illidan's Resilience |q 44480/1 |goto Azshara/0 34.83,49.90
 step
 click Light's Heart
 |tip Inside the building.
-turnin In My Father's House##44480 |goto Trueshot Lodge/0 34.44,51.14
+turnin In My Father's House##44480 |goto Trueshot Lodge/0 47.31,43.44
 |only Hunter
 step
 click Light's Heart
 |tip Inside the building.
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
-accept Destiny Unfulfilled##44496 |goto Trueshot Lodge/0 34.44,51.14
+accept Destiny Unfulfilled##44481 |goto Trueshot Lodge/0 47.31,43.44 |only if achieved(697)
+accept Destiny Unfulfilled##44496 |goto Trueshot Lodge/0 47.31,43.44 |only if not achieved(697)
 |only Hunter
 step
 Use the Call to Xe'ra ability
 |tip It appears as a button on the screen.
-Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44481 |only if achieved(697)
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496 |only if not achieved(697)
 |only Hunter
 step
 Watch the dialogue
-Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44481 |only if achieved(697)
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Hunter
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Hunter
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Hunter
 step
 Use the Metamorphosis ability
 |tip It's on your action bar.
-Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Hunter
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Hunter
 step
 kill Maiev Shadowsong##112867
 |tip She will defeat you.
-Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496
-Experience True Betrayal |q 44496/1 |goto 52.70,71.25
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496 |only if not achieved(697)
+Experience True Betrayal |q 44481/1 |goto 52.70,71.25 |only if achieved(697)
+Experience True Betrayal |q 44496/1 |goto 52.70,71.25 |only if not achieved(697)
 |only Hunter
 step
 click Light's Heart
 |tip Inside the building.
-turnin Destiny Unfulfilled##44496 |goto Trueshot Lodge/0 34.44,51.14
+turnin Destiny Unfulfilled##44481 |goto Trueshot Lodge/0 47.31,43.44 |only if achieved(697)
+turnin Destiny Unfulfilled##44496 |goto Trueshot Lodge/0 47.31,43.44 |only if not achieved(697)
+|only Hunter
+step
+click Light's Heart
+accept The Hunt for Illidan Stormrage##45174 |goto 47.31,43.44
+|only Hunter
+step
+talk Allari the Souleater##89398
+turnin The Hunt for Illidan Stormrage##45174 |goto Azsuna/0 43.29,43.16
+accept Soul Prism of the Illidari##45175 |goto Azsuna/0 43.29,43.16
+|only Hunter
+step
+Claim #40# Lingering Soul Fragments |q 45175/1
+|tip These have a chance to drop from the final boss of every dungeon.
+|tip Higher difficulty dungeons have a higher chance to drop them, as well as drop multiple at a time.
+|tip You can only get 20 per week, so this quest will take a minimum of 2 weeks to complete.
+|only Hunter
+step
+talk Allari the Souleater##89398
+turnin Soul Prism of the Illidari##45175 |goto 43.29,43.16
 |only Hunter
 step
 talk Berger the Steadfast##110412
@@ -18055,6 +19443,23 @@ Place a Work Order for Champion Armaments |q 44211/1 |goto 35.70,51.73
 step
 talk Berger the Steadfast##110412
 turnin Unseen Armaments##44211 |goto 35.70,51.73
+|only Hunter
+step
+talk Injured Archer##118429
+accept An Urgent Warning##46022 |goto 49.10,44.86
+|only Hunter
+step
+talk Tactician Tinderfell##103023
+turnin An Urgent Warning##46022 |goto 42.80,46.92
+accept Investigate the Broken Shore##46023 |goto 42.80,46.92
+|only Hunter
+step
+click Scouting Map
+Complete the "Menace on the Broken Shore" mission |q 46023/1 |goto 42.49,46.59
+|only Hunter
+step
+talk Tactician Tinderfell##103023
+turnin Investigate the Broken Shore##46023 |goto 42.80,46.92
 |only Hunter
 step
 talk Valeera Sanguinar##112679
@@ -18282,7 +19687,7 @@ Begin a "Throwing SI:7 Off the Trail" Mission
 Click Here After You Start the Mission |confirm |goto 37.46,44.21 |q 42684
 |only Rogue
 step
-collect 20 Aethril##124101 |q 42730/1 |goto Stormwind City/0 61.19,70.99
+collect 20 Aethril##124101 |q 42730/1 |goto Orgrimmar/1 53.99,73.26
 |tip Buy it from the auction house.
 |tip If you have the Herbalism profession, you can gather it in Azsuna.
 |only Rogue
@@ -18400,18 +19805,18 @@ stickystart "Fel_Portals_Rogue"
 step
 accept Fel Annihilation##43483 |goto 37.64,57.64
 |tip You will accept this quest automatically.
-|only Rogue
+|only if ZGV:RaceClassMatch("Rogue") and _G.C_Scenario.IsInScenario()
 stickystart "Fel_Annihilation_Rogue"
 step
 Follow the path |goto 35.51,48.86 < 15 |walk
 Follow the path  |goto 43.65,17.18 < 15 |walk
 talk Farseer Nobundo##110695
 accept Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only Rogue
+|only if ZGV:RaceClassMatch("Rogue") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 Speak to Nobundo to Begin the Assault |q 43705/1 |goto 44.91,9.26
-|only Rogue
+|only if ZGV:RaceClassMatch("Rogue") and _G.C_Scenario.IsInScenario()
 step
 Kill the enemies that attack in waves
 |tip Focus on keeping Farseer Nobundo alive.
@@ -18420,11 +19825,11 @@ Defeat the Second Assault |q 43705/3 |goto 44.88,9.34
 Defeat the Third Wave of Demons |q 43705/4 |goto 44.88,9.34
 kill Karzak the Impaler##110781 |q 43705/5 |goto 44.88,9.34
 Defend Farseer Nobundo from the Legion Assault |q 43705/6 |goto 44.88,9.34
-|only Rogue
+|only if ZGV:RaceClassMatch("Rogue") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 turnin Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only Rogue
+|only if ZGV:RaceClassMatch("Rogue") and _G.C_Scenario.IsInScenario()
 step
 label "Fel_Portals_Rogue"
 click Legion Portal
@@ -18627,8 +20032,8 @@ collect The Raven's Eye##139319 |q 42678/1
 |only Rogue
 step
 talk Valeera Sanguinar##110164
-turnin Into Black Rook Hold##42678 |goto 40.43,52.87
-accept Deciphering the Letter##42680 |goto 40.43,52.87
+turnin Into Black Rook Hold##42678 |goto Dalaran L/4 40.79,75.43
+accept Deciphering the Letter##42680 |goto Dalaran L/4 40.79,75.43
 |only Rogue
 step
 click The Raven's Eye
@@ -18655,7 +20060,7 @@ Click Here After You Start the Mission |confirm |goto 37.41,44.25 |q 43469
 stickystart "Where_Mathias_Rogue"
 step
 Complete #30# World Quests |q 43470/1
-|tip Use the World Quests guide to accomplish this.
+|tip Use the "World Quests" dailies guide to accomplish this.
 |only Rogue
 step
 label "Where_Mathias_Rogue"
@@ -18675,7 +20080,7 @@ step
 Complete a "Rare Elite" World Quest |q 43479/1
 |tip They are randomly available world quests.
 |tip On the world map, their icon looks like a blue circle with a yellow exclamation mark in it, with a golden dragon wrapping around the circle.
-|tip Use the World Quests guide to accomplish this.
+|tip Use the "World Quests" dailies guide to accomplish this.
 |only Rogue
 step
 Click the Torch and run through the doorway |goto 45.02,54.87 < 10 |walk
@@ -18823,7 +20228,7 @@ accept Champion: Master Mathias Shaw##43724 |instant |goto 40.49,78.08
 |only Rogue
 step
 talk Lord Jorach Ravenholdt##101513
-accept Another Worthy Blade##44034 |goto 41.38,78.08
+accept One More Thing...##44215 |goto 41.38,78.08
 |only Rogue
 step
 Follow the path up |goto 42.79,65.29 < 15 |walk
@@ -18844,8 +20249,6 @@ turnin A Hero's Weapon##43422 |goto 38.03,58.31
 |only Rogue
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept Awakenings##44464 |goto Dalaran L/4 40.66,54.57
 |only Rogue
 step
@@ -18862,8 +20265,6 @@ turnin Awakenings##44464 |goto Dalaran L/4 40.66,54.57
 |only Rogue
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept An Unclear Path##44466 |goto 40.79,54.82
 |only Rogue
 step
@@ -18883,8 +20284,6 @@ turnin An Unclear Path##44466 |goto Dalaran L/4 40.79,54.82
 |only Rogue
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept Ravencrest's Legacy##44479 |goto Dalaran L/4 40.79,54.82
 |only Rogue
 step
@@ -18961,8 +20360,6 @@ turnin Ravencrest's Legacy##44479 |goto Dalaran L/4 40.79,54.82
 |only Rogue
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept In My Father's House##44480 |goto Dalaran L/4 40.79,54.82
 |only Rogue
 step
@@ -18979,51 +20376,78 @@ turnin In My Father's House##44480 |goto Dalaran L/4 40.79,54.82
 |only Rogue
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
-accept Destiny Unfulfilled##44496 |goto Dalaran L/4 40.79,54.82
+accept Destiny Unfulfilled##44481 |goto Dalaran L/4 40.79,54.82 |only if achieved(697)
+accept Destiny Unfulfilled##44496 |goto Dalaran L/4 40.79,54.82 |only if not achieved(697)
 |only Rogue
 step
 Use the Call to Xe'ra ability
 |tip It appears as a button on the screen.
-Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44481 |only if achieved(697)
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496 |only if not achieved(697)
 |only Rogue
 step
 Watch the dialogue
-Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44481 |only if achieved(697)
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Rogue
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Rogue
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Rogue
 step
 Use the Metamorphosis ability
 |tip It's on your action bar.
-Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Rogue
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Rogue
 step
 kill Maiev Shadowsong##112867
 |tip She will defeat you.
-Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496
-Experience True Betrayal |q 44496/1 |goto 52.70,71.25
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496 |only if not achieved(697)
+Experience True Betrayal |q 44481/1 |goto 52.70,71.25 |only if achieved(697)
+Experience True Betrayal |q 44496/1 |goto 52.70,71.25 |only if not achieved(697)
 |only Rogue
 step
 Run down the stairs |goto Dalaran L/4 82.79,81.72 < 10 |walk
 Continue down the stairs |goto Dalaran L/4 90.59,84.77 < 10 |walk
 Cross the bridge |goto Dalaran L/4 49.05,35.98 < 15 |walk
 click Light's Heart
-turnin Destiny Unfulfilled##44496 |goto Dalaran L/4 40.79,54.82
+turnin Destiny Unfulfilled##44481 |goto Dalaran L/4 40.79,54.82 |only if achieved(697)
+turnin Destiny Unfulfilled##44496 |goto Dalaran L/4 40.79,54.82 |only if not achieved(697)
+|only Rogue
+step
+click Light's Heart
+accept The Hunt for Illidan Stormrage##45174 |goto 40.79,54.82
+|only Rogue
+step
+talk Allari the Souleater##89398
+turnin The Hunt for Illidan Stormrage##45174 |goto Azsuna/0 43.29,43.16
+accept Soul Prism of the Illidari##45175 |goto Azsuna/0 43.29,43.16
+|only Rogue
+step
+Claim #40# Lingering Soul Fragments |q 45175/1
+|tip These have a chance to drop from the final boss of every dungeon.
+|tip Higher difficulty dungeons have a higher chance to drop them, as well as drop multiple at a time.
+|tip You can only get 20 per week, so this quest will take a minimum of 2 weeks to complete.
+|only Rogue
+step
+talk Allari the Souleater##89398
+turnin Soul Prism of the Illidari##45175 |goto 43.29,43.16
 |only Rogue
 step
 talk Mal##110348
@@ -19257,18 +20681,18 @@ stickystart "Fel_Portals_Priest"
 step
 accept Fel Annihilation##43483 |goto 37.64,57.64
 |tip You will accept this quest automatically.
-|only Priest
+|only if ZGV:RaceClassMatch("Priest") and _G.C_Scenario.IsInScenario()
 stickystart "Fel_Annihilation_Priest"
 step
 Follow the path |goto 35.51,48.86 < 15 |walk
 Follow the path  |goto 43.65,17.18 < 15 |walk
 talk Farseer Nobundo##110695
 accept Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only Priest
+|only if ZGV:RaceClassMatch("Priest") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 Speak to Nobundo to Begin the Assault |q 43705/1 |goto 44.91,9.26
-|only Priest
+|only if ZGV:RaceClassMatch("Priest") and _G.C_Scenario.IsInScenario()
 step
 Kill the enemies that attack in waves
 |tip Focus on keeping Farseer Nobundo alive.
@@ -19277,11 +20701,11 @@ Defeat the Second Assault |q 43705/3 |goto 44.88,9.34
 Defeat the Third Wave of Demons |q 43705/4 |goto 44.88,9.34
 kill Karzak the Impaler##110781 |q 43705/5 |goto 44.88,9.34
 Defend Farseer Nobundo from the Legion Assault |q 43705/6 |goto 44.88,9.34
-|only Priest
+|only if ZGV:RaceClassMatch("Priest") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 turnin Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only Priest
+|only if ZGV:RaceClassMatch("Priest") and _G.C_Scenario.IsInScenario()
 step
 label "Fel_Portals_Priest"
 click Legion Portal
@@ -19730,7 +21154,7 @@ turnin Elixirs of Aid##43832 |goto 51.57,47.84
 step
 label "World_Quests_Priest"
 Complete #30# World Quests |q 43399/1
-|tip Use the World Quests guide to accomplish this.
+|tip Use the "World Quests" dailies guide to accomplish this.
 |only Priest
 step
 label "Lumenstones_Priest"
@@ -19761,11 +21185,11 @@ talk Lord Maxwell Tyrosus##111044
 Speak to Lord Maxwell Tyrosus |q 43401/1 |goto 72.75,43.12
 |only Priest
 step
-Enter the building |goto 40.19,55.89 < 15 |walk
-Run up the stairs |goto 35.07,62.47 < 10 |walk
+Run up the stairs |goto 60.46,30.46 < 10 |walk
+Enter the building |goto 59.10,21.04 |walk
 clicknpc Portal to Netherlight Temple##113620
 Choose _"I am ready to begin The Defense of Netherlight Temple."_
-Use the Portal to Netherlight Temple |q 43401/3 |goto 39.52,57.30
+Use the Portal to Netherlight Temple |q 43401/3 |goto 63.02,17.72
 |only Priest
 step
 Begin the Defense of Netherlight Temple Scenario |scenariostart |q 43401
@@ -19821,8 +21245,6 @@ accept A Second Legend##43935 |instant |goto 51.53,47.81
 |only Priest
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept Awakenings##44464 |goto Netherlight Temple/1 49.81,26.44
 |only Priest
 step
@@ -19836,8 +21258,6 @@ turnin Awakenings##44464 |goto Netherlight Temple/1 49.81,26.44
 |only Priest
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept An Unclear Path##44466 |goto 49.81,26.41
 |only Priest
 step
@@ -19854,8 +21274,6 @@ turnin An Unclear Path##44466 |goto Netherlight Temple/1 49.81,26.41
 |only Priest
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept Ravencrest's Legacy##44479 |goto Netherlight Temple/1 49.81,26.41
 |only Priest
 step
@@ -19929,8 +21347,6 @@ turnin Ravencrest's Legacy##44479 |goto Netherlight Temple/1 49.81,26.41
 |only Priest
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept In My Father's House##44480 |goto Netherlight Temple/1 49.81,26.41
 |only Priest
 step
@@ -19940,57 +21356,84 @@ Witness Illidan's Resilience |q 44480/1 |goto Azshara/0 34.83,49.90
 |only Priest
 step
 click Light's Heart
-turnin In My Father's House##44480 |goto The Maelstrom L/0 32.48,32.81
+turnin In My Father's House##44480 |goto Netherlight Temple/1 49.79,26.28
 |only Priest
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
-accept Destiny Unfulfilled##44496 |goto The Maelstrom L/0 32.48,32.81
+accept Destiny Unfulfilled##44481 |goto Netherlight Temple/1 49.79,26.28 |only if achieved(697)
+accept Destiny Unfulfilled##44496 |goto Netherlight Temple/1 49.79,26.28 |only if not achieved(697)
 |only Priest
 step
 Use the Call to Xe'ra ability
 |tip It appears as a button on the screen.
-Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44481 |only if achieved(697)
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496 |only if not achieved(697)
 |only Priest
 step
 Watch the dialogue
-Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44481 |only if achieved(697)
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Priest
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Priest
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Priest
 step
 Use the Metamorphosis ability
 |tip It's on your action bar.
-Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Priest
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Priest
 step
 kill Maiev Shadowsong##112867
 |tip She will defeat you.
-Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496
-Experience True Betrayal |q 44496/1 |goto 52.70,71.25
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496 |only if not achieved(697)
+Experience True Betrayal |q 44481/1 |goto 52.70,71.25 |only if achieved(697)
+Experience True Betrayal |q 44496/1 |goto 52.70,71.25 |only if not achieved(697)
 |only Priest
 step
 click Light's Heart
-turnin Destiny Unfulfilled##44496 |goto Netherlight Temple/1 49.81,26.41
+turnin Destiny Unfulfilled##44481 |goto Netherlight Temple/1 49.81,26.41 |only if achieved(697)
+turnin Destiny Unfulfilled##44496 |goto Netherlight Temple/1 49.81,26.41 |only if not achieved(697)
+|only Priest
+step
+click Light's Heart
+accept The Hunt for Illidan Stormrage##45174 |goto 49.81,26.41
+|only Priest
+step
+talk Allari the Souleater##89398
+turnin The Hunt for Illidan Stormrage##45174 |goto Azsuna/0 43.29,43.16
+accept Soul Prism of the Illidari##45175 |goto Azsuna/0 43.29,43.16
+|only Priest
+step
+Claim #40# Lingering Soul Fragments |q 45175/1
+|tip These have a chance to drop from the final boss of every dungeon.
+|tip Higher difficulty dungeons have a higher chance to drop them, as well as drop multiple at a time.
+|tip You can only get 20 per week, so this quest will take a minimum of 2 weeks to complete.
+|only Priest
+step
+talk Allari the Souleater##89398
+turnin Soul Prism of the Illidari##45175 |goto 43.29,43.16
 |only Priest
 step
 talk Lilith##110595
 |tip This quest will only be available if you chose to get the "Armaments of Light" class hall upgrade.
-accept Champion Armaments##44229 |goto 45.49,26.63
+accept Champion Armaments##44229 |goto Netherlight Temple/1 45.49,26.63
 |only Priest
 step
 talk Lilith##110595
@@ -19999,6 +21442,23 @@ Place a Work Order for Champion Armaments |q 44229/1 |goto 45.49,26.63
 step
 talk Lilith##110595
 turnin Champion Armaments##44229 |goto 45.49,26.63
+|only Priest
+step
+talk Injured Acolyte##118432
+accept An Urgent Warning##46028 |goto 51.06,52.80
+|only Priest
+step
+talk Moira Thaurissan##109776
+turnin An Urgent Warning##46028 |goto 51.45,45.97
+accept Investigate the Broken Shore##46029 |goto 51.45,45.97
+|only Priest
+step
+click Command Map
+Complete the "Menace on the Broken Shore" mission |q 46029/1 |goto 49.68,45.94
+|only Priest
+step
+talk Moira Thaurissan##109776
+turnin Investigate the Broken Shore##46029 |goto 51.45,45.97
 |only Priest
 step
 talk Mackay Firebeard##114274
@@ -20169,18 +21629,18 @@ stickystart "Fel_Portals_Shaman"
 step
 accept Fel Annihilation##43483 |goto 37.64,57.64
 |tip You will accept this quest automatically.
-|only Shaman
+|only if ZGV:RaceClassMatch("Shaman") and _G.C_Scenario.IsInScenario()
 stickystart "Fel_Annihilation_Shaman"
 step
 Follow the path |goto 35.51,48.86 < 15 |walk
 Follow the path  |goto 43.65,17.18 < 15 |walk
 talk Farseer Nobundo##110695
 accept Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only Shaman
+|only if ZGV:RaceClassMatch("Shaman") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 Speak to Nobundo to Begin the Assault |q 43705/1 |goto 44.91,9.26
-|only Shaman
+|only if ZGV:RaceClassMatch("Shaman") and _G.C_Scenario.IsInScenario()
 step
 Kill the enemies that attack in waves
 |tip Focus on keeping Farseer Nobundo alive.
@@ -20189,11 +21649,11 @@ Defeat the Second Assault |q 43705/3 |goto 44.88,9.34
 Defeat the Third Wave of Demons |q 43705/4 |goto 44.88,9.34
 kill Karzak the Impaler##110781 |q 43705/5 |goto 44.88,9.34
 Defend Farseer Nobundo from the Legion Assault |q 43705/6 |goto 44.88,9.34
-|only Shaman
+|only if ZGV:RaceClassMatch("Shaman") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 turnin Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only Shaman
+|only if ZGV:RaceClassMatch("Shaman") and _G.C_Scenario.IsInScenario()
 step
 label "Fel_Portals_Shaman"
 click Legion Portal
@@ -20467,11 +21927,11 @@ collect The Master's Journal pt. 1##136791 |q 41897/1 |goto 63.99,75.14
 |only Shaman
 step
 click The Master's Journal pt. 2
-collect The Master's Journal pt. 2##136792 |q 41897/1 |goto 61.74,71.99
+collect The Master's Journal pt. 2##136792 |q 41897/2 |goto 61.74,71.99
 |only Shaman
 step
 click The Master's Journal pt. 3
-collect The Master's Journal pt. 3##136793 |q 41897/1 |goto 62.37,75.96
+collect The Master's Journal pt. 3##136793 |q 41897/3 |goto 62.37,75.96
 |only Shaman
 step
 _Next to you:_
@@ -20578,9 +22038,9 @@ accept Ma'haat the Indomitable##42989 |goto 29.43,77.88
 stickystart "World_Quests_Shaman"
 stickystart "Return_To_The_Firelands_Shaman"
 step
-collect 10 Blood of Sargeras##124124 |c |q 42989
+collect 5 Blood of Sargeras##124124 |c |q 42989
 |tip Complete world quests and kill bosses in dungeons.
-|tip Use the World Quests guide to complete world quests.
+|tip Use the "World Quests" guide to complete world quests.
 |tip Use the Dungeon guides to complete dungeons.
 |tip If you have a Gathering profession leveled to at least Rank 2, you can get them from gathering.
 |only Shaman
@@ -20624,7 +22084,7 @@ turnin In the House of Light and Shadow##44448 |goto Dalaran L/10 28.46,48.31
 step
 label "World_Quests_Shaman"
 Complete #30# World Quests |q 42988/1
-|tip Use the World Quests guide to accomplish this.
+|tip Use the "World Quests" dailies guide to accomplish this.
 |only Shaman
 step
 talk Advisor Sevel##96746
@@ -20697,7 +22157,7 @@ Feed Emberscar |q 41934/3 |goto 21.18,36.33
 |only Shaman
 step
 click Emberscar, Brand of Damnation
-Obtain Emberscar |q 41934/3 |goto 21.18,36.33
+Obtain Emberscar |q 41934/4 |goto 21.18,36.33
 |only Shaman
 step
 Follow the path |goto 25.56,41.36 < 20 |only if walking
@@ -20748,8 +22208,6 @@ turnin A Hero's Weapon##43418 |goto 35.22,46.42
 |only Shaman
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept Awakenings##44464 |goto The Maelstrom L/0 32.48,32.80
 |only Shaman
 step
@@ -20763,8 +22221,6 @@ turnin Awakenings##44464 |goto The Maelstrom L/0 32.48,32.80
 |only Shaman
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept An Unclear Path##44466 |goto 32.48,32.81
 |only Shaman
 step
@@ -20781,8 +22237,6 @@ turnin An Unclear Path##44466 |goto The Maelstrom L/0 32.48,32.81
 |only Shaman
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept Ravencrest's Legacy##44479 |goto The Maelstrom L/0 32.48,32.81
 |only Shaman
 step
@@ -20856,8 +22310,6 @@ turnin Ravencrest's Legacy##44479 |goto The Maelstrom L/0 32.48,32.81
 |only Shaman
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept In My Father's House##44480 |goto 32.48,32.81
 |only Shaman
 step
@@ -20871,48 +22323,75 @@ turnin In My Father's House##44480 |goto The Maelstrom L/0 32.48,32.81
 |only Shaman
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
-accept Destiny Unfulfilled##44496 |goto The Maelstrom L/0 32.48,32.81
+accept Destiny Unfulfilled##44481 |goto The Maelstrom L/0 32.48,32.81 |only if achieved(697)
+accept Destiny Unfulfilled##44496 |goto The Maelstrom L/0 32.48,32.81 |only if not achieved(697)
 |only Shaman
 step
 Use the Call to Xe'ra ability
 |tip It appears as a button on the screen.
-Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44481 |only if achieved(697)
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496 |only if not achieved(697)
 |only Shaman
 step
 Watch the dialogue
-Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44481 |only if achieved(697)
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Shaman
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Shaman
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Shaman
 step
 Use the Metamorphosis ability
 |tip It's on your action bar.
-Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Shaman
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Shaman
 step
 kill Maiev Shadowsong##112867
 |tip She will defeat you.
-Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496
-Experience True Betrayal |q 44496/1 |goto 52.70,71.25
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496 |only if not achieved(697)
+Experience True Betrayal |q 44481/1 |goto 52.70,71.25 |only if achieved(697)
+Experience True Betrayal |q 44496/1 |goto 52.70,71.25 |only if not achieved(697)
 |only Shaman
 step
 click Light's Heart
-turnin Destiny Unfulfilled##44496 |goto The Maelstrom L/0 32.48,32.81
+turnin Destiny Unfulfilled##44481 |goto The Maelstrom L/0 32.48,32.81 |only if achieved(697)
+turnin Destiny Unfulfilled##44496 |goto The Maelstrom L/0 32.48,32.81 |only if not achieved(697)
+|only Shaman
+step
+click Light's Heart
+accept The Hunt for Illidan Stormrage##45174 |goto 32.48,32.81
+|only Shaman
+step
+talk Allari the Souleater##89398
+turnin The Hunt for Illidan Stormrage##45174 |goto Azsuna/0 43.29,43.16
+accept Soul Prism of the Illidari##45175 |goto Azsuna/0 43.29,43.16
+|only Shaman
+step
+Claim #40# Lingering Soul Fragments |q 45175/1
+|tip These have a chance to drop from the final boss of every dungeon.
+|tip Higher difficulty dungeons have a higher chance to drop them, as well as drop multiple at a time.
+|tip You can only get 20 per week, so this quest will take a minimum of 2 weeks to complete.
+|only Shaman
+step
+talk Allari the Souleater##89398
+turnin Soul Prism of the Illidari##45175 |goto 43.29,43.16
 |only Shaman
 step
 talk Meryl Felstorm##112688
@@ -21284,18 +22763,18 @@ stickystart "Fel_Portals_Mage"
 step
 accept Fel Annihilation##43483 |goto 37.64,57.64
 |tip You will accept this quest automatically.
-|only Mage
+|only if ZGV:RaceClassMatch("Mage") and _G.C_Scenario.IsInScenario()
 stickystart "Fel_Annihilation_Mage"
 step
 Follow the path |goto 35.51,48.86 < 15 |walk
 Follow the path  |goto 43.65,17.18 < 15 |walk
 talk Farseer Nobundo##110695
 accept Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only Mage
+|only if ZGV:RaceClassMatch("Mage") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 Speak to Nobundo to Begin the Assault |q 43705/1 |goto 44.91,9.26
-|only Mage
+|only if ZGV:RaceClassMatch("Mage") and _G.C_Scenario.IsInScenario()
 step
 Kill the enemies that attack in waves
 |tip Focus on keeping Farseer Nobundo alive.
@@ -21304,11 +22783,11 @@ Defeat the Second Assault |q 43705/3 |goto 44.88,9.34
 Defeat the Third Wave of Demons |q 43705/4 |goto 44.88,9.34
 kill Karzak the Impaler##110781 |q 43705/5 |goto 44.88,9.34
 Defend Farseer Nobundo from the Legion Assault |q 43705/6 |goto 44.88,9.34
-|only Mage
+|only if ZGV:RaceClassMatch("Mage") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 turnin Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only Mage
+|only if ZGV:RaceClassMatch("Mage") and _G.C_Scenario.IsInScenario()
 step
 label "Fel_Portals_Mage"
 click Legion Portal
@@ -21595,7 +23074,7 @@ accept The Might of the Tirisgarde##44689 |goto Hall of the Guardian/2 71.82,54.
 |only Mage
 step
 Complete #30# World Quests |q 44689/1
-|tip Use the World Quests guide to accomplish this.
+|tip Use the "World Quests" dailies guide to accomplish this.
 |only Mage
 step
 talk Archmage Khadgar##107351
@@ -21712,8 +23191,6 @@ turnin A Hero's Weapon##43415 |goto 58.84,42.79
 step
 Run down the stairs |goto Hall of the Guardian/1 69.69,74.02 < 15 |walk
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept Awakenings##44464 |goto Hall of the Guardian/1 83.66,32.85
 |only Mage
 step
@@ -21728,8 +23205,6 @@ turnin Awakenings##44464 |goto Hall of the Guardian/1 83.66,32.85
 |only Mage
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept An Unclear Path##44466 |goto Hall of the Guardian/1 83.77,32.70
 |only Mage
 step
@@ -21747,8 +23222,6 @@ turnin An Unclear Path##44466 |goto Hall of the Guardian/1 83.77,32.70
 |only Mage
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept Ravencrest's Legacy##44479 |goto Hall of the Guardian/1 83.77,32.70
 |only Mage
 step
@@ -21823,8 +23296,6 @@ turnin Ravencrest's Legacy##44479 |goto Hall of the Guardian/1 83.77,32.70
 |only Mage
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept In My Father's House##44480 |goto 83.83,32.74
 |only Mage
 step
@@ -21838,48 +23309,75 @@ turnin In My Father's House##44480 |goto Hall of the Guardian/1 83.83,32.74
 |only Mage
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
-accept Destiny Unfulfilled##44496 |goto Hall of the Guardian/1 83.83,32.74
+accept Destiny Unfulfilled##44481 |goto Hall of the Guardian/1 83.83,32.74 |only if achieved(697)
+accept Destiny Unfulfilled##44496 |goto Hall of the Guardian/1 83.83,32.74 |only if not achieved(697)
 |only Mage
 step
 Use the Call to Xe'ra ability
 |tip It appears as a button on the screen.
-Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44481 |only if achieved(697)
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496 |only if not achieved(697)
 |only Mage
 step
 Watch the dialogue
-Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44481 |only if achieved(697)
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Mage
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Mage
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Mage
 step
 Use the Metamorphosis ability
 |tip It's on your action bar.
-Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Mage
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Mage
 step
 kill Maiev Shadowsong##112867
 |tip She will defeat you.
-Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496
-Experience True Betrayal |q 44496/1 |goto 52.70,71.25
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496 |only if not achieved(697)
+Experience True Betrayal |q 44481/1 |goto 52.70,71.25 |only if achieved(697)
+Experience True Betrayal |q 44496/1 |goto 52.70,71.25 |only if not achieved(697)
 |only Mage
 step
 click Light's Heart
-turnin Destiny Unfulfilled##44496 |goto Hall of the Guardian/1 83.83,32.74
+turnin Destiny Unfulfilled##44481 |goto Hall of the Guardian/1 83.83,32.74 |only if achieved(697)
+turnin Destiny Unfulfilled##44496 |goto Hall of the Guardian/1 83.83,32.74 |only if not achieved(697)
+|only Mage
+step
+click Light's Heart
+accept The Hunt for Illidan Stormrage##45174 |goto 83.83,32.74
+|only Mage
+step
+talk Allari the Souleater##89398
+turnin The Hunt for Illidan Stormrage##45174 |goto Azsuna/0 43.29,43.16
+accept Soul Prism of the Illidari##45175 |goto Azsuna/0 43.29,43.16
+|only Mage
+step
+Claim #40# Lingering Soul Fragments |q 45175/1
+|tip These have a chance to drop from the final boss of every dungeon.
+|tip Higher difficulty dungeons have a higher chance to drop them, as well as drop multiple at a time.
+|tip You can only get 20 per week, so this quest will take a minimum of 2 weeks to complete.
+|only Mage
+step
+talk Allari the Souleater##89398
+turnin Soul Prism of the Illidari##45175 |goto 43.29,43.16
 |only Mage
 step
 talk Minuette##110427
@@ -21908,8 +23406,8 @@ Take the Illidari Gateway |q 44087/1 |goto 98.04,69.35 |only if havequest(44087)
 Take the Illidari Gateway |q 42666/1 |goto 98.04,69.35 |only if havequest(42666) or completedq(42666)
 |only DemonHunter
 step
-Return to Battlelord Gaardoun |q 44087/2 |goto Mardum, the Shattered Abyss/1 56.17,54.31 |only if havequest(44087) or completedq(44087)
-Return to Battlelord Gaardoun |q 42666/2 |goto Mardum, the Shattered Abyss/1 56.17,54.31 |only if havequest(42666) or completedq(42666)
+Return to Battlelord Gaardoun |q 44087/2 |goto Mardum, the Shattered Abyss/2 56.17,54.31 |only if havequest(44087) or completedq(44087)
+Return to Battlelord Gaardoun |q 42666/2 |goto Mardum, the Shattered Abyss/2 56.17,54.31 |only if havequest(42666) or completedq(42666)
 |only DemonHunter
 step
 talk Battlelord Gaardoun##103025
@@ -21991,28 +23489,25 @@ turnin Loramus, Is That You?##42681 |goto 59.35,57.67
 accept Demonic Improvements##42683 |goto 59.35,57.67
 |only DemonHunter
 step
-Follow the path down |goto 69.09,65.31 < 15 |walk
-Follow the path down |goto 68.43,53.58 > 10000 |walk
 talk Loramus Thalipedes##110599
 Watch the dialogue
-Listen to Loramus' Story |q 42683/1 |goto Mardum, the Shattered Abyss/2 55.24,62.65
+Listen to Loramus' Story |q 42683/1 |goto Mardum, the Shattered Abyss/3 55.24,62.65
 |only DemonHunter
 step
 talk Loramus Thalipedes##110599
 Choose a Class Hall Upgrade |q 42683/2 |goto 55.24,62.65
 |only DemonHunter
 step
-Follow the path up |goto 49.35,54.05 > 10000 |walk
-Follow the path |goto Mardum, the Shattered Abyss/1 49.03,41.34 < 15 |walk
+Follow the path |goto Mardum, the Shattered Abyss/2 49.03,41.34 < 15 |walk
 talk Matron Mother Malevolence##98632
-turnin Demonic Improvements##42683 |goto Mardum, the Shattered Abyss/1 60.07,48.82
-accept Additional Accoutrements##42682 |goto Mardum, the Shattered Abyss/1 60.07,48.82
+turnin Demonic Improvements##42683 |goto Mardum, the Shattered Abyss/2 60.07,48.82
+accept Additional Accoutrements##42682 |goto Mardum, the Shattered Abyss/2 60.07,48.82
 |only DemonHunter
 step
 click Scouting Map
 Begin the "Additional Accoutrements" Mission
 |tip This mission will take 1 hour to complete.
-Click Here After You Start the Mission |confirm |goto 58.72,53.09 |q 42682
+Click Here After You Start the Mission |confirm |goto Mardum, the Shattered Abyss/2 58.72,53.09 |q 42682
 |only DemonHunter
 step
 talk Archmage Khadgar##90417
@@ -22073,18 +23568,18 @@ stickystart "Fel_Portals_DemonHunter"
 step
 accept Fel Annihilation##43483 |goto 37.64,57.64
 |tip You will accept this quest automatically.
-|only DemonHunter
+|only if ZGV:RaceClassMatch("DemonHunter") and _G.C_Scenario.IsInScenario()
 stickystart "Fel_Annihilation_DemonHunter"
 step
 Follow the path |goto 35.51,48.86 < 15 |walk
 Follow the path  |goto 43.65,17.18 < 15 |walk
 talk Farseer Nobundo##110695
 accept Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only DemonHunter
+|only if ZGV:RaceClassMatch("DemonHunter") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 Speak to Nobundo to Begin the Assault |q 43705/1 |goto 44.91,9.26
-|only DemonHunter
+|only if ZGV:RaceClassMatch("DemonHunter") and _G.C_Scenario.IsInScenario()
 step
 Kill the enemies that attack in waves
 |tip Focus on keeping Farseer Nobundo alive.
@@ -22093,11 +23588,11 @@ Defeat the Second Assault |q 43705/3 |goto 44.88,9.34
 Defeat the Third Wave of Demons |q 43705/4 |goto 44.88,9.34
 kill Karzak the Impaler##110781 |q 43705/5 |goto 44.88,9.34
 Defend Farseer Nobundo from the Legion Assault |q 43705/6 |goto 44.88,9.34
-|only DemonHunter
+|only if ZGV:RaceClassMatch("DemonHunter") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 turnin Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only DemonHunter
+|only if ZGV:RaceClassMatch("DemonHunter") and _G.C_Scenario.IsInScenario()
 step
 label "Fel_Portals_DemonHunter"
 click Legion Portal
@@ -22154,15 +23649,15 @@ turnin Bringer of the Light##44004 |goto Dalaran L/10 28.48,48.46
 accept Light's Charge##44153 |goto Dalaran L/10 28.48,48.46
 |only DemonHunter
 step
-Glide to the floating island nearby |goto Dalaran L/10 77.58,47.92 < 10 |only if walking
-click Illidari Gateway |goto Dalaran L/10 98.04,69.29 |n
-Return to the Fel Hammer |goto Mardum, the Shattered Abyss/1 59.19,85.76 < 10000 |noway |c |q 44153
-|only DemonHunter
-step
 click Scouting Map
 Begin the "Additional Accoutrements" Mission
 |tip This mission will take 1 hour to complete.
 Complete the "Additional Accoutrements" Mission |q 42682/1 |goto 58.72,53.09
+|only DemonHunter
+step
+Reach Level 103 |ding 103
+|tip You must be at least level 103 to continue this questline.
+|tip Use the Leveling guides to accomplish this.
 |only DemonHunter
 step
 talk Kor'vas Bloodthorn##103761
@@ -22171,7 +23666,7 @@ accept The Blood of Demons##37447 |goto 59.34,57.62
 |only DemonHunter
 step
 click Light's Heart
-turnin Light's Charge##44153 |goto Mardum, the Shattered Abyss/1 58.64,43.14
+turnin Light's Charge##44153 |goto Mardum, the Shattered Abyss/2 58.64,43.14
 |only DemonHunter
 step
 Kill enemies around this area
@@ -22179,17 +23674,10 @@ Kill enemies around this area
 collect 100 Fel Blood##137677 |q 37447/1 |goto Azsuna/0 43.27,44.21
 |only DemonHunter
 step
-Glide to the floating island nearby |goto Dalaran L/10 77.58,47.92 < 10 |only if walking
-click Illidari Gateway |goto Dalaran L/10 98.04,69.29 |n
-Return to the Fel Hammer |goto Mardum, the Shattered Abyss/1 59.19,85.76 < 10000 |noway |c |q 37447
-|only DemonHunter
-step
-Follow the path down |goto Mardum, the Shattered Abyss/1 68.53,65.97 < 10 |walk
-Follow the path down |goto Mardum, the Shattered Abyss/1 68.39,53.69 > 10000 |walk
 talk Kayn Sunfury##107724
 |tip It may be Altruis the Sufferer.
-turnin The Blood of Demons##37447 |goto Mardum, the Shattered Abyss/2 58.39,51.56
-accept Immortal Soul##42510 |goto Mardum, the Shattered Abyss/2 58.39,51.56
+turnin The Blood of Demons##37447 |goto Mardum, the Shattered Abyss/3 58.39,51.56
+accept Immortal Soul##42510 |goto Mardum, the Shattered Abyss/3 58.39,51.56
 |only DemonHunter
 step
 Use the Blood Offering |use Blood Offering##137690
@@ -22202,16 +23690,9 @@ turnin Immortal Soul##42510 |goto 58.41,51.58
 accept Leader of the Illidari##42522 |goto 58.41,51.58
 |only DemonHunter
 step
-Follow the path up |goto 68.32,53.90 > 10000 |walk
-Follow the path |goto Mardum, the Shattered Abyss/1 68.51,66.34 < 15 |walk
 talk Kayn Sunfury##108572
 |tip It may be Altruis the Sufferer.
-turnin Leader of the Illidari##42522 |goto 58.66,57.93
-|only DemonHunter
-step
-Reach Level 103 |ding 103
-|tip You must be at least level 103 to continue this questline.
-|tip Use the Leveling guides to accomplish this.
+turnin Leader of the Illidari##42522 |goto Mardum, the Shattered Abyss/2 58.60,57.89
 |only DemonHunter
 step
 talk Matron Mother Malevolence##98632
@@ -22260,11 +23741,9 @@ click Grimoire of Arcane Ways
 collect Grimoire of Arcane Ways##138139 |q 42594/9 |goto 59.83,49.20
 |only DemonHunter
 step
-Glide to the floating island nearby |goto 77.58,47.92 < 10 |only if walking
-click Illidari Gateway |goto 98.04,69.29 > 10000
 talk Belath Dawnblade##108782
-turnin Move Like No Other##42594 |goto Mardum, the Shattered Abyss/1 57.58,52.26
-accept Back in Black##42801 |goto Mardum, the Shattered Abyss/1 57.58,52.26
+turnin Move Like No Other##42594 |goto Mardum, the Shattered Abyss/2 57.58,52.26
+accept Back in Black##42801 |goto Mardum, the Shattered Abyss/2 57.58,52.26
 |only DemonHunter
 step
 click Scouting Map
@@ -22326,8 +23805,8 @@ Speak with Akama |scenarioend |q 42634 |only if havequest(42634) or completedq(4
 step
 Watch the dialogue
 click Gateway to the Fel Hammer |goto 33.91,69.71 |n
-Return to the Fel Hammer |goto Mardum, the Shattered Abyss/1 60.45,51.05 < 10000 |noway |c |q 42921 |only if havequest(42921) or completedq(42921)
-Return to the Fel Hammer |goto Mardum, the Shattered Abyss/1 60.45,51.05 < 10000 |noway |c |q 42634 |only if havequest(42634) or completedq(42634)
+Return to the Fel Hammer |goto Mardum, the Shattered Abyss/2 60.45,51.05 < 10000 |noway |c |q 42921 |only if havequest(42921) or completedq(42921)
+Return to the Fel Hammer |goto Mardum, the Shattered Abyss/2 60.45,51.05 < 10000 |noway |c |q 42634 |only if havequest(42634) or completedq(42634)
 |only DemonHunter
 step
 talk Kayn Sunfury##108572
@@ -22428,10 +23907,8 @@ turnin Goddess Watch Over You##44337 |goto Dalaran L/10 28.53,48.33 |only if hav
 accept In the House of Light and Shadow##44448 |goto Dalaran L/10 28.53,48.33
 |only DemonHunter
 step
-Glide to the floating island nearby |goto 77.58,47.92 < 10 |only if walking
-click Illidari Gateway |goto 98.04,69.29 > 10000
 click Light's Heart
-Uncover the Secrets of the Light's Heart |q 44448/1 |goto Mardum, the Shattered Abyss/1 58.51,43.40
+Uncover the Secrets of the Light's Heart |q 44448/1 |goto Mardum, the Shattered Abyss/2 58.51,43.40
 |only DemonHunter
 step
 talk Archmage Khadgar##90417
@@ -22473,8 +23950,8 @@ kill Theryssia##92423 |q 42787/3 |goto Val'sharah/0 37.96,52.80
 |only DemonHunter
 step
 talk Belath Dawnblade##108782
-turnin Deal With It Personally##42787 |goto Mardum, the Shattered Abyss/1 57.58,52.22
-accept Malace in Vrykul Land##42735 |goto Mardum, the Shattered Abyss/1 57.58,52.22
+turnin Deal With It Personally##42787 |goto Mardum, the Shattered Abyss/2 57.58,52.22
+accept Malace in Vrykul Land##42735 |goto Mardum, the Shattered Abyss/2 57.58,52.22
 |only DemonHunter
 step
 talk Aludane Whitecloud##96813
@@ -22580,8 +24057,8 @@ collect Sargerite Keystone##138397 |q 42752/1
 |only DemonHunter
 step
 talk Belath Dawnblade##108782
-turnin Vault Break-In##42752 |goto Mardum, the Shattered Abyss/1 57.73,52.49
-accept The Crux of the Plan##42775 |goto Mardum, the Shattered Abyss/1 57.73,52.49
+turnin Vault Break-In##42752 |goto Mardum, the Shattered Abyss/2 57.73,52.49
+accept The Crux of the Plan##42775 |goto Mardum, the Shattered Abyss/2 57.73,52.49
 |only DemonHunter
 step
 click Sargerite Keystone
@@ -22605,8 +24082,6 @@ accept Champion: Matron Mother Malevolence##42701 |instant |goto 59.93,48.83
 Recruit Malevolence |q 42776/2 |goto 59.93,48.83
 |only DemonHunter
 step
-Follow the path down |goto 68.36,40.91 < 15 |walk
-Follow the path down |goto 68.34,53.44 > 10000 |walk
 talk Allari the Souleater##98648
 |tip She walks around.
 turnin Two Worthies##42776 |goto Mardum, the Shattered Abyss/2 62.45,48.38
@@ -22631,45 +24106,34 @@ turnin Hitting the Books##43878 |goto 62.06,75.03
 |only DemonHunter
 stickystart "World_Quests_DemonHunter"
 step
-Follow the path up |goto 58.88,66.04 < 15 |walk
-Follow the path up |goto 68.28,53.67 > 10000 |walk
-Follow the path |goto Mardum, the Shattered Abyss/1 68.62,66.64 < 15 |walk
+Follow the path |goto Mardum, the Shattered Abyss/2 68.62,66.64 < 15 |walk
 click Scouting Map
 Complete "Preparations for Invasion" Missions
 |tip Each of these missions will take up to 12 hours to complete.
-Complete the "Preparations for Invasion: Scouting their Hold" Mission |q 42669/1 |goto 58.83,54.94
-Complete the "Preparations for Invasion: Weapon Improvements" Mission |q 42669/2 |goto 58.83,54.94
-Complete the "Preparations for Invasion: Snatch and Grab" Mission |q 42669/3 |goto 58.83,54.94
-Complete the "Preparations for Invasion: Ship-Shape" Mission |q 42669/4 |goto 58.83,54.94
-Complete the "Preparations for Invasion: Where Are the Felsouls?" Mission |q 42669/5 |goto 58.83,54.94
+Complete the "Preparations for Invasion: Scouting their Hold" Mission |q 42669/1 |goto Mardum, the Shattered Abyss/2 58.83,54.94
+Complete the "Preparations for Invasion: Weapon Improvements" Mission |q 42669/2 |goto Mardum, the Shattered Abyss/2 58.83,54.94
+Complete the "Preparations for Invasion: Snatch and Grab" Mission |q 42669/3 |goto Mardum, the Shattered Abyss/2 58.83,54.94
+Complete the "Preparations for Invasion: Ship-Shape" Mission |q 42669/4 |goto Mardum, the Shattered Abyss/2 58.83,54.94
+Complete the "Preparations for Invasion: Where Are the Felsouls?" Mission |q 42669/5 |goto Mardum, the Shattered Abyss/2 58.83,54.94
 |only DemonHunter
 step
 label "World_Quests_DemonHunter"
 Complete #30# World Quests |q 44694/1
-|tip Use the World Quests guide to accomplish this.
+|tip Use the "World Quests" dailies guide to accomplish this.
 |only DemonHunter
 step
-Follow the path down |goto 68.46,66.55 < 15 |walk
-Follow the path down |goto 68.35,53.61 > 10000 |walk
 talk Allari the Souleater##98648
 |tip She walks around.
-turnin Preparations for Invasion##42669 |goto Mardum, the Shattered Abyss/2 56.46,60.39
-turnin One Battle at a Time##44694 |goto Mardum, the Shattered Abyss/2 56.46,60.39
-accept We'll Need Some Obliterum##44616 |goto Mardum, the Shattered Abyss/2 59.71,53.12
-accept A Very Special Kind of Fuel##42733 |goto Mardum, the Shattered Abyss/2 59.71,53.12
-accept Deadlier Warglaives##42732 |goto Mardum, the Shattered Abyss/2 59.71,53.12
+turnin Preparations for Invasion##42669 |goto Mardum, the Shattered Abyss/3 56.46,60.39
+turnin One Battle at a Time##44694 |goto Mardum, the Shattered Abyss/3 56.46,60.39
+accept A Very Special Kind of Fuel##42733 |goto Mardum, the Shattered Abyss/3 59.71,53.12
+accept Deadlier Warglaives##42732 |goto Mardum, the Shattered Abyss/3 59.71,53.12
 |only DemonHunter
 stickystart "Sovereign_Souls_DemonHunter"
 step
-talk Camille Kleister##97429
-turnin We'll Need Some Obliterum##44616 |goto Dalaran L/10 39.64,30.80
-|only Demon Hunter
-step
-collect 3 Obliterum##124125 |q 42732/1
+collect 1 Obliterum##124125 |q 42732/1
 |tip Buy these from the Auction House.
-|tip You can also create you own by unlocking your Obliterum Forge, if you prefer.
-|tip Use the Obliterum Forge guide to accomplish this.
-|tip NOTE: The questline to unlock your Obliterum Forge is time consuming.
+|tip You can also create you own at your Obliterum Forge, if you prefer.
 |only DemonHunter
 step
 label "Sovereign_Souls_DemonHunter"
@@ -22679,11 +24143,11 @@ Kill Bosses in Random Legion Dungeons
 collect 15 Sovereign Soul##138482 |q 42733/1
 |only DemonHunter
 step
-Follow the path down |goto Mardum, the Shattered Abyss/2 58.99,63.31 < 15 |walk
+Follow the path down |goto Mardum, the Shattered Abyss/3 58.99,63.31 < 15 |walk
 talk Jace Darkweaver##98646
-turnin Deadlier Warglaives##42732 |goto Mardum, the Shattered Abyss/2 59.06,75.20
-turnin A Very Special Kind of Fuel##42733 |goto Mardum, the Shattered Abyss/2 59.06,75.20
-accept Jump-Capable##42754 |goto Mardum, the Shattered Abyss/2 59.06,75.20
+turnin Deadlier Warglaives##42732 |goto Mardum, the Shattered Abyss/3 59.06,75.20
+turnin A Very Special Kind of Fuel##42733 |goto Mardum, the Shattered Abyss/3 59.06,75.20
+accept Jump-Capable##42754 |goto Mardum, the Shattered Abyss/3 59.06,75.20
 |only DemonHunter
 step
 Enter the Building |goto Suramar/0 31.36,83.90 < 10 |walk
@@ -22730,18 +24194,14 @@ click Fel Engine Ignition
 collect Fel Engine Ignition##139404 |q 42754/5 |goto 28.43,52.20
 |only DemonHunter
 step
-Follow the path down |goto Mardum, the Shattered Abyss/1 68.76,66.51 < 15 |walk
-Follow the path down |goto Mardum, the Shattered Abyss/1 68.42,53.45 > 10000 |walk
-Follow the path down |goto Mardum, the Shattered Abyss/2 59.06,63.24 < 15 |walk
+Follow the path down |goto Mardum, the Shattered Abyss/3 59.06,63.24 < 15 |walk
 talk Jace Darkweaver##98646
-turnin Jump-Capable##42754 |goto Mardum, the Shattered Abyss/2 59.04,75.13
-accept A Final Offer##42810 |goto Mardum, the Shattered Abyss/2 59.04,75.13
+turnin Jump-Capable##42754 |goto Mardum, the Shattered Abyss/3 59.04,75.13
+accept A Final Offer##42810 |goto Mardum, the Shattered Abyss/3 59.04,75.13
 |only DemonHunter
 step
-Follow the path up |goto 58.99,63.96 < 15 |walk
-Follow the path up |goto 68.18,53.78 > 10000 |walk
-Follow the path |goto Mardum, the Shattered Abyss/1 59.11,78.87 < 15 |walk
-Reach the Fel Hammer Balcony |q 42810/1 |goto Mardum, the Shattered Abyss/1 59.21,91.31
+Follow the path |goto Mardum, the Shattered Abyss/2 59.11,78.87 < 15 |walk
+Reach the Fel Hammer Balcony |q 42810/1 |goto Mardum, the Shattered Abyss/2 59.21,91.31
 |only DemonHunter
 step
 Watch the dialogue
@@ -22750,21 +24210,17 @@ Use the REFUSE! ability
 Refuse Kil'jaeden's Offer |q 42810/2 |goto 59.21,91.31
 |only DemonHunter
 step
-Follow the path down |goto 68.76,66.51 < 15 |walk
-Follow the path down |goto 68.42,53.45 > 10000 |walk
-Follow the path down |goto Mardum, the Shattered Abyss/2 59.06,63.24 < 15 |walk
+Follow the path down |goto Mardum, the Shattered Abyss/3 59.06,63.24 < 15 |walk
 talk Jace Darkweaver##98646
-turnin A Final Offer##42810 |goto Mardum, the Shattered Abyss/2 59.06,75.13
+turnin A Final Offer##42810 |goto Mardum, the Shattered Abyss/3 59.06,75.13
 |tip You will only be able to accept one of these quests.
-accept The Invasion of Niskara##42809 |or |goto Mardum, the Shattered Abyss/2 59.06,75.13
-accept The Invasion of Niskara##42920 |or |goto Mardum, the Shattered Abyss/2 59.06,75.13
+accept The Invasion of Niskara##42809 |or |goto Mardum, the Shattered Abyss/3 59.06,75.13
+accept The Invasion of Niskara##42920 |or |goto Mardum, the Shattered Abyss/3 59.06,75.13
 |only DemonHunter
 step
-Follow the path up |goto 58.99,63.96 < 15 |walk
-Follow the path up |goto 68.18,53.78 > 10000 |walk
 click Control Console
-Activate the Control Console |q 42809/1 |goto Mardum, the Shattered Abyss/1 58.96,65.96 |only if havequest(42809) or completedq(42809)
-Activate the Control Console |q 42920/1 |goto Mardum, the Shattered Abyss/1 58.96,65.96 |only if havequest(42920) or completedq(42920)
+Activate the Control Console |q 42809/1 |goto Mardum, the Shattered Abyss/2 58.96,65.96 |only if havequest(42809) or completedq(42809)
+Activate the Control Console |q 42920/1 |goto Mardum, the Shattered Abyss/2 58.96,65.96 |only if havequest(42920) or completedq(42920)
 |only DemonHunter
 step
 Watch the dialogue
@@ -22864,32 +24320,27 @@ Speak with Your Ally |scenarioend |goto 72.92,78.01 |q 42920 |only if havequest(
 step
 talk Altruis the Sufferer##108571
 |tip It could be Kayn Sunfury instead.
-turnin The Invasion of Niskara##42809 |goto Mardum, the Shattered Abyss/1 58.63,57.85 |only if havequest(42809) or completedq(42809)
-turnin The Invasion of Niskara##42920 |goto Mardum, the Shattered Abyss/1 58.63,57.85 |only if havequest(42920) or completedq(42920)
-accept Last, But Not Least##42132 |goto Mardum, the Shattered Abyss/1 58.63,57.85
+turnin The Invasion of Niskara##42809 |goto Mardum, the Shattered Abyss/2 58.63,57.85 |only if havequest(42809) or completedq(42809)
+turnin The Invasion of Niskara##42920 |goto Mardum, the Shattered Abyss/2 58.63,57.85 |only if havequest(42920) or completedq(42920)
+accept Last, But Not Least##42132 |goto Mardum, the Shattered Abyss/2 58.63,57.85
 |only DemonHunter
 step
-Follow the path down |goto 68.76,66.51 < 15 |walk
-Follow the path down |goto 68.42,53.45 > 10000 |walk
 talk Allari the Souleater##98648
 |tip She walks around.
-accept Champion: Allari the Souleater##43184 |instant |goto Mardum, the Shattered Abyss/2 62.94,59.53
-Recruit Allari the Souleater |q 42132/1 |goto Mardum, the Shattered Abyss/2 62.94,59.53
+accept Champion: Allari the Souleater##43184 |instant |goto Mardum, the Shattered Abyss/3 62.94,59.53
+Recruit Allari the Souleater |q 42132/1 |goto Mardum, the Shattered Abyss/3 62.94,59.53
 |only DemonHunter
-step
 Follow the path down |goto 59.11,63.67 < 15 |walk
 talk Jace Darkweaver##98646
 accept Champion: Jace Darkweaver##43185 |instant |goto 59.11,75.16
 Recruit Jace Darkweaver |q 42132/2 |goto 59.11,75.16
 |only DemonHunter
 step
-Follow the path up |goto 58.99,63.96 < 15 |walk
-Follow the path up |goto 68.18,53.78 > 10000 |walk
-Follow the path |goto Mardum, the Shattered Abyss/1 67.96,66.87 < 15 |walk
+Follow the path |goto Mardum, the Shattered Abyss/2 67.96,66.87 < 15 |walk
 talk Altruis the Sufferer##108571
 |tip It could be Kayn Sunfury instead.
-turnin Last, But Not Least##42132 |goto Mardum, the Shattered Abyss/1 58.60,57.85
-accept I Am the Slayer!##43186 |goto Mardum, the Shattered Abyss/1 58.60,57.85
+turnin Last, But Not Least##42132 |goto Mardum, the Shattered Abyss/2 58.60,57.85
+accept I Am the Slayer!##43186 |goto Mardum, the Shattered Abyss/2 58.60,57.85
 |only DemonHunter
 step
 Watch the dialogue
@@ -22904,16 +24355,14 @@ accept One More Thing...##44214 |or |goto 58.60,57.85
 accept One More Thing...##44215 |or |goto 58.60,57.85
 |only DemonHunter
 step
-Follow the path down |goto 68.76,66.51 < 15 |walk
-Follow the path down |goto 68.42,53.45 > 10000 |walk
-Follow the path down |goto Mardum, the Shattered Abyss/2 58.75,44.18 < 15 |walk
+Follow the path down |goto Mardum, the Shattered Abyss/3 58.75,44.18 < 15 |walk
 talk Altruis the Sufferer##110485
 |tip It could be Kayn Sunfury instead.
-turnin One More Thing...##44214 |goto Mardum, the Shattered Abyss/2 57.29,32.36 |only if havequest(44214) or completedq(44214)
-turnin One More Thing...##44214 |goto Mardum, the Shattered Abyss/2 57.29,32.36 |only if havequest(44215) or completedq(44215)
+turnin One More Thing...##44214 |goto Mardum, the Shattered Abyss/3 57.29,32.36 |only if havequest(44214) or completedq(44214)
+turnin One More Thing...##44214 |goto Mardum, the Shattered Abyss/3 57.29,32.36 |only if havequest(44215) or completedq(44215)
 |tip You will only be able to accept one of these quests.
-accept A Hero's Weapon##43412 |or |goto Mardum, the Shattered Abyss/2 57.29,32.36
-accept A Hero's Weapon##43422 |or |goto Mardum, the Shattered Abyss/2 57.29,32.36
+accept A Hero's Weapon##43412 |or |goto Mardum, the Shattered Abyss/3 57.29,32.36
+accept A Hero's Weapon##43422 |or |goto Mardum, the Shattered Abyss/3 57.29,32.36
 |only DemonHunter
 step
 Use the Commander's Valor ability
@@ -22929,25 +24378,21 @@ turnin A Hero's Weapon##43422 |goto 57.29,32.36 |only if havequest(43422) or com
 |only DemonHunter
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
-accept Awakenings##44464 |goto Mardum, the Shattered Abyss/1 58.68,43.64
+accept Awakenings##44464 |goto Mardum, the Shattered Abyss/2 58.68,43.64
 |only DemonHunter
 step
-Follow the path down |goto 38.07,54.90 < 20 |only if walking
-Follow the path |goto 40.18,59.31 < 20 |only if walking
+Follow the path down |goto Val'sharah/0 38.07,54.90 < 20 |only if walking
+Follow the path |goto Val'sharah/0 40.18,59.31 < 20 |only if walking
 Use the Call to Xe'ra ability
 |tip It appears as a button on the screen.
 Witness the Awakening of Illidan Stormrage |q 44464/1 |goto Val'sharah/0 54.40,73.19
 |only DemonHunter
 step
 click Light's Heart
-turnin Awakenings##44464 |goto Mardum, the Shattered Abyss/1 58.68,43.64
+turnin Awakenings##44464 |goto Mardum, the Shattered Abyss/2 58.68,43.64
 |only DemonHunter
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept An Unclear Path##44466 |goto 58.65,43.40
 |only DemonHunter
 step
@@ -22960,13 +24405,11 @@ Witness Illidan's Resilience |q 44466/1 |goto Val'sharah/0 45.54,34.75
 |only DemonHunter
 step
 click Light's Heart
-turnin An Unclear Path##44466 |goto Mardum, the Shattered Abyss/1 58.65,43.40
+turnin An Unclear Path##44466 |goto Mardum, the Shattered Abyss/2 58.65,43.40
 |only DemonHunter
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
-accept Ravencrest's Legacy##44479 |goto Mardum, the Shattered Abyss/1 58.65,43.40
+accept Ravencrest's Legacy##44479 |goto Mardum, the Shattered Abyss/2 58.65,43.40
 |only DemonHunter
 step
 Follow the path |goto Val'sharah/0 54.96,53.43 < 20 |only if walking
@@ -23035,13 +24478,11 @@ Return to Val'sharah |goto Val'sharah/0 41.44,45.63 < 10000 |noway |c |q 44479
 |only DemonHunter
 step
 click Light's Heart
-turnin Ravencrest's Legacy##44479 |goto Mardum, the Shattered Abyss/1 58.65,43.40
+turnin Ravencrest's Legacy##44479 |goto Mardum, the Shattered Abyss/2 58.65,43.40
 |only DemonHunter
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
-accept In My Father's House##44480 |goto Mardum, the Shattered Abyss/1 58.65,43.40
+accept In My Father's House##44480 |goto Mardum, the Shattered Abyss/2 58.65,43.40
 |only DemonHunter
 step
 Use the Call to Xe'ra ability
@@ -23050,57 +24491,74 @@ Witness Illidan's Resilience |q 44480/1 |goto Azshara/0 34.83,49.90
 |only DemonHunter
 step
 click Light's Heart
-turnin In My Father's House##44480 |goto Mardum, the Shattered Abyss/1 58.65,43.40
+turnin In My Father's House##44480 |goto Mardum, the Shattered Abyss/2 58.65,43.40
 |only DemonHunter
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
-accept Destiny Unfulfilled##44496 |goto Mardum, the Shattered Abyss/1 58.65,43.40
+accept Destiny Unfulfilled##44497 |goto Mardum, the Shattered Abyss/2 58.65,43.40
 |only DemonHunter
 step
 Use the Call to Xe'ra ability
 |tip It appears as a button on the screen.
-Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44497
 |only DemonHunter
 step
 Watch the dialogue
-Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44497
 |only DemonHunter
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44497
 |only DemonHunter
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44497
 |only DemonHunter
 step
 Use the Metamorphosis ability
 |tip It's on your action bar.
-Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44497
 |only DemonHunter
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44497
 |only DemonHunter
 step
 kill Maiev Shadowsong##112867
 |tip She will defeat you.
-Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496
-Experience True Betrayal |q 44496/1 |goto 52.70,71.25
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44497
+Experience True Betrayal |q 44497/1 |goto 52.70,71.25
 |only DemonHunter
 step
 click Light's Heart
-turnin Destiny Unfulfilled##44496 |goto Mardum, the Shattered Abyss/1 58.65,43.40
+turnin Destiny Unfulfilled##44497 |goto Mardum, the Shattered Abyss/2 58.65,43.40
+|only DemonHunter
+step
+click Light's Heart
+accept The Hunt for Illidan Stormrage##45174 |goto 58.65,43.40
+|only DemonHunter
+step
+talk Allari the Souleater##89398
+turnin The Hunt for Illidan Stormrage##45174 |goto Azsuna/0 43.29,43.16
+accept Soul Prism of the Illidari##45175 |goto Azsuna/0 43.29,43.16
+|only DemonHunter
+step
+Claim #40# Lingering Soul Fragments |q 45175/1
+|tip These have a chance to drop from the final boss of every dungeon.
+|tip Higher difficulty dungeons have a higher chance to drop them, as well as drop multiple at a time.
+|tip You can only get 20 per week, so this quest will take a minimum of 2 weeks to complete.
+|only DemonHunter
+step
+talk Allari the Souleater##89398
+turnin Soul Prism of the Illidari##45175 |goto 43.29,43.16
 |only DemonHunter
 step
 talk Slitesh##110433
 |tip This quest will only be available if you chose to get the "Fel Armaments" class hall upgrade.
-accept Champion Armaments##44223 |goto Mardum, the Shattered Abyss/1 60.10,43.38
+accept Champion Armaments##44223 |goto Mardum, the Shattered Abyss/2 60.10,43.38
 |only DemonHunter
 step
 talk Slitesh##110433
@@ -23109,6 +24567,23 @@ Place a Workorder for Champion Armaments |q 44223/1 |goto 60.10,43.38
 step
 talk Slitesh##110433
 turnin Champion Armaments##44223 |goto 60.10,43.38
+|only DemonHunter
+step
+talk Injured Adept##118425
+accept An Urgent Warning##45993 |goto 63.04,37.53
+|only DemonHunter
+step
+talk Kor'vas Bloodthorn##108311
+turnin An Urgent Warning##45993 |goto 59.33,57.67
+accept Investigate the Broken Shore##45994 |goto 59.33,57.67
+|only DemonHunter
+step
+click Scouting Map
+Complete the "Menace on the Broken Shore" mission |q 45994/1 |goto 58.60,54.84
+|only DemonHunter
+step
+talk Kor'vas Bloodthorn##108311
+turnin Investigate the Broken Shore##45994 |goto 59.33,57.67
 |only DemonHunter
 step
 talk Black Harvest Acolyte##112693
@@ -23232,18 +24707,18 @@ stickystart "Fel_Portals_Warlock"
 step
 accept Fel Annihilation##43483 |goto 37.64,57.64
 |tip You will accept this quest automatically.
-|only Warlock
+|only if ZGV:RaceClassMatch("Warlock") and _G.C_Scenario.IsInScenario()
 stickystart "Fel_Annihilation_Warlock"
 step
 Follow the path |goto 35.51,48.86 < 15 |walk
 Follow the path  |goto 43.65,17.18 < 15 |walk
 talk Farseer Nobundo##110695
 accept Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only Warlock
+|only if ZGV:RaceClassMatch("Warlock") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 Speak to Nobundo to Begin the Assault |q 43705/1 |goto 44.91,9.26
-|only Warlock
+|only if ZGV:RaceClassMatch("Warlock") and _G.C_Scenario.IsInScenario()
 step
 Kill the enemies that attack in waves
 |tip Focus on keeping Farseer Nobundo alive.
@@ -23252,11 +24727,11 @@ Defeat the Second Assault |q 43705/3 |goto 44.88,9.34
 Defeat the Third Wave of Demons |q 43705/4 |goto 44.88,9.34
 kill Karzak the Impaler##110781 |q 43705/5 |goto 44.88,9.34
 Defend Farseer Nobundo from the Legion Assault |q 43705/6 |goto 44.88,9.34
-|only Warlock
+|only if ZGV:RaceClassMatch("Warlock") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 turnin Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only Warlock
+|only if ZGV:RaceClassMatch("Warlock") and _G.C_Scenario.IsInScenario()
 step
 label "Fel_Portals_Warlock"
 click Legion Portal
@@ -23661,7 +25136,7 @@ collect Felsworn Heart##138989 |q 42660/1
 step
 label "World_Quests_Warlock"
 Complete #30# World Quests |q 44682/1
-|tip Use the World Quests guide to accomplish this.
+|tip Use the "World Quests" dailies guide to accomplish this.
 |only Warlock
 step
 label "One_Who's_Worthy_Warlock"
@@ -23689,10 +25164,10 @@ talk Ritssyn Flamescowl##105102
 accept Finding Fizzlebang##41785 |goto 53.96,36.26
 |only Warlock
 step
-Follow the path up |goto Stormheim/0 34.29,49.24 < 20 |only if walking and _G.UnitFactionGroup("player")=="Alliance"
-Follow the path up |goto Stormheim/0 35.18,47.15 < 20 |only if walking and _G.UnitFactionGroup("player")=="Alliance"
-Follow the path up |goto Stormheim/0 44.87,54.17 < 20 |only if walking and _G.UnitFactionGroup("player")=="Horde"
-Follow the path up |goto Stormheim/0 40.11,50.64 < 20 |only if walking and _G.UnitFactionGroup("player")=="Horde"
+Follow the path up |goto Stormheim/0 34.29,49.24 < 20 |only if walking and alliance
+Follow the path up |goto Stormheim/0 35.18,47.15 < 20 |only if walking and alliance
+Follow the path up |goto Stormheim/0 44.87,54.17 < 20 |only if walking and horde
+Follow the path up |goto Stormheim/0 40.11,50.64 < 20 |only if walking and horde
 Follow the path |goto Stormheim/0 38.89,44.93 < 20 |only if walking
 talk Lulubelle Fizzlebang##104855
 turnin Finding Fizzlebang##41785 |goto Stormheim/0 39.37,42.24
@@ -23799,8 +25274,6 @@ turnin A Hero's Weapon##43414 |goto 36.37,30.69
 |only Warlock
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept Awakenings##44464 |goto 53.18,32.63
 |only Warlock
 step
@@ -23815,8 +25288,6 @@ turnin Awakenings##44464 |goto Dreadscar Rift/0 53.18,32.63
 |only Warlock
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept An Unclear Path##44466 |goto 53.17,32.63
 |only Warlock
 step
@@ -23833,8 +25304,6 @@ turnin An Unclear Path##44466 |goto Dreadscar Rift/0 53.17,32.63
 |only Warlock
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept Ravencrest's Legacy##44479 |goto Dreadscar Rift/0 53.17,32.63
 |only Warlock
 step
@@ -23908,8 +25377,6 @@ turnin Ravencrest's Legacy##44479 |goto Dreadscar Rift/0 53.17,32.63
 |only Warlock
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept In My Father's House##44480 |goto Dreadscar Rift/0 53.17,32.63
 |only Warlock
 step
@@ -23923,53 +25390,107 @@ turnin In My Father's House##44480 |goto Dreadscar Rift/0 53.17,32.63
 |only Warlock
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
-accept Destiny Unfulfilled##44496 |goto Dreadscar Rift/0 53.17,32.63
+accept Destiny Unfulfilled##44481 |goto Dreadscar Rift/0 53.17,32.63 |only if achieved(697)
+accept Destiny Unfulfilled##44496 |goto Dreadscar Rift/0 53.17,32.63 |only if not achieved(697)
 |only Warlock
 step
 Use the Call to Xe'ra ability
 |tip It appears as a button on the screen.
-Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44481 |only if achieved(697)
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496 |only if not achieved(697)
 |only Warlock
 step
 Watch the dialogue
-Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44481 |only if achieved(697)
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Warlock
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Warlock
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Warlock
 step
 Use the Metamorphosis ability
 |tip It's on your action bar.
-Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Warlock
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Warlock
 step
 kill Maiev Shadowsong##112867
 |tip She will defeat you.
-Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496
-Experience True Betrayal |q 44496/1 |goto 52.70,71.25
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496 |only if not achieved(697)
+Experience True Betrayal |q 44481/1 |goto 52.70,71.25 |only if achieved(697)
+Experience True Betrayal |q 44496/1 |goto 52.70,71.25 |only if not achieved(697)
 |only Warlock
 step
 click Light's Heart
-turnin Destiny Unfulfilled##44496 |goto Dreadscar Rift/0 53.17,32.63
+turnin Destiny Unfulfilled##44481 |goto Dreadscar Rift/0 53.17,32.63 |only if achieved(697)
+turnin Destiny Unfulfilled##44496 |goto Dreadscar Rift/0 53.17,32.63 |only if not achieved(697)
+|only Warlock
+step
+click Light's Heart
+accept The Hunt for Illidan Stormrage##45174 |goto 53.17,32.63
+|only Warlock
+step
+talk Allari the Souleater##89398
+turnin The Hunt for Illidan Stormrage##45174 |goto Azsuna/0 43.29,43.16
+accept Soul Prism of the Illidari##45175 |goto Azsuna/0 43.29,43.16
+|only Warlock
+step
+Claim #40# Lingering Soul Fragments |q 45175/1
+|tip These have a chance to drop from the final boss of every dungeon.
+|tip Higher difficulty dungeons have a higher chance to drop them, as well as drop multiple at a time.
+|tip You can only get 20 per week, so this quest will take a minimum of 2 weeks to complete.
+|only Warlock
+step
+talk Allari the Souleater##89398
+turnin Soul Prism of the Illidari##45175 |goto 43.29,43.16
+|only Warlock
+step
+talk Allari the Souleater##89398
+accept The Once and Future Lord of Shadows##45176 |goto 43.29,43.16
+|only Warlock
+step
+Enter Trial of Valor |goto Stormheim/0 71.15,72.76
+|tip Press I to queue for the LFR version or enter it with a raid on any other difficulty.
+confirm
+|only Warlock
+step
+Defeat Helya |q 45176/1
+|only Warlock
+step
+click Lord Illidan Stormrage##116697
+Use your Soul Prism of the Illidari to capture Illidan Soul
+Capture Illidans Soul |use Soul Prism of the Illidari##143661 |q 45176/2
+|tip This will be located up the right steps in Helyas room after you defeat her.
+|only Warlock
+step
+click Light's Heart
+turnin The Once and Future Lord of Shadows##45176 |goto Dreadscar Rift/0 53.17,32.63
+accept The Nighthold##45177 |goto Dreadscar Rift/0 53.17,32.63
+|only Warlock
+step
+talk Archmage Khadgar##90417
+turnin The Nighthold##45177 |goto Dalaran L/10 28.54,48.31
 |only Warlock
 step
 talk Murr##110408
 |tip This quest will only be available if you chose to get the "Shadow Pact" class hall upgrade.
-accept Champion Armaments##44228 |goto 57.29,52.50
+accept Champion Armaments##44228 |goto Dreadscar Rift/0 57.29,52.50
 |only Warlock
 step
 talk Murr##110408
@@ -24007,6 +25528,23 @@ Use the "Unleash Infernal" Ability on Your Map |q 44227/3
 step
 talk Demonia Pickerin##113371
 turnin Unleashing our Wrath##44227 |goto 49.47,24.90
+|only Warlock
+step
+talk Injured Invoker##118423
+accept An Urgent Warning##45989 |goto Dreadscar Rift/0 58.36,36.95
+|only Warlock
+step
+talk Gakin the Darkbinder##106199
+turnin An Urgent Warning##45989 |goto 67.01,46.41
+accept Investigate the Broken Shore##45990 |goto 67.01,46.41
+|only Warlock
+step
+click Dreadscar Battle Plans
+Complete the "Menace on the Broken Shore" mission |q 45990/1 |goto 66.19,47.01
+|only Warlock
+step
+talk Gakin the Darkbinder##106199
+turnin Investigate the Broken Shore##45990 |goto 67.01,46.41
 |only Warlock
 step
 talk Initiate Da-Nel##112696
@@ -24149,18 +25687,18 @@ stickystart "Fel_Portals_Monk"
 step
 accept Fel Annihilation##43483 |goto 37.64,57.64
 |tip You will accept this quest automatically.
-|only Monk
+|only if ZGV:RaceClassMatch("Monk") and _G.C_Scenario.IsInScenario()
 stickystart "Fel_Annihilation_Monk"
 step
 Follow the path |goto 35.51,48.86 < 15 |walk
 Follow the path  |goto 43.65,17.18 < 15 |walk
 talk Farseer Nobundo##110695
 accept Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only Monk
+|only if ZGV:RaceClassMatch("Monk") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 Speak to Nobundo to Begin the Assault |q 43705/1 |goto 44.91,9.26
-|only Monk
+|only if ZGV:RaceClassMatch("Monk") and _G.C_Scenario.IsInScenario()
 step
 Kill the enemies that attack in waves
 |tip Focus on keeping Farseer Nobundo alive.
@@ -24169,11 +25707,11 @@ Defeat the Second Assault |q 43705/3 |goto 44.88,9.34
 Defeat the Third Wave of Demons |q 43705/4 |goto 44.88,9.34
 kill Karzak the Impaler##110781 |q 43705/5 |goto 44.88,9.34
 Defend Farseer Nobundo from the Legion Assault |q 43705/6 |goto 44.88,9.34
-|only Monk
+|only if ZGV:RaceClassMatch("Monk") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 turnin Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only Monk
+|only if ZGV:RaceClassMatch("Monk") and _G.C_Scenario.IsInScenario()
 step
 label "Fel_Portals_Monk"
 click Legion Portal
@@ -24272,6 +25810,10 @@ talk Felguard Invader##104758
 turnin The Defense of Tian Monastery##41728 |goto 38.96,24.96
 accept Desperate Strike##41730 |goto 38.96,24.96
 accept Desperate Strike##41730 |goto 38.96,24.96
+|only Monk
+step
+talk Taran Zhu##104784
+accept Storm, Earth, and Fire##41731 |goto The Jade Forest/0 38.99,24.94
 |only Monk
 stickystart "Fel_Spikes_Monk"
 stickystart "Fel_Fires_Monk"
@@ -24565,7 +26107,7 @@ turnin The Mead Master##41038 |goto 62.12,20.14
 accept Stolen Knowledge##41039 |goto 62.12,20.14
 |only Monk
 step
-Cross the bridge |goto 40.11,62.68 < 20 |only if walking and _G.UnitFactionGroup("player")=="Alliance"
+Cross the bridge |goto 40.11,62.68 < 20 |only if walking and alliance
 Cross the bridge |goto 44.15,60.44 < 20 |only if walking
 Follow the path |goto 44.63,63.30 < 20 |only if walking
 click Grapple Point |goto 45.12,63.84 |n
@@ -24672,7 +26214,7 @@ turnin Odyn's Cauldron##41059 |goto The Wandering Isle L/0 51.41,48.39
 step
 label "World_Quests_Monk"
 Complete #30# World Quests |q 41086/1
-|tip Use the World Quests guide to accomplish this.
+|tip Use the "World Quests" dailies guide to accomplish this.
 |only Monk
 step
 talk Iron-Body Ponshu##64975
@@ -24759,8 +26301,6 @@ accept Champion: Aegira##41739 |instant |goto 55.40,57.23
 |only Monk
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept Awakenings##44464 |goto 51.80,48.16
 |only Monk
 step
@@ -24774,8 +26314,6 @@ turnin Awakenings##44464 |goto The Wandering Isle L/0 51.80,48.16
 |only Monk
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept An Unclear Path##44466 |goto 51.80,48.16
 |only Monk
 step
@@ -24792,8 +26330,6 @@ turnin An Unclear Path##44466 |goto The Wandering Isle L/0 51.78,48.13
 |only Monk
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept Ravencrest's Legacy##44479 |goto The Wandering Isle L/0 51.78,48.13
 |only Monk
 step
@@ -24867,8 +26403,6 @@ turnin Ravencrest's Legacy##44479 |goto The Wandering Isle L/0 51.78,48.13
 |only Monk
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept In My Father's House##44480 |goto The Wandering Isle L/0 51.78,48.13
 |only Monk
 step
@@ -24882,48 +26416,91 @@ turnin In My Father's House##44480 |goto The Wandering Isle L/0 51.78,48.13
 |only Monk
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
-accept Destiny Unfulfilled##44496 |goto The Wandering Isle L/0 51.78,48.13
+accept Destiny Unfulfilled##44481 |goto The Wandering Isle L/0 51.78,48.13 |only if achieved(697)
+accept Destiny Unfulfilled##44496 |goto The Wandering Isle L/0 51.78,48.13 |only if not achieved(697)
 |only Monk
 step
 Use the Call to Xe'ra ability
 |tip It appears as a button on the screen.
-Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44481 |only if achieved(697)
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496 |only if not achieved(697)
 |only Monk
 step
 Watch the dialogue
-Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44481 |only if achieved(697)
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Monk
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Monk
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Monk
 step
 Use the Metamorphosis ability
 |tip It's on your action bar.
-Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Monk
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Monk
 step
 kill Maiev Shadowsong##112867
 |tip She will defeat you.
-Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496
-Experience True Betrayal |q 44496/1 |goto 52.70,71.25
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496 |only if not achieved(697)
+Experience True Betrayal |q 44481/1 |goto 52.70,71.25 |only if achieved(697)
+Experience True Betrayal |q 44496/1 |goto 52.70,71.25 |only if not achieved(697)
 |only Monk
 step
 click Light's Heart
-turnin Destiny Unfulfilled##44496 |goto The Wandering Isle L/0 51.78,48.13
+turnin Destiny Unfulfilled##44481 |goto The Wandering Isle L/0 51.78,48.13 |only if achieved(697)
+turnin Destiny Unfulfilled##44496 |goto The Wandering Isle L/0 51.78,48.13 |only if not achieved(697)
+|only Monk
+step
+click Light's Heart
+accept The Hunt for Illidan Stormrage##45174 |goto 51.78,48.13
+|only Monk
+step
+talk Allari the Souleater##89398
+turnin The Hunt for Illidan Stormrage##45174 |goto Azsuna/0 43.29,43.16
+accept Soul Prism of the Illidari##45175 |goto Azsuna/0 43.29,43.16
+|only Monk
+step
+Claim #40# Lingering Soul Fragments |q 45175/1
+|tip These have a chance to drop from the final boss of every dungeon.
+|tip Higher difficulty dungeons have a higher chance to drop them, as well as drop multiple at a time.
+|tip You can only get 20 per week, so this quest will take a minimum of 2 weeks to complete.
+|only Monk
+step
+talk Allari the Souleater##89398
+turnin Soul Prism of the Illidari##45175 |goto 43.29,43.16
+|only Monk
+step
+talk Injured Initiate##118430
+accept An Urgent Warning##46024	|goto The Wandering Isle L/0 50.98,58.52
+|only Monk
+step
+talk Master Hsu##99179
+turnin An Urgent Warning##46024 |goto  52.77,59.77
+|tip If Master Hsu is on a mission, you will have to wait until it is completed to turn this quest in.
+accept Investigate the Broken Shore##46025 |goto The Wandering Isle L/0 52.77,59.77
+|only Monk
+step
+click Scouting Map
+Start the Menace on the Broken Shore Mission
+|tip You will need followers with 830 item level to efficiently complete this.
+"Menace on the Broken Shore" mission completed |q 46025/1 |goto 52.90,60.16
 |only Monk
 step
 talk Archdruid Hamuul Runetotem##112689
@@ -25109,18 +26686,18 @@ stickystart "Fel_Portals_Druid"
 step
 accept Fel Annihilation##43483 |goto 37.64,57.64
 |tip You will accept this quest automatically.
-|only Druid
+|only if ZGV:RaceClassMatch("Druid") and _G.C_Scenario.IsInScenario()
 stickystart "Fel_Annihilation_Druid"
 step
 Follow the path |goto 35.51,48.86 < 15 |walk
 Follow the path  |goto 43.65,17.18 < 15 |walk
 talk Farseer Nobundo##110695
 accept Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only Druid
+|only if ZGV:RaceClassMatch("Druid") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 Speak to Nobundo to Begin the Assault |q 43705/1 |goto 44.91,9.26
-|only Druid
+|only if ZGV:RaceClassMatch("Druid") and _G.C_Scenario.IsInScenario()
 step
 Kill the enemies that attack in waves
 |tip Focus on keeping Farseer Nobundo alive.
@@ -25129,11 +26706,11 @@ Defeat the Second Assault |q 43705/3 |goto 44.88,9.34
 Defeat the Third Wave of Demons |q 43705/4 |goto 44.88,9.34
 kill Karzak the Impaler##110781 |q 43705/5 |goto 44.88,9.34
 Defend Farseer Nobundo from the Legion Assault |q 43705/6 |goto 44.88,9.34
-|only Druid
+|only if ZGV:RaceClassMatch("Druid") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 turnin Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only Druid
+|only if ZGV:RaceClassMatch("Druid") and _G.C_Scenario.IsInScenario()
 step
 label "Fel_Portals_Druid"
 click Legion Portal
@@ -25319,7 +26896,7 @@ accept Essence of Regrowth##44076 |goto 40.96,58.80
 |only Druid
 step
 talk Keeper Remulos##103832
-turnin The Protectors##43991 |goto The Dreamgrove/0 40.14,26.78
+turnin The Protectors##43991 |goto The Dreamgrove/0 44.84,50.13
 |only Druid
 stickystart "Gathering_The_Dreamers_Druid"
 step
@@ -25568,14 +27145,14 @@ step
 label "Blood_Of_Sargeras_Druid"
 collect 10 Blood of Sargeras##124124 |c |q 42365
 |tip Complete world quests and kill bosses in dungeons.
-|tip Use the World Quests guide to complete world quests.
+|tip Use the "World Quests" guide to complete world quests.
 |tip Use the Dungeon guides to complete dungeons.
 |tip If you have a Gathering profession leveled to at least Rank 2, you can get them from gathering.
 |only Druid
 step
 label "World_Quests_Druid"
 Complete #30# World Quests |q 43403/1
-|tip Use the World Quests guide to accomplish this.
+|tip Use the "World Quests" dailies guide to accomplish this.
 |only Druid
 step
 talk Rensar Greathoof##101195
@@ -25693,8 +27270,6 @@ turnin The Emerald Nightmare##42432 |goto The Dreamgrove/0 44.66,51.97
 step
 click Light's Heart
 |tip Inside the building.
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept Awakenings##44464 |goto 60.06,52.14
 |only Druid
 step
@@ -25710,8 +27285,6 @@ turnin Awakenings##44464 |goto The Dreamgrove/0 60.06,52.14
 step
 click Light's Heart
 |tip Inside the building.
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept An Unclear Path##44466 |goto 60.06,52.14
 |only Druid
 step
@@ -25730,8 +27303,6 @@ turnin An Unclear Path##44466 |goto The Dreamgrove/0 60.06,52.14
 step
 click Light's Heart
 |tip Inside the building.
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept Ravencrest's Legacy##44479 |goto The Dreamgrove/0 60.06,52.14
 |only Druid
 step
@@ -25807,8 +27378,6 @@ turnin Ravencrest's Legacy##44479 |goto The Dreamgrove/0 60.06,52.14
 step
 click Light's Heart
 |tip Inside the building.
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept In My Father's House##44480 |goto The Dreamgrove/0 60.06,52.14
 |only Druid
 step
@@ -25824,49 +27393,120 @@ turnin In My Father's House##44480 |goto The Dreamgrove/0 60.06,52.14
 step
 click Light's Heart
 |tip Inside the building.
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
-accept Destiny Unfulfilled##44496 |goto The Dreamgrove/0 60.06,52.14
+accept Destiny Unfulfilled##44481 |goto The Dreamgrove/0 60.06,52.14 |only if achieved(697)
+accept Destiny Unfulfilled##44496 |goto The Dreamgrove/0 60.06,52.14 |only if not achieved(697)
 |only Druid
 step
 Use the Call to Xe'ra ability
 |tip It appears as a button on the screen.
-Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44481 |only if achieved(697)
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496 |only if not achieved(697)
 |only Druid
 step
 Watch the dialogue
-Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44481 |only if achieved(697)
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Druid
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Druid
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Druid
 step
 Use the Metamorphosis ability
 |tip It's on your action bar.
-Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Druid
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only Druid
 step
 kill Maiev Shadowsong##112867
 |tip She will defeat you.
-Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496
-Experience True Betrayal |q 44496/1 |goto 52.70,71.25
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496 |only if not achieved(697)
+Experience True Betrayal |q 44481/1 |goto 52.70,71.25 |only if achieved(697)
+Experience True Betrayal |q 44496/1 |goto 52.70,71.25 |only if not achieved(697)
 |only Druid
 step
 click Light's Heart
 |tip Inside the building.
-turnin Destiny Unfulfilled##44496 |goto The Dreamgrove/0 60.06,52.14
+turnin Destiny Unfulfilled##44481 |goto The Dreamgrove/0 60.06,52.14 |only if achieved(697)
+turnin Destiny Unfulfilled##44496 |goto The Dreamgrove/0 60.06,52.14 |only if not achieved(697)
+|only Druid
+step
+click Light's Heart
+accept The Hunt for Illidan Stormrage##45174 |goto 60.06,52.14
+|only Druid
+step
+talk Allari the Souleater##89398
+turnin The Hunt for Illidan Stormrage##45174 |goto Azsuna/0 43.29,43.16
+accept Soul Prism of the Illidari##45175 |goto Azsuna/0 43.29,43.16
+|only Druid
+step
+Claim #40# Lingering Soul Fragments |q 45175/1
+|tip These have a chance to drop from the final boss of every dungeon.
+|tip Higher difficulty dungeons have a higher chance to drop them, as well as drop multiple at a time.
+|tip You can only get 20 per week, so this quest will take a minimum of 2 weeks to complete.
+|only Druid
+step
+talk Allari the Souleater##89398
+turnin Soul Prism of the Illidari##45175 |goto 43.29,43.16
+|only Druid
+step
+talk Allari the Souleater##89398
+accept The Once and Future Lord of Shadows##45176 |goto 43.29,43.16
+|only Druid
+step
+Enter Trial of Valor |goto Stormheim/0 71.15,72.76
+|tip Press I to queue for the LFR version or enter it with a raid on any other difficulty.
+confirm
+|only Druid
+step
+Defeat Helya |q 45176/1
+|only Druid
+step
+click Lord Illidan Stormrage##116697
+Use your Soul Prism of the Illidari to capture Illidan Soul
+Capture Illidans Soul |use Soul Prism of the Illidari##143661 |q 45176/2
+|tip This will be located up the right steps in Helyas room after you defeat her.
+|only Druid
+step
+click Light's Heart
+turnin The Once and Future Lord of Shadows##45176 |goto The Dreamgrove/0 60.06,52.14
+accept The Nighthold##45177 |goto The Dreamgrove/0 60.06,52.14
+|only Druid
+step
+talk Archmage Khadgar##90417
+turnin The Nighthold##45177 |goto Dalaran L/10 28.54,48.31
+|only Druid
+step
+talk Injured Druid of the Claw##118431
+accept An Urgent Warning##46026 |goto The Dreamgrove/0 46.35,48.61
+|only Druid
+step
+talk Skylord Omnuron##98002
+turnin An Urgent Warning##46026 |goto The Dreamgrove/0 52.60,51.44
+accept Investigate the Broken Shore##46027 |goto The Dreamgrove/0 52.60,51.44
+|only Druid
+step
+click Scouting Map
+Complete the _"Menace on the Broken Shore"_ mission |q 46027/1 |goto The Dreamgrove/0 52.66,51.15
+|only Druid
+step
+talk Skylord Omnuron##98002
+turnin Investigate the Broken Shore##46027 |goto The Dreamgrove/0 52.60,51.44
 |only Druid
 step
 talk Highlord Darion Mograine##93437
@@ -25992,18 +27632,18 @@ stickystart "Fel_Portals_DeathKnight"
 step
 accept Fel Annihilation##43483 |goto 37.64,57.64
 |tip You will accept this quest automatically.
-|only DeathKnight
+|only if ZGV:RaceClassMatch("DeathKnight") and _G.C_Scenario.IsInScenario()
 stickystart "Fel_Annihilation_DeathKnight"
 step
 Follow the path |goto 35.51,48.86 < 15 |walk
 Follow the path  |goto 43.65,17.18 < 15 |walk
 talk Farseer Nobundo##110695
 accept Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only DeathKnight
+|only if ZGV:RaceClassMatch("DeathKnight") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 Speak to Nobundo to Begin the Assault |q 43705/1 |goto 44.91,9.26
-|only DeathKnight
+|only if ZGV:RaceClassMatch("DeathKnight") and _G.C_Scenario.IsInScenario()
 step
 Kill the enemies that attack in waves
 |tip Focus on keeping Farseer Nobundo alive.
@@ -26012,11 +27652,11 @@ Defeat the Second Assault |q 43705/3 |goto 44.88,9.34
 Defeat the Third Wave of Demons |q 43705/4 |goto 44.88,9.34
 kill Karzak the Impaler##110781 |q 43705/5 |goto 44.88,9.34
 Defend Farseer Nobundo from the Legion Assault |q 43705/6 |goto 44.88,9.34
-|only DeathKnight
+|only if ZGV:RaceClassMatch("DeathKnight") and _G.C_Scenario.IsInScenario()
 step
 talk Farseer Nobundo##110695
 turnin Nobundo's Last Stand##43705 |goto 44.91,9.26
-|only DeathKnight
+|only if ZGV:RaceClassMatch("DeathKnight") and _G.C_Scenario.IsInScenario()
 step
 label "Fel_Portals_DeathKnight"
 click Legion Portal
@@ -26281,6 +27921,7 @@ Reach Level 110 |ding 110
 step
 talk Highlord Darion Mograine##93437
 accept The Scarlet Assault##42818 |goto Broken Shore/2 50.96,50.71
+|tip You may need to relog to get this quest to show up.
 |only DeathKnight
 step
 talk Archmage Khadgar##113686
@@ -26414,7 +28055,7 @@ stickystart "Aggregates_Of_Anguish_DeathKnight"
 step
 label "World_Quests_DeathKnight"
 Complete #30# World Quests |q 43573/1
-|tip Use the World Quests guide to accomplish this.
+|tip Use the "World Quests" dailies guide to accomplish this.
 |only DeathKnight
 step
 talk Siouxsie the Banshee##93568
@@ -26446,7 +28087,7 @@ turnin Maul of the Dead##43574 |goto 36.20,56.03
 step
 collect 10 Blood of Sargeras##124124 |c |q 44690 |future
 |tip Complete world quests and kill bosses in dungeons.
-|tip Use the World Quests guide to complete world quests.
+|tip Use the "World Quests" guide to complete world quests.
 |tip Use the Dungeon guides to complete dungeons.
 |tip If you have a Gathering profession leveled to at least Rank 2, you can get them from gathering.
 |only DeathKnight
@@ -26472,6 +28113,7 @@ accept The Frozen Soul##44282 |goto 58.19,31.17
 step
 talk Highlord Darion Mograine##93437
 accept The Fourth Horseman##43686 |goto 51.03,50.45
+|tip You may need to relog to get this quest to show up.
 |only DeathKnight
 step
 Arrive at Light's Hope Chapel |q 43686/1 |goto Eastern Plaguelands/0 71.35,48.13
@@ -26577,8 +28219,6 @@ turnin A Hero's Weapon##43407 |goto 57.10,58.53
 |only DeathKnight
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept Awakenings##44464 |goto 54.26,74.19
 |only DeathKnight
 step
@@ -26592,8 +28232,6 @@ turnin Awakenings##44464 |goto Broken Shore/1 54.26,74.19
 |only DeathKnight
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept An Unclear Path##44466 |goto 54.24,74.13
 |only DeathKnight
 step
@@ -26610,8 +28248,6 @@ turnin An Unclear Path##44466 |goto Broken Shore/1 54.24,74.13
 |only DeathKnight
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept Ravencrest's Legacy##44479 |goto Broken Shore/1 54.24,74.13
 |only DeathKnight
 step
@@ -26685,8 +28321,6 @@ turnin Ravencrest's Legacy##44479 |goto Broken Shore/1 54.24,74.13
 |only DeathKnight
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
 accept In My Father's House##44480 |goto Broken Shore/1 54.24,74.13
 |only DeathKnight
 step
@@ -26700,53 +28334,80 @@ turnin In My Father's House##44480 |goto Broken Shore/1 54.24,74.13
 |only DeathKnight
 step
 click Light's Heart
-|tip We believe this quest's availability is determined by your Order Hall Artifact Research.
-|tip If the quest isn't available, talk to the Head Archivist in your Order Hall to get more Artifact Research Notes.
-accept Destiny Unfulfilled##44496 |goto Broken Shore/1 54.24,74.13
+accept Destiny Unfulfilled##44481 |goto Broken Shore/1 54.24,74.13 |only if achieved(697)
+accept Destiny Unfulfilled##44496 |goto Broken Shore/1 54.24,74.13 |only if not achieved(697)
 |only DeathKnight
 step
 Use the Call to Xe'ra ability
 |tip It appears as a button on the screen.
-Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44481 |only if achieved(697)
+Begin the Destiny Unfulfilled Scenario |scenariostart |goto Shadowmoon Valley/0 73.07,44.07 |q 44496 |only if not achieved(697)
 |only DeathKnight
 step
 Watch the dialogue
-Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44481 |only if achieved(697)
+Confront Akama |scenariostage 1 |goto Black Temple L/1 52.70,71.25 |q 44496 |only if not achieved(697)
 |only DeathKnight
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Survive the Assault |scenariostage 2 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only DeathKnight
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Make Sure the Flames of Azzinoth Survive |scenariostage 3 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only DeathKnight
 step
 Use the Metamorphosis ability
 |tip It's on your action bar.
-Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Use Metamorphosis |scenariostage 4 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only DeathKnight
 step
 Kill the enemies that attack
 |tip Use the abilities on your action bar.
-Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Annihilate the Rest of Your Enemies |scenariostage 5 |goto 52.70,71.25 |q 44496 |only if not achieved(697)
 |only DeathKnight
 step
 kill Maiev Shadowsong##112867
 |tip She will defeat you.
-Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496
-Experience True Betrayal |q 44496/1 |goto 52.70,71.25
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44481 |only if achieved(697)
+Defeat Maiev |scenarioend |goto 52.70,71.25 |q 44496 |only if not achieved(697)
+Experience True Betrayal |q 44481/1 |goto 52.70,71.25 |only if achieved(697)
+Experience True Betrayal |q 44496/1 |goto 52.70,71.25 |only if not achieved(697)
 |only DeathKnight
 step
 click Light's Heart
-turnin Destiny Unfulfilled##44496 |goto Broken Shore/1 54.24,74.13
+turnin Destiny Unfulfilled##44481 |goto Broken Shore/1 54.24,74.13 |only if achieved(697)
+turnin Destiny Unfulfilled##44496 |goto Broken Shore/1 54.24,74.13 |only if not achieved(697)
+|only DeathKnight
+step
+click Light's Heart
+accept The Hunt for Illidan Stormrage##45174 |goto 54.24,74.13
+|only DeathKnight
+step
+talk Allari the Souleater##89398
+turnin The Hunt for Illidan Stormrage##45174 |goto Azsuna/0 43.29,43.16
+accept Soul Prism of the Illidari##45175 |goto Azsuna/0 43.29,43.16
+|only DeathKnight
+step
+Claim #40# Lingering Soul Fragments |q 45175/1
+|tip These have a chance to drop from the final boss of every dungeon.
+|tip Higher difficulty dungeons have a higher chance to drop them, as well as drop multiple at a time.
+|tip You can only get 20 per week, so this quest will take a minimum of 2 weeks to complete.
+|only DeathKnight
+step
+talk Allari the Souleater##89398
+turnin Soul Prism of the Illidari##45175 |goto 43.29,43.16
 |only DeathKnight
 step
 talk Dead Collector Bane##110410
 |tip This quest will only be available if you chose to get the "Brothers in Arms" class hall upgrade.
-accept Champion Armaments##44231 |goto 51.78,32.38
+accept Champion Armaments##44231 |goto Broken Shore/2 51.78,32.38
 |only DeathKnight
 step
 talk Dead Collector Bane##110410
@@ -26757,7 +28418,14034 @@ talk Dead Collector Bane##110410
 turnin Champion Armaments##44231 |goto 51.78,32.38
 |only DeathKnight
 step
+talk Injured Ebon Knight##118433
+accept An Urgent Warning##46030 |goto 48.44,47.50
+|only DeathKnight
+step
+talk Siouxsie the Banshee##93568
+turnin An Urgent Warning##46030 |goto 49.66,51.25
+accept Investigate the Broken Shore##46031 |goto 49.66,51.25
+|only DeathKnight
+step
+click Scouting Map
+Complete the "Menace on the Broken Shore" mission |q 46031/1 |goto 49.66,51.25
+|only DeathKnight
+step
+talk Siouxsie the Banshee##93568
+turnin Investigate the Broken Shore##46031 |goto 49.66,51.25
+|only DeathKnight
+step
 _Congratulations!_
 .
 You completed your Class Hall campaign!
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Legion (100-110)\\Balance of Power Questline",{
+author="support@zygorguides.com",
+description="This guide will walk you through completing the \"Balance of Power\" questline.",
+condition_suggested="level>=110",
+condition_end="completedq(43533)",
+},[[
+step
+Complete the quest "Runas Knows the Way" in Azsuna |q 37857 |future |or
+|tip This quest is essential to being able to interact with Archmage Kalec.
+|tip Use our Azsuna leveling guide to complete this.
+Click here to load the "Azsuna" leveling guide |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\Azsuna" |or
+step
+talk Image of Kalec##110768
+accept The Power Within##43496 |goto Mardum, the Shattered Abyss/2 60.27,28.84 |only DemonHunter
+accept The Power Within##43503 |goto Hall of the Guardian/2 56.35,38.32 |only Mage
+accept The Power Within##43501 |goto Broken Shore/1 44.18,45.54	|only DeathKnight
+accept The Power Within##43496 |goto The Dreamgrove/0 40.54,58.74 |only Druid
+accept The Power Within##43496 |goto Dalaran L/4 31.34,63.67 |only Rogue
+accept The Power Within##43496 |goto Skyhold/1 45.46,44.98 |only Warrior
+accept The Power Within##43496 |goto Eastern Plaguelands/20 37.66,54.78	|only Paladin
+accept The Power Within##43496 |goto Netherlight Temple/1 49.77,17.03 |only Priest
+accept The Power Within##43496 |goto The Maelstrom L/0 26.8,40.4 |only Shaman
+accept The Power Within##43496 |goto Dreadscar Rift/0 56.47,30.99 |only Warlock
+accept The Power Within##43496 |goto The Wandering Isle L/0 51.71,48.59 |only Monk
+accept The Power Within##43496 |goto Trueshot Lodge/0 48.63,49.89 |only Hunter
+step
+talk Archmage Kalec##110773
+turnin The Power Within##43501 |goto Azsuna/0 48.12,25.58 |only if havequest(43501)
+turnin The Power Within##43496 |goto Azsuna/0 48.12,25.58 |only if havequest(43496)
+turnin The Power Within##43505 |goto Azsuna/0 48.12,25.58 |only if havequest(43505)
+turnin The Power Within##43503 |goto Azsuna/0 48.12,25.58 |only if havequest(43503)
+|tip Kalec will appear when you get close.
+step
+talk Senegos##100482
+accept The Heart of Zin-Azshari##40668 |goto 48.04,25.83
+step
+Enter the Eye of Azshara dungeon |scenariostart |goto 61.15,41.15
+|tip This dungeon must be completed on Mythic +0 difficulty or higher.
+|tip Use the Premade Groups tool to form a group.
+|only if not completedq(40668)
+step
+collect 1 Heart of Zin-Azshari##132738 |q 40668/1
+|tip It's located on the rock next to the northern Channeler Varisz.
+step
+kill Wrath of Azshara##96028 |q 40668/2
+|tip Wrath of Azshara is the final boss of the instance.
+step
+talk Senegos##100482
+turnin The Heart of Zin-Azshari##40668 |goto 48.04,25.83
+accept Fallen Power##43517 |goto 48.04,25.83
+accept A Vainglorious Past##43514 |goto 48.04,25.83
+step
+talk Archmage Kalec##110773
+accept Tempering Darkness##43518 |goto 48.12,25.58
+stickystart "BoS"
+step
+Enter the Darkheart Thicket dungeon |scenariostart |goto Val'sharah/0 59.05,31.19
+|tip This dungeon must be completed on Mythic +0 difficulty or higher.
+|tip Use the Premade Groups tool to form a group.
+|only if not completedq(43517)
+step
+kill Oakheart##103344
+collect 1 Corrupted Essence##139633 |q 43517/1
+|tip Oakheart is the second boss in the dungeon.
+step
+kill Shade of Xavius##99192 |q 43517/2
+|tip Shade of Xavius is the last boss in the dungeon.
+step
+Follow the path |goto Azsuna/0 45.46,42.23 < 20 |only if walking
+Follow the path |goto 46.88,40.41 < 20 |only if walking
+talk Veridis Fallon##107376
+buy 1 Vainglorious Draught##139631 |n
+collect 1 Vainglorious Draught##139631 |q 43514/1 |goto 46.90,41.43
+|tip To purchase this item, you must be honored with the Court of Farondis.
+|tip This item costs 150 gold, modified by reputation.
+step
+label "BoS"
+collect 30 Blood of Sargeras##124124 |q 43518/1
+|tip Blood of Sargeras comes from gathering professions, world quests, and dungeon bosses.
+step
+talk Senegos##100482
+turnin Fallen Power##43517 |goto 48.04,25.83
+turnin A Vainglorious Past##43514 |goto 48.04,25.83
+step
+talk Archmage Kalec##110773
+turnin Tempering Darkness##43518 |goto 48.12,25.58
+accept Lucid Strength##43519 |goto 48.12,25.58
+step
+click Heart of Zin-Azshari##0
+|tip Stand still while you channel the spell.
+Absorb the power from the Corrupted Essence |q 43519/1 |goto 48.13,25.72
+step
+talk Archmage Kalec##110773
+turnin Lucid Strength##43519 |goto 48.12,25.58
+accept In Nightmares##43520 |goto 48.12,25.58
+step
+talk Senegos##100482
+accept Essence of Power##43521 |goto 48.04,25.83
+step
+Enter the Emerald Nightmare raid |scenariostart |goto Val'sharah/0 59.05,31.19
+|tip This raid must be completed on Normal difficulty or higher.
+|tip Use the Premade Groups tool to form a group.
+|only if not completedq(43520) and not completedq(43521)
+stickystart "Essence"
+step
+kill Il'gynoth##105393
+|tip Il'gynoth is the second boss of the Emerald Nightmare raid instance.
+collect 1 Deathglare Iris##139671 |q 43520/1
+step
+kill Xavius##103769
+|tip Xavius is the final boss of the Emerald Nightmare raid instance.
+collect 1 Horn of the Nightmare Lord##139672 |q 43520/2
+step
+label "Essence"
+collect 30 Corrupted Essence##139706 |q 43521/1
+|tip These have a chance to drop from each boss in Emerald Nightmare on normal difficulty or higher.
+|tip You can loot these from each difficulty every week.
+step
+talk Archmage Kalec##110773
+turnin In Nightmares##43520 |goto Azsuna/0 48.12,25.58
+step
+talk Senegos##100482
+turnin Essence of Power##43521 |goto 48.04,25.83
+accept Essential Consumption##43522 |goto 48.04,25.83
+step
+click Heart of Zin-Azshari##0
+|tip Stand still while you channel the spell.
+Absorb the combined power of the Corrupted Essences |q 43522/1 |goto 48.13,25.72
+step
+talk Senegos##100482
+turnin Essential Consumption##43522 |goto 48.04,25.83
+step
+talk Archmage Kalec##110773
+accept Repaid Debt##43523 |goto 48.12,25.58
+step
+talk Archmage Kalec##111826
+turnin Repaid Debt##43523 |goto Suramar/0 37.84,47.40 |region suramar_shalaran
+step
+talk Thalrenus Rivertree##101083
+accept Lost Knowledge##40673 |goto 37.83,47.25 |region suramar_shalaran
+step
+talk First Arcanist Thalyssra##115736
+|tip Thalyssra may be in another location nearby, depending on your progress in the Suramar story.
+buy 1 Scroll of Elun'dris##139780 |n
+|tip You must at least be revered with The Nightfallen to purchase this item.
+|tip This scroll costs 150 gold.
+Obtain the Scroll of Elun'dris from First Arcanist Thalyssra |q 40673/1 |goto 36.49,45.83 |region suramar_shalaran
+step
+talk Thalrenus Rivertree##101083
+turnin Lost Knowledge##40673 |goto 37.83,47.25
+accept Vault of the Wardens: Borrowing Without Asking##43525 |goto 37.83,47.25 |region suramar_shalaran
+step
+talk Syrana Starweaver##101080
+accept The Arcway: Rite of the Captain##40675 |goto 37.89,47.28 |region suramar_shalaran
+step
+talk Lothrius Mooncaller##101082
+accept Court of Stars: Literary Perfection##43524 |goto 37.94,47.37 |region suramar_shalaran
+step
+Go through the door |goto Azsuna/0 48.11,82.04 < 10 |only if walking
+Enter the Vault of the Wardens dungeon |scenariostart |goto 48.30,80.16
+|tip This dungeon must be completed on Mythic +0 difficulty or higher.
+|tip Use the Premade Groups tool to form a group.
+|only if not completedq(43525)
+step
+click Containment Crystal##252443
+collect 1 Containment Crystal##139788 |q 43525/1
+|tip The crystal is located at the top of the elevator room after the first boss.
+|tip After you kill the imp mother and open the door, look for it near the elevator platform.
+step
+kill Cordana Felsong##95888 |q 43525/2
+|tip Cordana Felsong is the last boss in the dungeon.
+step
+Enter The Arcway dungeon |scenariostart |goto Suramar/0 41.04,61.83
+|tip This dungeon must be completed on Mythic +0 difficulty or higher.
+|tip Use the Premade Groups tool to form a group.
+|only if not completedq(40675)
+step
+kill Advisor Vandros##98208 |q 40675/2
+collect 1 Eon Winder##139787 |q 40675/1
+|tip Advisor Vandros is the last boss in the dungeon.
+step
+Enter the Court of Stars dungeon |scenariostart |goto Suramar/0 50.94,65.58
+|tip This dungeon must be completed on Mythic +0 difficulty or higher.
+|tip Use the Premade Groups tool to form a group.
+|only if not completedq(43524)
+step
+click Scrolls, Sigils, and the Nightborne Way##252410
+collect 1 Wards, Sigils, and the Nightborne Way##139782 |q 43524/1
+|tip After killing the Patrol Captain Gerdo, you must go up the stairs and kill the Guardian Construct blocking the path to the next boss.
+|tip Immediately after killing the construct, go right. The book is at the end of the path.
+step
+kill Advisor Melandrus##101831 |q 43524/2
+|tip Advisor Melandrus is the last boss in the dungeon.
+step
+talk Thalrenus Rivertree##101083
+turnin Vault of the Wardens: Borrowing Without Asking##43525 |goto Suramar/0 37.83,47.25 |region suramar_shalaran
+step
+talk Lothrius Mooncaller##101082
+turnin Court of Stars: Literary Perfection##43524 |goto 37.94,47.37 |region suramar_shalaran
+step
+talk Syrana Starweaver##101080
+turnin The Arcway: Rite of the Captain##40675 |goto 37.89,47.28 |region suramar_shalaran
+accept Twisted Power##40678 |goto 37.89,47.28 |region suramar_shalaran
+step
+kill Eredar Souleater##107331+, Eredar Enforcer##107366+, Chattering Devil##107323+, Netherflame Infernal##107328+
+collect 5 Legion Portal Fragment##132749 |n
+Use the Portal Fragments to assemble them |use Legion Portal Fragment##132749
+Combine the fragments into a Greater Legion Portal Stone |condition itemcount(132750) >= 1 |goto Azsuna/0 27.65,50.58 |only if not completedq(40678)
+step
+Use the Greater Legion Portal Stone to summon Vizuul the Twisted |use Greater Legion Portal Stone##132750
+kill Vizuul the Twisted##101130
+collect 1 Twisted Runebindings##132751 |q 40678/1 |goto Azsuna/0 27.65,50.58
+|tip You will need a group to defeat Vizuul.
+|tip A five-person group is recommended.
+step
+talk Syrana Starweaver##101080
+turnin Twisted Power##40678 |goto Suramar/0 37.89,47.28 |region suramar_shalaran
+accept A True Test##43526 |goto 37.89,47.28 |region suramar_shalaran
+step
+click Heart of Zin-Azshari##0
+Absorb the power from the Twisted Runebindings |q 43526/1 |goto 37.74,47.24 |region suramar_shalaran
+step
+talk Syrana Starweaver##101080
+turnin A True Test##43526 |goto 37.89,47.28 |region suramar_shalaran
+step
+talk Archmage Kalec##111826
+accept Seeking the Valkyra##40603 |goto Suramar/0 37.84,47.40 |region suramar_shalaran
+step
+talk Ashildir##100738
+turnin Seeking the Valkyra##40603 |goto Stormheim/0 62.76,68.10
+accept The Mark##40608 |goto 62.76,68.10
+step
+click Eyir##0
+Receive the Mark of the Valkyra |q 40608/1 |goto Stormheim/28 60.53,51.18
+|tip When Eyir says "Kneel before me, mortal" type "/kneel" with her targeted.
+step
+talk Ashildir##100738
+turnin The Mark##40608 |goto Stormheim/0 62.76,68.10
+accept Retrieving the Svalnguard##40613 |goto 62.76,68.10
+step
+Enter the Maw of Souls dungeon |scenariostart |goto Stormheim/0 52.52,45.16
+|tip This dungeon must be completed on Mythic +0 difficulty or higher.
+|tip Use the Premade Groups tool to form a group.
+|only if not completedq(40613)
+step
+click The Svalnguard##245849
+collect 1 The Svalnguard##132440 |q 40613/1
+|tip The Svalnguard is located next to The Grimewalker, before the second boss.
+|tip The Grimewalker is the big putrid giant below decks.
+step
+kill Helya##96759 |q 40613/2
+|tip Helya is the last boss in the dungeon.
+step
+talk Ashildir##100738
+turnin Retrieving the Svalnguard##40613 |goto 62.76,68.10
+accept A Feast Fit for Odyn##40614 |goto 62.76,68.10
+accept Presentation is Key##40672 |goto 62.76,68.10
+step
+Follow the path |goto Stormheim/0 49.57,35.76 < 25 |only if walking
+kill Thunderhorn##100838
+|tip This mob is elite.
+collect 1 Thunderhorn Flank##132462 |goto Stormheim/0 47.88,39.44 |q 40614
+step
+kill Spinesever##100841
+|tip This mob is elite.
+collect 1 Spinesever's Spine##132463 |goto Highmountain/0 39.15,13.43 |q 40614
+step
+Follow the path |goto Azsuna/0 64.46,26.24 < 20 |only if walking
+Follow the path |goto 65.65,22.72 < 25 |only if walking
+Follow the path |goto 61.90,18.10 < 25 |only if walking
+Follow the path |goto 61.04,15.87 < 20 |only if walking
+kill Leytusk##100846
+collect 1 Leytusk Steak##132464 |goto Azsuna/0 62.14,11.77 |q 40614
+step
+Follow the path |goto Highmountain/0 50.81,64.26 < 25 |only if walking
+Enter the Neltharion's Lair dungeon |scenariostart |goto 49.56,68.71
+|tip This dungeon must be completed on Mythic +0 difficulty or higher.
+|tip Use the Premade Groups tool to form a group.
+|only if not completedq(40672)
+stickystart "Casing"
+step
+kill Dargrul##91007 |q 40672/2
+|tip Dargrul is the last boss in the dungeon.
+step
+label "Casing"
+click Adamantium Casing Scrap##245938
+collect 4 Adamantium Casing Scrap##132744 |q 40672/1
+|tip These can be found around the room near Dargrul.
+step
+talk Ashildir##100738
+turnin A Feast Fit for Odyn##40614 |goto Stormheim/0 62.76,68.10
+turnin Presentation is Key##40672 |goto 62.76,68.10
+accept Odyn's Blessing##40615 |goto 62.76,68.10
+step
+Enter the Halls of Valor dungeon |scenariostart |goto 72.69,70.46
+|tip This dungeon must be completed on Mythic +0 difficulty or higher.
+|tip Use the Premade Groups tool to form a group.
+|only if not completedq(40615)
+step
+Present the feast to Odyn |q 40615/1 |use Grand Feast of Valhallas##132471
+|tip Do this at the beginning of the instance.
+step
+kill Odyn##95676
+|tip Odyn is the last boss in the dungeon.
+click Heart of Zin-Azshari##0
+Earn Odyn's Favor |q 40615/2
+|tip The heart will appear after you loot the chest.
+|tip You will need to wait for the RP to finish to receive Odyn's Favor.
+step
+talk Ashildir##100738
+turnin Odyn's Blessing##40615 |goto 62.76,68.10
+step
+talk Archmage Kalec##111814
+accept Planning the Assault##43528 |goto 62.52,68.22
+step
+talk Archmage Kalec##111826
+turnin Planning the Assault##43528 |goto Suramar/0 37.84,47.40 |region suramar_shalaran
+accept Delusions of Grandeur##43530 |goto 37.84,47.40 |region suramar_shalaran
+accept Into the Nighthold##43531 |goto 37.84,47.40 |region suramar_shalaran
+step
+Enter the Nighthold raid |goto Suramar/0 44.18,59.66 < 5 |c
+|tip This raid must be completed on normal difficulty or higher.
+|tip Use the Premade Groups tool to form a group.
+|only if not completedq(43530) and not completedq(43531)
+stickystart "Delusions"
+step
+kill Trilliax##104288
+collect 1 Trilliax Core##140196 |q 43531/1
+|tip This only drops on normal difficulty or higher.
+step
+kill Elisande##106643
+collect 1 Millennia Tome##140197 |q 43531/2
+|tip This only drops on normal difficulty or higher.
+step
+label "Delusions"
+collect 20 Nightshard##140199 |q 43530/1
+|tip These drop from bosses in the Nighthold raid.
+|tip They only drop on normal difficulty or higher.
+|tip This will take at least two weeks to complete.
+step
+talk Archmage Kalec##111826
+turnin Delusions of Grandeur##43530 |goto 37.84,47.40 |region suramar_shalaran
+turnin Into the Nighthold##43531 |goto 37.84,47.40 |region suramar_shalaran
+accept Darkness Calls##43532 |goto 37.84,47.40 |region suramar_shalaran
+step
+Enter the Nighthold raid |goto Suramar/0 44.18,59.66 < 5 |c
+|tip This raid must be completed on normal difficulty or higher.
+|tip Use the Premade Groups tool to form a group.
+|only if not completedq(43532)
+step
+kill Gul'dan##105503
+|tip Gul'dan is the final boss of the instance.
+click Gift of the Nightborne##266483
+collect 1 Eye of Gul'dan##140198 |q 43532
+step
+talk Archmage Kalec##111826
+turnin Darkness Calls##43532 |goto 37.84,47.40 |region suramar_shalaran
+accept Balance of Power##43533 |goto 37.84,47.40 |region suramar_shalaran
+step
+click Heart of Zin-Azshari##0
+Absorb the combined power of the Nightshards and the Eye of Gul'dan |q 43533/1 |goto Suramar/0 41.40,18.29
+step
+talk Archmage Kalec##111826
+turnin Balance of Power##43533 |goto 41.13,18.41
+step
+Congratulations!
+You have completed the _Balance of Power_ questline
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Legion (100-110)\\Broken Shore Campaign",{
+author="support@zygorguides.com",
+description="This guide will walk you through completing the Broken Shore Campaign story.",
+startlevel=110.0,
+},[[
+step
+accept Armies of Legionfall##46730
+|only DeathKnight
+step
+Meet Khadgar at Krasus' Landing |q 46730/1 |goto Dalaran L/10 66.18,41.97
+|only DeathKnight
+step
+talk Archmage Khadgar##120215
+turnin Armies of Legionfall##46730 |goto 69.35,43.87
+accept Assault on Broken Shore##46734 |goto 69.35,43.87
+|only DeathKnight
+step
+talk Archmage Khadgar##120215
+Tell him: _"I am ready to launch the assault"_ |q 46734/1 |goto 69.34,43.87
+|only DeathKnight
+step
+Reach the Broken Shore |scenariogoal 1/35285 |goto Assault on Broken Shore/0 55.06,66.85 |q 46734
+|only DeathKnight
+step
+Defeat the Legion forces |scenariostage 2 |goto Assault on Broken Shore/0 52.70,67.01 |q 46734
+|tip Kill any mobs you see around the staging area.
+|only DeathKnight
+step
+Follow the path |goto Assault on Broken Shore/0 47.47,72.08 < 30 |walk
+Follow the path up |goto 44.05,73.57 < 25 |walk
+Follow the path |goto 41.46,71.46 < 25 |walk
+Follow the path |goto 39.96,67.80 < 20 |walk
+kill Lord Kalgorath##116291
+Defeat Lord Kalgorath |scenariogoal 3/35329 |goto 41.43,64.76 |q 46734
+|only DeathKnight
+step
+Go up the steps | goto 40.48,63.99 < 20 |walk
+Follow the path down |goto 44.04,58.20 < 20 |walk
+Follow the path |goto 47.17,58.16 < 20 |walk
+Follow the path |goto 52.27,52.46 < 20 |walk
+Close #3# Legion Portals |scenariogoal 4/35495 |goto 57.67,49.70 |q 46734
+|tip These are scattered around the area.
+|only DeathKnight
+step
+Deplete Arganoth's forces |scenariostage 4 |goto 57.67,49.70 |q 46734
+|tip Kill anything in the area until the progress bar fills up.
+|only DeathKnight
+step
+kill Dread Commander Arganoth##118551
+Defeat Dread Commander Arganoth |scenariogoal 5/35497 |goto 55.38,51.47 |walk |q 46734
+|only DeathKnight
+step
+click Demonic Gateway
+Take the Demonic Gateway |scenariogoal 6/35551 |goto 53.32,50.37 |walk |q 46734
+|only DeathKnight
+step
+click First Arcane Bomb |goto 49.47,46.56 < 5 |walk |scenariogoal 7/36178 |count 1 |q 46734
+|only DeathKnight
+step
+click Second Arcane Bomb |goto 49.94,44.47 < 5 |walk |scenariogoal 7/36178 |count 2 |q 46734
+|tip Take the portal after clicking this bomb. Don't bother killing the Interrogator.
+|only DeathKnight
+step
+click Third Arcane Bomb |goto 50.19,43.72 < 5 |walk |scenariogoal 7/36178 |count 3 |q 46734
+|only DeathKnight
+step
+click Fourth Arcane Bomb |goto 49.21,46.17 < 5 |walk |scenariogoal 7/36178 |count 4 |q 46734
+|only DeathKnight
+step
+click Fifth Arcane Bomb |goto 49.45,48.38 < 5 |walk |scenariogoal 7/36178 |count 5 |q 46734
+|only DeathKnight
+step
+Go upstairs |goto 49.10,45.31 < 5 |walk
+click Sixth Arcane Bomb |goto 49.30,45.88 < 5 |walk |scenariogoal 7/36178 |count 6 |q 46734
+|only DeathKnight
+step
+click Final Arcane Bomb |goto 50.84,45.63 < 5 |walk |scenariogoal 7/36178 |count 7 |q 46734
+|only DeathKnight
+step
+kill Mephistroth##120746
+Defeat Mephistroth |scenariogoal 7/36179 |goto 50.05,45.74 |q 46734
+|tip Interrupt Mind Blast whenever possible.
+|tip When Mephistroth casts Shadow Blast, start strafing to the left or right.
+|only DeathKnight
+step
+talk Archmage Khadgar##116302
+turnin Assault on Broken Shore##46734 |goto Broken Shore/0 44.73,63.27
+|only DeathKnight
+step
+talk Commander Chambers##120183
+accept Legionfall Supplies##46286 |goto 44.55,63.15
+accept Aalgen Point##46832 |goto 44.55,63.15
+|only DeathKnight
+step
+talk Illidari Calia##120272
+fpath Deliverance Point |goto Broken Shore/0 45.17,64.09
+|only DeathKnight
+stickystart "DK_Supplies"
+step
+Follow the path |goto 46.86,58.63 < 25 |only if walking
+Follow the path |goto 51.55,52.49 < 30 |only if walking
+Follow the path |goto 57.94,48.67 < 30 |only if walking
+Follow the path |goto 61.08,46.33 < 30 |only if walking
+Drop down |goto 63.41,48.74 < 20 |only if walking
+talk Heidirk the Scalekeeper##120118
+fpath Aalgen Point |goto 70.77,47.62
+|only DeathKnight
+step
+talk Heidirk the Scalekeeper##120118
+turnin Aalgen Point##46832 |goto 70.77,47.62
+accept Vengeance Point##46845 |goto 70.77,47.62
+|only DeathKnight
+step
+Follow the path |goto 66.35,42.24 < 30 |only if walking
+Follow the path up |goto 67.84,34.26 < 15 |only if walking
+Follow the path down |goto 64.07,33.29 < 20 |only if walking
+Follow the path |goto 56.85,29.64 < 25 |only if walking
+Cross the water |goto 53.72,27.17 < 20 |only if walking
+Follow the path |goto 51.15,23.93 < 20 |only if walking
+Defend Vengeance Point |q 46845/1 |goto 51.34,22.88
+|only DeathKnight
+step
+kill Abhorrent Felwing##120748+, Crazed Felblade##120969+
+Slay #5# Abhorrent Felwing |q 46845/2 |goto 51.84,21.55
+Slay #4# Crazed Felblade |q 46845/3 |goto 51.84,21.55
+|only DeathKnight
+step
+talk Izal Whitemoon##111323
+fpath Vengeance Point |goto 49.66,21.02
+|only DeathKnight
+step
+talk Izal Whitemoon##111323
+turnin Vengeance Point##46845 |goto 49.66,21.02
+|only DeathKnight
+step
+label "DK_Supplies"
+Collect #100# Legionfall War Supplies |q 46286/1
+|tip You can obtain this currency by completed world quests and kill rare elites in Broken Shore.
+|only DeathKnight
+step
+talk Commander Chambers##120183
+turnin Legionfall Supplies##46286 |goto 44.55,63.15
+accept Begin Construction##46245 |goto 44.54,63.15
+|only DeathKnight
+step
+click Legionfall Construction Table
+Legionfall Supplies Donated |q 46245/1 |goto 44.57,63.07
+|tip Choose whichever structure appeals to you.
+|only DeathKnight
+step
+talk Commander Chambers##120183
+turnin Begin Construction##46245 |goto 44.54,63.15
+|only DeathKnight
+step
+talk Archmage Khadgar##116302
+accept Altar of the Aegis##46244 |goto 44.73,63.27
+|only DeathKnight
+step
+Press _I_ and queue for Cathedral of Eternal Night or enter the dungeon with your group |goto 64.75,16.65
+kill Mephistroth##120793
+|tip Mephistroth is the final boss of the Cathedral of Eternal Night instance.
+Defeat Mephistroth |q 46244/1
+|only DeathKnight
+step
+talk Archmage Khadgar##116302
+turnin Altar of the Aegis##46244 |goto 44.73,63.27
+|only DeathKnight
+step
+talk Maiev Shadowsong##116576
+accept Defending Broken Isles##46247 |goto 44.54,63.52
+|only DeathKnight
+step
+Complete a Legion Assault |q 46247/1 |goto 44.54,63.52
+|only DeathKnight
+step
+talk Maiev Shadowsong##116576
+turnin Defending Broken Isles##46247 |goto 44.54,63.52
+|only DeathKnight
+step
+talk Lord Illidan Stormrage##117873 |only if achieved(11846)
+accept Mark of the Sentinax##47139 |goto 44.79,63.17 |only if achieved(11846)
+|achieve 11846 |only if not achieved(11846)
+|tip You must earn the "Champions of Legionfall" achievement to progress further. |only if not achieved(11846)
+Click here to load the "7.2 Order Hall Quests" guide and accomplish this |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\7.2 Order Hall Quests" |only if not achieved(11846)
+|only DeathKnight
+step
+collect 50 Mark of the Sentinax##147582 |q 47139/1 |goto 50.56,43.35
+|tip These are collected from Sentinax Portals.
+|tip Sentinax Beacons summon portals which spawn mobs that you can kill for Marks.
+|tip Setninax Beacons drop from mobs in Broken Shore.
+|tip Open your map and look for the Sentinax icon. Use your beacons below the ship.
+|only DeathKnight
+step
+talk Lord Illidan Stormrage##117873
+turnin Mark of the Sentinax##47139 |goto 44.79,63.17
+|only DeathKnight
+step
+talk Prophet Velen##120372
+accept Self-Fulfilling Prophecy##46248 |goto 44.57,63.39
+|only DeathKnight
+step
+Complete #8# world quests on Broken Shore |q 46248/1 |goto 44.57,63.39 |or
+|tip Use our World Quest guide to accomplish this.
+To load the World Quest guide, click here |confirm |next "Zygor's Dailies Guides\\Legion\\World Quests" |or
+|only DeathKnight
+step
+talk Prophet Velen##120372
+turnin Self-Fulfilling Prophecy##46248 |goto 44.57,63.39
+|only DeathKnight
+step
+talk Maiev Shadowsong##116576
+accept Intolerable Infestation##46252 |goto 44.54,63.52
+|only DeathKnight
+step
+kill Infernal Brutalizer##93619, Vile Stalker##90241, Felguard Shocktrooper##101943
+Kill #50# Demons |q 46252/1 |goto Azsuna/0 42.60,44.19
+|tip Drag them near the purple orbs to kill them faster.
+|only DeathKnight
+step
+talk Maiev Shadowsong##116576
+turnin Intolerable Infestation##46252 |goto Broken Shore/0 44.54,63.52
+|only DeathKnight
+step
+talk Archmage Khadgar##116302
+accept Relieved of Their Valuables##46769 |goto 44.73,63.27
+|only DeathKnight
+step
+click Hidden Wyrmtongue Cache##6478
+Find #3# Hidden Wyrmtongue Caches |q 46769/1 |goto 58.61,43.48
+|tip These caches are found scattered randomly around Broken Shore.
+|tip They will show on your minimap when you are near one.
+|only DeathKnight
+step
+talk Archmage Khadgar##116302
+turnin Relieved of Their Valuables##46769 |goto 44.73,63.27
+|only DeathKnight
+step
+talk Maiev Shadowsong##116576
+accept Take Out the Head...##46250 |goto 44.54,63.53
+|only DeathKnight
+step
+Slay #3# rare elite demon commanders on the Broken Shore |q 46250/1 |goto 58.61,43.48 |or
+|tip You can use the World Quest guide and click on rare icons on the world map to load some helpful tips.
+|tip These icons look like green skulls.
+|tip Rare spawns remain up for a short period of time, and change randomly.
+Click here to load the World Quest guide |confirm |next "Zygor's Dailies Guides\\Legion\\World Quests" |or
+|only DeathKnight
+step
+talk Maiev Shadowsong##116576
+turnin Take Out the Head...##46250 |goto 44.54,63.53
+|only DeathKnight
+step
+talk Archmage Khadgar##116302
+accept Championing Our Cause##46249 |goto 44.73,63.28
+|only DeathKnight
+step
+click Scouting Map
+Complete 1 Legionfall Mission |q 46249/1 |goto Broken Shore/2 49.79,50.61
+|tip Legionfall missions can be identified by looking at the zone text underneath the title after clicking on the mission.
+|tip Only Broken Shore missions count towards this objective.
+|tip You may also use the mission table in the Command Center on Broken Shore if that building is complete.
+|only DeathKnight
+step
+talk Archmage Khadgar##116302
+turnin Championing Our Cause##46249 |goto Broken Shore/0 44.73,63.28
+|only DeathKnight
+step
+talk Maiev Shadowsong##116576
+accept Strike Them Down##46246 |goto 44.54,63.53
+|only DeathKnight
+step
+kill Skittering Demon##117509+, Hatching Egg##119720+, Hatched Broodling##119721+
+Kill #100# Demons on Broken Shore |q 46246/1 |goto 38.63,31.86
+|tip The eggs will spawn 5 Broodlings with very low health.
+|tip You can also farm demons from portals underneath the Sentinax.
+|only DeathKnight
+step
+talk Maiev Shadowsong##116576
+turnin Strike Them Down##46246 |goto 44.54,63.53
+|only DeathKnight
+step
+accept Armies of Legionfall##46730
+|only DemonHunter
+step
+Meet Khadgar at Krasus' Landing |q 46730/1 |goto Dalaran L/10 66.18,41.97
+|only DemonHunter
+step
+talk Archmage Khadgar##120215
+turnin Armies of Legionfall##46730 |goto 69.35,43.87
+accept Assault on Broken Shore##46734 |goto 69.35,43.87
+|only DemonHunter
+step
+talk Archmage Khadgar##120215
+Tell him: _"I am ready to launch the assault"_ |q 46734/1 |goto 69.34,43.87
+|only DemonHunter
+step
+Reach the Broken Shore |scenariogoal 1/35285 |goto Assault on Broken Shore/0 55.06,66.85 |q 46734
+|only DemonHunter
+step
+Defeat the Legion forces |scenariostage 2 |goto Assault on Broken Shore/0 52.70,67.01 |q 46734
+|tip Kill any mobs you see around the staging area.
+|only DemonHunter
+step
+Follow the path |goto Assault on Broken Shore/0 47.47,72.08 < 30 |walk
+Follow the path up |goto 44.05,73.57 < 25 |walk
+Follow the path |goto 41.46,71.46 < 25 |walk
+Follow the path |goto 39.96,67.80 < 20 |walk
+kill Lord Kalgorath##116291
+Defeat Lord Kalgorath |scenariogoal 3/35329 |goto 41.43,64.76 |q 46734
+|only DemonHunter
+step
+Go up the steps | goto 40.48,63.99 < 20 |walk
+Follow the path down |goto 44.04,58.20 < 20 |walk
+Follow the path |goto 47.17,58.16 < 20 |walk
+Follow the path |goto 52.27,52.46 < 20 |walk
+Close #3# Legion Portals |scenariogoal 4/35495 |goto 57.67,49.70 |q 46734
+|tip These are scattered around the area.
+|only DemonHunter
+step
+Deplete Arganoth's forces |scenariostage 4 |goto 57.67,49.70 |q 46734
+|tip Kill anything in the area until the progress bar fills up.
+|only DemonHunter
+step
+kill Dread Commander Arganoth##118551
+Defeat Dread Commander Arganoth |scenariogoal 5/35497 |goto 55.38,51.47 |walk |q 46734
+|only DemonHunter
+step
+click Demonic Gateway
+Take the Demonic Gateway |scenariogoal 6/35551 |goto 53.32,50.37 |walk |q 46734
+|only DemonHunter
+step
+click First Arcane Bomb |goto 49.47,46.56 < 5 |walk |scenariogoal 7/36178 |count 1 |q 46734
+|only DemonHunter
+step
+click Second Arcane Bomb |goto 49.94,44.47 < 5 |walk |scenariogoal 7/36178 |count 2 |q 46734
+|tip Take the portal after clicking this bomb. Don't bother killing the Interrogator.
+|only DemonHunter
+step
+click Third Arcane Bomb |goto 50.19,43.72 < 5 |walk |scenariogoal 7/36178 |count 3 |q 46734
+|only DemonHunter
+step
+click Fourth Arcane Bomb |goto 49.21,46.17 < 5 |walk |scenariogoal 7/36178 |count 4 |q 46734
+|only DemonHunter
+step
+click Fifth Arcane Bomb |goto 49.45,48.38 < 5 |walk |scenariogoal 7/36178 |count 5 |q 46734
+|only DemonHunter
+step
+Go upstairs |goto 49.10,45.31 < 5 |walk
+click Sixth Arcane Bomb |goto 49.30,45.88 < 5 |walk |scenariogoal 7/36178 |count 6 |q 46734
+|only DemonHunter
+step
+click Final Arcane Bomb |goto 50.84,45.63 < 5 |walk |scenariogoal 7/36178 |count 7 |q 46734
+|only DemonHunter
+step
+kill Mephistroth##120746
+Defeat Mephistroth |scenariogoal 7/36179 |goto 50.05,45.74 |q 46734
+|tip Interrupt Mind Blast whenever possible.
+|tip When Mephistroth casts Shadow Blast, start strafing to the left or right.
+|only DemonHunter
+step
+talk Archmage Khadgar##116302
+turnin Assault on Broken Shore##46734 |goto Broken Shore/0 44.73,63.27
+|only DemonHunter
+step
+talk Commander Chambers##120183
+accept Legionfall Supplies##46286 |goto 44.55,63.15
+accept Aalgen Point##46832 |goto 44.55,63.15
+|only DemonHunter
+step
+talk Illidari Calia##120272
+fpath Deliverance Point |goto Broken Shore/0 45.17,64.09
+|only DemonHunter
+stickystart "DH_Supplies"
+step
+Follow the path |goto 46.86,58.63 < 25 |only if walking
+Follow the path |goto 51.55,52.49 < 30 |only if walking
+Follow the path |goto 57.94,48.67 < 30 |only if walking
+Follow the path |goto 61.08,46.33 < 30 |only if walking
+Drop down |goto 63.41,48.74 < 20 |only if walking
+talk Heidirk the Scalekeeper##120118
+fpath Aalgen Point |goto 70.77,47.62
+|only DemonHunter
+step
+talk Heidirk the Scalekeeper##120118
+turnin Aalgen Point##46832 |goto 70.77,47.62
+accept Vengeance Point##46845 |goto 70.77,47.62
+|only DemonHunter
+step
+Follow the path |goto 66.35,42.24 < 30 |only if walking
+Follow the path up |goto 67.84,34.26 < 15 |only if walking
+Follow the path down |goto 64.07,33.29 < 20 |only if walking
+Follow the path |goto 56.85,29.64 < 25 |only if walking
+Cross the water |goto 53.72,27.17 < 20 |only if walking
+Follow the path |goto 51.15,23.93 < 20 |only if walking
+Defend Vengeance Point |q 46845/1 |goto 51.34,22.88
+|only DemonHunter
+step
+kill Abhorrent Felwing##120748+, Crazed Felblade##120969+
+Slay #5# Abhorrent Felwing |q 46845/2 |goto 51.84,21.55
+Slay #4# Crazed Felblade |q 46845/3 |goto 51.84,21.55
+|only DemonHunter
+step
+talk Izal Whitemoon##111323
+fpath Vengeance Point |goto 49.66,21.02
+|only DemonHunter
+step
+talk Izal Whitemoon##111323
+turnin Vengeance Point##46845 |goto 49.66,21.02
+|only DemonHunter
+step
+label "DH_Supplies"
+Collect #100# Legionfall War Supplies |q 46286/1
+|tip You can obtain this currency by completing world quests and killing rare elites in Broken Shore.
+|only DemonHunter
+step
+talk Commander Chambers##120183
+turnin Legionfall Supplies##46286 |goto 44.55,63.15
+accept Begin Construction##46245 |goto 44.54,63.15
+|only DemonHunter
+step
+click Legionfall Construction Table
+Legionfall Supplies Donated |q 46245/1 |goto 44.57,63.07
+|tip Choose whichever structure appeals to you.
+|only DemonHunter
+step
+talk Commander Chambers##120183
+turnin Begin Construction##46245 |goto 44.54,63.15
+|only DemonHunter
+step
+talk Archmage Khadgar##116302
+accept Altar of the Aegis##46244 |goto 44.73,63.27
+|only DemonHunter
+step
+Press _I_ and queue for Cathedral of Eternal Night or enter the dungeon with your group |goto 64.75,16.65
+kill Mephistroth##120793
+|tip Mephistroth is the final boss of the Cathedral of Eternal Night instance.
+Defeat Mephistroth |q 46244/1
+|only DemonHunter
+step
+talk Archmage Khadgar##116302
+turnin Altar of the Aegis##46244 |goto 44.73,63.27
+|only DemonHunter
+step
+talk Maiev Shadowsong##116576
+accept Defending Broken Isles##46247 |goto 44.54,63.52
+|only DemonHunter
+step
+Complete a Legion Assault |q 46247/1 |goto 44.54,63.52
+|only DemonHunter
+step
+talk Maiev Shadowsong##116576
+turnin Defending Broken Isles##46247 |goto 44.54,63.52
+|only DemonHunter
+step
+talk Lord Illidan Stormrage##117873 |only if achieved(11846)
+accept Mark of the Sentinax##47139 |goto 44.79,63.17 |only if achieved(11846)
+|achieve 11846 |only if not achieved(11846)
+|tip You must earn the "Champions of Legionfall" achievement to progress further. |only if not achieved(11846)
+Click here to load the "7.2 Order Hall Quests" guide and accomplish this |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\7.2 Order Hall Quests" |only if not achieved(11846)
+|only DemonHunter
+step
+collect 50 Mark of the Sentinax##147582 |q 47139/1 |goto 50.56,43.35
+|tip These are collected from Sentinax Portals.
+|tip Sentinax Beacons summon portals which spawn mobs that you can kill for Marks.
+|tip Setninax Beacons drop from mobs in Broken Shore.
+|tip Open your map and look for the Sentinax icon. Use your beacons below the ship.
+|only DemonHunter
+step
+talk Lord Illidan Stormrage##117873
+turnin Mark of the Sentinax##47139 |goto 44.79,63.17
+|only DemonHunter
+step
+talk Prophet Velen##120372
+accept Self-Fulfilling Prophecy##46248 |goto 44.57,63.39
+|only DemonHunter
+step
+Complete #8# world quests on Broken Shore |q 46248/1 |goto 44.57,63.39 |or
+|tip Use our World Quest guide to accomplish this.
+To load the World Quest guide, click here |confirm |next "Zygor's Dailies Guides\\Legion\\World Quests" |or
+|only DemonHunter
+step
+talk Prophet Velen##120372
+turnin Self-Fulfilling Prophecy##46248 |goto 44.57,63.39
+|only DemonHunter
+step
+talk Maiev Shadowsong##116576
+accept Intolerable Infestation##46252 |goto 44.54,63.52
+|only DemonHunter
+step
+kill Infernal Brutalizer##93619, Vile Stalker##90241, Felguard Shocktrooper##101943
+Kill #50# Demons |q 46252/1 |goto Azsuna/0 42.60,44.19
+|tip Drag them near the purple orbs to kill them faster.
+|only DemonHunter
+step
+talk Maiev Shadowsong##116576
+turnin Intolerable Infestation##46252 |goto Broken Shore/0 44.54,63.52
+|only DemonHunter
+step
+talk Archmage Khadgar##116302
+accept Relieved of Their Valuables##46769 |goto 44.73,63.27
+|only DemonHunter
+step
+click Hidden Wyrmtongue Cache##6478
+Find #3# Hidden Wyrmtongue Caches |q 46769/1 |goto 58.61,43.48
+|tip These caches are found scattered randomly around Broken Shore.
+|tip They will show on your minimap when you are near one.
+|only DemonHunter
+step
+talk Archmage Khadgar##116302
+turnin Relieved of Their Valuables##46769 |goto 44.73,63.27
+|only DemonHunter
+step
+talk Maiev Shadowsong##116576
+accept Take Out the Head...##46250 |goto 44.54,63.53
+|only DemonHunter
+step
+Slay #3# rare elite demon commanders on the Broken Shore |q 46250/1 |goto 58.61,43.48 |or
+|tip You can use the World Quest guide and click on rare icons on the world map to load some helpful tips.
+|tip These icons look like green skulls.
+|tip Rare spawns remain up for a short period of time, and change randomly.
+Click here to load the World Quest guide |confirm |next "Zygor's Dailies Guides\\Legion\\World Quests" |or
+|only DemonHunter
+step
+talk Maiev Shadowsong##116576
+turnin Take Out the Head...##46250 |goto 44.54,63.53
+|only DemonHunter
+step
+talk Archmage Khadgar##116302
+accept Championing Our Cause##46249 |goto 44.73,63.28
+|only DemonHunter
+step
+click Scouting Map
+Complete 1 Legionfall Mission |q 46249/1 |goto Mardum, the Shattered Abyss/2 58.84,54.91
+|tip Legionfall missions can be identified by looking at the zone text underneath the title after clicking on the mission.
+|tip Only Broken Shore missions count towards this objective.
+|tip You may also use the mission table in the Command Center on Broken Shore if that building is complete.
+|only DemonHunter
+step
+talk Archmage Khadgar##116302
+turnin Championing Our Cause##46249 |goto Broken Shore/0 44.73,63.28
+|only DemonHunter
+step
+talk Maiev Shadowsong##116576
+accept Strike Them Down##46246 |goto 44.54,63.53
+|only DemonHunter
+step
+kill Skittering Demon##117509+, Hatching Egg##119720+, Hatched Broodling##119721+
+Kill #100# Demons on Broken Shore |q 46246/1 |goto 38.63,31.86
+|tip The eggs will spawn 5 Broodlings with very low health.
+|tip You can also farm demons from portals underneath the Sentinax.
+|only DemonHunter
+step
+talk Maiev Shadowsong##116576
+turnin Strike Them Down##46246 |goto 44.54,63.53
+|only DemonHunter
+step
+accept Armies of Legionfall##46730
+|only Druid
+step
+Meet Khadgar at Krasus' Landing |q 46730/1 |goto Dalaran L/10 66.18,41.97
+|only Druid
+step
+talk Archmage Khadgar##120215
+turnin Armies of Legionfall##46730 |goto 69.35,43.87
+accept Assault on Broken Shore##46734 |goto 69.35,43.87
+|only Druid
+step
+talk Archmage Khadgar##120215
+Tell him: _"I am ready to launch the assault"_ |q 46734/1 |goto 69.34,43.87
+|only Druid
+step
+Reach the Broken Shore |scenariogoal 1/35285 |q 46734 |goto Assault on Broken Shore/0 55.06,66.85
+|only Druid
+step
+Defeat the Legion forces |scenariostage 2 |q 46734 |goto Assault on Broken Shore/0 52.70,67.01
+|tip Kill any mobs you see around the staging area.
+|only Druid
+step
+Follow the path |goto Assault on Broken Shore/0 47.47,72.08 < 30 |walk
+Follow the path up |goto 44.05,73.57 < 25 |walk
+Follow the path |goto 41.46,71.46 < 25 |walk
+Follow the path |goto 39.96,67.80 < 20 |walk
+kill Lord Kalgorath##116291
+Defeat Lord Kalgorath |scenariogoal 3/35329 |q 46734 |goto 41.43,64.76
+|only Druid
+step
+Go up the steps | goto 40.48,63.99 < 20 |walk
+Follow the path down |goto 44.04,58.20 < 20 |walk
+Follow the path |goto 47.17,58.16 < 20 |walk
+Follow the path |goto 52.27,52.46 < 20 |walk
+Close #3# Legion Portals |scenariogoal 4/35495 |q 46734 |goto 57.67,49.70
+|tip These are scattered around the area.
+|only Druid
+step
+Deplete Arganoth's forces |scenariostage 4 |q 46734 |goto 57.67,49.70
+|tip Kill anything in the area until the progress bar fills up.
+|only Druid
+step
+kill Dread Commander Arganoth##118551
+Defeat Dread Commander Arganoth |scenariogoal 5/35497 |q 46734 |goto 55.38,51.47 |walk
+|only Druid
+step
+click Demonic Gateway
+Take the Demonic Gateway |scenariogoal 6/35551 |q 46734 |goto 53.32,50.37 |walk
+|only Druid
+step
+click First Arcane Bomb |goto 49.47,46.56 < 5 |walk |scenariogoal 7/36178 |count 1
+|only Druid
+|only if not completedq(46734)
+step
+click Second Arcane Bomb |goto 49.94,44.47 < 5 |walk |scenariogoal 7/36178 |count 2
+|tip Take the portal after clicking this bomb. Don't bother killing the Interrogator.
+|only Druid
+|only if not completedq(46734)
+step
+click Legion Portal |goto 49.29,45.39 < 5
+click Third Arcane Bomb |goto 50.19,43.72 < 5 |walk |scenariogoal 7/36178 |count 3
+|only Druid
+|only if not completedq(46734)
+step
+click Fourth Arcane Bomb |goto 49.21,46.17 < 5 |walk |scenariogoal 7/36178 |count 4
+|only Druid
+|only if not completedq(46734)
+step
+click Fifth Arcane Bomb |goto 49.45,48.38 < 5 |walk |scenariogoal 7/36178 |count 5
+|only Druid
+|only if not completedq(46734)
+step
+Go upstairs |goto 49.10,45.31 < 5 |walk
+click Sixth Arcane Bomb |goto 49.30,45.88 < 5 |walk |scenariogoal 7/36178 |count 6
+|only Druid
+|only if not completedq(46734)
+step
+click Final Arcane Bomb |goto 50.84,45.63 < 5 |walk |scenariogoal 7/36178 |count 7
+|only Druid
+|only if not completedq(46734)
+step
+kill Mephistroth##120746
+Defeat Mephistroth |scenariogoal 8/36179 |q 46734 |goto 50.05,45.74
+|tip Interrupt Mind Blast whenever possible.
+|tip When Mephistroth casts Shadow Blast, start strafing to the left or right.
+|only Druid
+|only if not completedq(46734)
+step
+talk Archmage Khadgar##116302
+turnin Assault on Broken Shore##46734 |goto Broken Shore/0 44.73,63.27
+|only Druid
+step
+talk Commander Chambers##120183
+accept Legionfall Supplies##46286 |goto Broken Shore/0 44.55,63.15
+accept Aalgen Point##46832 |goto Broken Shore/0 44.55,63.15
+|only Druid
+step
+Follow the path down |goto Broken Shore/0 44.21,58.25 < 10 |only if walking
+Go down the hill |goto Broken Shore/0 47.88,59.81 < 10 |only if walking
+Go up the path |goto 55.58,64.04 < 10 |only if walking
+talk Heidirk the Scalekeeper##120118
+turnin Aalgen Point##46832 |goto Broken Shore/0 70.76,47.61
+accept Vengeance Point##46845 |goto Broken Shore/0 70.76,47.61
+|only Druid
+step
+Go up the path |goto Broken Shore/0 67.82,34.06 < 10 |only if walking
+Follow the path |goto 63.62,33.64 < 10 |only if walking
+Cross the Twisted Grounds |goto 55.88,30.31 < 10 |only if walking
+Follow the small path |goto 52.11,32.73 < 10 |only if walking
+Cross the bridge |goto 50.80,29.54 < 10 |only if walking
+Go up the path |goto Broken Shore/0 51.23,20.89 < 10 |only if walking
+Defend Vengeance Point |q 46845/1 |goto 50.69,20.93
+|only Druid
+step
+kill 5 Abhorrent Felwing##120748 |q 46845/2 |goto Broken Shore/0 51.55,21.80
+kill 4 Crazed Felblade##120969 |q 46845/3 |goto 51.55,21.80
+|only Druid
+step
+talk Izal Whitemoon##111323
+turnin Vengeance Point##46845 |goto Broken Shore/0 49.67,21.02
+|only Druid
+step
+Complete World Quest or kill Elite enemies in the Broken Shores
+Collect #100# Legionfall War Supplies |q 46286/1
+|only Druid
+step
+talk Commander Chambers##120183
+turnin Legionfall Supplies##46286 |goto Broken Shore/0 44.54,63.14
+accept Begin Construction##46245 |goto Broken Shore/0 44.54,63.14
+|only Druid
+step
+click Legionfall Construction Table
+Select either the _Mage Tower_
+Or _Nether Disruptor_ to build towards
+Donate Legionfall Supplies |q Construction##46245/1 |goto Broken Shore/0 44.56,63.06
+|only Druid
+step
+talk Commander Chambers##120183
+turnin Begin Construction##46245 |goto Broken Shore/0 44.53,63.16
+|only Druid
+step
+talk Archmage Khadgar##116302
+accept Altar of the Aegis##46244 |goto Broken Shore/0 44.74,63.27
+|only Druid
+step
+Enter the Cathedral of Eternal Night dungeon
+|tip Press I to open your Group Finder and queue.
+|confirm |q 46244
+|only Druid
+step
+kill Mephistroth##120793 |q 46244/1
+|only Druid
+step
+talk Archmage Khadgar##116302
+turnin Altar of the Aegis##46244 |goto Broken Shore/0 44.74,63.27
+|only Druid
+step
+talk Commander Chambers##120183
+accept The Mage Tower##46772 |goto Broken Shore/0 44.53,63.14
+|only Druid
+step
+click Complete Construction
+Complete Construction of the Mage Tower |q 46772/1 |goto Broken Shore/0 45.01,62.49
+|only Druid
+step
+talk Grovewarden Proudhorn##118105
+turnin The Mage Tower##46772 |goto Broken Shore/0 44.54,63.15
+|only Druid
+step
+talk Commander Chambers##120183
+accept The Command Center##46773 |goto Broken Shore/0 44.54,63.15
+accept The Nether Disruptor##46774 |goto Broken Shore/0 44.54,63.15
+|only Druid
+step
+click Complete Construction
+Complete Construction of the Command Center |q 46773/1 |goto Broken Shore/0 44.22,63.35
+|only Druid
+step
+click Complete Construction
+Complete Construction of the Nether Disruptor |q 46774/1 |goto Broken Shore/0 41.20,64.66
+|only Druid
+step
+talk Commander Chambers##120183
+turnin The Command Center##46773 |goto Broken Shore/0 44.54,63.15
+turnin The Nether Disruptor##46774 |goto Broken Shore/0 44.54,63.15
+|only Druid
+step
+talk Lord Illidan Stormrage##117873 |only if achieved(11846)
+accept Mark of the Sentinax##47139 |goto 44.79,63.17 |only if achieved(11846)
+|achieve 11846 |only if not achieved(11846)
+|tip You must earn the "Champions of Legionfall" achievement to progress further. |only if not achieved(11846)
+Click here to load the "7.2 Order Hall Quests" guide and accomplish this |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\7.2 Order Hall Quests" |only if not achieved(11846)
+|only Druid
+step
+collect 50 Mark of the Sentinax##147582 |q 47139/1
+|tip Do this by killing empowered portal Rares and elite enemies.
+|tip Rare demonic lieutenants seem to be the most efficient way to complete this.
+|only Druid
+step
+talk Lord Illidan Stormrage##117873
+turnin Mark of the Sentinax##47139 |goto Broken Shore/0 44.78,63.21
+|only Druid
+step
+talk Prophet Velen##120372
+accept Self-Fulfilling Prophecy##46248 |goto Broken Shore/0 44.56,63.39
+|only Druid
+step
+Complete #8# world quests on Broken Shore |q 46248/1
+|tip Use the World Quests guide to complete this.
+|only Druid
+step
+talk Prophet Velen##120372
+turnin Self-Fulfilling Prophecy##46248 |goto Broken Shore/0 44.56,63.39
+|only Druid
+step
+talk Maiev Shadowsong##116576
+accept Intolerable Infestation##46252 |goto Broken Shore/0 44.54,63.52
+|only Druid
+step
+kill Felflame Imp##107335+, Fiendish Trickster##107545+
+Kill #50# Demons |q 46252/1 |goto Azsuna/0 32.44,49.97
+|only Druid
+step
+talk Maiev Shadowsong##116576
+turnin Intolerable Infestation##46252 |goto Broken Shore/0 44.54,63.52
+|only Druid
+step
+talk Archmage Khadgar##116302
+accept Relieved of Their Valuables##46769 |goto Broken Shore/0 44.72,63.27
+|only Druid
+step
+Find #3# Hidden Wyrmtongue Caches |q 46769/1
+|tip These caches are found scattered randomly around Broken Shore.
+|tip They will show on your minimap when you are near one.
+|only Druid
+step
+talk Archmage Khadgar##116302
+turnin Relieved of Their Valuables##46769 |goto Broken Shore/0 44.72,63.27
+|only Druid
+step
+talk Maiev Shadowsong##116576
+accept Take Out the Head...##46250 |goto 44.54,63.53
+|only Druid
+step
+Slay #3# rare elite demon commanders on the Broken Shore |q 46250/1 |goto 58.61,43.48 |or
+|tip You can use the World Quest guide and click on rare icons on the world map to load some helpful tips.
+|tip These icons look like green skulls.
+|tip Rare spawns remain up for a short period of time, and change randomly.
+Click here to load the World Quest guide |confirm |next "Zygor's Dailies Guides\\Legion\\World Quests" |or
+|only Druid
+step
+talk Maiev Shadowsong##116576
+turnin Take Out the Head...##46250 |goto 44.54,63.53
+|only Druid
+step
+talk Archmage Khadgar##116302
+accept Championing Our Cause##46249 |goto Broken Shore/0 44.72,63.26
+|only Druid
+step
+click Scouting Map
+Complete 1 Legionfall Mission in your Order Hall |q 46249/1 |goto The Dreamgrove/0 52.71,51.08
+|tip Legionfall missions can be identified by looking at the zone text underneath the title after clicking on the mission.
+|tip Only Broken Shore missions count towards this objective.
+|tip You may also use the mission table in the Command Center on Broken Shore if that building is complete.
+|only Druid
+step
+talk Archmage Khadgar##116302
+turnin Championing Our Cause##46249 |goto Broken Shore/0 44.72,63.26
+|only Druid
+step
+talk Maiev Shadowsong##116576
+accept Strike Them Down##46246 |goto Broken Shore/0 44.53,63.51
+|only Druid
+step
+kill Skittering Demon##117509+, Hatching Egg##119720+, Hatched Broodling##119721+
+Kill #100# Demons on Broken Shore |q 46246/1 |goto Broken Shore/0 38.62,28.48
+|only Druid
+step
+talk Maiev Shadowsong##116576
+turnin Strike Them Down##46246 |goto Broken Shore/0 44.53,63.51
+|only Druid
+step
+accept Armies of Legionfall##46730
+|only Hunter
+step
+Meet Khadgar at Krasus' Landing |q 46730/1 |goto Dalaran L/10 66.18,41.97
+|only Hunter
+step
+talk Archmage Khadgar##120215
+turnin Armies of Legionfall##46730 |goto 69.35,43.87
+accept Assault on Broken Shore##46734 |goto 69.35,43.87
+|only Hunter
+step
+talk Archmage Khadgar##120215
+Tell him: _"I am ready to launch the assault"_ |q 46734/1 |goto 69.34,43.87
+|only Hunter
+step
+Reach the Broken Shore |scenariogoal 1/35285 |goto Assault on Broken Shore/0 55.06,66.85 |q 46734
+|only Hunter
+step
+Defeat the Legion forces |scenariostage 2 |goto Assault on Broken Shore/0 52.70,67.01 |q 46734
+|tip Kill any mobs you see around the staging area.
+|only Hunter
+step
+Follow the path |goto Assault on Broken Shore/0 47.47,72.08 < 30 |walk
+Follow the path up |goto 44.05,73.57 < 25 |walk
+Follow the path |goto 41.46,71.46 < 25 |walk
+Follow the path |goto 39.96,67.80 < 20 |walk
+kill Lord Kalgorath##116291
+Defeat Lord Kalgorath |scenariogoal 3/35329 |goto 41.43,64.76 |q 46734
+|only Hunter
+step
+Go up the steps | goto 40.48,63.99 < 20 |walk
+Follow the path down |goto 44.04,58.20 < 20 |walk
+Follow the path |goto 47.17,58.16 < 20 |walk
+Follow the path |goto 52.27,52.46 < 20 |walk
+Close #3# Legion Portals |scenariogoal 4/35495 |goto 57.67,49.70 |q 46734
+|tip These are scattered around the area.
+|only Hunter
+step
+Deplete Arganoth's forces |scenariostage 4 |goto 57.67,49.70 |q 46734
+|tip Kill anything in the area until the progress bar fills up.
+|only Hunter
+step
+kill Dread Commander Arganoth##118551
+Defeat Dread Commander Arganoth |scenariogoal 5/35497 |goto 55.38,51.47 |walk |q 46734
+|only Hunter
+step
+click Demonic Gateway
+Take the Demonic Gateway |scenariogoal 6/35551 |goto 53.32,50.37 |walk |q 46734
+|only Hunter
+step
+click First Arcane Bomb |goto 49.47,46.56 < 5 |walk |scenariogoal 7/36178 |count 1 |q 46734
+|only Hunter
+step
+click Second Arcane Bomb |goto 49.94,44.47 < 5 |walk |scenariogoal 7/36178 |count 2 |q 46734
+|tip Take the portal after clicking this bomb. Don't bother killing the Interrogator.
+|only Hunter
+step
+click Third Arcane Bomb |goto 50.19,43.72 < 5 |walk |scenariogoal 7/36178 |count 3 |q 46734
+|only Hunter
+step
+click Fourth Arcane Bomb |goto 49.21,46.17 < 5 |walk |scenariogoal 7/36178 |count 4 |q 46734
+|only Hunter
+step
+click Fifth Arcane Bomb |goto 49.45,48.38 < 5 |walk |scenariogoal 7/36178 |count 5 |q 46734
+|only Hunter
+step
+Go upstairs |goto 49.10,45.31 < 5 |walk
+click Sixth Arcane Bomb |goto 49.30,45.88 < 5 |walk |scenariogoal 7/36178 |count 6 |q 46734
+|only Hunter
+step
+click Final Arcane Bomb |goto 50.84,45.63 < 5 |walk |scenariogoal 7/36178 |count 7 |q 46734
+|only Hunter
+step
+kill Mephistroth##120746
+Defeat Mephistroth |scenariogoal 7/36179 |goto 50.05,45.74 |q 46734
+|tip Interrupt Mind Blast whenever possible.
+|tip When Mephistroth casts Shadow Blast, start strafing to the left or right.
+|only Hunter
+step
+talk Archmage Khadgar##116302
+turnin Assault on Broken Shore##46734 |goto Broken Shore/0 44.73,63.27
+|only Hunter
+step
+talk Commander Chambers##120183
+accept Legionfall Supplies##46286 |goto 44.55,63.15
+accept Aalgen Point##46832 |goto 44.55,63.15
+|only Hunter
+step
+talk Illidari Calia##120272
+fpath Deliverance Point |goto Broken Shore/0 45.17,64.09
+|only Hunter
+stickystart "H_Supplies"
+step
+Follow the path |goto 46.86,58.63 < 25 |only if walking
+Follow the path |goto 51.55,52.49 < 30 |only if walking
+Follow the path |goto 57.94,48.67 < 30 |only if walking
+Follow the path |goto 61.08,46.33 < 30 |only if walking
+Drop down |goto 63.41,48.74 < 20 |only if walking
+talk Heidirk the Scalekeeper##120118
+fpath Aalgen Point |goto 70.77,47.62
+|only Hunter
+step
+talk Heidirk the Scalekeeper##120118
+turnin Aalgen Point##46832 |goto 70.77,47.62
+accept Vengeance Point##46845 |goto 70.77,47.62
+|only Hunter
+step
+Follow the path |goto 66.35,42.24 < 30 |only if walking
+Follow the path up |goto 67.84,34.26 < 15 |only if walking
+Follow the path down |goto 64.07,33.29 < 20 |only if walking
+Follow the path |goto 56.85,29.64 < 25 |only if walking
+Cross the water |goto 53.72,27.17 < 20 |only if walking
+Follow the path |goto 51.15,23.93 < 20 |only if walking
+Defend Vengeance Point |q 46845/1 |goto 51.34,22.88
+|only Hunter
+step
+kill Abhorrent Felwing##120748+, Crazed Felblade##120969+
+Slay #5# Abhorrent Felwing |q 46845/2 |goto 51.84,21.55
+Slay #4# Crazed Felblade |q 46845/3 |goto 51.84,21.55
+|only Hunter
+step
+talk Izal Whitemoon##111323
+fpath Vengeance Point |goto 49.66,21.02
+|only Hunter
+step
+talk Izal Whitemoon##111323
+turnin Vengeance Point##46845 |goto 49.66,21.02
+|only Hunter
+step
+label "H_Supplies"
+Collect #100# Legionfall War Supplies |q 46286/1
+|tip You can obtain this currency by completed world quests and kill rare elites in Broken Shore.
+|only Hunter
+step
+talk Commander Chambers##120183
+turnin Legionfall Supplies##46286 |goto 44.55,63.15
+accept Begin Construction##46245 |goto 44.54,63.15
+|only Hunter
+step
+click Legionfall Construction Table
+Legionfall Supplies Donated |q 46245/1 |goto 44.57,63.07
+|tip Choose whichever structure appeals to you.
+|only Hunter
+step
+talk Commander Chambers##120183
+turnin Begin Construction##46245 |goto 44.54,63.15
+|only Hunter
+step
+talk Archmage Khadgar##116302
+accept Altar of the Aegis##46244 |goto 44.73,63.27
+|only Hunter
+step
+Press _I_ and queue for Cathedral of Eternal Night or enter the dungeon with your group |goto 64.75,16.65
+kill Mephistroth##120793
+|tip Mephistroth is the final boss of the Cathedral of Eternal Night instance.
+Defeat Mephistroth |q 46244/1
+|only Hunter
+step
+talk Archmage Khadgar##116302
+turnin Altar of the Aegis##46244 |goto 44.73,63.27
+|only Hunter
+step
+talk Maiev Shadowsong##116576
+accept Defending Broken Isles##46247 |goto 44.54,63.52
+|only Hunter
+step
+Complete a Legion Assault |q 46247/1 |goto 44.54,63.52
+|only Hunter
+step
+talk Maiev Shadowsong##116576
+turnin Defending Broken Isles##46247 |goto 44.54,63.52
+|only Hunter
+step
+talk Lord Illidan Stormrage##117873 |only if achieved(11846)
+accept Mark of the Sentinax##47139 |goto 44.79,63.17 |only if achieved(11846)
+|achieve 11846 |only if not achieved(11846)
+|tip You must earn the "Champions of Legionfall" achievement to progress further. |only if not achieved(11846)
+Click here to load the "7.2 Order Hall Quests" guide and accomplish this |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\7.2 Order Hall Quests" |only if not achieved(11846)
+|only Hunter
+step
+collect 50 Mark of the Sentinax##147582 |q 47139/1 |goto 50.56,43.35
+|tip These are collected from Sentinax Portals.
+|tip Sentinax Beacons summon portals which spawn mobs that you can kill for Marks.
+|tip Setninax Beacons drop from mobs in Broken Shore.
+|tip Open your map and look for the Sentinax icon. Use your beacons below the ship.
+|only Hunter
+step
+talk Lord Illidan Stormrage##117873
+turnin Mark of the Sentinax##47139 |goto 44.79,63.17
+|only Hunter
+step
+talk Prophet Velen##120372
+accept Self-Fulfilling Prophecy##46248 |goto 44.57,63.39
+|only Hunter
+step
+Complete #8# world quests on Broken Shore |q 46248/1 |goto 44.57,63.39 |or
+|tip Use our World Quest guide to accomplish this.
+To load the World Quest guide, click here |confirm |next "Zygor's Dailies Guides\\Legion\\World Quests" |or
+|only Hunter
+step
+talk Prophet Velen##120372
+turnin Self-Fulfilling Prophecy##46248 |goto 44.57,63.39
+|only Hunter
+step
+talk Maiev Shadowsong##116576
+accept Intolerable Infestation##46252 |goto 44.54,63.52
+|only Hunter
+step
+kill Infernal Brutalizer##93619, Vile Stalker##90241, Felguard Shocktrooper##101943
+Kill #50# Demons |q 46252/1 |goto Azsuna/0 42.60,44.19
+|tip Drag them near the purple orbs to kill them faster.
+|only Hunter
+step
+talk Maiev Shadowsong##116576
+turnin Intolerable Infestation##46252 |goto Broken Shore/0 44.54,63.52
+|only Hunter
+step
+talk Archmage Khadgar##116302
+accept Relieved of Their Valuables##46769 |goto 44.73,63.27
+|only Hunter
+step
+click Hidden Wyrmtongue Cache##6478
+Find #3# Hidden Wyrmtongue Caches |q 46769/1 |goto 58.61,43.48
+|tip These caches are found scattered randomly around Broken Shore.
+|tip They will show on your minimap when you are near one.
+|only Hunter
+step
+talk Archmage Khadgar##116302
+turnin Relieved of Their Valuables##46769 |goto 44.73,63.27
+|only Hunter
+step
+talk Maiev Shadowsong##116576
+accept Take Out the Head...##46250 |goto 44.54,63.53
+|only Hunter
+step
+Slay #3# rare elite demon commanders on the Broken Shore |q 46250/1 |goto 58.61,43.48 |or
+|tip You can use the World Quest guide and click on rare icons on the world map to load some helpful tips.
+|tip These icons look like green skulls.
+|tip Rare spawns remain up for a short period of time, and change randomly.
+Click here to load the World Quest guide |confirm |next "Zygor's Dailies Guides\\Legion\\World Quests" |or
+|only Hunter
+step
+talk Maiev Shadowsong##116576
+turnin Take Out the Head...##46250 |goto 44.54,63.53
+|only Hunter
+step
+talk Archmage Khadgar##116302
+accept Championing Our Cause##46249 |goto 44.73,63.28
+|only Hunter
+step
+click Scouting Map
+Complete 1 Legionfall Mission |q 46249/1 |goto Trueshot Lodge/0 42.49,46.59
+|tip Legionfall missions can be identified by looking at the zone text underneath the title after clicking on the mission.
+|tip Only Broken Shore missions count towards this objective.
+|tip You may also use the mission table in the Command Center on Broken Shore if that building is complete.
+|only Hunter
+step
+talk Archmage Khadgar##116302
+turnin Championing Our Cause##46249 |goto Broken Shore/0 44.73,63.28
+|only Hunter
+step
+talk Maiev Shadowsong##116576
+accept Strike Them Down##46246 |goto 44.54,63.53
+|only Hunter
+step
+kill Skittering Demon##117509+, Hatching Egg##119720+, Hatched Broodling##119721+
+Kill #100# Demons on Broken Shore |q 46246/1 |goto 38.63,31.86
+|tip The eggs will spawn 5 Broodlings with very low health.
+|tip You can also farm demons from portals underneath the Sentinax.
+|only Hunter
+step
+talk Maiev Shadowsong##116576
+turnin Strike Them Down##46246 |goto 44.54,63.53
+|only Hunter
+step
+accept Armies of Legionfall##46730
+|only Mage
+step
+Meet Khadgar at Krasus' Landing |q 46730/1 |goto Dalaran L/10 66.18,41.97
+|only Mage
+step
+talk Archmage Khadgar##120215
+turnin Armies of Legionfall##46730 |goto 69.35,43.87
+accept Assault on Broken Shore##46734 |goto 69.35,43.87
+|only Mage
+step
+talk Archmage Khadgar##120215
+Tell him: _"I am ready to launch the assault"_ |q 46734/1 |goto 69.34,43.87
+|only Mage
+step
+Reach the Broken Shore |scenariogoal 1/35285 |q 46734 |goto Assault on Broken Shore/0 55.06,66.85
+|only Mage
+step
+Defeat the Legion forces |scenariostage 2 |q 46734 |goto Assault on Broken Shore/0 52.70,67.01
+|tip Kill any mobs you see around the staging area.
+|only Mage
+step
+Follow the path |goto Assault on Broken Shore/0 47.47,72.08 < 30 |walk
+Follow the path up |goto 44.05,73.57 < 25 |walk
+Follow the path |goto 41.46,71.46 < 25 |walk
+Follow the path |goto 39.96,67.80 < 20 |walk
+kill Lord Kalgorath##116291
+Defeat Lord Kalgorath |scenariogoal 3/35329 |q 46734 |goto 41.43,64.76
+|only Mage
+step
+Go up the steps | goto 40.48,63.99 < 20 |walk
+Follow the path down |goto 44.04,58.20 < 20 |walk
+Follow the path |goto 47.17,58.16 < 20 |walk
+Follow the path |goto 52.27,52.46 < 20 |walk
+Close #3# Legion Portals |scenariogoal 4/35495 |q 46734 |goto 57.67,49.70
+|tip These are scattered around the area.
+|only Mage
+step
+Deplete Arganoth's forces |scenariostage 4 |q 46734 |goto 57.67,49.70
+|tip Kill anything in the area until the progress bar fills up.
+|only Mage
+step
+kill Dread Commander Arganoth##118551
+Defeat Dread Commander Arganoth |scenariogoal 5/35497 |q 46734 |goto 55.38,51.47 |walk
+|only Mage
+step
+click Demonic Gateway
+Take the Demonic Gateway |scenariogoal 6/35551 |q 46734 |goto 53.32,50.37 |walk
+|only Mage
+step
+click First Arcane Bomb |goto 49.47,46.56 < 5 |walk |scenariogoal 7/36178 |q 46734 |count 1
+|only Mage
+step
+click Second Arcane Bomb |goto 49.94,44.47 < 5 |walk |scenariogoal 7/36178 |q 46734 |count 2
+|tip Take the portal after clicking this bomb. Don't bother killing the Interrogator.
+|only Mage
+step
+click Third Arcane Bomb |goto 50.19,43.72 < 5 |walk |scenariogoal 7/36178 |q 46734 |count 3
+|only Mage
+step
+click Fourth Arcane Bomb |goto 49.21,46.17 < 5 |walk |scenariogoal 7/36178 |q 46734 |count 4
+|only Mage
+step
+click Fifth Arcane Bomb |goto 49.45,48.38 < 5 |walk |scenariogoal 7/36178 |q 46734 |count 5
+|only Mage
+step
+Go upstairs |goto 49.10,45.31 < 5 |walk
+click Sixth Arcane Bomb |goto 49.30,45.88 < 5 |walk |scenariogoal 7/36178 |q 46734 |count 6
+|only Mage
+step
+click Final Arcane Bomb |goto 50.84,45.63 < 5 |walk |scenariogoal 7/36178 |q 46734 |count 7
+|only Mage
+step
+kill Mephistroth##120746
+Defeat Mephistroth |scenariogoal 8/36179 |q 46734 |goto 50.05,45.74
+|tip Interrupt Mind Blast whenever possible.
+|tip When Mephistroth casts Shadow Blast, start strafing to the left or right.
+|only Mage
+step
+talk Archmage Khadgar##116302
+turnin Assault on Broken Shore##46734 |goto Broken Shore/0 44.73,63.27
+|only Mage
+step
+talk Commander Chambers##120183
+accept Legionfall Supplies##46286 |goto 44.55,63.15
+accept Aalgen Point##46832 |goto 44.55,63.15
+|only Mage
+step
+talk Illidari Calia##120272
+fpath Deliverance Point |goto Broken Shore/0 45.17,64.09
+|only Mage
+stickystart "DH_Supplies"
+step
+Follow the path |goto 46.86,58.63 < 25 |only if walking
+Follow the path |goto 51.55,52.49 < 30 |only if walking
+Follow the path |goto 57.94,48.67 < 30 |only if walking
+Follow the path |goto 61.08,46.33 < 30 |only if walking
+Drop down |goto 63.41,48.74 < 20 |only if walking
+talk Heidirk the Scalekeeper##120118
+turnin Aalgen Point##46832 |goto 70.77,47.62
+accept Vengeance Point##46845 |goto 70.77,47.62
+|only Mage
+step
+talk Heidirk the Scalekeeper##120118
+fpath Aalgen Point |goto 70.77,47.62
+|only Mage
+step
+Follow the path |goto 66.35,42.24 < 30 |only if walking
+Follow the path up |goto 67.84,34.26 < 15 |only if walking
+Follow the path down |goto 64.07,33.29 < 20 |only if walking
+Follow the path |goto 56.85,29.64 < 25 |only if walking
+Cross the water |goto 53.72,27.17 < 20 |only if walking
+Follow the path |goto 51.15,23.93 < 20 |only if walking
+Defend Vengeance Point |q 46845/1 |goto 51.15,23.93
+|only Mage
+step
+kill Abhorrent Felwing##120748+, Crazed Felblade##120969+
+Slay #5# Abhorrent Felwing |q 46845/2 |goto 51.84,21.55
+Slay #4# Crazed Felblade |q 46845/3 |goto 51.84,21.55
+|only Mage
+step
+talk Izal Whitemoon##111323
+fpath Vengeance Point |goto 49.66,21.02
+|only Mage
+step
+talk Izal Whitemoon##111323
+turnin Vengeance Point##46845 |goto 49.66,21.02
+|only Mage
+step
+label "DH_Supplies"
+Collect #100# Legionfall War Supplies |q 46286/1
+|tip You can obtain this currency by completed world quests and kill rare elites in Broken Shore.
+|only Mage
+step
+talk Commander Chambers##120183
+turnin Legionfall Supplies##46286 |goto 44.55,63.15
+accept Begin Construction##46245 |goto 44.54,63.15
+|only Mage
+step
+click Legionfall Construction Table
+Legionfall Supplies Donated |q 46245/1 |goto 44.57,63.07
+|tip Choose whichever structure appeals to you.
+|only Mage
+step
+talk Commander Chambers##120183
+turnin Begin Construction##46245 |goto 44.54,63.15
+|only Mage
+step
+talk Archmage Khadgar##116302
+accept Altar of the Aegis##46244 |goto 44.70,63.24
+|only Mage
+step
+Press _I_ and queue for Cathedral of Eternal Night or enter the dungeon with your group |goto Broken Shore/0 64.75,16.65
+kill Mephistroth##120793
+|tip Mephistroth is the final boss of the Cathedral of Eternal Night instance.
+Defeat Mephistroth |q 46244/1
+|only Mage
+step
+talk Archmage Khadgar##116302
+turnin Altar of the Aegis##46244 |goto 44.73,63.27
+|only Mage
+step
+talk Archmage Khadgar##116302
+accept Shard Times##46251 |goto 44.73,63.26
+|only Mage
+step
+collect 2500 Nethershard##1226 |q 46251/1
+|tip These can be obtained through killing enemies or collecting chests on the Broken Shore.
+|tip These can also be obtained through completing invasions.
+|only Mage
+step
+talk Archmage Khadgar##116302
+turnin Shard Times##46251 |goto 44.73,63.26
+|only Mage
+step
+talk Lord Illidan Stormrage##117873 |only if achieved(11846)
+accept Mark of the Sentinax##47139 |goto 44.79,63.17 |only if achieved(11846)
+|achieve 11846 |only if not achieved(11846)
+|tip You must earn the "Champions of Legionfall" achievement to progress further. |only if not achieved(11846)
+Click here to load the "7.2 Order Hall Quests" guide and accomplish this |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\7.2 Order Hall Quests" |only if not achieved(11846)
+|only Mage
+step
+You must go under the Sentinax that pats around the Broken Shore
+|tip Summon portals and defeat the enemies that come out.
+collect 50 Mark of the Sentinax##147582 |q 47139/1
+|tip Boss summons give quite alot of marks, use these beacons as soon as you get them.
+|only Mage
+step
+talk Lord Illidan Stormrage##117873
+turnin Mark of the Sentinax##47139 |goto Broken Shore/0 44.76,63.18
+|only Mage
+step
+talk Prophet Velen##120372
+accept Self-Fulfilling Prophecy##46248 |goto Broken Shore/0 44.58,63.36
+|only Mage
+step
+Complete #8# world quests on Broken Shore |q 46248/1
+|tip Check out our "World Quests" guide to accomplish this.
+|only Mage
+step
+talk Prophet Velen##120372
+turnin Self-Fulfilling Prophecy##46248 |goto Broken Shore/0 44.58,63.36
+|only Mage
+step
+talk Maiev Shadowsong##116576
+accept Intolerable Infestation##46252 |goto Broken Shore/0 44.55,63.50
+|only Mage
+step
+Slay the Demons found all around Felsoul Hold
+Kill #50# Demons |q 46252/1 |goto Suramar/0 29.23,61.22
+|only Mage
+step
+talk Maiev Shadowsong##116576
+turnin Intolerable Infestation##46252 |goto Broken Shore/0 44.55,63.50
+|only Mage
+step
+talk Archmage Khadgar##116302
+accept Relieved of Their Valuables##46769 |goto Broken Shore/0 44.74,63.28
+|only Mage
+step
+click Hidden Wyrmtongue Cache##6478+
+Find #3# Hidden Wyrmtongue Caches |q 46769/1
+|tip These spawn randomly at different locations all around the Broken Shore.
+|tip They will appear as a tiny chest icon on your mini map when you are close by to one.
+|only Mage
+step
+talk Archmage Khadgar##116302
+turnin Relieved of Their Valuables##46769 |goto Broken Shore/0 44.74,63.28
+|only Mage
+step
+talk Maiev Shadowsong##116576
+accept Take Out the Head...##46250 |goto 44.54,63.53
+|only Mage
+step
+Slay #3# rare elite demon commanders on the Broken Shore |q 46250/1 |goto 58.61,43.48 |or
+|tip You can use the World Quest guide and click on rare icons on the world map to load some helpful tips.
+|tip These icons look like green skulls.
+|tip Rare spawns remain up for a short period of time, and change randomly.
+Click here to load the World Quest guide |confirm |next "Zygor's Dailies Guides\\Legion\\World Quests" |or
+|only Mage
+step
+talk Maiev Shadowsong##116576
+turnin Take Out the Head...##46250 |goto 44.54,63.53
+|only Mage
+step
+talk Archmage Khadgar##116302
+accept Championing Our Cause##46249 |goto Broken Shore/0 44.75,63.33
+|only Mage
+step
+click Scouting Map
+Complete 1 Legionfall Mission at your Class Order Hall |q 46249/1 |goto Hall of the Guardian/1 81.38,60.79
+|tip Legionfall missions can be identified by looking at the zone text underneath the title after clicking on the mission.
+|tip Only Broken Shore missions count towards this objective.
+|tip You may also use the mission table in the Command Center on Broken Shore if that building is complete.
+|only Mage
+step
+talk Archmage Khadgar##116302
+turnin Championing Our Cause##46249 |goto Broken Shore/0 44.75,63.33
+|only Mage
+step
+talk Maiev Shadowsong##116576
+accept Strike Them Down##46246 |goto Broken Shore/0 44.59,63.50
+|only Mage
+step
+kill Skittering Demon##117509+, Hatched Broodling##119721+
+|tip Kill the Hatching Eggs these will spawn 3-6 Hatched Broodlings per egg.
+Slay #100# Demons on the Broken Shore |q 46246/1 |goto Broken Shore/0 38.82,28.24
+|only Mage
+step
+talk Maiev Shadowsong##116576
+turnin Strike Them Down##46246 |goto Broken Shore/0 44.59,63.50
+|only Mage
+step
+accept Armies of Legionfall##46730
+|only Monk
+step
+Meet Khadgar at Krasus' Landing |q 46730/1 |goto Dalaran L/10 66.18,41.97
+|only Monk
+step
+talk Archmage Khadgar##120215
+turnin Armies of Legionfall##46730 |goto 69.35,43.87
+accept Assault on Broken Shore##46734 |goto 69.35,43.87
+|only Monk
+step
+talk Archmage Khadgar##120215
+Tell him: _"I am ready to launch the assault"_ |q 46734/1 |goto 69.34,43.87
+|only Monk
+step
+Reach the Broken Shore |scenariogoal 1/35285 |goto Assault on Broken Shore/0 55.06,66.85 |q 46734
+|only Monk
+step
+Defeat the Legion forces |scenariostage 2 |goto Assault on Broken Shore/0 52.70,67.01 |q 46734
+|tip Kill any mobs you see around the staging area.
+|only Monk
+step
+Follow the path |goto Assault on Broken Shore/0 47.47,72.08 < 30 |walk
+Follow the path up |goto 44.05,73.57 < 25 |walk
+Follow the path |goto 41.46,71.46 < 25 |walk
+Follow the path |goto 39.96,67.80 < 20 |walk
+kill Lord Kalgorath##116291
+Defeat Lord Kalgorath |scenariogoal 3/35329 |goto 41.43,64.76 |q 46734
+|only Monk
+step
+Go up the steps | goto 40.48,63.99 < 20 |walk
+Follow the path down |goto 44.04,58.20 < 20 |walk
+Follow the path |goto 47.17,58.16 < 20 |walk
+Follow the path |goto 52.27,52.46 < 20 |walk
+Close #3# Legion Portals |scenariogoal 4/35495 |goto 57.67,49.70 |q 46734
+|tip These are scattered around the area.
+|only Monk
+step
+Deplete Arganoth's forces |scenariostage 4 |goto 57.67,49.70 |q 46734
+|tip Kill anything in the area until the progress bar fills up.
+|only Monk
+step
+kill Dread Commander Arganoth##118551
+Defeat Dread Commander Arganoth |scenariogoal 5/35497 |goto 55.38,51.47 |walk |q 46734
+|only Monk
+step
+click Demonic Gateway
+Take the Demonic Gateway |scenariogoal 6/35551 |goto 53.32,50.37 |walk |q 46734
+|only Monk
+step
+click First Arcane Bomb |goto 49.47,46.56 < 5 |walk |scenariogoal 7/36178 |count 1 |q 46734
+|only Monk
+step
+click Second Arcane Bomb |goto 49.94,44.47 < 5 |walk |scenariogoal 7/36178 |count 2 |q 46734
+|tip Take the portal after clicking this bomb. Don't bother killing the Interrogator.
+|only Monk
+step
+click Third Arcane Bomb |goto 50.19,43.72 < 5 |walk |scenariogoal 7/36178 |count 3 |q 46734
+|only Monk
+step
+click Fourth Arcane Bomb |goto 49.21,46.17 < 5 |walk |scenariogoal 7/36178 |count 4 |q 46734
+|only Monk
+step
+click Fifth Arcane Bomb |goto 49.45,48.38 < 5 |walk |scenariogoal 7/36178 |count 5 |q 46734
+|only Monk
+step
+Go upstairs |goto 49.10,45.31 < 5 |walk
+click Sixth Arcane Bomb |goto 49.30,45.88 < 5 |walk |scenariogoal 7/36178 |count 6 |q 46734
+|only Monk
+step
+click Final Arcane Bomb |goto 50.84,45.63 < 5 |walk |scenariogoal 7/36178 |count 7 |q 46734
+|only Monk
+step
+kill Mephistroth##120746
+Defeat Mephistroth |scenariogoal 8/36179 |goto 50.05,45.74 |q 46734
+|tip Interrupt Mind Blast whenever possible.
+|tip When Mephistroth casts Shadow Blast, start strafing to the left or right.
+|only Monk
+step
+talk Archmage Khadgar##116302
+turnin Assault on Broken Shore##46734 |goto Broken Shore/0 44.73,63.27
+|only Monk
+step
+talk Commander Chambers##120183
+accept Legionfall Supplies##46286 |goto 44.55,63.15
+accept Aalgen Point##46832 |goto 44.55,63.15
+|only Monk
+step
+talk Illidari Calia##120272
+fpath Deliverance Point |goto Broken Shore/0 45.17,64.09
+|only Monk
+stickystart "Monk_Supplies"
+step
+Follow the path |goto 46.86,58.63 < 25 |only if walking
+Follow the path |goto 51.55,52.49 < 30 |only if walking
+Follow the path |goto 57.94,48.67 < 30 |only if walking
+Follow the path |goto 61.08,46.33 < 30 |only if walking
+Drop down |goto 63.41,48.74 < 20 |only if walking
+talk Heidirk the Scalekeeper##120118
+fpath Aalgen Point |goto 70.77,47.62
+|only Monk
+step
+talk Heidirk the Scalekeeper##120118
+turnin Aalgen Point##46832 |goto 70.77,47.62
+accept Vengeance Point##46845 |goto 70.77,47.62
+|only Monk
+step
+Follow the path |goto 66.35,42.24 < 30 |only if walking
+Follow the path up |goto 67.84,34.26 < 15 |only if walking
+Follow the path down |goto 64.07,33.29 < 20 |only if walking
+Follow the path |goto 56.85,29.64 < 25 |only if walking
+Cross the water |goto 53.72,27.17 < 20 |only if walking
+Follow the path |goto 51.15,23.93 < 20 |only if walking
+Defend Vengeance Point |q 46845/1 |goto 51.15,23.93
+|only Monk
+step
+kill Abhorrent Felwing##120748+, Crazed Felblade##120969+
+Slay #5# Abhorrent Felwing |q 46845/2 |goto 51.84,21.55
+Slay #4# Crazed Felblade |q 46845/3 |goto 51.84,21.55
+|only Monk
+step
+talk Izal Whitemoon##111323
+fpath Vengeance Point |goto 49.66,21.02
+|only Monk
+step
+talk Izal Whitemoon##111323
+turnin Vengeance Point##46845 |goto 49.66,21.02
+|only Monk
+step
+label "Monk_Supplies"
+Collect #100# Legionfall War Supplies |q 46286/1
+|tip You can obtain this currency by completed world quests and kill rare elites in Broken Shore.
+|only Monk
+step
+talk Commander Chambers##120183
+turnin Legionfall Supplies##46286 |goto 44.55,63.15
+accept Begin Construction##46245 |goto 44.54,63.15
+|only Monk
+step
+click Legionfall Construction Table
+Legionfall Supplies Donated |q 46245/1 |goto 44.57,63.07
+|tip Choose whichever structure appeals to you.
+|only Monk
+step
+talk Commander Chambers##120183
+turnin Begin Construction##46245 |goto 44.54,63.15
+|only Monk
+step
+talk Commander Chambers##120183
+accept The Nether Disruptor##46774 |goto 44.54,63.16
+|only Monk
+step
+talk Archmage Khadgar##116302
+accept Altar of the Aegis##46244 |goto 44.73,63.27
+|only Monk
+step
+Press _I_ and queue for Cathedral of Eternal Night or enter the dungeon with your group |goto 64.75,16.65
+kill Mephistroth##120793
+|tip Mephistroth is the final boss of the Cathedral of Eternal Night instance.
+Defeat Mephistroth |q 46244/1
+|only Monk
+step
+talk Archmage Khadgar##116302
+turnin Altar of the Aegis##46244 |goto 44.73,63.27
+|only Monk
+step
+talk Maiev Shadowsong##116576
+accept Defending Broken Isles##46247 |goto 44.54,63.52
+|only Monk
+step
+Complete a Legion Assault |q 46247/1 |goto 44.54,63.52
+|only Monk
+step
+talk Maiev Shadowsong##116576
+turnin Defending Broken Isles##46247 |goto 44.54,63.52
+|only Monk
+step
+talk Commander Chambers##120183
+accept The Nether Disruptor##46774 |goto 44.54,63.16
+|only Monk
+step
+talk Archmage Khadgar##116302
+accept Shard Times##46251 |goto 44.74,63.27
+|tip If you have the quest Altar of the Aegis, you will not be able to accept this quest.
+|only Monk
+step
+Collect #2500# Nethershards |q 46251/1 |goto 44.74,63.27
+|tip Nethershards can be obtained by looting rares, treasures, and completing world quests.
+|only Monk
+step
+talk Archmage Khadgar##116302
+turnin Shard Times##46251 |goto 44.74,63.27
+|only Monk
+step
+talk Lord Illidan Stormrage##117873 |only if achieved(11846)
+accept Mark of the Sentinax##47139 |goto 44.79,63.17 |only if achieved(11846)
+|achieve 11846 |only if not achieved(11846)
+|tip You must earn the "Champions of Legionfall" achievement to progress further. |only if not achieved(11846)
+Click here to load the "7.2 Order Hall Quests" guide and accomplish this |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\7.2 Order Hall Quests" |only if not achieved(11846)
+|only Monk
+step
+Locate The Sentinax in The Broken Shore and kill enemies that spawn from the portals in the area
+|tip It will be a large green icon on the World Map.
+collect 50 Mark of the Sentinax##147582 |q 47139/1
+|only Monk
+step
+talk Lord Illidan Stormrage##117873
+turnin Mark of the Sentinax##47139 |goto 44.79,63.19
+|only Monk
+step
+talk Prophet Velen##120372
+accept Self-Fulfilling Prophecy##46248 |goto 44.57,63.39
+|only Monk
+step
+Complete #8# world quests on Broken Shore |q 46248/1 |goto 44.57,63.39 |or
+|tip Use our World Quest guide to accomplish this.
+To load the World Quest guide, click here |confirm |next "Zygor's Dailies Guides\\Legion\\World Quests" |or
+|only Monk
+step
+talk Prophet Velen##120372
+turnin Self-Fulfilling Prophecy##46248 |goto 44.57,63.39
+|only Monk
+step
+talk Maiev Shadowsong##116576
+accept Intolerable Infestation##46252 |goto 44.54,63.52
+|only Monk
+step
+kill Infernal Brutalizer##93619, Vile Stalker##90241, Felguard Shocktrooper##101943
+Kill #50# Demons |q 46252/1 |goto Azsuna/0 42.60,44.19
+|tip Drag them near the purple orbs to kill them faster.
+|only Monk
+step
+talk Maiev Shadowsong##116576
+turnin Intolerable Infestation##46252 |goto Broken Shore/0 44.54,63.52
+|only Monk
+step
+talk Archmage Khadgar##116302
+accept Relieved of Their Valuables##46769 |goto 44.72,63.29
+|only Monk
+step
+click Hidden Wyrmtongue Cache##6478
+Find #3# Hidden Wyrmtongue Caches |q 46769/1 |goto 58.61,43.48
+These are located in random spots inside of the Broken Isle
+|tip They will show up on your minimap as silver chests when you are near one.
+|only Monk
+step
+talk Archmage Khadgar##116302
+turnin Relieved of Their Valuables##46769 |goto 44.73,63.27
+|only Monk
+step
+talk Maiev Shadowsong##116576
+accept Take Out the Head...##46250 |goto 44.54,63.53
+|only Monk
+step
+Slay #3# rare elite demon commanders on the Broken Shore |q 46250/1 |goto 58.61,43.48 |or
+|tip You can use the World Quest guide and click on rare icons on the world map to load some helpful tips.
+|tip These icons look like green skulls.
+|tip Rare spawns remain up for a short period of time, and change randomly.
+Click here to load the World Quest guide |confirm |next "Zygor's Dailies Guides\\Legion\\World Quests" |or
+|only Monk
+step
+talk Maiev Shadowsong##116576
+turnin Take Out the Head...##46250 |goto 44.54,63.53
+|only Monk
+step
+talk Archmage Khadgar##116302
+accept Championing Our Cause##46249 |goto 44.73,63.27
+|only Monk
+step
+click Scouting Map
+Complete 1 Legion Order Hall Mission |q 46249/1 |goto The Wandering Isle L/0 52.91,60.16
+|tip Legionfall missions can be identified by looking at the zone text underneath the title after clicking on the mission.
+|tip Only Broken Shore missions count towards this objective.
+|tip You may also use the mission table in the Command Center on Broken Shore if that building is complete.
+|only Monk
+step
+talk Archmage Khadgar##116302
+turnin Championing Our Cause##46249 |goto Broken Shore/0 44.73,63.27
+|only Monk
+step
+talk Maiev Shadowsong##116576
+accept Strike Them Down##46246 |goto 44.54,63.53
+|only Monk
+step
+kill Skittering Demon##117509+, Hatching Egg##119720+, Hatched Broodling##119721+
+Kill #100# Demons on Broken Shore |q 46246/1 |goto 38.63,31.86
+|tip The eggs will spawn 5 Broodlings with very low health.
+|tip You can also farm demons from portals underneath the Sentinax.
+|only Monk
+step
+talk Maiev Shadowsong##116576
+turnin Strike Them Down##46246 |goto 44.54,63.53
+|only Monk
+step
+accept Armies of Legionfall##46730
+|tip This quest will auto accept.
+|only Paladin
+step
+Meet Khadgar at Krasus' Landing |q 46730/1 |goto Dalaran L/10 66.18,41.97
+|only Paladin
+step
+talk Archmage Khadgar##120215
+turnin Armies of Legionfall##46730 |goto 69.35,43.87
+accept Assault on Broken Shore##46734 |goto 69.35,43.87
+|only Paladin
+step
+talk Archmage Khadgar##120215
+Tell him: _"I am ready to launch the assault"_ |q 46734/1 |goto 69.34,43.87
+|only Paladin
+step
+Reach the Broken Shore |scenariogoal 1/35285 |goto Assault on Broken Shore/0 55.06,66.85 |q 46734
+|only Paladin
+step
+Defeat the Legion forces |scenariostage 2 |goto Assault on Broken Shore/0 52.70,67.01 |q 46734
+|tip Kill any mobs you see around the staging area.
+|only Paladin
+step
+Follow the path |goto Assault on Broken Shore/0 47.47,72.08 < 30 |walk
+Follow the path up |goto 44.05,73.57 < 25 |walk
+Follow the path |goto 41.46,71.46 < 25 |walk
+Follow the path |goto 39.96,67.80 < 20 |walk
+kill Lord Kalgorath##116291
+Defeat Lord Kalgorath |scenariogoal 3/35329 |goto 41.43,64.76 |q 46734
+|only Paladin
+step
+Go up the steps | goto 40.48,63.99 < 20 |walk
+Follow the path down |goto 44.04,58.20 < 20 |walk
+Follow the path |goto 47.17,58.16 < 20 |walk
+Follow the path |goto 52.27,52.46 < 20 |walk
+Close #3# Legion Portals |scenariogoal 4/35495 |goto 57.67,49.70 |q 46734
+|tip These are scattered around the area.
+|only Paladin
+step
+Deplete Arganoth's forces |scenariostage 4 |goto 57.67,49.70 |q 46734
+|tip Kill anything in the area until the progress bar fills up.
+|only Paladin
+step
+kill Dread Commander Arganoth##118551
+Defeat Dread Commander Arganoth |scenariogoal 5/35497 |goto 55.38,51.47 |walk |q 46734
+|only Paladin
+step
+click Demonic Gateway
+Take the Demonic Gateway |scenariogoal 6/35551 |goto 53.32,50.37 |walk |q 46734
+|only Paladin
+step
+click First Arcane Bomb |goto 49.47,46.56 < 5 |walk |scenariogoal 7/36178 |count 1 |q 46734
+|only Paladin
+step
+click Second Arcane Bomb |goto 49.94,44.47 < 5 |walk |scenariogoal 7/36178 |count 2 |q 46734
+|tip Take the portal after clicking this bomb. Don't bother killing the Interrogator.
+|only Paladin
+step
+click Third Arcane Bomb |goto 50.19,43.72 < 5 |walk |scenariogoal 7/36178 |count 3 |q 46734
+|only Paladin
+step
+click Fourth Arcane Bomb |goto 49.21,46.17 < 5 |walk |scenariogoal 7/36178 |count 4 |q 46734
+|only Paladin
+step
+click Fifth Arcane Bomb |goto 49.45,48.38 < 5 |walk |scenariogoal 7/36178 |count 5 |q 46734
+|only Paladin
+step
+Go upstairs |goto 49.10,45.31 < 5 |walk
+click Sixth Arcane Bomb |goto 49.30,45.88 < 5 |walk |scenariogoal 7/36178 |count 6 |q 46734
+|only Paladin
+step
+click Final Arcane Bomb |goto 50.84,45.63 < 5 |walk |scenariogoal 7/36178 |count 7 |q 46734
+|only Paladin
+step
+kill Mephistroth##120746
+Defeat Mephistroth |scenariogoal 8/36179 |goto 50.05,45.74 |q 46734
+|tip Interrupt Mind Blast whenever possible.
+|tip When Mephistroth casts Shadow Blast, start strafing to the left or right.
+|only Paladin
+step
+talk Archmage Khadgar##116302
+turnin Assault on Broken Shore##46734 |goto Broken Shore/0 44.73,63.27
+|only Paladin
+step
+talk Commander Chambers##120183
+accept Legionfall Supplies##46286 |goto 44.55,63.15
+accept Aalgen Point##46832 |goto 44.55,63.15
+|only Paladin
+step
+talk Illidari Calia##120272
+fpath Deliverance Point |goto Broken Shore/0 45.17,64.09
+|only Paladin
+stickystart "Supplies"
+step
+Follow the path |goto 46.86,58.63 < 25 |only if walking
+Follow the path |goto 51.55,52.49 < 30 |only if walking
+Follow the path |goto 57.94,48.67 < 30 |only if walking
+Follow the path |goto 61.08,46.33 < 30 |only if walking
+Drop down |goto 63.41,48.74 < 20 |only if walking
+talk Heidirk the Scalekeeper##120118
+fpath Aalgen Point |goto 70.77,47.62
+|only Paladin
+step
+talk Heidirk the Scalekeeper##120118
+turnin Aalgen Point##46832 |goto 70.77,47.62
+accept Vengeance Point##46845 |goto 70.77,47.62
+|only Paladin
+step
+Follow the path |goto 66.35,42.24 < 30 |only if walking
+Follow the path up |goto 67.84,34.26 < 15 |only if walking
+Follow the path down |goto 64.07,33.29 < 20 |only if walking
+Follow the path |goto 56.85,29.64 < 25 |only if walking
+Cross the water |goto 53.72,27.17 < 20 |only if walking
+Follow the path |goto 51.15,23.93 < 20 |only if walking
+Defend Vengeance Point |q 46845/1 |goto 51.84,21.55
+|only Paladin
+step
+kill Abhorrent Felwing##120748+, Crazed Felblade##120969+
+Slay #5# Abhorrent Felwing |q 46845/2 |goto 51.84,21.55
+Slay #4# Crazed Felblade |q 46845/3 |goto 51.84,21.55
+|only Paladin
+step
+talk Izal Whitemoon##111323
+fpath Vengeance Point |goto 49.66,21.02
+|only Paladin
+step
+talk Izal Whitemoon##111323
+turnin Vengeance Point##46845 |goto 49.66,21.02
+|only Paladin
+step
+label "Supplies"
+Collect #100# Legionfall War Supplies |q 46286/1
+|tip You can obtain this currency by completed world quests and kill rare elites in Broken Shore.
+|only Paladin
+step
+talk Commander Chambers##120183
+turnin Legionfall Supplies##46286 |goto 44.55,63.15
+accept Begin Construction##46245 |goto 44.54,63.15
+|only Paladin
+step
+click Legionfall Construction Table
+Legionfall Supplies Donated |q 46245/1 |goto 44.57,63.07
+|tip Choose whichever structure appeals to you.
+|only Paladin
+step
+talk Commander Chambers##120183
+turnin Begin Construction##46245 |goto 44.54,63.15
+|only Paladin
+step
+talk Archmage Khadgar##116302
+accept Altar of the Aegis##46244 |goto 44.73,63.27
+|only Paladin
+step
+Press _I_ and queue for Cathedral of Eternal Night or enter the dungeon with your group |goto 64.75,16.65
+kill Mephistroth##120793
+|tip Mephistroth is the final boss of the Cathedral of Eternal Night instance.
+Defeat Mephistroth |q 46244/1
+|only Paladin
+step
+talk Archmage Khadgar##116302
+turnin Altar of the Aegis##46244 |goto 44.73,63.27
+|only Paladin
+step
+talk Maiev Shadowsong##116576
+accept Defending Broken Isles##46247 |goto 44.54,63.52
+|only Paladin
+step
+Complete a Legion Assault |q 46247/1 |goto 44.54,63.52
+|only Paladin
+step
+talk Maiev Shadowsong##116576
+turnin Defending Broken Isles##46247 |goto 44.54,63.52
+|only Paladin
+step
+talk Commander Chambers##120183
+accept The Nether Disruptor##46774 |goto 44.54,63.16
+|only Paladin
+step
+talk Archmage Khadgar##116302
+accept Shard Times##46251 |goto 44.74,63.27
+|tip If you have the quest Altar of the Aegis, you will not be able to accept this quest.
+|only Paladin
+step
+Collect #2500# Nethershards |q 46251/1 |goto 44.74,63.27
+|tip Nethershards can be obtained by looting rares, treasures, and completing world quests.
+|only Paladin
+step
+talk Archmage Khadgar##116302
+turnin Shard Times##46251 |goto 44.74,63.27
+|only Paladin
+step
+talk Lord Illidan Stormrage##117873 |only if achieved(11846)
+accept Mark of the Sentinax##47139 |goto 44.79,63.17 |only if achieved(11846)
+|achieve 11846 |only if not achieved(11846)
+|tip You must earn the "Champions of Legionfall" achievement to progress further. |only if not achieved(11846)
+Click here to load the "7.2 Order Hall Quests" guide and accomplish this |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\7.2 Order Hall Quests" |only if not achieved(11846)
+|only Paladin
+step
+Locate The Sentinax in The Broken Shore and kill enemies that spawn from the portals in the area
+|tip It will be a large green icon on the World Map.
+collect 50 Mark of the Sentinax##147582 |q 47139/1
+|only Paladin
+step
+talk Lord Illidan Stormrage##117873
+turnin Mark of the Sentinax##47139 |goto 44.79,63.19
+|only Paladin
+step
+talk Prophet Velen##120372
+accept Self-Fulfilling Prophecy##46248 |goto 44.57,63.39
+|only Paladin
+step
+Complete #8# world quests on Broken Shore |q 46248/1 |goto 44.57,63.39 |or
+|tip Use our World Quest guide to accomplish this.
+To load the World Quest guide, click here |confirm |next "Zygor's Dailies Guides\\Legion\\World Quests" |or
+|only Paladin
+step
+talk Prophet Velen##120372
+turnin Self-Fulfilling Prophecy##46248 |goto 44.57,63.39
+|only Paladin
+step
+talk Maiev Shadowsong##116576
+accept Intolerable Infestation##46252 |goto 44.54,63.52
+|only Paladin
+step
+kill Infernal Brutalizer##93619, Vile Stalker##90241, Felguard Shocktrooper##101943
+Kill #50# Demons |q 46252/1 |goto Azsuna/0 42.60,44.19
+|tip Drag them near the purple orbs to kill them faster.
+|only Paladin
+step
+talk Maiev Shadowsong##116576
+turnin Intolerable Infestation##46252 |goto Broken Shore/0 44.54,63.52
+|only Paladin
+step
+talk Archmage Khadgar##116302
+accept Relieved of Their Valuables##46769 |goto 44.72,63.29
+|only Paladin
+step
+click Hidden Wyrmtongue Cache##6478
+Find #3# Hidden Wyrmtongue Caches |q 46769/1 |goto 58.61,43.48
+These are located in random spots inside of the Broken Isle
+|tip They will show up on your minimap as silver chests when you are near one.
+|only Paladin
+step
+talk Archmage Khadgar##116302
+turnin Relieved of Their Valuables##46769 |goto 44.73,63.27
+|only Paladin
+step
+talk Maiev Shadowsong##116576
+accept Take Out the Head...##46250 |goto 44.54,63.53
+|only Paladin
+step
+Slay #3# rare elite demon commanders on the Broken Shore |q 46250/1 |goto 58.61,43.48 |or
+|tip You can use the World Quest guide and click on rare icons on the world map to load some helpful tips.
+|tip These icons look like green skulls.
+|tip Rare spawns remain up for a short period of time, and change randomly.
+Click here to load the World Quest guide |confirm |next "Zygor's Dailies Guides\\Legion\\World Quests" |or
+|only Paladin
+step
+talk Maiev Shadowsong##116576
+turnin Take Out the Head...##46250 |goto 44.54,63.53
+|only Paladin
+step
+talk Archmage Khadgar##116302
+accept Championing Our Cause##46249 |goto 44.73,63.27
+|only Paladin
+step
+click Scouting Map
+Complete 1 Legionfall Mission |q 46249/1 |goto Eastern Plaguelands/20 53.37,78.71
+|tip Legionfall missions can be identified by looking at the zone text underneath the title after clicking on the mission.
+|tip Only Broken Shore missions count towards this objective.
+|tip You may also use the mission table in the Command Center on Broken Shore if that building is complete.
+|only Paladin
+step
+talk Archmage Khadgar##116302
+turnin Championing Our Cause##46249 |goto Broken Shore/0 44.73,63.27
+|only Paladin
+step
+talk Maiev Shadowsong##116576
+accept Strike Them Down##46246 |goto 44.54,63.53
+|only Paladin
+step
+kill Skittering Demon##117509+, Hatching Egg##119720+, Hatched Broodling##119721+
+Kill #100# Demons on Broken Shore |q 46246/1 |goto 38.63,31.86
+|tip The eggs will spawn 5 Broodlings with very low health.
+|tip You can also farm demons from portals underneath the Sentinax.
+|only Paladin
+step
+talk Maiev Shadowsong##116576
+turnin Strike Them Down##46246 |goto 44.54,63.53
+|only Paladin
+step
+accept Armies of Legionfall##46730
+|only Priest
+step
+Meet Khadgar at Krasus' Landing |q 46730/1 |goto Dalaran L/10 66.18,41.97
+|only Priest
+step
+talk Archmage Khadgar##120215
+turnin Armies of Legionfall##46730 |goto 69.35,43.87
+accept Assault on Broken Shore##46734 |goto 69.35,43.87
+|only Priest
+step
+talk Archmage Khadgar##120215
+Tell him: _"I am ready to launch the assault"_ |q 46734/1 |goto 69.34,43.87
+|only Priest
+step
+Reach the Broken Shore |scenariogoal 1/35285 |goto Assault on Broken Shore/0 55.06,66.85 |q 46734
+|only Priest
+step
+Defeat the Legion forces |scenariostage 2 |goto Assault on Broken Shore/0 52.70,67.01 |q 46734
+|tip Kill any mobs you see around the staging area.
+|only Priest
+step
+Follow the path |goto Assault on Broken Shore/0 47.47,72.08 < 30 |walk
+Follow the path up |goto 44.05,73.57 < 25 |walk
+Follow the path |goto 41.46,71.46 < 25 |walk
+Follow the path |goto 39.96,67.80 < 20 |walk
+kill Lord Kalgorath##116291
+Defeat Lord Kalgorath |scenariogoal 3/35329 |goto 41.43,64.76 |q 46734
+|only Priest
+step
+Go up the steps | goto 40.48,63.99 < 20 |walk
+Follow the path down |goto 44.04,58.20 < 20 |walk
+Follow the path |goto 47.17,58.16 < 20 |walk
+Follow the path |goto 52.27,52.46 < 20 |walk
+Close #3# Legion Portals |scenariogoal 4/35495 |goto 57.67,49.70 |q 46734
+|tip These are scattered around the area.
+|only Priest
+step
+Deplete Arganoth's forces |scenariostage 4 |goto 57.67,49.70 |q 46734
+|tip Kill anything in the area until the progress bar fills up.
+|only Priest
+step
+kill Dread Commander Arganoth##118551
+Defeat Dread Commander Arganoth |scenariogoal 5/35497 |goto 55.38,51.47 |walk |q 46734
+|only Priest
+step
+click Demonic Gateway
+Take the Demonic Gateway |scenariogoal 6/35551 |goto 53.32,50.37 |walk |q 46734
+|only Priest
+step
+click First Arcane Bomb |goto 49.47,46.56 < 5 |walk |scenariogoal 7/36178 |count 1 |q 46734
+|only Priest
+step
+click Second Arcane Bomb |goto 49.94,44.47 < 5 |walk |scenariogoal 7/36178 |count 2 |q 46734
+|tip Take the portal after clicking this bomb. Don't bother killing the Interrogator.
+|only Priest
+step
+click Third Arcane Bomb |goto 50.19,43.72 < 5 |walk |scenariogoal 7/36178 |count 3 |q 46734
+|only Priest
+step
+click Fourth Arcane Bomb |goto 49.21,46.17 < 5 |walk |scenariogoal 7/36178 |count 4 |q 46734
+|only Priest
+step
+click Fifth Arcane Bomb |goto 49.45,48.38 < 5 |walk |scenariogoal 7/36178 |count 5 |q 46734
+|only Priest
+step
+Go upstairs |goto 49.10,45.31 < 5 |walk
+click Sixth Arcane Bomb |goto 49.30,45.88 < 5 |walk |scenariogoal 7/36178 |count 6 |q 46734
+|only Priest
+step
+click Final Arcane Bomb |goto 50.84,45.63 < 5 |walk |scenariogoal 7/36178 |count 7 |q 46734
+|only Priest
+step
+kill Mephistroth##120746
+Defeat Mephistroth |scenariogoal 7/36179 |goto 50.05,45.74 |q 46734
+|tip Interrupt Mind Blast whenever possible.
+|tip When Mephistroth casts Shadow Blast, start strafing to the left or right.
+|only Priest
+step
+talk Archmage Khadgar##116302
+turnin Assault on Broken Shore##46734 |goto Broken Shore/0 44.73,63.27
+|only Priest
+step
+talk Commander Chambers##120183
+accept Legionfall Supplies##46286 |goto 44.55,63.15
+accept Aalgen Point##46832 |goto 44.55,63.15
+|only Priest
+step
+talk Illidari Calia##120272
+fpath Deliverance Point |goto Broken Shore/0 45.17,64.09
+|only Priest
+stickystart "P_Supplies"
+step
+Follow the path |goto 46.86,58.63 < 25 |only if walking
+Follow the path |goto 51.55,52.49 < 30 |only if walking
+Follow the path |goto 57.94,48.67 < 30 |only if walking
+Follow the path |goto 61.08,46.33 < 30 |only if walking
+Drop down |goto 63.41,48.74 < 20 |only if walking
+talk Heidirk the Scalekeeper##120118
+fpath Aalgen Point |goto 70.77,47.62
+|only Priest
+step
+talk Heidirk the Scalekeeper##120118
+turnin Aalgen Point##46832 |goto 70.77,47.62
+accept Vengeance Point##46845 |goto 70.77,47.62
+|only Priest
+step
+Follow the path |goto 66.35,42.24 < 30 |only if walking
+Follow the path up |goto 67.84,34.26 < 15 |only if walking
+Follow the path down |goto 64.07,33.29 < 20 |only if walking
+Follow the path |goto 56.85,29.64 < 25 |only if walking
+Cross the water |goto 53.72,27.17 < 20 |only if walking
+Follow the path |goto 51.15,23.93 < 20 |only if walking
+Defend Vengeance Point |q 46845/1 |goto 51.34,22.88
+|only Priest
+step
+kill Abhorrent Felwing##120748+, Crazed Felblade##120969+
+Slay #5# Abhorrent Felwing |q 46845/2 |goto 51.84,21.55
+Slay #4# Crazed Felblade |q 46845/3 |goto 51.84,21.55
+|only Priest
+step
+talk Izal Whitemoon##111323
+fpath Vengeance Point |goto 49.66,21.02
+|only Priest
+step
+talk Izal Whitemoon##111323
+turnin Vengeance Point##46845 |goto 49.66,21.02
+|only Priest
+step
+label "P_Supplies"
+Collect #100# Legionfall War Supplies |q 46286/1
+|tip You can obtain this currency by completed world quests and kill rare elites in Broken Shore.
+|only Priest
+step
+talk Commander Chambers##120183
+turnin Legionfall Supplies##46286 |goto 44.55,63.15
+accept Begin Construction##46245 |goto 44.54,63.15
+|only Priest
+step
+click Legionfall Construction Table
+Legionfall Supplies Donated |q 46245/1 |goto 44.57,63.07
+|tip Choose whichever structure appeals to you.
+|only Priest
+step
+talk Commander Chambers##120183
+turnin Begin Construction##46245 |goto 44.54,63.15
+|only Priest
+step
+talk Archmage Khadgar##116302
+accept Altar of the Aegis##46244 |goto 44.73,63.27
+|only Priest
+step
+Press _I_ and queue for Cathedral of Eternal Night or enter the dungeon with your group |goto 64.75,16.65
+kill Mephistroth##120793
+|tip Mephistroth is the final boss of the Cathedral of Eternal Night instance.
+Defeat Mephistroth |q 46244/1
+|only Priest
+step
+talk Archmage Khadgar##116302
+turnin Altar of the Aegis##46244 |goto 44.73,63.27
+|only Priest
+step
+talk Maiev Shadowsong##116576
+accept Defending Broken Isles##46247 |goto 44.54,63.52
+|only Priest
+step
+Complete a Legion Assault |q 46247/1 |goto 44.54,63.52
+|only Priest
+step
+talk Maiev Shadowsong##116576
+turnin Defending Broken Isles##46247 |goto 44.54,63.52
+|only Priest
+step
+talk Lord Illidan Stormrage##117873 |only if achieved(11846)
+accept Mark of the Sentinax##47139 |goto 44.79,63.17 |only if achieved(11846)
+|achieve 11846 |only if not achieved(11846)
+|tip You must earn the "Champions of Legionfall" achievement to progress further. |only if not achieved(11846)
+Click here to load the "7.2 Order Hall Quests" guide and accomplish this |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\7.2 Order Hall Quests" |only if not achieved(11846)
+|only Priest
+step
+collect 50 Mark of the Sentinax##147582 |q 47139/1 |goto 44.79,63.17
+|tip These are collected from Sentinax Portals.
+|tip Sentinax Beacons summon portals which spawn mobs that you can kill for Marks.
+|tip Setninax Beacons drop from mobs in Broken Shore.
+|tip Open your map and look for the Sentinax icon. Use your beacons below the ship.
+|only Priest
+step
+talk Lord Illidan Stormrage##117873
+turnin Mark of the Sentinax##47139 |goto 44.79,63.17
+|only Priest
+step
+talk Prophet Velen##120372
+accept Self-Fulfilling Prophecy##46248 |goto Broken Shore/0 44.56,63.39
+|only Priest
+step
+Complete #8# world quests on Broken Shore |q 46248/1
+|tip Use the World Quests guide to complete this.
+|only Priest
+step
+talk Prophet Velen##120372
+turnin Self-Fulfilling Prophecy##46248 |goto Broken Shore/0 44.56,63.39
+|only Priest
+step
+talk Maiev Shadowsong##116576
+accept Intolerable Infestation##46252 |goto Broken Shore/0 44.54,63.52
+|only Priest
+step
+kill Felflame Imp##107335+, Fiendish Trickster##107545+
+Kill #50# Demons |q 46252/1 |goto Azsuna/0 32.44,49.97
+|only Priest
+step
+talk Maiev Shadowsong##116576
+turnin Intolerable Infestation##46252 |goto Broken Shore/0 44.54,63.52
+|only Priest
+step
+talk Archmage Khadgar##116302
+accept Relieved of Their Valuables##46769 |goto Broken Shore/0 44.72,63.27
+|only Priest
+step
+Find #3# Hidden Wyrmtongue Caches |q 46769/1
+|tip These caches are found scattered randomly around Broken Shore.
+|tip They will show on your minimap when you are near one.
+|only Priest
+step
+talk Archmage Khadgar##116302
+turnin Relieved of Their Valuables##46769 |goto Broken Shore/0 44.72,63.27
+|only Priest
+step
+talk Maiev Shadowsong##116576
+accept Take Out the Head...##46250 |goto 44.54,63.53
+|only Priest
+step
+Slay #3# rare elite demon commanders on the Broken Shore |q 46250/1 |goto 58.61,43.48 |or
+|tip You can use the World Quest guide and click on rare icons on the world map to load some helpful tips.
+|tip These icons look like green skulls.
+|tip Rare spawns remain up for a short period of time, and change randomly.
+Click here to load the World Quest guide |confirm |next "Zygor's Dailies Guides\\Legion\\World Quests" |or
+|only Priest
+step
+talk Maiev Shadowsong##116576
+turnin Take Out the Head...##46250 |goto 44.54,63.53
+|only Priest
+step
+talk Archmage Khadgar##116302
+accept Championing Our Cause##46249 |goto Broken Shore/0 44.72,63.26
+|only Priest
+step
+click Command Map
+Complete 1 Legionfall Mission in your Order Hall |q 46249/1 |goto Netherlight Temple/1 49.85,48.87
+|tip Legionfall missions can be identified by looking at the zone text underneath the title after clicking on the mission.
+|tip Only Broken Shore missions count towards this objective.
+|tip You may also use the mission table in the Command Center on Broken Shore if that building is complete.
+|only Priest
+step
+talk Archmage Khadgar##116302
+turnin Championing Our Cause##46249 |goto Broken Shore/0 44.72,63.26
+|only Priest
+step
+talk Maiev Shadowsong##116576
+accept Strike Them Down##46246 |goto Broken Shore/0 44.53,63.51
+|only Priest
+step
+kill Skittering Demon##117509+, Hatching Egg##119720+, Hatched Broodling##119721+
+Kill #100# Demons on Broken Shore |q 46246/1 |goto Broken Shore/0 38.62,28.48
+|only Priest
+step
+talk Maiev Shadowsong##116576
+turnin Strike Them Down##46246 |goto Broken Shore/0 44.53,63.51
+|only Priest
+step
+accept Armies of Legionfall##46730
+|only Rogue
+step
+Meet Khadgar at Krasus' Landing |q 46730/1 |goto Dalaran L/10 66.18,41.97
+|only Rogue
+step
+talk Archmage Khadgar##120215
+turnin Armies of Legionfall##46730 |goto 69.35,43.87
+accept Assault on Broken Shore##46734 |goto 69.35,43.87
+|only Rogue
+step
+talk Archmage Khadgar##120215
+Tell him: _"I am ready to launch the assault"_ |q 46734/1 |goto 69.34,43.87
+|only Rogue
+step
+Reach the Broken Shore |scenariogoal 1/35285 |q 46734 |goto Assault on Broken Shore/0 55.06,66.85
+|only Rogue
+step
+Defeat the Legion forces |scenariostage 2 |q 46734 |goto Assault on Broken Shore/0 52.70,67.01
+|tip Kill any mobs you see around the staging area.
+|only Rogue
+step
+Follow the path |goto Assault on Broken Shore/0 47.47,72.08 < 30 |walk
+Follow the path up |goto 44.05,73.57 < 25 |walk
+Follow the path |goto 41.46,71.46 < 25 |walk
+Follow the path |goto 39.96,67.80 < 20 |walk
+kill Lord Kalgorath##116291
+Defeat Lord Kalgorath |scenariogoal 3/35329 |q 46734 |goto 41.43,64.76
+|only Rogue
+step
+Go up the steps | goto 40.48,63.99 < 20 |walk
+Follow the path down |goto 44.04,58.20 < 20 |walk
+Follow the path |goto 47.17,58.16 < 20 |walk
+Follow the path |goto 52.27,52.46 < 20 |walk
+Close #3# Legion Portals |scenariogoal 4/35495 |q 46734 |goto 57.67,49.70
+|tip These are scattered around the area.
+|only Rogue
+step
+Deplete Arganoth's forces |scenariostage 4 |q 46734 |goto 57.67,49.70
+|tip Kill anything in the area until the progress bar fills up.
+|only Rogue
+step
+kill Dread Commander Arganoth##118551
+Defeat Dread Commander Arganoth |scenariogoal 5/35497 |q 46734 |goto 55.38,51.47 |walk
+|only Rogue
+step
+click Demonic Gateway
+Take the Demonic Gateway |scenariogoal 6/35551 |q 46734 |goto 53.32,50.37 |walk
+|only Rogue
+step
+click First Arcane Bomb |goto 49.47,46.56 < 5 |walk |scenariogoal 7/36178 |q 46734 |count 1
+|only Rogue
+step
+click Second Arcane Bomb |goto 49.94,44.47 < 5 |walk |scenariogoal 7/36178 |q 46734 |count 2
+|tip Take the portal after clicking this bomb. Don't bother killing the Interrogator.
+|only Rogue
+step
+click Third Arcane Bomb |goto 50.19,43.72 < 5 |walk |scenariogoal 7/36178 |q 46734 |count 3
+|only Rogue
+step
+click Fourth Arcane Bomb |goto 49.21,46.17 < 5 |walk |scenariogoal 7/36178 |q 46734 |count 4
+|only Rogue
+step
+click Fifth Arcane Bomb |goto 49.45,48.38 < 5 |walk |scenariogoal 7/36178 |q 46734 |count 5
+|only Rogue
+step
+Go upstairs |goto 49.10,45.31 < 5 |walk
+click Sixth Arcane Bomb |goto 49.30,45.88 < 5 |walk |scenariogoal 7/36178 |q 46734 |count 6
+|only Rogue
+step
+click Final Arcane Bomb |goto 50.84,45.63 < 5 |walk |scenariogoal 7/36178 |q 46734 |count 7
+|only Rogue
+step
+kill Mephistroth##120746
+Defeat Mephistroth |scenariogoal 8/36179 |q 46734 |goto 50.05,45.74
+|tip Interrupt Mind Blast whenever possible.
+|tip When Mephistroth casts Shadow Blast, start strafing to the left or right.
+|only Rogue
+step
+talk Archmage Khadgar##116302
+turnin Assault on Broken Shore##46734 |goto Broken Shore/0 44.73,63.27
+|only Rogue
+step
+talk Commander Chambers##120183
+accept Legionfall Supplies##46286 |goto 44.55,63.15
+accept Aalgen Point##46832 |goto 44.55,63.15
+|only Rogue
+step
+talk Illidari Calia##120272
+fpath Deliverance Point |goto Broken Shore/0 45.17,64.09
+|only Rogue
+stickystart "H_Supplies"
+step
+Follow the path |goto 46.86,58.63 < 25 |only if walking
+Follow the path |goto 51.55,52.49 < 30 |only if walking
+Follow the path |goto 57.94,48.67 < 30 |only if walking
+Follow the path |goto 61.08,46.33 < 30 |only if walking
+Drop down |goto 63.41,48.74 < 20 |only if walking
+talk Heidirk the Scalekeeper##120118
+fpath Aalgen Point |goto 70.77,47.62
+|only Rogue
+step
+talk Heidirk the Scalekeeper##120118
+turnin Aalgen Point##46832 |goto 70.77,47.62
+accept Vengeance Point##46845 |goto 70.77,47.62
+|only Rogue
+step
+Follow the path |goto 66.35,42.24 < 30 |only if walking
+Follow the path up |goto 67.84,34.26 < 15 |only if walking
+Follow the path down |goto 64.07,33.29 < 20 |only if walking
+Follow the path |goto 56.85,29.64 < 25 |only if walking
+Cross the water |goto 53.72,27.17 < 20 |only if walking
+Follow the path |goto 51.15,23.93 < 20 |only if walking
+Defend Vengeance Point |q 46845/1 |goto 51.15,23.93
+|only Rogue
+step
+kill Abhorrent Felwing##120748+, Crazed Felblade##120969+
+Slay #5# Abhorrent Felwing |q 46845/2 |goto 51.84,21.55
+Slay #4# Crazed Felblade |q 46845/3 |goto 51.84,21.55
+|only Rogue
+step
+talk Izal Whitemoon##111323
+fpath Vengeance Point |goto 49.66,21.02
+|only Rogue
+step
+talk Izal Whitemoon##111323
+turnin Vengeance Point##46845 |goto 49.66,21.02
+|only Rogue
+step
+label "H_Supplies"
+Collect #100# Legionfall War Supplies |q 46286/1
+|tip You can obtain this currency by completed world quests and kill rare elites in Broken Shore.
+|only Rogue
+step
+talk Commander Chambers##120183
+turnin Legionfall Supplies##46286 |goto 44.55,63.15
+accept Begin Construction##46245 |goto 44.54,63.15
+|only Rogue
+step
+click Legionfall Construction Table
+Legionfall Supplies Donated |q 46245/1 |goto 44.57,63.07
+|tip Choose whichever structure appeals to you.
+|only Rogue
+step
+talk Commander Chambers##120183
+turnin Begin Construction##46245 |goto 44.54,63.15
+|only Rogue
+step
+talk Archmage Khadgar##116302
+accept Altar of the Aegis##46244 |goto 44.66,63.36
+|only Rogue
+step
+Press _I_ and queue for Cathedral of Eternal Night or enter the dungeon with your group |goto Broken Shore/0 64.75,16.65
+kill Mephistroth##120793
+|tip Mephistroth is the final boss of the Cathedral of Eternal Night instance.
+Defeat Mephistroth |q 46244/1
+|only Rogue
+step
+talk Archmage Khadgar##116302
+turnin Altar of the Aegis##46244 |goto 44.73,63.27
+|only Rogue
+step
+talk Archmage Khadgar##116302
+accept Shard Times##46251 |goto 44.73,63.26
+|only Rogue
+step
+collect 2500 Nethershard##1226 |q 46251/1
+|tip These can be obtained through killing enemies or collecting chests on the Broken Shore.
+|tip These can also be obtained through completing invasions.
+|only Rogue
+step
+talk Archmage Khadgar##116302
+turnin Shard Times##46251 |goto 44.73,63.26
+|only Rogue
+step
+talk Lord Illidan Stormrage##117873 |only if achieved(11846)
+accept Mark of the Sentinax##47139 |goto 44.79,63.17 |only if achieved(11846)
+|achieve 11846 |only if not achieved(11846)
+|tip You must earn the "Champions of Legionfall" achievement to progress further. |only if not achieved(11846)
+Click here to load the "7.2 Order Hall Quests" guide and accomplish this |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\7.2 Order Hall Quests" |only if not achieved(11846)
+|only Rogue
+step
+You must go under the Sentinax that pats around the Broken Shore
+|tip Summon portals and defeat the enemies that come out.
+collect 50 Mark of the Sentinax##147582 |q 47139/1
+|tip Boss summons give quite alot of marks, use these beacons as soon as you get them.
+|only Rogue
+step
+talk Lord Illidan Stormrage##117873
+turnin Mark of the Sentinax##47139 |goto Broken Shore/0 44.76,63.18
+|only Rogue
+step
+talk Prophet Velen##120372
+accept Self-Fulfilling Prophecy##46248 |goto Broken Shore/0 44.58,63.36
+|only Rogue
+step
+Complete #8# world quests on Broken Shore |q 46248/1
+|tip Check out our "World Quests" guide to accomplish this.
+|only Rogue
+step
+talk Prophet Velen##120372
+turnin Self-Fulfilling Prophecy##46248 |goto Broken Shore/0 44.58,63.36
+|only Rogue
+step
+talk Maiev Shadowsong##116576
+accept Intolerable Infestation##46252 |goto Broken Shore/0 44.55,63.50
+|only Rogue
+step
+Slay the Demons found all around Felsoul Hold
+Kill #50# Demons |q 46252/1 |goto Suramar/0 29.23,61.22
+|only Rogue
+step
+talk Maiev Shadowsong##116576
+turnin Intolerable Infestation##46252 |goto Broken Shore/0 44.55,63.50
+|only Rogue
+step
+talk Archmage Khadgar##116302
+accept Relieved of Their Valuables##46769 |goto Broken Shore/0 44.74,63.28
+|only Rogue
+step
+click Hidden Wyrmtongue Cache##6478+
+Find #3# Hidden Wyrmtongue Caches |q 46769/1
+|tip These spawn randomly at different locations all around the Broken Shore.
+|tip They will appear as a tiny chest icon on your mini map when you are close by to one.
+|only Rogue
+step
+talk Archmage Khadgar##116302
+turnin Relieved of Their Valuables##46769 |goto Broken Shore/0 44.74,63.28
+|only Rogue
+step
+talk Maiev Shadowsong##116576
+accept Take Out the Head...##46250 |goto 44.54,63.53
+|only Rogue
+step
+Slay #3# rare elite demon commanders on the Broken Shore |q 46250/1 |goto 58.61,43.48 |or
+|tip You can use the World Quest guide and click on rare icons on the world map to load some helpful tips.
+|tip These icons look like green skulls.
+|tip Rare spawns remain up for a short period of time, and change randomly.
+Click here to load the World Quest guide |confirm |next "Zygor's Dailies Guides\\Legion\\World Quests" |or
+|only Rogue
+step
+talk Maiev Shadowsong##116576
+turnin Take Out the Head...##46250 |goto 44.54,63.53
+|only Rogue
+step
+talk Archmage Khadgar##116302
+accept Championing Our Cause##46249 |goto Broken Shore/0 44.75,63.33
+|only Rogue
+step
+click Scouting Map
+Complete 1 Legionfall Mission at your Class Order Hall |q 46249/1 |goto Dalaran L/4 37.51,44.29
+|tip Legionfall missions can be identified by looking at the zone text underneath the title after clicking on the mission.
+|tip Only Broken Shore missions count towards this objective.
+|tip You may also use the mission table in the Command Center on Broken Shore if that building is complete.
+|only Rogue
+step
+talk Archmage Khadgar##116302
+turnin Championing Our Cause##46249 |goto Broken Shore/0 44.75,63.33
+|only Rogue
+step
+talk Maiev Shadowsong##116576
+accept Strike Them Down##46246 |goto Broken Shore/0 44.59,63.50
+|only Rogue
+step
+kill Skittering Demon##117509+, Hatched Broodling##119721+
+|tip Kill the Hatching Eggs these will spawn 3-6 Hatched Broodlings per egg.
+Slay #100# Demons on the Broken Shore |q 46246/1 |goto Broken Shore/0 38.82,28.24
+|only Rogue
+step
+talk Maiev Shadowsong##116576
+turnin Strike Them Down##46246 |goto Broken Shore/0 44.59,63.50
+|only Rogue
+step
+accept Armies of Legionfall##46730
+|only Shaman
+step
+Meet Khadgar at Krasus' Landing |q 46730/1 |goto Dalaran L/10 66.18,41.97
+|only Shaman
+step
+talk Archmage Khadgar##120215
+turnin Armies of Legionfall##46730 |goto 69.35,43.87
+accept Assault on Broken Shore##46734 |goto 69.35,43.87
+|only Shaman
+step
+talk Archmage Khadgar##120215
+Tell him: _"I am ready to launch the assault"_ |q 46734/1 |goto 69.34,43.87
+|only Shaman
+step
+Reach the Broken Shore |scenariogoal 1/35285 |q 46734 |goto Assault on Broken Shore/0 55.06,66.85
+|only Shaman
+step
+Defeat the Legion forces |scenariostage 2 |q 46734 |goto Assault on Broken Shore/0 52.70,67.01
+|tip Kill any mobs you see around the staging area.
+|only Shaman
+step
+Follow the path |goto Assault on Broken Shore/0 47.47,72.08 < 30 |walk
+Follow the path up |goto 44.05,73.57 < 25 |walk
+Follow the path |goto 41.46,71.46 < 25 |walk
+Follow the path |goto 39.96,67.80 < 20 |walk
+kill Lord Kalgorath##116291
+Defeat Lord Kalgorath |scenariogoal 3/35329 |q 46734 |goto 41.43,64.76
+|only Shaman
+step
+Go up the steps | goto 40.48,63.99 < 20 |walk
+Follow the path down |goto 44.04,58.20 < 20 |walk
+Follow the path |goto 47.17,58.16 < 20 |walk
+Follow the path |goto 52.27,52.46 < 20 |walk
+Close #3# Legion Portals |scenariogoal 4/35495 |q 46734 |goto 57.67,49.70
+|tip These are scattered around the area.
+|only Shaman
+step
+Deplete Arganoth's forces |scenariostage 4 |q 46734 |goto 57.67,49.70
+|tip Kill anything in the area until the progress bar fills up.
+|only Shaman
+step
+kill Dread Commander Arganoth##118551
+Defeat Dread Commander Arganoth |scenariogoal 5/35497 |q 46734 |goto 55.38,51.47 |walk
+|only Shaman
+step
+click Demonic Gateway
+Take the Demonic Gateway |scenariogoal 6/35551 |q 46734 |goto 53.32,50.37 |walk
+|only Shaman
+step
+click First Arcane Bomb |goto 49.47,46.56 < 5 |walk |scenariogoal 7/36178 |q 46734 |count 1
+|only Shaman
+step
+click Second Arcane Bomb |goto 49.94,44.47 < 5 |walk |scenariogoal 7/36178 |q 46734 |count 2
+|tip Take the portal after clicking this bomb. Don't bother killing the Interrogator.
+|only Shaman
+step
+click Third Arcane Bomb |goto 50.19,43.72 < 5 |walk |scenariogoal 7/36178 |q 46734 |count 3
+|only Shaman
+step
+click Fourth Arcane Bomb |goto 49.21,46.17 < 5 |walk |scenariogoal 7/36178 |q 46734 |count 4
+|only Shaman
+step
+click Fifth Arcane Bomb |goto 49.45,48.38 < 5 |walk |scenariogoal 7/36178 |q 46734 |count 5
+|only Shaman
+step
+Go upstairs |goto 49.10,45.31 < 5 |walk
+click Sixth Arcane Bomb |goto 49.30,45.88 < 5 |walk |scenariogoal 7/36178 |q 46734 |count 6
+|only Shaman
+step
+click Final Arcane Bomb |goto 50.84,45.63 < 5 |walk |scenariogoal 7/36178 |q 46734 |count 7
+|only Shaman
+step
+kill Mephistroth##120746
+Defeat Mephistroth |scenariogoal 8/36179 |q 46734 |goto 50.05,45.74
+|tip Interrupt Mind Blast whenever possible.
+|tip When Mephistroth casts Shadow Blast, start strafing to the left or right.
+|only Shaman
+step
+talk Archmage Khadgar##116302
+turnin Assault on Broken Shore##46734 |goto Broken Shore/0 44.73,63.27
+|only Shaman
+step
+talk Commander Chambers##120183
+accept Legionfall Supplies##46286 |goto 44.55,63.15
+accept Aalgen Point##46832 |goto 44.55,63.15
+|only Shaman
+step
+talk Illidari Calia##120272
+fpath Deliverance Point |goto Broken Shore/0 45.17,64.09
+|only Shaman
+stickystart "DH_Supplies"
+step
+Follow the path |goto 46.86,58.63 < 25 |only if walking
+Follow the path |goto 51.55,52.49 < 30 |only if walking
+Follow the path |goto 57.94,48.67 < 30 |only if walking
+Follow the path |goto 61.08,46.33 < 30 |only if walking
+Drop down |goto 63.41,48.74 < 20 |only if walking
+talk Heidirk the Scalekeeper##120118
+turnin Aalgen Point##46832 |goto 70.77,47.62
+accept Vengeance Point##46845 |goto 70.77,47.62
+|only Shaman
+step
+talk Heidirk the Scalekeeper##120118
+fpath Aalgen Point |goto 70.77,47.62
+|only Shaman
+step
+Follow the path |goto 66.35,42.24 < 30 |only if walking
+Follow the path up |goto 67.84,34.26 < 15 |only if walking
+Follow the path down |goto 64.07,33.29 < 20 |only if walking
+Follow the path |goto 56.85,29.64 < 25 |only if walking
+Cross the water |goto 53.72,27.17 < 20 |only if walking
+Follow the path |goto 51.15,23.93 < 20 |only if walking
+Defend Vengeance Point |q 46845/1 |goto 51.15,23.93
+|only Shaman
+step
+kill Abhorrent Felwing##120748+, Crazed Felblade##120969+
+Slay #5# Abhorrent Felwing |q 46845/2 |goto 51.84,21.55
+Slay #4# Crazed Felblade |q 46845/3 |goto 51.84,21.55
+|only Shaman
+step
+talk Izal Whitemoon##111323
+fpath Vengeance Point |goto 49.66,21.02
+|only Shaman
+step
+talk Izal Whitemoon##111323
+turnin Vengeance Point##46845 |goto 49.66,21.02
+|only Shaman
+step
+label "DH_Supplies"
+Collect #100# Legionfall War Supplies |q 46286/1
+|tip You can obtain this currency by completed world quests and kill rare elites in Broken Shore.
+|only Shaman
+step
+talk Commander Chambers##120183
+turnin Legionfall Supplies##46286 |goto 44.55,63.15
+accept Begin Construction##46245 |goto 44.54,63.15
+|only Shaman
+step
+click Legionfall Construction Table
+Legionfall Supplies Donated |q 46245/1 |goto 44.57,63.07
+|tip Choose whichever structure appeals to you.
+|only Shaman
+step
+talk Commander Chambers##120183
+turnin Begin Construction##46245 |goto 44.54,63.15
+|only Shaman
+step
+talk Archmage Khadgar##116302
+accept Altar of the Aegis##46244 |goto 44.70,63.24
+|only Shaman
+step
+Press _I_ and queue for Cathedral of Eternal Night or enter the dungeon with your group |goto Broken Shore/0 64.75,16.65
+kill Mephistroth##120793
+|tip Mephistroth is the final boss of the Cathedral of Eternal Night instance.
+Defeat Mephistroth |q 46244/1
+|only Shaman
+step
+talk Archmage Khadgar##116302
+turnin Altar of the Aegis##46244 |goto 44.73,63.27
+|only Shaman
+step
+talk Archmage Khadgar##116302
+accept Shard Times##46251 |goto 44.73,63.26
+|only Shaman
+step
+collect 2500 Nethershard##1226 |q 46251/1
+|tip These can be obtained through killing enemies or collecting chests on the Broken Shore.
+|tip These can also be obtained through completing invasions.
+|only Shaman
+step
+talk Archmage Khadgar##116302
+turnin Shard Times##46251 |goto 44.73,63.26
+|only Shaman
+step
+talk Lord Illidan Stormrage##117873 |only if achieved(11846)
+accept Mark of the Sentinax##47139 |goto 44.79,63.17 |only if achieved(11846)
+|achieve 11846 |only if not achieved(11846)
+|tip You must earn the "Champions of Legionfall" achievement to progress further. |only if not achieved(11846)
+Click here to load the "7.2 Order Hall Quests" guide and accomplish this |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\7.2 Order Hall Quests" |only if not achieved(11846)
+|only Shaman
+step
+You must go under the Sentinax that pats around the Broken Shore
+|tip Summon portals and defeat the enemies that come out.
+collect 50 Mark of the Sentinax##147582 |q 47139/1
+|tip Boss summons give quite alot of marks, use these beacons as soon as you get them.
+|only Shaman
+step
+talk Lord Illidan Stormrage##117873
+turnin Mark of the Sentinax##147582 |goto Broken Shore/0 44.76,63.18
+|only Shaman
+step
+talk Prophet Velen##120372
+accept Self-Fulfilling Prophecy##46248 |goto Broken Shore/0 44.58,63.36
+|only Shaman
+step
+Complete #8# world quests on Broken Shore |q 46248/1
+|tip Check out our "World Quests" guide to accomplish this.
+|only Shaman
+step
+talk Prophet Velen##120372
+turnin Self-Fulfilling Prophecy##46248 |goto Broken Shore/0 44.58,63.36
+|only Shaman
+step
+talk Maiev Shadowsong##116576
+accept Intolerable Infestation##46252 |goto Broken Shore/0 44.55,63.50
+|only Shaman
+step
+Slay the Demons found all around Felsoul Hold
+Kill #50# Demons |q 46252/1 |goto Suramar/0 29.23,61.22
+|only Shaman
+step
+talk Maiev Shadowsong##116576
+turnin Intolerable Infestation##46252 |goto Broken Shore/0 44.55,63.50
+|only Shaman
+step
+talk Archmage Khadgar##116302
+accept Relieved of Their Valuables##46769 |goto Broken Shore/0 44.74,63.28
+|only Shaman
+step
+click Hidden Wyrmtongue Cache##6478+
+Find #3# Hidden Wyrmtongue Caches |q 46769/1
+|tip These spawn randomly at different locations all around the Broken Shore.
+|tip They will appear as a tiny chest icon on your mini map when you are close by to one.
+|only Shaman
+step
+talk Archmage Khadgar##116302
+turnin Relieved of Their Valuables##46769 |goto Broken Shore/0 44.74,63.28
+|only Shaman
+step
+talk Maiev Shadowsong##116576
+accept Take Out the Head...##46250 |goto 44.54,63.53
+|only Shaman
+step
+Slay #3# rare elite demon commanders on the Broken Shore |q 46250/1 |goto 58.61,43.48 |or
+|tip You can use the World Quest guide and click on rare icons on the world map to load some helpful tips.
+|tip These icons look like green skulls.
+|tip Rare spawns remain up for a short period of time, and change randomly.
+Click here to load the World Quest guide |confirm |next "Zygor's Dailies Guides\\Legion\\World Quests" |or
+|only Shaman
+step
+talk Maiev Shadowsong##116576
+turnin Take Out the Head...##46250 |goto 44.54,63.53
+|only Shaman
+step
+talk Archmage Khadgar##116302
+accept Championing Our Cause##46249 |goto Broken Shore/0 44.75,63.33
+|only Shaman
+step
+click Scouting Map
+Complete 1 Legionfall Mission at your Class Order Hall |q 46249/1 |goto The Maelstrom L/0 33.41,59.30
+|tip Legionfall missions can be identified by looking at the zone text underneath the title after clicking on the mission.
+|tip Only Broken Shore missions count towards this objective.
+|tip You may also use the mission table in the Command Center on Broken Shore if that building is complete.
+|only Shaman
+step
+talk Archmage Khadgar##116302
+turnin Championing Our Cause##46249 |goto Broken Shore/0 44.75,63.33
+|only Shaman
+step
+talk Maiev Shadowsong##116576
+accept Strike Them Down##46246 |goto Broken Shore/0 44.59,63.50
+|only Shaman
+step
+kill Skittering Demon##117509+, Hatched Broodling##119721+
+|tip Kill the Hatching Eggs these will spawn 3-6 Hatched Broodlings per egg.
+Slay #100# Demons on the Broken Shore |q 46246/1 |goto Broken Shore/0 38.82,28.24
+|only Shaman
+step
+talk Maiev Shadowsong##116576
+turnin Strike Them Down##46246 |goto Broken Shore/0 44.59,63.50
+|only Shaman
+step
+accept Armies of Legionfall##46730
+|only Warlock
+step
+Meet Khadgar at Krasus' Landing |q 46730/1 |goto Dalaran L/10 66.18,41.97
+|only Warlock
+step
+talk Archmage Khadgar##120215
+turnin Armies of Legionfall##46730 |goto 69.35,43.87
+accept Assault on Broken Shore##46734 |goto 69.35,43.87
+|only Warlock
+step
+talk Archmage Khadgar##120215
+Tell him: _"I am ready to launch the assault"_ |q 46734/1 |goto 69.34,43.87
+|only Warlock
+step
+Reach the Broken Shore |scenariogoal 1/35285 |goto Assault on Broken Shore/0 55.06,66.85 |q 46734
+|only Warlock
+step
+Defeat the Legion forces |scenariostage 2 |goto Assault on Broken Shore/0 52.70,67.01 |q 46734
+|tip Kill any mobs you see around the staging area.
+|only Warlock
+step
+Follow the path |goto Assault on Broken Shore/0 47.47,72.08 < 30 |walk
+Follow the path up |goto 44.05,73.57 < 25 |walk
+Follow the path |goto 41.46,71.46 < 25 |walk
+Follow the path |goto 39.96,67.80 < 20 |walk
+kill Lord Kalgorath##116291
+Defeat Lord Kalgorath |scenariogoal 3/35329 |goto 41.43,64.76 |q 46734
+|only Warlock
+step
+Go up the steps | goto 40.48,63.99 < 20 |walk
+Follow the path down |goto 44.04,58.20 < 20 |walk
+Follow the path |goto 47.17,58.16 < 20 |walk
+Follow the path |goto 52.27,52.46 < 20 |walk
+Close #3# Legion Portals |scenariogoal 4/35495 |goto 57.67,49.70 |q 46734
+|tip These are scattered around the area.
+|only Warlock
+step
+Deplete Arganoth's forces |scenariostage 4 |goto 57.67,49.70 |q 46734
+|tip Kill anything in the area until the progress bar fills up.
+|only Warlock
+step
+kill Dread Commander Arganoth##118551
+Defeat Dread Commander Arganoth |scenariogoal 5/35497 |goto 55.38,51.47 |walk |q 46734
+|only Warlock
+step
+click Demonic Gateway
+Take the Demonic Gateway |scenariogoal 6/35551 |goto 53.32,50.37 |walk |q 46734
+|only Warlock
+step
+click First Arcane Bomb |goto 49.47,46.56 < 5 |walk |scenariogoal 7/36178 |count 1 |q 46734
+|only Warlock
+step
+click Second Arcane Bomb |goto 49.94,44.47 < 5 |walk |scenariogoal 7/36178 |count 2 |q 46734
+|tip Take the portal after clicking this bomb. Don't bother killing the Interrogator.
+|only Warlock
+step
+click Third Arcane Bomb |goto 50.19,43.72 < 5 |walk |scenariogoal 7/36178 |count 3 |q 46734
+|only Warlock
+step
+click Fourth Arcane Bomb |goto 49.21,46.17 < 5 |walk |scenariogoal 7/36178 |count 4 |q 46734
+|only Warlock
+step
+click Fifth Arcane Bomb |goto 49.45,48.38 < 5 |walk |scenariogoal 7/36178 |count 5 |q 46734
+|only Warlock
+step
+Go upstairs |goto 49.10,45.31 < 5 |walk
+click Sixth Arcane Bomb |goto 49.30,45.88 < 5 |walk |scenariogoal 7/36178 |count 6 |q 46734
+|only Warlock
+step
+click Final Arcane Bomb |goto 50.84,45.63 < 5 |walk |scenariogoal 7/36178 |count 7 |q 46734
+|only Warlock
+step
+kill Mephistroth##120746
+Defeat Mephistroth |scenariogoal 7/36179 |goto 50.05,45.74 |q 46734
+|tip Interrupt Mind Blast whenever possible.
+|tip When Mephistroth casts Shadow Blast, start strafing to the left or right.
+|only Warlock
+step
+talk Archmage Khadgar##116302
+turnin Assault on Broken Shore##46734 |goto Broken Shore/0 44.73,63.27
+|only Warlock
+step
+talk Commander Chambers##120183
+accept Legionfall Supplies##46286 |goto 44.55,63.15
+accept Aalgen Point##46832 |goto 44.55,63.15
+|only Warlock
+step
+talk Illidari Calia##120272
+fpath Deliverance Point |goto Broken Shore/0 45.17,64.09
+|only Warlock
+stickystart "W_Supplies"
+step
+Follow the path |goto 46.86,58.63 < 25 |only if walking
+Follow the path |goto 51.55,52.49 < 30 |only if walking
+Follow the path |goto 57.94,48.67 < 30 |only if walking
+Follow the path |goto 61.08,46.33 < 30 |only if walking
+Drop down |goto 63.41,48.74 < 20 |only if walking
+talk Heidirk the Scalekeeper##120118
+fpath Aalgen Point |goto 70.77,47.62
+|only Warlock
+step
+talk Heidirk the Scalekeeper##120118
+turnin Aalgen Point##46832 |goto 70.77,47.62
+accept Vengeance Point##46845 |goto 70.77,47.62
+|only Warlock
+step
+Follow the path |goto 66.35,42.24 < 30 |only if walking
+Follow the path up |goto 67.84,34.26 < 15 |only if walking
+Follow the path down |goto 64.07,33.29 < 20 |only if walking
+Follow the path |goto 56.85,29.64 < 25 |only if walking
+Cross the water |goto 53.72,27.17 < 20 |only if walking
+Follow the path |goto 51.15,23.93 < 20 |only if walking
+Defend Vengeance Point |q 46845/1 |goto 51.34,22.88
+|only Warlock
+step
+kill Abhorrent Felwing##120748+, Crazed Felblade##120969+
+Slay #5# Abhorrent Felwing |q 46845/2 |goto 51.84,21.55
+Slay #4# Crazed Felblade |q 46845/3 |goto 51.84,21.55
+|only Warlock
+step
+talk Izal Whitemoon##111323
+fpath Vengeance Point |goto 49.66,21.02
+|only Warlock
+step
+talk Izal Whitemoon##111323
+turnin Vengeance Point##46845 |goto 49.66,21.02
+|only Warlock
+step
+label "W_Supplies"
+Collect #100# Legionfall War Supplies |q 46286/1
+|tip You can obtain this currency by completed world quests and kill rare elites in Broken Shore.
+|only Warlock
+step
+talk Commander Chambers##120183
+turnin Legionfall Supplies##46286 |goto 44.55,63.15
+accept Begin Construction##46245 |goto 44.54,63.15
+|only Warlock
+step
+click Legionfall Construction Table
+Legionfall Supplies Donated |q 46245/1 |goto 44.57,63.07
+|tip Choose whichever structure appeals to you.
+|only Warlock
+step
+talk Commander Chambers##120183
+turnin Begin Construction##46245 |goto 44.54,63.15
+|only Warlock
+step
+talk Archmage Khadgar##116302
+accept Altar of the Aegis##46244 |goto 44.73,63.27
+|only Warlock
+step
+Press _I_ and queue for Cathedral of Eternal Night or enter the dungeon with your group |goto 64.75,16.65
+kill Mephistroth##120793
+|tip Mephistroth is the final boss of the Cathedral of Eternal Night instance.
+Defeat Mephistroth |q 46244/1
+|only Warlock
+step
+talk Archmage Khadgar##116302
+turnin Altar of the Aegis##46244 |goto 44.73,63.27
+|only Warlock
+step
+talk Maiev Shadowsong##116576
+accept Defending Broken Isles##46247 |goto 44.54,63.52
+|only Warlock
+step
+Complete a Legion Assault |q 46247/1 |goto 44.54,63.52
+|only Warlock
+step
+talk Maiev Shadowsong##116576
+turnin Defending Broken Isles##46247 |goto 44.54,63.52
+|only Warlock
+step
+talk Lord Illidan Stormrage##117873 |only if achieved(11846)
+accept Mark of the Sentinax##47139 |goto 44.79,63.17 |only if achieved(11846)
+|achieve 11846 |only if not achieved(11846)
+|tip You must earn the "Champions of Legionfall" achievement to progress further. |only if not achieved(11846)
+Click here to load the "7.2 Order Hall Quests" guide and accomplish this |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\7.2 Order Hall Quests" |only if not achieved(11846)
+|only Warlock
+step
+collect 50 Mark of the Sentinax##147582 |q 47139/1 |goto 50.56,43.35
+|tip These are collected from Sentinax Portals.
+|tip Sentinax Beacons summon portals which spawn mobs that you can kill for Marks.
+|tip Setninax Beacons drop from mobs in Broken Shore.
+|tip Open your map and look for the Sentinax icon. Use your beacons below the ship.
+|only Warlock
+step
+talk Lord Illidan Stormrage##117873
+turnin Mark of the Sentinax##47139 |goto 44.79,63.17
+|only Warlock
+step
+talk Prophet Velen##120372
+accept Self-Fulfilling Prophecy##46248 |goto 44.57,63.39
+|only Warlock
+step
+Complete #8# world quests on Broken Shore |q 46248/1 |goto 44.57,63.39 |or
+|tip Use our World Quest guide to accomplish this.
+To load the World Quest guide, click here |confirm |next "Zygor's Dailies Guides\\Legion\\World Quests" |or
+|only Warlock
+step
+talk Prophet Velen##120372
+turnin Self-Fulfilling Prophecy##46248 |goto 44.57,63.39
+|only Warlock
+step
+talk Maiev Shadowsong##116576
+accept Intolerable Infestation##46252 |goto 44.54,63.52
+|only Warlock
+step
+kill Infernal Brutalizer##93619, Vile Stalker##90241, Felguard Shocktrooper##101943
+Kill #50# Demons |q 46252/1 |goto Azsuna/0 42.60,44.19
+|tip Drag them near the purple orbs to kill them faster.
+|only Warlock
+step
+talk Maiev Shadowsong##116576
+turnin Intolerable Infestation##46252 |goto Broken Shore/0 44.54,63.52
+|only Warlock
+step
+talk Archmage Khadgar##116302
+accept Relieved of Their Valuables##46769 |goto 44.73,63.27
+|only Warlock
+step
+click Hidden Wyrmtongue Cache##6478
+Find #3# Hidden Wyrmtongue Caches |q 46769/1 |goto 58.61,43.48
+|tip These caches are found scattered randomly around Broken Shore.
+|tip They will show on your minimap when you are near one.
+|only Warlock
+step
+talk Archmage Khadgar##116302
+turnin Relieved of Their Valuables##46769 |goto 44.73,63.27
+|only Warlock
+step
+talk Maiev Shadowsong##116576
+accept Take Out the Head...##46250 |goto 44.54,63.53
+|only Warlock
+step
+Slay #3# rare elite demon commanders on the Broken Shore |q 46250/1 |goto 58.61,43.48 |or
+|tip You can use the World Quest guide and click on rare icons on the world map to load some helpful tips.
+|tip These icons look like green skulls.
+|tip Rare spawns remain up for a short period of time, and change randomly.
+Click here to load the World Quest guide |confirm |next "Zygor's Dailies Guides\\Legion\\World Quests" |or
+|only Warlock
+step
+talk Maiev Shadowsong##116576
+turnin Take Out the Head...##46250 |goto 44.54,63.53
+|only Warlock
+step
+talk Archmage Khadgar##116302
+accept Championing Our Cause##46249 |goto 44.73,63.28
+|only Warlock
+step
+click Dreadscar Battle Plans
+Complete 1 Legionfall Mission |q 46249/1 |goto Dreadscar Rift/0 66.19,47.01
+|tip Legionfall missions can be identified by looking at the zone text underneath the title after clicking on the mission.
+|tip Only Broken Shore missions count towards this objective.
+|tip You may also use the mission table in the Command Center on Broken Shore if that building is complete.
+|only Warlock
+step
+talk Archmage Khadgar##116302
+turnin Championing Our Cause##46249 |goto Broken Shore/0 44.73,63.28
+|only Warlock
+step
+talk Maiev Shadowsong##116576
+accept Strike Them Down##46246 |goto 44.54,63.53
+|only Warlock
+step
+kill Skittering Demon##117509+, Hatching Egg##119720+, Hatched Broodling##119721+
+Kill #100# Demons on Broken Shore |q 46246/1 |goto 38.63,31.86
+|tip The eggs will spawn 5 Broodlings with very low health.
+|tip You can also farm demons from portals underneath the Sentinax.
+|only Warlock
+step
+talk Maiev Shadowsong##116576
+turnin Strike Them Down##46246 |goto 44.54,63.53
+|only Warlock
+step
+talk Injured Shieldmaiden##118406
+accept An Urgent Warning##45986 |goto Skyhold/1 61.52,27.82
+|only Warrior
+step
+talk Skyseer Ghrent##100635
+turnin An Urgent Warning##45986 |goto Skyhold/1 59.74,13.46
+accept Investigate the Broken Shore##45987 |goto Skyhold/1 59.74,13.46
+|only Warrior
+step
+click Eye of Odyn
+Complete the _Menace on the Broken Shore_ mission |q 45987/1 |goto Skyhold/1 59.06,13.37
+|only Warrior
+step
+talk Skyseer Ghrent##100635
+turnin Investigate the Broken Shore##45987 |goto Skyhold/1 59.74,13.40
+|only Warrior
+step
+accept Armies of Legionfall##46730 |goto Dalaran L/10 69.98,50.99
+|tip You will accept this quest automatically when entering Dalaran.
+|only Warrior
+step
+Meet Khadgar at Krasus' Landing |q 46730/1 |goto Dalaran L/10 66.24,42.12
+|only Warrior
+step
+talk Archmage Khadgar##120215
+turnin Armies of Legionfall##46730 |goto Dalaran L/10 69.33,43.85
+accept Assault on Broken Shore##46734 |goto Dalaran L/10 69.33,43.85
+|only Warrior
+step
+talk Archmage Khadgar##120215
+Tell him _"I am ready to launch the assault."_
+Speak to Khadgar |q 46734/1 |goto Dalaran L/10 69.33,43.85
+|only Warrior
+step
+Kill enemies around this area
+Defeat the Legion Forces |scenariostage 2 |q 46734 |goto Assault on Broken Shore/0 52.56,67.30
+|only Warrior
+step
+Follow the path |goto 45.13,73.58 < 10 |walk
+Go up the stairs |goto 40.20,67.51 < 10 |walk
+kill Lord Kalgorath##116291 |scenariostage 3 |q 46734 |goto 41.40,64.81
+|only Warrior
+step
+Go up the stairs |goto 40.66,64.31 < 10 |walk
+Go through the opening |goto 43.18,58.68 < 10 |walk
+click Legion Portal+
+|tip These can be found all around this area.
+Close #3# Legion Portals |scenariogoal 4/35495 |q 46734 |goto 54.53,47.74
+|only Warrior
+step
+Kill enemies around this area
+Defeat Arganoth's Forces |scenariostage 4 |q 46734 |goto 58.81,49.75
+|only Warrior
+step
+kill Dread Commander Arganoth##118551 |scenariostage 5 |q 46734 |goto 56.28,50.97
+|tip Kill the Felblaze Infernals to help prevent AoE damage.
+|only Warrior
+step
+click Demonic Gateway
+Use the Gateway |scenariostage 6 |q 46734 |goto 53.34,50.41
+|only Warrior
+step
+click Arcane Bomb
+Plant Arcane Bombs on the Command Ship |scenariogoal 7/36178 |count 1 |goto 49.48,46.57
+|only Warrior
+|only if not completedq(46734)
+step
+click Arcane Bomb
+Plant Arcane Bombs on the Command Ship |scenariogoal 7/36178 |count 2 |goto 49.93,44.46
+|only Warrior
+|only if not completedq(46734)
+step
+click Legion Portal |goto 49.33,45.42 < 5
+click Arcane Bomb
+Plant Arcane Bombs on the Command Ship |scenariogoal 7/36178 |count 3 |goto 50.19,43.71
+|only Warrior
+|only if not completedq(46734)
+step
+click Arcane Bomb
+Plant Arcane Bombs on the Command Ship |scenariogoal 7/36178 |count 4 |goto 49.21,46.17
+|only Warrior
+|only if not completedq(46734)
+step
+click Arcane Bomb
+Plant Arcane Bombs on the Command Ship |scenariogoal 7/36178 |count 5 |goto 49.42,48.39
+|only Warrior
+|only if not completedq(46734)
+step
+Go up the ramp |goto 49.32,45.38 < 10
+click Arcane Bomb
+Plant Arcane Bombs on the Command Ship |scenariogoal 7/36178 |count 6 |goto 49.30,45.88
+|only Warrior
+|only if not completedq(46734)
+step
+click Arcane Bomb
+Plant Arcane Bombs on the Command Ship |scenariogoal 7/36178 |count 7 |goto 50.85,45.61
+|only Warrior
+|only if not completedq(46734)
+step
+kill Mephistroth##120746 |scenariogoal 8/36179 |q 46734 |goto 50.06,45.73
+|tip Interrupt Mind Blast whenever possible.
+|tip When Mephistroth casts Shadow Blast, start strafing to the left or right.
+|only Warrior
+|only if not completedq(46734)
+step
+Gain a Foothold on Broken Shore |q 46734/2
+|only Warrior
+step
+talk Archmage Khadgar##116302
+turnin Assault on Broken Shore##46734 |goto Broken Shore/0 44.74,63.26
+|only Warrior
+step
+talk Commander Chambers##120183
+accept Legionfall Supplies##46286 |goto Broken Shore/0 44.55,63.15
+accept Aalgen Point##46832 |goto Broken Shore/0 44.55,63.15
+|only Warrior
+step
+Follow the path down |goto Broken Shore/0 44.21,58.25 < 10 |only if walking
+Go down the hill |goto Broken Shore/0 47.88,59.81 < 10 |only if walking
+Go up the path |goto 55.58,64.04 < 10 |only if walking
+talk Heidirk the Scalekeeper##120118
+turnin Aalgen Point##46832 |goto Broken Shore/0 70.76,47.61
+accept Vengeance Point##46845 |goto Broken Shore/0 70.76,47.61
+|only Warrior
+step
+Go up the path |goto Broken Shore/0 67.82,34.06 < 10 |only if walking
+Follow the path |goto 63.62,33.64 < 10 |only if walking
+Cross the Twisted Grounds |goto 55.88,30.31 < 10 |only if walking
+Follow the small path |goto 52.11,32.73 < 10 |only if walking
+Cross the bridge |goto 50.80,29.54 < 10 |only if walking
+Go up the path |goto Broken Shore/0 51.23,20.89 < 10 |only if walking
+Defend Vengeance Point |q 46845/1 |goto 50.69,20.93
+|only Warrior
+step
+kill 5 Abhorrent Felwing##120748 |q 46845/2 |goto 51.55,21.80
+kill 4 Crazed Felblade##120969 |q 46845/3 |goto 51.55,21.80
+|only Warrior
+step
+talk Izal Whitemoon##111323
+turnin Vengeance Point##46845 |goto Broken Shore/0 49.67,21.02
+|only Warrior
+step
+Complete World Quest or kill Elite enemies in the Broken Shores
+Collect #100# Legionfall War Supplies |q 46286/1
+|only Warrior
+step
+talk Commander Chambers##120183
+turnin Legionfall Supplies##46286 |goto Broken Shore/0 44.54,63.14
+accept Begin Construction##46245 |goto Broken Shore/0 44.54,63.14
+|only Warrior
+step
+click Legionfall Construction Table
+Select either the _Mage Tower_
+Or _Nether Disruptor_ to build towards
+Donate Legionfall Supplies |q Construction##46245/1 |goto 44.56,63.06
+|only Warrior
+step
+talk Commander Chambers##120183
+turnin Begin Construction##46245 |goto Broken Shore/0 44.53,63.16
+|only Warrior
+step
+talk Archmage Khadgar##116302
+accept Altar of the Aegis##46244 |goto Broken Shore/0 44.74,63.27
+|only Warrior
+step
+Enter the Cathedral of Eternal Night dungeon
+|tip Press I to open your Group Finder and queue.
+|confirm |q 46244
+|only Warrior
+step
+kill Mephistroth##120793 |q 46244/1
+|only Warrior
+step
+talk Archmage Khadgar##116302
+turnin Altar of the Aegis##46244 |goto Broken Shore/0 44.74,63.27
+|only Warrior
+step
+talk Commander Chambers##120183
+accept The Mage Tower##46772 |goto Broken Shore/0 44.53,63.14
+|only Warrior
+step
+click Complete Construction
+Complete Construction of the Mage Tower |q 46772/1 |goto Broken Shore/0 45.01,62.49
+|only Warrior
+step
+talk Grovewarden Proudhorn##118105
+turnin The Mage Tower##46772 |goto Broken Shore/0 44.54,63.15
+|only Warrior
+step
+talk Commander Chambers##120183
+accept The Command Center##46773 |goto Broken Shore/0 44.54,63.15
+accept The Nether Disruptor##46774 |goto Broken Shore/0 44.54,63.15
+|only Warrior
+step
+click Complete Construction
+Complete Construction of the Command Center |q 46773/1 |goto Broken Shore/0 44.22,63.35
+|only Warrior
+step
+click Complete Construction
+Complete Construction of the Nether Disruptor |q 46774/1 |goto Broken Shore/0 41.20,64.66
+|only Warrior
+step
+talk Commander Chambers##120183
+turnin The Command Center##46773 |goto Broken Shore/0 44.54,63.15
+turnin The Nether Disruptor##46774 |goto Broken Shore/0 44.54,63.15
+|only Warrior
+step
+talk Lord Illidan Stormrage##117873 |only if achieved(11846)
+accept Mark of the Sentinax##47139 |goto 44.79,63.17 |only if achieved(11846)
+|achieve 11846 |only if not achieved(11846)
+|tip You must earn the "Champions of Legionfall" achievement to progress further. |only if not achieved(11846)
+Click here to load the "7.2 Order Hall Quests" guide and accomplish this |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\7.2 Order Hall Quests" |only if not achieved(11846)
+|only Warrior
+step
+collect 50 Mark of the Sentinax##147582 |q 47139/1
+|tip Do this by killing empowered portal Rares and elite enemies.
+|tip Rare demonic lieutenants seem to be the most efficient way to complete this.
+|only Warrior
+step
+talk Lord Illidan Stormrage##117873
+turnin Mark of the Sentinax##47139 |goto Broken Shore/0 44.78,63.21
+|only Warrior
+step
+talk Prophet Velen##120372
+accept Self-Fulfilling Prophecy##46248 |goto Broken Shore/0 44.56,63.39
+|only Warrior
+step
+Complete #8# world quests on Broken Shore |q 46248/1
+|tip Use the World Quests guide to complete this.
+|only Warrior
+step
+talk Prophet Velen##120372
+turnin Self-Fulfilling Prophecy##46248 |goto Broken Shore/0 44.56,63.39
+|only Warrior
+step
+talk Maiev Shadowsong##116576
+accept Intolerable Infestation##46252 |goto Broken Shore/0 44.54,63.52
+|only Warrior
+step
+kill Felflame Imp##107335+, Fiendish Trickster##107545+
+Kill #50# Demons |q 46252/1 |goto Azsuna/0 32.44,49.97
+|only Warrior
+step
+talk Maiev Shadowsong##116576
+turnin Intolerable Infestation##46252 |goto Broken Shore/0 44.54,63.52
+|only Warrior
+step
+talk Archmage Khadgar##116302
+accept Relieved of Their Valuables##46769 |goto Broken Shore/0 44.72,63.27
+|only Warrior
+step
+Find #3# Hidden Wyrmtongue Caches |q 46769/1
+|tip These caches are found scattered randomly around Broken Shore.
+|tip They will show on your minimap when you are near one.
+|only Warrior
+step
+talk Archmage Khadgar##116302
+turnin Relieved of Their Valuables##46769 |goto Broken Shore/0 44.72,63.27
+|only Warrior
+step
+talk Maiev Shadowsong##116576
+accept Take Out the Head...##46250 |goto 44.54,63.53
+|only Warrior
+step
+Slay #3# rare elite demon commanders on the Broken Shore |q 46250/1 |goto 58.61,43.48 |or
+|tip You can use the World Quest guide and click on rare icons on the world map to load some helpful tips.
+|tip These icons look like green skulls.
+|tip Rare spawns remain up for a short period of time, and change randomly.
+Click here to load the World Quest guide |confirm |next "Zygor's Dailies Guides\\Legion\\World Quests" |or
+|only Warrior
+step
+talk Maiev Shadowsong##116576
+turnin Take Out the Head...##46250 |goto 44.54,63.53
+|only Warrior
+step
+talk Archmage Khadgar##116302
+accept Championing Our Cause##46249 |goto Broken Shore/0 44.72,63.26
+|only Warrior
+step
+click Eye of Odin
+Complete 1 Legionfall Mission in your Order Hall |q 46249/1 |goto Skyhold/1 59.13,13.42
+|tip Legionfall missions can be identified by looking at the zone text underneath the title after clicking on the mission.
+|tip Only Broken Shore missions count towards this objective.
+|tip You may also use the mission table in the Command Center on Broken Shore if that building is complete.
+|only Warrior
+step
+talk Archmage Khadgar##116302
+turnin Championing Our Cause##46249 |goto Broken Shore/0 44.72,63.26
+|only Warrior
+step
+talk Maiev Shadowsong##116576
+accept Strike Them Down##46246 |goto Broken Shore/0 44.53,63.51
+|only Warrior
+step
+kill Skittering Demon##117509+, Hatching Egg##119720+, Hatched Broodling##119721+
+Kill #100# Demons on Broken Shore |q 46246/1 |goto Broken Shore/0 38.62,28.48
+|only Warrior
+step
+talk Maiev Shadowsong##116576
+turnin Strike Them Down##46246 |goto Broken Shore/0 44.53,63.51
+|only Warrior
+step
+You have completed the Broken Shore Campaign!
+|tip The subsequent quests in this guide are optional.
+confirm
+step
+talk Archmage Khadgar##116302
+accept Pillars of Creation##46253 |goto Broken Shore/0 44.73,63.26
+step
+kill Mistress Sassz'ine##115767
+Click here to load the "Tomb of Sargeras - The Gates of Hell" guide |confirm |next "Zygor's Dungeon Guides\\Legion Raids\\Tomb of Sargeras - Gates of Hell"
+|tip Mistress Sassz'ine is the last boss in The Gates of Hell wing of the Tomb of Sargeras.
+Retrieve the Tidestone of Golganneth |q 46253/2
+step
+kill Atrigan##120996
+Click here to load the "Tomb of Sargeras - Wailing Halls" guide |confirm |next "Zygor's Dungeon Guides\\Legion Raids\\Tomb of Sargeras - Wailing Halls"
+|tip Atrigan is the first boss in the Wailing Halls wing of the Tomb of Sargeras.
+Retrieve the Hammer of Khaz'goroth |q 46253/1
+step
+kill Huntress Kasparian##118523
+Click here to load the "Tomb of Sargeras - Wailing Halls" guide |confirm |next "Zygor's Dungeon Guides\\Legion Raids\\Tomb of Sargeras - Wailing Halls"
+|tip Huntress Kasparian is the second boss in the Wailing Halls wing of the Tomb of Sargeras.
+Retrieve the Tears of Elune |q 46253/3
+step
+talk Archmage Khadgar##116302
+turnin Pillars of Creation##46253 |goto Broken Shore/0 44.73,63.26
+step
+talk Prophet Velen##120372
+accept The Deceiver's Downfall##46805 |goto Broken Shore/0 44.56,63.38
+step
+In the Tomb of Sargeras:
+kill Kil'jaeden##117269 |q 46805/1
+|tip He is the final boss in the Tomb of Sargeras raid.
+|tip Refer to our Raid guides to accomplish this.
+Click here to load the "Tomb of Sargeras - Deceiver's Fall" guide |confirm |next "Zygor's Dungeon Guides\\Legion Raids\\Tomb of Sargeras - Deceiver's Fall"
+step
+talk Prophet Velen##120372
+turnin The Deceiver's Downfall##46805 |goto Broken Shore/0 44.56,63.38
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Legion (100-110)\\Legion Invasions",{
+author="support@zygorguides.com",
+description="This guide will walk you through successfully completing the various Legion invasions.",
+startlevel=110.0,
+},[[
+step
+label "Menu"
+Wait for an invasion to start before proceeding
+|tip You can see if a zone is under attack by looking at your world map.
+When an invasion is in progress, click here |confirm
+step
+accept Assault on Azsuna##45838 |next "Azsuna" |goto Azsuna/0 46.99,40.90 |or
+accept Assault on Highmountain##45840 |next "Highmountain" |goto Thunder Totem/0 45.72,38.69 |or
+accept Assault on Stormheim##45839 |next "Stormheim" |goto Stormheim/0 60.40,51.07 |or
+accept Assault on Val'sharah##45812 |next "Sharah" |goto Val'sharah/0 54.59,72.99 |or
+|tip Click the quest box when you are in a zone currently under attack.
+step
+label "Azsuna"
+Repel #4# Legion Points |q 45838/1 |goto Azsuna/0 46.96,40.64
+|tip Use the World Quest guide by clicking on invasion points on your map.
+step
+Meet Prince Farondis at Shackle's Den |q 45838/2 |goto 55.98,60.84
+step
+talk Prince Farondis##118942
+turnin Assault on Azsuna##45838 |goto 55.98,60.84
+accept Presence of Power##45795 |goto 55.98,60.84
+step
+kill Dreadsworn Annihilator##117649+, Portal-Keeper V'thaal##117647+
+Repel the Legion forces |q 45795/1 |goto 56.47,67.09
+step
+kill Portal-Keeper V'thaal##117647
+Portal-Keeper V'thaal |q 45795/2 |goto 56.38,67.39
+step
+Follow the path |goto 56.03,68.69 < 15 |only if walking
+Follow the path |goto Azsuna/19 59.19,42.19 < 15 |only if walking
+Follow the path |goto 57.24,49.53 < 15 |only if walking
+kill Zor'thaduun##117648
+Defeat Zor'thaduun |q 45795/3 |goto 70.59,79.19
+step
+Follow the path |goto 68.12,65.60 < 15 |only if walking
+Follow the path |goto 57.41,49.47 < 15 |only if walking
+Follow the path |goto 66.04,18.97 < 15 |only if walking
+Follow the path |goto Azsuna/0 56.11,68.40 < 15 |only if walking
+Follow the path |goto 55.46,65.89 < 20 |only if walking
+Meet Prince Farondis outside the Temple |q 45795/4 |goto 55.09,67.40
+step
+talk Prince Farondis##117774
+turnin Presence of Power##45795 |goto 55.09,67.40
+accept A Conduit No More##46205 |goto 55.09,67.40
+step
+talk Prince Farondis##118942
+Tell him: _"I'm ready to bring down the power source."_
+Speak with Prince Farondis |q 46205/1 |goto 55.09,67.40
+step
+Destroy the Legion Conduit |q 46205/2 |goto 56.14,70.17
+|tip You will be flown up to it. Use the first ability on your bar on the giant green swirling portal.
+step
+talk Prince Farondis##119002
+turnin A Conduit No More##46205 |goto 58.39,21.45
+accept Battle for Azsuna##46199 |goto 58.39,21.45
+step
+talk Prince Farondis##117774
+Tell him: _"I am ready to begin the final assault."_
+Speak with Prince Farondis to begin the final assault |q 46199/1 |goto 58.39,21.45
+step
+Enter the scenario |scenariostart |goto 58.39,21.45 |q 46199
+|tip Wait for the queue.
+step
+kill Frenzied Dedicant##119516+, Foul Dreadbringer##119515+
+Assist the blue dragons |scenariostage 1 |goto Azsuna/0 57.27,17.65 |q 46199
+step
+click Azure War-Drake##119456
+Meet up with the blue drakes |scenariogoal 2/35590 |goto Azsuna Invasion/0 53.36,16.88 |q 46199
+step
+Reach the Legion Ship |scenariogoal 3/35592 |goto Azsuna Invasion/1 23.71,64.38 |q 46199
+step
+kill Felweaver Axtris##119453
+Defeat Felweaver Axtris |scenariogoal 4/35593 |goto Azsuna Invasion/1 51.94,48.73 |q 46199
+step
+kill Xeritas##118975
+Eliminate Fel Lord Xeritas |scenariogoal 5/35582 |goto Azsuna Invasion/1 23.40,52.12 |q 46199
+step
+click Azure War-Drake##119456
+Ride the drakes to safety |scenariogoal 6/35583 |goto Azsuna Invasion/1 22.12,55.35 |q 46199
+step
+talk Prince Farondis##88115
+turnin Battle for Azsuna##46199 |goto Azsuna/0 47.00,41.36
+step
+You have completed the battle for Azsuna!
+Click here to return to the menu |confirm |next "Menu"
+step
+label "Highmountain"
+Repel #4# Legion Points |q 45840/1 |goto Thunder Totem/0 45.72,38.69
+|tip Use the World Quest guide by clicking on invasion points on your map.
+step
+talk Lasan Skyhorn##119944
+turnin Assault on Highmountain##45840 |goto Highmountain/0 44.15,57.39
+accept Holding Our Ground##45572 |goto Highmountain/0 44.15,57.39
+step
+click Energy Crystal
+Destroy the Energy Crystal |q 45572/3 |goto Thunder Totem/0 35.12,34.46 |notravel |count 1
+step
+click Energy Crystal
+Destroy the Energy Crystal |q 45572/3 |goto 26.49,46.46 |notravel |count 2
+step
+click Energy Crystal
+Destroy the Energy Crystal |q 45572/3 |goto 14.72,56.77 |notravel |count 3
+step
+kill Dark Ritualist##117339+, Eredar Summoner##117334+, Infernal Crusher##117250+, Brutal Punisher##117421+
+Kill #10# demons |q 45572/1 |goto 27.70,27.18 |notravel
+click Injured Protector##117265
+Rescue the Injured Protector |q 45572/2 |goto 27.70,27.18 |notravel
+step
+click Thunder Totem Native##117453
+Rally #3# Thunder Totem Natives |q 45572/4 |goto Thunder Totem/0 48.21,42.46
+kill Hellfire Infernal##117251+
+Kill #10# Demon forces |q 45572/5 |goto 48.21,42.46
+step
+kill Felbound Ritualist##119716+
+|tip Kill the channelers around the platform to bring down Vythe.
+kill Incinerator Vythe##117473
+Incinerator Vythe |q 45572/6 |goto Highmountain/0 50.18,65.56
+step
+talk Lasan Skyhorn##119676
+turnin Holding Our Ground##45572 |goto 50.14,64.35
+accept Battle for Highmountain##46182 |goto 50.14,64.35
+step
+talk Lasan Skyhorn##119676
+Tell him: _"For the honor of Highmountain. I am ready!"_
+Speak with Lasan Skyhorn to begin the final assault |q 46182/1 |goto 50.14,64.35
+step
+Enter the scenario |scenariostart |goto 50.14,64.35 |q 46182
+|tip Wait for the queue.
+step
+click Rivermane Shaman##119855
+kill Hellfire Infernal##119859+, Twisted Nether-Mage##120097+, Felwing Terror##119858+
+Secure the upper portion of Thunder Totem |scenariostage 1 |goto Highmountain/0 47.64,60.52 |q 46182
+step
+Ride the elevator down |goto Highmountain/0 46.91,62.18
+Rendezvous with Mayla Highmountain |scenariogoal 2/35806 |goto 46.73,61.10 |q 46182
+step
+kill Fel-touched Pyromage##119860+, Fel-touched Pyromage##119860+
+Defend against the wave of attackers |scenariogoal 3/35810 |goto 46.73,61.10 |q 46182
+step
+kill Fel Champion Gargath##119959
+Defeat Fel Champion Gargath |scenariogoal 4/35812 |goto 46.73,61.10 |q 46182
+step
+Follow the path |goto 46.13,61.58 < 8 |walk
+Follow the path |goto 45.36,61.89 < 10 |walk
+Follow the path |goto 45.48,60.21 < 10 |walk
+Follow the path |goto 46.41,58.68 < 10 |walk
+Escort Mayla to the frontlines to meet up with Lasan Skyhorn |scenariogoal 5/35813 |goto Highmountain/0 45.68,57.70 |q 46182
+step
+click War Eagle##119857
+Reach the Legion Ship |scenariogoal 6/35814 |goto 45.76,57.56 |q 46182
+step
+click Jailer's Cage##119994
+Rescue Rivermane Tauren |scenariogoal 7/35815 |goto Highmountain Invasion/1 33.07,61.55 |count 1 |q 46182
+step
+click Jailer's Cage##119994
+Rescue Rivermane Tauren |scenariogoal 7/35815 |goto 45.43,35.70 |count 2 |q 46182
+step
+click Jailer's Cage##119994
+Rescue Rivermane Tauren |scenariogoal 7/35815 |goto Highmountain Invasion/2 49.53,36.35 |count 3 |q 46182
+step
+click Jailer's Cage##119994
+Rescue Rivermane Tauren |scenariogoal 7/35815 |goto 54.83,38.35 |count 4 |q 46182
+step
+click Jailer's Cage##119994
+Rescue Rivermane Tauren |scenariogoal 7/35815 |goto 67.80,43.05 |count 5 |q 46182
+step
+click Dynamite##119981
+Set Explosives at key positions |scenariogoal 8/35816 |goto 64.67,30.20 |count 1 |q 46182
+step
+click Dynamite##119981
+Set Explosives at key positions |scenariogoal 8/35816 |goto 60.17,52.45 |count 2 |q 46182
+step
+click Dynamite##119981
+Set Explosives at key positions |scenariogoal 8/35816 |goto 37.90,48.10 |count 3 |q 46182
+step
+click Dynamite##119981
+Set Explosives at key positions |scenariogoal 8/35816 |goto Highmountain Invasion/1 42.67,36.85 |count 4 |q 46182
+step
+click Dynamite##119981
+Set Explosives at key positions |scenariogoal 8/35816 |goto 54.63,64.45 |count 5 |q 46182
+step
+click Portal to Fel Commander##120081 |goto Highmountain/0 44.71,54.07 < 10
+kill 1 Fel Commander Erixtol##119579
+Eliminate Fel Commander Erixtol |scenariogoal 9/36938 |goto Highmountain/0 44.84,54.52 |q 46182
+step
+click War Eagle##120048
+Use the eagles to get off the ship |scenariogoal 10/35817 |goto 44.91,54.75 |q 46182
+step
+talk Lasan Skyhorn##119944
+turnin Battle for Highmountain##46182 |goto Highmountain/0 44.16,57.38
+step
+Click here to return to the menu |confirm |next "Menu"
+step
+label "Stormheim"
+Repel #4# Legion Points |q 45839/1 |goto Stormheim/0 60.40,51.07
+|tip Use the World Quest guide by clicking on invasion points on your map.
+step
+Meet with Vethir |q 45839/2 |goto 90.02,11.18
+step
+talk Vethir##116868
+turnin Assault on Stormheim##45839 |goto 90.02,11.18
+accept The Storm's Fury##45406 |goto 90.02,11.18
+step
+talk Vethir##116868
+Tell him: _"I am ready to begin."_
+Begin the Assault |q 45406/1 |goto 90.03,11.17
+step
+Defeat the Burning Legion Invaders |q 45406/2 |goto 83.39,6.19
+|tip Use the only ability on your vehicle bar to kill Burning Legion mobs below.
+step
+kill Lord Commander Alexius##118566
+|tip You will be stunned shortly after engaging him.
+|tip Wait for the dialogue to complete.
+Defeat Lord Commander Alexius |q 45406/3 |goto 82.02,7.22
+step
+turnin The Storm's Fury##45406 |goto 81.67,7.17
+accept Battle for Stormheim##46110 |goto 81.67,7.17
+step
+talk Val'kyr of Odyn##118778
+Tell her: _"I'm prepared! Send me to the Gates of Valor."_
+Speak with the Val'kyr of Odyn |q 46110/1 |goto 81.67,7.17
+step
+Enter the scenario |scenariostart |goto 58.39,21.45 |q 46110
+|tip Wait for the queue.
+step
+Follow the path |goto Stormheim/0 68.05,65.94 < 25 |only if walking
+click Aleifir##118789
+Free Aleifir |scenariogoal 1/35369 |goto 66.72,67.76 |count 1 |q 46110
+step
+Follow the path |goto Stormheim/0 68.05,65.94 < 25 |only if walking
+click Erilar##119200
+Free Erilar |scenariogoal 1/35369 |goto Stormheim/0 67.74,64.24 |count 2 |q 46110
+step
+Follow the path |goto Stormheim/0 68.63,64.81 < 25 |only if walking
+click Hrafsir##119201
+Free Hrafsir |scenariogoal 1/35369 |count 3 |goto Stormheim/0 69.97,63.88 |q 46110
+step
+click Erilar##119224
+click Hrafsir##119225
+click Aleifir##118858
+Eliminate Remaining Ground Forces |scenariogoal 2/35378 |goto Stormheim/0 69.87,68.65 |q 46110
+|tip Use the only ability on your vehicle bar to kill Burning Legion mobs below.
+step
+Reach the Legion Ship |scenariogoal 3/35370 |goto Stormheim/0 69.87,68.65 |q 46110
+step
+Kill the Legion forces |scenariogoal 4/35374 |goto Stormheim Invasion/2 56.67,51.30 |q 46110
+|tip Kill all of the mobs in the ship, both upstairs and downstairs.
+step
+click Fel Alchemy Station##118833
+Destroy the Alchemy Lab |scenariogoal 4/35373  |goto Stormheim Invasion/2 71.27,30.65 |q 46110
+step
+click Portal to Fel Cannon##118852 |goto Stormheim Invasion/2 37.84,77.91
+Reach the top of the ship |goto Stormheim/0 63.60,59.37 |noway |c |q 46110
+step
+click Shield Crystal
+|tip Destroy all 4 of the crystals before engaging Alexius
+Destroy #4# Shield Crystals |scenariogoal 5/35546 |goto Stormheim/0 63.85,59.76 |q 46110
+step
+kill Lord Commander Alexius##118840
+Defeat Lord Commander Alexius |scenariogoal 5/36939 |goto Stormheim/0 64.11,60.18 |q 46110
+step
+click Erilar##119224
+click Hrafsir##119225
+click Aleifir##118858
+Reach the Storm Drakes to escape from the Legion Ship |scenariogoal 6/35375 |goto Stormheim/0 64.11,60.13 |q 46110
+step
+Follow the path |goto Stormheim/0 61.53,55.94 < 25 |only if walking
+Follow the path |goto 65.66,62.33 < 25 |only if walking
+Follow the path |goto 68.19,66.12 < 25 |only if walking
+Follow the path |goto 70.65,69.85 < 25 |only if walking
+talk Odyn##118781
+turnin Battle for Stormheim##46110 |goto 71.99,71.86
+step
+You have completed the battle for Stormheim!
+Click here to return to the menu |confirm |next "Menu"
+step
+label "Sharah"
+Repel #4# Legion Points |q 45812/1 |goto Val'sharah/0 54.59,72.99
+|tip Use the World Quest guide by clicking on invasion points on your map.
+step
+Follow the path |goto 38.79,57.99 < 25 |only if walking
+Follow the path |goto 38.22,54.55 < 25 |only if walking
+Follow the path |goto 38.62,52.18 < 15 |only if walking
+Meet Jarod Shadowsong at Black Rook Hold |q 45812/2 |goto 39.10,51.63
+step
+talk Prince Farondis##118942
+turnin Assault on Azsuna##45812 |goto 39.10,51.63
+accept Holding the Ramparts##44789 |goto 39.10,51.63
+step
+talk Commander Jarod Shadowsong##118183
+Tell him: _"I'm ready. Send me to the ramparts!"_
+Passage to ramparts acquired |q 44789/1 |goto 39.10,51.63
+step
+kill Doomsworn Overseer##115657+, Doomsworn Inquisitor##115658+, Filthy Drudge##115656+
+Repel the Legion forces |q 44789/2 |goto 40.18,49.31
+step
+talk Cenarion Defender##118358
+Tell her: _"Take me to the top of Black Rook Hold"_
+Reach the top of Black Rook Hold |q 44789/3 |goto 40.57,47.29
+step
+click Soul Harvester
+|tip Click each one of the crystals to destroy them.
+kill General Zeonar##115603
+Defeat General Zeonar |q 44789/4 |goto 40.16,46.16
+step
+talk Cenarion Defender##118405
+Tell her: _"Send me to the terrace."_
+Report to Jarod Shadowsong atop the terrace in Black Rook Hold |q 44789/5 |goto 40.86,45.92
+step
+talk Commander Jarod Shadowsong##118250
+turnin Holding the Ramparts##44789 |goto 44.08,50.64
+accept Battle for Val'sharah##45856 |goto 44.08,50.64
+step
+talk Commander Jarod Shadowsong##118250
+Tell him: _"Send me to the forward camp at once!"_
+Speak with Jarod Shadowsong to begin the final assault |q 45856/1 |goto 44.08,50.64
+step
+Enter the scenario |scenariostart |goto 44.08,50.64 |q 45856
+|tip Wait for the queue.
+step
+Speak with Cenarius to begin the assault |scenariogoal 1/35256 |goto Val'sharah/0 33.10,50.90 |q 45856
+step
+kill Crushfist##117838
+Defeat Crushfist |scenariogoal 2/35049 |goto 31.76,48.19 |q 45856
+step
+click Fel Centrum##117930
+|tip You can easily locate these by looking where the green beams originate from.
+Destroy the Fel Centrums powering the barrier |scenariogoal 3/35125 |goto 33.29,42.06 |q 45856
+step
+Enter the tower |goto Val'sharah/0 33.44,41.25
+Reach the top of the tower |scenariogoal 4/35261 |goto Val'sharah/0 33.53,40.55 |q 45856
+|tip Go up the step and to the top.
+step
+kill Wrath-Lord Akrazar##117833
+Defeat Wrath-Lord Akrazar |scenariogoal 5/35085 |goto Val'sharah/0 33.53,40.55 |q 45856
+step
+click Fel Cannon
+Shoot #10# Shrieking Hellbats out of the sky |scenariogoal 6/35334 |goto 33.74,41.27 |q 45856
+step
+click Hippogryph
+Reach the Legion command ship |scenariogoal 7/35262 |goto 33.44,41.39 |q 45856
+step
+kill Dread Vizier Gra'tork##118180
+Eliminate the Legion Commander |scenariogoal 8/35249 |goto Val'sharah Invasion/1 40.63,23.00 |q 45856
+step
+Jump off the ship to escape |scenariogoal 9/35319 |goto Val'sharah Invasion/1 40.63,23.00 |q 45856
+step
+talk Cenarius##118440
+turnin Battle for Val'sharah##45856 |goto Val'sharah/0 54.96,73.39
+step
+You have completed the battle for Val'sharah!
+Click here to return to the menu |confirm |next "Menu"
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Legion (100-110)\\7.2 Order Hall Quests",{
+author="support@zygorguides.com",
+description="This guide will walk you through completing the new Class Order Hall quests introduced in patch 7.2.",
+startlevel=110.0,
+},[[
+step
+talk Archmage Khadgar##116302
+accept Seeking Lost Knowledge##47067 |goto Broken Shore/0 44.73,63.27
+|only DeathKnight
+step
+Follow the path |goto 68.70,46.97 < 25 |only if walking
+Follow the path |goto 66.36,42.42 < 25 |only if walking
+Follow the path |goto 67.77,37.75 < 30 |only if walking
+Follow the path up |goto 71.44,35.28 < 15 |only if walking
+Follow the path |goto 71.22,41.78 < 25 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/2 |goto 71.93,40.70
+|only DeathKnight
+step
+Follow the path |goto 72.53,36.30 < 15 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/3 |goto 75.62,36.27
+|only DeathKnight
+step
+Follow the path |goto 76.31,40.52 < 15 |only if walking
+Follow the path |goto 78.82,43.99 < 15 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/1 |goto 82.57,45.09
+|only DeathKnight
+step
+talk Archmage Khadgar##116302
+turnin Seeking Lost Knowledge##47067 |goto 44.73,63.28
+accept Delivering Lost Knowledge##46809 |goto 44.73,63.28
+|only DeathKnight
+step
+talk Illanna Dreadmoore##97111
+turnin Delivering Lost Knowledge##46809 |goto Broken Shore/2 49.74,55.87
+accept Using Lost Knowledge##46940 |goto 49.74,55.87
+|only DeathKnight
+step
+talk Illanna Dreadmoore##97111
+Select: _"Let's continue research on my artifact."_
+Start a Research Work Order |q 46940/1 |goto 49.74,55.87
+|only DeathKnight
+step
+talk Illanna Dreadmoore##97111
+turnin Using Lost Knowledge##46940 |goto 49.74,55.90
+|only DeathKnight
+step
+talk Archmage Khadgar##116302 |only if not completedq(46765)
+accept Greater Power for Greater Threats##46744 |goto Broken Shore/0 44.74,63.27 |or |only if not completedq(46765)
+|tip |only if not completedq(46765)
+If you have already maxed one of your artifacts, click here |confirm |next "DK_Traits" |or |only if not completedq(46765)
+Proceeding |next "DK_Traits" |only if completedq(46765)
+|only DeathKnight
+step
+Unlock all traits for one of your artifacts |q 46744/1
+|tip You can earn artifact power by completing world quests, dungeons, and certain quests.
+|only DeathKnight
+step
+talk Archmage Khadgar##116302
+turnin Greater Power for Greater Threats##46744 |goto 44.74,63.27
+|only DeathKnight
+step
+label "DK_Traits"
+talk Archmage Khadgar##116302
+accept The Broken Shore: Investigating the Legion##46765 |goto Broken Shore/0 44.73,63.27
+|only DeathKnight
+step
+collect Mysterious Runebound Scroll##147430 |n
+|tip This item has a chance to drop off of any mob.
+|tip Kill enemies in this area until you collect one.
+|tip Rare spawns seem to have a 100% drop rate.
+Discover the Hidden Legion Threat |q 46765/1 |goto Broken Shore/0 44.61,49.57
+|only DeathKnight
+step
+talk Archmage Khadgar##116302
+turnin The Broken Shore: Investigating the Legion##46765 |goto 44.73,63.27
+accept The Council's Call##47000 |goto 44.73,63.27
+|only DeathKnight
+step
+talk Archmage Khadgar##90417
+turnin The Council's Call##47000 |goto Dalaran L/10 28.50,48.33
+accept Away From Prying Eyes##44782 |goto 28.50,48.33
+|only DeathKnight
+step
+Enter the Purple Parlor |q 44782/1 |goto 24.73,48.04
+|tip Go through the portal at the top of the stairs.
+|only DeathKnight
+step
+talk Archmage Modera##115465
+turnin Away From Prying Eyes##44782 |goto 22.20,39.04
+accept In Dire Need##44821 |goto 22.20,39.04
+|only DeathKnight
+step
+Hear the Council's Plea |q 44821/1 |goto 22.29,39.68
+|tip Wait for the dialogue to complete.
+|only DeathKnight
+step
+talk Archmage Modera##115465
+turnin In Dire Need##44821 |goto 22.29,39.64
+|only DeathKnight
+step
+label "DKSpecs"
+To pursue the Frost specialization artifact traits, click here |confirm |next "Frost" |only if not completedq(45865)
+To pursue the Unholy specialization artifact traits, click here |confirm |next "Unholy" |only if not completedq(45861)
+To pursue the Blood specialization artifact traits, click here |confirm |next "Blood" |only if not completedq(45863)
+|tip You must have 35 artifact traits unlocked to start the questline for a specialization. |only if not completedq(45863) or not completedq(45863) or not completedq(45863)
+Proceeding |next "AfterSpecDK" |only if completedq(45865) and completedq(45861) and completedq(45863)
+|only DeathKnight
+step
+label "Frost"
+talk Archmage Kalec##115467
+accept Frost: The Thieving Apprentice##47046 |goto 22.95,41.10
+|tip This quest is geared towards the Frost specialization.
+|tip You must have 35 artifact traits unlocked with this specialization to start this questline.
+|only DeathKnight
+step
+talk Joanna##115791
+turnin Frost: The Thieving Apprentice##47046 |goto Azshara/0 25.02,38.53
+accept Professionally Good Looking##44915 |goto 25.02,38.53
+|only DeathKnight
+step
+talk Lobos##115970
+collect Fanciful Hat##142374 |n
+Acquire the Fanciful Hat |q 44915/3 |goto 45.17,18.42
+|tip Challenge Lobos for his hat.
+|only DeathKnight
+step
+talk Raethas Dawnseer##115946
+collect Well-Tailored Robes##142372 |n
+Acquire the Well-Tailored Robes |q 44915/2 |goto 62.45,16.05
+|tip Challenge Raethas for his robes.
+|only DeathKnight
+step
+talk Phloem##115903
+collect Magnificent Mantle##142365 |n
+Acquire the Magnificent Mantle |q 44915/1 |goto 80.84,32.05
+|tip Challenge Phloem for her mantle.
+|only DeathKnight
+step
+turnin Professionally Good Looking##44915 |goto 25.02,38.53
+accept Order of Incantations##44920 |goto 25.02,38.53
+|only DeathKnight
+step
+click Arcane-Imbued Gem
+click Frost-Imbued Gem
+click Fire-Imbued Gem
+click Shadow-Imbued Gem
+|tip Click the gems in that exact order.
+|tip Not following the proper order will result in instant death.
+Solve the barrier puzzle |q 44920/2 |goto 25.15,38.49
+|only DeathKnight
+step
+Click the quest completion box that pops up
+turnin Order of Incantations##44920 |goto 25.15,38.49
+accept The Archmage Accosted##44924 |goto 25.15,38.49
+|only DeathKnight
+step
+kill Sanath Lim-yo##115860
+|tip Fight your way to the top of the tower.
+|tip You can avoid most of the mobs along the way.
+Confront Archmage Xylem |q 44924/1 |goto 25.21,38.03
+|only DeathKnight
+step
+click Xylem's Portal
+Follow through the portal |q 44924/2 |goto 25.20,37.97
+|only DeathKnight
+step
+talk Joanna##116048
+turnin The Archmage Accosted##44924 |goto 25.22,37.90
+accept A Portal Away##46177 |goto 25.22,37.90
+|only DeathKnight
+step
+talk Archmage Kalec##105081
+turnin A Portal Away##46177 |goto Dalaran L/10 28.61,49.90
+|only DeathKnight
+step
+talk Archmage Modera##90418
+accept A Gift From the Six##45865 |goto 28.43,48.91
+|only DeathKnight
+step
+Receive the Council's gift |q 45865/1 |goto 30.42,48.91
+|tip Stand in the circle and use the special action button that appears on-screen.
+|tip Stand still until the ritual completes.
+|only DeathKnight
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45865 |goto 28.44,48.91
+|only DeathKnight
+step
+To pursue another specialization's traits, click here |confirm |next "DKSpecs" |only if not completedq(45865) or not completedq(45861) or not completedq(45863)
+To continue, click here |confirm |next "AfterSpecDK" |only if not completedq(45865) or not completedq(45861) or not completedq(45863)
+Continuing |next "AfterSpecDK" |only if completedq(45865) and completedq(45861) and completedq(45863)
+|only DeathKnight
+step
+label "Unholy"
+talk Archmage Modera##115465
+accept Unholy: The Folly of Levia Laurence##47057 |goto Dalaran L/10 22.29,39.64
+|tip This quest is geared towards the Unholy specialization.
+|tip You must have 35 artifact traits unlocked with this specialization to start this questline.
+|only DeathKnight
+step
+talk Professor Pallin##92195
+Ask him: _"Do you know where I can find Levia Laurence?"_
+Ask About Levia at the Scribe's Sacellum |q 47057/1 |goto Dalaran L/10 41.30,37.05
+|only DeathKnight
+step
+talk Icks##97331
+Ask him: _"Do you know where I can find Levia Laurence?"_
+Ask About Levia at the Militant Mystic |q 47057/2 |goto Dalaran L/10 49.31,73.11
+|only DeathKnight
+step
+Enter the Lounge |goto Dalaran L/10 49.90,37.80 < 6 |walk
+talk Amisi Azuregaze##96806
+Ask her: _"Do you know where I can find Levia Laurence?"_
+Ask About Levia at the Legerdemain Lounge |q 47057/3 |goto Dalaran L/10 49.78,40.13
+|only DeathKnight
+step
+Go upstairs |goto Dalaran L/10 50.68,40.22 < 5 |walk
+click Levia's Research Journal
+Investigate Levia's Belongings |q 47057/4 |goto Dalaran L/10 46.41,40.08
+|only DeathKnight
+step
+talk Archmage Modera##90418
+turnin Unholy: The Folly of Levia Laurence##47057 |goto 28.48,48.93
+accept Bargaining with Shadows##46327 |goto 28.48,48.93
+|only DeathKnight
+step
+Enter the Chamber of the Guardians |goto Dalaran L/10 45.66,43.32 < 10 |walk
+Step onto the teleporter |goto 49.27,47.55 < 6 |walk
+talk Ritssyn Flamescowl##116714
+turnin Bargaining with Shadows##46327 |goto Dalaran L/12 52.77,59.25
+accept The Acolyte Imperiled##45916 |goto Dalaran L/12 52.77,59.25
+|only DeathKnight
+step
+Investigate Levia's Ritual |q 45916/1 |goto Dalaran L/12 58.07,72.99
+|only DeathKnight
+step
+Kill the enemies that attack
+Defend Ritssyn |q 45916/2 |goto Dalaran L/12 58.07,72.99
+|only DeathKnight
+step
+talk Ritssyn Flamescowl##116714
+turnin The Acolyte Imperiled##45916 |goto Dalaran L/12 58.07,72.99
+accept Dabbling in the Demonic##45125 |goto Dalaran L/12 58.07,72.99
+|only DeathKnight
+step
+click Talar |goto Dalaran L/12 58.75,71.08
+|confirm |q 45125/1
+|only DeathKnight
+step
+click Taam |goto Dalaran L/12 56.06,73.27
+|confirm |q 45125/1
+|only DeathKnight
+step
+click Dregla |goto Dalaran L/12 56.88,74.45
+|confirm |q 45125/1
+|only DeathKnight
+step
+talk Ritssyn Flamescowl##116714
+Tell him _"The runes are activated. Stabilize the portal."_
+Stabilize the Portal |q 45125/1 |goto Dalaran L/12 57.59,72.54
+|only DeathKnight
+step
+talk Ritssyn Flamescowl##116714
+turnin Dabbling in the Demonic##45125 |goto Dalaran L/12 57.70,72.54
+accept Following the Scent##45917 |goto Dalaran L/12 57.70,72.54
+|only DeathKnight
+step
+click Demonic Gateway |goto Dalaran L/12 60.36,75.79 < 5 |walk
+talk Fhambar##118450
+Tell him _"Go find Levia, Fhambar!"_
+Talk to Fhambar |q 45917/1 |goto Azsuna/0 30.97,51.84
+|only DeathKnight
+step
+Follow Fhambar |goto Azsuna/0 30.13,52.19 < 10 |walk
+Follow Fhambar |goto 27.68,52.58 < 10 |walk
+Find Levia Laurance |q 45917/2 |goto 25.78,57.55
+|only DeathKnight
+step
+talk Levia Laurence##116189
+turnin Following the Scent##45917 |goto Azsuna/0 25.67,57.75
+accept Unlikely Seduction##45126 |goto Azsuna/0 25.67,57.75
+|only DeathKnight
+step
+kill Agatha##118520
+Defeat Agatha |q 45126/1 |goto Azsuna/0 25.84,57.42
+|tip Watch the dialogue.
+|only DeathKnight
+step
+talk Levia Laurence##116189
+turnin Unlikely Seduction##45126 |goto Azsuna/0 25.67,57.75
+accept Fel-Crossed Lovers##45127 |goto Azsuna/0 25.67,57.75
+|only DeathKnight
+step
+Go up the stairs |goto Dalaran L/10 37.63,50.13 < 10 |only if walking
+talk Archmage Modera##90418
+turnin Fel-Crossed Lovers##45127 |goto Dalaran L/10 28.48,48.93
+accept A Gift From the Six##45861 |goto Dalaran L/10 28.48,48.93
+|only DeathKnight
+step
+Use the _Acquire the Gift_ ability
+|tip It appears on your screen when standing in this spot.
+Receive the Council's Gift |q 45861/1 |goto Dalaran L/10 30.42,48.93
+|only DeathKnight
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45861 |goto Dalaran L/10 28.48,48.93
+|only DeathKnight
+step
+To pursue another specialization's traits, click here |confirm |next "DKSpecs" |only if not completedq(45865) or not completedq(45861) or not completedq(45863)
+To continue, click here |confirm |next "AfterSpecDK" |only if not completedq(45865) or not completedq(45861) or not completedq(45863)
+Continuing |next "AfterSpecDK" |only if completedq(45865) and completedq(45861) and completedq(45863)
+|only DeathKnight
+step
+label "Blood"
+talk Archmage Ansirem Runeweaver##90431
+accept Blood: Aid of the Illidari##47025 |goto Dalaran L/10 28.44,49.46
+|only DeathKnight
+step
+Find Kor'vas Bloodthorn |q 47025/1 |goto 49.13,26.03
+|tip Kor'vas can be found patrolling the streets of Dalaran.
+|only DeathKnight
+step
+talk Kor'vas Bloodthorn##116880
+turnin Blood: Aid of the Illidari##47025 |goto 52.03,19.58
+accept Gathering Information##45413 |goto 52.03,19.58
+|only DeathKnight
+step
+talk Teller Rames##96817
+talk Teller Hanners##96818
+talk Teller Althiellis##96819
+Investigate the bank employees |q 45413/1 |goto 53.17,15.26
+|tip Talk to all three bank tellers.
+|only DeathKnight
+step
+talk Randall Goldsprocket##113812
+Identify the stolen item |q 45413/2 |goto 53.78,20.29
+|tip Wait for the dialogue to complete.
+|only DeathKnight
+step
+talk Kor'vas Bloodthorn##116880
+turnin Gathering Information##45413 |goto 52.04,19.63
+accept Confirming Suspicions##45414 |goto 52.04,19.63
+|only DeathKnight
+step
+Enter the building |goto 37.45,36.54 < 5
+Search First to Your Aid |q 45414/1 |goto 36.03,37.51
+|tip Wait near Olisarra the Kind until the dialogue completes.
+|only DeathKnight
+step
+Search Krasus' Landing |q 45414/2 |goto 74.83,45.52
+|tip Wait for the dialogue to complete.
+|only DeathKnight
+step
+talk Prophet Velen##117042
+Speak to Velen |q 45414/3 |goto 74.83,45.52
+|tip Wait for the dialogue to complete.
+|only DeathKnight
+step
+talk Prophet Velen##117042
+Witness Velen's vision |q 45414/4 |goto 74.83,45.52
+|tip Wait for the dialogue to complete.
+|only DeathKnight
+step
+talk Prophet Velen##117042
+turnin Confirming Suspicions##45414 |goto 74.83,45.52
+accept Between Worlds##45415 |goto 74.83,45.52
+|only DeathKnight
+step
+click Portal to Hellfire peninsula
+Take the portal to Hellfire Peninsula |q 45415/1 |goto 75.10,46.18
+|only DeathKnight
+step
+talk Kor'vas Bloodthorn##116880
+Speak to Kor'vas at the Stair of Destiny |q 45415/2 |goto Hellfire Peninsula/0 85.30,50.11
+|only DeathKnight
+step
+Open the portal |q 45415/3 |goto 85.30,50.11
+|tip Kill Doomheralds first.
+|tip Defeat the waves of mobs that spawn.
+|only DeathKnight
+step
+talk Kor'vas Bloodthorn##116880
+turnin Between Worlds##45415 |goto 85.30,50.11
+accept Dark Omens##45843 |goto 85.30,50.11
+|only DeathKnight
+step
+talk Archmage Modera##90418
+turnin Dark Omens##45843 |goto Dalaran L/10 28.43,48.91
+accept A Gift From the Six##45863 |goto 28.43,48.91
+|only DeathKnight
+step
+Receive the Council's gift |q 45863/1 |goto 30.43,48.95
+|tip Stand in the circle and use the special action button that appears on-screen.
+|tip Stand still until the ritual completes.
+|only DeathKnight
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45863 |goto 28.44,48.91
+|only DeathKnight
+step
+To pursue another specialization's traits, click here |confirm |next "DKSpecs" |only if not completedq(45865) or not completedq(45861) or not completedq(45863)
+To continue, click here |confirm |next "AfterSpecDK" |only if not completedq(45865) or not completedq(45861) or not completedq(45863)
+Continuing |next "AfterSpecDK" |only if completedq(45865) and completedq(45861) and completedq(45863)
+|only DeathKnight
+step
+label "AfterSpecDK"
+talk Maiev Shadowsong##116576
+accept Champions of Legionfall##47137 |goto Broken Shore/0 44.54,63.52
+|only DeathKnight
+step
+talk Highlord Darion Mograine##113695
+accept Making Preparations##45240 |goto Broken Shore/1 26.94,28.86
+|only DeathKnight
+step
+click Death Gate to Pit of Saron |goto 24.22,27.67
+Take the Death Gate near Highlord Darion Mograine |goto Pit of Saron DK/0 60.83,19.77 < 50 |c |noway |q 45240
+|only DeathKnight
+step
+Follow the path |goto 56.00,18.08 < 20 |only if walking
+talk Minerva Ravensorrow##119539
+turnin Making Preparations##45240 |goto 47.79,19.24
+accept Harnessing Power##45398 |goto 47.79,19.24
+accept Severing the Sveldrek##45399 |goto 47.79,19.24
+|only DeathKnight
+step
+kill Risen Sveldrek##119575+
+click Risen Sveldrek##119575
+Raise #8# Sveldrek |q 45399/1 |goto 44.42,23.67
+|only DeathKnight
+step
+Enter the hall |goto 39.79,16.58 < 20  |only if walking
+kill Andjor Dragontamer##116827
+collect 1 Rimefang's Harness##143676 |q 45398/1 |goto 33.92,8.99
+|only DeathKnight
+step
+talk Minerva Ravensorrow##119539
+turnin Harnessing Power##45398 |goto 47.79,19.24
+turnin Severing the Sveldrek##45399 |goto 47.79,19.24
+accept Return to Acherus##45331 |goto 47.79,19.24
+|only DeathKnight
+step
+talk Highlord Darion Mograine##113695
+turnin Return to Acherus##45331 |goto Broken Shore/1 26.94,28.82
+accept The Peak of Bones##44775 |goto 26.94,28.82
+|only DeathKnight
+step
+talk Grimwing##93465
+Tell him: _"Send me to Thorim's Peak!"_
+Speak with Grimwing |q 44775/1 |goto Broken Shore/2 25.53,28.82
+|only DeathKnight
+step
+talk Minerva Ravensorrow##115360
+turnin The Peak of Bones##44775 |goto Stormheim/0 51.28,84.31
+accept From Bones They Rise##44783 |goto 51.28,84.31
+accept Thorim's Flame##46305 |goto 51.28,84.31
+|only DeathKnight
+stickystart "Thorignir"
+step
+click Grapple Point
+Click the first Grapple Point |goto 50.02,83.59 < 5 |only if walking
+Click the second Grapple Point |goto 50.03,82.75 < 5 |only if walking
+Click the third Grapple Point |goto 49.96,82.11 < 5 |only if walking
+Follow the path |goto 48.00,82.32 < 15 |only if walking
+talk Drekirjar Shrine-Keeper##119647
+Tell him: _"I'm raising these Thorignir as my soldiers..."_
+kill Drekirjar Shrine-Keeper##119647
+Drekirjar Shrine-Keeper convinced |q 46305/1 |goto 47.87,82.98
+|only DeathKnight
+step
+click Thorim's Flame
+Collect Thorim's Flame |q 46305/2 |goto 47.99,83.08
+|only DeathKnight
+step
+label "Thorignir"
+click Deceased Thorignir
+Revive #4# Deceased Thorignir |q 44783/1 |goto 48.92,81.78
+|only DeathKnight
+step
+talk Minerva Ravensorrow##116737
+turnin From Bones They Rise##44783 |goto 47.76,82.98
+turnin Thorim's Flame##46305 |goto 47.76,82.98
+accept The Bonemother##44787 |goto 47.76,82.98
+|only DeathKnight
+step
+click Grapple Point
+Follow the path |goto 48.00,82.32 < 15 |only if walking
+Follow the path |goto 49.96,82.11 < 20 |only if walking
+Click the first Grapple Point |goto 50.03,82.75 < 5 |only if walking
+Click the second Grapple Point |goto 50.02,83.59 < 5 |only if walking
+click Thorim's Beacon
+Light Thorim's Beacon |q 44787/1 |goto 51.25,84.38
+|only DeathKnight
+step
+kill Daumyr##115284
+Defeat Daumyr |q 44787/2 |goto 50.77,84.30
+click Daumyr##115284
+|tip Use the extra action button that appears to raise Daumyr.
+Raise Daumyr |q 44787/3 |goto 50.80,84.30
+|only DeathKnight
+step
+click Daumyr##116748
+Ride Daumyr to Acherus |q 44787/4 |goto 50.80,84.30
+|only DeathKnight
+step
+talk Highlord Darion Mograine##113695
+turnin The Bonemother##44787 |goto Broken Shore/1 26.88,28.79
+accept On Daumyr's Wings##45243 |goto 26.88,28.79
+|only DeathKnight
+step
+talk Daumyr##116130
+Tell her: _"Time to go to Broken Shore, Daumyr."_
+Ride Daumyr to Broken Shore |q 45243/1 |goto 21.62,32.19
+|only DeathKnight
+step
+talk Highlord Darion Mograine##116128
+turnin On Daumyr's Wings##45243 |goto Broken Shore/0 51.64,21.78
+accept We Ride!##45103 |goto 51.64,21.78
+|only DeathKnight
+step
+talk Daumyr##115284
+Tell her: _"Let's ride."_
+Mount Daumyr |q 45103/1 |goto 51.57,21.28
+|only DeathKnight
+step
+Kill #100# Demons |q 45103/2 |goto 55.81,34.33
+|tip Use the new abilities on your action bar to accomplish this.
+|only DeathKnight
+step
+talk Highlord Darion Mograine##113695
+turnin We Ride!##45103 |goto Broken Shore/1 26.86,28.69
+|only DeathKnight
+step
+talk Minerva Ravensorrow##95900
+accept Champion: Minerva Ravensorrow##46050 |goto 25.51,34.34
+|only DeathKnight
+step
+talk Siouxsie the Banshee##93568
+accept Further Advancement##46789 |goto Broken Shore/2 49.66,51.28
+|only DeathKnight
+step
+talk Archivist Zubashi##97485
+Talk to Archivist Zubashi |q 46789/1 |goto 47.71,53.88
+|only DeathKnight
+step
+talk Siouxsie the Banshee##93568
+turnin Further Advancement##46789 |goto 49.66,51.28
+|only DeathKnight
+step
+talk Maiev Shadowsong##116576
+turnin Champions of Legionfall##47137 |goto Broken Shore/0 44.54,63.52
+|only DeathKnight
+step
+talk Archmage Khadgar##116302
+accept Shard Times##46251 |goto 44.74,63.27
+|only DeathKnight
+step
+Collect #2500# Nethershards |q 46251/1 |goto 44.74,63.27
+|tip Nethershards can be obtained by looting rares, treasures, and completing world quests.
+|only DeathKnight
+step
+talk Archmage Khadgar##116302
+turnin Shard Times##46251 |goto 44.74,63.27
+|only DeathKnight
+step
+You must complete the Broken Shore campaign to continue
+Click here to load the "Broken Shore Campaign" guide |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\Broken Shore Campaign"
+Breach the Tomb |q 46246 |future
+|tip Use the Broken Shore Campaign guide to accomplish this.
+|only DeathKnight
+step
+talk Dread Commander Thalanor##117573
+accept Amal'thazad's Message##46719 |goto Broken Shore/0 43.92,63.12
+|only DeathKnight
+step
+talk Amal'thazad##93555
+turnin Amal'thazad's Message##46719 |goto Broken Shore/2 58.21,31.07
+accept Frozen Memories##46720 |goto 58.21,31.07
+|only DeathKnight
+step
+Take the portal to the top of Archerus |q 46720/1 |goto 55.52,28.34
+|only DeathKnight
+step
+Listen to the Lich King's plan |q 46720/2 |goto Broken Shore/1 47.82,51.83
+|tip Simply wait for the dialogue to complete.
+|only DeathKnight
+step
+Witnes the Lich King's vision  |q 46720/3 |goto Icecrown/0 44.70,4.41
+|tip Land on the little chunk of ice and wait for the vision to complete.
+|only DeathKnight
+step
+Click the quest completion box
+turnin Frozen Memories##46720 |goto 44.70,4.41
+accept Draconic Secrets##46812 |goto 44.70,4.41
+|only DeathKnight
+step
+talk Trizormu##27938
+|tip He is on the ground floor.
+Tell him: _"Tell me all you know of a glacier to the north where a powerful dragon fell."_
+Trizormu interrogated |q 46812/1 |goto Dragonblight/0 60.31,54.86
+|only DeathKnight
+step
+talk Tariolstrasz##26443
+|tip He is on the ground floor.
+Tell him: _"Tell me all you know of a great dragon that fell on a glacier to the north of Icecrown."_
+Steward Tariolstrasz interrogated |q 46812/2 |goto 57.90,54.16
+|only DeathKnight
+step
+Infiltrate the Ruby Sanctum |q 46812/3 |goto The Ruby Sanctum/0 49.01,31.40
+|only DeathKnight
+step
+Follow the path |goto 41.40,76.55 < 20 |only if walking
+|tip Avoid the Ruby Keepers.
+click Codex Draconomicus Rubicus##6477
+Read the Codex Draconomicus |q 46812/4 |goto 47.92,77.21
+|only DeathKnight
+step
+Click the quest completion box
+turnin Draconic Secrets##46812 |goto 47.92,77.21
+accept The Lost Glacier##46813 |goto 47.92,77.21
+|only DeathKnight
+step
+Travel to the Lost Glacier |q 46813/1 |goto Icecrown/0 42.60,0.38
+|tip Move around a little bit if the scenario doesn't trigger.
+|only DeathKnight
+step
+Find the Frozen Span |scenariogoal 1/36221 |q 46813 |goto The Lost Glacier/0 52.20,69.57
+|tip You will need to fight through the ghouls to reach the Frozen Span.
+|only DeathKnight
+step
+Find Kyranastraz' Rest |scenariogoal 2/36222 |q 46813
+|tip There is a narrow path of ice ahead. Follow that towards the skeletal remains.
+|only DeathKnight
+step
+kill Revitalized Ghoul##121040+, Revitalized Monstrosity##121048+, Revitalized Skeleton##121060+
+Collect the red dragon's essence |scenariogoal 3/36223 |q 46813
+|tip Kill mobs until the bar on your screen fills up.
+|only DeathKnight
+step
+Convert the life essence to death |scenariogoal 4/36224 |q 46813
+|tip Use the special action button ability on your screen.
+|only DeathKnight
+step
+click Deep Crack
+|tip It is located near the green mound.
+turnin The Lost Glacier##46813
+|only DeathKnight
+step
+talk Archmage Khadgar##116302
+accept Seeking Lost Knowledge##47067 |goto Broken Shore/0 44.73,63.27
+|only DemonHunter
+step
+Follow the path |goto 68.70,46.97 < 25 |only if walking
+Follow the path |goto 66.36,42.42 < 25 |only if walking
+Follow the path |goto 67.77,37.75 < 30 |only if walking
+Follow the path up |goto 71.44,35.28 < 15 |only if walking
+Follow the path |goto 71.22,41.78 < 25 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/2 |goto 71.93,40.70
+|only DemonHunter
+step
+Follow the path |goto 72.53,36.30 < 15 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/3 |goto 75.62,36.27
+|only DemonHunter
+step
+Follow the path |goto 76.31,40.52 < 15 |only if walking
+Follow the path |goto 78.82,43.99 < 15 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/1 |goto 82.57,45.09
+|only DemonHunter
+step
+talk Archmage Khadgar##116302
+turnin Seeking Lost Knowledge##47067 |goto 44.73,63.28
+accept Delivering Lost Knowledge##47078 |goto 44.73,63.28
+|only DemonHunter
+step
+talk Vahu the Weathered##111736
+turnin Delivering Lost Knowledge##47078 |goto Mardum, the Shattered Abyss/3 62.04,75.02
+accept Using Lost Knowledge##46940 |goto 62.04,75.02
+|only DemonHunter
+step
+talk Vahu the Weathered##111736
+Start a Research Work Order |q 46940/1 |goto 62.04,75.02
+|only DemonHunter
+step
+talk Vahu the Weathered##111736
+turnin Using Lost Knowledge##46940 |goto 62.04,75.02
+|only DemonHunter
+step
+talk Archmage Khadgar##116302 |only if not completedq(46765)
+accept Greater Power for Greater Threats##46744 |goto Broken Shore/0 44.74,63.27 |or |only if not completedq(46765)
+|tip |only if not completedq(46765)
+If you have already maxed one of your artifacts, click here |confirm |next "DH_Traits" |or |only if not completedq(46765)
+Proceeding |next "DH_Traits" |only if completedq(46765)
+|only DemonHunter
+step
+Unlock all traits for one of your artifacts |q 46744/1
+|tip You can earn artifact power by completing world quests, dungeons, and certain quests.
+|only DemonHunter
+step
+talk Archmage Khadgar##116302
+turnin Greater Power for Greater Threats##46744 |goto 44.74,63.27
+|only DemonHunter
+step
+label "DH_Traits"
+talk Archmage Khadgar##116302
+accept The Broken Shore: Investigating the Legion##46765 |goto Broken Shore/0 44.73,63.27
+|only DemonHunter
+step
+collect Mysterious Runebound Scroll##147430 |n
+|tip This item has a chance to drop off of any mob.
+|tip Kill enemies in this area until you collect one.
+|tip Rare spawns seem to have a 100% drop rate.
+Discover the Hidden Legion Threat |q 46765/1 |goto Broken Shore/0 44.61,49.57
+|only DemonHunter
+step
+talk Archmage Khadgar##116302
+turnin The Broken Shore: Investigating the Legion##46765 |goto 44.73,63.27
+accept The Council's Call##47000 |goto 44.73,63.27
+|only DemonHunter
+step
+talk Archmage Khadgar##90417
+turnin The Council's Call##47000 |goto Dalaran L/10 28.50,48.33
+accept Away From Prying Eyes##44782 |goto 28.50,48.33
+|only DemonHunter
+step
+Enter the Purple Parlor |q 44782/1 |goto 24.73,48.04
+|tip Go through the portal at the top of the stairs.
+|only DemonHunter
+step
+talk Archmage Modera##115465
+turnin Away From Prying Eyes##44782 |goto 22.20,39.04
+accept In Dire Need##44821 |goto 22.20,39.04
+|only DemonHunter
+step
+Hear the Council's Plea |q 44821/1 |goto 22.29,39.68
+|tip Wait for the dialogue to complete.
+|only DemonHunter
+step
+talk Archmage Modera##115465
+turnin In Dire Need##44821 |goto 22.29,39.64
+|only DemonHunter
+step
+label "DHSpecs"
+To pursue the Vengeance specialization artifact traits, click here |confirm |next "Vengeance" |only if not completedq(45863)
+To pursue the Havoc specialization artifact traits, click here |confirm |next "Havoc" |only if not completedq(45865)
+|tip You must have 35 artifact traits unlocked to start the questline for a specialization. |only if not completedq(45863) or not completedq(45865)
+Continuing |next "AfterSpecDH" |only if completedq(45863) and completedq(45865)
+|only DemonHunter
+step
+label "Vengeance"
+talk Archmage Ansirem Runeweaver##115466
+accept Vengeance: Seeking Kor'vas##46314 |goto 22.46,40.53
+|tip This quest is geared towards the Vengeance specialization.
+|tip You must have 35 artifact traits unlocked with this specialization to start this questline.
+|only DemonHunter
+step
+Find Kor'vas Bloodthorn |q 46314/1 |goto 49.13,26.03
+|tip Kor'vas can be found patrolling the streets of Dalaran.
+|only DemonHunter
+step
+talk Kor'vas Bloodthorn##116880
+turnin Vengeance: Seeking Kor'vas##46314 |goto 52.03,19.58
+accept Gathering Information##45413 |goto 52.03,19.58
+|only DemonHunter
+step
+talk Teller Rames##96817
+talk Teller Hanners##96818
+talk Teller Althiellis##96819
+Investigate the bank employees |q 45413/1 |goto 53.17,15.26
+|tip Talk to all three bank tellers.
+|only DemonHunter
+step
+talk Randall Goldsprocket##113812
+Identify the stolen item |q 45413/2 |goto 53.78,20.29
+|tip Wait for the dialogue to complete.
+|only DemonHunter
+step
+talk Kor'vas Bloodthorn##116880
+turnin Gathering Information##45413 |goto 52.04,19.63
+accept Confirming Suspicions##45414 |goto 52.04,19.63
+|only DemonHunter
+step
+Enter the building |goto 37.45,36.54 < 5
+Search First to Your Aid |q 45414/1 |goto 36.03,37.51
+|tip Wait near Olisarra the Kind until the dialogue completes.
+|only DemonHunter
+step
+Search Krasus' Landing |q 45414/2 |goto 74.83,45.52
+|tip Wait for the dialogue to complete.
+|only DemonHunter
+step
+talk Prophet Velen##117042
+Speak to Velen |q 45414/3 |goto 74.83,45.52
+|tip Wait for the dialogue to complete.
+|only DemonHunter
+step
+talk Prophet Velen##117042
+Witness Velen's vision |q 45414/4 |goto 74.83,45.52
+|tip Wait for the dialogue to complete.
+|only DemonHunter
+step
+talk Prophet Velen##117042
+turnin Confirming Suspicions##45414 |goto 74.83,45.52
+accept Between Worlds##45415 |goto 74.83,45.52
+|only DemonHunter
+step
+click Portal to Hellfire peninsula
+Take the portal to Hellfire Peninsula |q 45415/1 |goto 75.10,46.18
+|only DemonHunter
+step
+talk Kor'vas Bloodthorn##116880
+Speak to Kor'vas at the Stair of Destiny |q 45415/2 |goto Hellfire Peninsula/0 85.30,50.11
+|only DemonHunter
+step
+Open the portal |q 45415/3 |goto 85.30,50.11
+|tip Kill Doomheralds first.
+|tip Defeate the waves of mobs that spawn.
+|only DemonHunter
+step
+talk Kor'vas Bloodthorn##116880
+turnin Between Worlds##45415 |goto 85.30,50.11
+accept Dark Omens##45843 |goto 85.30,50.11
+|only DemonHunter
+step
+talk Archmage Modera##90418
+turnin Dark Omens##45843 |goto Dalaran L/10 28.43,48.91
+accept A Gift From the Six##45863 |goto 28.43,48.91
+|only DemonHunter
+step
+Receive the Council's gift |q 45863/1 |goto 30.43,48.95
+|tip Stand in the circle and use the special action button that appears on-screen.
+|tip Stand still until the ritual completes.
+|only DemonHunter
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45863 |goto 28.44,48.91
+|only DemonHunter
+step
+To pursue another specialization's traits, click here |confirm |next "DHSpecs" |only if not completedq(45863) or not completedq(45865)
+To continue, click here |confirm |next "AfterSpecDH" |only if not completedq(45863) or not completedq(45865)
+Continuing |next "AfterSpecDH" |only if completedq(45863) and completedq(45865)
+|only DemonHunter
+step
+label "Havoc"
+talk Archmage Kalec##115467
+accept Havoc: The Thieving Apprentice##47043 |goto 22.94,41.13
+|tip This quest is geared towards the Havoc specialization.
+|tip You must have 35 artifact traits unlocked with this specialization to start this questline.
+|only DemonHunter
+step
+talk Joanna##115791
+turnin Havoc: The Thieving Apprentice##47043 |goto Azshara/0 25.02,38.53
+accept Professionally Good Looking##44915 |goto 25.02,38.53
+|only DemonHunter
+step
+talk Lobos##115970
+collect Fanciful Hat##142374 |n
+Acquire the Fanciful Hat |q 44915/3 |goto 45.17,18.42
+|tip Challenge Lobos for his hat.
+|only DemonHunter
+step
+talk Raethas Dawnseer##115946
+collect Well-Tailored Robes##142372 |n
+Acquire the Well-Tailored Robes |q 44915/2 |goto 62.45,16.05
+|tip Challenge Raethas for his robes.
+|only DemonHunter
+step
+talk Phloem##115903
+collect Magnificent Mantle##142365 |n
+Acquire the Magnificent Mantle |q 44915/1 |goto 80.84,32.05
+|tip Challenge Phloem for her mantle.
+|only DemonHunter
+step
+turnin Professionally Good Looking##44915 |goto 25.02,38.53
+accept Order of Incantations##44920 |goto 25.02,38.53
+|only DemonHunter
+step
+click Arcane-Imbued Gem
+click Frost-Imbued Gem
+click Fire-Imbued Gem
+click Shadow-Imbued Gem
+|tip Click the gems in that exact order.
+|tip Not following the proper order will result in instant death.
+Solve the barrier puzzle |q 44920/2 |goto 25.15,38.49
+|only DemonHunter
+step
+Click the quest completion box that pops up
+turnin Order of Incantations##44920 |goto 25.15,38.49
+accept The Archmage Accosted##44924 |goto 25.15,38.49
+|only DemonHunter
+step
+kill Sanath Lim-yo##115860
+|tip Fight your way to the top of the tower.
+|tip You can avoid most of the mobs along the way.
+Confront Archmage Xylem |q 44924/1 |goto 25.21,38.03
+|only DemonHunter
+step
+click Xylem's Portal
+Follow through the portal |q 44924/2 |goto 25.20,37.97
+|only DemonHunter
+step
+talk Joanna##116048
+turnin The Archmage Accosted##44924 |goto 25.22,37.90
+accept A Portal Away##46177 |goto 25.22,37.90
+|only DemonHunter
+step
+talk Archmage Kalec##105081
+turnin A Portal Away##46177 |goto Dalaran L/10 28.61,49.90
+|only DemonHunter
+step
+talk Archmage Modera##90418
+accept A Gift From the Six##45865 |goto 28.43,48.91
+|only DemonHunter
+step
+Receive the Council's gift |q 45865/1 |goto 30.42,48.91
+|tip Stand in the circle and use the special action button that appears on-screen.
+|tip Stand still until the ritual completes.
+|only DemonHunter
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45865 |goto 28.44,48.91
+|only DemonHunter
+step
+To pursue another specialization's traits, click here |confirm |next "DHSpecs" |only if not completedq(45863) or not completedq(45865)
+To continue, click here |confirm |next "AfterSpecDH" |only if not completedq(45863) or not completedq(45865)
+Continuing |next "AfterSpecDH" |only if completedq(45863) and completedq(45865)
+|only DemonHunter
+step
+label "AfterSpecDH"
+talk Maiev Shadowsong##116576
+accept Champions of Legionfall##47137 |goto Broken Shore/0 44.54,63.52
+|only DemonHunter
+step
+accept An Urgent Message##46159 |goto Mardum, the Shattered Abyss/2 58.82,71.93
+|tip You will accept this quest automatically.
+|only DemonHunter
+step
+click Control Console##3365
+Communication received |q 46159/1 |goto 58.96,65.60
+|only DemonHunter
+step
+talk Kor'vas Bloodthorn##108311
+turnin An Urgent Message##46159 |goto 59.33,57.75
+accept Taking Charge##45301 |goto 59.33,57.75
+|only DemonHunter
+step
+talk Kyra Lightblade##116490
+Tell her: _"Take me to Mardum."_
+Travel to Mardum |q 45301/1 |goto 57.70,18.11
+|only DemonHunter
+step
+talk Kor'vas Bloodthorn##116448
+turnin Taking Charge##45301 |goto Mardum, the Shattered Abyss/2 74.21,41.67
+accept Scouting Party##45330 |goto 74.21,41.67
+accept Operation: Portals##45329 |goto 74.21,41.67
+|only DemonHunter
+stickystart "Scouts"
+step
+click Legion Portal##235710
+Close #3# Legion Portals |q 45329/1 |goto 76.88,43.47 |count 1
+|only DemonHunter
+step
+click Legion Portal##235710
+Close #3# Legion Portals |q 45329/1 |goto 77.38,49.03 |count 2
+|only DemonHunter
+step
+Enter the cave |goto 80.35,48.26 < 20 |walk
+kill Targuz##117682
+talk Lady S'theno##118784
+Ask her: _"Why did you leave the others?"_
+Find Lady S'theno |q 45330/2 |goto 81.44,50.41
+|only DemonHunter
+step
+click Legion Portal##235710
+Close #3# Legion Portals |q 45329/1 |goto 80.41,41.81 |count 3
+|only DemonHunter
+step
+label "Scouts"
+click Illidari Scout##116560
+Rescue #8# Illidari Scouts |q 45330/1 |goto 79.25,45.25
+|only DemonHunter
+step
+Follow the path |goto 76.97,43.52 < 25 |only if walking
+talk Kor'vas Bloodthorn##116448
+turnin Scouting Party##45330 |goto 74.21,41.67
+turnin Operation: Portals##45329 |goto 74.21,41.67
+accept Defense of the Fel Hammer##45339 |goto 74.21,41.67
+|only DemonHunter
+step
+click Illidari Gateway
+Start the scenario |scenariostart |goto 74.51,40.66 |q 45339
+|only DemonHunter
+step
+kill Eredar Soulflayer##116648+, Eredar Soulflayer##116649+, Doomguard Destroyer##116651+
+Repel the invaders |scenariostage 1 |goto The Fel Hammer/1 58.82,54.07 |q 45339
+|only DemonHunter
+step
+click Forge Room##3365 |goto The Fel Hammer/2 58.75,44.65
+kill Mother Volaz##116703
+Defeat Mother Volaz |scenariogoal 2/34835 |goto 55.93,27.96 |q 45339
+|only DemonHunter
+step
+click Control Room##3365 |goto 58.92,63.71
+kill 1 Lord Ar'dranath##116654
+Defeat Ar'dranath |scenariogoal 3/34836 |goto 59.13,77.35 |q 45339
+|only DemonHunter
+step
+click Control Console##3365
+Use the Control Console |scenariogoal 4/34844 |goto The Fel Hammer/1 58.92,66.22 |q 45339
+|only DemonHunter
+step
+talk Kor'vas Bloodthorn##108311
+turnin Defense of the Fel Hammer##45339 |goto Mardum, the Shattered Abyss/2 59.30,57.75
+accept We Must be Prepared!##45385 |goto 59.30,57.75
+|only DemonHunter
+step
+talk Lady S'theno##117709
+turnin We Must be Prepared!##45385 |goto Broken Shore/0 52.14,21.14
+accept Restoring Equilibrium##45764 |goto 52.14,21.14
+accept Power Outage##46725 |goto 52.14,21.14
+accept War'zuul the Provoker##45798 |goto 52.14,21.14
+|only DemonHunter
+step
+click Illidari Felbat##118071 |goto 51.83,20.70
+Ride the Felbat |goto 61.79,11.82 < 10 |noway |c |q 45798
+|only DemonHunter
+stickystart "Core"
+step
+kill War'zuul the Provoker##117958
+Defeat War'zuul the Provoker |q 45798/1 |goto 64.41,16.14
+|only DemonHunter
+step
+click Stabilizing Crystal##3365
+Collect #3# Stabilizing Crystals |q 45764/1 |goto 64.10,18.69 |count 1
+|only DemonHunter
+step
+Follow the path |goto 64.55,16.39 < 25 |only if walking
+click Stabilizing Crystal##3365
+Collect #3# Stabilizing Crystal |q 45764/1 |goto 66.10,15.67 |count 2
+|only DemonHunter
+step
+click Stabilizing Crystal##3365
+Collect #3# Stabilizing Crystal |q 45764/1 |goto 67.57,16.26 |count 3
+|only DemonHunter
+step
+label "Core"
+Replenish the Power Core |q 46725/1 |goto 68.14,15.15
+|tip Run through patches of green fel energy on the ground.
+|tip When you are launched in the air, fly though the green fel orbs.
+|only DemonHunter
+step
+talk Lady S'theno##117709
+turnin Restoring Equilibrium##45764 |goto 52.13,21.15
+turnin Power Outage##46725 |goto 52.13,21.15
+turnin War'zuul the Provoker##45798 |goto 52.13,21.15
+accept Return of the Slayer##46266 |goto 52.13,21.15
+|only DemonHunter
+step
+talk Kor'vas Bloodthorn##108311
+turnin Return of the Slayer##46266 |goto Mardum, the Shattered Abyss/2 59.30,57.60
+|only DemonHunter
+step
+talk Lady S'theno##117481
+accept Champion: Lady S'theno##45391 |goto 62.02,54.04
+|only DemonHunter
+step
+talk Tylos Darksight##103732
+accept Further Advancement##46780 |goto Mardum, the Shattered Abyss/3 53.53,46.25
+|only DemonHunter
+step
+talk Loramus Thalipedes##108527
+Talk to Loramus Thalipedes |q 46780/1 |goto 55.28,62.69
+|only DemonHunter
+step
+talk Tylos Darksight##103732
+turnin Further Advancement##46780 |goto 53.53,46.25
+|only DemonHunter
+step
+talk Maiev Shadowsong##116576
+turnin Champions of Legionfall##47137 |goto Broken Shore/0 44.54,63.52
+|only DemonHunter
+step
+talk Archmage Khadgar##116302
+accept Shard Times##46251 |goto 44.74,63.27
+|only DemonHunter
+step
+Collect #2500# Nethershards |q 46251/1 |goto 44.74,63.27
+|tip Nethershards can be obtained by looting rares, treasures, and completing world quests.
+|only DemonHunter
+step
+talk Archmage Khadgar##116302
+turnin Shard Times##46251 |goto 44.74,63.27
+|only DemonHunter
+step
+You must complete the Broken Shore campaign to continue
+Click here to load the "Broken Shore Campaign" guide |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\Broken Shore Campaign"
+Breach the Tomb |q 46246 |future
+|tip Use the Broken Shore Campaign guide to accomplish this.
+|only DemonHunter
+step
+talk Illidari Enforcer##118314
+accept Livin' on the Ledge##46333 |goto Broken Shore/0 43.95,62.69
+|only DemonHunter
+step
+talk Matron Mother Malevolence##108784
+turnin Livin' on the Ledge##46333 |goto Mardum, the Shattered Abyss/2 59.98,48.91
+accept To Fel and Back##46334 |goto 59.98,48.91
+|only DemonHunter
+step
+talk Kyra Lightblade##116490
+Tell her: _"I need passage to Felwing Ledge."_
+Speak with Kyra Lightblade |q 46334/1 |goto 57.73,18.11
+|only DemonHunter
+step
+talk Matron Mother Malevolence##119781
+Tell her: _"I'm ready, Matron Mother."_
+Speak with Matron Mother Malevolence |scenariogoal 1/35778 |q 46334 |goto Felwing Ledge/0 42.94,16.77
+|only DemonHunter
+step
+kill Lixahl##119916
+|tip Move out of the corrosive ground.
+|tip You will only need to damage Lixahl to around 60%.
+Attempt to Subdue Lixahl |scenariogoal 2/35779 |q 46334 |goto 43.08,19.10
+|only DemonHunter
+step
+Follow the path |goto 44.51,21.76 < 15 |only if walking
+Follow the path |goto 44.70,28.32 < 15 |only if walking
+Follow the path |goto 44.30,34.57 < 20 |only if walking
+Track Lixahl |scenariogoal 3/35780 |q 46334 |goto 42.60,39.13
+|only DemonHunter
+step
+kill Lixahl##119916
+|tip Move out of the corrosive ground.
+|tip You will only need to damage Lixahl to around 30%.
+Attempt to Subdue Lixahl Once More |scenariogoal 4/35782 |q 46334 |goto 42.60,39.13
+|only DemonHunter
+step
+Follow the path |goto 40.67,39.42 < 15 |only if walking
+Follow the path |goto 38.63,46.63 < 20 |only if walking
+Continue Tracking Lixahl |scenariogoal 5/35783 |q 46334 |goto 41.69,56.13
+|only DemonHunter
+step
+Glide to Lixahl |scenariogoal 6/36466 |q 46334 |goto 44.35,62.72
+|tip Double Jump and glide to Lixahl.
+|only DemonHunter
+step
+kill Lixahl##119916
+|tip Interrupt Piercing Screech whenever possible.
+|tip Move out of the corrosive ground.
+Lixahl Subdued |scenariogoal 7/35784 |q 46334 |goto 52.04,80.55
+|only DemonHunter
+step
+click Lixahl
+Ride Lixahl |scenariogoal 8/35811 |q 46334 |goto 51.52,80.08
+|only DemonHunter
+step
+talk Yrdris Lightblade##119844
+Return to The Fel Hammer |q 46334/3 |goto Felwing Ledge/0 48.60,17.08
+|only DemonHunter
+step
+talk Matron Mother Malevolence##108784
+turnin To Fel and Back##46334 |goto Mardum, the Shattered Abyss/2 60.03,48.87
+|only DemonHunter
+step
+talk Archmage Khadgar##116302
+accept Seeking Lost Knowledge##47067 |goto Broken Shore/0 44.74,63.26
+|only Druid
+step
+Follow the path up |goto 71.48,35.24 < 10 |only if walking
+click Remnant of Lost Knowledge##121165
+Recover Knowledge from Lost Temple |q 47067/2 |goto Broken Shore/0 71.92,40.74
+|only Druid
+step
+Follow the path |goto Broken Shore/0 72.07,38.71 < 10 |only if walking
+click Remnant of Lost Knowledge##121165
+Recover Knowledge from Moonlight Ascent |q 47067/3 |goto 75.62,36.28
+|only Druid
+step
+Jump down here |goto Broken Shore/0 77.93,37.18 < 10 |only if walking
+click Remnant of Lost Knowledge##121165
+Recover Knowledge from Felfire Pass |q 47067/1 |goto 82.55,45.12
+|only Druid
+step
+talk Archmage Khadgar##116302
+turnin Seeking Lost Knowledge##47067 |goto Broken Shore/0 44.73,63.26
+accept Delivering Lost Knowledge##47075 |goto Broken Shore/0 44.73,63.26
+|only Druid
+step
+talk Celadine the Fatekeeper##111737
+turnin Delivering Lost Knowledge##47075 |goto The Dreamgrove/0 33.94,32.53
+accept Using Lost Knowledge##46940 |goto The Dreamgrove/0 33.94,32.53
+|only Druid
+step
+talk Celadine the Fatekeeper##111737
+Tell her _"Let's continue research on my artifact."_
+Start a Research Work Order |q 46940/1 |goto The Dreamgrove/0 33.91,32.54
+|only Druid
+step
+talk Celadine the Fatekeeper##111737
+turnin Using Lost Knowledge##46940 |goto The Dreamgrove/0 33.94,32.53
+|only Druid
+step
+talk Archmage Khadgar##116302
+accept Greater Power for Greater Threats##46744 |goto Broken Shore/0 44.73,63.26
+If you already have 35 Artifact Traits unlocked, click here to continue |confirm
+|only Druid
+|only if not completedq(46765)
+step
+Unlock All Artifact Traits on a Weapon |q 46744/1
+|only Druid
+step
+talk Archmage Khadgar##116302
+turnin Greater Power for Greater Threats##46744 |goto Broken Shore/0 44.73,63.26
+accept The Broken Shore: Investigating the Legion##46765 |goto Broken Shore/0 44.73,63.26
+|only Druid
+step
+Kill an elite in the Broken Isles
+|tip They appear as a green skull on the world map.
+collect Mysterious Runebound Scroll##147430 |n
+Discover the Hidden Legion Threat |q 46765/1
+|only Druid
+step
+talk Archmage Khadgar##116302
+turnin The Broken Shore: Investigating the Legion##46765 |goto Broken Shore/0 44.73,63.26
+accept The Council's Call##47000 |goto Broken Shore/0 44.73,63.26
+|only Druid
+step
+Go up the stairs |goto Dalaran L/10 37.57,50.17 < 10 |only if walking
+talk Archmage Khadgar##90417
+turnin The Council's Call##47000 |goto Dalaran L/10 28.57,48.33
+accept Away From Prying Eyes##44782 |goto Dalaran L/10 28.57,48.33
+|only Druid
+step
+Enter the Purple Parlor |q 44782/1 |goto Dalaran L/10 24.42,48.06
+|tip Go through the portal.
+|only Druid
+step
+talk Archmage Modera##115465
+turnin Away From Prying Eyes##44782 |goto Dalaran L/10 22.20,39.07
+accept In Dire Need##44821 |goto Dalaran L/10 22.20,39.07
+|only Druid
+step
+Watch the dialogue
+Hear the Council's Plea |q 44821/1 |goto Dalaran L/10 23.25,39.57
+|only Druid
+step
+talk Archmage Modera##115465
+turnin In Dire Need##44821 |goto Dalaran L/10 22.29,39.64
+|only Druid
+step "druid_artifacttraits"
+Select your current Spec:
+Balance |confirm |next "druid_balanceartifact"
+Feral |confirm |next "druid_feralartifact"
+Guardian |confirm |next "druid_guardianartifact"
+Restoration |confirm |next "druid_restorationartifact"
+|only Druid
+step "druid_balanceartifact"
+talk Archmage Karlain##90463
+accept Balance: The Twisted Twin##47037 |goto Dalaran L/10 28.62,47.78
+|tip You must have 35 Traits unlocked to accept this quest.
+|only Druid
+step
+Enter the Lounge |goto Dalaran L/10 46.22,38.29 < 5 |walk
+talk Karam Magespear##116175
+turnin Balance: The Twisted Twin##47037 |goto Dalaran L/10 49.37,39.77
+accept Message from the Shadows##45185 |goto Dalaran L/10 49.37,39.77
+|only Druid
+step
+Go up the stairs |goto Dalaran L/10 50.67,40.33 < 5 |walk
+click A Mysterious Note
+Search For Clues |q 45185/1 |goto Dalaran L/10 47.02,39.04
+|only Druid
+step
+talk Karam Magespear##116175
+|tip He is downstairs.
+turnin Message from the Shadows##45185 |goto Dalaran L/10 49.37,39.77
+accept Secrets in the Underbelly##45187 |goto Dalaran L/10 49.37,39.77
+|only Druid
+step
+Go down into the Underbelly |goto Dalaran L/10 59.75,47.78 < 5 |walk
+talk Underbelly Lowlife##116323+
+|tip They can be found around this area. They will fight you or run away.
+kill Nethersworn Assassin##116322+
+collect Nethersworn Manifesto##143496 |n
+Search For Clues |q 45187/1|goto Dalaran L/11 60.08,45.54
+|only Druid
+step
+Next to you:
+talk Karam Magespear##116175
+turnin Secrets in the Underbelly##45187
+accept The Wisdom of the Council##45188
+|only Druid
+step
+Go up the stairs |goto Dalaran L/10 37.57,50.17 < 10 |only if walking
+talk Archmage Karlain##90463
+turnin The Wisdom of the Council##45188 |goto Dalaran L/10 28.62,47.78
+accept Where it's Thinnest##45190 |goto Dalaran L/10 28.62,47.78
+|only Druid
+step
+talk Karam Magespear##116175
+turnin Where it's Thinnest##45190 |goto Broken Shore/0 56.45,27.35
+accept Runes of Rending##45192 |goto Broken Shore/0 56.45,27.35
+|only Druid
+step
+Step onto the blue rune to start then follow this pattern:
+Up, Left, Right, Left, Right, Right, Down, Right, Up, Up, Left,
+Up, Up, Left, Left, Right, Up, Left, Left, Up, Right,
+Right, Up, Left, Up, Left, Right, Up
+Bypass the Wards |q 45192/1 |goto Broken Shore/0 57.99,27.18
+|only Druid
+step
+Kill the enemies in the area
+kill Thar'kith##116393
+Defeat Raest's Minions |q 45192/2 |goto Broken Shore/0 59.72,27.33
+|only Druid
+step
+talk Karam Magespear##116308
+turnin Runes of Rending##45192 |goto Broken Shore/0 59.81,27.45
+accept One Step Behind##45193 |goto Broken Shore/0 59.81,27.45
+|only Druid
+step
+Go up the stairs |goto Dalaran L/10 37.57,50.17 < 10 |only if walking
+talk Archmage Khadgar##90417
+turnin One Step Behind##45193 |goto Dalaran L/10 28.56,48.35
+|only Druid
+step
+talk Archmage Modera##90418
+accept A Gift From the Six##45866 |goto Dalaran L/10 28.46,48.91
+|only Druid
+step
+Use the _Acquire the Gift_ ability
+|tip It appears on your screen when standing in this spot.
+Receive the Council's Gift |q 45866/1 |goto Dalaran L/10 30.42,48.93
+|only Druid
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45866 |goto Dalaran L/10 28.48,48.93 |next "druid_artifactend"
+|only Druid
+step "druid_feralartifact"
+talk Archmage Modera##115465
+accept Feral: The Folly of Levia Laurence##47059 |goto Dalaran L/10 28.50,48.93
+|tip You must have 35 Traits unlocked to accept this quest.
+|only Druid
+step
+talk Professor Pallin##92195
+Ask him _"Do you know where I can find Levia Laurence?"_
+Ask About Levia at the Scribe's Sacellum |q 47059/1 |goto Dalaran L/10 41.30,37.05
+|only Druid
+step
+talk Icks##97331
+Ask him _"Do you know where I can find Levia Laurence?"_
+Ask About Levia at the Militant Mystic |q 47059/2 |goto Dalaran L/10 49.31,73.11
+|only Druid
+step
+Enter the Lounge |goto Dalaran L/10 49.90,37.80 < 6 |walk
+talk Amisi Azuregaze##96806
+Ask her _"Do you know where I can find Levia Laurence?"_
+Ask About Levia at the Legerdemain Lounge |q 47059/3 |goto Dalaran L/10 49.78,40.13
+|only Druid
+step
+Go upstairs |goto Dalaran L/10 50.68,40.22 < 5 |walk
+click Levia's Research Journal
+Investigate Levia's Belongings |q 47059/4 |goto Dalaran L/10 46.41,40.08
+|only Druid
+step
+Go up the stairs |goto Dalaran L/10 37.63,50.13 < 10 |only if walking
+talk Archmage Modera##90418
+turnin Fury: The Folly of Levia Laurence##47059 |goto 28.48,48.93
+accept Bargaining with Shadows##46327 |goto 28.48,48.93
+|only Druid
+step
+Enter the Chamber of the Guardians |goto Dalaran L/10 45.66,43.32 < 10 |walk
+Step onto the teleporter |goto 49.27,47.55 < 6 |walk
+talk Ritssyn Flamescowl##116714
+turnin Bargaining with Shadows##46327 |goto Dalaran L/12 52.77,59.25
+accept The Acolyte Imperiled##45916 |goto Dalaran L/12 52.77,59.25
+|only Druid
+step
+Investigate Levia's Ritual |q 45916/1 |goto Dalaran L/12 58.07,72.99
+|only Druid
+step
+Kill the enemies that attack
+Defend Ritssyn |q 45916/2 |goto Dalaran L/12 58.07,72.99
+|only Druid
+step
+talk Ritssyn Flamescowl##116714
+turnin The Acolyte Imperiled##45916 |goto Dalaran L/12 58.07,72.99
+accept Dabbling in the Demonic##45125 |goto Dalaran L/12 58.07,72.99
+|only Druid
+step
+click Talar |goto Dalaran L/12 58.75,71.08
+|confirm |q 45125/1
+|only Druid
+step
+click Taam |goto Dalaran L/12 56.06,73.27
+|confirm |q 45125/1
+|only Druid
+step
+click Dregla |goto Dalaran L/12 56.88,74.45
+|confirm |q 45125/1
+|only Druid
+step
+talk Ritssyn Flamescowl##116714
+Tell him _"The runes are activated. Stabilize the portal."_
+Stabilize the Portal |q 45125/1 |goto Dalaran L/12 57.59,72.54
+|only Druid
+step
+talk Ritssyn Flamescowl##116714
+turnin Dabbling in the Demonic##45125 |goto Dalaran L/12 57.70,72.54
+accept Following the Scent##45917 |goto Dalaran L/12 57.70,72.54
+|only Druid
+step
+click Demonic Gateway |goto Dalaran L/12 60.36,75.79 < 5 |walk
+talk Fhambar##118450
+Tell him _"Go find Levia, Fhambar!"_
+Talk to Fhambar |q 45917/1 |goto Azsuna/0 30.97,51.84
+|only Druid
+step
+Follow Fhambar |goto Azsuna/0 30.13,52.19 < 10 |walk
+Follow Fhambar |goto 27.68,52.58 < 10 |walk
+Find Levia Laurance |q 45917/2 |goto 25.78,57.55
+|only Druid
+step
+talk Levia Laurence##116189
+turnin Following the Scent##45917 |goto Azsuna/0 25.67,57.75
+accept Unlikely Seduction##45126 |goto Azsuna/0 25.67,57.75
+|only Druid
+step
+kill Agatha##118520
+Defeat Agatha |q 45126/1 |goto Azsuna/0 25.84,57.42
+|only Druid
+step
+talk Levia Laurence##116189
+turnin Unlikely Seduction##45126 |goto Azsuna/0 25.67,57.75
+accept Fel-Crossed Lovers##45127 |goto Azsuna/0 25.67,57.75
+|only Druid
+step
+Go up the stairs |goto Dalaran L/10 37.63,50.13 < 10 |only if walking
+talk Archmage Modera##90418
+turnin Fel-Crossed Lovers##45127 |goto Dalaran L/10 28.48,48.93
+accept A Gift From the Six##45861 |goto Dalaran L/10 28.48,48.93
+|only Druid
+step
+Use the _Acquire the Gift_ ability
+|tip It appears on your screen when standing in this spot.
+Receive the Council's Gift |q 45861/1 |goto Dalaran L/10 30.42,48.93
+|only Druid
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45861 |goto Dalaran L/10 28.48,48.93 |next "druid_artifactend"
+|only Druid
+step "druid_guardianartifact"
+talk Archmage Ansirem Runeweaver##90431
+accept Guardian: Aid of the Illidari##47023 |goto Dalaran L/10 28.51,49.48
+|tip You must have 35 Traits unlocked to accept this quest.
+|only Druid
+step
+Find Kor'vas Bloodthorn |q 47023/1 |goto Dalaran L/10 49.09,26.10
+|only Druid
+step
+talk Kor'vas Bloodthorn##116880
+turnin Guardian: Aid of the Illidari##47023 |goto Dalaran L/10 52.04,19.65
+accept accept 45413 |goto Dalaran L/10 52.04,19.65
+|only Druid
+step
+talk Glutonia##107622
+|tip She walks around the area.
+Ask her _"Fine, Glutonia. What was the Legion after?"_
+|confirm |q 45413/1 |goto Dalaran L/10 51.81,15.70
+|only Druid
+step
+talk Teller Rames##96817
+Ask him _"What was stolen in the attack?"_
+|confirm |q 45413/1 |goto Dalaran L/10 52.28,14.73
+|only Druid
+step
+talk Teller Hanners##96818
+Ask her _"Do you have any idea what was taken?"_
+|confirm |q 45413/1 |goto Dalaran L/10 53.15,15.24
+|only Druid
+step
+talk Teller Althiellis##96819
+Ask him _"Is anything missing from the vault?"_
+Investigate the Bank Employees |q 45413/1 |goto Dalaran L/10 54.05,15.75
+|only Druid
+step
+talk Randall Goldsprocket##113812
+Ask him _"What did it take exactly?"_
+Identify the Stolen Item |q 45413/2 |goto Dalaran L/10 53.74,20.23
+|only Druid
+step
+talk Kor'vas Bloodthorn##116880
+turnin Gathering Information##45413 |goto Dalaran L/10 52.04,19.65
+accept Confirming Suspicions##45414 |goto Dalaran L/10 52.04,19.65
+|only Druid
+step
+Enter the building |goto Dalaran L/10 37.50,36.49 < 6 |walk
+Search First to Your Aid |q 45414/1 |goto Dalaran L/10 36.34,37.33
+|only Druid
+step
+Search Krasus' Landing |q 45414/2 |goto Dalaran L/10 73.36,45.31
+|only Druid
+step
+talk Prophet Velen##117042
+Tell him _"Kruul's heart was stolen by the Legion."_
+Speak to Velen |q 45414/3 |goto Dalaran L/10 74.72,45.51
+|only Druid
+step
+Witness Velen's Vision |q 45414/4 |goto Dalaran L/10 74.40,45.47
+|only Druid
+step
+talk Prophet Velen##117042
+turnin Confirming Suspicions##45414 |goto Dalaran L/10 74.65,45.52
+accept Between Worlds##45415 |goto Dalaran L/10 74.65,45.52
+|only Druid
+step
+click Portal to Hellfire Peninsula
+Take the Portal to Hellfire Peninsula |q 45415/1 |goto Dalaran L/10 75.07,46.16
+|only Druid
+step
+talk Kor'vas Bloodthorn##116880
+Speak to Kor'vas at the Stair of Destiny |q 45415/2 |goto Hellfire Peninsula 85.30,50.12
+|only Druid
+step
+Kill the enemies that attack in waves
+kill Lord Vazuun##117126
+Open the Portal |q 45415/3 |goto Hellfire Peninsula 84.50,50.17
+|only Druid
+step
+talk Kor'vas Bloodthorn##116880
+turnin Between Worlds##45415 |goto Hellfire Peninsula 85.29,50.12
+accept Dark Omens##45843 |goto Hellfire Peninsula 85.29,50.12
+|only Druid
+step
+Go up the stairs |goto Dalaran L/10 37.63,50.13 < 10 |only if walking
+talk Archmage Modera##90418
+turnin Dark Omens##45843 |goto Dalaran L/10 28.48,48.93
+accept A Gift from the Six##45863 |goto Dalaran L/10 28.48,48.93
+|only Druid
+step
+Use the _Acquire the Gift_ ability
+|tip It appears on your screen when standing in this spot.
+Receive the Council's Gift |q 45863/1 |goto Dalaran L/10 30.42,48.93
+|only Druid
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45863 |goto Dalaran L/10 28.48,48.93 |next "druid_artifactend"
+|only Druid
+step "druid_restorationartifact"
+talk Archmage Modera##90418
+accept Restoration: The Bradensbrook Investigation##47004 |goto Dalaran L/10 28.49,48.90
+|tip You must have 35 Traits unlocked to accept this quest.
+|only Druid
+step
+talk Mayor Heathrow##118752
+turnin Restoration: The Bradensbrook Investigation##47004 |goto Val'sharah 42.24,58.97
+accept Aid on the Front Lines##46079 |goto Val'sharah 42.24,58.97
+|only Druid
+step
+click Injured Villager##118809
+Heal these Injured Villagers scattered around the field
+Heal #8# Wounded Defenders |q 46079/1 |goto Val'sharah/0 42.29,61.28
+|only Druid
+step
+talk Mayor Heathrow##118752
+turnin Aid on the Front Lines##46079 |goto Val'sharah/0 42.28,58.96
+accept Shadowsong's Return##46082 |goto Val'sharah/0 42.28,58.96
+|only Druid
+step
+talk Commander Jarod Shadowsong##118947
+turnin Shadowsong's Return##46082 |goto Val'sharah/0 39.11,58.14
+accept Cutting off the Heads##46106 |goto Val'sharah/0 39.11,58.14
+accept Quieting the Spirits##46080 |goto Val'sharah/0 39.11,58.14
+|only Druid
+stickystart "Risen Attackers"
+step
+kill Nethos Starwalker##118950 |q 46106/2 |goto Val'sharah/0 37.09,58.46
+|only Druid
+step
+kill Tael'thos the Cutter##118951 |q 46106/3 |goto 39.22,62.13
+|only Druid
+step
+kill Disa Trueshaft##118949 |q 46106/1 |goto 36.80,61.33
+|only Druid
+step
+label "Risen Attackers"
+kill Risen Archer##118759+, Risen Soldier##118758+, Risen Hound##118754+, Risen Scout##118757+, Black Rook Falcon##118756+
+Slay 12 Risen Attackers |q 46080/1
+|only Druid
+step
+Next to you
+talk Commander Jarod Shadowsong##118954
+turnin Cutting off the Heads##46106
+turnin Quieting the Spirits##46080
+accept Source of the Corruption##46107
+|only Druid
+step
+Follow the path up |goto 38.63,57.60 < 10 |only if walking
+Go to Heroes' Rest |q 46107/1 |goto 37.83,55.32
+|only Druid
+step
+click Corrupted Rooksguard##120156+
+|tip Once clicked these will either be Freed and disappear or get angry and attack you.
+Release 3 Fel Courrupted Rooksguards |q 46107/2 |goto 38.42,53.02
+|only Druid
+step
+kill Lorgos the Resurrector##118980 |q 46107/3 |goto 38.92,51.34
+|only Druid
+step
+Next to you
+talk Commander Jarod Shadowsong##118954
+turnin Source of the Corruption##46107
+accept The Matter Resolved... For Now...##46200
+|only Druid
+step
+Go up the stairs |goto Dalaran L/10 37.63,50.13 < 10 |only if walking
+talk Archmage Modera##90418
+turnin The Matter Resolved... For Now...##46200 |goto Dalaran L/10 28.61,48.90
+accept A Gift From the Six##45864 |goto Dalaran L/10 28.61,48.90
+|only Druid
+step
+Use the _Acquire the Gift_ ability
+|tip It appears on your screen when standing in this spot.
+Receive the Council's Gift |q 45864/1 |goto Dalaran L/10 30.42,48.93
+|only Druid
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45864 |goto Dalaran L/10 28.48,48.93 |next "druid_artifactend"
+|only Druid
+step "druid_artifactend"
+You have gained the Balance Druid's new Artifact Traits |only if completedq(45866)
+You have gained the Feral Druid's new Artifact Traits |only if completedq(45861)
+You have gained the Guardian Druid's new Artifact Traits |only if completedq(45863)
+You have gained the Restoration Druid's new Artifact Traits |only if completedq(45864)
+Click here to continue the Druid Campaign |confirm |only if not completedq(45866) or not completedq(45861) or not completedq(45863) or not completedq(45864)
+Click here to pursue another spec's Artifact Traits |confirm |next "druid_artifacttraits" |only if not completedq(45866) or not completedq(45861) or not completedq(45863) or not completedq(45864)
+Moving to next section |next |only if completedq(45866) and completedq(45861) and completedq(45863) and completedq(45864)
+|only Druid
+step
+talk Maiev Shadowsong##116576
+accept Defending Broken Isles##46247 |goto Broken Shore/0 44.54,63.52
+|only Druid
+step
+Complete a Legion Assault |q 46247/1
+|only Druid
+step
+talk Maiev Shadowsong##116576
+turnin Defending Broken Isles##46247 |goto Broken Shore/0 44.54,63.52
+accept Champions of Legionfall##47137 |goto Broken Shore/0 44.54,63.52
+|only Druid
+step
+talk Thisalee Crow##106299
+accept Talon Terror##44869 |goto The Dreamgrove/0 44.50,51.47
+|only Druid
+step
+talk Thisalee Crow##115802
+turnin Talon Terror##44869 |goto Mount Hyjal/0 40.94,42.58
+accept Attack on the Roost##44877 |goto Mount Hyjal/0 40.94,42.58
+accept Mother's Orders##45532 |goto Mount Hyjal/0 40.94,42.58
+|only Druid
+stickystart "roostdemonkills"
+step
+kill Mother Mirenda##116624 |q 45532/1 |goto Mount Hyjal/0 40.65,43.82
+|only Druid
+step
+label "roostdemonkills"
+Kill attacking enemies
+Kill #15# Legion Invaders |q 44877/1 |goto Mount Hyjal/0 41.25,44.21
+|only Druid
+step
+Next to you:
+talk Thisalee Crow##115802
+turnin Attack on the Roost##44877
+turnin Mother's Orders##45532
+accept Aviana's Grace##44888
+|only Druid
+step
+Follow the path back |goto Mount Hyjal/0 43.83,46.06 < 10 |walk
+click Offering to Aviana
+Place the Offering to Aviana |q 44888/1 |goto 44.32,47.94
+|only Druid
+step
+Watch the dialogue
+Contact Aviana |q 44888/2 |goto 44.32,47.94
+|only Druid
+step
+talk Aviana##115749
+turnin Aviana's Grace##44888 |goto Mount Hyjal/0 44.32,47.96
+accept Lone Wolf##44921 |goto Mount Hyjal/0 44.32,47.96
+|only Druid
+step
+talk Thisalee Crow##106299
+turnin Lone Wolf##44921 |goto Moonglade 68.18,54.80
+accept The Befouled Barrows##45528 |goto Moonglade 68.18,54.80
+accept Let Sleeping Dogs Lie##45498 |goto Moonglade 68.18,54.80
+|only Druid
+step
+Enter the tunnel |goto Moonglade/0 68.61,52.44 < 6 |walk
+click Legion Portal
+Close the First Portal |q 45528/1 |count 1 |goto 65.47,47.20
+|only Druid
+step
+Follow the path |goto Moonglade/0 66.94,47.63 < 6 |walk
+click Legion Portal
+Close the Second Portal |q 45528/1 |count 2 |goto 67.14,44.56
+|only Druid
+step
+Cross the bridge |goto Moonglade/0 68.13,47.32 < 6 |walk
+click Legion Portal
+Close the Final Portal |q 45528/1 |goto 69.13,45.18
+|only Druid
+step
+Jump down here |goto Moonglade/0 68.57,46.22 < 6 |walk
+click Goldrinn##115750
+Awake Goldrinn |q 45498/1 |goto 69.53,47.94
+|only Druid
+step
+Next to you:
+talk Thisalee Crow##106299
+turnin The Befouled Barrows##45528
+turnin Let Sleeping Dogs Lie##45498
+accept The Wolf's Tale##46924
+|only Druid
+step
+Go up the ramp |goto Moonglade/0 66.76,47.20 < 6 |walk
+Follow the path |goto 68.07,48.84 < 6 |walk
+talk Goldrinn##115750
+Find Goldrinn |q 46924/1 |goto Moonglade/0 68.06,55.18
+|only Druid
+step
+talk Goldrinn##115750
+turnin The Wolf's Tale##46924 |goto Moonglade/0 68.09,55.27
+accept Nature's Advance##45426 |goto Moonglade/0 68.09,55.27
+|only Druid
+step
+talk Rensar Greathoof##101195
+turnin Nature's Advance##45426 |goto The Dreamgrove/0 44.65,51.95
+accept The Preservation of Nature##46674 |goto The Dreamgrove/0 44.65,51.95
+|only Druid
+step
+talk Thisalee Crow##106299
+turnin The Preservation of Nature##46674 |goto Broken Shore/0 43.57,58.30
+accept Nature's Touch##46676 |goto Broken Shore/0 43.57,58.30
+accept To Track a Demon##46675 |goto Broken Shore/0 43.57,58.30
+|only Druid
+stickystart "collectdemonmissives"
+step
+Follow the path |goto Broken Shore/0 40.93,53.88 < 10 |only if walking
+Heal #5# Injured Druids |q 46676/1 |goto Broken Shore/0 38.15,44.76
+|tip You can use your own healing skills to heal them.
+|only Druid
+step
+label "collectdemonmissives"
+kill Felsorrow Conqueror##120031+, Felguard Legionnaire##116518+
+Collect #3# Impsorrow Missives |q 46675/1 |goto Broken Shore/0 38.15,44.76
+|only Druid
+step
+Next to you:
+talk Thisalee Crow##106299
+turnin Nature's Touch##46676
+turnin To Track a Demon##46675
+accept Prick of Thistle##46677
+|only Druid
+step
+Follow the path |goto Broken Shore/0 37.38,45.78 < 10 |only if walking
+Jump into the water |goto 35.89,44.18 < 10 |only if walking
+kill Commander Katith'rax##120095 |q 46677/1 |goto Broken Shore/0 32.25,32.29
+|only Druid
+step
+Next to you:
+talk Thisalee Crow##106299
+turnin Prick of Thistle##46677
+accept Grovebound##45425
+|only Druid
+step
+talk Rensar Greathoof##101195
+turnin Grovebound##45425 |goto The Dreamgrove/0 44.65,51.95
+|only Druid
+step
+talk Thisalee Crow##106299
+accept Champion: Thisalee Crow##46044 |goto The Dreamgrove/0 44.48,51.51
+|only Druid
+step
+Recruit a Legionfall Champion |q 47137/1
+|only Druid
+step
+talk Maiev Shadowsong##116576
+turnin Champions of Legionfall##47137 |goto Broken Shore/0 44.54,63.52
+|only Druid
+step
+talk Skylord Omnuron##98002
+accept Further Advancement##46786 |goto The Dreamgrove/0 52.60,51.42
+|only Druid
+step
+talk Leafbeard the Storied##97989
+Talk to Leafbeard the Storied |q 46786/1 |goto The Dreamgrove/0 33.2,29.0
+|only Druid
+step
+talk Skylord Omnuron##98002
+turnin Further Advancement##46786 |goto The Dreamgrove/0 52.60,51.42
+|only Druid
+step
+talk Archmage Khadgar##116302
+accept Shard Times##46251 |goto Broken Shore/0 44.73,63.27
+|only Druid
+step
+Collect 2500 Nethershards |q 46251/1
+|tip You can do this by completing World Quests and killing Rares in the Broken Shore.
+|tip You will get 2499 Nethershards back.
+|only Druid
+step
+talk Archmage Khadgar##116302
+turnin Shard Times##46251 |goto Broken Shore/0 44.73,63.27
+|only Druid
+step
+You must complete the Broken Shore campaign to continue
+Use the Broken Shore Campaign guide to accomplish this |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\Broken Shore Campaign"
+Breach the Tomb |q 46246 |future
+|only Druid
+step
+talk Grovewarden Proudhorn##118105
+accept Talon's Call##46317 |goto Broken Shore/0 43.81,62.97
+|only Druid
+step
+talk Thisalee Crow##106299
+turnin Talon's Call##46317 |goto The Dreamgrove/0 44.45,51.47
+accept Defense of Aviana##46318 |goto The Dreamgrove/0 44.45,51.47
+|only Druid
+step
+Help Defend the Shrine of Aviana |scenariostart |q 46318 |goto Mount Hyjal/0 41.10,42.82
+|only Druid
+step
+talk Skylord Shadegrove##119808
+Ask him _"How can we help?"_
+Meet Skylord Shadegrove |scenariostage 1 |q 46318 |goto Mount Hyjal/0 42.74,45.67
+|only Druid
+step
+Kill enemies in this area
+Kill Demons Attacking the Shrine |scenariostage 2 |q 46318 |goto Mount Hyjal/0 41.23,43.79
+|only Druid
+step
+Return to the Shrine |scenariostage 3 |q 46318 |goto Mount Hyjal/0 42.32,45.13
+|only Druid
+step
+Watch the dialogue
+Uncover the Traitor |scenariostage 4 |q 46318 |goto Mount Hyjal/0 42.68,45.30
+|only Druid
+step
+Go up the path |goto The Dreamgrove/0 33.91,21.50 < 10 |only if walking
+talk Thisalee Crow##106299
+turnin Defense of Aviana##46318 |goto The Dreamgrove/0 31.07,4.75
+accept You Can't Take the Sky From Me##46319 |goto The Dreamgrove/0 31.07,4.75
+|only Druid
+step
+Follow the path |goto Azsuna/0 41.00,35.19 < 10 |only if walking
+Go up the path |goto 39.17,32.74 < 10 |only if walking
+Continue up the mountain |goto 36.89,31.21 < 10 |only if walking
+Follow the path |goto 39.09,26.70 < 10 |only if walking
+Retrieve the Idol of Aviana |scenariostart |q 46319 |goto 41.24,24.77
+|only Druid
+step
+Meet Up With Thisalee Crow |scenariostage 1 |q 46319 |goto 41.24,24.77
+|only Druid
+step
+_Use Prowl_ |cast Prowl##5215
+Follow Thisalee while _stealthed_
+Follow the path |goto 41.56,22.67 < 6 |walk
+Follow the path |goto 42.70,23.04 < 6 |walk
+Infiltrate the Legion Encampment |scenariostage 2 |q 46319 |goto 43.09,22.93
+|only Druid
+step
+Scout Infazzar |scenariostage 3 |q 46319 |goto 43.09,22.93
+|only Druid
+step
+Kill the enemies that attack
+Fight Off Attacking Demons and Harpies |scenariostage 4 |q 46319 |goto 43.09,22.93
+|only Druid
+step
+click Lunarwing Owl
+Follow Infazzar to His Ship |scenariostage 5 |q 46319 |goto 42.78,24.79
+|only Druid
+step
+kill Infazzar the Shade |scenariostage 6 |q 46319 |goto Azsuna/0 39.02,28.69
+|only Druid
+step
+Go up the path |goto The Dreamgrove/0 33.91,21.50 < 10 |only if walking
+click Corrupted Idol of Aviana##120947
+turnin You Can't Take the Sky From Me##46319 |goto The Dreamgrove/0 29.97,4.27
+|only Druid
+step
+talk Archmage Khadgar##116302
+accept Seeking Lost Knowledge##47067 |goto Broken Shore/0 44.74,63.26
+|only Hunter
+step
+Follow the path |goto 68.70,46.97 < 25 |only if walking
+Follow the path |goto 66.36,42.42 < 25 |only if walking
+Follow the path |goto 67.77,37.75 < 30 |only if walking
+Follow the path up |goto 71.44,35.28 < 15 |only if walking
+Follow the path |goto 71.22,41.78 < 25 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/2 |goto 71.93,40.70
+|only Hunter
+step
+Follow the path |goto 72.53,36.30 < 15 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/3 |goto 75.62,36.27
+|only Hunter
+step
+Follow the path |goto 76.31,40.52 < 15 |only if walking
+Follow the path |goto 78.82,43.99 < 15 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/1 |goto 82.57,45.09
+|only Hunter
+step
+talk Archmage Khadgar##116302
+turnin Seeking Lost Knowledge##47067 |goto 44.73,63.28
+accept Delivering Lost Knowledge##47073 |goto 44.73,63.28
+|only Hunter
+step
+talk Holt Thunderhorn##98737
+turnin Delivering Lost Knowledge##47073 |goto Trueshot Lodge/0 52.56,54.44
+accept Using Lost Knowledge##46940 |goto 52.56,54.44
+|only Hunter
+step
+talk Holt Thunderhorn##98737
+Select: _"Let's continue research on my artifact."_
+Start a Research Work Order |q 46940/1 |goto 52.56,54.44
+|only Hunter
+step
+talk Holt Thunderhorn##98737
+turnin Using Lost Knowledge##46940 |goto 52.56,54.44
+|only Hunter
+step
+talk Archmage Khadgar##116302 |only if not completedq(46765)
+accept Greater Power for Greater Threats##46744 |goto Broken Shore/0 44.74,63.27 |or |only if not completedq(46765)
+|tip |only if not completedq(46765)
+If you have already maxed one of your artifacts, click here |confirm |next "H_Traits" |or |only if not completedq(46765)
+Proceeding |next "H_Traits" |only if completedq(46765)
+|only Hunter
+step
+Unlock all traits for one of your artifacts |q 46744/1
+|tip You can earn artifact power by completing world quests, dungeons, and certain quests.
+|only Hunter
+step
+talk Archmage Khadgar##116302
+turnin Greater Power for Greater Threats##46744 |goto 44.74,63.27
+|only Hunter
+step
+label "H_Traits"
+talk Archmage Khadgar##116302
+accept The Broken Shore: Investigating the Legion##46765 |goto Broken Shore/0 44.73,63.27
+|only Hunter
+step
+collect Mysterious Runebound Scroll##147430 |n
+|tip This item has a chance to drop off of any mob.
+|tip Kill enemies in this area until you collect one.
+|tip Rare spawns seem to have a 100% drop rate.
+Discover the Hidden Legion Threat |q 46765/1 |goto Broken Shore/0 44.61,49.57
+|only Hunter
+step
+talk Archmage Khadgar##116302
+turnin The Broken Shore: Investigating the Legion##46765 |goto 44.73,63.27
+accept The Council's Call##47000 |goto 44.73,63.27
+|only Hunter
+step
+talk Archmage Khadgar##90417
+turnin The Council's Call##47000 |goto Dalaran L/10 28.50,48.33
+accept Away From Prying Eyes##44782 |goto 28.50,48.33
+|only Hunter
+step
+Enter the Purple Parlor |q 44782/1 |goto Dalaran L/10 24.30,48.02
+|tip Go through the portal at the top of the stairs.
+|only Hunter
+step
+talk Archmage Modera##115465
+turnin Away From Prying Eyes##44782 |goto 22.20,39.04
+accept In Dire Need##44821 |goto 22.20,39.04
+|only Hunter
+step
+Hear the Council's Plea |q 44821/1 |goto 22.29,39.68
+|tip Wait for the dialogue to complete.
+|only Hunter
+step
+talk Archmage Modera##115465
+turnin In Dire Need##44821 |goto 22.29,39.64
+|only Hunter
+step
+label "HSpecs"
+To pursue the Beast Mastery specialization artifact traits, click here |confirm |next "BM" |only if not completedq(45842)
+To pursue the Marksmanship specialization artifact traits, click here |confirm |next "Marks" |only if not completedq(45866)
+To pursue the Survival specialization artifact traits, click here |confirm |next "Survival" |only if not completedq(45865)
+|tip You must have 35 artifact traits unlocked to start the questline for a specialization. |only if not completedq(45842) or not completedq(45866) or not completedq(45865)
+Proceeding |next "AfterSpecH" |only if completedq(45842) and completedq(45866) and completedq(45865)
+|only Hunter
+step
+label "BM"
+talk Archmage Modera##90418
+accept Beast Mastery: Rumblings Near Feltotem##47018 |goto 22.31,39.64
+|tip This quest is geared towards the Beast Mastery specialization.
+|tip You must have 35 artifact traits unlocked with this specialization to start this questline.
+|only Hunter
+step
+Follow the path |goto Highmountain/0 40.87,11.50 < 25 |only if walking
+Follow the path |goto 37.68,16.10 < 25 |only if walking
+Follow the path |goto 36.60,20.17 < 25 |only if walking
+talk Navarrogg##117225
+turnin Beast Mastery: Rumblings Near Feltotem##47018 |goto 35.74,23.98
+accept The Burning Birds##45564 |goto 35.74,23.98
+|only Hunter
+step
+click Fel Infusing Totem
+|tip You will take periodic fire damage for 10 seconds after clicking one.
+collect 5 Fel Infusing Totem##143778 |q 45564/1 |goto 35.74,23.98
+|only Hunter
+step
+Meet Navarrogg near Feltotem |q 45564/2 |goto 31.31,25.14
+|only Hunter
+step
+talk Navarrogg##117249
+turnin The Burning Birds##45564 |goto 31.31,25.14
+accept The Tainted Marsh##45726 |goto 31.31,25.14
+|only Hunter
+step
+talk Navarrogg##117249
+Tell him: _"I'd like the help to the Blind Marshlands."_
+Get a ride to the Marshlands |q 45726/1 |goto 31.31,25.14
+|only Hunter
+step
+kill Seabound Reaver##102038+
+Use the Exfoliator on their corpses |use Fel Exfoliator##143863
+Cleanse #5# spirits |q 45726/2 |goto 27.93,31.94
+|only Hunter
+step
+Follow the path |goto Highmountain/0 27.78,27.82 < 20 |only if walking
+Follow the path |goto 29.09,26.04 < 20 |only if walking
+talk Navarrogg##117249
+turnin The Tainted Marsh##45726 |goto 31.30,25.13
+accept Village of the Corruptors##45575 |goto 31.30,25.13
+|only Hunter
+step
+kill Feltotem Infuser##117353+
+|tip You will find these inside huts.
+Kill #4# Feltotem Infusers |q 45575/1 |goto 30.09,28.49
+|only Hunter
+step
+talk Navarrogg##117292
+|tip He will appear next to you.
+turnin Village of the Corruptors##45575 |goto 30.06,28.37
+accept The Feltotem Menace##45587 |goto 30.06,28.37
+|only Hunter
+step
+Follow the path |goto 30.81,31.49 < 25 |only if walking
+Find Tugar Bloodtotem |q 45587/1 |goto 32.24,32.68
+|only Hunter
+step
+Stop Tugar Bloodtotem |q 45587/2 |goto 32.38,32.81
+|tip Wait for the dialogue to complete.
+|only Hunter
+step
+talk Navarrogg##117361
+turnin The Feltotem Menace##45587 |goto 31.30,25.14
+accept Destroying the Nest##45796 |goto 31.30,25.14
+|only Hunter
+step
+Follow the path |goto Highmountain/0 32.33,26.05 < 25 |only if walking
+Enter the cave |goto 33.60,28.08 < 15 |only if walking
+Enter Feltotem Caverns |q 45796/1 |goto Highmountain/40 49.44,12.85
+|only Hunter
+step
+kill Novice Warbull##118051+, Feltotem Warbull##119495+, Novice Acolyte##118050+
+Kill #15# Legion forces |q 45796/2 |goto 57.44,52.61
+kill Fel Worm Egg##118040+
+|tip These lay in clusters near Fel Worms.
+Destroy #50# Fel Worm eggs |q 45796/3 |goto 57.44,52.61
+|only Hunter
+step
+kill Fel Broodmaster##117984
+Slay the Fel Broodmaster |q 45796/4 |goto 73.74,59.89
+|only Hunter
+step
+Leave the cave |goto Highmountain/0 33.60,28.07 < 10 |only if walking
+Follow the path |goto 32.60,26.25 < 25 |only if walking
+turnin Destroying the Nest##45796 |goto 31.31,25.14
+accept A Triumphant Report##45841 |goto 31.31,25.14
+|only Hunter
+step
+talk Archmage Modera##90418
+turnin A Triumphant Report##45841 |goto Dalaran L/10 28.45,48.90
+accept A Gift From the Six##45842 |goto 28.45,48.90
+|only Hunter
+step
+Receive the Council's gift |q 45842/1 |goto 30.43,48.95
+|tip Stand in the circle and use the special action button that appears on-screen.
+|tip Stand still until the ritual completes.
+|only Hunter
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45842 |goto 28.44,48.93
+|only Hunter
+step
+To pursue another specialization's traits, click here |confirm |next "HSpecs" |only if not completedq(45842) or not completedq(45866) or not completedq(45865)
+To continue, click here |confirm |next "AfterSpecH" |only if not completedq(45842) or not completedq(45866) or not completedq(45865)
+Continuing |next "AfterSpecH" |only if completedq(45842) and completedq(45866) and completedq(45865)
+|only Hunter
+step
+label "Marks"
+talk Archmage Karlain##90463
+accept Marksmanship: The Twisted Twin##47039 |goto Dalaran L/10 28.61,47.78
+|tip This quest is geared towards the Marksmanship specialization.
+|tip You must have 35 artifact traits unlocked with this specialization to start this questline.
+|only Hunter
+step
+talk Karam Magespear##116175
+turnin Marksmanship: The Twisted Twin##47039 |goto 49.36,39.84
+accept Message from the Shadows##45185 |goto 49.36,39.84
+|only Hunter
+step
+click Wand of Simulated Life##3365
+collect Wand of Simulated Life##143534 |n
+click A Mysterious Note##3365
+collect A Mysterious Note##143494 |n
+Search for clues |q 45185/1 |goto 47.36,41.26
+|tip Go upstairs.
+|only Hunter
+step
+talk Karam Magespear##116175
+turnin Message from the Shadows##45185 |goto 49.36,39.80
+accept Secrets in the Underbelly##45187 |goto 49.36,39.80
+|only Hunter
+step
+Enter The Underbelly |goto Dalaran L/10 34.61,45.54 <20
+click Underbelly Lowlife##116323
+|tip You will need to click several of them
+collect Nethersworn Manifesto##143496 |n
+Search for clues |q 45187/1 |goto Dalaran L/11 54.18,62.44
+|only Hunter
+step
+talk Karam Magespear##116308
+turnin Secrets in the Underbelly##45187 |goto 52.15,58.48
+accept The Wisdom of the Council##45188 |goto 52.15,58.48
+|only Hunter
+step
+talk Archmage Karlain##90463
+turnin The Wisdom of the Council##45188 |goto Dalaran L/10 28.59,47.78
+accept Where it's Thinnest##45190 |goto 28.59,47.78
+|only Hunter
+step
+Cross the water |goto Broken Shore/0 52.02,25.15 < 20 |only if walking
+talk Karam Magespear##116175
+turnin Where it's Thinnest##45190 |goto 56.46,27.34
+accept Runes of Rending##45192 |goto 56.46,27.34
+|only Hunter
+step
+kill Thar'kith##34914
+Bypass the wards |q 45192/1 |goto 59.74,27.33
+|tip You will need to step on blue runes only.
+|tip Stepping on a purple rune will instantly kill you.
+|tip Stepping on a blue rune will change some nearby runes to blue or purple.
+|only Hunter
+step
+kill Thar'kith##116393
+Defeat Raest's minions |q 45192/2
+|only Hunter
+step
+talk Karam Magespear##116308
+turnin Runes of Rending##45192 |goto 59.79,27.44
+accept One Step Behind##45193 |goto 59.79,27.44
+|only Hunter
+step
+talk Archmage Khadgar##90417
+turnin One Step Behind##45193 |goto Dalaran L/10 28.45,48.35
+|only Hunter
+step
+talk Archmage Modera##90418
+accept A Gift From the Six##45866 |goto 28.45,48.90
+|only Hunter
+step
+Receive the Council's gift |q 45866/1 |goto 30.43,48.95
+|tip Stand in the circle and use the special action button that appears on-screen.
+|tip Stand still until the ritual completes.
+|only Hunter
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45866 |goto 28.44,48.93
+|only Hunter
+step
+To pursue another specialization's traits, click here |confirm |next "HSpecs" |only if not completedq(45842) or not completedq(45866) or not completedq(45865)
+To continue, click here |confirm |next "AfterSpecH" |only if not completedq(45842) or not completedq(45866) or not completedq(45865)
+Continuing |next "AfterSpecH" |only if completedq(45842) and completedq(45866) and completedq(45865)
+|only Hunter
+step
+label "Survival"
+talk Archmage Kalec##105081
+accept Survival: The Thieving Apprentice##47047 |goto Dalaran L/10 28.63,49.90
+|tip This quest is geared towards the Survival specialization.
+|tip You must have 35 artifact traits unlocked with this specialization to start this questline.
+|only Hunter
+step
+talk Joanna##115791
+turnin Survival: The Thieving Apprentice##47047 |goto Azshara/0 25.02,38.53
+accept Professionally Good Looking##44915 |goto 25.02,38.53
+|only Hunter
+step
+talk Lobos##115970
+collect Fanciful Hat##142374 |n
+Acquire the Fanciful Hat |q 44915/3 |goto 45.17,18.42
+|tip Challenge Lobos for his hat.
+|only Hunter
+step
+talk Raethas Dawnseer##115946
+collect Well-Tailored Robes##142372 |n
+Acquire the Well-Tailored Robes |q 44915/2 |goto 62.45,16.05
+|tip Challenge Raethas for his robes.
+|only Hunter
+step
+talk Phloem##115903
+collect Magnificent Mantle##142365 |n
+Acquire the Magnificent Mantle |q 44915/1 |goto 80.84,32.05
+|tip Challenge Phloem for her mantle.
+|only Hunter
+step
+turnin Professionally Good Looking##44915 |goto 25.02,38.53
+accept Order of Incantations##44920 |goto 25.02,38.53
+|only Hunter
+step
+click Arcane-Imbued Gem
+click Frost-Imbued Gem
+click Fire-Imbued Gem
+click Shadow-Imbued Gem
+|tip Click the gems in that exact order.
+|tip Not following the proper order will result in instant death.
+Solve the barrier puzzle |q 44920/2 |goto 25.15,38.49
+|only Hunter
+step
+Click the quest completion box that pops up
+turnin Order of Incantations##44920 |goto 25.15,38.49
+accept The Archmage Accosted##44924 |goto 25.15,38.49
+|only Hunter
+step
+kill Sanath Lim-yo##115860
+|tip Fight your way to the top of the tower.
+|tip You can avoid most of the mobs along the way.
+Confront Archmage Xylem |q 44924/1 |goto 25.21,38.03
+|only Hunter
+step
+click Xylem's Portal
+Follow through the portal |q 44924/2 |goto 25.20,37.97
+|only Hunter
+step
+talk Joanna##116048
+turnin The Archmage Accosted##44924 |goto 25.22,37.90
+accept A Portal Away##46177 |goto 25.22,37.90
+|only Hunter
+step
+talk Archmage Kalec##105081
+turnin A Portal Away##46177 |goto Dalaran L/10 28.61,49.90
+|only Hunter
+step
+talk Archmage Modera##90418
+accept A Gift From the Six##45865 |goto 28.43,48.91
+|only Hunter
+step
+Receive the Council's gift |q 45865/1 |goto 30.42,48.91
+|tip Stand in the circle and use the special action button that appears on-screen.
+|tip Stand still until the ritual completes.
+|only Hunter
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45865 |goto 28.44,48.91
+|only Hunter
+step
+To pursue another specialization's traits, click here |confirm |next "HSpecs" |only if not completedq(45842) or not completedq(45866) or not completedq(45865)
+To continue, click here |confirm |next "AfterSpecH" |only if not completedq(45842) or not completedq(45866) or not completedq(45865)
+Continuing |next "AfterSpecH" |only if completedq(45842) and completedq(45866) and completedq(45865)
+|only Hunter
+step
+label "AfterSpecH"
+talk Maiev Shadowsong##116576
+accept Champions of Legionfall##47137 |goto Broken Shore/0 44.54,63.52
+|only Hunter
+step
+talk Shandris Feathermoon##108455
+accept Devastating Effects##45551 |goto Trueshot Lodge/0 46.40,34.88
+|only Hunter
+step
+Follow the path |goto Suramar/0 63.30,43.86 < 25 |only if walking
+Follow the path |goto 58.98,47.36 < 25 |only if walking
+Follow the path |goto 55.76,49.13 < 25 |only if walking
+talk D'Bynn##117308
+turnin Devastating Effects##45551 |goto 52.22,48.85
+accept Soothing Wounds##45552 |goto 52.22,48.85
+|only Hunter
+step
+Forage for #10# Manaroot |q 45552/1 |goto 56.13,47.46
+|tip Use the extra action button on your screen to forage near Leyines.
+|tip Leylines are purple electrical lines on the ground.
+|only Hunter
+step
+click D'Bynn##117245
+Soothe D'Bynn's wounds |q 45552/2 |goto 52.22,48.85
+|only Hunter
+step
+talk D'Bynn##117308
+turnin Soothing Wounds##45552 |goto 52.22,48.85
+accept The Nighthuntress Beckons##45553 |goto 52.22,48.85
+|only Hunter
+step
+click D'Bynn##117245
+Ride D'Bynn |q 45553/1 |goto 52.22,48.85
+|only Hunter
+step
+talk Nighthuntress Syrenne##117246
+turnin The Nighthuntress Beckons##45553 |goto 57.47,44.78
+accept Taking Control##45554 |goto 57.47,44.78
+|only Hunter
+step
+Jump down |goto 58.58,44.70 < 15 |only if walking
+Follow the path |goto 59.32,47.51 < 25 |only if walking
+kill Torturer Relyn##117355
+collect 1 Relyn's Control Orb##143830 |q 45554/1 |goto 60.86,49.97
+|only Hunter
+step
+Follow the path |goto 58.97,47.29 < 25 |only if walking
+Follow the path |goto 58.40,45.76 < 25 |only if walking
+Follow the path |goto 58.45,43.34 < 25 |only if walking
+click Nightborne Cage##233629
+Free Nighthuntress Syrenne |q 45554/2 |goto 57.47,44.78
+|only Hunter
+step
+talk Nighthuntress Syrenne##117246
+turnin Taking Control##45554 |goto 57.47,44.78
+accept Felbound Beasts##45555 |goto 57.47,44.78
+|only Hunter
+stickystart "Trapper"
+step
+click Heartwood Doe##117397
+click Crimson Silkwing##117398
+Free #8# Felbound beasts |q 45555/1 |goto 60.27,43.85
+|only Hunter
+step
+label "Trapper"
+kill Felborne Trapper##117412+, Nightborne Trapper##100778+
+Kill #6# Nightborne and Felborne Trappers |q 45555/2 |goto 60.27,43.85
+|only Hunter
+step
+Follow the path |goto 58.45,45.59 < 20 |only if walking
+Follow the path |goto 58.43,43.24 < 20 |only if walking
+Follow the path up |goto 59.21,41.04 < 25 |only if walking
+talk Nighthuntress Syrenne##117246
+turnin Felbound Beasts##45555 |goto 55.79,42.21
+accept Ready to Strike##45556 |goto 55.79,42.21
+|only Hunter
+step
+Cross the bridge |goto Broken Shore/0 51.03,25.26 < 25 |only if walking
+talk Nighthuntress Syrenne##119097
+turnin Ready to Strike##45556 |goto 50.91,30.64
+accept Unnatural Consequences##45557 |goto 50.91,30.64
+accept Salvation##46060 |goto 50.91,30.64
+|only Hunter
+stickystart "Salve"
+Follow the path |goto 52.26,33.64 < 25 |only if walking
+Follow the path |goto 48.68,35.29 < 25 |only if walking
+Follow the path |goto 44.22,36.96 < 25 |only if walking
+Follow the path |goto 42.53,36.20 < 20 |only if walking
+kill Nighthuntress Lexera##117362
+Defeat Nighthuntress Lexera |q 45557/1 |goto 41.85,34.09
+|only Hunter
+step
+label "Salve"
+click Bloodbeak Owl##118671
+click Rockfang Howler##118664
+click Mountain Prowler##118674
+Manaroot Salve applied |q 46060/1 |goto 52.12,33.35
+|only Hunter
+step
+Follow the path |goto 43.90,37.04 < 25 |only if walking
+Follow the path |goto 48.92,35.46 < 25 |only if walking
+Follow the path |goto 52.26,33.07 < 25 |only if walking
+talk Nighthuntress Syrenne##119097
+turnin Unnatural Consequences##45557 |goto 50.92,30.64
+turnin Salvation##46060 |goto 50.92,30.64
+accept Secured Surroundings##46235 |goto 50.92,30.64
+|only Hunter
+step
+talk Nighthuntress Syrenne##117246
+turnin Secured Surroundings##46235 |goto 44.77,61.13
+accept Champion: Nighthuntress Syrenne##46048 |goto 44.77,61.13
+|only Hunter
+step
+talk Maiev Shadowsong##116576
+turnin Champions of Legionfall##47137 |goto Broken Shore/0 44.54,63.52
+|only Hunter
+step
+talk Tactician Tinderfell##103023
+accept Further Advancement##46783 |goto Trueshot Lodge/0 42.80,46.92
+|only Hunter
+step
+talk Survivalist Bahn##108050
+Talk to Survivalist Bahn |q 46783/1 |goto 58.66,51.16
+|only Hunter
+step
+talk Tactician Tinderfell##103023
+turnin Further Advancement##46783 |goto 42.80,46.92
+|only Hunter
+step
+talk Archmage Khadgar##116302
+accept Shard Times##46251 |goto Broken Shore/0 44.74,63.27
+|only Hunter
+step
+Collect #2500# Nethershards |q 46251/1 |goto 44.74,63.27
+|tip Nethershards can be obtained by looting rares, treasures, and completing world quests.
+|only Hunter
+step
+talk Archmage Khadgar##116302
+turnin Shard Times##46251 |goto 44.74,63.27
+|only Hunter
+step
+You must complete the Broken Shore campaign to continue
+Click here to load the "Broken Shore Campaign" guide |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\Broken Shore Campaign"
+Breach the Tomb |q 46246 |future
+|tip Use the Broken Shore Campaign guide to accomplish this.
+|only Hunter
+step
+talk Nimi Brightcastle##117810
+accept A Golden Ticket##46336 |goto Broken Shore/0 43.76,63.40
+|only Hunter
+step
+click Golden Letter
+|tip It's on the corner of the table.
+turnin A Golden Ticket##46336 |goto Trueshot Lodge/0 42.80,45.61
+accept Night of the Wilds##46337 |goto 42.80,45.61
+|only Hunter
+step
+talk Herald of Odyn##119953
+Tell her: _"I am ready to attend the feast"_
+Herald taken to the Eternal Hunt |q 46337/1 |goto 49.72,36.53
+|only Hunter
+step
+kill Habrok##119800
+|tip Your pet's Growl ability will not work on this beast.
+Hunt the owl spirit |scenariogoal 1/35800 |q 46337 |goto Fields of the Eternal Hunt/0 26.88,48.78
+|only Hunter
+step
+kill Ketlingr##119798
+|tip Your pet's Growl ability will not work on this beast.
+|tip Ketlingr will Pounce on your location. Start moving when the cast starts.
+|tip Don't stand in front of Ketlingr.
+Hunt the cat spirit |scenariogoal 1/35799 |q 46337 |goto 34.07,60.46
+|only Hunter
+step
+Cross the bridge |goto 41.90,68.38 < 15 |walk
+kill Garos##119799
+|tip Your pet's Growl ability will not work on this beast.
+|tip Interrupt Acid Spit.
+|tip Garos will summon several small worms during Wild Spawn.
+Hunt the worm spirit |scenariogoal 1/35794 |q 46337 |goto 64.59,66.05
+|only Hunter
+step
+Follow the path |goto 54.01,47.53 < 25 |walk
+kill Hyrtir##119795
+|tip Your pet's Growl ability will not work on this beast.
+|tip Move away during Wild Bellow.
+Hunt the stag spirit |scenariogoal 1/35790 |q 46337 |goto 64.28,27.46
+|only Hunter
+step
+kill Vetholnir##119797
+|tip The hawk spirit flies around the area.
+|tip Your pet's Growl ability will not work on this beast.
+|tip Run around during Focused Gusts.
+|tip Interrupt Gusting Winds.
+|tip Vetholnir will summon several small worms during Wild Spawn.
+Hunt the hawk spirit |scenariogoal 2/35801 |q 46337 |goto 53.03,44.63
+|only Hunter
+step
+Cross the bridge |goto 44.64,65.46 < 15 |walk
+kill Fereki##119796
+|tip Your pet's Growl ability will not work on this beast.
+|tip Move away during Wild Bellow.
+|tip Don't stand in front of Fereki.
+|tip Fereki will Pounce on your location. Start moving when the cast starts.
+Hunt the wolf spirit |scenariogoal 2/36338 |q 46337 |goto 27.80,83.21
+|only Hunter
+step
+kill Haukenulfnir##119914
+|tip Your pet's Growl ability will not work on this beast.
+|tip Interrupt Gusting Winds.
+|tip Haukenulfnir will Pounce on your location. Start moving when the cast starts.
+|tip Move away during Wild Bellow.
+|tip Tornados spawned by Wild Winds will knock you back. Avoid them.
+Defeat the wolfhawk |scenariogoal 3/35803 |q 46337 |goto 28.01,66.39
+|only Hunter
+step
+talk Odyn##119665
+Tell him: _"Revel the night away and awake in Trueshot Lodge"_
+Revel the night away |scenariogoal 4/36349 |q 46337 |goto 36.56,41.21
+|only Hunter
+step
+click Empty Saddle
+turnin Night of the Wilds##46337 |goto Trueshot Lodge/0 44.23,21.44
+|only Hunter
+step
+talk Archmage Khadgar##116302
+accept Seeking Lost Knowledge##47067 |goto Broken Shore/0 44.73,63.27
+|only Mage
+step
+Follow the path |goto 68.70,46.97 < 25 |only if walking
+Follow the path |goto 66.36,42.42 < 25 |only if walking
+Follow the path |goto 67.77,37.75 < 30 |only if walking
+Follow the path up |goto 71.44,35.28 < 15 |only if walking
+Follow the path |goto 71.22,41.78 < 25 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/2 |goto 71.87,40.67
+|only Mage
+step
+Follow the path |goto 72.41,36.49 < 15 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/3 |goto 75.62,36.27
+|only Mage
+step
+Jump Down here |goto 77.81,37.88 < 10 |only if walking
+Follow the path |goto 79.71,42.09 < 20 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/1 |goto 82.57,45.09
+|only Mage
+step
+talk Archmage Khadgar##116302
+turnin Seeking Lost Knowledge##47067 |goto 44.73,63.28
+accept Delivering Lost Knowledge##47070 |goto 44.73,63.28
+|only Mage
+step
+talk Edirah##110624
+turnin Delivering Lost Knowledge##47070 |goto Hall of the Guardian/2 63.93,50.05
+accept Using Lost Knowledge##46940 |goto Hall of the Guardian/2 63.93,50.05
+|only Mage
+step
+talk Edirah##110624
+Tell her _"Let's continue research on my artifact"_
+Start a Research Work Order |q 46940/1 |goto 63.93,50.05
+|tip Each work order costs 500 Order Resources.
+|only Mage
+step
+talk Edirah##110624
+turnin Using Lost Knowledge##46940 |goto 63.93,50.05
+|only Mage
+step
+talk Archmage Khadgar##116302
+accept The Broken Shore: Investigating the Legion##46765 |goto Broken Shore/0 44.73,63.29
+|only Mage
+step
+Follow the path |goto 46.86,58.63 < 25 |only if walking
+Follow the path |goto 51.48,54.17 < 30 |only if walking
+kill Toiling Collector##119187+
+|tip This is not a 100 percent chance to drop.
+collect Mysterious Runebound Scroll##147430 |q 46765/1 |goto Broken Shore/0 54.55,56.57
+|only Mage
+step
+talk Archmage Khadgar##116302
+turnin The Broken Shore: Investigating the Legion##46765 |goto Broken Shore/0 44.73,63.29
+accept The Council's Call##47000 |goto Broken Shore/0 44.73,63.29
+|tip You need 35 traits in at least one spec to accept this quest.
+|only Mage
+step
+talk Archmage Khadgar##90417
+turnin The Council's Call##47000 |goto Dalaran L/10 28.68,48.48
+accept Away From Prying Eyes##44782 |goto Dalaran L/10 28.68,48.48
+|only Mage
+step
+Enter the Portal |q 44782/1 |goto Dalaran L/10 24.76,48.15
+|only Mage
+step
+talk Archmage Modera##115465
+turnin Away From Prying Eyes##44782 |goto 22.50,39.07
+accept In Dire Need##44821 |goto 22.50,39.07
+|only Mage
+step
+Watch the Dialogue
+Hear the Council's Plea |q 44821/1 |goto 23.03,39.77
+|only Mage
+step
+talk Archmage Modera##115465
+turnin In Dire Need##44821 |goto 22.38,39.71
+|only Mage
+step
+label "Mage Artifact Options"
+Click here if you would like to do the Fire Artifact upgrade quest line |next "Fire Artifact Upgrade"
+Click here if you would like to do the Frost Artifact upgrade quest line |next "Frost Artifact Upgrade"
+Click here if you would like to do the Arcane Artifact upgrade quest line |next "Arcane Artifact Upgrade"
+confirm
+|only Mage
+step
+label "Fire Artifact Upgrade"
+talk Archmage Modera##115465
+accept Fire: The Folly of Levia Laurence##47055 |goto Dalaran L/10 22.39,39.69
+|only Mage
+step
+talk Professor Pallin##92195
+Tell him "Do you know where I can find Levia Laurence?"
+Ask about Levia at the Scribe's Sacellum |q 47055/1 |goto 41.40,37.18
+|only Mage
+step
+talk Icks##97331
+Tell him "Do you know where I can find Levia Laurence?"
+Ask about Levia at the Militant Mystic |q 47055/2 |goto 49.04,73.29
+|only Mage
+step
+talk Amisi Azuregaze##96806
+Tell her "Do you know where I can find Levia Laurence?"
+Ask about Levia at the Legerdemain Lounge |q 47055/3 |goto 49.71,39.88
+|only Mage
+step
+Run up the stairs |goto 49.92,39.46
+click Levia's Research Journal
+Investigate Levia's belongings |q 47055/4 |goto 46.49,40.04
+|only Mage
+step
+talk Archmage Modera##90418
+turnin Fire: The Folly of Levia Laurence##47055 |goto 28.51,48.90
+accept Bargaining with Shadows##46327 |goto 28.51,48.90
+|only Mage
+step
+talk Ritssyn Flamescowl##116714
+turnin Bargaining with Shadows##46327 |goto Dalaran L/12 53.10,59.42
+accept The Acolyte Imperiled##45916 |goto Dalaran L/12 53.10,59.42
+|only Mage
+step
+Watch the Dialogue
+Investigate Levia's Ritual |q 45916/1 |goto 57.70,72.15
+|only Mage
+step
+Slay all of the Imps that come out of the side portals
+Defend Ritssyn |q 45916/2 |goto 57.70,72.15
+|only Mage
+step
+talk Ritssyn Flamescowl##116714
+turnin The Acolyte Imperiled##45916 |goto 57.70,72.15
+accept Dabbling in the Demonic##45125 |goto 57.70,72.15
+|only Mage
+step
+Click the _Taam_ Rune to activate it
+Click the _Talar_ Rune to activate it
+Click the _Dregla_ Rune to activate it
+talk Ritssyn Flamescowl##116714
+Tell him "The runes are activated. Stabilize the portal."
+Stabilize the Portal |q 45125/1 |goto 57.36,72.21
+|only Mage
+step
+talk Ritssyn Flamescowl##116714
+turnin  Dabbling in the Demonic##45125 |goto 57.70,72.15
+accept Following the Scent##45917 |goto 57.70,72.15
+|only Mage
+step
+click Demonic Gateway |goto 57.70,72.15
+talk Fhambar##118450
+Tell him "Go find Levia, Fhambar!"
+Speak to Fhambar |q 45917/1 |goto Azsuna/0 30.95,51.86
+|only Mage
+step
+Follow Fhambar around
+|tip Fhember will periodically stop and find nothing, keep close to him.
+Find Levia Laurance |q 45917/2 |goto Azsuna/0 25.90,57.36
+|only Mage
+step
+talk Levia Laurence##116189
+turnin Following the Scent##45917 |goto 25.68,57.73
+accept Unlikely Seduction##45126 |goto 25.68,57.73
+|only Mage
+step
+kill Agatha##118520 |q 45126/1 |goto 25.68,57.73
+|only Mage
+step
+talk Levia Laurence##116189
+turnin Unlikely Seduction##45126 |goto 25.68,57.73
+accept Fel-Crossed Lovers##45127 |goto 25.68,57.73
+|only Mage
+step
+talk Archmage Modera##90418
+turnin Fel-Crossed Lovers##45127 |goto Dalaran L/10 28.62,48.86
+accept A Gift From the Six##45861 |goto Dalaran L/10 28.61,48.90
+|only Mage
+step
+Enter the Blue Circle on the ground
+Use the extra action ability "Aquire the Gift"
+Receive the Council's gift |q 45861/1 |goto 30.42,48.91
+|only Mage
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45861 |goto Dalaran L/10 28.61,48.90
+|only Mage
+step
+To apply your new points you will need to go back to your Alter within your Order Hall
+confirm
+|only Mage
+step
+Click here if you would like to do another specs Artifact Upgrade quest line |next "Mage Artifact Options"
+|tip To start another quest line you must have at least 35 traits in the weapons spec.
+Click here if you would NOT like to do another specs Artifact Upgrade quest line |next "Mage 7.2 conti"
+confirm
+|only Mage
+step
+label "Frost Artifact Upgrade"
+talk Archmage Karlain##90463
+accept Frost: The Twisted Twin##45182 |goto Dalaran L/10 28.73,47.91
+|only Mage
+step
+talk Karam Magespear##116175
+turnin Frost: The Twisted Twin##45182 |goto 49.26,39.73
+accept Message from the Shadows##45185 |goto 49.26,39.73
+|only Mage
+step
+Run up the stairs |goto 50.06,39.53
+click A Mysterious Note
+collect A Mysterious Note##143494 |q 45185/1 |goto 46.98,39.13
+|only Mage
+step
+Run down the stairs |goto 49.47,41.12
+talk Karam Magespear##116175
+turnin Message from the Shadows##45185 |goto 49.26,39.73
+accept Secrets in the Underbelly##45187 |goto 49.26,39.73
+|only Mage
+step
+Run down the stairs into the Underbelly |goto 59.56,47.35
+Talk to the Underbelly Lowlifes all around this area
+kill Nethersworn Assassin##116322+, Underbelly Lowlife##116323+
+collect Nethersworn Manifesto##143496 |q 45187/1 |goto Dalaran L/11 53.17,60.93
+|only Mage
+step
+Next to you
+talk Karam Magespear##116308
+turnin Secrets in the Underbelly##45187
+accept The Wisdom of the Council##45188
+|only Mage
+step
+Exit the Underbelly |goto Dalaran L/11 76.12,65.45
+talk Archmage Karlain##90463
+turnin The Wisdom of the Council##45188 |goto Dalaran L/10 28.66,48.06
+accept Where it's Thinnest##45190 |goto Dalaran L/10 28.66,48.06
+|only Mage
+step
+Cross the water |goto Broken Shore/0 52.84,24.06
+talk Karam Magespear##116175
+turnin Where it's Thinnest##45190 |goto 56.45,27.34
+accept Runes of Rending##45192 |goto 56.45,27.34
+|only Mage
+step
+Step on the blue runes, each rune creates more blue runes
+Get to the end of the path using these runes
+Bypass the wards |q 45192/1 |goto 58.01,27.36
+|only Mage
+step
+kill Thar'kith##116393
+Defeat Raest's minions |q 45192/2 |goto 59.54,27.32
+|only Mage
+step
+talk Karam Magespear##116308
+turnin Runes of Rending##45192 |goto 59.78,27.40
+accept One Step Behind##45193 |goto 59.78,27.40
+|only Mage
+step
+talk Archmage Khadgar##90417
+turnin One Step Behind##45193 |goto Dalaran L/10 28.65,48.40
+|only Mage
+step
+talk Archmage Modera##90418
+accept A Gift From the Six##45866 |goto 28.51,48.91
+|only Mage
+step
+Enter the Blue Circle on the ground
+Use the extra action ability "Aquire the Gift"
+Receive the Council's gift |q 45866/1 |goto 30.42,48.91
+|only Mage
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45866 |goto Dalaran L/10 28.61,48.90
+|only Mage
+step
+To apply your new points you will need to go back to your Alter within your Order Hall
+confirm
+|only Mage
+step
+Click here if you would like to do another specs Artifact Upgrade quest line |next "Mage Artifact Options"
+|tip To start another quest line you must have at least 35 traits in the weapons spec.
+Click here if you would NOT like to do another specs Artifact Upgrade quest line |next "Mage 7.2 conti"
+confirm
+|only Mage
+step
+label "Arcane Artifact Upgrade"
+talk Archmage Khadgar##90417
+accept Arcane: Fate of the Tideskorn##45482 |goto Dalaran L/10 28.59,48.39
+|only Mage
+step
+talk Huntsman Slodi##119230
+Tell him "I'm searching for the vrykul mentioned in these scrolls."
+Speak with Huntsman Slodi |q 45482/1 |goto Suramar/0 65.37,50.80
+|only Mage
+step
+Follow the path |goto 65.79,51.16 |only if walking
+Enter the building |goto 70.45,49.78 |walk
+talk Priestess Bryna##119232
+Tell her "Skodl mentioned you could help find the vrykul mentioned in these scrolls."
+Speak with Priestess Bryna |q 45482/2 |goto 70.51,49.97
+|only Mage
+step
+Enter the building and run up the stairs |goto 71.57,49.77
+talk Yngvild the Watcher##119233
+Tell her "Have any vrykul come through here that struck you as odd?"
+Speak with Yngvild the Watcher |q 45482/3 |goto 71.49,49.56
+|only Mage
+step
+Follow the shore |goto 72.99,49.80 |only if walking
+talk Sigryn##116568
+turnin Arcane: Fate of the Tideskorn##45482 |goto 76.25,50.03
+accept The Reluctant Queen##45486 |goto 76.25,50.03
+|only Mage
+step
+talk Sigryn##116568
+Tell her "I'm ready."
+Speak to Sigryn in Valdisdall |q 45486/1 |goto Stormheim/0 59.67,50.84
+|only Mage
+step
+Follow Sigryn, she will follow the road
+Defeat the Hidden Assasins that appear along the way
+|tip Stay close to her.
+Escort Sigryn to Skold-Ashil |q 45486/2 |goto 62.37,68.06
+|only Mage
+step
+talk Priestess Halla##117107
+Tell her "This vrykul is the heir to the God-King. She seeks an audience with Eyir."
+Speak with Priestess Halla |q 45486/3 |goto 62.77,68.10
+|only Mage
+step
+Watch the Dialogue
+Gain an audience with Eyir |q 45486/4 |goto Stormheim/28 64.23,51.05
+|only Mage
+step
+talk Eyir##93628
+turnin The Reluctant Queen##45486 |goto 66.25,51.18
+accept To Silence the Bonespeakers##45522 |goto 66.25,51.18
+|only Mage
+step
+Follow the path |goto Stormheim/0 61.30,52.44 < 10 |only if walking
+Continue following the path |goto 65.85,49.78 < 10 |only if walking
+Follow the path down |goto 68.16,47.49 < 10 |only if walking
+Follow the stairs down |goto 70.09,44.39 < 10 |only if walking
+Defeat Runeseer Faljar |q 45522/1 |goto 72.83,40.49
+|only Mage
+step
+talk Runeseer Faljar##117199
+turnin To Silence the Bonespeakers##45522 |goto 73.25,39.91
+|only Mage
+step
+talk Sigryn##116568
+accept To Tame the Drekirjar##45523 |goto 72.90,40.43
+|only Mage
+step
+Use your Grapple ability here to get over the wall |goto 40.14,66.12 < 10 |only if walking
+Follow the path up |goto 42.21,66.76 < 10 |only if walking
+Continue following the path up |goto 43.78,69.09 < 10 |only if walking
+Enter the building |goto 42.09,71.00 < 5 |walk
+Watch the Dialogue
+Defeat Jarl Velbrand |q 45523/1 |goto 41.36,71.72
+|only Mage
+step
+talk Jarl Velbrand##117227
+turnin To Tame the Drekirjar##45523 |goto 41.15,71.91
+|only Mage
+step
+talk Sigryn##116568
+accept The Forgotten Heir##45524 |goto 41.38,71.67
+|only Mage
+step
+Follow the path |goto 79.21,65.11 < 10 |only if walking
+Follow the path down |goto 78.48,69.21 < 10 |only if walking
+Follow the Shore |goto 78.84,76.51 < 10 |only if walking
+Cross the water |goto 76.79,84.56 < 10 |only if walking
+Follow the path up |goto 73.40,87.73 < 10 |only if walking
+Enter the cave |goto 73.75,86.14 |walk
+Watch the Dialogue
+Find Torvald |q 45524/1 |goto Stormheim/0 74.19,85.03
+|only Mage
+step
+kill Torvald##116497 |q 45524/2 |goto 74.19,85.03
+|only Mage
+step
+talk Sigryn##116568
+turnin The Forgotten Heir##45524 |goto 74.19,85.03
+accept Unanswered Questions##45525 |goto 74.19,85.03
+|only Mage
+step
+Follow the path down |goto 67.10,62.21 < 10 |only if walking
+Continue following the path |goto 64.05,63.39 < 10 |only if walking
+Enter the building |goto 62.73,68.10 |walk
+talk Sigryn##116568
+Tell her "I'm ready."
+Watch the Dialogue
+Speak to Sigryn |q 45525/1 |goto Stormheim/28 65.79,50.55
+|only Mage
+step
+talk Eyir##93628
+turnin Unanswered Questions##45525 |goto 65.79,50.55
+accept The Gates Are Closed##46340 |goto 65.79,50.55
+|only Mage
+step
+talk Archmage Khadgar##90417
+turnin The Gates Are Closed##46340 |goto Dalaran L/10 28.55,48.35
+|only Mage
+step
+talk Archmage Modera##90418
+accept A Gift From the Six##45862 |goto 28.45,48.91
+|only Mage
+step
+Enter the Blue Circle on the ground
+Use the extra action ability "Aquire the Gift"
+Receive the Council's gift |q 45862/1 |goto 30.42,48.91
+|only Mage
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45862 |goto 28.45,48.91
+|only Mage
+step
+To apply your new points you will need to go back to your Alter within your Order Hall
+confirm
+|only Mage
+step
+Click here if you would like to do another specs Artifact Upgrade quest line |next "Mage Artifact Options"
+|tip To start another quest line you must have at least 35 traits in the weapons spec.
+Click here if you would NOT like to do another specs Artifact Upgrade quest line |next "Mage 7.2 conti"
+confirm
+|only Mage
+step
+label "Mage 7.2 conti"
+talk Maiev Shadowsong##116576
+accept Defending Broken Isles##46247 |goto Broken Shore/0 44.54,63.52
+|only Mage
+step
+Complete a Legion Assault |q 46247/1 |goto 44.54,63.52
+|tip These seem to happen at least 1 time a day lasting for about 5 to 6 hours each.
+|only Mage
+step
+talk Maiev Shadowsong##116576
+turnin Defending Broken Isles##46247 |goto 44.54,63.52
+|only Mage
+step
+talk Maiev Shadowsong##116576
+accept Champions of Legionfall##47137 |goto 44.56,63.48
+|only Mage
+step
+accept An Urgent Situation##45437 |goto Hall of the Guardian/1 57.53,87.21
+|only Mage
+step
+talk Aethas Sunreaver##118242
+turnin An Urgent Situation##45437 |goto Hall of the Guardian/2 71.82,62.42
+accept Backup Plan##44766 |goto Hall of the Guardian/2 71.82,62.42
+|only Mage
+step
+talk Archmage Kalec##108247
+turnin Backup Plan##44766 |goto 56.14,38.21
+accept The Vault of the Tirisgarde##46335 |goto 56.14,38.21
+|only Mage
+step
+click Nightborne Soulstone
+collect Nightborne Soulstone##146409 |q 46335/5 |goto 72.81,62.89
+|only Mage
+step
+click Twilight Reliquary
+collect Twilight Device##146403 |q 46335/2 |goto 49.23,59.84
+|only Mage
+step
+click Cache of the Sin'dorei
+collect Coronet of the Lu'minellia##146404 |q 46335/3 |goto Hall of the Guardian/1 58.03,67.58
+|only Mage
+step
+click Crystallized Sillithid Essence
+collect Crystallized Silithid Essence##146405 |q 46335/4 |goto 61.94,43.21
+|only Mage
+step
+click Erno's Enigma
+collect Erno's Enigma##146402 |q 46335/1 |goto 81.66,26.51
+|only Mage
+step
+talk Archmage Kalec##108247
+turnin The Vault of the Tirisgarde##46335 |goto Hall of the Guardian/2 56.14,38.21
+accept A Creative Solution##46338 |goto Hall of the Guardian/2 56.14,38.21
+|only Mage
+step
+talk Ari##109307
+Ask her "Can you think of a way to safely us the Nightborne Soulstone?"
+Ask her "Where would I find such a thing?"
+Talk to Ari |q 46338/1 |goto Hall of the Guardian/1 37.32,48.47
+|only Mage
+step
+talk Aethas Sunreaver##118242
+turnin A Creative Solution##46338 |goto Hall of the Guardian/2 72.11,62.58
+accept The Nightborne Apprentice##45207 |goto Hall of the Guardian/2 72.11,62.58
+|only Mage
+step
+Follow the path |goto Suramar/0 61.76,43.80 < 10 |only if walking
+Follow the path |goto Suramar/0 59.66,41.49 < 10 |only if walking
+Follow the path up |goto Suramar/0 56.63,41.96 < 10 |only if walking
+talk Arcanist Ryanna##121357
+turnin The Nightborne Apprentice##45207 |goto 55.82,42.02
+accept Retaliation##46705 |goto 55.82,42.02
+accept Keymaster Orlis##46339 |goto 55.82,42.02
+|only Mage
+stickystart "Felborne Spellbreaker"
+step
+kill Orlis##115469
+|tip He pats around this area.
+collect Unusual Crystal##142241 |q 46339/1 |goto 54.31,39.70
+|only Mage
+step
+label "Felborne Spellbreaker"
+kill Felborne Spellbreaker##115519+, Fel-Powered Sentinel##115480+
+kill 7 Felborne Insurgents |q 46705/1 |goto 54.24,39.21
+|only Mage
+step
+kill Arcanist Ryanna##121358
+turnin Retaliation##46705 |goto 54.56,39.17
+turnin Keymaster Orlis##46339 |goto 54.56,39.17
+accept Into the Hornet's Nest##46345 |goto 54.56,39.17
+|only Mage
+step
+click Nightborne Teleporter
+Use the Nightborne Teleporter |q 46345/1 |goto 54.34,39.24
+|only Mage
+step
+talk Arcanist Ryanna##116321
+turnin Into the Hornet's Nest##46345 |goto Suramar/39 47.33,23.39
+accept Nyell's Workshop##44768 |goto Suramar/39 47.33,23.39
+accept Secrets of the Shal'dorei##44770 |goto Suramar/39 47.33,23.39
+|only Mage
+stickystart "Nightborne Scrolls"
+step
+Follow the stairs down |goto 36.12,46.29
+Continue following the stairs down |goto 37.63,69.52
+kill Master Artificer Nyell##115518 |q 44768/1 |goto 40.72,78.83
+collect Nighborne Construct Progenitor##142212 |q 44768/2 |goto 40.72,78.83
+|only Mage
+step
+label "Nightborne Scrolls"
+click Nightborne Scroll
+|tip These can be found on the ground all around this area.
+collect 8 Ancient Shal'dorei Scroll##142211 |q 44770/1
+|only Mage
+step
+Follow the stairs up |goto 33.25,55.33
+Continue following the stairs up |goto 43.90,40.67
+talk Arcanist Ryanna##116321
+turnin Nyell's Workshop##44768 |goto Suramar/39 47.33,23.39
+turnin Secrets of the Shal'dorei##44770 |goto Suramar/39 47.33,23.39
+accept Keep it Secret, Keep it Safe##46351 |goto Suramar/39 47.33,23.39
+|only Mage
+step
+talk Ari##109307
+turnin Keep it Secret, Keep it Safe##46351 |goto Hall of the Guardian/2 72.07,60.89
+|only Mage
+step
+Watch the Dialogue
+talk Aethas Sunreaver##118242
+accept Redundancy##45251 |goto 72.18,62.79
+|only Mage
+step
+click Portal to the Broken Shore |goto 72.60,58.32
+talk Aethas Sunreaver##117331
+turnin Redundancy##45251 |goto Broken Shore/0 49.24,18.66
+accept Lady Remor'za##45614 |goto Broken Shore/0 49.24,18.66
+accept Shield Amplification##45586 |goto Broken Shore/0 49.24,18.66
+|only Mage
+stickystart "Nightborne Soulstone"
+step
+kill Lady Remor'za##117328 |q 45614/1 |goto 41.56,15.57
+|only Mage
+step
+label "Nightborne Soulstone"
+Follow the path |goto 46.27,16.28
+Follow the stairs down |goto 45.79,19.54
+Slay any and all enemies in this area
+Use the Nightborne Soulstone |use Nightborne Soulstone##143795
+Reinforce the Soulstone Shield |q 45586/1 |goto 42.64,17.39
+|only Mage
+step
+Next to you
+talk Aethas Sunreaver##119001
+turnin Lady Remor'za##45614
+turnin Shield Amplification##45586
+accept Arming Dalaran##46000
+|only Mage
+step
+talk Aethas Sunreaver##117331
+Tell him "I'm ready to go. Summon a portal please."
+Talk to Aethas |q 46000/1 |goto 40.98,15.82
+|only Mage
+step
+click the Portal to the Dalaran Spire |goto 40.96,15.87
+Take the portal |q 46000/2
+|only Mage
+step
+click the purple crystal
+Activate the Nightborne Soulstone |q 46000/3 |goto Dalaran L/10 26.93,52.61
+|only Mage
+step
+talk Aethas Sunreaver##118242
+turnin Arming Dalaran##46000 |goto 27.16,51.68
+accept Return of the Archmage##46290 |goto 27.16,51.68
+|only Mage
+step
+talk Meryl Felstorm##109222
+turnin Return of the Archmage##46290 |goto Hall of the Guardian/2 72.63,61.32
+|only Mage
+step
+talk Aethas Sunreaver##117497
+accept Champion: Aethas Sunreaver##46043 |instant |goto Hall of the Guardian/2 72.14,62.74
+Recruit a Legionfall Champion |q 47137/1 |goto Hall of the Guardian/2 72.14,62.74
+|only Mage
+step
+talk Archmage Melis##108515
+accept Further Advancement##46782 |goto Hall of the Guardian/1 80.57,63.07
+|only Mage
+step
+talk Chronicler Elrianne##108331
+Talk to Chronicler Elrianne |q 46782/1 |goto 74.93,29.21
+|only Mage
+step
+Choose either the Roster of Champions or Guardians of the Kirin Tor
+|tip This reasearch costs 10,000 Order Resources and takes 1 day to complete.
+confirm
+|only Mage
+step
+talk Archmage Melis##108515
+turnin Further Advancement##46782 |goto Hall of the Guardian/1 80.57,63.07
+|only Mage
+step
+talk Maiev Shadowsong##116576
+turnin Champions of Legionfall##47137 |goto Broken Shore/0 44.56,63.53
+|only Mage
+step
+talk The Great Akazamzarak##103092
+accept Finders Keepers##45615 |goto Hall of the Guardian/1 81.38,59.91
+|only Mage
+step
+click Arcane Dust
+Clean the First Pile of Arcane Dust |q 45615/1 |count 1 |goto 78.74,66.14
+|only Mage
+step
+click Arcane Dust
+Clean the First Pile of Arcane Dust |q 45615/1 |count 2 |goto 75.83,62.51
+|only Mage
+step
+click Arcane Dust
+Clean the First Pile of Arcane Dust |q 45615/1 |count 3 |goto 72.08,59.07
+|only Mage
+step
+click Arcane Dust
+Clean the First Pile of Arcane Dust |q 45615/1 |count 4 |goto 89.04,51.26
+|only Mage
+step
+click Arcane Dust
+Clean the First Pile of Arcane Dust |q 45615/1 |count 5 |goto 73.75,30.70
+|only Mage
+step
+click Arcane Dust
+Clean the First Pile of Arcane Dust |q 45615/1 |count 6 |goto 59.46,40.14
+|only Mage
+step
+click Arcane Dust
+Clean the First Pile of Arcane Dust |q 45615/1 |count 7 |goto 45.84,31.81
+|only Mage
+step
+click Arcane Dust
+Clean the First Pile of Arcane Dust |q 45615/1 |count 8 |goto 31.74,37.86
+|only Mage
+step
+talk The Great Akazamzarak##103092
+turnin Finders Keepers##45615 |goto Hall of the Guardian/1 81.38,59.91
+accept Servant to No One##45630 |goto Hall of the Guardian/1 81.38,59.91
+|only Mage
+step
+Target any player in Dalaran and use your extra action button
+Test Servants |q 45630/1 |goto Dalaran L/10 68.17,44.01
+|only Mage
+step
+talk The Great Akazamzarak##103092
+turnin Servant to No One##45630 |goto Hall of the Guardian/1 81.38,59.91
+accept Nothing Up My Sleeve##46722 |goto Hall of the Guardian/1 81.38,59.91
+|only Mage
+step
+Watch the Dialgoue
+click Akazamzarak's Hat
+Perform Akazamzarak's trick |q 46722/1 |goto 81.38,59.91
+|only Mage
+step
+talk The Great Akazamzarak##103092
+turnin Nothing Up My Sleeve##46722 |goto Hall of the Guardian/1 81.38,59.91
+accept Down the Rabbit Hole##46723 |goto Hall of the Guardian/1 81.38,59.91
+|only Mage
+step
+click Akazamzarak's Hat |goto 81.38,59.91
+Enter Akazamzarak's Hat |scenariostart |q 46723
+|only Mage
+step
+Run toward the Hungry Wolf on the other side of the room |scenariogoal 1/35881 |q 46723
+|only Mage
+step
+kill Hungry Wolf##120185 |scenariogoal 2/35882 |q 46723
+|only Mage
+step
+Leave Akazamzarak's Hat |scenariogoal 3/35883 |q 46723
+|only Mage
+step
+talk The Great Akazamzarak##103092
+turnin Down the Rabbit Hole##46723 |goto Hall of the Guardian/1 81.38,59.91
+accept Champion: The Great Akazamzarak##46724 |instant |goto Hall of the Guardian/1 81.38,59.91
+|only Mage
+step
+You must first complete the Broken Shore Campaign quest line before being able to start the quest line to obtain your Class Hall mount
+Check out our Broken Shore Campaign guide to accomplish this |confirm |or |next "Zygor's Leveling Guides\\Legion (100-110)\\Broken Shore Campaign"
+Click here to proceed |confirm
+|only if not achieved(11546)
+|only Mage
+step
+talk Invoker Threadgold##117770
+accept Avocation of Antonidas##45844 |goto Broken Shore/0 45.19,61.79
+|only Mage
+step
+talk Archmage Kalec##108247
+turnin Avocation of Antonidas##45844 |goto Hall of the Guardian/2 56.42,38.32
+accept Burning Within##45845 |goto Hall of the Guardian/2 56.42,38.32
+accept Chilled to the Core##45846 |goto Hall of the Guardian/2 56.42,38.32
+accept Close to Home##45847 |goto Hall of the Guardian/2 56.42,38.32
+|only Mage
+step
+talk Archmage Celindra##96786
+Tell her: _"I'm looking for Antonidas' arcane disc piece. Do you have it?"_
+Speak with Archmage Celindra |goto Dalaran L/10 56.09,47.02
+click Tri-Disc of the Arcane
+collect Tri-Disc of the Arcane##143838 |q 45847/1 |goto Dalaran L/10 53.85,47.38
+|only Mage
+step
+talk Archmage Khadgar##90417
+Tell him _"Khadgar, I'm looking for a piece of a disc that Antonidas gave you a long time ago."_
+Speak with Archmage Khadgar |q 45845/1 |goto Dalaran L/10 28.56,48.39
+|only Mage
+step
+click the Portal to Karazhan |q 45845/3 |goto Dalaran L/12 32.36,71.93
+|only Mage
+step
+talk Archmage Alturus##114667
+Tell him: _"I'm here to inquire about the Tri-Disc of Fire."_
+Speak with Archmage Alturus |q 45845/2 |goto Deadwind Pass/0 48.56,78.88
+|only Mage
+step
+Enter the Tomb |goto 48.65,78.84
+Follow the path down |goto Deadwind Pass/22 53.30,38.10 < 10
+Follow the hallway |goto Deadwind Pass/22 58.19,90.44 < 10
+Take the Portal to Alturus' Sanctum |q 45845/4 |goto 50.83,91.01
+|only Mage
+step
+click Tri-Disc of Fire
+collect Tri-Disc of Fire##143836 |q 45845/5 |goto Deadwind Pass/0 51.61,89.50
+|only Mage
+step
+talk Archmage Cedric##18165
+Tell him: _"Archmage Cedric, I'm looking for a piece of a disc that Antonidas gave to you. Do you happen have it?"_
+Speak with Archmage Cedric |q 45846/1 |goto Hillsbrad Foothills/0 30.91,30.82
+|only Mage
+step
+kill Ok'rok Icetouch##121200
+collect Tri-Disc of Frost##143837 |q 45846/2 |goto Hillsbrad Foothills/0 43.56,29.81
+|only Mage
+step
+talk Archmage Kalec##108247
+turnin Burning Within##45845 |goto Hall of the Guardian/2 56.42,38.32
+turnin Chilled to the Core##45846 |goto Hall of the Guardian/2 56.42,38.32
+turnin Close to Home##45847 |goto Hall of the Guardian/2 56.42,38.32
+accept Dispersion of the Discs##45354 |goto Hall of the Guardian/2 56.42,38.32
+|only Mage
+step
+talk Archmage Kalec##108247
+Tell him: _"I'm ready to travel to the Eye of Eternity."_
+Speak with Archmage Kalec |goto Hall of the Guardian/2 56.42,38.32
+Enter the Scenario and watch the Dialogue
+Listen to Kalec's Instructions |scenariogoal 1/34807 |q 45354 |goto 1166/1 38.76,49.05
+|only Mage
+step
+click Tri-Disc of Fire##119506 |goto 1166/1 31.32,56.76
+kill Primal Rage of Fire##119299 |scenariogoal 2/34808 |q 45354
+|tip Spellsteal Burning Rage when it is applied.
+|tip Avoid standing in any fire on the ground.
+|only Mage
+step
+click Tri-Disc of the Arcane##119505 |goto 1166/1 38.69,36.67
+kill Primal Rage of the Arcane##119446 |scenariogoal 2/34810 |q 45354
+|tip Avoid the Arcane circles being placed around the room.
+|tip He will split throughout the fight, these share health.
+|only Mage
+step
+click Tri-Disc of Frost##119507 |goto 1166/1 46.34,56.20
+kill Primal Rage of Frost##119300 |scenariogoal 2/34809 |q 45354
+|tip Interrupt Avalanche when he casts it.
+|tip Spell Steal Fringed Barrier when it is applied.
+|tip Avoid Glacier Spear.
+|tip Kill the adds as soon as they appear.
+|only Mage
+step
+Complete the Ritual in the Eye of Eternity |q 45354/1
+|only Mage
+step
+talk Archmage Kalec##116441
+Tell him: _"I'm ready to go back, Kalec."_ |goto 1166/1 38.76,49.05 < 5
+Arrive back at the Hall of the Guardians |goto Hall of the Guardian/2 59.79,47.74 |c |noway
+|only Mage
+step
+talk Archmage Kalec##108247
+turnin Dispersion of the Discs##45354 |goto Hall of the Guardian/2 56.42,38.21
+|only Mage
+step
+talk Archmage Khadgar##116302
+accept Seeking Lost Knowledge##47067 |goto Broken Shore/0 44.73,63.27
+|only Monk
+step
+Follow the path |goto 68.70,46.97 < 25 |only if walking
+Follow the path |goto 66.36,42.42 < 25 |only if walking
+Follow the path |goto 67.77,37.75 < 30 |only if walking
+Follow the path up |goto 71.44,35.28 < 15 |only if walking
+Follow the path |goto 71.22,41.78 < 25 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/2 |goto Broken Shore/0 71.94,40.72
+|only Monk
+step
+Follow the path |goto 72.07,38.72 < 20 |only if walking
+Follow the path |goto 72.50,36.43 < 20 |only if walking
+Follow the path |goto 73.54,36.78 < 20 |only if walking
+Follow the path |goto 74.44,36.27 < 20 |only if walking
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/3 |goto 75.61,36.29
+|only Monk
+step
+Follow the path |goto 76.45,39.81 < 10 |only if walking
+Follow the path |goto 79.71,42.09 < 20 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/1 |goto 82.57,45.09
+|only Monk
+step
+talk Archmage Khadgar##116302
+turnin Seeking Lost Knowledge##47067 |goto 44.73,63.28
+accept Delivering Lost Knowledge##47069 |goto 44.73,63.28
+|only Monk
+step
+talk Lorewalker Cho##106942
+turnin Delivering Lost Knowledge##47069 |goto The Wandering Isle L/0 46.72,46.69
+accept Using Lost Knowledge##46940 |goto 46.72,46.69
+|only Monk
+step
+talk Lorewalker Cho##106942
+Use the Empowered Elven Tome |use Empowered Elven Tome##147860
+Select: _"Let's continue research on my artifact."_
+Start a Research Work Order |q 46940/1 |goto 46.72,46.69
+|only Monk
+step
+talk Lorewalker Cho##106942
+turnin Using Lost Knowledge##46940 |goto 46.72,46.69
+|only Monk
+step
+talk Archmage Khadgar##116302
+accept Greater Power for Greater Threats##46744 |goto Broken Shore/0 44.74,63.28
+Click here if you have all of your artifact traits unlocked |confirm
+|only Monk
+step
+click Forge of the Roaring Mountain
+Unlock all traits on an artifact weapon |q 46744/1 |goto The Wandering Isle L/0 51.45,48.28
+|tip Collect Artifact Power from World Quests, Dungeons, Raids and the Suramar Questline.
+|only Monk
+step
+talk Archmage Khadgar##116302
+turnin Greater Power for Greater Threats##46744 |goto Broken Shore/0 44.74,63.28
+accept The Broken Shore: Investigating the Legion##46765 |goto 44.74,63.28
+|only Monk
+step
+collect Mysterious Runebound Scroll##147430 |n
+|tip This item has a chance to drop off of any mob.
+|tip Kill enemies in this area until you collect one.
+|tip You can also kill a Rare Spawn in the Broken Shore.
+Discover the Hidden Legion Threat |q 46765/1 |goto Broken Shore/0 44.61,49.57
+|only Monk
+step
+talk Archmage Khadgar##116302
+turnin The Broken Shore: Investigating the Legion##46765 |goto 44.73,63.27
+accept The Council's Call##47000 |goto 44.73,63.27
+|only Monk
+step
+talk Archmage Khadgar##90417
+turnin The Council's Call##47000 |goto Dalaran L/10 28.50,48.33
+accept Away From Prying Eyes##44782 |goto 28.50,48.33
+|only Monk
+step
+Enter the Purple Parlor |q 44782/1 |goto 24.72,48.09
+|tip Go through the portal at the top of the stairs.
+|only Monk
+step
+talk Archmage Modera##115465
+turnin Away From Prying Eyes##44782 |goto 22.20,39.04
+accept In Dire Need##44821 |goto 22.20,39.04
+|only Monk
+step
+Hear the Council's Plea |q 44821/1 |goto 22.29,39.68
+|tip Wait for the dialogue to complete.
+|only Monk
+step
+talk Archmage Modera##115465
+turnin In Dire Need##44821 |goto 22.29,39.64
+|only Monk
+step
+label "MonkSpec"
+Choose your specialization
+Windwalker |confirm |only if not completedq(47019)
+Brewmaster |confirm |next "Brew" |only if not completedq(47024)
+Mistweaver |confirm |next "Mist" |only if not completedq(47005)
+You have unlocked the Lost Traits for all 3 Monk Specializations |confirm |next "postM"
+|only Monk
+step
+talk Archmage Ansirem Runeweaver##115466
+accept Windwalker: Rumblings Near Feltotem##47019 |goto 22.24,40.02
+|tip This quest is geared towards the Windwalk specialization.
+|only Monk
+step
+talk Navarrogg##117225
+turnin Windwalker: Rumblings Near Feltotem##47019 |goto Highmountain/0 35.74,23.98
+accept The Burning Birds##45564 |goto 35.74,23.97
+|only Monk
+step
+collect Fel Infusing Totem##143778 |q 45564/1 |count 1 |goto 34.53,22.62
+|only Monk
+step
+collect Fel Infusing Totem##143778 |q 45564/1 |count 2 |goto 34.30,24.80
+|only Monk
+step
+collect Fel Infusing Totem##143778 |q 45564/1 |count 3 |goto 33.84,25.70
+|only Monk
+step
+collect Fel Infusing Totem##143778 |q 45564/1 |count 4 |goto 32.67,24.82
+|only Monk
+step
+collect Fel Infusing Totem##143778 |q 45564/1 |count 5  |goto 32.64,25.91
+|only Monk
+step
+Meet Navarrogg near Feltotem |q 45564/2	|goto 31.31,25.14
+|only Monk
+step
+talk Navarrogg##117249
+turnin The Burning Birds##45564 |goto 31.31,25.14
+accept The Tainted Marsh##45726 |goto 31.31,25.14
+|only Monk
+step
+talk Navarrogg##117249
+Tell him "I'd like the help to the Blind Marshlands."
+Get a ride to the Marshlands |q 45726/1 |goto 31.31,25.15
+|only Monk
+step
+kill Seabound Despoiler##102513, Seabound Reaver##102038
+Use the Fel Exfoliator on Seabound corpses |use Fel Exfoliator##143863
+Cleanse #5# Spirits |q 45726/2 |goto 28.28,31.38
+|only Monk
+step
+Follow the path |goto 27.87,28.88 |only if walking
+Follow the path |goto 28.08,27.07 |only if walking
+Follow the path |goto 29.22,25.39 |only if walking
+Follow the path |goto 30.42,24.56 |only if walking
+talk Navarrogg##117249
+turnin The Tainted Marsh##45726 |goto 31.30,25.12
+accept Village of the Corruptors##45575 |goto 31.30,25.12
+|only Monk
+step
+kill Feltotem Infuser##117353 |q 45575/1 |goto 29.04,29.59
+You can find more here |goto 30.10,26.23
+|only Monk
+step
+talk Navarrogg##117292
+turnin Village of the Corruptors##45575
+accept The Feltotem Menace##45587
+|tip Standing next to you.
+|only Monk
+step
+Find Tugar Bloodtotem |q 45587/1 |goto 31.71,32.28
+|only Monk
+step
+Stop Tugar Bloodtotem |q 45587/2 |goto 32.46,33.06
+|only Monk
+step
+talk Navarrogg##117361
+turnin The Feltotem Menace##45587 |goto 31.30,25.14
+accept Destroying the Nest##45796 |goto 31.30,25.14
+|only Monk
+step
+Enter the cave |q 45796/1 |goto Highmountain/40 48.83,11.71
+|only Monk
+step
+kill Novice Warbull##118051, Novice Acolyte##118050 |q 45796/2 |goto Highmountain/40 54.57,26.37
+kill Fel Worm Egg##118040 |q 45796/3 |goto 60.03,33.17
+|tip You can walk over them to destroy them.
+|only Monk
+step
+kill Fel Broodmaster##117984 |q 45796/4 |goto 73.54,60.03
+|only Monk
+step
+Follow the path |goto  66.41,48.64 |walk
+Follow the path |goto 57.51,26.37 |walk
+Leave the cave |goto 47.25,10.45 |walk
+Follow the path |goto Highmountain/0 32.94,26.86 |only if walking
+talk Navarrogg##117361
+turnin Destroying the Nest##45796 |goto 31.31,25.14
+accept A Triumphant Report##45841 |goto 31.31,25.15
+|only Monk
+step
+talk Archmage Modera##90418
+turnin A Triumphant Report##45841 |goto Dalaran L/10 28.45,48.93
+accept A Gift From the Six##45842 |goto 28.45,48.93
+|only Monk
+step
+Raise your weapon and receive the Council of Six's gift in the Violet Citadel |q 45842/1 |goto 30.41,48.93
+|tip Click the button that appears at the center of your screen.
+|only Monk
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45842 |goto 28.44,48.91 |next "postM"
+|only Monk
+step
+label "Mist"
+talk Archmage Modera##90418
+accept Mistweaver: The Bradensbrook Investigation##47005 |goto Dalaran L/10 28.43,48.88
+|only Monk
+step
+talk Mayor Heathrow##118752
+turnin Mistweaver: The Bradensbrook Investigation##47005 |goto Val'sharah/0 42.24,58.97
+accept Aid on the Front Lines##46079 |goto Val'sharah/0 42.28,58.96
+|only Monk
+step
+click Injured Villager##118809
+Heal these Injured Villagers scattered around the field
+Heal 8 wounded defenders |q 46079/1 |goto Val'sharah/0 42.29,61.28
+|only Monk
+step
+talk Mayor Heathrow##118752
+turnin Aid on the Front Lines##46079 |goto Val'sharah/0 42.28,58.96
+accept Shadowsong's Return##46082 |goto Val'sharah/0 42.28,58.96
+|only Monk
+step
+talk Commander Jarod Shadowsong##118947
+turnin Shadowsong's Return##46082 |goto 39.12,58.13
+accept Cutting off the Heads##46106 |goto 39.12,58.13
+accept Quieting the Spirits##46080 |goto 39.12,58.13
+|only Monk
+stickystart "Risen Attackers"
+step
+kill Nethos Starwalker##118950 |q 46106/2 |goto Val'sharah/0 37.09,58.46
+|only Monk
+step
+kill Tael'thos the Cutter##118951 |q 46106/3 |goto 39.22,62.13
+|only Monk
+step
+kill Disa Trueshaft##118949 |q 46106/1 |goto 36.80,61.33
+|only Monk
+step
+label "Risen Attackers"
+kill Risen Archer##118759+, Risen Soldier##118758+, Risen Hound##118754+, Risen Scout##118757+, Black Rook Falcon##118756+
+Slay 12 Risen Attackers |q 46080/1
+|only Monk
+step
+Next to you
+talk Commander Jarod Shadowsong##118954
+turnin Cutting off the Heads##46106
+turnin Quieting the Spirits##46080
+accept Source of the Corruption##46107
+|only Monk
+step
+Follow the path up |goto 38.63,57.60 < 10 |only if walking
+Go to Heroes' Rest |q 46107/1 |goto 37.83,55.32
+|only Monk
+step
+click Corrupted Rooksguard##120156+
+|tip Once clicked these will either be Freed and disappear or get angry and attack you.
+Release 3 Fel Courrupted Rooksguards |q 46107/2 |goto 38.42,53.02
+|only Monk
+step
+kill Lorgos the Resurrector##118980 |q 46107/3 |goto 38.92,51.34
+|only Monk
+step
+Next to you
+talk Commander Jarod Shadowsong##118954
+turnin Source of the Corruption##46107
+accept The Matter Resolved... For Now...##46200
+|only Monk
+step
+talk Archmage Modera##90418
+turnin The Matter Resolved... For Now...##46200 |goto Dalaran L/10 28.61,48.90
+accept A Gift From the Six##45864 |goto Dalaran L/10 28.61,48.90
+|only Monk
+step
+Enter the Blue Circle on the ground
+Use the extra action ability "Aquire the Gift"
+Receive the Council's gift |q 45864/1 |goto 30.42,48.91
+|only Monk
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45864 |next "postM" |goto Dalaran L/10 28.61,48.90
+|only Monk
+step
+label "Brew"
+talk Archmage Ansirem Runeweaver##90431
+accept Brewmaster: Aid of the Illidari##47024 |goto Dalaran L/10 28.44,49.46
+|only Monk
+step
+Find Kor'vas Bloodthorn |q 47024/1 |goto 49.13,26.03
+|tip Kor'vas can be found patrolling the streets of Dalaran.
+|only Monk
+step
+talk Kor'vas Bloodthorn##116880
+turnin Brewmaster: Aid of the Illidari##47024 |goto 52.03,19.58
+accept Gathering Information##45413 |goto 52.03,19.58
+|only Monk
+step
+talk Teller Rames##96817
+talk Teller Hanners##96818
+talk Teller Althiellis##96819
+Investigate the bank employees |q 45413/1 |goto 53.17,15.26
+|tip Talk to all three bank tellers.
+|only Monk
+step
+talk Randall Goldsprocket##113812
+Identify the stolen item |q 45413/2 |goto 53.78,20.29
+|tip Wait for the dialogue to complete.
+|only Monk
+step
+talk Kor'vas Bloodthorn##116880
+turnin Gathering Information##45413 |goto 52.04,19.63
+accept Confirming Suspicions##45414 |goto 52.04,19.63
+|only Monk
+step
+Enter the building |goto 37.45,36.54 < 5
+Search First to Your Aid |q 45414/1 |goto 36.03,37.51
+|tip Wait near Olisarra the Kind until the dialogue completes.
+|only Monk
+step
+Search Krasus' Landing |q 45414/2 |goto 74.83,45.52
+|tip Wait for the dialogue to complete.
+|only Monk
+step
+talk Prophet Velen##117042
+Speak to Velen |q 45414/3 |goto 74.83,45.52
+|tip Wait for the dialogue to complete.
+|only Monk
+step
+talk Prophet Velen##117042
+Witness Velen's vision |q 45414/4 |goto 74.83,45.52
+|tip Wait for the dialogue to complete.
+|only Monk
+step
+talk Prophet Velen##117042
+turnin Confirming Suspicions##45414 |goto 74.83,45.52
+accept Between Worlds##45415 |goto 74.83,45.52
+|only Monk
+step
+click Portal to Hellfire peninsula
+Take the portal to Hellfire Peninsula |q 45415/1 |goto 75.10,46.18
+|only Monk
+step
+talk Kor'vas Bloodthorn##116880
+Speak to Kor'vas at the Stair of Destiny |q 45415/2 |goto Hellfire Peninsula/0 85.30,50.11
+|only Monk
+step
+Open the portal |q 45415/3 |goto 85.30,50.11
+|tip Kill Doomheralds first.
+|tip Defeate the waves of mobs that spawn.
+|only Monk
+step
+talk Kor'vas Bloodthorn##116880
+turnin Between Worlds##45415 |goto 85.30,50.11
+accept Dark Omens##45843 |goto 85.30,50.11
+|only Monk
+step
+talk Archmage Modera##90418
+turnin Dark Omens##45843 |goto Dalaran L/10 28.43,48.91
+accept A Gift From the Six##45863 |goto 28.43,48.91
+|only Monk
+step
+Receive the Council's gift |q 45863/1 |goto 30.43,48.95
+|tip Stand in the circle and use the special action button that appears on-screen.
+|tip Stand still until the ritual completes.
+|only Monk
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45863 |goto 28.44,48.91
+|only Monk
+step
+label "postM"
+talk Maiev Shadowsong##116576
+accept Defending Broken Isles##46247 |goto 44.56,63.52
+|only Monk
+step
+Legion Assault completed |q 46247/1 |goto Broken Shore/0 44.69,63.14
+|tip Find an ongoing Legion Assault to participate in.
+|only Monk
+step
+talk Maiev Shadowsong##116576
+turnin Defending Broken Isles##46247 |goto 44.54,63.52
+accept Champions of Legionfall##47137 |goto 44.54,63.52
+|only Monk
+step
+talk Brewmaster Blanche##116929
+accept A Brewing Situation##45440 |goto The Wandering Isle L/0 51.54,48.43
+|only Monk
+step
+click Barrel of Celebreation Brew
+Brew delivered to the temple balcony |q 45440/1	|goto 50.97,55.74
+|only Monk
+step
+click Barrel of Celebreation Brew
+Brew delivered tot he Laughing Crane |q 45440/2 |goto 50.77,59.19
+|only Monk
+step
+click Barrel of Celebreation Brew
+Brew delivered to the troop training grounds |q 45440/3 |goto 54.02,58.37
+|only Monk
+step
+talk Iron-Body Ponshu##100438
+turnin A Brewing Situation##45440 |goto 51.41,48.40
+|only Monk
+step
+talk Brewer Almai##119664
+accept Panic at the Brewery##45404 |goto 51.32,48.45
+|only Monk
+step
+talk Tak-Tak##101880
+Speak with Tak-Tak to secure a ride to Stormstout Brewery |q 45404/1 |goto 47.17,47.74
+|only Monk
+step
+Fly to the Stormstout Brewery |scenariostart |q 45404
+|only Monk
+step
+click Brewery Door
+It will be on the right as you enter the scenario
+Open the door |scenariogoal 1/34917 |q 45404
+|only Monk
+step
+Collect #8# Barrels of Storm Brew |scenariogoal 2/34924 |q 45404
+Use "Detox" on #8# Diseased Breweres |scenariogoal 2/34923 |q 45404
+|tip These both can be found on multiple levels of the Stormstout Brewery.
+|only Monk
+step
+Head downstairs, towards the North Western end of the room
+Follow the ramp down
+click Brewery Door
+Open the front door |scenariogoal 3/34931 |q 45404
+|only Monk
+step
+Drink the Storm Brew |scenariogoal 4/34932 |q 45404
+|tip This step should comlete automaically.
+|only Monk
+step
+Close 3 Legion Portals |scenariogoal 5/34941 |q 45404
+|tip Look for the golden markers on your minimap.
+|only Monk
+step
+Step into the small blue circle nearby
+kill Brewmaster Blanche##119735 |scenariogoal 6/34937 |q 45404
+|only Monk
+step
+talk Brewer Almai##121152
+Tell her "Let's go."
+Return to the Wandering Isle |goto The Wandering Isle L/0 51.51,48.99 |noway |c |q 45404
+|only Monk
+step
+talk Spirit of Brewmaster Blanche##119765
+turnin Panic at the Brewery##45404 |goto 51.54,48.42
+accept Storming the Legion##45459 |goto 51.54,48.42
+|only Monk
+step
+talk Tak-Tak##101880
+Travel to the Broken Shore |q 45459/1 |goto 47.16,47.76
+|only Monk
+step
+talk Brewer Almai##117305
+turnin Storming the Legion##45459 |goto Broken Shore/0 53.62,53.42
+accept Fel Ingredients##45574 |goto 53.62,53.42
+accept Alchemist Korlya##45449 |goto 53.62,53.42
+accept Barrel Toss##45545 |goto 53.62,53.42
+|only Monk
+stickystart "spreader"
+stickystart "killer"
+step
+Follow the path |goto 55.37,48.90 < 25 |only if walking
+Follow the path |goto 55.21,45.93 < 25 |only if walking
+Follow the path |goto 57.34,44.81 < 25 |only if walking
+Follow the path |goto 59.56,42.82 < 25 |only if walking
+Follow the path |goto 60.68,41.51 < 25 |only if walking
+kill Alchemist Korlya##117277 |q 45449/1 |goto 61.53,42.53
+|only Monk
+step "spreader"
+Use the Barrel of Storm Brew on Fel Brew Spreaders |use Barrel of Storm Brew##146308
+kill 5 Fel Brew Spreader##117201 |q 45545/1
+|only Monk
+step "killer"
+kill Felfire Incinerator##117278
+collect 3 Demonic Ash##146312 |q 45574/3 |goto 58.21,49.12
+kill Felskorn Initiate##120376+, Felskorn Infuser##119837+
+collect 3 Flask of Fel Blood##146311 |q 45574/2 |goto 58.21,49.12
+click Fel Cauldron##3365
+collect 5 Vial of Liquid Felflame##146310 |q 45574/1 |goto 57.98,45.09
+|only Monk
+step
+Follow the path |goto 56.31,50.92 < 25 |only if walking
+Follow the path |goto 54.11,51.41 < 25 |only if walking
+talk Brewer Almai##117305
+turnin Fel Ingredients##45574 |goto 53.62,53.42
+turnin Alchemist Korlya##45449 |goto 53.62,53.42
+turnin Barrel Toss##45545 |goto 53.62,53.42
+accept Hope For a Cure##46320 |goto 53.62,53.42
+|only Monk
+step
+Follow the path |goto The Wandering Isle L/0 51.35,53.39 < 25
+talk Spirit of Brewmaster Blanche##119765
+turnin Hope For a Cure##46320 |goto 50.49,57.88
+accept Not Felling Well##45442 |goto 50.49,57.88
+|only Monk
+step
+click Brew Still##3365
+Collect the Curative Brew |q 45442/1 |goto 50.44,57.93
+|only Monk
+step
+click Fel-Poisoned Initiate##119772
+Fel-Poisoned Initiate cured |q 45442/2 |goto 53.46,58.70
+|tip They are all around the area.
+|only Monk
+step
+talk Spirit of Brewmaster Blanche##119765
+turnin Not Felling Well##45442 |goto 50.49,57.88
+accept A Time for Everything##45771 |goto 50.48,57.88
+|only Monk
+step
+Follow the path |goto 51.36,53.54 < 25
+click Iron-Body Ponshu##119915
+Iron-Body Ponshu cured |q 45771/1 |goto 51.40,48.46
+|only Monk
+step
+talk Iron-Body Ponshu##100438
+turnin A Time for Everything##45771 |goto 51.40,48.42
+|only Monk
+step
+talk Brewer Almai##117504
+accept Champion: Almai##45790 |goto 51.59,48.49
+|only Monk
+step
+talk Maiev Shadowsong##116576
+turnin Champions of Legionfall##47137 |goto 44.55,63.53 |goto Broken Shore/0 44.55,63.53
+|only Monk
+step
+talk Master Hsu##99179
+accept Further Advancement##46785 |goto The Wandering Isle L/0 52.77,59.76
+|only Monk
+step
+talk Number Nine Jia##98939
+Talk to Number Nine Jia |q 46785/1 |goto 53.03,59.78
+|only Monk
+step
+talk Master Hsu##99179
+turnin Further Advancement##46785 |goto 52.77,59.78
+|only Monk
+step
+talk Yiska##118214
+accept Master Who?##46353 |goto Broken Shore/0 44.98,61.98
+|tip You will need to have completed the quest Strike Them Down in the Broken Shore Campaign guide.
+|tip You will also need to have earned the Broken Isles Pathfinder, Part One and Part Two for this to appear.
+Click here to load the "Broken Shore Campaign" guide |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\Broken Shore Campaign"
+|only Monk
+step
+Enter the Teleportation Mandala |goto The Wandering Isle L/0 49.89,47.12 < 10
+Follow the path |goto 50.04,48.73 < 20
+Follow the path |goto 44.93,51.31 < 20
+Follow the path |goto 42.09,51.28 < 20
+Follow the path |goto 39.38,51.28 < 20
+Follow the path |goto 36.26,51.33 < 20
+Follow the path |goto 31.43,47.01 < 20
+Follow the path |goto 30.88,43.91 < 20
+Follow the path |goto 32.20,42.84 < 20
+talk Master Bu##120722
+turnin Master Who?##46353 |goto 32.32,43.42
+accept The Tale of Ban-Lu##46341 |goto 32.32,43.42
+|only Monk
+step
+Listen to Master Bu's Story |q 46341/1 |goto 32.32,43.42
+|only Monk
+step
+talk Master Bu##120722
+turnin The Tale of Ban-Lu##46341 |goto 32.37,43.12
+accept Return to the Broken Peak##46342 |goto 32.37,43.12
+|only Monk
+step
+talk Master Bu##120722
+turnin Return to the Broken Peak##46342 |goto Kun-Lai Summit/0 47.34,41.70
+accept The Trail of Ban-Lu##46343 |goto 47.34,41.70
+|only Monk
+step
+click Pawprint
+First set of pawprints found |q 46343/1 |goto 47.05,40.57
+|only Monk
+step
+click Pawprint
+Second set of pawprints found |q 46343/2 |goto 46.02,40.14
+|only Monk
+step
+click Pawprint
+Third set of pawprints found |q 46343/3 |goto 46.35,42.48
+|only Monk
+step
+click Pawprint
+Fourth set of pawprints found |q 46343/4 |goto 46.55,45.17
+|only Monk
+step
+talk Master Bu##120758
+turnin The Trail of Ban-Lu##46343 |goto 47.92,48.87
+|only Monk
+step
+talk Smelly Mountaintop##120744
+accept Smelly's Luckydo##46344 |goto 47.95,49.08
+|only Monk
+step
+kill Hozen Snowthumper##120799+, Hozen Crag-Leaper##120798+, Dookya##120797
+collect 3 Smelly's Luckydo##147315 |q 46344/1 |goto 50.33,49.58
+|only Monk
+step
+talk Smelly Mountaintop##120744
+turnin Smelly's Luckydo##46344 |goto 47.95,49.08
+|only Monk
+step
+talk Master Bu##120722
+accept The Shadow of Ban-Lu##46346 |goto 47.92,48.89
+|only Monk
+step
+talk Master Bu##120722
+turnin The Shadow of Ban-Lu##46346 |goto 36.52,48.24
+accept Clean-up on Aisle Sha##46347 |goto 36.52,48.24
+|only Monk
+step
+talk Commander Shen-Li##120747
+Speak with Commander Shen-li |q 46347/1 |goto 36.76,47.58
+|only Monk
+step
+talk Commander Shen-Li##120747
+Tell him "I'm ready to clean up the sha." |goto 36.76,47.58 < 5
+click Sha Puddle
+Walk over Remnants of Anger
+kill Manifestation of Anger##120768+
+|tip They will be all around the area.
+Squish the Sha Remnants |q 46347/2 |goto 35.60,41.95
+|only Monk
+step
+talk Commander Shen-Li##120747
+Tell him "I've cleaned up the Sha." |q 46347/3 |goto 36.76,47.58
+|only Monk
+step
+talk Master Bu##120722
+turnin Clean-up on Aisle Sha##46347 |goto 36.52,48.24
+accept The River to Ban-Lu##46348 |goto 36.52,48.24
+|only Monk
+step
+talk Waterspeaker Ryuli##120726
+turnin The River to Ban-Lu##46348 |goto 74.37,88.68
+accept Lilies for Ryuli##46349 |goto 74.37,88.68
+|only Monk
+step
+click Moon Lily
+collect 6 Moon Lily##147313 |q 46349/1 |goto 73.98,46.36
+|only Monk
+step
+talk Waterspeaker Ryuli##120726
+turnin Lilies for Ryuli##46349 |goto 74.37,88.68
+|only Monk
+step
+talk Waterspeaker Ryuli##120726
+accept The Trial of Ban-Lu##46350 |goto 73.86,89.02
+|only Monk
+step
+Watch the dialogue
+Ban-Lu Found |q 46350/1 |goto The Jade Forest/0 23.44,35.18
+|only Monk
+step
+kill Ban-Lu##121173
+Defeat Ban-Lu |q 46350/2 |goto 24.09,35.97
+|only Monk
+step
+Follow the path |goto 51.54,44.84 < 20
+Follow the path |goto 51.58,40.47 < 20
+Follow the path |goto 52.85,39.13 < 20
+Follow the path |goto 51.92,35.94 < 20
+Follow the path |goto 51.10,31.67 < 20
+Follow the path |goto 48.95,29.18 < 20
+Follow the path |goto 44.75,29.09 < 20
+Follow the path |goto 42.89,27.63 < 20
+talk Ban-Lu##121173
+turnin The Trial of Ban-Lu##46350 |goto 41.68,25.41
+|only Monk
+step
+More content to come soon!
+Click here if you want to unlock the new set of traits for other Artifacts |confirm |next "MonkSpec"
+|only Monk
+step
+talk Archmage Khadgar##116302
+accept Seeking Lost Knowledge##47067 |goto Broken Shore/0 44.73,63.27
+|only Paladin
+step
+Follow the path |goto 68.70,46.97 < 25 |only if walking
+Follow the path |goto 66.36,42.42 < 25 |only if walking
+Follow the path |goto 67.77,37.75 < 30 |only if walking
+Follow the path up |goto 71.44,35.28 < 15 |only if walking
+Follow the path |goto 71.22,41.78 < 25 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/2 |goto Broken Shore/0 71.94,40.72
+|only Paladin
+step
+Follow the path |goto 72.07,38.72 < 20 |only if walking
+Follow the path |goto 72.50,36.43 < 20 |only if walking
+Follow the path |goto 73.54,36.78 < 20 |only if walking
+Follow the path |goto 74.44,36.27 < 20 |only if walking
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/3 |goto 75.61,36.29
+|only Paladin
+step
+Follow the path |goto 76.45,39.81 < 10 |only if walking
+Follow the path |goto 79.71,42.09 < 20 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/1 |goto 82.57,45.09
+|only Paladin
+step
+talk Archmage Khadgar##116302
+turnin Seeking Lost Knowledge##47067 |goto 44.73,63.28
+accept Delivering Lost Knowledge##47071 |goto 44.73,63.28
+|only Paladin
+step
+talk Sister Elda##91190
+turnin Delivering Lost Knowledge##47071 |goto Eastern Plaguelands/20 37.73,57.22
+accept Using Lost Knowledge##46940 |goto 46.72,46.69
+|only Paladin
+step
+talk Sister Elda##91190
+Use the Empowered Elven Tome |use Empowered Elven Tome##147860
+Select: _"Let's continue research on my artifact."_
+Start a Research Work Order |q 46940/1 |goto 37.73,57.22
+|only Paladin
+step
+talk Sister Elda##91190
+turnin Using Lost Knowledge##46940 |goto 37.73,57.22
+|only Paladin
+step
+talk Archmage Khadgar##116302
+accept Greater Power for Greater Threats##46744 |goto Broken Shore/0 44.74,63.28
+Click here if you have all of your artifact traits unlocked |confirm
+|only Paladin
+step
+click Forge of the Roaring Mountain
+Unlock all traits on an artifact weapon |q 46744/1 |goto The Wandering Isle L/0 51.45,48.28
+|tip Collect Artifact Power from World Quests, Dungeons, Raids and the Suramar Questline.
+|only Paladin
+step
+talk Archmage Khadgar##116302
+turnin Greater Power for Greater Threats##46744 |goto Broken Shore/0 44.74,63.28
+accept The Broken Shore: Investigating the Legion##46765 |goto 44.74,63.28
+|only Paladin
+step
+collect Mysterious Runebound Scroll##147430 |n
+|tip This item has a chance to drop off of any mob.
+|tip Kill enemies in this area until you collect one.
+|tip You can also kill a Rare Spawn in the Broken Shore.
+Discover the Hidden Legion Threat |q 46765/1 |goto Broken Shore/0 44.61,49.57
+|only Paladin
+step
+talk Archmage Khadgar##116302
+turnin The Broken Shore: Investigating the Legion##46765 |goto 44.73,63.27
+accept The Council's Call##47000 |goto 44.73,63.27
+|only Paladin
+step
+talk Archmage Khadgar##90417
+turnin The Council's Call##47000 |goto Dalaran L/10 28.50,48.33
+accept Away From Prying Eyes##44782 |goto 28.50,48.33
+|only Paladin
+step
+Enter the Purple Parlor |q 44782/1 |goto 24.72,48.09
+|tip Go through the portal at the top of the stairs.
+|only Paladin
+step
+talk Archmage Modera##115465
+turnin Away From Prying Eyes##44782 |goto 22.20,39.04
+accept In Dire Need##44821 |goto 22.20,39.04
+|only Paladin
+step
+Hear the Council's Plea |q 44821/1 |goto 22.29,39.68
+|tip Wait for the dialogue to complete.
+|only Paladin
+step
+talk Archmage Modera##115465
+turnin In Dire Need##44821 |goto 22.29,39.64
+|only Paladin
+step
+label "PalSpec"
+Choose your specialization
+Retribution |confirm |only if not completedq(47052)
+Protection |confirm |next "Protection" |only if not completedq(47022)
+Holy |confirm |next "Holy" |only if not completedq(47006)
+You have unlocked the Lost Traits for all 3 Paladin Specializations |confirm |next "post"
+|only Paladin
+step
+talk Archmage Khadgar##115464
+accept Retribution: Fate of the Tideskorn##47052 |next "Ret" |goto 22.45,38.75
+|only Paladin
+step
+label "Protection"
+talk Archmage Ansirem Runeweaver##90431
+accept Protection: Aid of the Illidari##47022 |goto 22.45,38.75
+|only Paladin
+step
+Find Kor'vas Bloodthorn |q 47022/1 |goto 49.13,26.03
+|tip Kor'vas can be found patrolling the streets of Dalaran.
+|only Paladin
+step
+talk Kor'vas Bloodthorn##116880
+turnin Vengeance: Seeking Kor'vas##47022 |goto 52.03,19.58
+accept Gathering Information##45413 |goto 52.03,19.58
+|only Paladin
+step
+talk Teller Rames##96817
+talk Teller Hanners##96818
+talk Teller Althiellis##96819
+Investigate the bank employees |q 45413/1 |goto 53.17,15.26
+|tip Talk to all three bank tellers.
+|only Paladin
+step
+talk Randall Goldsprocket##113812
+Identify the stolen item |q 45413/2 |goto 53.78,20.29
+|tip Wait for the dialogue to complete.
+|only Paladin
+step
+talk Kor'vas Bloodthorn##116880
+turnin Gathering Information##45413 |goto 52.04,19.63
+accept Confirming Suspicions##45414 |goto 52.04,19.63
+|only Paladin
+step
+Enter the building |goto 37.45,36.54 < 5
+Search First to Your Aid |q 45414/1 |goto 36.03,37.51
+|tip Wait near Olisarra the Kind until the dialogue completes.
+|only Paladin
+step
+Search Krasus' Landing |q 45414/2 |goto 74.83,45.52
+|tip Wait for the dialogue to complete.
+|only Paladin
+step
+talk Prophet Velen##117042
+Speak to Velen |q 45414/3 |goto 74.83,45.52
+|tip Wait for the dialogue to complete.
+|only Paladin
+step
+talk Prophet Velen##117042
+Witness Velen's vision |q 45414/4 |goto 74.83,45.52
+|tip Wait for the dialogue to complete.
+|only Paladin
+step
+talk Prophet Velen##117042
+turnin Confirming Suspicions##45414 |goto 74.83,45.52
+accept Between Worlds##45415 |goto 74.83,45.52
+|only Paladin
+step
+click Portal to Hellfire peninsula
+Take the portal to Hellfire Peninsula |q 45415/1 |goto 75.10,46.18
+|only Paladin
+step
+talk Kor'vas Bloodthorn##116880
+Speak to Kor'vas at the Stair of Destiny |q 45415/2 |goto Hellfire Peninsula/0 85.30,50.11
+|only Paladin
+step
+Open the portal |q 45415/3 |goto 85.30,50.11
+|tip Kill Doomheralds first.
+|tip Defeate the waves of mobs that spawn.
+|only Paladin
+step
+talk Kor'vas Bloodthorn##116880
+turnin Between Worlds##45415 |goto 85.30,50.11
+accept Dark Omens##45843 |goto 85.30,50.11
+|only Paladin
+step
+talk Archmage Modera##90418
+turnin Dark Omens##45843 |goto Dalaran L/10 28.43,48.91
+accept A Gift From the Six##45863 |goto 28.43,48.91
+|only Paladin
+step
+Receive the Council's gift |q 45863/1 |goto 30.43,48.95
+|tip Stand in the circle and use the special action button that appears on-screen.
+|tip Stand still until the ritual completes.
+|only Paladin
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45863 |goto 28.44,48.91
+|only Paladin
+step
+To pursue another specialization's traits, click here |confirm |next "PalSpec"
+To continue, click here |confirm |next "AfterSpecDH" |only if not completedq(47052) and not completedq(47022)
+Continuing |next "post" |only if completedq(47052) and completedq(47022)
+|only Paladin
+step
+label "Ret"
+Follow the path |goto Suramar/0 65.16,45.15 < 20 |only if walking
+Follow the path |goto 65.17,47.13 < 20 |only if walking
+Follow the path |goto 64.78,49.16 < 20 |only if walking
+talk Huntsman Slodi##119230
+Speak with Huntsman Slodi |q 47052/1 |goto 65.40,50.79
+|only Paladin
+step
+Follow the path |goto 66.20,51.19 < 20 |only if walking
+Follow the path |goto 67.81,51.21 < 20 |only if walking
+Follow the path |goto 69.20,50.30 < 20 |only if walking
+talk Priestess Bryna##119232
+Speak with Priestess Bryna |q 47052/2 |goto 70.53,49.97
+|only Paladin
+step
+talk Yngvild the Watcher##119233
+|tip She's at the top of the tower.
+Speak with Yngvild the Watcher |q 47052/3 |goto 71.46,49.56
+|only Paladin
+step
+Follow the path |goto 72.13,47.93 < 20 |only if walking
+Follow the path |goto 73.32,49.44 < 20 |only if walking
+Follow the path |goto 74.84,50.12 < 20 |only if walking
+talk Sigryn##116568
+turnin Retribution: Fate of the Tideskorn##47052 |goto 76.27,50.00
+accept The Reluctant Queen##45486 |goto 76.27,50.00
+|only Paladin
+step
+talk Sigryn##116568
+Tell her _"I'm ready."_
+Speak with Yngvild the Watcher |q 45486/1 |goto Stormheim/0 59.64,50.82
+|only Paladin
+step
+map Stormheim/0
+path loop off;dist 20
+path	59.32,52.51	60.29,53.76	61.37,55.16
+path	62.38,55.03	63.28,55.03	64.44,54.96
+path	65.88,55.38	66.48,57.16	67.28,59.22
+path	68.24,58.36	68.99,59.20	68.47,61.23
+path	67.25,62.11	65.62,62.56	64.41,63.19
+path	63.14,63.66	60.88,65.14	60.86,67.65
+Escort Sigryn to Skold-Ashil |q 45486/2 |goto 62.52,68.06
+|tip Follow her closely.
+|only Paladin
+step
+talk Priestess Halla##117107
+Speak with Priestess Halla |q 45486/3 |goto 62.83,68.11
+|only Paladin
+step
+talk Eyir##93628
+Gain an audience with Eyir |q 45486/4 |goto Stormheim/28 66.80,51.30
+|tip Watch the dialogue.
+|only Paladin
+step
+talk Eyir##93628
+turnin The Reluctant Queen##45486 |goto 72.44,51.24
+accept To Silence the Bonespeakers##45522 |goto 72.44,51.24
+|only Paladin
+step
+Follow the path |goto 71.59,42.30
+Follow the path | goto 72.13,40.86
+kill Runeseer Faljar##117199 |q 45522/1 |goto 73.14,40.08
+|only Paladin
+step
+talk Eyir##93628
+turnin To Silence the Bonespeakers##45522 |goto 73.26,39.89
+|only Paladin
+step
+talk Sigryn##116568
+accept To Tame the Drekirjar##45523 |goto 72.85,40.48
+|only Paladin
+step
+Follow the path |goto 43.33,70.13 < 20 |only if walking
+Follow the path |goto 42.60,71.00 < 20 |only if walking
+Follow the path |goto 41.86,71.25 < 20 |only if walking
+Follow the path |goto 41.15,71.88 < 20 |only if walking
+kill Jarl Velbrand##117227 |q 45523/1 |goto 41.29,71.78
+|tip Watch the dialogue.
+|only Paladin
+step
+talk Jarl Velbrand##117227
+turnin To Tame the Drekirjar##45523 |goto 41.13,71.93
+|only Paladin
+step
+talk Sigryn##116568
+accept The Forgotten Heir##45524 |goto 41.40,71.67
+|only Paladin
+step
+Follow the path |goto Stormheim/0 81.64,68.81 < 20 |only if walking
+Follow the path |goto 79.97,70.33 < 20 |only if walking
+Follow the path |goto 78.73,71.72 < 20 |only if walking
+Follow the path |goto 78.43,73.22 < 20 |only if walking
+Follow the path |goto 79.06,74.71 < 20 |only if walking
+Follow the path |goto 78.01,79.32 < 20 |only if walking
+Follow the path |goto 76.70,84.72 < 20 |only if walking
+Follow the path |goto 76.22,88.29 < 20 |only if walking
+Follow the path |goto 74.90,89.43 < 20 |only if walking
+Torvald found |q 45524/1 |goto 74.22,84.84
+|only Paladin
+step
+talk Sigryn##116568
+turnin The Forgotten Heir##45524 |goto 73.59,86.00
+accept Unanswered Questions##45525 |goto 73.59,86.00
+|only Paladin
+step
+map Stormheim/0
+path loop off;dist 20
+path	59.32,52.51	60.29,53.76	61.37,55.16
+path	62.38,55.03	63.28,55.03	64.44,54.96
+path	65.88,55.38	66.48,57.16	67.28,59.22
+path	68.24,58.36	68.99,59.20	68.47,61.23
+path	67.25,62.11	65.62,62.56	64.41,63.19
+path	63.14,63.66	60.88,65.14	60.86,67.65
+path	62.02,67.94	62.98,68.11
+map	Stormheim/28
+path	42.46,51.87
+Follow the path
+talk Sigryn##116568
+Speak to Sigryn |q 45525/1
+|tip Watch the dialogue.
+|only Paladin
+step
+talk Eyir##93628
+turnin Unanswered Questions##45525 |goto 73.20,50.86
+accept The Gates Are Closed##46340 |goto 73.20,50.86
+|only Paladin
+step
+talk Archmage Khadgar##90417
+turnin The Gates Are Closed##46340 |goto Dalaran L/10 28.51,48.31
+|only Paladin
+step
+talk Archmage Modera##90418
+accept A Gift From the Six##45862 |goto 28.44,48.90
+|only Paladin
+step
+Raise your weapon and receive the Council of Six's gift in the Violet Citadel |q 45862/1 |goto 30.41,48.93
+|tip Click the button that appears at the center of your screen.
+|only Paladin
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45862 |goto 28.44,48.91
+|only Paladin
+step
+label "Holy"
+talk Archmage Modera##90418
+accept Holy: The Bradensbrook Investigation##47006 |goto Dalaran L/10 28.43,48.95
+|only Paladin
+step
+talk Mayor Heathrow##118752
+turnin Holy: The Bradensbrook Investigation##47006 |goto Val'sharah/0 42.24,58.97
+accept Aid on the Front Lines##46079 |goto Val'sharah/0 42.28,58.96
+|only Paladin
+step
+click Injured Villager##118809
+Heal these Injured Villagers scattered around the field
+Heal 8 wounded defenders |q 46079/1 |goto Val'sharah/0 42.29,61.28
+|only Paladin
+step
+talk Mayor Heathrow##118752
+turnin Aid on the Front Lines##46079 |goto Val'sharah/0 42.28,58.96
+accept Shadowsong's Return##46082 |goto Val'sharah/0 42.28,58.96
+|only Paladin
+step
+talk Commander Jarod Shadowsong##118947
+turnin Shadowsong's Return##46082 |goto 39.12,58.13
+accept Cutting off the Heads##46106 |goto 39.12,58.13
+accept Quieting the Spirits##46080 |goto 39.12,58.13
+|only Paladin
+stickystart "Risen Attackers"
+step
+kill Nethos Starwalker##118950 |q 46106/2 |goto Val'sharah/0 37.09,58.46
+|only Paladin
+step
+kill Tael'thos the Cutter##118951 |q 46106/3 |goto 39.22,62.13
+|only Paladin
+step
+kill Disa Trueshaft##118949 |q 46106/1 |goto 36.80,61.33
+|only Paladin
+step
+label "Risen Attackers"
+kill Risen Archer##118759+, Risen Soldier##118758+, Risen Hound##118754+, Risen Scout##118757+, Black Rook Falcon##118756+
+Slay 12 Risen Attackers |q 46080/1
+|only Paladin
+step
+Next to you
+talk Commander Jarod Shadowsong##118954
+turnin Cutting off the Heads##46106
+turnin Quieting the Spirits##46080
+accept Source of the Corruption##46107
+|only Paladin
+step
+Follow the path up |goto 38.63,57.60 < 10 |only if walking
+Go to Heroes' Rest |q 46107/1 |goto 37.83,55.32
+|only Paladin
+step
+click Corrupted Rooksguard##120156+
+|tip Once clicked these will either be Freed and disappear or get angry and attack you.
+Release 3 Fel Courrupted Rooksguards |q 46107/2 |goto 38.42,53.02
+|only Paladin
+step
+kill Lorgos the Resurrector##118980 |q 46107/3 |goto 38.92,51.34
+|only Paladin
+step
+Next to you
+talk Commander Jarod Shadowsong##118954
+turnin Source of the Corruption##46107
+accept The Matter Resolved... For Now...##46200
+|only Paladin
+step
+talk Archmage Modera##90418
+turnin The Matter Resolved... For Now...##46200 |goto Dalaran L/10 28.61,48.90
+accept A Gift From the Six##45864 |goto Dalaran L/10 28.61,48.90
+|only Paladin
+step
+Enter the Blue Circle on the ground
+Use the extra action ability "Aquire the Gift"
+Receive the Council's gift |q 45864/1 |goto 30.42,48.91
+|only Paladin
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45864 |goto Dalaran L/10 28.61,48.90
+|only Paladin
+step
+To apply your new points you will need to go back to your Alter within your Order Hall
+confirm
+|only Paladin
+step
+label "post"
+talk Maiev Shadowsong##116576
+accept Defending Broken Isles##46247 |goto 44.56,63.52
+|only Paladin
+step
+Legion Assault completed |q 46247/1 |goto Broken Shore/0 44.69,63.14
+|tip Find an ongoing Legion Assault to participate in.
+|only Paladin
+step
+talk Maiev Shadowsong##116576
+turnin Defending Broken Isles##46247 |goto 44.54,63.52
+accept Champions of Legionfall##47137 |goto 44.54,63.52
+|only Paladin
+step
+talk Lady Liadrin##90249
+accept Judgment Awaits##45143 |goto Eastern Plaguelands/20 50.20,74.00
+|only Paladin
+step
+Go up the stairs |goto 41.50,75.66 < 15 |walk
+Continue up the stiars |goto 45.03,84.47 < 15 |walk
+Leave the building |goto Eastern Plaguelands/0 75.42,52.66 < 15 |walk
+talk Silver Hand Recruit##116361
+|tip They will be walking all around the area.
+Use the _"Highlord's Judgement"_ ability at the center of your screen on Silver hand Recruits
+Silver Hand recruits judged |q 45143/1 |goto 74.61,53.21
+|only Paladin
+step
+Enter the building |goto Eastern Plaguelands/20 39.83,92.92 < 20 |walk
+Go down the stairs |goto 42.50,88.75 < 15 |walk
+Continue down the stairs |goto 41.57,74.92 < 15 |walk
+Follow the path |goto 48.08,61.76 < 15
+talk Delas Moonfang##109102
+turnin Judgment Awaits##45143 |goto 59.31,32.31
+accept Ancestors and Enemies##45890 |goto 59.31,32.31
+|only Paladin
+step
+Follow the path |goto Val'sharah/0 67.66,51.11 < 25 |only if walking
+Enter the building |goto 66.95,52.73 < 15 |walk
+talk Erelyn Moonfang##119209
+turnin Ancestors and Enemies##45890 |goto 66.77,53.45
+accept Darkbinder Dilemma##46259 |goto 66.77,53.45
+|only Paladin
+step
+Leave the building |goto Val'sharah/0 66.99,52.82 < 15 |walk
+Follow the path |goto 68.20,50.72 < 25 |only if walking
+Follow the path |goto 68.75,52.27 < 25 |only if walking
+Follow the path |goto 68.59,54.89 < 25 |only if walking
+Follow the path |goto 67.40,57.04 < 25 |only if walking
+Follow the path |goto 67.02,59.80 < 25 |only if walking
+kill Darkbinder Elissath##119214 |q 46259/1 |goto 65.69,59.68
+|only Paladin
+step
+Follow the path |goto Val'sharah/0 67.13,59.45 < 25 |only if walking
+Follow the path |goto 67.37,57.09 < 25 |only if walking
+Follow the path |goto 68.16,55.72 < 25 |only if walking
+Follow the path |goto 68.93,53.83 < 25 |only if walking
+Jump down here |goto 68.11,52.27 < 25 |only if walking
+Enter the building |goto 66.98,52.91 < 15 |walk
+talk Erelyn Moonfang##119209
+turnin Darkbinder Dilemma##46259 |goto 66.76,53.46
+accept Moonfang Family Relics##45145 |goto 66.76,53.46
+|only Paladin
+step
+Go upstairs |goto Val'sharah/0 67.02,53.31 < 10 |walk
+click Moonfang Chest##6478
+collect Nerus' Journal##143331 |q 45145/1 |count 1 |goto 66.90,53.13
+|only Paladin
+step
+Leave the building |goto Val'sharah/0 66.98,52.80 < 15
+Enter the building |goto 65.86,51.28 < 15
+click Moonfang Chest##6478
+collect Blank Scroll##143332 |q 45145/1 |count 2 |goto 65.90,50.90
+|only Paladin
+step
+Leave the building |goto Val'sharah/0 65.87,51.30 < 15 |walk
+Enter the building |goto 65.05,51.26 < 15 |walk
+click Moonfang Chest##6478
+collect Felstone Pendant##143330 |q 45145/1 |count 3 |goto 64.83,51.39
+|only Paladin
+step
+Follow the path |goto Eastern Plaguelands/20 48.78,61.05 < 25
+Follow the path |goto 59.40,44.71 < 25
+talk Delas Moonfang##109102
+turnin Moonfang Family Relics##45145 |goto 59.38,32.37
+accept Runic Reading##45146 |goto 59.38,32.37
+|only Paladin
+step
+kill Felguard Invader##92445+, Eredar Riftweaver##92450+
+collect 10 Fel Blood##137677 |q 45146/1 |goto Azsuna/0 66.67,26.52
+|tip Kill enemies all around this area.
+|only Paladin
+step
+Follow the path |goto Eastern Plaguelands/20 48.78,61.05 < 25
+Follow the path |goto 59.40,44.71 < 25
+talk Delas Moonfang##109102
+turnin Runic Reading##45146 |goto 59.38,32.37
+accept Felstone Destruction##45147 |goto 59.38,32.37
+|only Paladin
+step
+click Felstone Pendant
+Felstone Pendant destroyed |q 45147/1 |goto 58.77,31.56
+|only Paladin
+step
+talk Nerus Moonfang##119545
+turnin Felstone Destruction##45147 |goto 58.88,31.80
+accept Oath Breaker##45148 |goto 58.88,31.80
+accept Ending the Crescent Curse##45149 |goto 58.88,31.80
+|tip Watch the dialogue.
+|only Paladin
+stickystart "10Felbound"
+step
+Follow the path |goto Broken Shore/0 51.00,19.29 |only if walking
+Follow the path |goto 51.10,15.30 |only if walking
+Follow the path |goto 53.11,15.83 |only if walking
+kill Oathbinder Zorak##116478 |q 45148/1 |goto 55.28,18.05
+|only Paladin
+step "10Felbound"
+talk Felbound Spirit##116470
+Use the ability found at the center of your screen on Felbound Spirits
+Release #10# Felbound Spirits |q 45149/1 |goto Broken Shore/0 53.93,18.47
+|only Paladin
+step
+Follow the path |goto Eastern Plaguelands/20 48.01,62.34 < 25
+Follow the path |goto 55.94,49.86 <25
+talk Nerus Moonfang##119545
+turnin Oath Breaker##45148 |goto 58.88,31.80
+turnin Ending the Crescent Curse##45149 |goto 58.88,31.80
+|only Paladin
+step
+talk Nerus Moonfang##119545
+accept Champion: Nerus Moonfang##46045 |goto Eastern Plaguelands/20 58.75,31.59
+|only Paladin
+step
+talk Maiev Shadowsong##116576
+turnin Champions of Legionfall##47137 |goto Broken Shore/0 44.51,63.53
+|only Paladin
+step
+talk Champion Cyssa Dawnrose##118376
+accept Worthy of the Title##46069 |goto 43.80,63.10
+|tip You will need to have completed the quest Strike Them Down in the Broken Shore Campaign guide.
+|tip You will also need to have earned the Broken Isles Pathfinder, Part One and Part Two for this to appear.
+Click here to load the "Broken Shore Campaign" guide |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\Broken Shore Campaign"
+|only Paladin
+step
+talk Lord Grayson Shadowbreaker##90250
+turnin Worthy of the Title##46069 |goto Eastern Plaguelands/20 52.28,78.10
+accept Preparations Underway##46070 |goto 52.28,78.10
+|only Paladin
+step
+collect Stonehide Leather Barding 1 ##131746 |q 46070/1
+|tip You can buy this from the Auction House.
+|tip You can create this using Leatherworking.
+|only Paladin
+step
+talk Lord Grayson Shadowbreaker##90250
+turnin Preparations Underway##46070 |goto 52.26,78.10
+accept The Hammer of Dalaran##46071 |goto 52.26,78.10
+|only Paladin
+step
+talk Alard Schmied##92183
+turnin The Hammer of Dalaran##46071 |goto Dalaran L/10 44.07,28.82
+accept A Few Things First##46083 |goto Dalaran L/10 44.07,28.82
+|only Paladin
+step
+collect 25 Leystone Ore##123918 |q 46083/1
+|tip You can buy these from the Auction House.
+|tip You can collect these with the Mining skill.
+|only Paladin
+step
+talk Sundries Merchant##109563
+|tip You must be in your disguise to talk to this npc.
+buy 1 Suramarian Sapphire##147768 |q 46083/2 |goto Suramar/0 50.06,77.24
+|tip This costs 500 Ancient Mana.
+|only Paladin
+step
+talk Alard Schmied##92183
+turnin A Few Things First##46083 |goto Dalaran L/10 44.07,28.82
+accept Leather to Legendary##46074 |goto Dalaran L/10 44.07,28.82
+|only Paladin
+step
+Watch the Dialogue
+click Plated Barding
+collect Plated Barding##144294 |q 46074/1 |goto 44.39,28.76
+|only Paladin
+step
+talk Lord Grayson Shadowbreaker##90250
+Return to Grayson |q 46074/2 |goto Eastern Plaguelands/20 52.40,77.53
+|only Paladin
+step
+talk Lord Grayson Shadowbreaker##90250
+turnin Leather to Legendary##46074 |goto 52.40,77.53
+accept Stirring in the Shadows##45770 |goto 52.40,77.53
+|only Paladin
+step
+Follow the path |goto 41.89,71.22 < 20
+Follow the path |goto 45.48,83.93 < 20
+Exit the building |goto 39.99,92.47 < 15
+talk Defender Sterius##118360
+Tell him "I'm ready to go." |goto Eastern Plaguelands/0 43.46,19.57
+Enter the Stirring in the Shadows scenario
+confirm
+|only Paladin
+step
+Choose 2 allies to recruit |goto 1130/1 63.59,79.00 |scenariostage 1
+|only Paladin
+stickystart "Holy Water"
+step
+Follow the path |goto 63.57,66.60 < 25
+Follow the path |goto 62.73,57.58 < 25
+|tip While in this scenario a Shadowy Figure will periodically spawn summoning mobs for you to fight.
+kill Osseine##118198 |scenariogoal 2/36042 |goto 72.85,46.71
+|only Paladin
+step
+Enter the building |goto 75.17,47.05 < 10
+click Silver Hand Knight##118327
+Find the 1st Missing Paladin |goto 78.23,48.02
+|confirm
+|only Paladin
+step
+Follow the path |goto 66.84,51.09
+kill Pestulon##118199 |goto 58.12,45.66
+|scenariogoal 2/36043
+|only Paladin
+step
+Enter the building |goto 56.22,47.03
+click Silver Hand Knight##118332 |goto 53.50,49.18
+Find the 2nd Missing Paladin
+|confirm
+|only Paladin
+step
+Follow the path |goto 57.90,42.31
+Follow the path |goto 59.87,30.16
+kill Rotmouth##118197 |scenariogoal 2/36041 |goto 66.73,22.38
+|only Paladin
+step
+Enter the building |goto 68.11,20.05
+click Silver Hand Knight##118332
+Find the 3rd Missing Paladin |goto 70.09,16.53
+|confirm
+|only Paladin
+step
+label "Holy Water"
+click Cache of Holy Water##6478+
+collect 6 Stratholme Holy Water##144064
+|tip These can be found in boxes all around Stratholme.
+|only Paladin
+step
+Search the City |scenariostage 2
+|only Paladin
+step
+Follow the path |goto 66.43,27.73 < 20
+Follow the path |goto 71.27,47.76 < 20
+Follow the path |goto 61.51,58.94 < 20
+talk Lord Grayson Shadowbreaker##117714
+Tell him "Here's the Holy Water, Grayson."
+Give Grayson the Holy Water |scenariogoal 3/35263 |goto 63.34,71.88
+|only Paladin
+step
+click Blessed Mount Barding
+Imbue the Barding |scenariogoal 4/35264 |goto 63.29,74.45
+|only Paladin
+step
+map 1130/1
+path follow strict;loop off;ants straight
+path	63.55,66.42	62.73,57.65	65.58,50.09
+path	57.86,40.55	59.38,29.97	55.57,19.11
+path	47.95,19.92
+Enter the building |goto 42.88,20.37 < 5
+Watch the Dialogue
+Explore Rivendare's Crypt |scenariogoal 5/35274 |goto 37.93,21.60
+|only Paladin
+step
+Leave the building |goto 42.88,20.37 < 5
+kill Raemien the Soultaker##118224 |goto 48.41,20.16 |scenariogoal 6/35275
+|only Paladin
+step
+talk Lord Grayson Shadowbreaker##117714
+Tell him "I'm ready to return, Grayson." |goto 47.05,20.40
+Complete the Stirring in the Shadows |q 45770/1
+Click here to continue |confirm always
+|only Paladin
+step
+talk Lord Grayson Shadowbreaker##90250
+turnin Stirring in the Shadows##45770 |goto Eastern Plaguelands/20 52.15,77.80
+|only Paladin
+step
+talk Archmage Khadgar##116302
+accept Seeking Lost Knowledge##47067 |goto Broken Shore/0 44.73,63.27
+|only Priest
+step
+Follow the path |goto 68.70,46.97 < 25 |only if walking
+Follow the path |goto 66.36,42.42 < 25 |only if walking
+Follow the path |goto 67.77,37.75 < 30 |only if walking
+Follow the path up |goto 71.44,35.28 < 15 |only if walking
+Follow the path |goto 71.22,41.78 < 25 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/2 |goto 71.93,40.70
+|only Priest
+step
+Follow the path |goto 72.53,36.30 < 15 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/3 |goto 75.62,36.27
+|only Priest
+step
+Follow the path |goto 76.31,40.52 < 15 |only if walking
+Follow the path |goto 78.82,43.99 < 15 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/1 |goto 82.57,45.09
+|only Priest
+step
+talk Archmage Khadgar##116302
+turnin Seeking Lost Knowledge##47067 |goto 44.73,63.28
+accept Delivering Lost Knowledge##47077 |goto 44.73,63.28
+|only Priest
+step
+talk Juvess the Duskwhisperer##111738
+turnin Delivering Lost Knowledge##47077 |goto Netherlight Temple/1 59.83,28.11
+accept Using Lost Knowledge##46940 |goto 59.83,28.11
+|only Priest
+step
+talk Juvess the Duskwhisperer##111738
+Tell her: _"Let's continue research on my artifact."_
+Start a Research Work Order |q 46940/1 |goto 59.83,28.11
+|only Priest
+step
+talk Juvess the Duskwhisperer##111738
+turnin Using Lost Knowledge##46940 |goto 59.83,28.11
+|only Priest
+step
+talk Archmage Khadgar##116302 |only if not completedq(46765)
+accept Greater Power for Greater Threats##46744 |goto Broken Shore/0 44.74,63.27 |or |only if not completedq(46765)
+|tip |only if not completedq(46765)
+If you have already maxed one of your artifacts, click here |confirm |next "P_Traits" |or |only if not completedq(46765)
+Proceeding |next "P_Traits" |only if completedq(46765)
+|only Priest
+step
+Unlock all traits for one of your artifacts |q 46744/1
+|tip You can earn artifact power by completing world quests, dungeons, and certain quests.
+|only Priest
+step
+talk Archmage Khadgar##116302
+turnin Greater Power for Greater Threats##46744 |goto 44.74,63.27
+|only Priest
+step
+label "P_Traits"
+talk Archmage Khadgar##116302
+accept The Broken Shore: Investigating the Legion##46765 |goto Broken Shore/0 44.73,63.27
+|only Priest
+step
+collect Mysterious Runebound Scroll##147430 |n
+|tip This item has a chance to drop off of any mob.
+|tip Kill enemies in this area until you collect one.
+|tip Rare spawns seem to have a 100% drop rate.
+Discover the Hidden Legion Threat |q 46765/1 |goto Broken Shore/0 44.61,49.57
+|only Priest
+step
+talk Archmage Khadgar##116302
+turnin The Broken Shore: Investigating the Legion##46765 |goto 44.73,63.27
+accept The Council's Call##47000 |goto 44.73,63.27
+|only Priest
+step
+talk Archmage Khadgar##90417
+turnin The Council's Call##47000 |goto Dalaran L/10 28.50,48.33
+accept Away From Prying Eyes##44782 |goto 28.50,48.33
+|only Priest
+step
+Enter the Purple Parlor |q 44782/1 |goto Dalaran L/10 24.30,48.02
+|tip Go through the portal at the top of the stairs.
+|only Priest
+step
+talk Archmage Modera##115465
+turnin Away From Prying Eyes##44782 |goto 22.20,39.04
+accept In Dire Need##44821 |goto 22.20,39.04
+|only Priest
+step
+Hear the Council's Plea |q 44821/1 |goto 22.29,39.68
+|tip Wait for the dialogue to complete.
+|only Priest
+step
+talk Archmage Modera##115465
+turnin In Dire Need##44821 |goto 22.29,39.64
+|only Priest
+step
+label "PSpecs"
+To pursue the Shadow specialization artifact traits, click here |confirm |next "Shadow" |only if not completedq(45866)
+To pursue the Holy specialization artifact traits, click here |confirm |next "Holy" |only if not completedq(45864)
+To pursue the Discipline specialization artifact traits, click here |confirm |next "Discipline" |only if not completedq(45842)
+|tip You must have 35 artifact traits unlocked to start the questline for a specialization. |only if not completedq(45866) or not completedq(45864) or not completedq(45842)
+Continuing |next "AfterSpecP" |only if completedq(45866) and completedq(45864) and completedq(45842)
+|only Priest
+step
+label "Shadow"
+talk Archmage Karlain##90463
+accept Shadow: The Twisted Twin##47042 |goto 28.61,47.78
+|tip This quest is geared towards the Shadow specialization.
+|tip You must have 35 artifact traits unlocked with this specialization to start this questline.
+|only Priest
+step
+talk Karam Magespear##116175
+turnin Shadow: The Twisted Twin##47042 |goto 49.36,39.84
+accept Message from the Shadows##45185 |goto 49.36,39.84
+|only Priest
+step
+click Wand of Simulated Life##3365
+collect Wand of Simulated Life##143534 |n
+click A Mysterious Note##3365
+collect A Mysterious Note##143494 |n
+Search for clues |q 45185/1 |goto 47.36,41.26
+|tip Go upstairs.
+|only Priest
+step
+talk Karam Magespear##116175
+turnin Message from the Shadows##45185 |goto 49.36,39.80
+accept Secrets in the Underbelly##45187 |goto 49.36,39.80
+|only Priest
+step
+Enter The Underbelly |goto Dalaran L/10 34.61,45.54 <20
+click Underbelly Lowlife##116323
+|tip You will need to click several of them
+collect Nethersworn Manifesto##143496 |n
+Search for clues |q 45187/1 |goto Dalaran L/11 54.18,62.44
+|only Priest
+step
+talk Karam Magespear##116308
+turnin Secrets in the Underbelly##45187 |goto 52.15,58.48
+accept The Wisdom of the Council##45188 |goto 52.15,58.48
+|only Priest
+step
+talk Archmage Karlain##90463
+turnin The Wisdom of the Council##45188 |goto Dalaran L/10 28.59,47.78
+accept Where it's Thinnest##45190 |goto 28.59,47.78
+|only Priest
+step
+Cross the water |goto Broken Shore/0 52.02,25.15 < 20 |only if walking
+talk Karam Magespear##116175
+turnin Where it's Thinnest##45190 |goto 56.46,27.34
+accept Runes of Rending##45192 |goto 56.46,27.34
+|only Priest
+step
+kill Thar'kith##34914
+Bypass the wards |q 45192/1 |goto 59.74,27.33
+|tip You will need to step on blue runes only.
+|tip Stepping on a purple rune will instantly kill you.
+|tip Stepping on a blue rune will change some nearby runes to blue or purple.
+|only Priest
+step
+kill Thar'kith##116393
+Defeat Raest's minions |q 45192/2
+|only Priest
+step
+talk Karam Magespear##116308
+turnin Runes of Rending##45192 |goto 59.79,27.44
+accept One Step Behind##45193 |goto 59.79,27.44
+|only Priest
+step
+talk Archmage Khadgar##90417
+turnin One Step Behind##45193 |goto Dalaran L/10 28.45,48.35
+|only Priest
+step
+talk Archmage Modera##90418
+accept A Gift From the Six##45866 |goto 28.45,48.90
+|only Priest
+step
+Receive the Council's gift |q 45866/1 |goto 30.43,48.95
+|tip Stand in the circle and use the special action button that appears on-screen.
+|tip Stand still until the ritual completes.
+|only Priest
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45866 |goto 28.44,48.93
+|only Priest
+step
+To pursue another specialization's traits, click here |confirm |next "PSpecs" |only if not completedq(45866) or not completedq(45864) or not completedq(45842)
+To continue, click here |confirm |next "AfterSpecP" |only if not completedq(45866) or not completedq(45864) or not completedq(45842)
+Continuing |next "AfterSpecP" |only if completedq(45866) and completedq(45864) and completedq(45842)
+|only Priest
+step
+label "Holy"
+talk Archmage Modera##90418
+accept Holy: The Bradensbrook Investigation##46078 |goto Dalaran L/10 28.43,48.88
+|tip This quest is geared towards the Holy specialization.
+|tip You must have 35 artifact traits unlocked with this specialization to start this questline.
+|only Priest
+step
+talk Mayor Heathrow##118752
+turnin Holy: The Bradensbrook Investigation##46078 |goto Val'sharah/0 42.24,58.97
+accept Aid on the Front Lines##46079 |goto Val'sharah/0 42.28,58.96
+|only Priest
+step
+click Injured Villager##118809
+Heal these Injured Villagers scattered around the field
+Heal 8 wounded defenders |q 46079/1 |goto Val'sharah/0 42.29,61.28
+|only Priest
+step
+talk Mayor Heathrow##118752
+turnin Aid on the Front Lines##46079 |goto Val'sharah/0 42.28,58.96
+accept Shadowsong's Return##46082 |goto Val'sharah/0 42.28,58.96
+|only Priest
+step
+talk Commander Jarod Shadowsong##118947
+turnin Shadowsong's Return##46082 |goto 39.12,58.13
+accept Cutting off the Heads##46106 |goto 39.12,58.13
+accept Quieting the Spirits##46080 |goto 39.12,58.13
+|only Priest
+stickystart "Risen Attackers2"
+step
+kill Nethos Starwalker##118950 |q 46106/2 |goto Val'sharah/0 37.09,58.46
+|only Priest
+step
+kill Tael'thos the Cutter##118951 |q 46106/3 |goto 39.22,62.13
+|only Priest
+step
+kill Disa Trueshaft##118949 |q 46106/1 |goto 36.80,61.33
+|only Priest
+step
+label "Risen Attackers2"
+kill Risen Archer##118759+, Risen Soldier##118758+, Risen Hound##118754+, Risen Scout##118757+, Black Rook Falcon##118756+
+Slay 12 Risen Attackers |q 46080/1
+|only Priest
+step
+Next to you
+talk Commander Jarod Shadowsong##118954
+turnin Cutting off the Heads##46106
+turnin Quieting the Spirits##46080
+accept Source of the Corruption##46107
+|only Priest
+step
+Follow the path up |goto 38.63,57.60 < 10 |only if walking
+Go to Heroes' Rest |q 46107/1 |goto 37.83,55.32
+|only Priest
+step
+click Corrupted Rooksguard##120156+
+|tip Once clicked, these will either be freed and disappear or get angry and attack you.
+Release 3 Fel Courrupted Rooksguards |q 46107/2 |goto 38.42,53.02
+|only Priest
+step
+kill Lorgos the Resurrector##118980 |q 46107/3 |goto 38.92,51.34
+|only Priest
+step
+Next to you
+talk Commander Jarod Shadowsong##118954
+turnin Source of the Corruption##46107
+accept The Matter Resolved... For Now...##46200
+|only Priest
+step
+talk Archmage Modera##90418
+turnin The Matter Resolved... For Now...##46200 |goto Dalaran L/10 28.61,48.90
+accept A Gift From the Six##45864 |goto Dalaran L/10 28.61,48.90
+|only Priest
+step
+Receive the Council's gift |q 45864/1 |goto 30.42,48.91
+|tip Stand in the circle and use the special action button that appears on-screen.
+|tip Stand still until the ritual completes.
+|only Priest
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45864 |goto Dalaran L/10 28.61,48.90
+|only Priest
+step
+To pursue another specialization's traits, click here |confirm |next "PSpecs" |only if not completedq(45866) or not completedq(45864) or not completedq(45842)
+To continue, click here |confirm |next "AfterSpecP" |only if not completedq(45866) or not completedq(45864) or not completedq(45842)
+Continuing |next "AfterSpecP" |only if completedq(45866) and completedq(45864) and completedq(45842)
+|only Priest
+step
+label "Discipline"
+talk Archmage Modera##90418
+accept Discipline: Rumblings Near Feltotem##47020 |goto 22.31,39.64
+|tip This quest is geared towards the Discipline specialization.
+|tip You must have 35 artifact traits unlocked with this specialization to start this questline.
+|only Priest
+step
+Follow the path |goto Highmountain/0 40.87,11.50 < 25 |only if walking
+Follow the path |goto 37.68,16.10 < 25 |only if walking
+Follow the path |goto 36.60,20.17 < 25 |only if walking
+talk Navarrogg##117225
+turnin Discipline: Rumblings Near Feltotem##47020 |goto 35.74,23.98
+accept The Burning Birds##45564 |goto 35.74,23.98
+|only Priest
+step
+click Fel Infusing Totem
+|tip You will take periodic fire damage for 10 seconds after clicking one.
+collect 5 Fel Infusing Totem##143778 |q 45564/1 |goto 35.74,23.98
+|only Priest
+step
+Meet Navarrogg near Feltotem |q 45564/2 |goto 31.31,25.14
+|only Priest
+step
+talk Navarrogg##117249
+turnin The Burning Birds##45564 |goto 31.31,25.14
+accept The Tainted Marsh##45726 |goto 31.31,25.14
+|only Priest
+step
+talk Navarrogg##117249
+Tell him: _"I'd like the help to the Blind Marshlands."_
+Get a ride to the Marshlands |q 45726/1 |goto 31.31,25.14
+|only Priest
+step
+kill Seabound Reaver##102038+
+Use the Exfoliator on their corpses |use Fel Exfoliator##143863
+Cleanse #5# spirits |q 45726/2 |goto 27.93,31.94
+|only Priest
+step
+Follow the path |goto Highmountain/0 27.78,27.82 < 20 |only if walking
+Follow the path |goto 29.09,26.04 < 20 |only if walking
+talk Navarrogg##117249
+turnin The Tainted Marsh##45726 |goto 31.30,25.13
+accept Village of the Corruptors##45575 |goto 31.30,25.13
+|only Priest
+step
+kill Feltotem Infuser##117353+
+|tip You will find these inside huts.
+Kill #4# Feltotem Infusers |q 45575/1 |goto 30.09,28.49
+|only Priest
+step
+talk Navarrogg##117292
+|tip He will appear next to you.
+turnin Village of the Corruptors##45575 |goto 30.06,28.37
+accept The Feltotem Menace##45587 |goto 30.06,28.37
+|only Priest
+step
+Follow the path |goto 30.81,31.49 < 25 |only if walking
+Find Tugar Bloodtotem |q 45587/1 |goto 32.24,32.68
+|only Priest
+step
+Stop Tugar Bloodtotem |q 45587/2 |goto 32.38,32.81
+|tip Wait for the dialogue to complete.
+|only Priest
+step
+talk Navarrogg##117361
+turnin The Feltotem Menace##45587 |goto 31.30,25.14
+accept Destroying the Nest##45796 |goto 31.30,25.14
+|only Priest
+step
+Follow the path |goto Highmountain/0 32.33,26.05 < 25 |only if walking
+Enter the cave |goto 33.60,28.08 < 15 |only if walking
+Enter Feltotem Caverns |q 45796/1 |goto Highmountain/40 49.44,12.85
+|only Priest
+step
+kill Novice Warbull##118051+, Feltotem Warbull##119495+, Novice Acolyte##118050+
+Kill #15# Legion forces |q 45796/2 |goto 57.44,52.61
+kill Fel Worm Egg##118040+
+|tip These lay in clusters near Fel Worms.
+Destroy #50# Fel Worm eggs |q 45796/3 |goto 57.44,52.61
+|only Priest
+step
+kill Fel Broodmaster##117984
+Slay the Fel Broodmaster |q 45796/4 |goto 73.74,59.89
+|only Priest
+step
+Leave the cave |goto Highmountain/0 33.60,28.07 < 10 |only if walking
+Follow the path |goto 32.60,26.25 < 25 |only if walking
+turnin Destroying the Nest##45796 |goto 31.31,25.14
+accept A Triumphant Report##45841 |goto 31.31,25.14
+|only Priest
+step
+talk Archmage Modera##90418
+turnin A Triumphant Report##45841 |goto Dalaran L/10 28.45,48.90
+accept A Gift From the Six##45842 |goto 28.45,48.90
+|only Priest
+step
+Receive the Council's gift |q 45842/1 |goto 30.43,48.95
+|tip Stand in the circle and use the special action button that appears on-screen.
+|tip Stand still until the ritual completes.
+|only Priest
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45842 |goto 28.44,48.93
+|only Priest
+step
+To pursue another specialization's traits, click here |confirm |next "PSpecs" |only if not completedq(45866) or not completedq(45864) or not completedq(45842)
+To continue, click here |confirm |next "AfterSpecP" |only if not completedq(45866) or not completedq(45864) or not completedq(45842)
+Continuing |next "AfterSpecP" |only if completedq(45866) and completedq(45864) and completedq(45842)
+|only Priest
+step
+label "AfterSpecP"
+talk Maiev Shadowsong##116576
+accept Champions of Legionfall##47137 |goto Broken Shore/0 44.54,63.52
+|only Priest
+step
+talk Alonsus Faol##110564
+accept A Curious Contagion##45343 |goto Netherlight Temple/1 51.55,47.74
+|only Priest
+step
+Follow the path |goto Highmountain/0 35.50,63.47 < 20 |only if walking
+Follow the path |goto 32.42,60.55 < 25 |only if walking
+Follow the path |goto 29.65,56.85 < 25 |only if walking
+talk Aelthalyste##118528
+turnin A Curious Contagion##45343 |goto 29.96,55.88
+accept Sampling the Source##45344 |goto 29.96,55.88
+accept Shambling Specimens##45346 |goto 29.96,55.88
+accept Mischievous Sprites##45345 |goto 29.96,55.88
+|only Priest
+step
+Follow the path down |goto Highmountain/0 29.37,55.88 < 20 |only if walking
+Follow the path |goto 29.85,52.31 < 20 |only if walking
+kill Soothoof Hillstrider##116975+
+|tip Use your Dispel Magic ability on Hillstriders before killing them.
+collect 25 Shimmering Dust##143678 |q 45345/1 |goto 30.50,48.17
+|only Priest
+stickystart "Specimen"
+step
+Follow the path |goto 31.05,43.80 < 25 |only if walking
+Follow the path |goto 31.62,41.58 < 25 |only if walking
+Follow the path |goto 30.86,38.79 < 25 |only if walking
+click Shambling Corpse##116982
+Use Shackle Undead on Shambling Corpses |cast Shackle Undead##9484
+Use the Corpse Collector on Shackled corpses |use Corpse Collector##143718
+Collect #4# Shambling Corpses |q 45346/1 |goto 28.35,34.85
+|only Priest
+step
+label "Specimen"
+click Fel Contagion##6478
+|tip Standing on the burnt ground will deal damage over time.
+Collect #6# Contaminated Specimens |q 45344/1 |goto 28.35,34.85
+|only Priest
+step
+Follow the path |goto 30.91,35.05 < 25 |only if walking
+Follow the path up |goto 30.89,40.88 < 25 |only if walking
+Follow the path |goto 31.01,46.33 < 25 |only if walking
+Follow the path up |goto 29.85,52.95 < 25 |only if walking
+Follow the path |goto 29.50,56.40 < 25 |only if walking
+talk Aelthalyste##118528
+turnin Sampling the Source##45344 |goto 29.96,55.88
+turnin Shambling Specimens##45346 |goto 29.96,55.88
+turnin Mischievous Sprites##45345 |goto 29.96,55.88
+accept Crafting a Cure##45347 |goto 29.96,55.88
+|only Priest
+step
+click Untested Cure##117006
+Add Holy magic to the Untested Cure |q 45347/1 |goto 30.00,55.87
+|only Priest
+step
+click Untested Cure##117006 |goto 30.00,55.87
+|tip It's on the table in the same spot.
+click Roland Abernathy##116702
+|tip Use the extra action button on your screen to administer the cure.
+Administer the Untested Cure |q 45347/2 |goto 30.00,55.79
+|only Priest
+step
+click Untested Cure##117006
+Add Shadow magic to the Untested Cure |q 45347/3 |goto 30.00,55.87
+|only Priest
+step
+click Untested Cure##117006 |goto 30.00,55.87
+|tip It's on the table in the same spot.
+click Roland Abernathy##116702
+|tip Use the extra action button on your screen to administer the cure.
+Administer the Untested Cure |q 45347/4 |goto 30.00,55.79
+|only Priest
+step
+click Roland Abernathy##116702
+Resurrect Roland Abernathy |q 45347/5 |goto 30.00,55.79
+|only Priest
+step
+talk Aelthalyste##118528
+turnin Crafting a Cure##45347 |goto 29.96,55.88
+accept Safekeeping##45348 |goto 29.96,55.88
+|only Priest
+step
+talk Alonsus Faol##110564
+turnin Safekeeping##45348 |goto Netherlight Temple/1 51.60,47.81
+accept To the Broken Shore##45349 |goto 51.60,47.81
+|only Priest
+step
+Follow the path |goto Broken Shore/0 40.58,61.76 < 25 |only if walking
+Follow the path |goto 40.31,67.42 < 25 |only if walking
+Drop down |goto 38.87,65.49 < 15 |only if walking
+Follow the path |goto 35.23,60.17 < 20 |only if walking
+Follow the path |goto 34.10,52.67 < 15 |only if walking
+talk Aelthalyste##118528
+turnin To the Broken Shore##45349 |goto 33.65,49.69
+accept Countering the Contagion##45350 |goto 33.65,49.69
+accept Administering Aid##45342 |goto 33.65,49.69
+|only Priest
+stickystart "Cure"
+step
+Follow the path |goto 30.58,54.45 < 20 |only if walking
+click Fel Spreader##8386
+Fel Spreaders destroyed |q 45350/1 |goto 32.11,56.23 |count 1
+|only Priest
+step
+click Fel Spreader##8386
+Fel Spreaders destroyed |q 45350/1 |goto 35.38,58.92 |count 2
+|only Priest
+step
+click Fel Spreader##8386
+Fel Spreaders destroyed |q 45350/1 |goto 34.16,64.02 |count 3
+|only Priest
+step
+click Fel Spreader##8386
+Fel Spreaders destroyed |q 45350/1 |goto 31.46,60.58 |count 4
+|only Priest
+step
+Follow the path |goto 29.10,61.97 < 20 |only if walking
+kill Ozzuk the Corrupter##117170
+Defeat Ozzuk the Corrupter |q 45350/2 |goto 29.23,63.86
+|only Priest
+step
+Follow the path |goto 27.94,58.48 < 25 |only if walking
+click Fel Spreader##8386
+Fel Spreaders destroyed |q 45350/1 |goto 28.42,56.34 |count 5
+|only Priest
+step
+label "Cure"
+click Legionfall Fighter##117196
+Use the Counteragent |use Contagion Counteragent##143773
+Cure #8# Legionfall Fighters |q 45342/1 |goto 31.36,60.48
+|only Priest
+step
+Follow the path |goto 30.84,54.36 < 20 |only if walking
+talk Aelthalyste##118528
+turnin Countering the Contagion##45350 |goto 33.65,49.69
+turnin Administering Aid##45342 |goto 33.65,49.69
+accept Sterile Surroundings##46145 |goto 33.65,49.69
+|only Priest
+step
+talk Aelthalyste##120842
+turnin Sterile Surroundings##46145 |goto Netherlight Temple/1 23.92,40.49
+accept Champion: Aelthalyste##46034 |goto 23.92,40.49
+|only Priest
+step
+talk Moira Thaurissan##109776
+accept Further Advancement##46788 |goto 51.42,45.94
+|only Priest
+step
+talk Archon Torias##110725
+Talk to Archon Torias |q 46788/1 |goto 55.96,40.68
+|only Priest
+step
+talk Moira Thaurissan##109776
+turnin Further Advancement##46788 |goto 51.42,45.94
+|only Priest
+step
+talk Maiev Shadowsong##116576
+turnin Champions of Legionfall##47137 |goto Broken Shore/0 44.54,63.52
+|only Priest
+step
+talk Archmage Khadgar##116302
+accept Shard Times##46251 |goto 44.74,63.27
+|only Priest
+step
+Collect #2500# Nethershards |q 46251/1 |goto 44.74,63.27
+|tip Nethershards can be obtained by looting rares, treasures, and completing world quests.
+|only Priest
+step
+talk Archmage Khadgar##116302
+turnin Shard Times##46251 |goto 44.74,63.27
+|only Priest
+step
+You must complete the Broken Shore campaign to continue
+Use the Broken Shore Campaign guide to accomplish this |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\Broken Shore Campaign"
+Breach the Tomb |q 46246 |future
+|only Priest
+step
+talk Grand Priest##118536
+accept The Speaker Awaits##45788 |goto Broken Shore/0 44.40,63.66
+|only Priest
+step
+talk Betild Deepanvil##102709
+turnin The Speaker Awaits##45788 |goto Netherlight Temple/1 47.94,21.89
+accept The Sunken Vault##45789 |goto Netherlight Temple/1 47.94,21.89
+|only Priest
+step
+talk Brann Bronzebeard##117694
+Tell him: _"I am ready to head to the Maelstrom."_
+Submarine taken to the Sunken Vault |q 45789/1 |goto Azsuna/0 44.26,51.24
+|only Priest
+step
+Locate the lost Titan vault near the Maelstrom |scenariostage 1 |goto Lightless Cavern/1 47.21,50.67
+|only Priest
+step
+Enter the Titan vault |scenariostage 2 |goto 53.53,54.72
+|only Priest
+step
+click Control Console
+Activate the console |scenariogoal 3/35058 |goto 72.89,70.94
+|only Priest
+step
+Listen to the custodian's story |scenariostage 4 |goto 71.89,65.47
+|tip This will take some time to complete.
+|only Priest
+step
+Defend yourself against the vault's defense machanisms |scenariostage 5 |goto 68.82,63.19
+|tip Kill the waves of enemies.
+|tip Move out of AoE effects.
+|only Priest
+step
+talk Brann Bronzebeard##117694
+Tell him: _"I am ready to head back to Dalaran."_ |goto 69.20,62.12
+Return to Dalaran |goto Dalaran L/10 72.46,45.93 < 50 |c |noway
+|only Priest
+step
+talk Betild Deepanvil##102709
+turnin The Sunken Vault##45789 |goto Netherlight Temple/1 49.77,20.64
+|only Priest
+step
+talk Archmage Khadgar##116302
+accept Seeking Lost Knowledge##47067 |goto Broken Shore/0 44.73,63.27
+|only Rogue
+step
+Follow the path |goto 68.70,46.97 < 25 |only if walking
+Follow the path |goto 66.36,42.42 < 25 |only if walking
+Follow the path |goto 67.77,37.75 < 30 |only if walking
+Follow the path up |goto 71.44,35.28 < 15 |only if walking
+Follow the path |goto 71.22,41.78 < 25 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/2 |goto 71.87,40.67
+|only Rogue
+step
+Follow the path |goto 72.41,36.49 < 15 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/3 |goto 75.62,36.27
+|only Rogue
+step
+Jump Down here |goto 77.81,37.88 < 10 |only if walking
+Follow the path |goto 79.71,42.09 < 20 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/1 |goto 82.57,45.09
+|only Rogue
+step
+talk Archmage Khadgar##116302
+turnin Seeking Lost Knowledge##47067 |goto 44.73,63.28
+accept Delivering Lost Knowledge##47079 |goto 44.73,63.28
+|only Rogue
+step
+talk Filius Sparkstache##102641
+turnin Delivering Lost Knowledge##47079 |goto Dalaran L/4 38.59,70.02
+accept Using Lost Knowledge##46940 |goto Dalaran L/4 38.59,70.02
+|only Rogue
+step
+talk Gorma Windspeaker##111739
+Tell her _"Let's continue research on my artifact"_
+Start a Research Work Order |q 46940/1 |goto 38.59,70.02
+|tip Each work order costs 500 Order Resources.
+|only Rogue
+step
+talk Gorma Windspeaker##111739
+turnin Using Lost Knowledge##46940 |goto 38.59,70.02
+|only Rogue
+step
+talk Archmage Khadgar##116302
+accept The Broken Shore: Investigating the Legion##46765 |goto Broken Shore/0 44.73,63.29
+|only Rogue
+step
+Follow the path |goto 46.86,58.63 < 25 |only if walking
+Follow the path |goto 51.48,54.17 < 30 |only if walking
+kill Toiling Collector##119187+
+|tip This is not a 100 percent chance to drop.
+collect Mysterious Runebound Scroll##147430 |q 46765/1 |goto Broken Shore/0 54.55,56.57
+|only Rogue
+step
+talk Archmage Khadgar##116302
+turnin The Broken Shore: Investigating the Legion##46765 |goto Broken Shore/0 44.73,63.29
+accept The Council's Call##47000 |goto Broken Shore/0 44.73,63.29
+|tip You need 35 traits in at least one spec to accept this quest.
+|only Rogue
+step
+talk Archmage Khadgar##90417
+turnin The Council's Call##47000 |goto Dalaran L/10 28.68,48.48
+accept Away From Prying Eyes##44782 |goto Dalaran L/10 28.68,48.48
+|only Rogue
+step
+Enter the Portal |q 44782/1 |goto Dalaran L/10 24.76,48.15
+|only Rogue
+step
+talk Archmage Modera##115465
+turnin Away From Prying Eyes##44782 |goto 22.50,39.07
+accept In Dire Need##44821 |goto 22.50,39.07
+|only Rogue
+step
+Watch the Dialogue
+Hear the Council's Plea |q 44821/1 |goto 23.03,39.77
+|only Rogue
+step
+talk Archmage Modera##115465
+turnin In Dire Need##44821 |goto 22.38,39.71
+|only Rogue
+step
+label "Rogue Artifact Options"
+Click here if you would like to do the Outlaw Artifact upgrade quest line |next "Outlaw Artifact Upgrade"
+Click here if you would like to do the Assasination Artifact upgrade quest line |next "Assasination Artifact Upgrade"
+Click here if you would like to do the Subtlety Artifact upgrade quest line |next "Subtlety Artifact Upgrade"
+confirm
+|only Rogue
+step
+label "Outlaw Artifact Upgrade"
+talk Archmage Modera##115465
+accept Outlaw: The Folly of Levia Lauren##47058 |goto Dalaran L/10 22.67,39.62
+|only Rogue
+step
+talk Professor Pallin##92195
+Tell him "Do you know where I can find Levia Laurence?"
+Ask about Levia at the Scribe's Sacellum |q 47058/1 |goto 41.40,37.18
+|only Rogue
+step
+talk Icks##97331
+Tell him "Do you know where I can find Levia Laurence?"
+Ask about Levia at the Militant Mystic |q 47058/2 |goto 49.04,73.29
+|only Rogue
+step
+talk Amisi Azuregaze##96806
+Tell her "Do you know where I can find Levia Laurence?"
+Ask about Levia at the Legerdemain Lounge |q 47058/3 |goto 49.71,39.88
+|only Rogue
+step
+Run up the stairs |goto 49.92,39.46
+click Levia's Research Journal
+Investigate Levia's belongings |q 47058/4 |goto 46.49,40.04
+|only Rogue
+step
+talk Archmage Modera##90418
+turnin Outlaw: The Folly of Levia Lauren##47058 |goto 28.51,48.90
+accept Bargaining with Shadows##46327 |goto 28.51,48.90
+|only Rogue
+step
+talk Ritssyn Flamescowl##116714
+turnin Bargaining with Shadows##46327 |goto Dalaran L/12 53.10,59.42
+accept The Acolyte Imperiled##45916 |goto Dalaran L/12 53.10,59.42
+|only Rogue
+step
+Watch the Dialogue
+Investigate Levia's Ritual |q 45916/1 |goto 57.70,72.15
+|only Rogue
+step
+Slay all of the Imps that come out of the side portals
+Defend Ritssyn |q 45916/2 |goto 57.70,72.15
+|only Rogue
+step
+talk Ritssyn Flamescowl##116714
+turnin The Acolyte Imperiled##45916 |goto 57.70,72.15
+accept Dabbling in the Demonic##45125 |goto 57.70,72.15
+|only Rogue
+step
+Click the _Taam_ Rune to activate it
+Click the _Talar_ Rune to activate it
+Click the _Dregla_ Rune to activate it
+talk Ritssyn Flamescowl##116714
+Tell him "The tunes are activated. Stabilize the portal."
+Stabilize the Portal |q 45125/1 |goto 57.36,72.21
+|only Rogue
+step
+talk Ritssyn Flamescowl##116714
+turnin  Dabbling in the Demonic##45125 |goto 57.70,72.15
+accept Following the Scent##45917 |goto 57.70,72.15
+|only Rogue
+step
+click Demonic Gateway |goto 57.70,72.15
+talk Fhambar##118450
+Tell him "Go find Levia, Fhambar!"
+Speak to Fhambar |q 45917/1 |goto Azsuna/0 30.95,51.86
+|only Rogue
+step
+Follow Fhambar around
+|tip Fhember will periodically stop and find nothing, keep close to him.
+Find Levia Laurance |q 45917/2 |goto Azsuna/0 25.90,57.36
+|only Rogue
+step
+talk Levia Laurence##116189
+turnin Following the Scent##45917 |goto 25.68,57.73
+accept Unlikely Seduction##45126 |goto 25.68,57.73
+|only Rogue
+step
+kill Agatha##118520 |q 45126/1 |goto 25.68,57.73
+|only Rogue
+step
+talk Levia Laurence##116189
+turnin Unlikely Seduction##45126 |goto 25.68,57.73
+accept Fel-Crossed Lovers##45127 |goto 25.68,57.73
+|only Rogue
+step
+talk Archmage Modera##90418
+turnin Fel-Crossed Lovers##45127 |goto Dalaran L/10 28.62,48.86
+accept A Gift From the Six##45861 |goto Dalaran L/10 28.61,48.90
+|only Rogue
+step
+Enter the Blue Circle on the ground
+Use the extra action ability "Aquire the Gift"
+Receive the Council's gift |q 45861/1 |goto 30.42,48.91
+|only Rogue
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45861 |goto Dalaran L/10 28.61,48.90
+|only Rogue
+step
+To apply your new points you will need to go back to your Alter within your Order Hall
+confirm
+|only Rogue
+step
+Click here if you would like to do another specs Artifact Upgrade quest line |next "Rogue Artifact Options"
+|tip To start another quest line you must have at least 35 traits in the weapons spec.
+Click here if you would to continue through the Order Hall quest line |next "Rogue 7.2 conti"
+confirm
+|only Rogue
+step
+label "Assasination Artifact Upgrade"
+talk Archmage Khadgar##90417
+accept Assassination: Fate of the Tideskorn##47051 |goto Dalaran L/10 28.69,48.35
+|only Rogue
+step
+talk Huntsman Slodi##119230
+Tell him "I'm searching for the vrykul mentioned in these scrolls."
+Speak with Huntsman Slodi |q 47051/1 |goto Suramar/0 65.37,50.80
+|only Rogue
+step
+Follow the path |goto 65.79,51.16 |only if walking
+Enter the building |goto 70.45,49.78 |walk
+talk Priestess Bryna##119232
+Tell her "Skodl mentioned you could help find the vrykul mentioned in these scrolls."
+Speak with Priestess Bryna |q 47051/2 |goto 70.51,49.97
+|only Rogue
+step
+Enter the building and run up the stairs |goto 71.57,49.77
+talk Yngvild the Watcher##119233
+Tell her "Have any vrykul come through here that struck you as odd?"
+Speak with Yngvild the Watcher |q 47051/3 |goto 71.49,49.56
+|only Rogue
+step
+Follow the shore |goto 72.99,49.80 |only if walking
+talk Sigryn##116568
+turnin Assassination: Fate of the Tideskorn##47051 |goto 76.25,50.03
+accept The Reluctant Queen##45486 |goto 76.25,50.03
+|only Rogue
+step
+talk Sigryn##116568
+Tell her "I'm ready."
+Speak to Sigryn in Valdisdall |q 45486/1 |goto Stormheim/0 59.67,50.84
+|only Rogue
+step
+Follow Sigryn, she will follow the road
+Defeat the Hidden Assasins that appear along the way
+|tip Stay close to her.
+Escort Sigryn to Skold-Ashil |q 45486/2 |goto 62.37,68.06
+|only Rogue
+step
+talk Priestess Halla##117107
+Tell her "This vrykul is the heir to the God-King. She seeks an audience with Eyir."
+Speak with Priestess Halla |q 45486/3 |goto 62.77,68.10
+|only Rogue
+step
+Watch the Dialogue
+Gain an audience with Eyir |q 45486/4 |goto Stormheim/28 64.23,51.05
+|only Rogue
+step
+talk Eyir##93628
+turnin The Reluctant Queen##45486 |goto 66.25,51.18
+accept To Silence the Bonespeakers##45522 |goto 66.25,51.18
+|only Rogue
+step
+Follow the path |goto Stormheim/0 61.30,52.44 < 10 |only if walking
+Continue following the path |goto 65.85,49.78 < 10 |only if walking
+Follow the path down |goto 68.16,47.49 < 10 |only if walking
+Follow the stairs down |goto 70.09,44.39 < 10 |only if walking
+Defeat Runeseer Faljar |q 45522/1 |goto 72.83,40.49
+|only Rogue
+step
+talk Runeseer Faljar##117199
+turnin To Silence the Bonespeakers##45522 |goto 73.25,39.91
+|only Rogue
+step
+talk Sigryn##116568
+accept To Tame the Drekirjar##45523 |goto 72.90,40.43
+|only Rogue
+step
+Use your Grapple ability here to get over the wall |goto 40.14,66.12 < 10 |only if walking
+Follow the path up |goto 42.21,66.76 < 10 |only if walking
+Continue following the path up |goto 43.78,69.09 < 10 |only if walking
+Enter the building |goto 42.09,71.00 < 5 |walk
+Watch the Dialogue
+Defeat Jarl Velbrand |q 45523/1 |goto 41.36,71.72
+|only Rogue
+step
+talk Jarl Velbrand##117227
+turnin To Tame the Drekirjar##45523 |goto 41.15,71.91
+|only Rogue
+step
+talk Sigryn##116568
+accept The Forgotten Heir##45524 |goto 41.38,71.67
+|only Rogue
+step
+Follow the path |goto 79.21,65.11 < 10 |only if walking
+Follow the path down |goto 78.48,69.21 < 10 |only if walking
+Follow the Shore |goto 78.84,76.51 < 10 |only if walking
+Cross the water |goto 76.79,84.56 < 10 |only if walking
+Follow the path up |goto 73.40,87.73 < 10 |only if walking
+Enter the cave |goto 73.75,86.14 |walk
+Watch the Dialogue
+Find Torvald |q 45524/1 |goto Stormheim/0 74.19,85.03
+|only Rogue
+step
+kill Torvald##116497 |q 45524/2 |goto 74.19,85.03
+|only Rogue
+step
+talk Sigryn##116568
+turnin The Forgotten Heir##45524 |goto 74.19,85.03
+accept Unanswered Questions##45525 |goto 74.19,85.03
+|only Rogue
+step
+Follow the path down |goto 67.10,62.21 < 10 |only if walking
+Continue following the path |goto 64.05,63.39 < 10 |only if walking
+Enter the building |goto 62.73,68.10 |walk
+talk Sigryn##116568
+Tell her "I'm ready."
+Watch the Dialogue
+Speak to Sigryn |q 45525/1 |goto Stormheim/28 65.79,50.55
+|only Rogue
+step
+talk Eyir##93628
+turnin Unanswered Questions##45525 |goto 65.79,50.55
+accept The Gates Are Closed##46340 |goto 65.79,50.55
+|only Rogue
+step
+talk Archmage Khadgar##90417
+turnin The Gates Are Closed##46340 |goto Dalaran L/10 28.55,48.35
+|only Rogue
+step
+talk Archmage Modera##90418
+accept A Gift From the Six##45862 |goto 28.45,48.91
+|only Rogue
+step
+Enter the Blue Circle on the ground
+Use the extra action ability "Aquire the Gift"
+Receive the Council's gift |q 45862/1 |goto 30.42,48.91
+|only Rogue
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45862 |goto 28.45,48.91
+|only Rogue
+step
+To apply your new points you will need to go back to your Alter within your Order Hall
+confirm
+|only Rogue
+step
+Click here if you would like to do another specs Artifact Upgrade quest line |next "Rogue Artifact Options"
+|tip To start another quest line you must have at least 35 traits in the weapons spec.
+Click here if you would to continue through the Order Hall quest line |next "Rogue 7.2 conti"
+confirm
+|only Rogue
+step
+label "Subtlety Artifact Upgrade"
+talk Archmage Kalec##115467
+accept Subtlety: The Thieving Apprentice##47048 |goto Dalaran L/10 28.85,49.79
+|tip This quest is geared towards the Havoc specialization.
+|only Rogue
+step
+talk Joanna##115791
+turnin Subtlety: The Thieving Apprentice##47048 |goto Azshara/0 25.02,38.53
+accept Professionally Good Looking##44915 |goto 25.02,38.53
+|only Rogue
+step
+talk Lobos##115970
+collect Fanciful Hat##142374 |n
+Acquire the Fanciful Hat |q 44915/3 |goto 45.17,18.42
+|tip Challenge Lobos for his hat.
+|only Rogue
+step
+talk Raethas Dawnseer##115946
+collect Well-Tailored Robes##142372 |n
+Acquire the Well-Tailored Robes |q 44915/2 |goto 62.45,16.05
+|tip Challenge Raethas for his robes.
+|only Rogue
+step
+talk Phloem##115903
+collect Magnificent Mantle##142365 |n
+Acquire the Magnificent Mantle |q 44915/1 |goto 80.84,32.05
+|tip Challenge Phloem for her mantle.
+|only Rogue
+step
+turnin Professionally Good Looking##44915 |goto 25.02,38.53
+accept Order of Incantations##44920 |goto 25.02,38.53
+|only Rogue
+step
+click Arcane-Imbued Gem
+click Frost-Imbued Gem
+click Fire-Imbued Gem
+click Shadow-Imbued Gem
+|tip Click the gems in that exact order.
+|tip Not following the proper order will result in instant death.
+Solve the barrier puzzle |q 44920/2 |goto 25.15,38.49
+|only Rogue
+step
+Click the quest completion box that pops up
+turnin Order of Incantations##44920 |goto 25.15,38.49
+accept The Archmage Accosted##44924 |goto 25.15,38.49
+|only Rogue
+step
+kill Sanath Lim-yo##115860
+|tip Fight your way to the top of the tower.
+|tip You can avoid most of the mobs along the way.
+Confront Archmage Xylem |q 44924/1 |goto 25.21,38.03
+|only Rogue
+step
+click Xylem's Portal
+Follow through the portal |q 44924/2 |goto 25.20,37.97
+|only Rogue
+step
+talk Joanna##116048
+turnin The Archmage Accosted##44924 |goto 25.22,37.90
+accept A Portal Away##46177 |goto 25.22,37.90
+|only Rogue
+step
+talk Archmage Kalec##105081
+turnin A Portal Away##46177 |goto Dalaran L/10 28.61,49.90
+|only Rogue
+step
+talk Archmage Modera##90418
+accept A Gift From the Six##45865 |goto 28.43,48.91
+|only Rogue
+step
+Receive the Council's gift |q 45865/1 |goto 30.42,48.91
+|tip Stand in the circle and use the special action button that appears on-screen.
+|tip Stand still until the ritual completes.
+|only Rogue
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45865 |goto 28.44,48.91
+|only Rogue
+step
+To apply your new points you will need to go back to your Alter within your Order Hall
+confirm
+|only Rogue
+step
+Click here if you would like to do another specs Artifact Upgrade quest line |next "Rogue Artifact Options"
+|tip To start another quest line you must have at least 35 traits in the weapons spec.
+Click here if you would to continue through the Order Hall quest line |next "Rogue 7.2 conti"
+confirm
+|only Rogue
+step
+label "Rogue 7.2 conti"
+talk Maiev Shadowsong##116576
+accept Defending Broken Isles##46247 |goto Broken Shore/0 44.54,63.52
+|only Rogue
+step
+Complete a Legion Assault |q 46247/1 |goto 44.54,63.52
+|tip These seem to happen at least 1 time a day lasting for about 5 to 6 hours each.
+|only Rogue
+step
+talk Maiev Shadowsong##116576
+turnin Defending Broken Isles##46247 |goto 44.54,63.52
+|only Rogue
+step
+talk Maiev Shadowsong##116576
+accept Champions of Legionfall##47137 |goto Broken Shore/0 44.57,63.50
+|only Rogue
+step
+talk Lord Jorach Ravenholdt##101513
+accept The Pirate's Bay##46322 |goto Dalaran L/4 41.31,77.29
+|only Rogue
+step
+talk Lilian Voss##119822
+turnin The Pirate's Bay##46322 |goto Azsuna/0 57.67,63.46
+accept What's the Cache?##46323 |goto Azsuna/0 57.67,63.46
+accept False Orders##46324 |goto Azsuna/0 57.67,63.46
+|only Rogue
+step
+talk Fleet Admiral Tethys##118125
+accept Loot and Plunder!##45073 |goto 57.65,63.55
+|only Rogue
+stickystart "Blacksail Booty"
+step
+Go onto the ship |goto 60.59,68.50 |only if walking
+Plant the First False Orders |q 46324/1 |goto 61.01,68.29
+|only Rogue
+step
+Follow the path |goto 60.07,70.87 |only if walking
+Plant the Second False Orders |q 46324/2 |goto 59.48,72.60
+|only Rogue
+step
+Follow the path |goto 58.04,76.27 |only if walking
+Go onto the ship |goto 58.68,77.42 |only if walking
+kill Master Gunner Prix##115242
+collect Fel-Infused Gunpowder Cache##142116 |q 46323/1 |goto 59.22,77.93
+|only Rogue
+step
+label "Blacksail Booty"
+click Blacksail Booty
+|tip These are chests found all around this area.
+Burn 8 Blacksail Booty |q 45073/1
+|only Rogue
+step
+talk Lilian Voss##119822
+turnin What's the Cache?##46323 |goto Azsuna/0 57.67,63.46
+turnin False Orders##46324 |goto Azsuna/0 57.67,63.46
+|only Rogue
+step
+talk Fleet Admiral Tethys##118125
+turnin Loot and Plunder!##45073 |goto 57.65,63.55
+|only Rogue
+step
+talk Crackers##118126
+accept Fit For a Pirate##45848 |instant |goto 57.67,63.54
+|only Rogue
+step
+talk Lilian Voss##119822
+accept Jorach's Calling##46326 |goto 57.67,63.46
+|only Rogue
+step
+talk Lord Jorach Ravenholdt##101513
+turnin Jorach's Calling##46326 |goto Dalaran L/4 41.44,77.49
+accept A Bit of Espionage##45571 |goto Dalaran L/4 41.44,77.49
+|only Rogue
+step
+talk Aludane Whitecloud##96813
+Tell him "Fly me to the Broken Shore!"
+Speak to Aludane Whitecloud |q 45571/1 |goto Dalaran L/10 69.93,50.94
+|only Rogue
+step
+talk Lord Jorach Ravenholdt##117259
+turnin A Bit of Espionage##45571 |goto Broken Shore/0 70.14,47.08
+accept Rise Up##45576 |goto Broken Shore/0 70.14,47.08
+|only Rogue
+step
+Follow the path |goto 66.85,44.08 < 10 |only if walking
+Continue following the path |goto 66.87,40.20 < 10 |only if walking
+Continue following the path |goto 71.38,35.02 < 10 |only if walking
+kill Dread Warbringer##117294+, Jadepyre Magus##117291+, Felblade Sentry##117289+
+Slay 8 Demons |q 45576/1 |goto 70.48,39.37
+|tip These demons are all up this path.
+|only Rogue
+step
+Reach the peak |q 45576/2 |goto 71.22,41.73
+|only Rogue
+step
+talk Lilian Voss##117263
+turnin Rise Up##45576 |goto 71.55,41.93
+accept This Time, Leave a Trail##45629 |goto 71.55,41.93
+|only Rogue
+step
+click Rappel Point
+Use the Rappel Point |q 45629/1 |goto 71.91,42.18
+|only Rogue
+step
+click Fel-Infused Gunpowder Cache
+Pick up the Fel-Infused Gunpowder Cache |q 45629/2 |goto 71.99,42.21
+|only Rogue
+step
+click Felfire Explosive
+Place the First Felfire Explosive |q 45629/3 |count 1 |goto 72.70,40.33
+|tip Use your Distract and Sap abilties to get past the mobs without getting seen.
+|only Rogue
+step
+click Felfire Explosive
+Place the Second Felfire Explosive |q 45629/3 |count 2 |goto 72.04,39.31
+|tip Use your Distract and Sap abilties to get past the mobs without getting seen.
+|only Rogue
+step
+click Felfire Explosive
+Place the Third Felfire Explosive |q 45629/3 |count 3 |goto 74.05,37.10
+|tip Use your Distract and Sap abilties to get past the mobs without getting seen.
+|only Rogue
+step
+click Felfire Explosive
+Place the Fourth Felfire Explosive |q 45629/3 |count 4 |goto 75.35,39.41
+|tip Use your Distract and Sap abilties to get past the mobs without getting seen.
+|only Rogue
+step
+Leave the cave |goto 76.25,39.82
+click Legion Torch
+Light the Gunpowder |q 45629/4 |goto 76.62,40.12
+|only Rogue
+step
+talk Lord Jorach Ravenholdt##117259
+turnin This Time, Leave a Trail##45629 |goto 76.81,39.84
+accept Meld Into the Shadows##46827 |goto 76.81,39.84
+|only Rogue
+step
+talk Lord Jorach Ravenholdt##101513
+turnin Meld Into the Shadows##46827 |goto Dalaran L/4 41.38,77.49
+|only Rogue
+step
+talk Lilian Voss##98099
+accept Champion: Lilian Voss##46058 |instant |goto 42.00,72.72
+Recruit a Legionfall Champion |q 47137/1 |goto 42.00,72.72
+|only Rogue
+step
+talk Maiev Shadowsong##116576
+turnin Champions of Legionfall##47137 |goto Broken Shore/0 44.57,63.50
+|only Rogue
+step
+You must first complete the Broken Shore Campaign quest line before being able to start the quest line to obtain your Class Hall mount
+Check out our Broken Shore Campaign guide to accomplish this |confirm |or |next "Zygor's Leveling Guides\\Legion (100-110)\\Broken Shore Campaign"
+Click here to proceed |confirm
+|only if not achieved(11546)
+|only Rogue
+step
+talk Apothecary Keever##119259
+accept Dread Infiltrators##46103 |goto Broken Shore/0 45.06,64.01
+|only Rogue
+step
+talk Lilian Voss##98099
+turnin Dread Infiltrators##46103 |goto Dalaran L/4 19.93,21.33
+accept Hiding In Plain Sight##46178 |goto Dalaran L/4 19.93,21.33
+|only Rogue
+step
+Watch the Dialogue
+Listen to Lilian's plan |q 46178/1 |goto Dalaran L/4 19.93,21.33
+|only Rogue
+step
+Be sure you are stealthed before entering the city to avoid aggroing guards.
+|tip Avoid any guards that are able to see through stealth.
+kill Ardaan the Solemn##118892
+|tip Try to Distract the guard and wait for Ardaan to walk away before engaging.
+Assasinate the Exodar Mark |q 46178/2 |goto The Exodar/0 29.0,36.5
+|tip You can see the Mark as a star on the map much like rares.
+|only Rogue
+step
+Be sure you are stealthed before entering the city to avoid aggroing guards.
+|tip Avoid any guards that are able to see through stealth.
+kill Taylenne Sweetsong##118891
+|tip She will be surronded by casters, use your Cloak of Shadows when you open on her and kill her quickly.
+Assasinate the Darnassus Mark |q 46178/3 |goto Darnassus/0 66.8,48.3
+|tip You can see the Mark as a star on the map much like rares.
+|only Rogue
+step
+Be sure you are stealthed before entering the city to avoid aggroing guards.
+|tip Avoid any guards that are able to see through stealth.
+kill Corin Twinbellows##118889
+|tip Pick Pocket him first and use the key to remove his armor.
+Assasinate the Ironforge Mark |q 46178/4 |goto Ironforge/0 42.6,50.2
+|tip You can see the Mark as a star on the map much like rares.
+|only Rogue
+step
+Be sure you are stealthed before entering the city to avoid aggroing guards.
+|tip Avoid any guards that are able to see through stealth.
+kill Auctioneer Jaxon##15659
+|tip He is inside the AH which is usually crowded be prepared to vanish as soon as Jaxon dies.
+Assasinate the Stormwind Mark |q 46178/5 |goto Stormwind City/0 61.4,70.4
+|tip You can see the Mark as a star on the map much like rares.
+|only Rogue
+step
+talk Lilian Voss##98099
+turnin Hiding In Plain Sight##46178 |goto Dalaran L/4 41.67,77.74
+|only Rogue
+step
+talk Archmage Khadgar##116302
+accept Seeking Lost Knowledge##47067 |goto Broken Shore/0 44.73,63.27
+|only Shaman
+step
+Follow the path |goto 68.70,46.97 < 25 |only if walking
+Follow the path |goto 66.36,42.42 < 25 |only if walking
+Follow the path |goto 67.77,37.75 < 30 |only if walking
+Follow the path up |goto 71.44,35.28 < 15 |only if walking
+Follow the path |goto 71.22,41.78 < 25 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/2 |goto 71.87,40.67
+|only Shaman
+step
+Follow the path |goto 72.41,36.49 < 15 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/3 |goto 75.62,36.27
+|only Shaman
+step
+Jump Down here |goto 77.81,37.88 < 10 |only if walking
+Follow the path |goto 79.71,42.09 < 20 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/1 |goto 82.57,45.09
+|only Shaman
+step
+talk Archmage Khadgar##116302
+turnin Seeking Lost Knowledge##47067 |goto 44.73,63.28
+accept Delivering Lost Knowledge##47074 |goto 44.73,63.28
+|only Shaman
+step
+talk Gorma Windspeaker##111739
+turnin Delivering Lost Knowledge##47074 |goto The Maelstrom L/0 32.38,49.75
+accept Using Lost Knowledge##46940 |goto The Maelstrom L/0 32.38,49.75
+|only Shaman
+step
+talk Gorma Windspeaker##111739
+Tell her _"Let's continue research on my artifact"_
+Start a Research Work Order |q 46940/1 |goto 32.38,49.75
+|tip Each work order costs 500 Order Resources.
+|only Shaman
+step
+talk Gorma Windspeaker##111739
+turnin Using Lost Knowledge##46940 |goto The Maelstrom L/0 32.38,49.75
+|only Shaman
+step
+talk Archmage Khadgar##116302
+accept The Broken Shore: Investigating the Legion##46765 |goto Broken Shore/0 44.73,63.29
+|only Shaman
+step
+Follow the path |goto 46.86,58.63 < 25 |only if walking
+Follow the path |goto 51.48,54.17 < 30 |only if walking
+kill Toiling Collector##119187+
+|tip This is not a 100 percent chance to drop.
+collect Mysterious Runebound Scroll##147430 |q 46765/1 |goto Broken Shore/0 54.55,56.57
+|only Shaman
+step
+talk Archmage Khadgar##116302
+turnin The Broken Shore: Investigating the Legion##46765 |goto Broken Shore/0 44.73,63.29
+accept The Council's Call##47000 |goto Broken Shore/0 44.73,63.29
+|tip You need 35 traits in at least one spec to accept this quest.
+|only Shaman
+step
+talk Archmage Khadgar##90417
+turnin The Council's Call##47000 |goto Dalaran L/10 28.68,48.48
+accept Away From Prying Eyes##44782 |goto Dalaran L/10 28.68,48.48
+|only Shaman
+step
+Enter the Portal |q 44782/1 |goto Dalaran L/10 24.76,48.15
+|only Shaman
+step
+talk Archmage Modera##115465
+turnin Away From Prying Eyes##44782 |goto 22.50,39.07
+accept In Dire Need##44821 |goto 22.50,39.07
+|only Shaman
+step
+Watch the Dialogue
+Hear the Council's Plea |q 44821/1 |goto 23.03,39.77
+|only Shaman
+step
+talk Archmage Modera##115465
+turnin In Dire Need##44821 |goto 22.38,39.71
+|only Shaman
+step
+label "Shaman Artifact Options"
+Click here if you would like to do the Enhancement Artifact upgrade quest line |next "Enhancement Artifact Upgrade"
+Click here if you would like to do the Restoration Artifact upgrade quest line |next "Restoration Artifact Upgrade"
+Click here if you would like to do the Elemental Artifact upgrade quest line |next "Elemental Artifact Upgrade"
+confirm
+|only Shaman
+step
+label "Enhancement Artifact Upgrade"
+talk Archmage Khadgar##115464
+accept Enhancement: Fate of the Tideskorn##47050 |goto 22.55,38.87
+|only Shaman
+step
+talk Huntsman Slodi##119230
+Tell him "I'm searching for the vrykul mentioned in these scrolls."
+Speak with Huntsman Slodi |q 47050/1 |goto Suramar/0 65.37,50.80
+|only Shaman
+step
+Follow the path |goto 65.79,51.16 |only if walking
+Enter the building |goto 70.45,49.78 |walk
+talk Priestess Bryna##119232
+Tell her "Skodl mentioned you could help find the vrykul mentioned in these scrolls."
+Speak with Priestess Bryna |q 47050/2 |goto 70.51,49.97
+|only Shaman
+step
+Enter the building and run up the stairs |goto 71.57,49.77
+talk Yngvild the Watcher##119233
+Tell her "Have any vrykul come through here that struck you as odd?"
+Speak with Yngvild the Watcher |q 47050/3 |goto 71.49,49.56
+|only Shaman
+step
+Follow the shore |goto 72.99,49.80 |only if walking
+talk Sigryn##116568
+turnin Enhancement: Fate of the Tideskorn##47050 |goto 76.25,50.03
+accept The Reluctant Queen##45486 |goto 76.25,50.03
+|only Shaman
+step
+talk Sigryn##116568
+Tell her "I'm ready."
+Speak to Sigryn in Valdisdall |q 45486/1 |goto Stormheim/0 59.67,50.84
+|only Shaman
+step
+Follow Sigryn, she will follow the road
+Defeat the Hidden Assasins that appear along the way
+|tip Stay close to her.
+Escort Sigryn to Skold-Ashil |q 45486/2 |goto 62.37,68.06
+|only Shaman
+step
+talk Priestess Halla##117107
+Tell her "This vrykul is the heir to the God-King. She seeks an audience with Eyir."
+Speak with Priestess Halla |q 45486/3 |goto 62.77,68.10
+|only Shaman
+step
+Watch the Dialogue
+Gain an audience with Eyir |q 45486/4 |goto Stormheim/28 64.23,51.05
+|only Shaman
+step
+talk Eyir##93628
+turnin The Reluctant Queen##45486 |goto 66.25,51.18
+accept To Silence the Bonespeakers##45522 |goto 66.25,51.18
+|only Shaman
+step
+Follow the path |goto Stormheim/0 61.30,52.44 < 10 |only if walking
+Continue following the path |goto 65.85,49.78 < 10 |only if walking
+Follow the path down |goto 68.16,47.49 < 10 |only if walking
+Follow the stairs down |goto 70.09,44.39 < 10 |only if walking
+Defeat Runeseer Faljar |q 45522/1 |goto 72.83,40.49
+|only Shaman
+step
+talk Runeseer Faljar##117199
+turnin To Silence the Bonespeakers##45522 |goto 73.25,39.91
+|only Shaman
+step
+talk Sigryn##116568
+accept To Tame the Drekirjar##45523 |goto 72.90,40.43
+|only Shaman
+step
+Use your Grapple ability here to get over the wall |goto 40.14,66.12 < 10 |only if walking
+Follow the path up |goto 42.21,66.76 < 10 |only if walking
+Continue following the path up |goto 43.78,69.09 < 10 |only if walking
+Enter the building |goto 42.09,71.00 < 5 |walk
+Watch the Dialogue
+Defeat Jarl Velbrand |q 45523/1 |goto 41.36,71.72
+|only Shaman
+step
+talk Jarl Velbrand##117227
+turnin To Tame the Drekirjar##45523 |goto 41.15,71.91
+|only Shaman
+step
+talk Sigryn##116568
+accept The Forgotten Heir##45524 |goto 41.38,71.67
+|only Shaman
+step
+Follow the path |goto 79.21,65.11 < 10 |only if walking
+Follow the path down |goto 78.48,69.21 < 10 |only if walking
+Follow the Shore |goto 78.84,76.51 < 10 |only if walking
+Cross the water |goto 76.79,84.56 < 10 |only if walking
+Follow the path up |goto 73.40,87.73 < 10 |only if walking
+Enter the cave |goto 73.75,86.14 |walk
+Watch the Dialogue
+Find Torvald |q 45524/1 |goto Stormheim/0 74.19,85.03
+|only Shaman
+step
+kill Torvald##116497 |q 45524/2 |goto 74.19,85.03
+|only Shaman
+step
+talk Sigryn##116568
+turnin The Forgotten Heir##45524 |goto 74.19,85.03
+accept Unanswered Questions##45525 |goto 74.19,85.03
+|only Shaman
+step
+Follow the path down |goto 67.10,62.21 < 10 |only if walking
+Continue following the path |goto 64.05,63.39 < 10 |only if walking
+Enter the building |goto 62.73,68.10 |walk
+talk Sigryn##116568
+Tell her "I'm ready."
+Watch the Dialogue
+Speak to Sigryn |q 45525/1 |goto Stormheim/28 65.79,50.55
+|only Shaman
+step
+talk Eyir##93628
+turnin Unanswered Questions##45525 |goto 65.79,50.55
+accept The Gates Are Closed##46340 |goto 65.79,50.55
+|only Shaman
+step
+talk Archmage Khadgar##90417
+turnin The Gates Are Closed##46340 |goto Dalaran L/10 28.55,48.35
+|only Shaman
+step
+talk Archmage Modera##90418
+accept A Gift From the Six##45862 |goto 28.45,48.91
+|only Shaman
+step
+Enter the Blue Circle on the ground
+Use the extra action ability "Aquire the Gift"
+Receive the Council's gift |q 45862/1 |goto 30.42,48.91
+|only Shaman
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45862 |goto 28.45,48.91
+|only Shaman
+step
+To apply your new points you will need to go back to your Alter within your Order Hall
+confirm
+|only Shaman
+step
+Click here if you would like to do another specs Artifact Upgrade quest line |next "Shaman Artifact Options"
+|tip To start another quest line you must have at least 35 traits in the weapons spec.
+Click here if you would to continue through the Order Hall quest line |next "Shaman 7.2 conti"
+confirm
+|only Shaman
+step
+label "Restoration Artifact Upgrade"
+talk Archmage Modera##90418
+accept Restoration: The Bradensbrook Investigation##47003 |goto Dalaran L/10 28.46,48.91
+|only Shaman
+step
+talk Mayor Heathrow##118752
+turnin Restoration: The Bradensbrook Investigation##47003 |goto Val'sharah/0 42.28,58.96
+accept Aid on the Front Lines##46079 |goto Val'sharah/0 42.28,58.96
+|only Shaman
+step
+click Injured Villager##118809
+Heal these Injured Villagers scattered around the field
+Heal 8 wounded defenders |q 46079/1 |goto Val'sharah/0 42.29,61.28
+|only Shaman
+step
+talk Mayor Heathrow##118752
+turnin Aid on the Front Lines##46079 |goto Val'sharah/0 42.28,58.96
+accept Shadowsong's Return##46082 |goto Val'sharah/0 42.28,58.96
+|only Shaman
+step
+talk Commander Jarod Shadowsong##118947
+turnin Shadowsong's Return##46082 |goto 39.12,58.13
+accept Cutting off the Heads##46106 |goto 39.12,58.13
+accept Quieting the Spirits##46080 |goto 39.12,58.13
+|only Shaman
+stickystart "Risen Attackers"
+step
+kill Nethos Starwalker##118950 |q 46106/2 |goto Val'sharah/0 37.09,58.46
+|only Shaman
+step
+kill Tael'thos the Cutter##118951 |q 46106/3 |goto 39.22,62.13
+|only Shaman
+step
+kill Disa Trueshaft##118949 |q 46106/1 |goto 37.10,62.05
+|only Shaman
+step
+label "Risen Attackers"
+kill Risen Archer##118759+, Risen Soldier##118758+, Risen Hound##118754+, Risen Scout##118757+, Black Rook Falcon##118756+
+Slay 12 Risen Attackers |q 46080/1
+|only Shaman
+step
+Next to you
+talk Commander Jarod Shadowsong##118954
+turnin Cutting off the Heads##46106
+turnin Quieting the Spirits##46080
+accept Source of the Corruption##46107
+|only Shaman
+step
+Follow the path up |goto 38.63,57.60 < 10 |only if walking
+Go to Heroes' Rest |q 46107/1 |goto 37.83,55.32
+|only Shaman
+step
+click Corrupted Rooksguard##120156+
+|tip Once clicked these will either be Freed and disappear or get angry and attack you.
+Release 3 Fel Courrupted Rooksguards |q 46107/2 |goto 38.42,53.02
+|only Shaman
+step
+kill Lorgos the Resurrector##118980 |q 46107/3 |goto 38.92,51.34
+|only Shaman
+step
+Next to you
+talk Commander Jarod Shadowsong##118954
+turnin Source of the Corruption##46107
+accept The Matter Resolved... For Now...##46200
+|only Shaman
+step
+talk Archmage Modera##90418
+turnin The Matter Resolved... For Now...##46200 |goto Dalaran L/10 28.61,48.90
+accept A Gift From the Six##45864 |goto Dalaran L/10 28.61,48.90
+|only Shaman
+step
+Enter the Blue Circle on the ground
+Use the extra action ability "Aquire the Gift"
+Receive the Council's gift |q 45864/1 |goto 30.42,48.91
+|only Shaman
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45864 |goto Dalaran L/10 28.61,48.90
+|only Shaman
+step
+To apply your new points you will need to go back to your Alter within your Order Hall
+confirm
+|only Shaman
+step
+Click here if you would like to do another specs Artifact Upgrade quest line |next "Shaman Artifact Options"
+|tip To start another quest line you must have at least 35 traits in the weapons spec.
+Click here if you would to continue through the Order Hall quest line |next "Shaman 7.2 conti"
+confirm
+|only Shaman
+step
+label "Elemental Artifact Upgrade"
+talk Archmage Modera##90418
+accept Elemental: The Folly of Levia Laurence##45123 |goto Dalaran L/10 28.51,48.90
+|only Shaman
+step
+talk Professor Pallin##92195
+Tell him "Do you know where I can find Levia Laurence?"
+Ask about Levia at the Scribe's Sacellum |q 45123/1 |goto 41.40,37.18
+|only Shaman
+step
+talk Icks##97331
+Tell him "Do you know where I can find Levia Laurence?"
+Ask about Levia at the Militant Mystic |q 45123/2 |goto 49.04,73.29
+|only Shaman
+step
+talk Amisi Azuregaze##96806
+Tell her "Do you know where I can find Levia Laurence?"
+Ask about Levia at the Legerdemain Lounge |q 45123/3 |goto 49.71,39.88
+|only Shaman
+step
+Run up the stairs |goto 49.92,39.46
+click Levia's Research Journal
+Investigate Levia's belongings |q 45123/4 |goto 46.49,40.04
+|only Shaman
+step
+talk Archmage Modera##90418
+turnin Elemental: The Folly of Levia Laurence##45123 |goto 28.51,48.90
+accept Bargaining with Shadows##46327 |goto 28.51,48.90
+|only Shaman
+step
+talk Ritssyn Flamescowl##116714
+turnin Bargaining with Shadows##46327 |goto Dalaran L/12 53.10,59.42
+accept The Acolyte Imperiled##45916 |goto Dalaran L/12 53.10,59.42
+|only Shaman
+step
+Watch the Dialogue
+Investigate Levia's Ritual |q 45916/1 |goto 57.70,72.15
+|only Shaman
+step
+Slay all of the Imps that come out of the side portals
+Defend Ritssyn |q 45916/2 |goto 57.70,72.15
+|only Shaman
+step
+talk Ritssyn Flamescowl##116714
+turnin The Acolyte Imperiled##45916 |goto 57.70,72.15
+accept Dabbling in the Demonic##45125 |goto 57.70,72.15
+|only Shaman
+step
+Click the _Taam_ Rune to activate it
+Click the _Talar_ Rune to activate it
+Click the _Dregla_ Rune to activate it
+talk Ritssyn Flamescowl##116714
+Tell him "The runes are activated. Stabilize the portal."
+Stabilize the Portal |q 45125/1 |goto 57.36,72.21
+|only Shaman
+step
+talk Ritssyn Flamescowl##116714
+turnin  Dabbling in the Demonic##45125 |goto 57.70,72.15
+accept Following the Scent##45917 |goto 57.70,72.15
+|only Shaman
+step
+click Demonic Gateway |goto 57.70,72.15
+talk Fhambar##118450
+Tell him "Go find Levia, Fhambar!"
+Speak to Fhambar |q 45917/1 |goto Azsuna/0 30.95,51.86
+|only Shaman
+step
+Follow Fhambar around
+|tip Fhember will periodically stop and find nothing, keep close to him.
+Find Levia Laurance |q 45917/2 |goto Azsuna/0 25.90,57.36
+|only Shaman
+step
+talk Levia Laurence##116189
+turnin Following the Scent##45917 |goto 25.68,57.73
+accept Unlikely Seduction##45126 |goto 25.68,57.73
+|only Shaman
+step
+kill Agatha##118520 |q 45126/1 |goto 25.68,57.73
+|only Shaman
+step
+talk Levia Laurence##116189
+turnin Unlikely Seduction##45126 |goto 25.68,57.73
+accept Fel-Crossed Lovers##45127 |goto 25.68,57.73
+|only Shaman
+step
+talk Archmage Modera##90418
+turnin Fel-Crossed Lovers##45127 |goto Dalaran L/10 28.62,48.86
+accept A Gift From the Six##45861 |goto Dalaran L/10 28.61,48.90
+|only Shaman
+step
+Enter the Blue Circle on the ground
+Use the extra action ability "Aquire the Gift"
+Receive the Council's gift |q 45861/1 |goto 30.42,48.91
+|only Shaman
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45861 |goto Dalaran L/10 28.61,48.90
+|only Shaman
+step
+Click here if you would like to do another specs Artifact Upgrade quest line |next "Shaman Artifact Options"
+|tip To start another quest line you must have at least 35 traits in the weapons spec.
+Click here if you would to continue through the Order Hall quest line |next "Shaman 7.2 conti"
+confirm
+|only Shaman
+step
+label "Shaman 7.2 conti"
+talk Maiev Shadowsong##116576
+accept Defending Broken Isles##46247 |goto Broken Shore/0 44.54,63.52
+|only Shaman
+step
+Complete a Legion Assault |q 46247/1 |goto 44.54,63.52
+|tip These seem to happen at least 1 time a day lasting for about 5 to 6 hours each.
+|only Shaman
+step
+talk Maiev Shadowsong##116576
+turnin Defending Broken Isles##46247 |goto 44.54,63.52
+|only Shaman
+step
+talk Maiev Shadowsong##116576
+accept Champions of Legionfall##47137 |goto Broken Shore/0 44.58,63.45
+|only Shaman
+step
+talk Advisor Sevel##96746
+accept A "Humble" Request##45652 |goto The Maelstrom L/0 33.02,60.34
+|only Shaman
+step
+talk Magatha Grimtotem##117482
+Tell her "I am the farseer of the Earthen Ring. Who are you?"
+Speak to the visitor |q 45652/1 |goto 35.85,76.04
+|only Shaman
+step
+talk Magatha Grimtotem##117482
+turnin A "Humble" Request##45652 |goto 35.85,76.04
+accept The Power of Thousands##45706 |goto 35.85,76.04
+|only Shaman
+step
+click Portal to Thousand Needles |goto 33.26,76.50
+Take the Portal to Thousand Needles |q 45706/1 |goto Thousand Needles/0 42.19,45.87 < 5
+|only Shaman
+step
+talk Magatha Grimtotem##120244
+turnin The Power of Thousands##45706 |goto Thousand Needles/0 42.13,45.15
+accept Snakes and Stones##45724 |goto Thousand Needles/0 42.13,45.15
+accept Breaking Chains##45725 |goto Thousand Needles/0 42.13,45.15
+accept The Crone's Wrath##45723 |goto Thousand Needles/0 42.13,45.15
+|only Shaman
+stickystart "Captivess"
+stickystart "Demonss"
+step
+Follow the path |goto 41.68,43.48 < 5 |only if walking
+Continue following the path |goto 39.54,41.77 < 5 |only if walking
+Continue following the path |goto 38.52,40.48 < 5 |only if walking
+Continue following the path |goto 35.46,39.26 < 5 |only if walking
+Continue following the path |goto 34.19,35.97 < 5 |only if walking
+Continue following the path |goto 34.94,31.74 < 5 |only if walking
+kill Doomsayer Baelresh##117562
+collect The Doomstone##143860 |q 45724/1 |goto 35.14,30.95
+|only Shaman
+step
+label "Captivess"
+click Prison Cage+
+Free 8 Captured Grimtotems |q 45725/1
+|only Shaman
+step
+label "Demonss"
+kill Spellstalker##117545+, Wrathguard Hellreaver##117548+, Felguard Houndmaster##117544+, Fiery Trickster##117542+
+Slay 15 Demons |q 45723/1
+|only Shaman
+step
+Cross the bridge |goto 36.92,31.76 < 5 |only if walking
+talk Magatha Grimtotem##120244
+turnin Snakes and Stones##45724 |goto 37.21,32.22
+turnin Breaking Chains##45725 |goto 37.21,32.22
+turnin The Crone's Wrath##45723 |goto 37.21,32.22
+accept Against Magatha's Will##44800 |goto 37.21,32.22
+|only Shaman
+step
+talk Magatha Grimtotem##120244
+click the speech bubbles
+Deny Magatha Grimtotem |q 44800/1 |goto 37.21,32.22
+|only Shaman
+step
+click Portal to the Maelstrom |goto 37.32,32.12
+talk Farseer Nobundo##106519
+turnin Against Magatha's Will##44800 |goto The Maelstrom L/0 30.44,51.71
+accept Demonic Disruption##45763 |goto The Maelstrom L/0 30.44,51.71
+|only Shaman
+step
+talk Farseer Nobundo##106519
+Tell him "Take me to the Broken Shore!"
+Speak to Nobundo for a teleport |q 45763/1 |goto 30.44,51.71
+|only Shaman
+step
+talk Therazane##117715
+turnin Demonic Disruption##45763 |goto Broken Shore/0 60.54,51.69
+accept Infernal Phenomena##45971 |goto Broken Shore/0 60.54,51.69
+accept Elemental Cores##45767 |goto Broken Shore/0 60.54,51.69
+accept Brothers and Sisters##45765 |goto Broken Shore/0 60.54,51.69
+|only Shaman
+stickystart "Injured Shaman"
+stickystart "Power Cores"
+step
+Stop the First Infernal ritual |q 45971/1 |goto Broken Shore/0 59.39,51.43
+|tip Kill the Earthtwisting Defilers around this Infernal.
+|only Shaman
+step
+Stop the Second Infernal Ritual |q 45971/2 |goto 57.37,46.84
+|tip Kill the Earthtwisting Defilers around this Infernal.
+|only Shaman
+step
+Stop the Third Infernal Ritual |q 45971/3 |goto 61.29,42.16
+|tip Kill the Earthtwisting Defilers around this Infernal.
+|only Shaman
+step
+label "Power Cores"
+kill Earthtwisting Defiler##118315+, Flamecrashing Ravager##120276+
+collect 3 Air Power Core##146891 |q 45767/4
+collect 3 Earth Power Core##146890 |q 45767/3
+collect 3 Water Power Core##146889 |q 45767/2
+collect 3 Fire Power Core##146888 |q 45767/1
+|only Shaman
+step
+label "Injured Shaman"
+click Injured Shaman
+|tip Use your Healing Surge ability on the Injured Shaman.
+Heal 8 Injured Shamen |q 45765/1
+|only Shaman
+step
+talk Therazane##117715
+turnin Infernal Phenomena##45971 |goto Broken Shore/0 60.54,51.69
+turnin Elemental Cores##45767 |goto Broken Shore/0 60.54,51.69
+turnin Brothers and Sisters##45765 |goto Broken Shore/0 60.54,51.69
+accept The Firelord's Offense##45883
+|only Shaman
+step
+talk Firelord Smolderon##115492
+turnin The Firelord's Offense##45883 |goto 54.64,52.31
+accept Conflagration##45769 |goto 54.64,52.31
+|only Shaman
+step
+Use your extra action button to gain a huge buff.
+Use Doomstone |q 45769/1 |goto 54.9,49.1
+|only Shaman
+step
+kill Barastagax the Flamecleaver##120267 |q 45769/2 |goto 54.9,49.1
+|only Shaman
+step
+talk Farseer Nobundo##106519
+turnin Conflagration##45769 |goto The Maelstrom L/0 30.36,51.64
+accept The Calm After the Storm##46258 |goto The Maelstrom L/0 30.36,51.64
+|only Shaman
+step
+click Doomstone Pedistal
+Place the Doomstone |q 46258/1 |goto 34.88,31.50
+|only Shaman
+step
+talk Neptulon##115572
+turnin The Calm After the Storm##46258 |goto 35.07,31.68
+|only Shaman
+step
+talk Magatha Grimtotem##120245
+accept Champion: Magatha Grimtotem##46057 |instant |goto 34.29,30.38
+Recruit a Legionfall Champion |q 47137/1 |goto 34.29,30.38
+|only Shaman
+step
+talk Advisor Sevel##96746
+accept Further Advancement##46781 |goto 32.97,60.30
+|only Shaman
+step
+talk Journeyman Goldmine##112199
+Talk to Journeyman Goldmine |q 46781/1 |goto 33.31,58.28
+|only Shaman
+step
+Choose either Roster of Champions or Ring of Earth for your next research
+|tip This research costs 10,000 Order Resources and take 1 day to complete.
+confirm
+|only Shaman
+step
+talk Advisor Sevel##96746
+turnin Further Advancement##46781 |goto 32.97,60.30
+|only Shaman
+step
+talk Maiev Shadowsong##116576
+turnin Champions of Legionfall##47137 |goto Broken Shore/0 44.55,63.50
+|only Shaman
+step
+You must first complete the Broken Shore Campaign quest line before being able to start the quest line to obtain your Class Hall mount
+Check out our Broken Shore Campaign guide to accomplish this |confirm |or |next "Zygor's Leveling Guides\\Legion (100-110)\\Broken Shore Campaign"
+Click here to proceed |confirm
+|only if not achieved(11546)
+|only Shaman
+step
+talk Orono##117888
+accept Carried On the Wind##46791 |goto Broken Shore/0 44.66,61.61
+|only Shaman
+step
+talk Consular Celestos##106521
+turnin Carried On the Wind##46791 |goto The Maelstrom L/0 28.35,45.12
+accept Gathering of the Storms##46792 |goto The Maelstrom L/0 28.35,45.12
+|only Shaman
+step
+talk Consular Celestos##106521
+Tell him: _"Send me to the Throne of the Four Winds."_
+Speak with Consular Celestos |q 46792/1 |goto The Maelstrom L/0 28.35,45.12
+|only Shaman
+step
+kill Anshal##120130 |scenariogoal 1/35886 |q 46792 |goto 1148/1 31.82,50.07
+|tip Interrupt Healing Surge as much as possible
+|tip Be sure to avoid the green puddles on the ground.
+|tip Kill the adds when they appear.
+|only Shaman
+step
+kill Nezir##120129 |scenariogoal 1/35885 |q 46792 |goto 1148/1 47.7,25.5
+|tip Avoid the puddles falling on the ground when hes casting Tempest of Frost.
+|tip Interrupt Wind Chill.
+|tip Try to avoid getting hit by Freezing Gale.
+|only Shaman
+step
+kill Rohash##120128 |scenariogoal 1/35884 |q 46792 |goto 1148/1 63.6,49.9
+|tip Interrupt Slicing Gale when you can.
+|tip Avoid standing in Stinging Vortex, this will be placed on top of you and suck you in until you leave the circle.
+|tip Stay in closer to the center of the room to prepare for Sandstorm, this will blow you back.
+|tip Once Sandstorm starts be sure to run against the push back and avoid getting hit by the tornados that appear.
+|only Shaman
+step
+Enter the swirl |goto 1148/1 61.47,52.80
+Watch the Dialogue
+Listen to Thunderaan's Speech |scenariogoal 2/35973 |q 46792 |goto 1148/1 47.33,60.36
+|only Shaman
+step
+Complete the Gathering of the Storms Scenario |q 46792/2
+|only Shaman
+step
+talk Consular Celestos##106521
+turnin Gathering of the Storms##46792 |goto The Maelstrom L/0 28.35,45.12
+|only Shaman
+step
+talk Archmage Khadgar##116302
+accept Seeking Lost Knowledge##47067 |goto Broken Shore/0 44.73,63.27
+|only Warlock
+step
+Follow the path |goto 68.70,46.97 < 25 |only if walking
+Follow the path |goto 66.36,42.42 < 25 |only if walking
+Follow the path |goto 67.77,37.75 < 30 |only if walking
+Follow the path up |goto 71.44,35.28 < 15 |only if walking
+Follow the path |goto 71.22,41.78 < 25 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/2 |goto 71.93,40.70
+|only Warlock
+step
+Follow the path |goto 72.53,36.30 < 15 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/3 |goto 75.62,36.27
+|only Warlock
+step
+Follow the path |goto 76.31,40.52 < 15 |only if walking
+Follow the path |goto 78.82,43.99 < 15 |only if walking
+click Remnant of Lost Knowledge##121165
+|tip Stand still and wait for the channeling to complete.
+Recover Knowledge from Moonlight Ascent |q 47067/1 |goto 82.57,45.09
+|only Warlock
+step
+talk Archmage Khadgar##116302
+turnin Seeking Lost Knowledge##47067 |goto 44.73,63.28
+accept Delivering Lost Knowledge##47076 |goto 44.73,63.28
+|only Warlock
+step
+talk Mile Raitheborne##111740
+turnin Delivering Lost Knowledge##47076 |goto Dreadscar Rift/0 57.04,41.04
+accept Using Lost Knowledge##46940 |goto 57.04,41.04
+|only Warlock
+step
+talk Mile Raitheborne##111740
+Tell him: _"Let's continue research on my artifact."_
+Start a Research Work Order |q 46940/1 |goto 57.04,41.04
+|only Warlock
+step
+talk Mile Raitheborne##111740
+turnin Using Lost Knowledge##46940 |goto 57.07,41.08
+|only Warlock
+step
+talk Archmage Khadgar##116302 |only if not completedq(46765)
+accept Greater Power for Greater Threats##46744 |goto Broken Shore/0 44.74,63.27 |or |only if not completedq(46765)
+|tip |only if not completedq(46765)
+If you have already maxed one of your artifacts, click here |confirm |next "W_Traits" |or |only if not completedq(46765)
+Proceeding |next "W_Traits" |only if completedq(46765)
+|only Warlock
+step
+Unlock all traits for one of your artifacts |q 46744/1
+|tip You can earn artifact power by completing world quests, dungeons, and certain quests.
+|only Warlock
+step
+talk Archmage Khadgar##116302
+turnin Greater Power for Greater Threats##46744 |goto 44.74,63.27
+|only Warlock
+step
+label "W_Traits"
+talk Archmage Khadgar##116302
+accept The Broken Shore: Investigating the Legion##46765 |goto Broken Shore/0 44.73,63.27
+|only Warlock
+step
+collect Mysterious Runebound Scroll##147430 |n
+|tip This item has a chance to drop off of any mob.
+|tip Kill enemies in this area until you collect one.
+|tip Rare spawns seem to have a 100% drop rate.
+Discover the Hidden Legion Threat |q 46765/1 |goto Broken Shore/0 44.61,49.57
+|only Warlock
+step
+talk Archmage Khadgar##116302
+turnin The Broken Shore: Investigating the Legion##46765 |goto 44.73,63.27
+accept The Council's Call##47000 |goto 44.73,63.27
+|only Warlock
+step
+talk Archmage Khadgar##90417
+turnin The Council's Call##47000 |goto Dalaran L/10 28.50,48.33
+accept Away From Prying Eyes##44782 |goto 28.50,48.33
+|only Warlock
+step
+Enter the Purple Parlor |q 44782/1 |goto Dalaran L/10 24.30,48.02
+|tip Go through the portal at the top of the stairs.
+|only Warlock
+step
+talk Archmage Modera##115465
+turnin Away From Prying Eyes##44782 |goto 22.20,39.04
+accept In Dire Need##44821 |goto 22.20,39.04
+|only Warlock
+step
+Hear the Council's Plea |q 44821/1 |goto 22.29,39.68
+|tip Wait for the dialogue to complete.
+|only Warlock
+step
+talk Archmage Modera##115465
+turnin In Dire Need##44821 |goto 22.29,39.64
+|only Warlock
+step
+label "WSpecs"
+To pursue the Demonology specialization artifact traits, click here |confirm |next "Demonology" |only if not completedq(45862)
+To pursue the Destruction specialization artifact traits, click here |confirm |next "Destruction" |only if not completedq(45842)
+To pursue the Affliction specialization artifact traits, click here |confirm |next "Affliction" |only if not completedq(45866)
+|tip You must have 35 artifact traits unlocked to start the questline for a specialization. |only if not completedq(45862) or not completedq(45842) or not completedq(45866)
+Continuing |next "AfterSpecW" |only if completedq(45862) and completedq(45842) and completedq(45866)
+|only Warlock
+step
+label "Demonology"
+talk Archmage Khadgar##115464
+accept Demonology: Fate of the Tideskorn##47049 |goto 22.45,38.75
+|tip This quest is geared towards the Demonology specialization.
+|tip You must have 35 artifact traits unlocked with this specialization to start this questline.
+|only Warlock
+step
+Follow the path |goto Suramar/0 64.60,44.61 < 25 |only if walking
+Follow the path |goto 64.37,48.39 < 25 |only if walking
+talk Huntsman Slodi##119230
+Speak with Huntsman Slodi |q 47049/1 |goto 65.40,50.79
+|only Warlock
+step
+Follow the path |goto 66.20,51.19 < 20 |only if walking
+Follow the path |goto 67.81,51.21 < 20 |only if walking
+Follow the path |goto 69.20,50.30 < 20 |only if walking
+talk Priestess Bryna##119232
+|tip She is inside the small building.
+Speak with Priestess Bryna |q 47049/2 |goto 70.53,49.97
+|only Warlock
+step
+talk Yngvild the Watcher##119233
+|tip She's at the top of the tower.
+Speak with Yngvild the Watcher |q 47049/3 |goto 71.46,49.56
+|only Warlock
+step
+Follow the path |goto 72.13,47.93 < 20 |only if walking
+Follow the path |goto 73.32,49.44 < 20 |only if walking
+Follow the path |goto 74.84,50.12 < 20 |only if walking
+talk Sigryn##116568
+turnin Retribution: Fate of the Tideskorn##47049 |goto 76.27,50.00
+accept The Reluctant Queen##45486 |goto 76.27,50.00
+|only Warlock
+step
+talk Sigryn##116568
+Tell her _"I'm ready."_
+Speak with Yngvild the Watcher |q 45486/1 |goto Stormheim/0 59.64,50.82
+|only Warlock
+step
+map Stormheim/0
+path loop off;dist 20
+path	59.32,52.51	60.29,53.76	61.37,55.16
+path	62.38,55.03	63.28,55.03	64.44,54.96
+path	65.88,55.38	66.48,57.16	67.28,59.22
+path	68.24,58.36	68.99,59.20	68.47,61.23
+path	67.25,62.11	65.62,62.56	64.41,63.19
+path	63.14,63.66	60.88,65.14	60.86,67.65
+path	62.80,68.11
+Escort Sigryn to Skold-Ashil |q 45486/2
+|tip Follow her closely.
+|only Warlock
+step
+talk Priestess Halla##117107
+Speak with Priestess Halla |q 45486/3 |goto 62.83,68.11
+|only Warlock
+step
+talk Eyir##93628
+Gain an audience with Eyir |q 45486/4 |goto Stormheim/28 66.80,51.30
+|tip Watch the dialogue.
+|only Warlock
+step
+talk Eyir##93628
+turnin The Reluctant Queen##45486 |goto 72.44,51.24
+accept To Silence the Bonespeakers##45522 |goto 72.44,51.24
+|only Warlock
+step
+Follow the path |goto Stormheim/0 62.62,52.15 < 25 |only if walking
+Follow the path |goto 64.40,48.78 < 25 |only if walking
+Follow the path |goto 66.67,48.87 < 25 |only if walking
+Follow the path |goto 69.46,45.57 < 20 |only if walking
+Follow the path |goto 71.34,42.74 < 20 |only if walking
+Follow the path |goto 73.02,41.65 < 20 |only if walking
+kill Runeseer Faljar##117199 |q 45522/1 |goto 73.12,40.07
+|only Warlock
+step
+talk Runeseer Faljar##117199
+turnin To Silence the Bonespeakers##45522 |goto 73.26,39.89
+|only Warlock
+step
+talk Sigryn##116568
+accept To Tame the Drekirjar##45523 |goto 72.85,40.48
+|only Warlock
+step
+Follow the path |goto 44.13,60.34 < 20 |only if walking
+click Graple Point
+Grapple over the wall |goto 45.22,64.96 < 5 |only if walking
+Follow the path |goto 44.41,67.96 < 20 |only if walking
+Follow the path |goto 43.33,70.13 < 20 |only if walking
+Follow the path |goto 42.60,71.00 < 20 |only if walking
+Follow the path |goto 41.86,71.25 < 20 |only if walking
+Follow the path |goto 41.15,71.88 < 20 |only if walking
+kill Jarl Velbrand##117227 |q 45523/1 |goto 41.29,71.78
+|tip Watch the dialogue.
+|only Warlock
+step
+talk Jarl Velbrand##117227
+turnin To Tame the Drekirjar##45523 |goto 41.13,71.93
+|only Warlock
+step
+talk Sigryn##116568
+accept The Forgotten Heir##45524 |goto 41.40,71.67
+|only Warlock
+step
+Follow the path |goto 65.25,54.57 < 25 |only if walking
+Follow the path |goto 67.22,59.10 < 25 |only if walking
+Follow the path |goto 71.04,57.79 < 20 |only if walking
+Follow the path |goto 72.71,57.06 < 25 |only if walking
+Follow the path |goto 78.41,57.14 < 25 |only if walking
+Follow the path |goto 80.70,63.32 < 20 |only if walking
+Follow the path |goto 81.64,68.81 < 20 |only if walking
+Follow the path |goto 79.97,70.33 < 20 |only if walking
+Follow the path |goto 78.73,71.72 < 20 |only if walking
+Follow the path |goto 78.43,73.22 < 20 |only if walking
+Follow the path |goto 79.06,74.71 < 20 |only if walking
+Follow the path |goto 78.01,79.32 < 20 |only if walking
+Follow the path |goto 76.70,84.72 < 20 |only if walking
+Follow the path |goto 76.22,88.29 < 20 |only if walking
+Follow the path |goto 74.90,89.43 < 20 |only if walking
+Follow the path |goto 73.41,87.59 < 15 |only if walking
+Torvald found |q 45524/1 |goto 74.22,84.84
+|only Warlock
+step
+kill Torvald##116497 |q 45524/2 |goto 74.27,84.84
+|tip Watch the dialogue.
+|tip Torvald is elite. Make sure you have cooldowns ready.
+|only Warlock
+step
+talk Sigryn##116568
+turnin The Forgotten Heir##45524 |goto 74.17,85.01
+accept Unanswered Questions##45525 |goto 74.17,85.01
+|only Warlock
+step
+map Stormheim/0
+path loop off;dist 20
+path	59.32,52.51	60.29,53.76	61.37,55.16
+path	62.38,55.03	63.28,55.03	64.44,54.96
+path	65.88,55.38	66.48,57.16	67.28,59.22
+path	68.24,58.36	68.99,59.20	68.47,61.23
+path	67.25,62.11	65.62,62.56	64.41,63.19
+path	63.14,63.66	60.88,65.14	60.86,67.65
+path	62.02,67.94	62.98,68.11
+map	Stormheim/28
+path	66.25,51.18
+Follow the path
+talk Sigryn##116568
+Speak to Sigryn |q 45525/1
+|tip Watch the dialogue.
+|only Warlock
+step
+talk Eyir##93628
+turnin Unanswered Questions##45525 |goto 73.20,50.86
+accept The Gates Are Closed##46340 |goto 73.20,50.86
+|only Warlock
+step
+talk Archmage Khadgar##90417
+turnin The Gates Are Closed##46340 |goto Dalaran L/10 28.51,48.31
+|only Warlock
+step
+talk Archmage Modera##90418
+accept A Gift From the Six##45862 |goto 28.44,48.90
+|only Warlock
+step
+Raise your weapon and receive the Council of Six's gift in the Violet Citadel |q 45862/1 |goto 30.41,48.93
+|tip Click the button that appears at the center of your screen.
+|only Warlock
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45862 |goto 28.44,48.91
+|only Warlock
+step
+To pursue another specialization's traits, click here |confirm |next "WSpecs" |only if not completedq(45862) or not completedq(45842) or not completedq(45866)
+To continue, click here |confirm |next "AfterSpecW" |only if not completedq(45862) or not completedq(45842) or not completedq(45866)
+Continuing |next "AfterSpecW" |only if completedq(45862) and completedq(45842) and completedq(45866)
+|only Warlock
+step
+label "Destruction"
+talk Archmage Modera##90418
+accept Destruction: Rumblings Near Feltotem##45560 |goto 22.31,39.64
+|tip This quest is geared towards the Destruction specialization.
+|tip You must have 35 artifact traits unlocked with this specialization to start this questline.
+|only Warlock
+step
+Follow the path |goto Highmountain/0 40.87,11.50 < 25 |only if walking
+Follow the path |goto 37.68,16.10 < 25 |only if walking
+Follow the path |goto 36.60,20.17 < 25 |only if walking
+talk Navarrogg##117225
+turnin Destruction: Rumblings Near Feltotem##45560 |goto 35.74,23.98
+accept The Burning Birds##45564 |goto 35.74,23.98
+|only Warlock
+step
+click Fel Infusing Totem
+|tip You will take periodic fire damage for 10 seconds after clicking one.
+collect 5 Fel Infusing Totem##143778 |q 45564/1 |goto 35.74,23.98
+|only Warlock
+step
+Meet Navarrogg near Feltotem |q 45564/2 |goto 31.31,25.14
+|only Warlock
+step
+talk Navarrogg##117249
+turnin The Burning Birds##45564 |goto 31.31,25.14
+accept The Tainted Marsh##45726 |goto 31.31,25.14
+|only Warlock
+step
+talk Navarrogg##117249
+Tell him: _"I'd like the help to the Blind Marshlands."_
+Get a ride to the Marshlands |q 45726/1 |goto 31.31,25.14
+|only Warlock
+step
+kill Seabound Reaver##102038+
+Use the Exfoliator on their corpses |use Fel Exfoliator##143863
+Cleanse #5# spirits |q 45726/2 |goto 27.93,31.94
+|only Warlock
+step
+Follow the path |goto Highmountain/0 27.78,27.82 < 20 |only if walking
+Follow the path |goto 29.09,26.04 < 20 |only if walking
+talk Navarrogg##117249
+turnin The Tainted Marsh##45726 |goto 31.30,25.13
+accept Village of the Corruptors##45575 |goto 31.30,25.13
+|only Warlock
+step
+kill Feltotem Infuser##117353+
+|tip You will find these inside huts.
+Kill #4# Feltotem Infusers |q 45575/1 |goto 30.09,28.49
+|only Warlock
+step
+talk Navarrogg##117292
+|tip He will appear next to you.
+turnin Village of the Corruptors##45575 |goto 30.06,28.37
+accept The Feltotem Menace##45587 |goto 30.06,28.37
+|only Warlock
+step
+Follow the path |goto 30.81,31.49 < 25 |only if walking
+Find Tugar Bloodtotem |q 45587/1 |goto 32.24,32.68
+|only Warlock
+step
+Stop Tugar Bloodtotem |q 45587/2 |goto 32.38,32.81
+|tip Wait for the dialogue to complete.
+|only Warlock
+step
+talk Navarrogg##117361
+turnin The Feltotem Menace##45587 |goto 31.30,25.14
+accept Destroying the Nest##45796 |goto 31.30,25.14
+|only Warlock
+step
+Follow the path |goto Highmountain/0 32.33,26.05 < 25 |only if walking
+Enter the cave |goto 33.60,28.08 < 15 |only if walking
+Enter Feltotem Caverns |q 45796/1 |goto Highmountain/40 49.44,12.85
+|only Warlock
+step
+kill Novice Warbull##118051+, Feltotem Warbull##119495+, Novice Acolyte##118050+
+Kill #15# Legion forces |q 45796/2 |goto 57.44,52.61
+kill Fel Worm Egg##118040+
+|tip These lay in clusters near Fel Worms.
+Destroy #50# Fel Worm eggs |q 45796/3 |goto 57.44,52.61
+|only Warlock
+step
+kill Fel Broodmaster##117984
+Slay the Fel Broodmaster |q 45796/4 |goto 73.74,59.89
+|only Warlock
+step
+Leave the cave |goto Highmountain/0 33.60,28.07 < 10 |only if walking
+Follow the path |goto 32.60,26.25 < 25 |only if walking
+turnin Destroying the Nest##45796 |goto 31.31,25.14
+accept A Triumphant Report##45841 |goto 31.31,25.14
+|only Warlock
+step
+talk Archmage Modera##90418
+turnin A Triumphant Report##45841 |goto Dalaran L/10 28.45,48.90
+accept A Gift From the Six##45842 |goto 28.45,48.90
+|only Warlock
+step
+Receive the Council's gift |q 45842/1 |goto 30.43,48.95
+|tip Stand in the circle and use the special action button that appears on-screen.
+|tip Stand still until the ritual completes.
+|only Warlock
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45842 |goto 28.44,48.93
+|only Warlock
+step
+To pursue another specialization's traits, click here |confirm |next "WSpecs" |only if not completedq(45862) or not completedq(45842) or not completedq(45866)
+To continue, click here |confirm |next "AfterSpecW" |only if not completedq(45862) or not completedq(45842) or not completedq(45866)
+Continuing |next "AfterSpecW" |only if completedq(45862) and completedq(45842) and completedq(45866)
+|only Warlock
+step
+label "Affliction"
+talk Archmage Karlain##90463
+accept Affliction: The Twisted Twin##47041 |goto Dalaran L/10 28.61,47.78
+|tip This quest is geared towards the Affliction specialization.
+|tip You must have 35 artifact traits unlocked with this specialization to start this questline.
+|only Warlock
+step
+talk Karam Magespear##116175
+turnin Affliction: The Twisted Twin##47041 |goto 49.36,39.84
+accept Message from the Shadows##45185 |goto 49.36,39.84
+|only Warlock
+step
+click Wand of Simulated Life##3365
+collect Wand of Simulated Life##143534 |n
+click A Mysterious Note##3365
+collect A Mysterious Note##143494 |n
+Search for clues |q 45185/1 |goto 47.36,41.26
+|tip Go upstairs.
+|only Warlock
+step
+talk Karam Magespear##116175
+turnin Message from the Shadows##45185 |goto 49.36,39.80
+accept Secrets in the Underbelly##45187 |goto 49.36,39.80
+|only Warlock
+step
+Enter The Underbelly |goto Dalaran L/10 34.61,45.54 <20
+click Underbelly Lowlife##116323
+|tip You will need to click several of them
+collect Nethersworn Manifesto##143496 |n
+Search for clues |q 45187/1 |goto Dalaran L/11 54.18,62.44
+|only Warlock
+step
+talk Karam Magespear##116308
+turnin Secrets in the Underbelly##45187 |goto 52.15,58.48
+accept The Wisdom of the Council##45188 |goto 52.15,58.48
+|only Warlock
+step
+talk Archmage Karlain##90463
+turnin The Wisdom of the Council##45188 |goto Dalaran L/10 28.59,47.78
+accept Where it's Thinnest##45190 |goto 28.59,47.78
+|only Warlock
+step
+Cross the water |goto Broken Shore/0 52.02,25.15 < 20 |only if walking
+talk Karam Magespear##116175
+turnin Where it's Thinnest##45190 |goto 56.46,27.34
+accept Runes of Rending##45192 |goto 56.46,27.34
+|only Warlock
+step
+kill Thar'kith##34914
+Bypass the wards |q 45192/1 |goto 59.74,27.33
+|tip You will need to step on blue runes only.
+|tip Stepping on a purple rune will instantly kill you.
+|tip Stepping on a blue rune will change some nearby runes to blue or purple.
+|only Warlock
+step
+kill Thar'kith##116393
+Defeat Raest's minions |q 45192/2
+|only Warlock
+step
+talk Karam Magespear##116308
+turnin Runes of Rending##45192 |goto 59.79,27.44
+accept One Step Behind##45193 |goto 59.79,27.44
+|only Warlock
+step
+talk Archmage Khadgar##90417
+turnin One Step Behind##45193 |goto Dalaran L/10 28.45,48.35
+|only Warlock
+step
+talk Archmage Modera##90418
+accept A Gift From the Six##45866 |goto 28.45,48.90
+|only Warlock
+step
+Receive the Council's gift |q 45866/1 |goto 30.43,48.95
+|tip Stand in the circle and use the special action button that appears on-screen.
+|tip Stand still until the ritual completes.
+|only Warlock
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45866 |goto 28.44,48.93
+|only Warlock
+step
+To pursue another specialization's traits, click here |confirm |next "WSpecs" |only if not completedq(45862) or not completedq(45842) or not completedq(45866)
+To continue, click here |confirm |next "AfterSpecW" |only if not completedq(45862) or not completedq(45842) or not completedq(45866)
+Continuing |next "AfterSpecW" |only if completedq(45862) and completedq(45842) and completedq(45866)
+|only Warlock
+step
+label "AfterSpecW"
+talk Maiev Shadowsong##116576
+accept Champions of Legionfall##47137 |goto Broken Shore/0 44.54,63.52
+|only Warlock
+step
+talk Shinfel Blightsworn##105926
+accept Answers Unknown##45021 |goto Dreadscar Rift/0 57.16,38.22
+|only Warlock
+step
+talk Jubeka Shadowbreaker##115863
+turnin Answers Unknown##45021 |goto Azsuna/0 30.50,44.56
+accept Cult Culling##45024 |goto 30.50,44.56
+accept Stealing the Source of Power##45025 |goto 30.50,44.56
+|only Warlock
+stickystart "Stealing"
+step
+Follow the path |goto 29.73,46.97 |only if walking
+Follow the path |goto 28.15,49.88 |only if walking
+Follow the path |goto 27.68,53.64 |only if walking
+Follow the path down |goto 29.08,55.24 |only if walking
+Enter the cave |goto 30.27,56.17 < 15 |walk
+click Fel Crystal##6477
+Destroy the first Fel Crystal |q 45025/1 |goto 31.04,54.21 |count 1
+|only Warlock
+step
+Follow the path |goto 31.52,54.50 < 10 |walk
+click Fel Crystal##6477
+Destroy the second Fel Crystal |q 45025/1 |goto 31.83,54.03 |count 2
+|only Warlock
+step
+click Fel Crystal##6477
+Destroy the third Fel Crystal |q 45025/1 |goto 32.03,53.27 |count 3
+|only Warlock
+step
+Follow the path |goto 31.69,53.38 < 10 |walk
+click Fel Crystal##6477
+Destroy the fourth Fel Crystal |q 45025/1 |goto 31.58,52.20 |count 4
+|only Warlock
+step
+Follow the path |goto 30.98,53.03 < 10 |walk
+click Fel Crystal##6477
+Destroy the fifth Fel Crystal |q 45025/1 |goto 30.66,52.59 |count 5
+|only Warlock
+step
+kill Corrine the Devout##115883
+Defeat Corrine the Devout |q 45024/2 |goto 30.06,53.22
+|only Warlock
+step
+label "Stealing"
+kill Devoted Occultist##115875+
+Kill #10# Devoted Occultists |q 45024/1 |goto 30.32,53.05
+|only Warlock
+step
+talk Jubeka Shadowbreaker##115863
+turnin Cult Culling##45024 |goto 30.50,44.56
+turnin Stealing the Source of Power##45025 |goto 30.50,44.56
+accept Expending Fel Energy##45026 |goto 30.50,44.56
+|only Warlock
+step
+kill Manastalker##107135+, Wrathguard##107133+, Eredar Souleater##107331+
+|tip Kill demons to deplete the crystals.
+|tip You must empty the bar at the top of your screen.
+Deplete the Fel Crystals |q 45026/1 |goto 27.66,50.64
+|only Warlock
+step
+talk Jubeka Shadowbreaker##115863
+turnin Expending Fel Energy##45026 |goto 30.50,44.56
+accept Informing the Council##45794 |goto 30.50,44.56
+|only Warlock
+step
+talk Shinfel Blightsworn##105926
+turnin Informing the Council##45794 |goto Dreadscar Rift/0 57.13,38.22
+accept To the Broken Shore##45027 |goto 57.13,38.22
+|only Warlock
+step
+talk Shinfel Blightsworn##105926
+Tell her: _"I am ready to be summoned."_
+Accept the summons to Broken Shore |q 45027/1 |goto 57.15,38.26
+|only Warlock
+step
+talk Jubeka Shadowbreaker##115863
+turnin To the Broken Shore##45027 |goto Broken Shore/0 81.11,49.55
+accept The Fate of Kanrethad##45028 |goto 81.11,49.55
+|only Warlock
+step
+Follow the path |goto 81.97,47.16 < 20 |only if walking
+Follow the path |goto 80.61,43.45 < 20 |only if walking
+click Depleted Fel Crystal##6477
+Place the first Fel Crystal |q 45028/1 |goto 78.32,40.19 |count 1
+|tip You will be attacked after placing a crystal.
+|only Warlock
+step
+click Depleted Fel Crystal##6477
+Place the first Fel Crystal |q 45028/1 |goto 77.84,40.10 |count 2
+|tip You will be attacked after placing a crystal.
+|only Warlock
+step
+click Depleted Fel Crystal##6477
+Place the first Fel Crystal |q 45028/1 |goto 77.72,39.24 |count 3
+|tip You will be attacked after placing a crystal.
+|only Warlock
+step
+click Depleted Fel Crystal##6477
+Place the first Fel Crystal |q 45028/1 |goto 77.72,39.24 |count 4
+|tip You will be attacked after placing a crystal.
+|only Warlock
+step
+click Depleted Fel Crystal##6477
+Place the first Fel Crystal |q 45028/1 |goto 78.56,39.34 |count 5
+|only Warlock
+step
+kill Dark Summoner Rezara##117561
+Defeat Dark Summoner Rezara |q 45028/2 |goto 78.09,39.50
+|only Warlock
+step
+talk Jubeka Shadowbreaker##115863
+turnin The Fate of Kanrethad##45028 |goto 78.11,39.68
+accept Crystal Containment##46020 |goto 78.11,39.68
+|only Warlock
+step
+talk Jubeka Shadowbreaker##105922
+turnin Crystal Containment##46020 |goto Dreadscar Rift/0 56.69,33.77
+|only Warlock
+step
+talk Kanrethad Ebonlocke##118927
+accept Champion: Kanrethad Ebonlocke##46047 |goto 55.35,34.23
+|only Warlock
+step
+talk Gakin the Darkbinder##106199
+accept Further Advancement##46784 |goto 67.00,46.39
+|only Warlock
+step
+talk Archivist Melinda##108018
+Talk to Archivist Melinda |q 46784/1 |goto 55.34,40.98
+|only Warlock
+step
+talk Gakin the Darkbinder##106199
+turnin Further Advancement##46784 |goto 67.00,46.39
+|only Warlock
+step
+talk Maiev Shadowsong##116576
+turnin Champions of Legionfall##47137 |goto Broken Shore/0 44.54,63.52
+|only Warlock
+step
+talk Archmage Khadgar##116302
+accept Shard Times##46251 |goto 44.74,63.27
+|only Warlock
+step
+Collect #2500# Nethershards |q 46251/1 |goto 44.74,63.27
+|tip Nethershards can be obtained by looting rares, treasures, and completing world quests.
+|only Warlock
+step
+talk Archmage Khadgar##116302
+turnin Shard Times##46251 |goto 44.74,63.27
+|only Warlock
+step
+You must complete the Broken Shore campaign to continue
+Click here to load the "Broken Shore Campaign" guide |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\Broken Shore Campaign"
+Breach the Tomb |q 46246 |future
+|tip Use the Broken Shore Campaign guide to accomplish this.
+|only Warlock
+step
+talk Elithys Firestorm##117622
+accept Bloodbringer's Missive##46237 |goto Broken Shore/0 43.92,63.08
+|only Warlock
+step
+talk Mor'zul Bloodbringer##119166
+Ask him: _"Why have you called me here?"_
+Speak with Mor'zul Bloodbringer |q 46237/1 |goto Dreadscar Rift/0 35.23,38.55
+|only Warlock
+step
+talk Mor'zul Bloodbringer##119166
+turnin Bloodbringer's Missive##46237 |goto 35.23,38.55
+accept If You Build It##46238 |goto 35.23,38.55
+accept Fel to the Core##46239 |goto 35.23,38.55
+accept Give Me Fuel, Give Me Fire##46240 |goto 35.23,38.55
+|only Warlock
+stickystart "BuildIt"
+step
+Follow the path |goto Val'sharah/0 55.01,74.49 < 20 |only if walking
+Follow the path |goto 57.70,76.31 < 30 |only if walking
+Enter Lostlight Grotto |goto 57.57,83.43 < 25 |only if walking
+kill Moonlost Owlbeast##108259+
+collect 50 Owlbeast Blood##144444 |q 46240/1 |goto 59.93,81.73
+|only Warlock
+step
+Retrieve the Overcharged Fel Core |q 46239/1
+|tip You can obtain this item by completing any invasion in the Broken Isles.
+|tip The final boss of the last scenario will drop the core.
+|only Warlock
+step
+label "BuildIt"
+collect 5 Felslate##123919
+|tip This can be gathered with Mining.
+collect 3 Chatoic Spinel##130175
+|tip This can be gathered with Jewelcrafting by prospecting ore.
+collect 1 Unbending Potion##127845
+|tip This can be crafted with Alchemy.
+|tip You can purchase any of these from the Auction House.
+|only Warlock
+step
+talk Mor'zul Bloodbringer##119166
+turnin If You Build It##46238 |goto Dreadscar Rift/0 35.23,38.55
+turnin Fel to the Core##46239 |goto 35.23,38.55
+turnin Give Me Fuel, Give Me Fire##46240 |goto 35.23,38.55
+accept The Minions of Hel'nurath##46241 |goto 35.23,38.55
+|only Warlock
+step
+Follow the path |goto Broken Shore/0 46.88,58.67 < 25 |only if walking
+Follow the path |goto 50.54,53.86 < 25 |only if walking
+click Xorothian Cultist##119053
+|tip Use your Succubus' Seduce ability on them.
+Leader's location found |q 46241/1 |goto 45.22,47.46
+|only Warlock
+step
+Click the quest complete box
+turnin The Minions of Hel'nurath##46241 |goto 45.22,47.46
+accept The Dreadlord's Calling##46242 |goto 45.22,47.46
+|only Warlock
+step
+kill Zuriwa the Hexxer##119173
+Retrieve the Xorothian Calling Stone |q 46242/1 |goto 43.44,46.76
+|only Warlock
+step
+talk Mor'zul Bloodbringer##119166
+turnin The Dreadlord's Calling##46242 |goto Dreadscar Rift/0 35.23,38.59
+accept The Wrathsteed of Xoroth##46243 |goto 35.23,38.59
+|only Warlock
+step
+click Mor'zul's Gateway
+Enter the portal |scenariostart
+|only Warlock
+step
+click Xorothian Calling Stone
+Place the Calling Stone |scenariogoal 1/35652
+|tip Wait for the dialogue to finish.
+|only Warlock
+step
+Defeat the minions |scenariogoal 2/35653
+|tip To remove the shield for Ritualists, use your Felhunter's Devour Magic ability.
+|only Warlock
+step
+kill Arax'ath##119840
+Defeat Arax'ath |scenariogoal 3/35654
+|tip You MUST kill the imps IMMEDIATELY when they spawn!
+Enslave the Wrathsteed |scenariogoal 3/35655
+|tip Cast Enslave Demon on the Wrathsteed.
+|only Warlock
+step
+talk Mor'zul Bloodbringer##119823
+turnin The Wrathsteed of Xoroth##46243
+|tip Wait for the dialogue to complete.
+|only Warlock
+step
+talk Archmage Khadgar##116302
+accept Seeking Lost Knowledge##47067 |goto Broken Shore/0 44.74,63.26
+|only Warrior
+step
+Follow the path up |goto 71.48,35.24 < 10 |only if walking
+click Remnant of Lost Knowledge##121165
+Recover Knowledge from Lost Temple |q 47067/2 |goto Broken Shore/0 71.92,40.74
+|only Warrior
+step
+Follow the path |goto Broken Shore/0 72.07,38.71 < 10 |only if walking
+click Remnant of Lost Knowledge##121165
+Recover Knowledge from Moonlight Ascent |q 47067/3 |goto 75.62,36.28
+|only Warrior
+step
+Jump down here |goto Broken Shore/0 77.93,37.18 < 10 |only if walking
+click Remnant of Lost Knowledge##121165
+Recover Knowledge from Felfire Pass |q 47067/1 |goto 82.55,45.12
+|only Warrior
+step
+talk Archmage Khadgar##116302
+turnin Seeking Lost Knowledge##47067 |goto Broken Shore/0 44.73,63.26
+accept Delivering Lost Knowledge##47072 |goto Broken Shore/0 44.73,63.26
+|only Warrior
+step
+talk Fjornson Stonecarver##111741
+turnin Delivering Lost Knowledge##47072 |goto Skyhold/1 45.09,28.28
+accept Using Lost Knowledge##46940 |goto Skyhold/1 45.09,28.28
+|only Warrior
+step
+talk Fjornson Stonecarver##111741
+Tell him _"Let's continue research on my artifact."_
+Start a Work Order |q 46940/1 |goto Skyhold/1 45.07,28.32
+|only Warrior
+step
+talk Fjornson Stonecarver##111741
+turnin Using Lost Knowledge##46940 |goto Skyhold/1 45.09,28.28
+|only Warrior
+step
+talk Archmage Khadgar##116302
+accept Greater Power For Greater Threats##46744 |goto Broken Shore/0 44.73,63.27
+If you already have 35 Artifact Traits unlocked, click here to continue |confirm
+|only Warrior
+|only if not completedq(46765)
+step
+click Forge of Odyn
+Unlock All Traits on an Artifact Weapon |q 46744/1 |goto Skyhold/1 40.31,35.83
+|only Warrior
+step
+talk Archmage Khadgar##116302
+turnin Greater Power For Greater Threats##46744 |goto Broken Shore/0 44.73,63.26
+accept The Broken Shore: Investigating the Legion##46765 |goto Broken Shore/0 44.73,63.28
+|only Warrior
+step
+Kill an elite in the Broken Isles
+|tip They appear as a green skull on the world map.
+collect Mysterious Runebound Scroll##147430 |n
+Discover the Hidden Legion Threat |q 46765/1
+|only Warrior
+step
+talk Archmage Khadgar##116302
+turnin The Broken Shore: Investigating the Legion##46765 |goto Broken Shore/0 44.73,63.28
+accept The Council's Call##47000 |goto Broken Shore/0 44.73,63.28
+|only Warrior
+step
+Go up the stairs |goto Dalaran L/10 37.57,50.17 < 10 |only if walking
+talk Archmage Khadgar##90417
+turnin The Council's Call##47000 |goto Dalaran L/10 28.57,48.33
+accept Away From Prying Eyes##44782 |goto Dalaran L/10 28.57,48.33
+|only Warrior
+step
+Enter the Purple Parlor |q 44782/1 |goto Dalaran L/10 24.42,48.06
+|tip Go through the portal.
+|only Warrior
+step
+talk Archmage Modera##115465
+turnin Away From Prying Eyes##44782 |goto Dalaran L/10 22.20,39.07
+accept In Dire Need##44821 |goto Dalaran L/10 22.20,39.07
+|only Warrior
+step
+Watch the dialogue
+Hear the Council's Plea |q 44821/1 |goto Dalaran L/10 23.25,39.57
+|only Warrior
+step
+talk Archmage Modera##115465
+turnin In Dire Need##44821 |goto Dalaran L/10 22.29,39.64
+|only Warrior
+step "warrior_artifacttraits"
+Select your current Spec:
+Arms |confirm |next "warrior_armsartifact"
+Fury |confirm |next "warrior_furyartifact"
+Protection |confirm |next "warrior_protectionartifact"
+|only Warrior
+step "warrior_armsartifact"
+talk Archmage Kalec##115467
+accept Arms: The Thieving Apprentice##44914 |goto Dalaran L/10 28.66,49.92
+|tip You must have 35 Traits unlocked to accept this quest.
+|only Warrior
+step
+talk Joanna##115791
+turnin Arms: The Thieving Apprentice##44914 |goto Azshara/0 25.02,38.53
+accept Professionally Good Looking##44915 |goto Azshara/0 25.02,38.53
+|only Warrior
+step
+talk Lobos##115970
+Tell him _"I challenge you for that hat!"_
+kill Lobos##115970
+Acquire a Fanciful Hat |q 44915/3 |goto Azshara/0 45.17,18.43
+|only Warrior
+step
+talk Raethas Dawnseer##115946
+Tell him _"I, um, need your robes..."_
+kill Raethas Dawnseer##115946
+Acquire Well-Tailored Robes |q 44915/2 |goto Azshara/0 62.45,16.05
+|only Warrior
+step
+talk Phloem##115903
+Tell her _"I need that mantle."_
+kill Phloem##115903
+Acquire a Magnificent Mangle |q 44915/1 |goto Azshara/0 80.84,32.05
+|only Warrior
+step
+talk Joanna##115791
+turnin Professionally Good Looking##44915 |goto Azshara/0 25.02,38.53
+accept Order of Incantations##44920 |goto Azshara/0 25.02,38.53
+|only Warrior
+step
+Click the Gems in the following order:
+click Arcane-Imbued Gem
+click Frost-Imbued Gem
+click Fire-Imbued Gem
+click Shadow-Imbued Gem
+Solve the Barrier Puzzle |q 44920/2 |goto Azshara/0 25.14,38.50
+|only Warrior
+step
+Click the Quest Complete Box:
+turnin Order of Incantations##44920
+accept The Archmage Accosted##44924
+|only Warrior
+step
+Follow the path upstairs |goto Azshara/0 25.28,37.94 < 6 |walk
+kill Sanath Lim-yo##115860
+|tip He is all the way at the top of the tower.
+|tip Move far away and avoid his Shadow Barrage ability.
+Confront Archmage Xylem |q 44924/1 |goto Azshara/0 25.21,38.05
+|only Warrior
+step
+click Xylem's Portal
+Follow Through the Portal |q 44924/2 |goto Azshara/0 25.19,37.97
+|only Warrior
+step
+talk Joanna##116048
+turnin The Archmage Accosted##44924 |goto Azshara/0 25.23,37.90
+accept A Portal Away##46177 |goto Azshara/0 25.23,37.90
+|only Warrior
+step
+Go up the stairs |goto Dalaran L/10 37.57,50.17 < 10 |only if walking
+talk Archmage Modera##115465
+turnin A Portal Away##46177 |goto Dalaran L/10 28.71,49.90
+|only Warrior
+step
+talk Archmage Modera##90418
+accept A Gift From the Six##45865 |goto Dalaran L/10 28.50,48.95
+|only Warrior
+step
+Use the _Acquire the Gift_ ability
+|tip It appears on your screen when standing in this spot.
+Receive the Council's Gift |q 45865/1 |goto Dalaran L/10 30.42,48.93
+|only Warrior
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45865 |goto Dalaran L/10 28.48,48.93 |next "warrior_artifactend"
+|only Warrior
+step "warrior_furyartifact"
+talk Archmage Modera##115465
+accept Fury: The Folly of Levia Laurence##47056 |goto Dalaran L/10 28.43,48.90
+|tip You must have 35 Traits unlocked to accept this quest.
+|only Warrior
+step
+talk Professor Pallin##92195
+Ask him _"Do you know where I can find Levia Laurence?"_
+Ask About Levia at the Scribe's Sacellum |q 47056/1 |goto Dalaran L/10 41.30,37.05
+|only Warrior
+step
+talk Icks##97331
+Ask him _"Do you know where I can find Levia Laurence?"_
+Ask About Levia at the Militant Mystic |q 47056/2 |goto Dalaran L/10 49.31,73.11
+|only Warrior
+step
+Enter the Lounge |goto Dalaran L/10 49.90,37.80 < 6 |walk
+talk Amisi Azuregaze##96806
+Ask her _"Do you know where I can find Levia Laurence?"_
+Ask About Levia at the Legerdemain Lounge |q 47056/3 |goto Dalaran L/10 49.78,40.13
+|only Warrior
+step
+Go upstairs |goto Dalaran L/10 50.68,40.22 < 5 |walk
+click Levia's Research Journal
+Investigate Levia's Belongings |q 47056/4 |goto Dalaran L/10 46.41,40.08
+|only Warrior
+step
+Go up the stairs |goto Dalaran L/10 37.63,50.13 < 10 |only if walking
+talk Archmage Modera##90418
+turnin Fury: The Folly of Levia Laurence##47056 |goto 28.48,48.93
+accept Bargaining with Shadows##46327 |goto 28.48,48.93
+|only Warrior
+step
+Enter the Chamber of the Guardians |goto Dalaran L/10 45.66,43.32 < 10 |walk
+Step onto the teleporter |goto 49.27,47.55 < 6 |walk
+talk Ritssyn Flamescowl##116714
+turnin Bargaining with Shadows##46327 |goto Dalaran L/12 52.77,59.25
+accept The Acolyte Imperiled##45916 |goto Dalaran L/12 52.77,59.25
+|only Warrior
+step
+Investigate Levia's Ritual |q 45916/1 |goto Dalaran L/12 58.07,72.99
+|only Warrior
+step
+Kill the enemies that attack
+Defend Ritssyn |q 45916/2 |goto Dalaran L/12 58.07,72.99
+|only Warrior
+step
+talk Ritssyn Flamescowl##116714
+turnin The Acolyte Imperiled##45916 |goto Dalaran L/12 58.07,72.99
+accept Dabbling in the Demonic##45125 |goto Dalaran L/12 58.07,72.99
+|only Warrior
+step
+click Talar |goto Dalaran L/12 58.75,71.08
+|confirm |q 45125/1
+|only Warrior
+step
+click Taam |goto Dalaran L/12 56.06,73.27
+|confirm |q 45125/1
+|only Warrior
+step
+click Dregla |goto Dalaran L/12 56.88,74.45
+|confirm |q 45125/1
+|only Warrior
+step
+talk Ritssyn Flamescowl##116714
+Tell him _"The runes are activated. Stabilize the portal."_
+Stabilize the Portal |q 45125/1 |goto Dalaran L/12 57.59,72.54
+|only Warrior
+step
+talk Ritssyn Flamescowl##116714
+turnin Dabbling in the Demonic##45125 |goto Dalaran L/12 57.70,72.54
+accept Following the Scent##45917 |goto Dalaran L/12 57.70,72.54
+|only Warrior
+step
+click Demonic Gateway |goto Dalaran L/12 60.36,75.79 < 5 |walk
+talk Fhambar##118450
+Tell him _"Go find Levia, Fhambar!"_
+Talk to Fhambar |q 45917/1 |goto Azsuna/0 30.97,51.84
+|only Warrior
+step
+Follow Fhambar |goto Azsuna/0 30.13,52.19 < 10 |walk
+Follow Fhambar |goto 27.68,52.58 < 10 |walk
+Find Levia Laurance |q 45917/2 |goto 25.78,57.55
+|only Warrior
+step
+talk Levia Laurence##116189
+turnin Following the Scent##45917 |goto Azsuna/0 25.67,57.75
+accept Unlikely Seduction##45126 |goto Azsuna/0 25.67,57.75
+|only Warrior
+step
+kill Agatha##118520
+Defeat Agatha |q 45126/1 |goto Azsuna/0 25.84,57.42
+|only Warrior
+step
+talk Levia Laurence##116189
+turnin Unlikely Seduction##45126 |goto Azsuna/0 25.67,57.75
+accept Fel-Crossed Lovers##45127 |goto Azsuna/0 25.67,57.75
+|only Warrior
+step
+Go up the stairs |goto Dalaran L/10 37.63,50.13 < 10 |only if walking
+talk Archmage Modera##90418
+turnin Fel-Crossed Lovers##45127 |goto Dalaran L/10 28.48,48.93
+accept A Gift From the Six##45861 |goto Dalaran L/10 28.48,48.93
+|only Warrior
+step
+Use the _Acquire the Gift_ ability
+|tip It appears on your screen when standing in this spot.
+Receive the Council's Gift |q 45861/1 |goto Dalaran L/10 30.42,48.93
+|only Warrior
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45861 |goto Dalaran L/10 28.48,48.93 |next "warrior_artifactend"
+|only Warrior
+step "warrior_protectionartifact"
+talk Archmage Ansirem Runeweaver##90431
+accept Protection: Aid of the Illidari##45412 |goto Dalaran L/10 28.46,49.48
+|tip You must have 35 Traits unlocked to accept this quest.
+|only Warrior
+step
+Find Kor'vas Bloodthorn |q 45412/1 |goto Dalaran L/10 49.09,26.10
+|only Warrior
+step
+talk Kor'vas Bloodthorn##116880
+turnin Protection: Aid of the Illidari##45412 |goto Dalaran L/10 52.04,19.65
+accept accept 45413 |goto Dalaran L/10 52.04,19.65
+|only Warrior
+step
+talk Glutonia##107622
+|tip She walks around the area.
+Ask her _"Fine, Glutonia. What was the Legion after?"_
+|confirm |q 45413/1 |goto Dalaran L/10 51.81,15.70
+|only Warrior
+step
+talk Teller Rames##96817
+Ask him _"What was stolen in the attack?"_
+|confirm |q 45413/1 |goto Dalaran L/10 52.28,14.73
+|only Warrior
+step
+talk Teller Hanners##96818
+Ask her _"Do you have any idea what was taken?"_
+|confirm |q 45413/1 |goto Dalaran L/10 53.15,15.24
+|only Warrior
+step
+talk Teller Althiellis##96819
+Ask him _"Is anything missing from the vault?"_
+Investigate the Bank Employees |q 45413/1 |goto Dalaran L/10 54.05,15.75
+|only Warrior
+step
+talk Randall Goldsprocket##113812
+Ask him _"What did it take exactly?"_
+Identify the Stolen Item |q 45413/2 |goto Dalaran L/10 53.74,20.23
+|only Warrior
+step
+talk Kor'vas Bloodthorn##116880
+turnin Gathering Information##45413 |goto Dalaran L/10 52.04,19.65
+accept Confirming Suspicions##45414 |goto Dalaran L/10 52.04,19.65
+|only Warrior
+step
+Enter the building |goto Dalaran L/10 37.50,36.49 < 6 |walk
+Search First to Your Aid |q 45414/1 |goto Dalaran L/10 36.34,37.33
+|only Warrior
+step
+Search Krasus' Landing |q 45414/2 |goto Dalaran L/10 73.36,45.31
+|only Warrior
+step
+talk Prophet Velen##117042
+Tell him _"Kruul's heart was stolen by the Legion."_
+Speak to Velen |q 45414/3 |goto Dalaran L/10 74.72,45.51
+|only Warrior
+step
+Witness Velen's Vision |q 45414/4 |goto Dalaran L/10 74.40,45.47
+|only Warrior
+step
+talk Prophet Velen##117042
+turnin Confirming Suspicions##45414 |goto Dalaran L/10 74.65,45.52
+accept Between Worlds##45415 |goto Dalaran L/10 74.65,45.52
+|only Warrior
+step
+click Portal to Hellfire Peninsula
+Take the Portal to Hellfire Peninsula |q 45415/1 |goto Dalaran L/10 75.07,46.16
+|only Warrior
+step
+talk Kor'vas Bloodthorn##116880
+Speak to Kor'vas at the Stair of Destiny |q 45415/2 |goto Hellfire Peninsula 85.30,50.12
+|only Warrior
+step
+Kill the enemies that attack in waves
+kill Lord Vazuun##117126
+Open the Portal |q 45415/3 |goto Hellfire Peninsula 84.50,50.17
+|only Warrior
+step
+talk Kor'vas Bloodthorn##116880
+turnin Between Worlds##45415 |goto Hellfire Peninsula 85.29,50.12
+accept Dark Omens##45843 |goto Hellfire Peninsula 85.29,50.12
+|only Warrior
+step
+Go up the stairs |goto Dalaran L/10 37.63,50.13 < 10 |only if walking
+talk Archmage Modera##90418
+turnin Dark Omens##45843 |goto Dalaran L/10 28.48,48.93
+accept A Gift from the Six##45863 |goto Dalaran L/10 28.48,48.93
+|only Warrior
+step
+Use the _Acquire the Gift_ ability
+|tip It appears on your screen when standing in this spot.
+Receive the Council's Gift |q 45863/1 |goto Dalaran L/10 30.42,48.93
+|only Warrior
+step
+talk Archmage Modera##90418
+turnin A Gift From the Six##45863 |goto Dalaran L/10 28.48,48.93 |next "warrior_artifactend"
+|only Warrior
+step "warrior_artifactend"
+You have gained the Arms Warrior's new Artifact Traits |only if completedq(45865)
+You have gained the Fury Warrior's new Artifact Traits |only if completedq(45861)
+You have gained the Protection Warrior's new Artifact Traits |only if completedq(45863)
+Click here to continue the Warrior Campaign |confirm |only if not completedq(45865) or not completedq(45861) or not completedq(45863)
+Click here to pursue another spec's Artifact Traits |confirm |next "warrior_artifacttraits" |only if not completedq(45865) or not completedq(45861) or not completedq(45863)
+Moving to next section |next |only if completedq(45865) and completedq(45861) and completedq(45863)
+|only Warrior
+step
+talk Maiev Shadowsong##116576
+accept Defending Broken Isles##46247 |goto Broken Shore/0 44.54,63.52
+|only Warrior
+step
+Complete a Legion Assault |q 46247/1
+|only Warrior
+step
+talk Maiev Shadowsong##116576
+turnin Defending Broken Isles##46247 |goto Broken Shore/0 44.54,63.52
+accept Champions of Legionfall##47137 |goto Broken Shore/0 44.54,63.52
+|only Warrior
+step
+accept Tactical Planning##46173 |goto Skyhold/1 58.92,36.38
+|tip You will accept this when you return to Skyhold.
+|only Warrior
+step
+talk Odyn##96469
+turnin Tactical Planning##46173 |goto Skyhold/1 58.31,84.33
+accept Recruitment Drive##44849 |goto Skyhold/1 58.31,84.33
+|only Warrior
+step
+talk Aerylia##96679
+Tell her _"We need to go to Helheim."_
+Travel to Helheim |q 44849/1 |goto Skyhold/1 58.35,25.06
+|only Warrior
+step
+talk Aerylia##116193
+turnin Recruitment Drive##44849 |goto Helheim/0 34.39,28.50
+accept Stolen Souls##45834 |goto Helheim/0 34.39,28.50
+accept Helya's Horn##45118 |goto Helheim/0 34.39,28.50
+accept Arming the Army##44850 |goto Helheim/0 34.39,28.50
+|only Warrior
+stickystart "warriorequipment"
+stickystart "warriorempowerhorn"
+step
+All around Helheim:
+click Soul Fonts
+Release #15# Stolen Souls |q 45834/1 |goto Helheim/0 41.52,45.86
+|only Warrior
+step
+label "warriorequipment"
+click Stolen Crates
+Recover #10# Stolen Warrior's Blades |q 44850/1 |goto Helheim/0 41.52,45.86
+Recover #10# Stolen Warrior's Shields |q 44850/2 |goto Helheim/0 41.52,45.86
+|only Warrior
+step
+label "warriorempowerhorn"
+Kill enemies in Helheim
+Kill Enemies to Empower Helya's Horn |q 45118/1 |goto Helheim/0 41.52,45.86
+|tip You can see the progress bar in your quest tracker.
+|only Warrior
+step
+talk Aerylia##116193
+turnin Stolen Souls##45834 |goto Helheim/0 34.39,28.50
+turnin Helya's Horn##45118 |goto Helheim/0 34.39,28.50
+turnin Arming the Army##44850 |goto Helheim/0 34.39,28.50
+accept A Glorious Reunion##45128 |goto Helheim/0 34.39,28.50
+|only Warrior
+step
+talk Aerylia##116193
+Tell her _"Let's get out of here."_
+Return to Skyhold |q 45128/1 |goto Skyhold/1 58.35,25.06
+|only Warrior
+step
+talk Odyn##96469
+turnin A Glorious Reunion##45128 |goto Skyhold/1 58.31,84.33
+accept Resource Management##44889 |goto Skyhold/1 58.31,84.33
+|only Warrior
+step
+talk Danica the Reclaimer##116858
+turnin Resource Management##44889 |goto Broken Shore/0 69.80,34.74
+accept Kvaldir on Call##45634 |goto Broken Shore/0 69.80,34.74
+accept Missing in Action: Lord Darius Crowley##45648 |goto Broken Shore/0 69.80,34.74
+|only Warrior
+step
+click Felsworn Cave
+Find Lord Darius Crowley |q 45648/1 |goto Broken Shore/0 71.50,28.58
+|only Warrior
+step
+Next to you:
+talk Lord Darius Crowley##117475
+turnin Missing in Action: Lord Darius Crowley##45648
+accept Mission: Search and Rescue##45649
+accept Operation Felrage##45650
+|only Warrior
+stickystart "savecapturedwarriors"
+step
+Use the _Helya's Horn_ ability that appears on your screen
+Blow Helya's Horn |q 45634/1 |goto Broken Shore/0  72.84,27.12
+|only Warrior
+step
+label "savecapturedwarriors"
+click Captured Warrior##117411+
+Save #8# Captured Warrior Squads |q 45649/1 |goto Broken Shore/0 76.5,27.5
+|only Warrior
+step
+kill Warlord Kaz'jatar##120143 |q 45650/2 |goto Broken Shore/0 83.45,26.90
+kill Felbeard##117404 |q 45650/1 |goto Broken Shore/0 83.45,26.90
+|only Warrior
+step
+Use the _Call Kvaldir_ ability on your screen
+Destroy the First Portal |q 45634/2 |count 1 |goto Broken Shore/0 82.78,29.27
+|only Warrior
+step
+Next to you:
+talk Lord Darius Crowley##117475
+turnin Operation Felrage##45650
+turnin Mission: Search and Rescue##45649
+|only Warrior
+step
+Use the _Call Kvaldir_ ability on your screen
+Destroy the Second Portal |q 45634/2 |count 2 |goto Broken Shore/0 66.87,38.62
+|only Warrior
+step
+Enter the cave |goto Broken Shore/0 66.81,34.82 < 6 |walk
+Use the _Call Kvaldir_ ability on your screen
+Destroy the Last Portal |q 45634/2 |goto 64.58,30.43
+|only Warrior
+step
+talk Danica the Reclaimer##116858
+turnin Kvaldir on Call##45634 |goto Broken Shore/0 69.82,34.72
+accept Return of the Battlelord##46267 |goto Broken Shore/0 69.82,34.72
+|only Warrior
+step
+talk Odyn##96469
+turnin Return of the Battlelord##46267 |goto Skyhold/1 58.31,84.33
+|only Warrior
+step
+talk Lord Darius Crowley##117475
+accept Champion: Lord Darius Crowley##45876 |goto Skyhold/1 59.87,83.80
+|only Warrior
+step
+Recruit a Legionfall Champion |q 47137/1
+|only Warrior
+step
+talk Maiev Shadowsong##116576
+turnin Champions of Legionfall##47137 |goto Broken Shore/0 44.54,63.52
+|only Warrior
+step
+talk Skyseer Ghrent##100635
+accept Further Advancement##46778 |goto Skyhold/1 59.71,13.44
+|only Warrior
+step
+talk Einar the Runecaster##107994
+Talk to Einar the Runecaster |q 46778/1 |goto Skyhold/1 46.6,29.6
+|only Warrior
+step
+talk Skyseer Ghrent##100635
+turnin Further Advancement##46778 |goto Skyhold/1 59.71,13.44
+|only Warrior
+step
+talk Archmage Khadgar##116302
+accept Shard Times##46251 |goto Broken Shore/0 44.73,63.27
+|only Warrior
+step
+Collect 2500 Nethershards |q 46251/1
+|tip You can do this by completing World Quests and killing Rares in the Broken Shore.
+|tip You will get 2499 Nethershards back.
+|only Warrior
+step
+talk Archmage Khadgar##116302
+turnin Shard Times##46251 |goto Broken Shore/0 44.73,63.27
+|only Warrior
+step
+You must complete the Broken Shore campaign to continue
+Use the Broken Shore Campaign guide to accomplish this |confirm |next "Zygor's Leveling Guides\\Legion (100-110)\\Broken Shore Campaign"
+Breach the Tomb |q 46246 |future
+|only Warrior
+step
+talk Valarjar Warsinger##119527
+accept A Godly Invitation##46208 |goto 43.59,63.08
+|only Warrior
+step
+talk Odyn##96469
+turnin A Godly Invitation##46208 |goto Skyhold/1 58.40,84.56
+accept The Trial of Rage##46207 |goto Skyhold/1 58.40,84.56
+|only Warrior
+step
+talk Odyn##96469
+Tell him _"I'm ready to begin the trial, Odyn."_
+Begin the Trial of Rage Scenario |scenariostart |q 46207 |goto 58.40,84.56
+|only Warrior
+step
+talk Damrul the Stronk##118762
+Tell him _"I challenge you to fight!"_
+Challenge Damrul the Stronk |scenariogoal 1/35413 |q 46207 |goto Halls of Valor/1 52.30,87.07
+|only Warrior
+step
+kill Damrul the Stronk##118762
+Defeat Damrul the Stronk |scenariogoal 1/35403 |q 46207 |goto Halls of Valor/1 50.32,85.82
+|only Warrior
+step
+talk Omanawkwa Steelhoof##118775
+Tell him _"I challenge you to fight!"_
+Challenge Omanawkwa Steelhoof |scenariogoal 2/35414 |q 46207 |goto Halls of Valor/1 50.47,87.13
+|only Warrior
+step
+kill Omanawkwa Steelhoof##118775
+Defeat Omanawkwa Steelhoof |scenariogoal 2/35410 |q 46207 |goto 50.47,85.82
+|only Warrior
+step
+talk Asrea Moonblade##118772
+Tell her _"I challenge you to fight!"_
+Challenge Asrea Moonblade |scenariogoal 3/35415 |q 46207 |goto Halls of Valor/1 51.39,87.03
+|only Warrior
+step
+kill Asrea Moonblade##118772
+Defeat Asrea Moonblade |scenariogoal 3/35411 |q 46207 |goto 50.47,85.82
+|only Warrior
+step
+Step onto the Rune |scenariogoal 4/36226 |q 46207 |goto Halls of Valor/1 52.49,87.95
+|only Warrior
+step
+kill Asprirant Thyri##118855
+Defeat Asprirant Thyri |scenariogoal 4/35412 |q 46207 |goto Halls of Valor/1 50.95,85.80
+|only Warrior
+step
+click Skyhold Portal
+Return to Skyhold |q 46207/2 |goto Halls of Valor/1 51.41,89.43
+|only Warrior
+step
+talk Odyn##96469
+turnin The Trial of Rage##46207 |goto Skyhold/1 58.40,84.56
+|only Warrior
+step
+Congratulations!
+You have earned your Class Hall mount
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Legion (100-110)\\Broken Shore\\Excavator Karla Quests",{
+author="support@zygorguides.com",
+description="This guide will walk you through completing the treasure hunting quests offered by Excavator Karla on Broken Shore.",
+condition_suggested="level>=110 and completedq(46734)",
+condition_end="completedq(46666)",
+startlevel=110.0,
+},[[
+stickystart "Karla"
+step
+Follow the path |goto Broken Shore/0 44.20,62.29 < 20 |only if walking
+Follow the path |goto 40.64,61.76 < 20 |only if walking
+Follow the path |goto 40.33,67.42 < 20 |only if walking
+talk Excavator Karla##119886
+accept Spiders, Huh?##46499 |goto 39.54,71.68
+|tip Quests from this NPC appear 24 hours after completing the last one offered.
+step
+Follow the path |goto 48.38,21.48 < 20 |only if walking
+Cross the water |goto 45.30,23.59 < 25 |only if walking
+Follow the path |goto 44.57,27.57 < 25 |only if walking
+Follow the path |goto 41.83,28.51 < 25 |only if walking
+click Spider-Covered Treasure Chest##6478
+collect Potentially Precious Gem##146955 |n
+Find the Creeping Grotto treasure |q 46499/1 |goto 43.44,31.38
+step
+Follow the path |goto Broken Shore/0 44.20,62.29 < 20 |only if walking
+Follow the path |goto 40.64,61.76 < 20 |only if walking
+Follow the path |goto 40.33,67.42 < 20 |only if walking
+talk Excavator Karla##119886
+turnin Spiders, Huh?##46499 |goto 39.54,71.68
+step
+Follow the path |goto Broken Shore/0 44.20,62.29 < 20 |only if walking
+Follow the path |goto 40.64,61.76 < 20 |only if walking
+Follow the path |goto 40.33,67.42 < 20 |only if walking
+talk Excavator Karla##119886
+accept Grave Robbin'##46501 |goto 39.54,71.68
+|tip Quests from this NPC appear 24 hours after completing the last one offered.
+step
+Follow the path |goto Broken Shore/0 43.89,58.31 < 20 |only if walking
+Follow the path |goto 47.00,58.50 < 20 |only if walking
+Follow the path |goto 51.56,51.23 < 20 |only if walking
+click Dusty Treasure Chest##6478
+Retrieve the Soul Ruin treasure |q 46501/1 |goto 49.68,46.76
+step
+Follow the path |goto Broken Shore/0 44.20,62.29 < 20 |only if walking
+Follow the path |goto 40.64,61.76 < 20 |only if walking
+Follow the path |goto 40.33,67.42 < 20 |only if walking
+talk Excavator Karla##119886
+turnin Grave Robbin'##46501 |goto 39.54,71.68
+step
+Follow the path |goto Broken Shore/0 44.20,62.29 < 20 |only if walking
+Follow the path |goto 40.64,61.76 < 20 |only if walking
+Follow the path |goto 40.33,67.42 < 20 |only if walking
+talk Excavator Karla##119886
+accept Tomb Raidering##46509 |goto 39.54,71.68
+|tip Quests from this NPC appear 24 hours after completing the last one offered.
+step
+Cross the water |goto Broken Shore/0 52.04,25.18 < 20 |only if walking
+Follow the path up |goto 55.39,27.70 < 25 |only if walking
+Follow the path |goto 57.60,28.37 < 25 |only if walking
+Follow the path |goto 62.08,23.45 < 20 |only if walking
+Follow the path |goto 64.20,23.19 < 15 |only if walking
+Follow the path |goto 66.48,22.54 < 15 |only if walking
+Follow the path |goto 68.65,19.31 < 15 |only if walking
+click Grandiose Treasure Chest##6478
+Locate the Tomb of Sargeras treasure |q 46509/1 |goto 67.60,16.17
+step
+Follow the path |goto Broken Shore/0 44.20,62.29 < 20 |only if walking
+Follow the path |goto 40.64,61.76 < 20 |only if walking
+Follow the path |goto 40.33,67.42 < 20 |only if walking
+talk Excavator Karla##119886
+turnin Tomb Raidering##46509 |goto 39.54,71.68
+step
+Follow the path |goto Broken Shore/0 44.20,62.29 < 20 |only if walking
+Follow the path |goto 40.64,61.76 < 20 |only if walking
+Follow the path |goto 40.33,67.42 < 20 |only if walking
+talk Excavator Karla##119886
+accept Ship Graveyard##46510 |goto 39.54,71.68
+|tip Quests from this NPC appear 24 hours after completing the last one offered.
+step
+Follow the path |goto 42.30,72.48 < 20 |only if walking
+Follow the path |goto 45.22,73.54 < 25 |only if walking
+Swim across the water |goto 47.28,75.09 < 25 |only if walking
+Swim under the stones |goto 53.99,77.27 < 20 |only if walking
+click Sunken Treasure Chest##6477
+|tip Clicking a Damaged Diving Helmet will give you temporary increased swim speed and underwater breathing.
+collect 1 Wonderfully-Adorned Cloth##146958 |q 46510/1 |goto 54.70,77.89
+step
+Follow the path |goto Broken Shore/0 44.20,62.29 < 20 |only if walking
+Follow the path |goto 40.64,61.76 < 20 |only if walking
+Follow the path |goto 40.33,67.42 < 20 |only if walking
+talk Excavator Karla##119886
+turnin Ship Graveyard##46510 |goto 39.54,71.68
+step
+Follow the path |goto Broken Shore/0 44.20,62.29 < 20 |only if walking
+Follow the path |goto 40.64,61.76 < 20 |only if walking
+Follow the path |goto 40.33,67.42 < 20 |only if walking
+talk Excavator Karla##119886
+accept We're Treasure Hunters##46511 |goto 39.54,71.68
+|tip Quests from this NPC appear 24 hours after completing the last one offered.
+step
+Follow the path |goto 68.61,46.68 < 20 |only if walking
+Follow the path |goto 66.38,41.54 < 25 |only if walking
+Follow the path |goto 69.88,35.70 < 25 |only if walking
+Follow the path |goto 73.74,29.02 < 20 |only if walking
+Follow the path |goto 75.19,23.89 < 20 |only if walking
+click Sandy Treasure Chest##6478
+Locate the Felrage Strand treasure |q 46511/1 |goto 75.76,21.73
+step
+Follow the path |goto Broken Shore/0 44.20,62.29 < 20 |only if walking
+Follow the path |goto 40.64,61.76 < 20 |only if walking
+Follow the path |goto 40.33,67.42 < 20 |only if walking
+talk Excavator Karla##119886
+turnin We're Treasure Hunters##46511 |goto 39.54,71.68
+step
+Follow the path |goto Broken Shore/0 44.20,62.29 < 20 |only if walking
+Follow the path |goto 40.64,61.76 < 20 |only if walking
+Follow the path |goto 40.33,67.42 < 20 |only if walking
+talk Excavator Karla##119886
+accept The Motherlode##46666 |goto 39.54,71.68
+|tip Quests from this NPC appear 24 hours after completing the last one offered.
+step
+Follow the path |goto 42.15,72.39 < 20 |only if walking
+Follow the path |goto 45.34,70.51 < 25 |only if walking
+click Peculiar Rope
+Investigate Excavator Karla's Cave |q 46666/1 |goto 47.84,67.35
+|tip Wait for the dialogue to complete.
+step
+talk Excavator Karla##119886
+turnin The Motherlode##46666 |goto 45.04,52.30
+|tip Don't forget to open one of the caches for a reward.
+step
+label "Karla"
+Excavator Karla only offers a quest every 24 hours
+step
+Congratulations!
+You have completed the Excavator Karla questline
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Legion (100-110)\\Rogue Pickpocketing Quest Line",{
+author="support@zygorguides.com",
+description="This guide will walk you through completing the Rogue pickpocketing quest line.",
+condition_suggested="level>=100 and level<=110 and raceclass('Rogue')",
+condition_end="completedq(47594)",
+startlevel=100.0,
+},[[
+step
+This quest line is only available to Rogues |confirm
+|only if not Rogue
+step
+talk Griftah##103792
+accept Wanna Buy a Lamp?##47591 |goto Dalaran L/4 45.74,27.08
+|only Rogue
+step
+talk Griftah##103792
+buy 1 Dubious Lamp##151749 |n
+|tip This costs 500 gold.
+collect 1 Dubious Lamp##151749 |q 47591/1 |goto Dalaran L/4 45.74,27.08
+|only Rogue
+step
+talk Griftah##103792
+turnin Wanna Buy a Lamp?##47591 |goto Dalaran L/4 45.74,27.08
+accept Shine Bright Like a Diamond##47592 |goto Dalaran L/4 45.74,27.08
+|only Rogue
+step
+talk Griftah##103792
+buy 1 Certified Organic Lamp Shining Kit##151181 |n
+|tip This costs 500 gold.
+collect 1 Certified Organic Lamp Shining Kit##151181 |q 47592/1 |goto Dalaran L/4 45.74,27.08
+|only Rogue
+step
+Use the Certified Organic Lamp |use Certified Organic Lamp Shining Kit##151181
+Use the Shining kit to polish the lamp |q 47592/2
+|only Rogue
+step
+talk Griftah##103792
+turnin Shine Bright Like a Diamond##47592 |goto Dalaran L/4 45.74,27.08
+|only Rogue
+step
+talk Al'Abas##123087
+accept The Mysterious, Magnificent Al'Abas##47603 |goto Dalaran L/4 45.74,27.08
+|only Rogue
+step
+talk Al'Abas##123087
+Speak with Al'Abas |q 47603/1 |goto Dalaran L/4 45.74,27.08
+|only Rogue
+step
+talk Al'Abas##123087
+turnin The Mysterious, Magnificent Al'Abas##47603 |goto Dalaran L/4 45.74,27.08
+accept In the Land of Magic##47604 |goto Dalaran L/4 45.74,27.08
+|only Rogue
+step
+talk Al'Abas##123087
+Speak with Al'Abas again |q 47604/1 |goto Dalaran L/4 45.74,27.08
+|only Rogue
+step
+talk Al'Abas##123087
+turnin In the Land of Magic##47604 |goto Dalaran L/4 45.74,27.08
+accept Coins of Air##47605 |goto Dalaran L/4 45.74,27.08
+|only Rogue
+step
+talk Al'Abas##123087
+turnin Coins of Air##47605 |goto Dalaran L/4 45.74,27.08
+accept Loyalty Is Its Own Reward##47606 |goto Dalaran L/4 45.74,27.08
+|only Rogue
+step
+talk Griftah##103792
+accept I'll Take Those, Thanks!##47594 |goto Dalaran L/4 45.74,27.08
+|only Rogue
+stickystart "10k Coin"
+step
+Use your Stealth ability and Pickpocket mobs on the Broken Isles
+Obtain #1000# Coins of Air |q 47606/1
+|only Rogue
+step
+talk Al'Abas##123087
+turnin Loyalty Is Its Own Reward##47606 |goto Dalaran L/4 45.74,27.08
+accept High Fash-Djinn##47607 |goto Dalaran L/4 45.74,27.08
+|only Rogue
+step
+Use your Stealth ability and Pickpocket the Demons and Elves on the Broken Isles
+collect Manaforged Worry-Chain##151158 |q 47607/1
+collect Managraphic Card##151159 |q 47607/2
+collect Elegant Manabraid##151160 |q 47607/3
+collect Subtle Chronometer##151161 |q 47607/4
+collect Glitzy Mana-Chain##151162 |q 47607/5
+collect Locket of Magical Memories##151163 |q 47607/6
+|only Rogue
+step
+label "10k Coin"
+Use your Stealth ability and Pickpocket mobs on the Broken Isles
+Obtain #10000# Coins of Air |q 47594/1
+|only Rogue
+step
+talk Al'Abas##123087
+turnin High Fash-Djinn##47607 |goto Dalaran L/4 45.74,27.08
+|only Rogue
+step
+talk Griftah##103792
+turnin I'll Take Those, Thanks!##47594 |goto Dalaran L/4 45.74,27.08
+|only Rogue
+step
+After this is complete, you get a repeatable quest to turn in 9,999 Coins of Air in exchange for 50 gold.
+|tip You may do this as often as you want!
+|tip You can also use these coins to buy items from Griftah including toys, pets, and transmogs.
+confirm
+|only Rogue
+step
+_Congratulations!_
+You have completed the Rogue Pickpocketing Quest Line!
+|only Rogue
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Legion (100-110)\\Meatball Order Hall Champion",{
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining Meatball as a Class Order Hall champion.",
+condition_suggested="level>=110",
+condition_end="completedq(45312)",
+model={501},
+startlevel=110.0,
+},[[
+step
+To earn Meatball as a champion, you must have access to the Brawler's Guild
+|tip You will need to collect a Blood-Soaked Invitation.
+kill Helarjar Mystcaller##111325+, Helarjar Soulhunter##111328+, Helarjar Priest##111326+
+collect 1 Blood-Soaked Invitation##144363 |goto Stormheim/0 85.32,11.34 |n
+click Blood-Soaked Invitation##144363 |use Blood-Soaked Invitation##144363
+Gain access to the Brawler's Guild |achieve 11559
+step
+talk Brawl'gar Arena Grunt##67267 |goto Brawl'gar Arena/1 56.37,21.26 < 5
+Tell him _"Yes, sign me up for a fight."_
+Wait to be teleported into the arena |goto Brawl'gar Arena/1 57.07,48.67 < 5 |c |noway
+_WHEN THE FIGHT BEGINS_
+|tip When Oso begins casting Shotgun Blast, move out from in front of him.
+|tip He may occasionally knock you back and then cast Grizzly Leap. Run out of this circle.
+only if ZGV:GetReputation(2010).friendRep<250
+step
+kill Oso##117753
+|tip When Oso begins casting Shotgun Blast, move out from in front of him.
+|tip He may occasionally knock you back and then cast Grizzly Leap. Run out of this circle.
+Defeat Oso |condition ZGV:GetReputation(2010).friendRep>=250
+step
+click Dreadscar Battle Plans |only Warlock
+click Command Map |only Priest
+click Eye of Odin |only Warrior
+click Scouting Map |only DemonHunter, DeathKnight, Druid, Hunter, Mage, Monk, Paladin, Rogue, Shaman
+Complete the Class Hall mission "_There is no Brawlers Guild_" |condition itemcount(142522) >= 1 |goto Dreadscar Rift/0 66.19,47.01 |only Warlock
+Complete the Class Hall mission "_There is no Brawlers Guild_" |condition itemcount(142522) >= 1 |goto Broken Shore/2 49.79,50.61 |only DeathKnight
+Complete the Class Hall mission "_There is no Brawlers Guild_" |condition itemcount(142522) >= 1 |goto Mardum, the Shattered Abyss/2 58.84,54.91 |only DemonHunter
+Complete the Class Hall mission "_There is no Brawlers Guild_" |condition itemcount(142522) >= 1 |goto The Dreamgrove/0 52.71,51.08 |only Druid
+Complete the Class Hall mission "_There is no Brawlers Guild_" |condition itemcount(142522) >= 1 |goto Trueshot Lodge/0 42.49,46.59 |only Hunter
+Complete the Class Hall mission "_There is no Brawlers Guild_" |condition itemcount(142522) >= 1 |goto Hall of the Guardian/1 81.38,60.79 |only Mage
+Complete the Class Hall mission "_There is no Brawlers Guild_" |condition itemcount(142522) >= 1 |goto The Wandering Isle L/0 52.91,60.16 |only Monk
+Complete the Class Hall mission "_There is no Brawlers Guild_" |condition itemcount(142522) >= 1 |goto Eastern Plaguelands/20 53.37,78.71 |only Paladin
+Complete the Class Hall mission "_There is no Brawlers Guild_" |condition itemcount(142522) >= 1 |goto Netherlight Temple/1 49.85,48.87 |only Priest
+Complete the Class Hall mission "_There is no Brawlers Guild_" |condition itemcount(142522) >= 1 |goto Dalaran L/4 37.51,44.29 |only Rogue
+Complete the Class Hall mission "_There is no Brawlers Guild_" |condition itemcount(142522) >= 1 |goto The Maelstrom L/0 33.41,59.30 |only Shaman
+Complete the Class Hall mission "_There is no Brawlers Guild_" |condition itemcount(142522) >= 1 |goto Skyhold/1 59.13,13.42 |only Warrior
+|tip This mission costs 200 Order Resources and takes 3 hours to complete.
+|only if not completedq(45111) and not havequest(45111)
+step
+click Rude Letter##142522 |use Rude Letter##142522
+accept Everyone Loves a Good Fight##45111
+step
+click Far Sight Totem
+Observe #5# Brawl'gar Arena matches |q 45111/1 |goto Brawl'gar Arena/1 52.09,74.49
+|tip You can also participate in brawls to complete this quest.
+step
+talk Bruno Flameretardant##49889
+turnin Everyone Loves a Good Fight##45111 |goto Brawl'gar Arena/1 42.23,92.49
+step
+click Dreadscar Battle Plans |only Warlock
+click Command Map |only Priest
+click Eye of Odin |only Warrior
+click Scouting Map |only DemonHunter, DeathKnight, Druid, Hunter, Mage, Monk, Paladin, Rogue, Shaman
+Complete the Class Hall mission "_Council of War_" |condition itemcount(142553) >= 1 |goto Dreadscar Rift/0 66.19,47.01 |only Warlock
+Complete the Class Hall mission "_Council of War_" |condition itemcount(142553) >= 1 |goto Broken Shore/2 49.79,50.61 |only DeathKnight
+Complete the Class Hall mission "_Council of War_" |condition itemcount(142553) >= 1 |goto Mardum, the Shattered Abyss/2 58.84,54.91 |only DemonHunter
+Complete the Class Hall mission "_Council of War_" |condition itemcount(142553) >= 1 |goto The Dreamgrove/0 52.71,51.08 |only Druid
+Complete the Class Hall mission "_Council of War_" |condition itemcount(142553) >= 1 |goto Trueshot Lodge/0 42.49,46.59 |only Hunter
+Complete the Class Hall mission "_Council of War_" |condition itemcount(142553) >= 1 |goto Hall of the Guardian/1 81.38,60.79 |only Mage
+Complete the Class Hall mission "_Council of War_" |condition itemcount(142553) >= 1 |goto The Wandering Isle L/0 52.91,60.16 |only Monk
+Complete the Class Hall mission "_Council of War_" |condition itemcount(142553) >= 1 |goto Eastern Plaguelands/20 53.37,78.71 |only Paladin
+Complete the Class Hall mission "_Council of War_" |condition itemcount(142553) >= 1 |goto Netherlight Temple/1 49.85,48.87 |only Priest
+Complete the Class Hall mission "_Council of War_" |condition itemcount(142553) >= 1 |goto Dalaran L/4 37.51,44.29 |only Rogue
+Complete the Class Hall mission "_Council of War_" |condition itemcount(142553) >= 1 |goto The Maelstrom L/0 33.41,59.30 |only Shaman
+Complete the Class Hall mission "_Council of War_" |condition itemcount(142553) >= 1 |goto Skyhold/1 59.13,13.42 |only Warrior
+|tip This mission costs 200 Order Resources and takes 12 hours to complete.
+|tip You must get the bonus loot from this mission, so aim for 200% success chance.
+|only if not completedq(45162) and not havequest(45162)
+step
+click Tuft of Dwarvish Beard##142553 |use Tuft of Dwarvish Beard##142553
+accept We Brought the Hammer##45162
+step
+talk Bruno Flameretardant##49889
+turnin We Brought the Hammer##45162 |goto Brawl'gar Arena/1 42.23,92.49
+step
+click Dreadscar Battle Plans |only Warlock
+click Command Map |only Priest
+click Eye of Odin |only Warrior
+click Scouting Map |only DemonHunter, DeathKnight, Druid, Hunter, Mage, Monk, Paladin, Rogue, Shaman
+Complete the Class Hall mission "_Its Clean Up Time_" |condition itemcount(142554) >= 1 |goto Dreadscar Rift/0 66.19,47.01 |only Warlock
+Complete the Class Hall mission "_Its Clean Up Time_" |condition itemcount(142554) >= 1 |goto Broken Shore/2 49.79,50.61 |only DeathKnight
+Complete the Class Hall mission "_Its Clean Up Time_" |condition itemcount(142554) >= 1 |goto Mardum, the Shattered Abyss/2 58.84,54.91 |only DemonHunter
+Complete the Class Hall mission "_Its Clean Up Time_" |condition itemcount(142554) >= 1 |goto The Dreamgrove/0 52.71,51.08 |only Druid
+Complete the Class Hall mission "_Its Clean Up Time_" |condition itemcount(142554) >= 1 |goto Trueshot Lodge/0 42.49,46.59 |only Hunter
+Complete the Class Hall mission "_Its Clean Up Time_" |condition itemcount(142554) >= 1 |goto Hall of the Guardian/1 81.38,60.79 |only Mage
+Complete the Class Hall mission "_Its Clean Up Time_" |condition itemcount(142554) >= 1 |goto The Wandering Isle L/0 52.91,60.16 |only Monk
+Complete the Class Hall mission "_Its Clean Up Time_" |condition itemcount(142554) >= 1 |goto Eastern Plaguelands/20 53.37,78.71 |only Paladin
+Complete the Class Hall mission "_Its Clean Up Time_" |condition itemcount(142554) >= 1 |goto Netherlight Temple/1 49.85,48.87 |only Priest
+Complete the Class Hall mission "_Its Clean Up Time_" |condition itemcount(142554) >= 1 |goto Dalaran L/4 37.51,44.29 |only Rogue
+Complete the Class Hall mission "_Its Clean Up Time_" |condition itemcount(142554) >= 1 |goto The Maelstrom L/0 33.41,59.30 |only Shaman
+Complete the Class Hall mission "_Its Clean Up Time_" |condition itemcount(142554) >= 1 |goto Skyhold/1 59.13,13.42 |only Warrior
+|tip This mission costs 200 Order Resources and takes 16 hours to complete.
+|tip You must get the bonus loot from this mission, so aim for 200% success chance.
+|tip It can take up to 2 hours for this mission to appear.
+|only if not completedq(45163) and not havequest(45163)
+step
+click Broken Broom Handle##142554 |use Broken Broom Handle##142554
+accept Cleaning Up##45163
+step
+talk Bruno Flameretardant##49889
+turnin Cleaning Up##45163 |goto Brawl'gar Arena/1 42.23,92.49
+step
+click Dreadscar Battle Plans |only Warlock
+click Command Map |only Priest
+click Eye of Odin |only Warrior
+click Scouting Map |only DemonHunter, DeathKnight, Druid, Hunter, Mage, Monk, Paladin, Rogue, Shaman
+Complete the Class Hall mission "_Master of Shadows_" |condition itemcount(143561) >= 1 |goto Dreadscar Rift/0 66.19,47.01 |only Warlock
+Complete the Class Hall mission "_Master of Shadows_" |condition itemcount(143561) >= 1 |goto Broken Shore/2 49.79,50.61 |only DeathKnight
+Complete the Class Hall mission "_Master of Shadows_" |condition itemcount(143561) >= 1 |goto Mardum, the Shattered Abyss/2 58.84,54.91 |only DemonHunter
+Complete the Class Hall mission "_Master of Shadows_" |condition itemcount(143561) >= 1 |goto The Dreamgrove/0 52.71,51.08 |only Druid
+Complete the Class Hall mission "_Master of Shadows_" |condition itemcount(143561) >= 1 |goto Trueshot Lodge/0 42.49,46.59 |only Hunter
+Complete the Class Hall mission "_Master of Shadows_" |condition itemcount(143561) >= 1 |goto Hall of the Guardian/1 81.38,60.79 |only Mage
+Complete the Class Hall mission "_Master of Shadows_" |condition itemcount(143561) >= 1 |goto The Wandering Isle L/0 52.91,60.16 |only Monk
+Complete the Class Hall mission "_Master of Shadows_" |condition itemcount(143561) >= 1 |goto Eastern Plaguelands/20 53.37,78.71 |only Paladin
+Complete the Class Hall mission "_Master of Shadows_" |condition itemcount(143561) >= 1 |goto Netherlight Temple/1 49.85,48.87 |only Priest
+Complete the Class Hall mission "_Master of Shadows_" |condition itemcount(143561) >= 1 |goto Dalaran L/4 37.51,44.29 |only Rogue
+Complete the Class Hall mission "_Master of Shadows_" |condition itemcount(143561) >= 1 |goto The Maelstrom L/0 33.41,59.30 |only Shaman
+Complete the Class Hall mission "_Master of Shadows_" |condition itemcount(143561) >= 1 |goto Skyhold/1 59.13,13.42 |only Warrior
+|tip This mission costs 200 Order Resources and takes 16 hours to complete.
+|tip You must get the bonus loot from this mission, so aim for 200% success chance.
+|tip It can take up to 2 hours for this mission to appear.
+|only if not completedq(45304) and not havequest(45304)
+step
+click Exhausted Shadow Candle##143561 |use Exhausted Shadow Candle##143561
+accept Attacking the Darkness##45304
+step
+talk Bruno Flameretardant##49889
+turnin Attacking the Darkness##45304 |goto Brawl'gar Arena/1 42.23,92.49
+step
+click Dreadscar Battle Plans |only Warlock
+click Command Map |only Priest
+click Eye of Odin |only Warrior
+click Scouting Map |only DemonHunter, DeathKnight, Druid, Hunter, Mage, Monk, Paladin, Rogue, Shaman
+Complete the Class Hall mission "_I've Got A Strange Feeling About This_" |condition itemcount(143590) >= 1 |goto Dreadscar Rift/0 66.19,47.01 |only Warlock
+Complete the Class Hall mission "_I've Got A Strange Feeling About This_" |condition itemcount(143590) >= 1 |goto Broken Shore/2 49.79,50.61 |only DeathKnight
+Complete the Class Hall mission "_I've Got A Strange Feeling About This_" |condition itemcount(143590) >= 1 |goto Mardum, the Shattered Abyss/2 58.84,54.91 |only DemonHunter
+Complete the Class Hall mission "_I've Got A Strange Feeling About This_" |condition itemcount(143590) >= 1 |goto The Dreamgrove/0 52.71,51.08 |only Druid
+Complete the Class Hall mission "_I've Got A Strange Feeling About This_" |condition itemcount(143590) >= 1 |goto Trueshot Lodge/0 42.49,46.59 |only Hunter
+Complete the Class Hall mission "_I've Got A Strange Feeling About This_" |condition itemcount(143590) >= 1 |goto Hall of the Guardian/1 81.38,60.79 |only Mage
+Complete the Class Hall mission "_I've Got A Strange Feeling About This_" |condition itemcount(143590) >= 1 |goto The Wandering Isle L/0 52.91,60.16 |only Monk
+Complete the Class Hall mission "_I've Got A Strange Feeling About This_" |condition itemcount(143590) >= 1 |goto Eastern Plaguelands/20 53.37,78.71 |only Paladin
+Complete the Class Hall mission "_I've Got A Strange Feeling About This_" |condition itemcount(143590) >= 1 |goto Netherlight Temple/1 49.85,48.87 |only Priest
+Complete the Class Hall mission "_I've Got A Strange Feeling About This_" |condition itemcount(143590) >= 1 |goto Dalaran L/4 37.51,44.29 |only Rogue
+Complete the Class Hall mission "_I've Got A Strange Feeling About This_" |condition itemcount(143590) >= 1 |goto The Maelstrom L/0 33.41,59.30 |only Shaman
+Complete the Class Hall mission "_I've Got A Strange Feeling About This_" |condition itemcount(143590) >= 1 |goto Skyhold/1 59.13,13.42 |only Warrior
+|tip This mission costs 200 Order Resources and takes 16 hours to complete.
+|tip You must get the bonus loot from this mission, so aim for 200% success chance.
+|tip It can take up to 2 hours for this mission to appear.
+|only if not completedq(45312) and not havequest(45312)
+step
+click Hunk of Meatball##143590 |use Hunk of Meatball##143590
+accept You Beat the Ball of Meat##45312
+step
+talk Bruno Flameretardant##49889
+turnin You Beat the Ball of Meat##45312 |goto Brawl'gar Arena/1 42.23,92.49
+step
+Congratulations!
+You have earned _Meatball_ as an Order Hall Champion
+]])
+ZGV.BETASTART()
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Legion (100-110)\\The Deceiver's Downfall",{
+author="support@zygorguides.com",
+description="This guide will walk you through completing The Deceiver's Downfall quest in the Broken Shore.",
+condition_suggested="level>=110",
+condition_end="completedq(46805)",
+startlevel=110.0,
+},[[
+step
+talk Prophet Velen##120372
+accept The Deceiver's Downfall##46805 |goto Broken Shore/0 44.56,63.38
+step
+In the Tomb of Sargeras:
+kill Kil'jaeden##117269 |q 46805/1
+|tip He is the final boss in the Tomb of Sargeras raid.
+|tip Refer to our Raid guides to accomplish this.
+Click here to load the Tomb of Sargeras - Deceiver's Fall guide |confirm |next "Zygor's Dungeon Guides\\Legion Raids\\Tomb of Sargeras - Deceiver's Fall"
+step
+talk Prophet Velen##120372
+turnin The Deceiver's Downfall##46805 |goto Broken Shore/0 44.56,63.38
+]])
+ZGV.BETAEND()
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Legion (100-110)\\Argus Campaign",{
+author="support@zygorguides.com",
+description="This guide will walk you through completing the new Argus zone added in patch 7.3.",
+condition_suggested="level>=110",
+},[[
+step
+accept The Hand of Fate##47835 |goto Dalaran L/10 72.44,45.93
+|tip You will accept this quest automatically.
+step
+click Portal to Orgrimmar
+Take the Dalaran portal to Orgrimmar |q 47835/1 |goto 55.25,23.95
+step
+Meet the escort at Bladefist Bay |q 47835/2 |goto Durotar/0 58.29,12.09
+step
+talk Lady Liadrin##122065
+turnin The Hand of Fate##47835 |goto 58.29,12.09
+accept Two If By Sea##47867 |goto 58.29,12.09
+step
+talk Lady Liadrin##122065
+Tell her: _"I'm ready."_
+Set sail for the Exodar |q 47867/1 |goto 58.29,12.09
+step
+talk Vindicator Boros##121756
+turnin Two If By Sea##47867 |goto Azuremyst Scenario/1 21.39,55.09
+accept Light's Exodus##47223 |goto 21.39,55.09
+step
+Follow the path |goto 23.23,53.76 < 15 |only if walking
+Enter The Exodar |goto 24.64,49.39 < 15 |walk
+|tip Follow the path all the way down and to the center of The Vault of Lights.
+talk Prophet Velen##120977
+|tip He is in the big purple symbol on the ground to the left at the bottom of the ramp.
+turnin Light's Exodus##47223 |goto Azuremyst Scenario/2 33.80,65.49
+accept The Vindicaar##47224 |goto Azuremyst Scenario/2 33.80,65.49
+step
+click Light Crystal
+|tip It's directly in front of Prophet Velen.
+Activate the beacon |q 47224/1 |goto 33.68,66.33
+|tip Stand still while channeling.
+step
+click Lightforged Beacon
+|tip Wait for the dialogue to complete.
+Board the Vindicaar |q 47224/2 |goto 33.68,66.33
+step
+Follow the path |goto Azuremyst Scenario/3 36.04,43.71 < 20 |walk
+Follow the path |goto 34.61,44.64 < 20 |walk
+talk Prophet Velen##120977
+turnin The Vindicaar##47224 |goto 39.17,78.30
+accept Into the Night##48440 |goto 39.17,78.30
+step
+talk Prophet Velen##120977
+Tell him: _"I am ready."_
+Depart for Argus |q 48440/1 |goto 39.23,78.15
+step
+talk High Priestess Ishanah##123395
+home Argus Wastes |goto Krokuun/1 49.97,75.61 |q 48440 |future
+step
+talk Prophet Velen##120977
+turnin Into the Night##48440 |goto Krokuun/1 40.17,23.49
+accept Alone in the Abyss##46938 |goto 40.17,23.49
+step
+talk Grand Artificer Romuul##121263
+Tell him: _"Take me to the surface."_
+Speak to Romuul to disembark |q 46938/1 |goto 43.39,23.19
+step
+Follow the path |goto Krokuun/0 61.25,82.03 < 25 |only if walking
+talk Prophet Velen##119543
+turnin Alone in the Abyss##46938
+accept Righteous Fury##47589 |goto 60.83,79.39
+step
+talk Illidan Stormrage##119535
+accept Overwhelming Power##46297 |goto 60.91,79.23
+step
+talk Chieftain Hatuun##126239
+accept A Stranger's Plea##48483 |goto 58.75,78.35
+stickystart "oPower"
+stickystart "drudge"
+step
+click Devastator Anchor
+|tip Click all three anchors.
+Destroy the southern Devastator |q 47589/1 |goto 57.93,77.70
+step
+click Devastator Anchor
+|tip Click all three anchors.
+Destroy the western Devastator |q 47589/2 |goto 57.16,74.23
+step
+click Devastator Anchor
+|tip Click all three anchors.
+Destroy the eastern Devastator |q 47589/3 |goto 59.15,74.33
+step
+label "oPower"
+kill Felsiege Doomcaller##122922+, Felsiege Champion##120322+, Vilefiend##119602
+Kill #12# Demons |q 46297/1 |goto 58.00,76.63
+step
+label "drudge"
+click Felbound Drudge##123085
+Heal #8# Felbound Drudges |q 48483/1 |goto 58.00,76.63
+step
+talk Prophet Velen##123149
+turnin Righteous Fury##47589 |goto 54.24,75.42
+turnin A Stranger's Plea##48483 |goto 54.24,75.42
+step
+talk Illidan Stormrage##123148
+turnin Overwhelming Power##46297 |goto 54.33,75.24
+accept Vengeance##47627 |goto 54.33,75.24
+step
+kill Antaen Light-Breaker##120361
+|tip Wait for the dialogue to complete.
+Destroy the Siege Weapon |q 47627/1 |goto 53.90,74.94
+step
+talk Illidan Stormrage##123148
+turnin Vengeance##47627 |goto 54.32,75.25
+step
+talk Prophet Velen##123149
+accept Signs of Resistance##47641 |goto 54.24,75.43
+step
+Follow the path |goto 55.99,75.73 < 20 |only if walking
+Follow the path |goto 59.37,71.90 < 20 |only if walking
+Search for signs of resistance |q 47641/1 |goto 59.90,69.14
+step
+talk Prophet Velen##121345
+turnin Signs of Resistance##47641 |goto 59.91,69.13
+accept The Prophet's Gambit##46732 |goto 59.91,69.13
+step
+Follow the path |goto 59.08,68.25 < 20 |only if walking
+Follow Velen |q 46732/1 |goto 56.74,67.68
+step
+Stand with Velen |q 46732/2 |goto 56.74,67.68
+|tip Wait for the dialogue to complete.
+step
+talk Prophet Velen##121345
+turnin The Prophet's Gambit##46732 |goto 56.74,67.68
+step
+talk High Exarch Turalyon##120529
+accept Rendezvous##46816 |goto 56.65,67.43
+step
+click Signal Crystal
+Activate the Signal Crystal |q 46816/1 |goto 55.48,67.35
+step
+talk High Exarch Turalyon##120529
+turnin Rendezvous##46816 |goto 56.65,67.43
+accept From Darkness##46839 |goto 56.65,67.43
+step
+talk High Exarch Turalyon##120529
+Tell him: _"I am ready, High Exarch."_
+|tip Follow Turalyon around.
+Walk with High Exarch Turalyon |q 46839/1 |goto 56.65,67.43
+step
+talk High Exarch Turalyon##120760
+turnin From Darkness##46839 |goto 59.95,66.35
+accept Threat Reduction##46841 |goto 59.95,66.35
+accept Prisoners No More##46840 |goto 59.95,66.35
+stickystart "dSlaves"
+step
+Follow the path |goto 59.93,62.27 < 25 |only if walking
+Follow the path |goto 57.67,57.50 < 25 |only if walking
+kill Xeth'tal##120598
+Defeat Xeth'tal |q 46841/2 |goto 58.34,52.36
+step
+Follow the path |goto 58.07,56.44 < 25 |only if walking
+kill Magraloth##120601
+Defeat Magraloth |q 46841/3 |goto 55.58,55.24
+step
+label "dSlaves"
+click Legion Cage##6477
+click Darkfallen Slave##121254
+|tip These are found all around the area.
+Darkfallen Slaves rescued |q 46840/1 |goto 52.77,56.81
+step
+Follow the path |goto 53.55,56.31 < 20 |only if walking
+kill Kar'aaz##120602
+Defeat Kar'aaz |q 46841/1 |goto 48.93,57.83
+step
+Follow the path |goto 49.58,55.90 < 20 |only if walking
+talk High Exarch Turalyon##120953
+turnin Threat Reduction##46841 |goto 50.40,53.83
+turnin Prisoners No More##46840 |goto 50.40,53.83
+accept A Strike at the Heart##46842 |goto 50.40,53.83
+step
+talk High Exarch Turalyon##120738
+Tell him: _"I am ready to fight by your side."_
+Prepare for Battle |q 46842/1 |goto 50.40,53.83
+step
+kill Aggonar##119397
+Defeat Aggonar |q 46842/2 |goto 51.86,52.75
+|tip Turalyon will assist you. Move out of the patches targeted on the ground.
+step
+talk High Exarch Turalyon##120738
+turnin A Strike at the Heart##46842 |goto 51.55,52.81
+accept Return to the Vindicaar##46843 |goto 51.55,52.81
+step
+click Lightforged Beacon |goto 51.42,52.59
+Return to the Vindicaar |goto Krokuun/1 61.32,81.81 < 1000 |noway |c |q 46843
+step
+talk Alleria Windrunner##120844
+turnin Return to the Vindicaar##46843 |goto Krokuun/1 42.61,27.15
+step
+talk Prophet Velen##126307
+accept A Moment of Respite##48500 |goto 40.31,23.59
+step
+Follow the path up |goto 36.27,44.39 < 10 |walk
+talk High Priestess Ishanah##123395
+Ask her: _"It is good to see you, Ishanah. How are you?"_
+Speak with High Priestess Ishanah |q 48500/3 |goto 49.97,75.66
+step
+Drop down |goto 41.22,57.10 < 15 |walk
+talk Artificer Shela'na##126389
+Ask her: _"What is that behind you?"_
+Speak with Artificer Shela'na |q 48500/1 |goto Krokuun/2 59.12,70.93
+step
+Follow the path |goto 52.44,53.90 < 5 |walk
+talk Thelbus Wimblenod##126390
+Ask him: _"What is that behind you?"_
+Speak with Thelbus Wimblenod |q 48500/2 |goto 41.53,27.61
+step
+Follow the path |goto 36.78,52.98 < 5 |walk
+Follow the path up |goto 48.44,60.20 < 8 |walk
+talk Prophet Velen##126307
+turnin A Moment of Respite##48500 |goto Krokuun/1 40.27,23.59
+step
+talk High Exarch Turalyon##122378
+accept Gathering Light##47431 |goto 42.03,25.83
+step
+click Navigation Console
+Use the Navigation Console to teleport to Krokul Hovel, Krokuun |q 47431/1 |goto Krokuun/0 55.73,67.68
+step
+Meet Turalyon in Krokuun |q 47431/2 |goto 55.73,67.68
+step
+Follow the path |goto 55.42,68.40 < 15 |only if walking
+Follow the path |goto 53.96,68.23 < 15 |only if walking
+Follow the path |goto 50.41,70.20 < 20 |only if walking
+Cross the bridge |goto 44.09,65.22 < 20 |only if walking
+Reach the Shattered Fields |q 47431/3 |goto 40.36,63.35
+|tip Wait for Chieftain Hatuun to remove the barrier.
+step
+Reach the Xenedar |q 47431/4 |goto 40.36,63.35
+step
+talk High Exarch Turalyon##122621
+|tip Wait for him to catch up.
+turnin Gathering Light##47431 |goto 40.36,63.35
+step
+talk Grand Vindicator Sorvos##121521
+accept A Grim Equation##40238 |goto 39.93,63.12
+step
+talk Captain Fareeya##121519
+accept Crystals Not Included##46213 |goto 40.50,63.62
+step
+talk Grand Lector Enaara##121520
+accept The Best Prevention##47541 |goto 40.63,64.34
+stickystart "attackers"
+stickystart "shargunite"
+step
+Follow the path |goto 40.56,68.32 < 25 |only if walking
+click Soul Coffer##125966
+Destroy the Eastern Soul Coffer |q 40238/1 |goto 40.28,70.64
+step
+Follow the path |goto 39.30,70.79 < 15 |only if walking
+click Soul Coffer##125966
+Destroy the Southern Soul Coffer |q 40238/2 |goto 37.81,69.02
+step
+click Soul Coffer##125966
+Destroy the Western Soul Coffer |q 40238/3 |goto 34.00,72.22
+step
+label "attackers"
+kill Shadowbound Defiler##123110+, Seething Harbinger##123109+, Felscarred Destroyer##121531+
+Kill #20# attackers |q 47541/1 |goto 34.00,72.22
+step
+label "shargunite"
+click Shargunite Crystal##6478
+collect 10 Shargunite Crystal##150942 |q 46213/1 |goto 34.00,72.22
+step
+Follow the path |goto 32.93,69.50 < 15 |only if walking
+talk Archmage Y'mera##121578
+turnin Crystals Not Included##46213 |goto 31.82,71.84
+turnin A Grim Equation##40238 |goto 31.82,71.84
+turnin The Best Prevention##47541 |goto 31.82,71.84
+accept Fire At Will##47508 |goto 31.82,71.84
+step
+click Lightforged Battery
+Kill #30# Frenzied Plaguewing |q 47508/1 |goto 32.14,72.56
+|tip Shoot them out of the sky.
+step
+talk Archmage Y'mera##121578
+turnin Fire At Will##47508 |goto 31.82,71.84
+accept Locating the Longshot##47771 |goto 31.82,71.84
+step
+Follow the path |goto 32.21,67.20 < 20 |only if walking
+talk Baraat the Longshot##121517
+turnin Locating the Longshot##47771 |goto 31.45,63.80
+accept Bringing the Big Guns##47526 |goto 31.45,63.80
+step
+Follow the path |goto 31.11,60.38 < 15 |only if walking
+click Light's Judgement##6477
+|tip Defend against the incoming attackers.
+Secure Light's Judgment |q 47526/1 |goto 31.71,57.91
+step
+click Light's Judgement##6477
+turnin Bringing the Big Guns##47526 |goto 31.70,57.89
+step
+talk Image of Grand Artificer Romuul##124906
+accept Lightly Roasted##47754 |goto 31.69,58.22
+step
+Follow the path |goto 33.56,61.45 < 20 |only if walking
+Clear the rubble |q 47754/1 |goto 36.45,57.53
+|tip Use the extra action button on-screen to clear the rubble.
+step
+talk High Exarch Turalyon##122621
+turnin Lightly Roasted##47754 |goto 36.33,56.94
+accept The Light Mother##47652 |goto 36.33,56.94
+step
+Follow the path up |goto 36.58,56.00 < 15 |walk
+Follow the path |goto 37.48,52.99 < 15 |walk
+click Teleportation Crystal##6477
+Place the first Teleportation Crystal |q 47652/1 |goto 37.08,53.85 |count 1
+step
+click Teleportation Crystal##6477
+Place the second Teleportation Crystal |q 47652/1 |goto 37.36,54.69 |count 2
+step
+click Teleportation Crystal##6477
+Place the third Teleportation Crystal |q 47652/1 |goto 37.73,53.97 |count 3
+step
+click Xe'ra##123589
+Rescue Xe'ra |q 47652/2 |goto 37.42,53.78
+|tip Xe'ra is floating in the middle of the room.
+step
+talk High Exarch Turalyon##122621
+turnin The Light Mother##47652 |goto 37.37,53.55
+accept Light's Return##47653 |goto 37.37,53.55
+step
+talk High Exarch Turalyon##122621
+Tell him: _"Let's go!"_
+Speak with Turalyon |q 47653/1 |goto 37.37,53.55
+|tip Wait for the dialogue to complete.
+step
+talk High Exarch Turalyon##122378
+turnin Light's Return##47653 |goto Krokuun/1 42.10,25.83
+accept The Child of Light and Shadow##47743 |goto 42.10,25.83
+step
+talk High Exarch Turalyon##122378
+Tell him: _"Let us begin, Turalyon."_
+Speak with Turalyon |q 47743/1 |goto 42.10,25.83
+step
+talk Prophet Velen##126307
+turnin The Child of Light and Shadow##47743 |goto 45.46,35.49
+accept Essence of the Light Mother##49143 |goto 45.46,35.49
+step
+click Vestige of Light##6478
+|tip They look like gold spots on the ground.
+collect 3 Vestige of Light##153125 |goto 50.47,47.29 |q 49143/1
+step
+talk Grand Artificer Romuul##121263
+accept The Vindicaar Matrix Core##47287 |goto 43.15,27.71
+step
+talk Prophet Velen##126307
+|tip Wait for him to walk back to his original position.
+turnin Essence of the Light Mother##49143 |goto 45.46,35.49
+accept An Offering of Light##48559 |goto 45.46,35.49
+step
+Follow the path down |goto 40.78,47.90 < 5 |walk
+click Netherlight Crucible
+Infuse the Netherlight Crucible with the Essence of Light |q 48559/1 |goto Krokuun/2 57.90,71.29
+step
+click Vindicaar Matrix Core
+Link Light's Judgment |q 47287/1 |goto 50.68,48.61
+step
+talk Prophet Velen##126307
+Follow the path up |goto 47.83,59.75 < 10 |walk
+turnin An Offering of Light##48559 |goto Krokuun/1 40.27,23.44
+accept The Burning Heart##48199 |goto 40.27,23.44
+step
+talk Grand Artificer Romuul##121263
+turnin The Vindicaar Matrix Core##47287 |goto 43.42,23.19
+step
+click Navigation Console
+Use the Navigation Console to travel to the Antoran Wastes |q 48199/1 |goto Antoran Wastes/5 33.50,56.12
+step
+talk Prophet Velen##126950
+turnin The Burning Heart##48199 |goto Antoran Wastes/5 32.47,59.66
+step
+talk High Exarch Turalyon##126954
+accept Securing a Foothold##48200 |goto 33.47,58.40
+step
+talk Grand Artificer Romuul##121263
+Tell him: _"I am ready, Romuul."_
+Use the Drop Pod to reach the surface |q 48200/1 |goto 32.66,55.53
+step
+click Lightforged Beacon##6477
+Place the Lightforged Beacon |q 48200/2 |goto Antoran Wastes/0 72.96,50.52
+step
+talk High Exarch Turalyon##126954
+|tip Wait a moment for Turalyon to appear.
+turnin Securing a Foothold##48200 |goto 72.90,50.24
+accept Reinforce Light's Purchase##48201 |goto 72.90,50.24 |or |next "Light_Purchase"
+accept Reinforce the Veiled Den##48202 |goto 72.90,50.24 |or |next "Veiled_Den"
+|tip You will only be able to accept one of these quests.
+step
+label "Light_Purchase"
+Follow the path |goto 72.28,47.86 < 25 |only if walking
+Follow the path |goto 70.13,48.55 < 25 |only if walking
+Follow the path |goto 70.22,53.08 < 25 |only if walking
+Follow the path |goto 68.10,54.11 < 25 |only if walking
+Follow the path |goto 65.59,51.84 < 25 |only if walking
+Follow the path |goto 64.65,56.32 < 25 |only if walking
+Follow the path |goto 70.83,63.45 < 25 |only if walking
+Follow the path |goto 71.05,72.71 < 25 |only if walking
+talk Alleria Windrunner##127033
+Ask her: _"What information have you been able to gather, Alleria?"_
+Speak with Alleria at Light's Purchase |q 48201/1 |goto 72.39,74.85
+step
+talk Alleria Windrunner##127033
+turnin Reinforce Light's Purchase##48201 |goto 72.39,74.85
+accept Sizing Up The Opposition##47473 |goto 72.39,74.85
+|tip Wait a moment for this quest to appear.
+|next "Beacon_End"
+step
+label "Veiled_Den"
+Follow the path |goto 70.60,46.31 < 25 |only if walking
+Follow the path up |goto 69.08,35.98 < 25 |only if walking
+Follow the path |goto 68.04,33.75 < 20 |only if walking
+Follow the path |goto 67.92,28.17 < 20 |only if walking
+talk Alleria Windrunner##127033
+Tell him: _"Turalyon wants to know the situation down here."_
+Speak with Illidan at the Veiled Den. |q 48202/1 |goto 68.77,26.14
+step
+talk Illidan Stormrage##127051
+turnin Reinforce the Veiled Den##48202 |goto Antoran Wastes/0 68.77,26.14
+accept Sizing Up The Opposition##48929 |goto 68.77,26.14
+|tip Wait a moment for this quest to appear.
+step
+label "Beacon_End"
+talk High Exarch Turalyon##126954
+turnin Sizing Up The Opposition##47473 |goto Antoran Wastes/5 33.59,58.36 |only if havequest(47473)
+turnin Sizing Up The Opposition##48929 |goto Antoran Wastes/5 33.59,58.36 |only if havequest(48929)
+step
+talk Chieftain Hatuun##119388
+accept The Wranglers##48460 |goto Krokuun/0 56.56,67.56
+step
+Follow the path |goto Krokuun/0 59.84,67.56 < 25 |only if walking
+Follow the path |goto 60.56,62.63 < 25 |only if walking
+talk Lead Rider Jerek##126160
+turnin The Wranglers##48460 |goto 64.42,62.61
+accept An Argus Roper##47967 |goto 64.42,62.61
+accept Duskcloak Problem##48455 |goto 64.42,62.61
+stickystart "pathera"
+stickystart "cragscaler"
+step
+kill Eredar Acolyte##123130+
+collect 1 Birth of the Ur'zul##152575 |n
+accept Strike Back##48542 |goto 67.84,68.82
+step
+kill Eredar Acolyte##123130+
+Kill #8# Eredar ritualists |q 48542/1 |goto 67.84,68.82
+step
+Follow the path up |goto 70.60,66.95 < 20 |only if walking
+Follow the path |goto 70.83,64.38 < 20 |only if walking
+kill Lady Shahrazad##122834
+Lady Shahrazad |q 48542/2 |goto 67.66,59.54
+step
+label "cragscaler"
+click Wild Cragscaler##123074
+Wild Cragscaler rescued |q 47967/1 |goto 67.97,68.99
+Return them to these coordinates |goto 64.44,62.02
+step
+label "pathera"
+kill Duskcloak Panthara##124303+, Young Duskcloak##124486+
+Kill #10# Pathera |q 48455/1 |goto 67.97,68.99
+step
+talk Lead Rider Jerek##126160
+turnin An Argus Roper##47967 |goto 64.42,62.61
+turnin Duskcloak Problem##48455 |goto 64.42,62.61
+turnin Strike Back##48542 |goto 64.42,62.61
+accept Woah, Nelly!##48544 |goto 64.42,62.61
+step
+Follow the path |goto 61.02,62.40 < 20 |only if walking
+Follow the path |goto 59.06,68.33 < 20 |only if walking
+talk Chieftain Hatuun##119388
+turnin Woah, Nelly!##48544 |goto 56.57,67.56
+accept Remnants of Darkfall Ridge##48441 |goto 56.56,67.55
+step
+talk High Exarch Turalyon##126954
+accept The Speaker Calls##47889 |goto Krokuun/1 39.02,24.71
+step
+click Navigation Console
+Meet Magni in the Krokul Hovel |goto Krokuun/0 55.48,67.35 < 25 |q 47889/1
+step
+talk Magni Bronzebeard##124595
+turnin The Speaker Calls##47889 |goto 56.76,67.49
+accept Visions of Torment##47890 |goto 56.76,67.49
+step
+Join Magni by the Sacred Stone |q 47890/1 |goto 56.98,65.66
+|tip Wait for Magni to join you.
+step
+click Sacred Stone
+Select: _"Place your hand on the stone."_
+Witness the vision |q 47890/2 |goto 57.08,65.58
+step
+talk Magni Bronzebeard##124595
+turnin Visions of Torment##47890 |goto 56.98,65.67
+accept Dire News##47891 |goto 56.98,65.67
+step
+talk High Exarch Turalyon##122378
+turnin Dire News##47891 |goto Krokuun/1 39.05,24.81
+accept Storming the Citadel##47892 |goto 39.05,24.81
+step
+Follow the path |goto Krokuun/0 59.53,68.07 < 20 |only if walking
+Follow the path |goto 60.71,55.41 < 20 |only if walking
+click Signal Crystal
+Call the Lightforged Beacon |q 47892/1 |goto Krokuun/0 62.70,49.12
+step
+talk High Exarch Turalyon##120763
+turnin Storming the Citadel##47892 |goto 60.84,47.24
+step
+talk Image of Grand Artificer Romuul##124975
+accept Scars of the Past##47986 |goto 60.68,47.30
+step
+talk Prophet Velen##124974
+accept Preventive Measures##47987 |goto 61.04,47.79
+step
+talk Illidan Stormrage##124972
+accept Chaos Theory##47988 |goto 60.62,43.97
+stickystart "chaosTheory"
+stickystart "measures"
+step
+click Vindicator Plating##6478
+collect Vindicator Plating##151839 |q 47986/2 |goto 62.13,41.28
+step
+Follow the path |goto 59.01,38.83 < 20 |only if walking
+Follow the path |goto 60.26,36.64 < 20 |only if walking
+Follow the path |goto 60.85,33.64 < 15 |walk
+click Invocation Array##6478
+collect Invocation Array##151837 |q 47986/1 |goto 60.55,33.05
+step
+Follow the path |goto 61.52,29.76 < 20 |only if walking
+click Judgment Core##6477
+collect Judgment Core##151838 |q 47986/3 |goto 60.24,28.09
+step
+label "chaosTheory"
+kill 1 Nathrezim Banelord##125139 |q 47988/2 |goto 59.11,37.86
+kill Nath'raxxan Fleshcarver##125121+, Nath'raxxan Doomshot##125129+, Ravenous Soulhunter##125223+
+Defeat #12# Nath'raxxan forces |q 47988/1 |goto 59.11,37.86
+step
+label "measures"
+click Lightforged Bulwark##125048
+Use the Talisman of the Prophet |use Talisman of the Prophet##152110
+Sanctify #9# Warriors |q 47987/1 |goto 59.11,37.86
+step
+Follow the path |goto 60.46,30.22 < 20 |only if walking
+Follow the path |goto 59.43,33.43 < 20 |only if walking
+Follow the path |goto 58.59,40.32 < 20 |only if walking
+talk Illidan Stormrage##124972
+turnin Chaos Theory##47988 |goto 60.62,43.99
+step
+talk Prophet Velen##124974
+turnin Preventive Measures##47987 |goto 61.05,47.80
+step
+talk Image of Grand Artificer Romuul##124975
+turnin Scars of the Past##47986 |goto 60.67,47.30
+accept A Touch of Fel##47990 |goto 60.67,47.30
+step
+talk Alleria Windrunner##125443
+accept Heralds of Apocalypse##47989 |goto 61.56,46.72
+step
+talk Illidan Stormrage##124972
+accept Dark Machinations##47991 |goto 60.62,43.98
+stickystart "felcore"
+step
+Follow the path |goto Krokuun/0 59.00,37.85 < 20 |only if walking
+click Spire Stabilizer##6477
+Dismantle the first Spire of Woe |q 47991/1 |goto 56.91,38.27 |count 1
+|tip Be quick, as you will take fel damage while inside the circle.
+step
+Enter the building |goto 52.70,36.30 < 15 |walk
+kill Mistress Apostriss##125114
+Defeat Mistress Apostriss |q 47989/2 |goto 51.82,37.51
+step
+click Spire Stabilizer##6477
+Dismantle the second Spire of Woe |q 47991/1 |goto 52.93,34.69 |count 2
+|tip Be quick, as you will take fel damage while inside the circle.
+step
+click Spire Stabilizer##6477
+Dismantle the third Spire of Woe |q 47991/1 |goto 55.58,35.47 |count 3
+|tip Be quick, as you will take fel damage while inside the circle.
+step
+Follow the path |goto 52.71,34.24 < 20 |only if walking
+Follow the path |goto 50.67,32.17 < 15 |only if walking
+Follow the path |goto 48.03,32.21 < 20 |only if walking
+kill Lady Heretica##125115
+Defeat Lady Heretica |q 47989/1 |goto 47.77,30.12
+step
+label "felcore"
+kill Blazing Felshard##125109+
+collect 1 Immaculate Felcore##151851 |q 47990/1 |goto 49.30,33.38
+step
+Follow the path |goto 52.60,34.27 < 20 |only if walking
+Follow the path |goto 55.80,37.71 < 20 |only if walking
+Follow the path |goto 58.90,38.71 < 20 |only if walking
+talk Illidan Stormrage##124972
+turnin Dark Machinations##47991 |goto 60.60,43.97
+step
+talk Alleria Windrunner##125443
+turnin Heralds of Apocalypse##47989 |goto 61.56,46.73
+step
+talk Image of Grand Artificer Romuul##124975
+turnin A Touch of Fel##47990 |goto 60.68,47.30
+step
+talk High Exarch Turalyon##120763
+accept Dawn of Justice##47992 |goto 60.83,47.25
+step
+click Lightforged Warframe
+Take control of the Lightforged Warframe |q 47992/1 |goto 60.72,47.55
+stickystart "justice"
+step
+click Nath'raxxan Rift
+Close the first Nath'raxxan Rift |q 47992/3 |goto 52.91,25.81 |count 1
+step
+click Nath'raxxan Rift
+Close the second Nath'raxxan Rift |q 47992/3 |goto 51.89,25.89 |count 2
+step
+click Nath'raxxan Rift
+Close the third Nath'raxxan Rift |q 47992/3 |goto 52.65,21.02 |count 3
+step
+click Nath'raxxan Rift
+Close the fouth Nath'raxxan Rift |q 47992/3 |goto 53.06,19.78 |count 4
+step
+click Nath'raxxan Rift
+Close the fifth Nath'raxxan Rift |q 47992/3 |goto 55.42,20.76 |count 5
+step
+label "justice"
+kill Abyssal Annihilator##125850+, Nath'raxxan Felguard##125149+, Nath'raxxan Highguard##125338+
+Kill #60# Reinforcements |q 47992/2 |goto 52.65,21.02
+step
+Click the quest completion box
+turnin Dawn of Justice##47992 |goto 53.69,22.78
+accept Lord of the Spire##47993 |goto 53.69,22.78
+step
+Follow the path |goto Krokuun/7 65.63,84.21 < 20 |walk
+Follow the path |goto 55.18,67.12 < 20 |walk
+Follow the path |goto 45.01,50.69 < 20 |walk
+kill Lord Nath'raxas##125034
+Defeat Lord Nath'raxas |q 47993/1 |goto 44.06,7.14
+step
+Follow the path |goto Krokuun/7 45.25,51.50 < 20 |walk
+Follow the path |goto Krokuun/7 55.31,67.47 < 20 |walk
+Follow the path |goto 65.83,84.61 < 20 |walk
+Rejoin your forces |q 47993/2 |goto Krokuun/0 51.14,18.68
+step
+talk High Exarch Turalyon##122378
+turnin Lord of the Spire##47993 |goto Krokuun/1 39.05,24.86
+step
+talk Grand Artificer Romuul##121263
+accept Forming a Bond##47994 |goto 43.46,23.24
+step
+clicknpc Lightforged Courier##121260
+accept The Mysterious Missive##47102 |goto Krokuun/0 40.64,70.07
+step
+talk Captain Fareeya##121519
+turnin The Mysterious Missive##47102 |goto Krokuun/0 40.51,63.63
+accept Intercepting the Legion's Plans##47554 |goto 40.51,63.63
+step
+kill Shadowbound Defiler##123110+, Seething Harbinger##123109+, Felsiege Infernal##119395+
+collect 2 Enigmatic Legion Orders##150995 |q 47554/1 |goto Krokuun/0 38.00,62.51
+step
+Follow the path up |goto Krokuun/0 34.30,61.67 < 20 |only if walking
+Follow the path up |goto 32.97,60.17 < 20 |only if walking
+Follow the path up |goto 30.68,59.39 < 20 |only if walking
+talk Codebreaker Brae##122950
+_<Pick up the code book.>_
+collect Army of the Light Code Book##150993 |q 47554/2 |goto 31.02,57.67
+step
+Follow the path down |goto Krokuun/0 34.78,61.64 < 20 |only if walking
+Follow the path up |goto 39.49,63.00 < 20 |only if walking
+talk Captain Fareeya##121519
+turnin Intercepting the Legion's Plans##47554 |goto 40.50,63.63
+accept Imprisoned Inquisitor##47104 |goto 40.50,63.63
+step
+talk Grand Artificer Romuul##121263
+turnin Imprisoned Inquisitor##47104 |goto Krokuun/1 43.39,23.19
+accept Foiling the Legion's Jailbreak##47134 |goto 43.39,23.19
+step
+talk Grand Artificer Romuul##121263
+Tell him _"I am ready to go to the Arcatraz."_
+Speak to Romuul to travel to the Arcatraz |q 47134/1 |goto Krokuun/1 43.42,23.24
+step
+Enter the Arcatraz |goto Arcatraz L/1 41.20,74.29 < 1000 |c |q 47134
+step
+Follow the path |goto Arcatraz L/1 41.23,48.58 < 10 |walk
+Search the Arcatraz |q 47134/2 |goto 41.20,46.25
+step
+click Legion Portal
+Close the first Legion Portal |q 47134/3 |count 1 |goto Arcatraz L/1 39.55,35.73
+step
+Follow the path |goto Arcatraz L/1 51.37,39.49 < 10 |walk
+Follow the path |goto 58.14,39.40 < 10 |walk
+click Legion Portal
+Close the second Legion Portal |q 47134/3 |count 2 |goto 64.26,24.00
+step
+Follow the path |goto Arcatraz L/1 64.93,35.68 < 10 |walk
+Go up the ramp |goto 65.43,25.37 < 10 |walk
+Follow the path |goto Arcatraz L/2 60.34,38.41 < 10 |walk
+Follow the path |goto 42.04,29.18 < 10 |walk
+Follow the path |goto 30.12,32.15 < 15 |walk
+Follow the path |goto 28.16,42.31 < 10 |walk
+Find High Inquisitor Raalgar |q 47134/4 |goto 28.20,55.00
+step
+kill Lah'zaruun##121320 |q 47134/5 |goto Arcatraz L/2 27.98,66.82
+|tip Interrupt Fel Bulwark whenever possible.
+|tip At 50% health, the Seekers will release and attack you.
+step
+click Portal to the Vindicaar
+Escape from the Arcatraz |q 47134/6 |goto Arcatraz L/2 22.15,75.94
+step
+talk Grand Artificer Romuul##121263
+turnin Foiling the Legion's Jailbreak##47134 |goto Krokuun/1 43.39,23.19
+accept Long Overdue##47182 |goto Krokuun/1 43.39,23.19
+stickystart "Garrison"
+step
+Follow the path down |goto Krokuun/0 58.62,40.01 < 20 |only if walking
+Follow the path |goto 60.06,37.27 < 15 |only if walking
+Follow the path |goto 61.86,29.58 < 20 |only if walking
+click Argussian Heartwell
+Mark the Heartwell |q 47182/2 |count 1 |goto Krokuun/0 64.02,24.54
+step
+click Argussian Heartwell
+Mark the Heartwell |q 47182/2 |count 2 |goto Krokuun/0 65.25,26.11
+step
+click Argussian Heartwell
+Mark the Heartwell |q 47182/2 |count 3 |goto Krokuun/0 66.75,25.46
+step
+label "Garrison"
+kill Shademistress##122041+, Slavering Devourer##121297+, Legion Cannoneer##122039+, Highguard Captain##123658+
+Kill #8# Demons |q 47182/1 |goto Krokuun/0 64.77,25.34
+step
+Enter the building |goto Krokuun/0 66.57,23.65 < 10 |walk
+kill High Inquisitor Raalgar##121544
+collect Fel Heart of Argus##147906 |q 47182/3 |goto 67.68,22.61
+step
+talk Grand Artificer Romuul##121263
+turnin Long Overdue##47182 |goto Krokuun/1 43.42,23.19
+step
+talk Prophet Velen##126307
+accept A Floating Ruin##48081 |goto 40.24,23.64
+step
+click Navigation Console
+Use the Navigation Console to go to Mac'Aree |q 48081/1 |goto 42.54,22.83
+step
+talk Prophet Velen##120533
+turnin A Floating Ruin##48081 |goto Mac'Aree/3 46.98,23.18
+accept Mac'Aree, Jewel of Argus##46815 |goto 46.98,23.18
+step
+talk Grand Artificer Romuul##121263
+Tell him: _"I am ready, Romuul."_
+Travel to Exodus Point |q 46815/1 |goto 49.68,23.66
+step
+talk Prophet Velen##125968
+Ask him: _"Shall we continue?"_
+Talk to Velen |q 46815/2 |goto Mac'Aree/0 55.32,82.17
+|tip Wait for the dialogue to complete.
+step
+Follow Prophet Velen |q 46815/3 |goto 54.50,77.91
+step
+talk Prophet Velen##120533
+turnin Mac'Aree, Jewel of Argus##46815 |goto 54.50,77.91
+accept Defenseless and Afraid##46818 |goto 54.50,77.91
+accept Khazaduum, First of His Name##46834 |goto 54.50,77.91
+step
+kill Zealous Echo##120604+, Soultwisted Echo##120836+, Fanatical Echo##119864+
+collect 3 Stolen Pylon Core##152408 |q 46818 |goto 52.86,75.44
+|tip They can be found all around the area.
+step
+click Ancient Pylon##3365
+Activate the first Ancient Pylon |q 46818/1 |goto 51.46,73.46 |count 1
+step
+click Ancient Pylon##3365
+Activate the second Ancient Pylon |q 46818/1 |goto 54.35,73.39 |count 2
+step
+click Ancient Pylon##3365
+Activate the third Ancient Pylon |q 46818/1 |goto 52.90,72.36 |count 3
+step
+kill Echo of Khazaduum##120764
+collect 1 Arkonite Keystone##152407 |q 46834/1 |goto 52.91,67.39
+step
+Follow the path |goto 52.89,73.31 < 20 |only if walking
+talk Prophet Velen##120533
+turnin Defenseless and Afraid##46818 |goto 54.50,77.90
+turnin Khazaduum, First of His Name##46834 |goto 54.50,77.90
+accept Consecrating Ground##47066 |goto 54.50,77.90
+step
+Go down the steps |goto 52.86,78.43 < 15 |walk
+click Arkonite Matrix##3365
+Restore the Shattered Arkonite Matrix |q 47066/1 |goto 52.87,80.21
+step
+talk Prophet Velen##120533
+turnin Consecrating Ground##47066 |goto 52.86,75.86
+accept The Path Forward##46941 |goto 52.86,75.86
+step
+click Vindicaar Beacon##3365
+Call Down a Lightforged Beacon |q 46941/1 |goto 52.86,75.45
+step
+talk Prophet Velen##120533
+turnin The Path Forward##46941 |goto 52.86,75.86
+|tip Wait for the dialogue to complete.
+accept Not-So-Humble Beginnings##47686 |goto 52.86,75.86
+step
+Go down the steps |goto 57.06,69.85 < 20 |only if walking
+Follow the path |goto 57.80,63.46 < 20 |only if walking
+Follow the path |goto 58.92,59.72 < 30 |only if walking
+Follow the path |goto 58.12,51.83 < 25 |only if walking
+talk Archmage Y'mera##123413
+turnin Not-So-Humble Beginnings##47686 |goto 59.71,50.50
+accept Conservation of Magic##47882 |goto 59.71,50.50
+accept Invasive Species##47688 |goto 59.71,50.50
+stickystart "arcana"
+step
+click Power Conduit
+Stabilize the Power Conduit |q 47882/1| count 1 |goto Mac'Aree/0 59.63,52.17
+step
+click Power Conduit
+Stabilize the Power Conduit |q 47882/1| count 2 |goto Mac'Aree/0 60.50,53.85
+step
+click Power Conduit
+Stabilize the Power Conduit |q 47882/1| count 3 |goto Mac'Aree/0 62.71,54.65
+step
+click Power Conduit
+Stabilize the Power Conduit |q 47882/1| count 4 |goto Mac'Aree/0 62.81,51.89
+step
+click Power Conduit
+Stabilize the Power Conduit |q 47882/1| count 5 |goto Mac'Aree/0 64.52,53.49
+step
+click Power Conduit
+Stabilize the Power Conduit |q 47882/1| count 6 |goto Mac'Aree/0 66.04,57.01
+step
+Follow the path |goto Mac'Aree/0 66.35,54.28 < 15 |only if walking
+click Power Conduit
+Stabilize the Power Conduit |q 47882/1| count 7 |goto Mac'Aree/0 66.30,52.61
+step
+click Power Conduit
+Stabilize the Power Conduit |q 47882/1| count 8 |goto Mac'Aree/0 67.07,51.23
+step
+label "arcana"
+kill Manafeeder Panthara##123508+
+collect 30 Partially Digested Arcana##151366 |q 47688/1 |goto Mac'Aree/0 66.40,52.36
+step
+Follow the path |goto Mac'Aree/0 62.36,53.07 < 30 |only if walking
+talk Archmage Y'mera##123413
+turnin Conservation of Magic##47882 |goto 59.71,50.50
+turnin Invasive Species##47688 |goto 59.71,50.50
+accept The Longest Vigil##47883 |goto 59.71,50.50
+step
+click Deactivated Conservatory Vigilant##124799
+Wake the Gatekeeper |q 47883/1 |goto 59.99,50.50
+|tip Wait for the dialogue to complete.
+step
+talk Vigilant Quoram##124070
+Tell him: _"I seek the Sigil of Awakening."_
+Speak to Vigilant Quoram |q 47883/2 |goto 59.99,50.50
+|tip Wait for the dialogue to complete.
+step
+talk Vigilant Quoram##124070
+turnin The Longest Vigil##47883 |goto 59.99,50.50
+accept Gatekeeper's Challenge: Tenacity##47689 |goto 59.99,50.50
+accept Gatekeeper's Challenge: Cunning##47685 |goto 59.99,50.50
+accept Gatekeeper's Challenge: Mastery##47687 |goto 59.99,50.50
+step
+talk High Wakener Aargon##123522
+Tell him: _"I challenge you to a duel."_
+kill High Wakener Aargon##123522 |q 47687/3 |goto 63.75,51.64
+step
+talk Arc-Consul Velara##123520
+Tell her: _"I challenge you to a duel."_
+kill Arc-Consul Velara##123520 |q 47687/2 |goto 64.01,50.37
+step
+talk Grand Vizier Jarasum##123521
+Tell him: _"I challenge you to a duel."_
+kill Grand Vizier Jarasum##123521 |q 47687/1 |goto 63.79,49.04
+step
+talk Gatekeeper's Image##124077
+Tell him: _"I am ready."_
+Enter the Gatekeeper's Alcove |q 47689/1 |goto 67.41,50.21
+|tip Wait for the dialogue to complete.
+step
+Cross the first room |goto 68.49,50.13 < 5 |q 47689 |c
+|tip Purple is safe and red will kill you.
+|tip Observe the pattern and cross the room on the purple symbols only.
+step
+Cross the second room |goto 69.47,50.06 < 5 |q 47689 |c
+|tip The pink beams will instantly kill you.
+|tip The pink orbs that move across the ground will also instantly kill you.
+|tip Watch the pattern and, when the time is right, run quickly across the room.
+step
+talk Gatekeeper's Image##124077
+Ask him: _"Is the trial complete?"_
+Complete the Trial of Tenacity |q 47689/2 |goto 70.92,49.96
+|tip You must run up the stairs and onto the balcony at the top.
+|tip The purple-pink orbs that come down the steps will instantly kill you.
+|tip Watch them spawn and make your run when you find an opening
+step
+Follow the path |goto 67.17,44.93 < 30 |only if walking
+click Well-Preserved Tome
+Inspect the Well-Preserved Tome |q 47685/1 |goto 62.54,45.99
+step
+click Ancient Scholar Sculpture |goto 62.41,45.47 < 3
+|tip It's the red one. Click this one first.
+click Ancient Consul Sculpture |goto 62.51,45.40 < 3
+|tip It's the blue one. Click this one second.
+Enter the building |goto 60.98,44.93 < 5 |walk
+click Cache of Guile##3365
+Retrieve the Fragment of Guile |q 47685/4 |goto 60.95,44.09
+step
+click Ancient Scholar Sculpture |goto 62.41,45.47 < 3
+|tip It's the red one. Click this one first.
+click Ancient Wakener Sculpture |goto 62.61,45.46 < 3
+|tip It's the yellow one. Click this one second.
+Enter the building |goto 62.16,43.20 < 5 |walk
+click Cache of Wit##3365
+Retrieve the Cache of Wit |q 47685/3 |goto 61.78,42.79
+step
+click Ancient Consul Sculpture |goto 62.51,45.40 < 3
+|tip It's the blue one. Click this one first.
+click Ancient Wakener Sculpture |goto 62.61,45.46 < 3
+|tip It's the yellow one. Click this one second.
+click Cache of Acuity##3365
+Retrieve the Fragment of Acuity |q 47685/2 |goto 63.71,44.83
+step
+talk Vigilant Quoram##124070
+turnin Gatekeeper's Challenge: Tenacity##47689 |goto 59.99,50.50
+turnin Gatekeeper's Challenge: Cunning##47685 |goto 59.99,50.50
+turnin Gatekeeper's Challenge: Mastery##47687 |goto 59.99,50.50
+accept The Defiler's Legacy##47690 |goto 59.98,50.49
+step
+Follow the path |goto 64.88,46.51 < 25 |only if walking
+Follow the path up |goto 66.55,41.25 < 25 |only if walking
+Follow the path |goto 67.19,37.75 < 25 |only if walking
+kill Archimonde##124677 |q 47690/1 |goto 68.84,33.15
+|tip Wait for the dialogue to complete.
+step
+click The Sigil of Awakening##3365
+collect 1 Sigil of Awakening##151476 |q 47690/2 |goto 68.16,33.54
+step
+Follow the path |goto 67.23,37.95 < 20 |only if walking
+Follow the path |goto 66.50,41.72 < 20 |only if walking
+Follow the path |goto 64.95,43.04 < 20 |only if walking
+talk Archmage Y'mera##123413
+turnin The Defiler's Legacy##47690 |goto 63.29,39.73
+accept The Sigil of Awakening##48107 |goto 63.29,39.73
+step
+click Lightforged Beacon
+Return to the Vindicaar |q 48107/1 |goto 62.98,39.48
+step
+click Sigil of Awakening##3365
+Sigil of Awakening secured |q 48107/2 |goto Mac'Aree/3 54.24,55.95
+step
+talk Prophet Velen##120533
+turnin The Sigil of Awakening##48107 |goto 53.30,50.18
+step
+talk Illidan Stormrage##126408
+accept Where They Least Expect It##48461 |goto 47.33,19.65
+step
+click Invasion Point
+Clear an Invasion Point |q 48461/1
+|tip Open your map and look for an invasion icon. They look like green portals.
+|tip Go to an invasion site and complete it.
+step
+talk Illidan Stormrage##126408
+turnin Where They Least Expect It##48461 |goto 47.33,19.65
+step
+talk High Exarch Turalyon##124312
+accept We Have a Problem##48344 |goto 50.92,23.18
+step
+Travel to the Conservatory of the Arcane |q 48344/1 |goto Mac'Aree/0 62.65,39.42
+step
+talk High Exarch Turalyon##124312
+|tip Wait for Turalyon to join you.
+turnin We Have a Problem##48344 |goto 62.65,39.42
+accept A Non-Prophet Organization##47691 |goto 62.65,39.42
+accept Wrath of the High Exarch##47854 |goto 62.65,39.42
+step
+talk Captain Fareeya##123668
+accept Overt Ops##47995 |goto 62.69,39.28
+stickystart "WotHE"
+step
+talk Baraat the Longshot##123670
+Select: _"<Relay Fareeya's orders.>"_
+Give the orders to Baraat |q 47995/1 |goto 54.86,35.32
+step
+Enter the building |goto 54.16,26.55 < 5 |walk
+talk Grand Vindicator Sorvos##123669
+Select: _"<Relay Fareeya's orders.>"_
+Give the orders to Sorvos |q 47995/2 |goto 53.58,26.52
+step
+Enter the building |goto 61.58,25.68 < 5 |walk
+talk Blademaster Telaamon##123671
+Select: _"<Relay Fareeya's orders.>"_
+Give the orders to Telaamon |q 47995/3 |goto 62.15,25.20
+step
+label "WotHE"
+kill Vilefiend Tracker##124430+, Antoran Despoiler##124448+, Demonfly Acidmaw##124444+, Antoran Fiendmaster##124435+
+click Antoran Despoiler##124448
+Disrupt the Legion forces in Arinor Gardens |q 47854/1 |goto 59.95,25.92
+step
+Enter the building |goto 59.49,24.40 < 5 |walk
+Find Velen |q 47691/1 |goto 59.08,19.99
+step
+talk High Exarch Turalyon##124312
+|tip Wait for the dialogue to complete.
+turnin Wrath of the High Exarch##47854 |goto 59.14,20.20
+turnin Overt Ops##47995 |goto 59.14,20.20
+step
+talk Prophet Velen##120533
+turnin A Non-Prophet Organization##47691 |goto 59.08,20.07
+accept Talgath's Forces##48345 |goto 59.08,20.07
+step
+talk High Exarch Turalyon##124312
+accept Flanking Maneuvers##47853 |goto 59.14,20.20
+stickystart "talgath"
+step
+Go up the stairs |goto 59.16,21.01 < 5 |walk
+Jump down |goto 58.70,19.16 < 15 |walk
+click Legion Portal##236562
+Close the first Legion portal |q 47853/1 |goto 57.82,17.34 |count 1
+step
+click Legion Portal##236562
+Close the second Legion portal |q 47853/1 |goto 54.45,9.95 |count 2
+step
+click Legion Portal##236562
+Close the third Legion portal |q 47853/1 |goto 51.26,9.02 |count 3
+step
+label "talgath"
+kill Talgathi Hound##125167+, Talgathi Incinerator##125190+, Talgathi Executioner##125159+,
+Defeat Talgath's forces |q 48345/1 |goto 54.57,11.72
+step
+Go up the stairs |goto 52.62,14.32 < 15 |only if walking
+Go up the stairs |goto 48.76,14.30 < 15 |only if walking
+talk Prophet Velen##120533
+turnin Talgath's Forces##48345 |goto 48.80,19.73
+turnin Flanking Maneuvers##47853 |goto 48.80,19.73
+accept What Might Have Been##47855 |goto 48.80,19.73
+step
+talk Prophet Velen##120533
+Tell him: _"Show me."_
+Talk to Velen |q 47855/1 |goto 48.80,19.73
+step
+talk Prophet Velen##120533
+turnin What Might Have Been##47855 |goto 48.80,19.73
+accept Across the Universe##47856 |goto 48.80,19.73
+step
+talk Prophet Velen##120533
+Tell him: _"I am ready."_
+Talk to Velen |q 47856/1 |goto 49.44,18.90
+step
+kill Talgath##125233 |q 47856/2 |goto 50.20,17.86
+|tip Wait for the dialogue to complete.
+step
+talk Prophet Velen##120533
+turnin Across the Universe##47856 |goto 50.14,17.91
+accept Shadow of the Triumvirate##47416 |goto 50.14,17.91
+step
+Go up the stairs |goto 47.50,17.11 < 25 |only if walking
+Follow the path |goto 45.11,17.01 < 25 |only if walking
+click Lightforged Beacon
+Return to the Vindicaar |q 47416/1 |goto 43.87,14.53
+step
+talk Prophet Velen##120533
+turnin Shadow of the Triumvirate##47416 |goto Mac'Aree/3 57.08,60.35
+accept The Seat of the Triumvirate##47238 |goto 57.08,60.35
+|tip Wait for the dialogue to complete.
+step
+Go with Velen |q 47238/1 |goto 57.08,60.35
+|tip Wait for the dialogue to complete.
+step
+talk Alleria Windrunner##121230
+Tell her: _"Show me."_
+Listen to Alleria's Tale |q 47238/2 |goto 58.32,59.60
+step
+talk Prophet Velen##120533
+|tip Wait for the dialogue to complete.
+turnin The Seat of the Triumvirate##47238 |goto 57.08,60.35
+step
+talk Alleria Windrunner##121230
+accept Whispers from Oronaar##40761 |goto 58.32,59.60
+step
+Follow the path |goto Mac'Aree/0 48.92,70.05 < 20 |only if walking
+Investigate the Ruins of Oronaar |q 40761/1 |goto 46.95,68.93
+step
+click Prayer Effigy
+accept Arkhaan's Prayers##47101 |goto 46.77,69.00
+stickystart "fragPrayer"
+step
+click Frantic Wall Scrawling##3365
+Inspect the wall scrawlings |q 40761/4 |goto 48.33,66.28
+step
+click Discarded Naaru Figurine##3365
+Naaru figurine inspected |q 40761/2 |goto 47.95,60.74
+step
+Follow the path |goto 46.86,58.36 < 20 |only if walking
+talk Artificer Andaara##127083
+accept Lightforged Beacon: City Center##48668 |goto 46.77,55.50
+step
+click Vindicaar Beacon##3365
+Vindicaar Beacon |q 48668/1 |goto 47.03,55.50
+step
+talk Vindicaar Beacon##3365
+turnin Lightforged Beacon: City Center##48668 |goto 46.77,55.50
+step
+Follow the path |goto 46.56,62.36 < 20 |only if walking
+Follow the path |goto 46.30,68.62 < 25 |only if walking
+Enter the building |goto 46.13,71.21 < 5 |walk
+click Abandoned Altar##3365
+Inspect the abandoned altar |q 40761/3 |goto 46.53,72.50
+step
+label "fragPrayer"
+kill Shadow-Touched Krokul##121250+, Void-Addled Krokul##121251+
+collect 5 Fragmented Prayers##147763 |q 47101/1 |goto 45.93,69.93
+step
+Follow the path down |goto 44.98,66.93 < 20 |only if walking
+talk Alleria Windrunner##121230
+turnin Whispers from Oronaar##40761 |goto 43.41,67.61
+turnin Arkhaan's Prayers##47101 |goto 43.41,67.61
+accept The Pulsing Madness##47180 |goto 43.41,67.61
+step
+talk Arkhaan##121518
+|tip Wait for him to walk out of the building.
+accept Arkhaan's Pain##47100 |goto 43.50,67.73
+stickystart "broken"
+step
+click Void Manifestation##121539
+Cleanse the Void Manifestation |q 47180/1 |goto 42.09,64.07 |count 1
+step
+click Void Manifestation##121539
+Cleanse the Void Manifestation |q 47180/1 |goto 41.46,67.73 |count 2
+step
+click Void Manifestation##121539
+Cleanse the Void Manifestation |q 47180/1 |goto 42.31,68.17 |count 3
+step
+click Void Manifestation##121539
+Cleanse the Void Manifestation |q 47180/1 |goto 41.03,71.16 |count 4
+step
+click Void Manifestation##121539
+Cleanse the Void Manifestation |q 47180/1 |goto 42.19,71.12 |count 5
+step
+label "broken"
+kill Shadow-Touched Krokul##123301+, Voidscarred Krokul##119749+, Void-Addled Krokul##123302+
+Kill #12# Broken |q 47100/1 |goto 56.33,80.44
+step
+talk Alleria Windrunner##121230
+turnin The Pulsing Madness##47180 |goto 43.41,67.61
+step
+talk Arkhaan##121518
+turnin Arkhaan's Pain##47100 |goto 43.50,67.73
+accept Arkhaan's Plan##47183 |goto 43.50,67.73
+step
+Enter the building |goto 41.14,64.84 < 10 |walk
+Follow Arkhaan |q 47183/1 |goto 40.43,61.99
+step
+talk Arkhaan##121518
+Tell him: _"We should keep going."_
+Talk to Arkhaan |q 47183/2 |goto 40.47,61.95
+step
+Follow the path |goto 35.06,65.01 < 25 |only if walking
+talk Arkhaan##121518
+|tip You will periodically need to talk to Arkhaan to keep him moving.
+|tip Kill the various saves of enemies that spawn along the way
+Escort Arkhaan to Isolon |q 47183/3 |goto 35.10,60.74
+step
+talk Alleria Windrunner##121230
+turnin Arkhaan's Plan##47183 |goto 35.33,59.54
+accept Arkhaan's Peril##47184 |goto 35.33,59.54
+step
+click Void Tear
+Cross into the Void |q 47184/1 |goto 35.56,59.32
+step
+kill Arkhaan##121546
+|tip If someone has killed him recently, you may have to wait for a few moments.
+Deal with Arkhaan |q 47184/2 |goto 35.83,58.63
+step
+talk Alleria Windrunner##121230
+turnin Arkhaan's Peril##47184 |goto 35.33,59.54
+|tip Wait for the dialogue to complete.
+accept Throwing Shade##47203 |goto 35.33,59.54
+step
+Jump down |goto 35.81,55.26 < 20 |only if walking
+Follow Alleria |q 47203/1 |goto 37.11,52.35
+step
+click Void Tear
+|tip Watch the dialogue.
+Cross into the Void |q 47203/2 |goto 37.11,52.35
+step
+click Dismantled Portal
+Examine the Dismantled Portal |q 47203/3 |goto 39.65,48.22
+|tip Avoid going near mobs along the way.
+|tip Be especially wary of mobs with the invisibility detection icon above their heads.
+|tip In general, you want to mimic the path of the Locus-Walker.
+step
+Follow the path |goto 38.30,48.65 < 10 |walk
+click Image of Saprish
+Examine the Image of Saprish |q 47203/4 |goto 35.54,43.69
+|tip Avoid going near mobs along the way.
+|tip Be especially wary of mobs with the invisibility detection icon above their heads.
+|tip In general, you want to mimic the path of the Locus-Walker.
+step
+Follow the path |goto 35.31,40.99 < 10 |walk
+click Voidforge
+Examine the Voidforge |q 47203/5 |goto 36.06,38.65
+|tip Avoid going near mobs along the way.
+|tip Be especially wary of mobs with the invisibility detection icon above their heads.
+|tip In general, you want to mimic the path of the Locus-Walker.
+step
+Follow the path |goto 34.83,39.86 < 10 |walk
+Follow the path |goto 33.37,39.52 < 10 |walk
+Meet Alleria and Locus-Walker |q 47203/6 |goto 31.88,37.48
+|tip Avoid going near mobs along the way.
+|tip Be especially wary of mobs with the invisibility detection icon above their heads.
+|tip In general, you want to mimic the path of the Locus-Walker.
+step
+talk Alleria Windrunner##121230
+turnin Throwing Shade##47203 |goto 31.88,37.48
+accept Sources of Darkness##47217 |goto 31.88,37.48
+step
+talk Locus-Walker##121597
+accept The Shadowguard Incursion##47218 |goto 31.94,37.34
+stickystart "shadowguard"
+step
+Follow the path |goto 29.62,36.16 < 15 |only if walking
+click Void Harvester
+Deactivate the Void Harvester |q 47217/1 |goto 31.69,34.38 |count 1
+step
+click Void Harvester
+Deactivate the Void Harvester |q 47217/1 |goto 28.34,34.23 |count 2
+step
+click Void Harvester
+Deactivate the Void Harvester |q 47217/1 |goto 25.07,35.81 |count 3
+step
+click Void Harvester
+Deactivate the Void Harvester |q 47217/1 |goto 25.12,38.84 |count 4
+step
+click Void Harvester
+Deactivate the Void Harvester |q 47217/1 |goto 27.51,40.16 |count 5
+step
+label "shadowguard"
+kill Shadowguard Phaseblade##121672+, Shadowguard Siphoner##121671+
+Kill #15# Shadowguard Ethereals |q 47218/1 |goto 25.96,39.50
+step
+Follow the path |goto 29.14,36.97 < 20 |only if walking
+talk Alleria Windrunner##121230
+turnin Sources of Darkness##47217 |goto 31.88,37.48
+step
+talk Locus-Walker##121597
+turnin The Shadowguard Incursion##47218 |goto 31.93,37.34
+accept A Vessel Made Ready##47219 |goto 31.93,37.34
+step
+click Void Tear
+|tip Wait a moment for the Void Tear to appear.
+Enter the Void Tear |q 47219/1 |goto 31.98,37.03
+step
+kill Shadowguard Abyss Caller##121761+
+kill Nhal'athoth##121663 |q 47219/2 |goto 26.70,45.00
+|tip Kill the three callers to free Nhal'athoth.
+step
+click Heart of Nhal'athoth##3365
+collect Heart of Nhal'athoth##151088 |q 47219/3 |goto 26.70,45.00
+step
+talk Alleria Windrunner##121230
+|tip Wait for the dialogue to complete.
+turnin A Vessel Made Ready##47219 |goto 28.44,47.20
+accept A Beacon in the Dark##47220 |goto 28.44,47.20
+step
+click Lightforged Beacon
+Return to the Vindicaar |q 47220/1 |goto Mac'Aree/3 58.26,81.01
+step
+talk Prophet Velen##120533
+turnin A Beacon in the Dark##47220 |goto Mac'Aree/3 53.33,50.22
+accept Seat of the Triumvirate: The Crest of Knowledge##47654 |goto 53.33,50.22
+accept An Offering of Shadow##48560 |goto 53.33,50.22
+step
+click Netherlight Crucible
+Infuse the Netherlight Crucible with the Essence of Shadow |q 48560/1 |goto Mac'Aree/4 56.17,68.41
+step
+talk Artificer Shela'na##126389
+turnin An Offering of Shadow##48560 |goto 57.29,68.41
+accept The Netherlight Crucible##49224 |goto 57.29,68.41
+step
+click Netherlight Crucible
+Imbue a relic with Netherlight Fortification |q 49224/1 |goto Mac'Aree/4 56.20,68.41
+step
+talk Artificer Shela'na##126389
+turnin The Netherlight Crucible##49224 |goto 57.29,68.41
+step
+Press _I_ and queue for Seat of the Triumvirate or enter the dungeon with your group |goto The Seat of the Triumvirate/0 21.9,86.2 < 1000 |c |q 47654
+step
+kill L'ura##124729 |q 47654/1
+|tip This is the last encounter of the instance.
+collect The Crest of Knowledge##151090 |q 47654/2
+Use the Seat of the Triumvirate instance guide to accomplish this
+Click here to load the Seat of the Triumvirate guide |confirm |next "Zygor's Dungeon Guides\\Legion Dungeons\\Seat of the Triumvirate"
+step
+click Crest of Knowledge##3365
+Crest of Knowledge placed on Mac'aree |q 47654/3 |goto Mac'Aree/3 54.32,54.89
+step
+click Crest of Knowledge##3365
+Eye of Prophecy secured |q 47654/4 |goto Mac'Aree/3 54.32,54.89
+step
+talk Prophet Velen##128722
+turnin Seat of the Triumvirate: The Crest of Knowledge##47654 |goto Mac'Aree/3 53.35,50.35
+step
+click Scouting Map
+Complete the mission, "Darkfall Ridge Supplies" |q 48441/1 |goto Krokuun/2 69.42,54.36
+|tip This mission has a base resource cost of 100 and time of 16 hours.
+step
+talk Chieftain Hatuun##119388
+turnin Remnants of Darkfall Ridge##48441 |goto Krokuun/0 56.56,67.56
+accept Nath'raxas Hold: Preparations##48442 |goto 56.56,67.56
+step
+Raise 6 Followers to 900 Item Level |q 48442/1 |goto Krokuun/2 69.53,54.36
+|tip You can do this by completing missions at your mission table and placing work orders for champion equipment if you have the order hall upgrade.
+step
+talk Chieftain Hatuun##119388
+turnin Nath'raxas Hold: Preparations##48442 |goto Krokuun/0 56.55,67.56
+accept Nath'raxas Hold: Rescue Mission##48443 |goto Krokuun/0 56.55,67.56
+step
+click Scouting Map
+Complete the mission "Nath'raxas Breakout" |q 48443/1 |goto Krokuun/2 69.53,54.36
+|tip This mission has a base resource cost of 100 and time of 16 hours.
+step
+talk Chieftain Hatuun##119388
+turnin Nath'raxas Hold: Rescue Mission##48443 |goto Krokuun/0 56.55,67.56
+step
+talk Alleria Windrunner##121230
+accept The Ruins of Oronaar##48445 |goto Mac'Aree/3 45.51,24.59
+step
+click Scout Map
+Complete the mission, "Inches from Madness." |q 48445/1 |goto Mac'Aree/4 67.66,56.83
+|tip You may need to reload for it to appear.
+|tip This mission will take at least 16 hours.
+step
+talk Alleria Windrunner##121230
+turnin The Ruins of Oronaar##48445 |goto Mac'Aree/3 45.51,24.59
+accept Relics of the Ancient Eredar##48446 |goto 45.51,24.59
+accept Beneath Oranaar##48654 |goto 45.51,24.59
+step
+Follow the path |goto Mac'Aree/0 44.92,56.63 < 15
+Go down the stairs |goto 44.43,58.12 < 15 |only if walking
+Follow the path |goto 44.02,63.39 < 20 |only if walking
+Follow the path down |goto 43.90,66.30 < 20 |only if walking
+Follow the path down |goto 42.37,66.53 < 20 |only if walking
+Enter the cave |goto 42.35,63.19 < 15 |only if walking
+talk Nabiru##127037
+turnin Beneath Oranaar##48654 |goto 43.99,60.91
+step
+Raise 6 Followers to 925 Item Level |q 48446/1 |goto Mac'Aree/3 45.51,24.59
+|tip You can do this by completing missions at your mission table and placing work orders for champion equipment if you have the order hall upgrade.
+step
+talk Alleria Windrunner##121230
+turnin Relics of the Ancient Eredar##48446 |goto 45.51,24.59
+step
+talk High Exarch Turalyon##126954
+accept Reinforce Light's Purchase##48201 |goto Antoran Wastes/5 33.50,58.31 |or |only if not completedq(48201)
+accept Reinforce the Veiled Den##48202 |goto Antoran Wastes/5 33.50,58.31 |or |only if not completedq(48202)
+|tip You may have to wait until the next daily reset to accept this quest.
+step
+Follow the path |goto Antoran Wastes/0 72.28,47.86 < 25 |only if walking
+Follow the path |goto 70.13,48.55 < 25 |only if walking
+Follow the path |goto 70.22,53.08 < 25 |only if walking
+Follow the path |goto 68.10,54.11 < 25 |only if walking
+Follow the path |goto 65.59,51.84 < 25 |only if walking
+Follow the path |goto 64.65,56.32 < 25 |only if walking
+Follow the path |goto 70.83,63.45 < 25 |only if walking
+Follow the path |goto 71.05,72.71 < 25 |only if walking
+talk Alleria Windrunner##127033
+Ask her: _"What information have you been able to gather, Alleria?"_
+Speak with Alleria at Light's Purchase |q 48201/1 |goto 72.39,74.85
+|only if havequest(48201)
+step
+talk Alleria Windrunner##127033
+turnin Reinforce Light's Purchase##48201 |goto 72.39,74.85
+|only if havequest(48201)
+step
+Follow the path |goto Antoran Wastes/0 70.60,46.31 < 25 |only if walking
+Follow the path up |goto 69.08,35.98 < 25 |only if walking
+Follow the path |goto 68.04,33.75 < 20 |only if walking
+Follow the path |goto 67.92,28.17 < 20 |only if walking
+talk Alleria Windrunner##127033
+Tell him: _"Turalyon wants to know the situation down here."_
+Speak with Illidan at the Veiled Den. |q 48202/1 |goto 68.77,26.14
+|only if havequest(48202)
+step
+talk Illidan Stormrage##127051
+turnin Reinforce the Veiled Den##48202 |goto Antoran Wastes/0 68.77,26.14
+|only if havequest(48202)
+--@@BETASTART
+step
+talk Alleria Windrunner##121230
+accept Shadowguard Dispersion##48447 |goto Mac'Aree/3 45.51,24.59
+step
+click Scout Map
+Complete the mission, "Shadowguard Dispersion." |q 48447/1 |goto Mac'Aree/4 67.66,56.83
+|tip You may need to reload for it to appear.
+|tip This mission will take at least 16 hours.
+step
+talk Alleria Windrunner##121230
+turnin Shadowguard Dispersion##48447 |goto Mac'Aree/3 45.51,24.59
+step
+talk High Exarch Turalyon##126954
+accept Hindering the Legion War Machine##48448 |goto Antoran Wastes/5 33.59,58.22
+step
+click Scout Map
+Complete the mission, "Gambit in the Wastes." |q 48448/1 |goto Antoran Wastes/6 55.08,27.08
+|tip You may need to reload for it to appear.
+|tip This mission will take at least 16 hours.
+step
+talk High Exarch Turalyon##126954
+turnin Hindering the Legion War Machine##48448 |goto Antoran Wastes/5 33.59,58.22
+accept Take the Edge Off##48600 |goto Antoran Wastes/5 33.59,58.22
+step
+Raise 6 Followers to 950 Item Level |q 48600/1 |goto Antoran Wastes/6 55.08,27.08
+|tip You can do this by completing missions at your mission table and placing work orders for champion equipment if you have the order hall upgrade.
+step
+talk High Exarch Turalyon##126954
+turnin Take the Edge Off##48600 |goto Antoran Wastes/5 33.59,58.22
+accept Supplying the Antoran Campaign##48912 |goto Antoran Wastes/5 33.59,58.22
+step
+Complete #10# Invasion points |q 48912/1
+|tip One Invasion Point is active every 6 hours in each of the 3 Argus zones.
+|tip Check out our Invasion point guides to accomplish this.
+step
+talk High Exarch Turalyon##126954
+turnin Supplying the Antoran Campaign##48912 |goto Antoran Wastes/5 33.59,58.22
+accept Felfire Shattering##48601 |goto Antoran Wastes/5 33.59,58.22
+step
+click Scout Map
+Complete the mission, "Assault on Felfire Armory." |q 48601/1 |goto Antoran Wastes/6 55.08,27.08
+|tip You may need to reload for it to appear.
+|tip This mission will take at least 16 hours.
+step
+talk High Exarch Turalyon##126954
+turnin Felfire Shattering##48601 |goto Antoran Wastes/5 33.59,58.22
+--@@BETAEND
+step
+Congratulations!
+You have completed the _Argus Campaign_ guide
 ]])

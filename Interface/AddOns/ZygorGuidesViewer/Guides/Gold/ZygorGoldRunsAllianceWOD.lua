@@ -13,7 +13,7 @@ if UnitFactionGroup("player")=="Alliance" then
 	meta={goldtype="daily",levelreq=90,gold=34,time=15,icon="Interface\\ICONS\\Achievement_Faction_Anglers"},
 	description="This guide will take you through The Anglers dailies",
 },[[
-			#include "A_Anglers"
+			#include "Anglers_Dailies"
 ]])
 	ZygorGuidesViewer:RegisterGuide("GOLD\\Alliance Daily Runs\\The August Celestials Dailies Run",{
 	meta={goldtype="daily",levelreq=90,gold=57,time=5,icon="Interface\\ICONS\\Achievement_Faction_Celestials"},
@@ -28,20 +28,20 @@ if UnitFactionGroup("player")=="Alliance" then
 	meta={goldtype="daily",levelreq=90,gold=46,time=6,icon="Interface\\ICONS\\Achievement_Faction_SerpentRiders"},
 	description="Th is guide will take you through the Order of the Cloud Serpent dailies",
 },[[
-			#include "A_Cloud_Serpent"
+			#include "CS_Dailies"
 ]])
 	ZygorGuidesViewer:RegisterGuide("GOLD\\Alliance Daily Runs\\The Shado-Pan Dailies Run",{
 	meta={goldtype="daily",levelreq=90,gold=65,time=8,icon="Interface\\ICONS\\Achievement_Faction_ShadoPan"},
 	description="This guide will take you through the Shado-Pan dailies",
 },[[
-			#include "Shado_Pan_Daily_A"
+			#include "Shado_Pan_Dailies"
 ]])
 	ZygorGuidesViewer:RegisterGuide("GOLD\\Alliance Daily Runs\\The Tillers Dailies Run",{
 	meta={goldtype="daily",levelreq=90,gold=49,time=5,icon="Interface\\ICONS\\Achievement_Faction_Tillers"},
 	description="This guide will take you through The Tillers dailies",
 },[[
 		step
-			#include "A_Tillers_DailyQuest"
+			#include "Tillers_Dailies"
 ]])
 	ZygorGuidesViewer:RegisterGuide("GOLD\\Alliance Daily Runs\\The Golden Lotus Dailies Run",{
 	meta={goldtype="daily",levelreq=90,gold=109,time=11,icon="Interface\\ICONS\\Achievement_Faction_GoldenLotus"},
@@ -59,14 +59,14 @@ if UnitFactionGroup("player")=="Alliance" then
 	meta={goldtype="daily",levelreq=90,gold=68,time=5,icon="Interface\\ICONS\\Achievement_Faction_Klaxxi"},
 	description="This guide will take you through The Klaxxi dailies",
 },[[
-			#include "A_Klaxxi"
+			#include "Klaxxi_Dailies"
 ]])
 	ZygorGuidesViewer:RegisterGuide("GOLD\\Alliance Daily Runs\\Operation:Shieldwall Dailies Run",{
 	meta={goldtype="daily",levelreq=90,gold=61,time=8,icon="Interface\\ICONS\\Achievement_General_AllianceSlayer"},
 	description="This guide will take you through quests for Operation: Shieldwall.",
 },[[
 		step
-			#include "Operation_Shieldwall_Daily"
+			#include "OShieldwall_Dailies"
 ]])
 	ZygorGuidesViewer:RegisterGuide("GOLD\\Alliance Daily Runs\\Kirin Tor Offensive Dailies Run",{
 	meta={goldtype="daily",levelreq=90,gold=288,time=75,icon="Interface\\ICONS\\Achievement_Reputation_Kirintor_Offensive"},
@@ -1393,7 +1393,7 @@ ZygorGuidesViewer:RegisterGuide("GOLD\\Farming\\Cocoa Beans (Alliance)",{
 	condition_valid='raceclass("Alliance")',
 },[[
 	step
-		#include "A_Stormwind_Cooking_Dailies"
+		#include "SW_Cooking_Dailies"
 		earn 1 Epicurean's Reward##81
 	step
 		talk Bario Matalli##49701

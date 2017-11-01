@@ -25,12 +25,20 @@ rematch:InitModule(function()
 	end
 	rematch:ConvertTitlebarCloseButton(card.CloseButton)
 	rematch:SetTitlebarButtonIcon(card.PinButton,"pin")
+
+	-- "Unwrap Pet" menu that replaces regular pet menu when a wrapped pet is right clicked
+	rematch:RegisterMenu("UnwrapMenu",{
+		{ title=true, maxWidth=200, text=L["A New Pet!"] },
+		{ text=UNWRAP, func=card.UnwrapFromMenu },
+		{ text=CANCEL },
+	})
+	
 end)
 
 -- TODO: rewrite this; break it apart into components (it's too long)
 function rematch:ShowPetCard(parent,petID,force)
 
-	if (card.locked and not force) or rematch:UIJustChanged() then
+	if not force and (card.locked or rematch:UIJustChanged()) then
 		return -- don't show a new pet card if current one is locked or just left a menu/frame shown/etc
 	end
 
@@ -38,20 +46,27 @@ function rematch:ShowPetCard(parent,petID,force)
 		return
 	end
 
+	if petID==rematch.petInfo.petID then
+		rematch.petInfo:Reset() -- in case any stats change while card being refreshed
+	end
+
 	-- if FastPetCard not enabled, then cause a 0.25 delay before showing a card (unless it's forced)
 	if not settings.ClickPetCard and not settings.FastPetCard then
 		if parent and petID and not force then
-			card.parent = parent
-			card.petID = petID
+			card.delayedParent = parent
+			card.delayedPetID = petID
 			rematch:StartTimer("PetCard",0.25,rematch.ShowPetCard)
 			return
 		elseif not force then
-			parent = card.parent
-			petID = card.petID
+			parent = card.delayedParent
+			petID = card.delayedPetID
 		end
 	end
 
 	if not parent or not petID then return end
+
+	card.delayedParent = nil
+	card.delayedPetID = nil
 
 	-- search hits are shown only for cards displayed from the pet panel
 	-- check if card's parent is a descendant of the pet panel
@@ -66,40 +81,6 @@ function rematch:ShowPetCard(parent,petID,force)
 		end
 	until forPetPanel~=nil
 
-	local leveling,speciesID,customName,level,xp,maxXP,displayID,isFavorite,name,icon,petType,_,sourceText,description,canBattle,isTradable,unique,obtainable
-	local health,maxHealth,power,speed,rarity,petBreed
-	local idTYpe
-
-	if type(petID)=="table" and petID.speciesID then -- petID is a table of stats
-		speciesID = petID.speciesID
-		level = petID.level
-		health = petID.health or 100
-		maxHealth = health
-		power = petID.power or 0
-		speed = petID.speed or 0
-		rarity = petID.rarity or 4
-		petBreed = petID.breed
-		name,icon,petType,_,sourceText,description,_,canBattle,isTradable,unique,obtainable,displayID = C_PetJournal.GetPetInfoBySpeciesID(speciesID)
-		idType = "table"
-	else -- petID is either a string ("BattlePet-0-00etc") or a numbered species (42) or a leveling pet (0)
-		idType = rematch:GetIDType(petID)
-		if idType=="pet" then
-			speciesID,customName,level,xp,maxXP,displayID,isFavorite,name,icon,petType,_,sourceText,description,_,canBattle,isTradable,unique,obtainable = C_PetJournal.GetPetInfoByPetID(petID)
-			health,maxHealth,power,speed,rarity = C_PetJournal.GetPetStats(petID)
-		elseif idType=="species" then
-			speciesID = petID
-			name,icon,petType,_,sourceText,description,_,canBattle,isTradable,unique,obtainable,displayID = C_PetJournal.GetPetInfoBySpeciesID(petID)
-		elseif idType=="leveling" then
-			leveling = true
-			name = L["Leveling Pet"]
-			icon = "Interface\\AddOns\\Rematch\\Textures\\levelingicon-round.blp"
-		end
-	end
-
-	if (not speciesID or not petType) and not leveling then
-		return
-	end
-
 	-- hide the search hits
 	card.Title.Icon.SearchHit:Hide()
 	card.Title.Type.SearchHit:Hide()
@@ -107,16 +88,41 @@ function rematch:ShowPetCard(parent,petID,force)
 		card.Front.Bottom.Abilities[i].SearchHit:Hide()
 	end
 
+	-- make the petID the pet of interest for petInfo
+	local petInfo = rematch.petInfo:Fetch(petID)
+
+   -- whether this card is a leveling, ignored or random card
+   local isSpecial = rematch:GetSpecialPetIDType(petID)
+		
+	if (not petInfo.speciesID or not petInfo.petType) and not isSpecial then
+		return
+	end
+
 	-- title stuff
-	card.Title.Name:SetText(customName or name)
-	if leveling then
-		card.Title.Icon.Texture:SetTexture(icon)
-		card.Title.Type.Texture:SetTexCoord(0,1,0,1)
-		SetPortraitToTexture(card.Title.Type.Texture,"Interface\\Icons\\INV_Pet_Achievement_CatchPetFamily25")
+	card.Title.Name:SetText(petInfo.name)
+	if isSpecial then
+      if isSpecial=="leveling" then
+         card.Title.Icon.Texture:SetTexture("Interface\\AddOns\\Rematch\\Textures\\levelingicon-round")
+         card.Title.Type.Texture:SetTexCoord(0,1,0,1)
+         SetPortraitToTexture(card.Title.Type.Texture,"Interface\\Icons\\INV_Pet_Achievement_CatchPetFamily25")
+      elseif isSpecial=="ignored" then
+         card.Title.Icon.Texture:SetTexture("Interface\\AddOns\\Rematch\\Textures\\ignoredicon-round")
+         card.Title.Type.Texture:SetTexCoord(0,1,0,1)
+         SetPortraitToTexture(card.Title.Type.Texture,"Interface\\Icons\\Ability_Hunter_Pet_GoTo")
+      elseif isSpecial=="random" then
+         SetPortraitToTexture(card.Title.Icon.Texture,"Interface\\Icons\\INV_Misc_Dice_02")
+         if petInfo.petType==0 then
+            card.Title.Type.Texture:SetTexCoord(0,1,0,1)
+            SetPortraitToTexture(card.Title.Type.Texture,"Interface\\Icons\\INV_Misc_Dice_01")
+         else
+      		card.Title.Type.Texture:SetTexCoord(0.4921875,0.796875,0.50390625,0.65625)
+            rematch:FillPetTypeIcon(card.Title.Type.Texture,petInfo.petType,"Interface\\PetBattles\\PetIcon-")
+         end
+      end
 	else
-		SetPortraitToTexture(card.Title.Icon.Texture,icon)
+		SetPortraitToTexture(card.Title.Icon.Texture,petInfo.icon)
 		card.Title.Type.Texture:SetTexCoord(0.4921875,0.796875,0.50390625,0.65625)
-		rematch:FillPetTypeIcon(card.Title.Type.Texture,petType,"Interface\\PetBattles\\PetIcon-")
+		rematch:FillPetTypeIcon(card.Title.Type.Texture,petInfo.petType,"Interface\\PetBattles\\PetIcon-")
 	end
 
 	--[[ Front ]]
@@ -124,24 +130,25 @@ function rematch:ShowPetCard(parent,petID,force)
 	-- filling out middle card info
 	local info = card.Front.Middle
 
-	info.Level:SetText(level or "")
-	info.LevelBG:SetShown(level and canBattle)
-	info.LevelLabel:SetShown(level and canBattle)
-	info.Level:SetShown(level and canBattle)
+	local showLevel = petInfo.level and petInfo.canBattle
+	info.Level:SetText(petInfo.level or "")
+	info.LevelBG:SetShown(showLevel)
+	info.LevelLabel:SetShown(showLevel)
+	info.Level:SetShown(showLevel)
 
 	-- bottom of middle card info
 	local ybottom = 6
-	-- xp bar
-	if canBattle and level and level<25 and xp then
+	-- xp bar for pets that can battle under level 25
+	if showLevel and petInfo.level<25 and petInfo.xp then
 		info.XP:Show()
-		info.XP:SetValue(xp/maxXP*100)
-		info.XP.Text:SetText(format(L["XP: %d/%d (%d%%)"],xp,maxXP,xp*100/maxXP))
+		info.XP:SetValue(petInfo.xp/petInfo.maxXp*100)
+		info.XP.Text:SetText(format(L["XP: %d/%d (%d%%)"],petInfo.xp,petInfo.maxXp,petInfo.xp*100/petInfo.maxXp))
 		ybottom = ybottom + 16
 	else
 		info.XP:Hide()
 	end
 	-- "Hold [Alt] to flip card etc" help bit
-	if not settings.HideMenuHelp and not leveling then
+	if not settings.HideMenuHelp and not isSpecial then
 		info.AltFlipHelp:ClearAllPoints()
 		info.AltFlipHelp:SetPoint("BOTTOMLEFT",8,ybottom)
 		ybottom = ybottom + info.AltFlipHelp:GetStringHeight()+4
@@ -151,36 +158,8 @@ function rematch:ShowPetCard(parent,petID,force)
 	end
 	-- possible breeds
 	info.PossibleBreeds:Hide()
-	if rematch.breedSource and canBattle then
-		local breeds = rematch.info
-		wipe(breeds)
-		if rematch.breedSource=="BattlePetBreedID" then
-			if not BPBID_Arrays.BreedsPerSpecies then BPBID_Arrays.InitializeArrays() end
-			local data,numBreeds = BPBID_Arrays
-			if #rematch.breedNames==0 then
-				rematch:GatherBreedNames()
-			end
-			if data.BreedsPerSpecies[speciesID] then
-				for i=1,#data.BreedsPerSpecies[speciesID] do
-					local breed = data.BreedsPerSpecies[speciesID][i]
-					tinsert(breeds,rematch.breedNames[breed-2])
-				end
-			end
-		elseif rematch.breedSource=="PetTracker_Breeds" then
-			if PetTracker.Breeds[speciesID] then
-				for _,breed in pairs(PetTracker.Breeds[speciesID]) do
-					tinsert(breeds,PetTracker:GetBreedIcon(breed,0.85))
-				end
-			end
-		elseif rematch.breedSource=="LibPetBreedInfo-1.0" then
-			local lib = rematch.breedLib
-			local data = lib:GetAvailableBreeds(speciesID)
-			if data then
-				for _,breed in pairs(data) do
-					tinsert(breeds,lib:GetBreedName(breed))
-				end
-			end
-		end
+	if rematch.breedSource and petInfo.canBattle then
+		local breeds = petInfo.possibleBreedNames
 		local possibleBreeds = #breeds>0 and table.concat(breeds,rematch.breedSource=="PetTracker_Breeds" and " " or ", ") or UNKNOWN
 		info.PossibleBreeds:SetText(format("%s: \124cffffffff%s",L["Possible Breeds"],possibleBreeds))
 		info.PossibleBreeds:ClearAllPoints()
@@ -190,19 +169,18 @@ function rematch:ShowPetCard(parent,petID,force)
 	end
 	-- collected
 	info.Collected:Hide()
-	local collected = speciesID and C_PetJournal.GetOwnedBattlePetString(speciesID)
-	if collected and canBattle then
+	local collected = petInfo.speciesID and C_PetJournal.GetOwnedBattlePetString(petInfo.speciesID)
+	if collected and petInfo.canBattle then
 		local collectedPets = rematch.info
 		wipe(collectedPets)
 		for otherPetID in roster:AllOwnedPets() do
-			local otherSpeciesID,_,otherLevel = C_PetJournal.GetPetInfoByPetID(otherPetID)
-			if otherSpeciesID==speciesID then
-				local _,_,_,_,otherRarity = C_PetJournal.GetPetStats(otherPetID)
-				local _,_,_,otherHex = GetItemQualityColor(otherRarity-1)
+			local altInfo = rematch.altInfo:Fetch(otherPetID,true)
+			if altInfo.speciesID==petInfo.speciesID then
+				local _,_,_,otherHex = GetItemQualityColor(altInfo.rarity-1)
 				if rematch.breedSource then
-					tinsert(collectedPets,format("\124c%s%d %s\124r",otherHex,otherLevel,rematch:GetBreedByPetID(otherPetID)))
+					tinsert(collectedPets,format("\124c%s%d %s\124r",otherHex,altInfo.level,altInfo.breedName))
 				else
-					tinsert(collectedPets,format("\124c%s%s %d\124r",otherHex,LEVEL,otherLevel))
+					tinsert(collectedPets,format("\124c%s%s %d\124r",otherHex,LEVEL,altInfo.level))
 				end
 			end
 		end
@@ -213,22 +191,34 @@ function rematch:ShowPetCard(parent,petID,force)
 		info.Collected:Show()
 	end
 
-	local	model = leveling and card.Front.LevelingModel or card.Front.Model
-	if leveling then
-		model:SetModel("Interface\\Buttons\\talktomequestion_ltblue.m2")
-		model:SetModelScale(3)
-		card.Front.Model:Hide()
-	elseif displayID and displayID~=0 and displayID~=model.displayID then
-		model.displayID = displayID
-		model:SetDisplayInfo(displayID)
-		model:SetDoBlend(false)
+	local middle = card.Front.Middle
+
+	-- update model in middle front of card
+	middle.LevelingModel:Hide()
+	if isSpecial then -- if this is a card for a leveling pet (or ignored or random)
+		middle.ModelScene:Hide()
+      local m2 = isSpecial=="ignored" and "Interface\\Buttons\\talktomered.m2" or isSpecial=="random" and "Interface\\Buttons\\talktomequestionmark.m2" or "Interface\\Buttons\\talktomequestion_ltblue.m2"
+      C_Timer.After(0,function() -- not sure why this delay is necessary to set model
+   		middle.LevelingModel:Show()
+         middle.LevelingModel:SetModel(m2)
+      end)
+	elseif petInfo.displayID~=card.displayID or card.forceSceneChange then
+		middle.ModelScene:Show()
+		middle.LevelingModel:Hide()
+		card.displayID = petInfo.displayID
+		local cardSceneID,loadoutSceneID = C_PetJournal.GetPetModelSceneInfoBySpeciesID(petInfo.speciesID)
+		middle.ModelScene:TransitionToModelSceneID(cardSceneID, CAMERA_TRANSITION_TYPE_IMMEDIATE, CAMERA_MODIFICATION_TYPE_DISCARD, card.forceSceneChange)
+		local actor = middle.ModelScene:GetActorByTag("unwrapped")
+		if actor then
+			actor:SetModelByCreatureDisplayID(petInfo.displayID)
+			actor:SetAnimationBlendOperation(LE_MODEL_BLEND_OPERATION_NONE)
+		end
+		card.forceSceneChange = nil
+		-- only PrepareForFanfare if fanfare ever observed to avoid loading Blizzard_Collections
+		if rematch:WasFanfareObserved(petInfo.needsFanfare) then
+			middle.ModelScene:PrepareForFanfare(petInfo.needsFanfare)
+		end
 	end
-	if not leveling then
-		card.Front.LevelingModel:Hide()
-	end
-	model:SetPoint("BOTTOMRIGHT",info,"BOTTOMRIGHT",-3,ybottom-4)
-	model:Show()
-	
 
 	-- stats along left of card
 	card.statIndex = 1
@@ -238,49 +228,46 @@ function rematch:ShowPetCard(parent,petID,force)
 		button:Hide()
 	end
 	-- add pet's real name in first line if it has a custom name
-	if customName then
-		info.RealName:SetText(name)
+	if petInfo.customName then
+		info.RealName:SetText(petInfo.speciesName)
 		card.ypos = card.ypos - info.RealName:GetStringHeight() - 6
 	end
-	info.RealName:SetShown(customName and true)
+	info.RealName:SetShown(petInfo.customName and true)
 	-- actual stats here
-	if idType=="pet" then -- this is a pet player owns
-		if C_PetJournal.PetIsSlotted(petID) then
+	if petInfo.idType=="pet" then -- this is a pet player owns
+		if petInfo.isSlotted then
 			card:AddStat(L["Slotted"],"Interface\\RaidFrame\\ReadyCheck-Ready",0,1,0,1,L["Slotted"],L["This pet is loaded in one of the three battle pet slots."])
 		end
-		if isFavorite then
+		if petInfo.isFavorite then
 			card:AddStat(L["Favorite"],"Interface\\Common\\FavoritesIcon",0.125,0.71875,0.09375,0.6875,L["Favorite"],L["This pet is marked as a Favorite from its right-click menu."])
 		end
 		if rematch:IsPetLeveling(petID) then
-			card:AddStat(L["Leveling"],"Interface\\AddOns\\Rematch\\Textures\\footnotes",0.25,0.5,0,0.5,L["Leveling"],L["This pet is in Rematch's leveling queue."])
+			card:AddStat(L["Leveling"],"Interface\\AddOns\\Rematch\\Textures\\footnotes",0.125,0.25,0,0.25,L["Leveling"],L["This pet is in Rematch's leveling queue."])
 		end
 	end
-	if canBattle and (idType=="pet" or idType=="table") then
-		local healthText = health==0 and format("%s0/%d (%s)",rematch.hexRed,maxHealth,DEAD) or health<maxHealth and format("%s%d/%d (%d%%)",rematch.hexRed,health,maxHealth,health/maxHealth*100) or maxHealth
+	if petInfo.canBattle and petInfo.power and petInfo.power>0 then
+		local healthText = petInfo.health==0 and format("%s0/%d (%s)",rematch.hexRed,petInfo.maxHealth,DEAD) or petInfo.health<petInfo.maxHealth and format("%s%d/%d (%d%%)",rematch.hexRed,petInfo.health,petInfo.maxHealth,petInfo.health/petInfo.maxHealth*100) or petInfo.maxHealth
 		card:AddStat(healthText,"Interface\\PetBattles\\PetBattle-StatIcons",0.5,1,0.5,1,PET_BATTLE_STAT_HEALTH,PET_BATTLE_TOOLTIP_HEALTH_MAX)
-		card:AddStat(power,"Interface\\PetBattles\\PetBattle-StatIcons",0,0.5,0,0.5,PET_BATTLE_STAT_POWER,PET_BATTLE_TOOLTIP_POWER)
-		card:AddStat(speed,"Interface\\PetBattles\\PetBattle-StatIcons",0,0.5,0.5,1,PET_BATTLE_STAT_SPEED,PET_BATTLE_TOOLTIP_SPEED)
-		local r,g,b,hex = GetItemQualityColor(rarity-1)
-		card:AddStat(format("\124c%s%s",hex,_G["BATTLE_PET_BREED_QUALITY"..(min(6,rarity))]),"Interface\\PetBattles\\PetBattle-StatIcons",0.5,1,0,0.5,PET_BATTLE_STAT_QUALITY,PET_BATTLE_TOOLTIP_RARITY)
+		card:AddStat(petInfo.power,"Interface\\PetBattles\\PetBattle-StatIcons",0,0.5,0,0.5,PET_BATTLE_STAT_POWER,PET_BATTLE_TOOLTIP_POWER)
+		card:AddStat(petInfo.speed,"Interface\\PetBattles\\PetBattle-StatIcons",0,0.5,0.5,1,PET_BATTLE_STAT_SPEED,PET_BATTLE_TOOLTIP_SPEED)
+		local r,g,b,hex = GetItemQualityColor(petInfo.rarity-1)
+		card:AddStat(format("\124c%s%s",hex,_G["BATTLE_PET_BREED_QUALITY"..(min(6,petInfo.rarity))]),"Interface\\PetBattles\\PetBattle-StatIcons",0.5,1,0,0.5,PET_BATTLE_STAT_QUALITY,PET_BATTLE_TOOLTIP_RARITY)
 		info.LevelBG:SetVertexColor(r,g,b)
 	end
 
-	if rematch.breedSource and (type(petID)=="string" or petBreed) then
-		card:AddStat(petBreed or rematch:GetBreedByPetID(petID),"Interface\\AchievementFrame\\UI-Achievement-Progressive-Shield",0.09375,0.578125,0.140625,0.625,L["Breed"],format(L["Determines how stats are distributed.  All breed data is pulled from your installed %s%s\124r addon."],rematch.hexWhite,GetAddOnMetadata(rematch.breedSource,"Title") or rematch.breedSource))
+	if rematch.breedSource and petInfo.breedName then
+		card:AddStat(petInfo.breedName,"Interface\\AchievementFrame\\UI-Achievement-Progressive-Shield",0.09375,0.578125,0.140625,0.625,L["Breed"],format(L["Determines how stats are distributed.  All breed data is pulled from your installed %s%s\124r addon."],rematch.hexWhite,GetAddOnMetadata(rematch.breedSource,"Title") or rematch.breedSource))
 	end
 
-	if settings.ShowSpeciesID then
-		card:AddStat(speciesID,"Interface\\WorldMap\\Gear_64Grey",0.1,0.9,0.1,0.9,L["Species ID"],L["All versions of this pet share this unique \"species\" number."])
+	if settings.ShowSpeciesID and petInfo.speciesID then
+		card:AddStat(petInfo.speciesID,"Interface\\WorldMap\\Gear_64Grey",0.1,0.9,0.1,0.9,L["Species ID"],L["All versions of this pet share this unique \"species\" number."])
 	end
 
-	if not leveling then
-		local count = roster:IsPetInTeam(petID,true)
-		if count then
-			card:AddStat(format(L["%d Teams"],count),"Interface\\FriendsFrame\\UI-Toast-ChatInviteIcon",0.125,0.875,0.09375,0.84375,L["Teams"],format(L["%s Click to search for all teams that include this pet."],rematch.LMB),card.TeamsStatOnClick)
-		end
+   if petInfo.inTeams then
+   	card:AddStat(format(L["%d Teams"],petInfo.numTeams),"Interface\\FriendsFrame\\UI-Toast-ChatInviteIcon",0.125,0.875,0.09375,0.84375,L["Teams"],format(L["%s Click to search for all teams that include this pet."],rematch.LMB),card.TeamsStatOnClick)
 	end
 
-	if obtainable then
+	if petInfo.isObtainable then
 		card:AddStat(SEARCH,"Interface\\Minimap\\Tracking\\None",0,1,0,1,SEARCH,format(L["%s Click to search for all versions of this pet."],rematch.LMB),card.SearchStatOnClick)
 	end
 
@@ -289,20 +276,22 @@ function rematch:ShowPetCard(parent,petID,force)
 	if teamSlot>0 and teamSlot<4 then
 		teamKey = parent:GetParent().key
 	end
+
 	local abilities = card.Front.Bottom.Abilities
+
+	-- cleanup any previous abilities
 	for i=1,6 do
 		abilities[i]:Hide()
 		abilities[i].Hint:Hide()
 		card:DesaturateAbility(abilities[i],false)
 	end
-	wipe(rematch.abilityList)
-	if canBattle then
-		C_PetJournal.GetPetAbilityList(speciesID,rematch.abilityList,rematch.levelList)
+	
+	if petInfo.canBattle then
 		for i=1,6 do
-			if canBattle and rematch.abilityList[i] then
-				local _,abilityName,abilityIcon,_,abilityDescription,_,abilityType,noHints = C_PetBattles.GetAbilityInfoByID(rematch.abilityList[i])
+			if petInfo.abilityList[i] then
+				local _,abilityName,abilityIcon,_,abilityDescription,_,abilityType,noHints = C_PetBattles.GetAbilityInfoByID(petInfo.abilityList[i])
 				if abilityName then
-					abilities[i].abilityID = rematch.abilityList[i]
+					abilities[i].abilityID = petInfo.abilityList[i]
 					abilities[i].Name:SetText(abilityName)
 					abilities[i].Icon:SetTexture(abilityIcon)
 					rematch:FillPetTypeIcon(abilities[i].Type,abilityType)
@@ -311,7 +300,7 @@ function rematch:ShowPetCard(parent,petID,force)
 					if teamKey then
 						local found
 						for j=1,3 do
-							if RematchSaved[teamKey][teamSlot][j+1]==rematch.abilityList[i] then
+							if RematchSaved[teamKey][teamSlot][j+1]==petInfo.abilityList[i] then
 								found = true
 							end
 						end
@@ -320,7 +309,7 @@ function rematch:ShowPetCard(parent,petID,force)
 						end
 					end
 					-- for battle unit frames, UpdatePetCardAbility will show strong/weak hints and return true if not found
-					if parent:GetParent()==PetBattleFrame and C_PetBattles.IsPlayerNPC(2) and rematch.Battle:UpdatePetCardAbility(abilities[i],rematch.abilityList[i],abilityType,parent.petOwner,parent.petIndex) then
+					if parent:GetParent()==PetBattleFrame and C_PetBattles.IsPlayerNPC(2) and rematch.Battle:UpdatePetCardAbility(abilities[i],petInfo.abilityList[i],abilityType,parent.petOwner,parent.petIndex) then
 						card:DesaturateAbility(abilities[i],true)
 					end
 					-- show search hits if this is for the pet panel (and if any filters apply)
@@ -328,7 +317,7 @@ function rematch:ShowPetCard(parent,petID,force)
 						if roster.searchMask and roster.searchMask~="" and abilityDescription and (abilityName:match(roster.searchMask) or abilityDescription:match(roster.searchMask)) then
 							-- if name or description matches search, show its SearchHit silver border
 							abilities[i].SearchHit:Show()
-						elseif roster:IsFilterUsed("Similar") and roster:GetFilter("Similar",rematch.abilityList[i]) then
+						elseif roster:IsFilterUsed("Similar") and roster:GetFilter("Similar",petInfo.abilityList[i]) then
 							-- if "Similar" filter used and this ability is among the abilities, show its SearchHit
 							abilities[i].SearchHit:Show()
 						elseif roster:IsFilterUsed("Strong") and not noHints then
@@ -344,9 +333,13 @@ function rematch:ShowPetCard(parent,petID,force)
 			end
 		end
 	end
-	card.Front.Bottom.CantBattle:SetShown(not canBattle)
-	if leveling then
+	card.Front.Bottom.CantBattle:SetShown(not petInfo.canBattle)
+	if isSpecial=="leveling" then
 		card.Front.Bottom.CantBattle:SetText(L["When this team loads, your current leveling pet will go in this spot."])
+   elseif isSpecial=="ignored" then
+      card.Front.Bottom.CantBattle:SetText(L["When this team loads, this spot will be ignored."])
+   elseif isSpecial=="random" then
+      card.Front.Bottom.CantBattle:SetText(L["When this team loads, a random high level pet will go in this spot."])
 	else
 		card.Front.Bottom.CantBattle:SetText(BATTLE_PET_CANNOT_BATTLE)
 	end
@@ -354,7 +347,7 @@ function rematch:ShowPetCard(parent,petID,force)
 	-- finally if this is for the pet panel, see if search hit should be shown on title buttons
 	if forPetPanel then
 		-- show search hit on pet icon if search text is in pet's sourceText
-		if roster.searchMask and ((sourceText or ""):match(roster.searchMask) or (name or ""):match(roster.searchMask) or (customName or ""):match(roster.searchMask)) then
+		if roster.searchMask and ((sourceText or ""):match(roster.searchMask) or (petInfo.name or ""):match(roster.searchMask) or (petInfo.customName or ""):match(roster.searchMask)) then
 			card.Title.Icon.SearchHit:Show()
 		end
 		-- show search hit on type icon if "Touch vs" or "Types" filter used
@@ -366,7 +359,8 @@ function rematch:ShowPetCard(parent,petID,force)
 	--[[ Back ]]
 
 	local backHeight = 0 -- measuring height of back of card too in case lore needs more room
-	if not leveling then -- leveling pets have no back of card
+	if not isSpecial then -- leveling pets have no back of card
+		local sourceText = petInfo.sourceText
 		-- shrink font if source text is very long (some pets like spiders list nearly every zone in the game!)
 		local sourceLength = (sourceText or ""):len()
 		if sourceLength>300 then
@@ -377,20 +371,20 @@ function rematch:ShowPetCard(parent,petID,force)
 		else
 			card.Back.Source.Text:SetFontObject("GameFontHighlight")
 		end
-		if not obtainable then
+		if not petInfo.isObtainable then
 			sourceText = L["This is an opponent pet."]
 		end
 
-		rematch:FillPetTypeIcon(card.Back.Bottom.StrongType,rematch.hintsDefense[petType][1],"Interface\\PetBattles\\PetIcon-")
-		rematch:FillPetTypeIcon(card.Back.Bottom.WeakType,rematch.hintsDefense[petType][2],"Interface\\PetBattles\\PetIcon-")
+		rematch:FillPetTypeIcon(card.Back.Bottom.StrongType,rematch.hintsDefense[petInfo.petType][1],"Interface\\PetBattles\\PetIcon-")
+		rematch:FillPetTypeIcon(card.Back.Bottom.WeakType,rematch.hintsDefense[petInfo.petType][2],"Interface\\PetBattles\\PetIcon-")
 
-		card.Back.Source.Text:SetText(format("%s%s%s",sourceText,isTradable and "" or "\n\124cffff0000"..BATTLE_PET_NOT_TRADABLE,unique and "\n\124cffffd200"..ITEM_UNIQUE or ""))
+		card.Back.Source.Text:SetText(format("%s%s%s",sourceText,petInfo.isTradable and "" or "\n\124cffff0000"..BATTLE_PET_NOT_TRADABLE,petInfo.isUnique and "\n\124cffffd200"..ITEM_UNIQUE or ""))
 		local sourceHeight = card.Back.Source.Text:GetStringHeight()+16
 		card.Back.Source:SetHeight(sourceHeight)
-		card.Back.Middle.Lore:SetText(description)
-		card.Back.Bottom.TypeName:SetText(_G["BATTLE_PET_NAME_"..petType])
-		rematch:FillPetTypeIcon(card.Back.Bottom.TypeIcon,petType,"Interface\\PetBattles\\PetIcon-")
-		local racial = select(5,C_PetBattles.GetAbilityInfoByID(PET_BATTLE_PET_TYPE_PASSIVES[petType]))
+		card.Back.Middle.Lore:SetText(petInfo.loreText)
+		card.Back.Bottom.TypeName:SetText(_G["BATTLE_PET_NAME_"..petInfo.petType])
+		rematch:FillPetTypeIcon(card.Back.Bottom.TypeIcon,petInfo.petType,"Interface\\PetBattles\\PetIcon-")
+		local racial = select(5,C_PetBattles.GetAbilityInfoByID(PET_BATTLE_PET_TYPE_PASSIVES[petInfo.petType]))
 		racial = racial:match("^.-\r\n(.-)\r"):gsub("%[percentage.-%]%%","4%%")
 		card.Back.Bottom.Racial:SetText(racial)
 		local bottomHeight = card.Back.Bottom.Racial:GetStringHeight()+104
@@ -402,7 +396,7 @@ function rematch:ShowPetCard(parent,petID,force)
 	--[[ Leftovers ]]
 
 	-- desaturate BGs for missing pets
-	if idType=="pet" then
+	if petInfo.idType=="pet" then
 		card.Title.TitleBG:SetDesaturated(false)
 		card.Front.Bottom.AbilitiesBG:SetDesaturated(false)
 		card.Back.Bottom.BottomBG:SetDesaturated(false)
@@ -416,7 +410,7 @@ function rematch:ShowPetCard(parent,petID,force)
 	-- example: Manos/Fatos/Hanos have 3 abilities each; Erris' Sprouts/Runts/Prince Charming have 6
 	-- however some opponent pets have weird abilitylists: Kiazor the Destroyer has 1,2,5; Scuttles has 1,2,4!
 	-- so both columns will show if there's any ability in the 4th, 5th or 6th slot
-	local bothColumns = (rematch.abilityList[4] or rematch.abilityList[5] or rematch.abilityList[6]) and true
+	local bothColumns = petInfo.abilityList and (petInfo.abilityList[4] or petInfo.abilityList[5] or petInfo.abilityList[6]) and true
 	for i=1,3 do
 		local abilityOffset = bothColumns and 7 or 54
 		local abilityWidth = bothColumns and 114 or 140
@@ -445,7 +439,7 @@ function rematch:ShowPetCard(parent,petID,force)
 		card.PinButton:Hide()
 	end
 	-- adjust card height to fit max of front height, back height or 416(standard size)
-	card:SetHeight(max(190+abs(card.ypos)+ybottom,backHeight,416))
+	card:SetHeight(max(190+max(abs(card.ypos),middle.ModelScene:GetHeight()+2)+ybottom,backHeight,416))
 
 	-- save parent and petID to recreate card if needed
 	card.parent = parent
@@ -459,7 +453,7 @@ end
 
 -- called at end of ShowPetCard and in the OnEvent for MODIFIER_STATE_CHANGED
 function card:FlipCardIfAltDown()
-	local altDown = IsAltKeyDown() and card.petID~=0 -- don't flip leveling pets
+	local altDown = IsAltKeyDown() and not rematch:GetSpecialPetIDType(card.petID) -- don't flip leveling pets
 	card.Front:SetShown(not altDown)
 	card.Back:SetShown(altDown)
 end
@@ -496,6 +490,9 @@ function rematch:HidePetCard(maybe)
 	if not settings.FastPetCard then
 		rematch:StopTimer("PetCard")
 	end
+	if not card:IsVisible() then
+		card:OnHide() -- if card isn't on screen, go through the motions as if it was
+	end
 	if (maybe and card.locked) or card.keepOnScreen then return end
 	card:Hide()
 end
@@ -508,8 +505,14 @@ function card:OnHide()
 	card:UnregisterEvent("MODIFIER_STATE_CHANGED")
 	card.locked = nil
 	card.petID = nil
+	card.delayedParent = nil
+	card.delayedPetID = nil
 	rematch.BottomPanel.SummonButton:Disable()
 	card:UpdateHighlights()
+	if card.nowUnwrapping then
+		card.Front.Middle.UnwrapAnim:Stop()
+		card.nowUnwrapping = nil
+	end
 end
 
 function card:CurrentPetIDIsDifferent(petID)
@@ -554,6 +557,7 @@ function card:UpdateLockState()
 	card.CloseButton:EnableMouse(card.locked)
 	card.PinButton:EnableMouse(card.locked)
 	card.Front.Middle.PossibleBreedsCapture:EnableMouse(card.locked)
+	card.Front.Middle.ModelScene:EnableMouse(card.locked)
 	for _,button in pairs(card.statButtons) do
 		button:EnableMouse(locked)
 	end
@@ -615,7 +619,7 @@ end
 
 function card:PossibleBreedsOnEnter()
 	local middle = card.Front.Middle
-	if not middle.PossibleBreeds:IsVisible() then
+	if not middle.PossibleBreeds:IsVisible() or IsMouseButtonDown() then
 		return
 	end
 	local btable = middle.BreedTable
@@ -630,19 +634,13 @@ function card:PossibleBreedsOnEnter()
 		row:Hide() -- clean up all rows
 	end
 
-	local speciesID, owned
-	if type(card.petID)=="string" then
-		speciesID = C_PetJournal.GetPetInfoByPetID(card.petID)
-		owned = true
-	elseif type(card.petID)=="table" then
-		speciesID = card.petID.speciesID
-	else
-		speciesID = card.petID
-	end
+	local petInfo = rematch.petInfo:Fetch(card.petID)
+
+	local speciesID,owned = petInfo.speciesID,petInfo.owned
 
 	card:FillBreedTable(speciesID,rematch.info) -- gather possible breed data into rematch.info
 
-	local petBreed = type(card.petID)=="table" and card.petID.breed or rematch:GetBreedByPetID(card.petID)
+	local petBreed = petInfo.breedID
 
 	for index,info in ipairs(rematch.info) do
 		if not btable.Rows[index] then
@@ -654,7 +652,7 @@ function card:PossibleBreedsOnEnter()
 		row.Health:SetText(info[2])
 		row.Power:SetText(info[3])
 		row.Speed:SetText(info[4])
-		if info[1]==petBreed then
+		if info[1]==petInfo.breedName then
 			btable.Highlight:SetPoint("TOPLEFT",row,2,0)
 			btable.Highlight:SetPoint("BOTTOMRIGHT",row,-2,-1)
 			btable.Highlight:Show()
@@ -686,6 +684,7 @@ function card:FillBreedTable(speciesID,breeds)
 		if not BPBID_Arrays.BreedsPerSpecies then
 			BPBID_Arrays.InitializeArrays()
 		end
+		rematch:GatherBreedNames()
 		local data,numBreeds = BPBID_Arrays
 		if data.BreedsPerSpecies[speciesID] then
 			for i=1,#data.BreedsPerSpecies[speciesID] do
@@ -769,21 +768,12 @@ end
 
 -- from the "Search" stat on the pet card
 function card:SearchStatOnClick()
-	local petID = card.petID
-	local idType = rematch:GetIDType(petID)
-	local speciesID
-	if idType=="pet" then
-		speciesID = C_PetJournal.GetPetInfoByPetID(petID)
-	elseif idType=="species" then
-		speciesID = petID
-	elseif idType=="table" then
-		speciesID = petID.speciesID
-	end
-	if speciesID then
+	local petInfo = rematch.petInfo:Fetch(card.petID)
+	if petInfo.speciesID then
 		card.keepOnScreen = true -- may need to reconfigure UI, flag will prevent hiding pet card during HideWidgets
 		rematch:AutoShow()
 		rematch:ShowPets()
-		rematch:SearchForSpecies(speciesID)
+		rematch:SearchForSpecies(petInfo.speciesID)
 		card.keepOnScreen = nil
 	end
 end
@@ -803,4 +793,47 @@ function card:TeamsStatOnClick()
 	rematch:AutoShow()
 	rematch:ShowTeam()
 	card.keepOnScreen = nil
+end
+
+--[[ Unwrap ]]
+
+-- fanfare model stuff requires mixins from the load-on-demand journal
+-- returns true if there was ever a need for fanfare stuff (and handles
+-- necessary loading and mixin on that first attempt)
+local fanfareObserved = nil
+function rematch:WasFanfareObserved(needsFanfare)
+	if needsFanfare and not fanfareObserved then
+		LoadAddOn("Blizzard_Collections")
+		Mixin(card.Front.Middle.ModelScene,CollectionsWrappedModelSceneMixin)
+		fanfareObserved = true
+	end
+	return fanfareObserved
+end
+
+-- call to unwrap a pet (the locked pet card must be up when this is called!)
+function card:UnwrapPet()
+	local petID = card.petID
+	local petInfo = rematch.altInfo:Fetch(petID)
+	if petInfo.needsFanfare then
+		local modelScene = card.Front.Middle.ModelScene
+		if rematch:WasFanfareObserved(true) then -- just in case; load Blizzard_Collections and mixins
+			if not modelScene:IsUnwrapAnimating() then -- only run if animation not happening
+				local function OnFinishedCallback()
+					C_PetJournal.ClearFanfare(petID)
+					rematch:UpdateUI()
+				end
+				modelScene:StartUnwrapAnimation(OnFinishedCallback)
+			end
+		end
+	end
+end
+
+-- when Unwrap is called from a menu, the card is locked and shown for the unwrap
+-- animation to happen
+function card:UnwrapFromMenu()
+	local petID = rematch:GetMenuSubject()
+	local parent = rematch:GetMenuParent()
+	card.locked = true
+	rematch:ShowPetCard(parent,petID,true)
+	card:UnwrapPet()
 end

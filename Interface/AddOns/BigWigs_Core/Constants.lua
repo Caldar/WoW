@@ -1,6 +1,6 @@
 local C = {}
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs", true)
-local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Common", true)
+local L = BigWigsAPI:GetLocale("BigWigs")
+local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 local BigWigs = BigWigs
 local names = {}
 local descriptions = {}
@@ -153,7 +153,7 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 					description = gsub(description, "{(%-?%d-)}", replaceIdWithDescription) -- Allow embedding an id in a string.
 					description = gsub(description, "{focus}", CL.focus_only) -- Allow embedding the focus prefix.
 				end
-				description = roleDesc.. gsub(description, "{rt(%d)}", "\124T13700%1:15\124t")
+				description = roleDesc.. gsub(description, "{rt(%d)}", "|T13700%1:15|t")
 			end
 			local icon = L[option .. "_icon"]
 			if icon == option .. "_icon" then icon = nil end
@@ -177,15 +177,25 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 	elseif t == "number" then
 		if option > 0 then
 			local spellName, _, icon = GetSpellInfo(option)
-			if not spellName then error(("Invalid option %d in module %s."):format(option, module.name)) end
+			if not spellName then
+				BigWigs:Error(("Invalid option %d in module %s."):format(option, module.name))
+				spellName = option
+			end
 			local desc = GetSpellDescription(option)
-			if not desc then BigWigs:Print(("No spell description was returned for id %d!"):format(option)) desc = "" end
+			if not desc then
+				BigWigs:Error(("No spell description was returned for id %d!"):format(option))
+				desc = option
+			end
 			local roleIcon, roleDesc = getRoleStrings(module, option)
 			return option, spellName..roleIcon, roleDesc..desc, icon
 		else
 			-- This is an EncounterJournal ID
-			local title, description, _, abilityIcon, displayInfo = EJ_GetSectionInfo(-option)
-			if not title then error(("Invalid option %d in module %s."):format(option, module.name)) end
+			local title, description, _, abilityIcon = EJ_GetSectionInfo(-option)
+			if not title then
+				BigWigs:Error(("Invalid option %d in module %s."):format(option, module.name))
+				title = option
+				description = option
+			end
 
 			local roleIcon, roleDesc = getRoleStrings(module, option)
 			return option, title..roleIcon, roleDesc..description, abilityIcon or false

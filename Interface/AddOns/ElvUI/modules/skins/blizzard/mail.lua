@@ -10,6 +10,7 @@ local ATTACHMENTS_MAX_SEND = ATTACHMENTS_MAX_SEND
 
 local function LoadSkin()
 	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.mail ~= true then return end
+
 	MailFrame:StripTextures(true)
 	MailFrame:SetTemplate("Transparent")
 	--MailFrame:Width(360)
@@ -29,6 +30,15 @@ local function LoadSkin()
 		local t = _G["MailItem"..i.."ButtonIcon"]
 		t:SetTexCoord(unpack(E.TexCoords))
 		t:SetInside()
+
+		local ib = _G["MailItem"..i.."ButtonIconBorder"]
+		hooksecurefunc(ib, 'SetVertexColor', function(self, r, g, b)
+			self:GetParent():SetBackdropBorderColor(r, g, b)
+			self:SetTexture("")
+		end)
+		hooksecurefunc(ib, 'Hide', function(self)
+			self:GetParent():SetBackdropBorderColor(unpack(E.media.bordercolor))
+		end)
 	end
 
 	S:HandleCloseButton(MailFrameCloseButton)
@@ -95,6 +105,7 @@ local function LoadSkin()
 	S:HandleButton(OpenMailReplyButton)
 	S:HandleButton(OpenMailDeleteButton)
 	S:HandleButton(OpenMailCancelButton)
+	S:HandleButton(OpenAllMail)
 
 	InboxFrame:StripTextures()
 	MailFrameInset:Kill()

@@ -13,7 +13,7 @@ if UnitFactionGroup("player")=="Horde" then
 	meta={goldtype="daily",levelreq=90,gold=34,time=15,icon="Interface\\ICONS\\Achievement_Faction_Anglers"},
 	description="This guide will take you through The Anglers dailies",
 },[[
-			#include "H_Anglers"
+			#include "Anglers_Dailies"
 ]])
 	ZygorGuidesViewer:RegisterGuide("GOLD\\Horde Daily Runs\\The August Celestials Dailies Run",{
 	meta={goldtype="daily",levelreq=90,gold=57,time=5,icon="Interface\\ICONS\\Achievement_Faction_Celestials"},
@@ -28,13 +28,13 @@ if UnitFactionGroup("player")=="Horde" then
 	meta={goldtype="daily",levelreq=90,gold=46,time=6,icon="Interface\\ICONS\\Achievement_Faction_SerpentRiders"},
 	description="This guide will take you through the Order of the Cloud Serpent dailies",
 },[[
-			#include "H_Cloud_Serpent"
+			#include "CS_Dailies"
 ]])
 	ZygorGuidesViewer:RegisterGuide("GOLD\\Horde Daily Runs\\The Shado-Pan Dailies Run",{
 	meta={goldtype="daily",levelreq=90,gold=65,time=5,icon="Interface\\ICONS\\Achievement_Faction_ShadoPan"},
 	description="This guide will take you through the Shado-Pan dailies",
 },[[
-			#include "Shado_Pan_Daily_H"
+			#include "Shado_Pan_Dailies"
 ]])
 	ZygorGuidesViewer:RegisterGuide("GOLD\\Horde Daily Runs\\The Tillers Dailies Run",{
 	startlevel=90,
@@ -42,7 +42,7 @@ if UnitFactionGroup("player")=="Horde" then
 	description="This guide will take you through The Tillers dailies",
 },[[
 		step
-			#include "H_Tillers"
+			#include "Tillers_Dailies"
 ]])
 	ZygorGuidesViewer:RegisterGuide("GOLD\\Horde Daily Runs\\The Golden Lotus Dailies Run",{
 	meta={goldtype="daily",levelreq=90,gold=109,time=11,icon="Interface\\ICONS\\Achievement_Faction_GoldenLotus"},
@@ -60,7 +60,7 @@ if UnitFactionGroup("player")=="Horde" then
 	meta={goldtype="daily",levelreq=90,gold=68,time=5,icon="Interface\\ICONS\\Achievement_Faction_Klaxxi"},
 	description="This guide will take you through The Klaxxi dailies",
 },[[
-			#include "H_Klaxxi"
+			#include "Klaxxi_Dailies"
 ]])
 	ZygorGuidesViewer:RegisterGuide("GOLD\\Horde Daily Runs\\Dominance Offensive Dailies Run",{
 	meta={goldtype="daily",levelreq=90,gold=61,time=8,icon="Interface\\ICONS\\Achievement_General_HordeSlayer"},
@@ -1529,7 +1529,7 @@ end
 ZygorGuidesViewer:RegisterGuide("GOLD\\Farming\\Cocoa Beans (Horde)",{
 	condition_valid='raceclass("Horde")',
 },[[
-		#include "H_Org_Cooking_Dailies"
+		#include "Org_Cooking_Dailies"
 		earn 1 Epicurean's Reward##81
 	step
 		talk Shazdar##49737

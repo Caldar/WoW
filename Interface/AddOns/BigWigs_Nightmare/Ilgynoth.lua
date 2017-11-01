@@ -19,7 +19,6 @@ mod.respawnTime = 30
 --
 
 local mobCollector = {}
-local fixateOnMe = nil
 local phase = 1 -- 1 = Outside, 2 = Boss, 3 = Outside, 4 = Boss
 local deathglareMarked = {} -- save GUIDs of marked mobs
 local deathglareMarks  = { [6] = true, [5] = true, [4] = true, [3] = true } -- available marks to use
@@ -84,7 +83,8 @@ local spawnDataMythic = {
 }
 local nextCorruptorText = "" -- used to stop the bars
 local nextDeathglareText = "" -- used to stop the bars
-local bloodsRemaining = 20
+local blobsRemaining = 20
+local blobsMissed = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -107,19 +107,18 @@ if L then
 	L.shriveled_eyestalk = -13570 -- Shriveled Eyestalk
 	L.shriveled_eyestalk_icon = 208697 -- Mind Flay icon
 
-	L.custom_off_deathglare_marker = "Deathglare Tentacle marker"
-	L.custom_off_deathglare_marker_desc = "Mark Deathglare Tentacles with {rt6}{rt5}{rt4}{rt3}, requires promoted or leader.\n|cFFFF0000Only 1 person in the raid should have this enabled to prevent marking conflicts.|r\n|cFFADFF2FTIP: If the raid has chosen you to turn this on, having nameplates enabled or quickly mousing over the tentacles is the fastest way to mark them.|r"
-	L.custom_off_deathglare_marker_icon = 6
-
-	L.bloods_remaining = "%d |4Blood:Bloods; remaining"
+	L.remaining = "Remaining"
+	L.missed = "Missed"
 end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
+local tentacleMarker = mod:AddMarkerOption(false, "npc", 6, L.deathglare_tentacle, 6, 5, 4, 3) -- Deathglare Tentacle
 function mod:GetOptions()
 	return {
+		"infobox",
 		{"stages", "COUNTDOWN"},
 		223121, -- Final Torpor
 		212886, -- Nightmare Corruption
@@ -134,7 +133,6 @@ function mod:GetOptions()
 		-- Nightmare Ichor
 		210099, -- Fixate
 		209469, -- Touch of Corruption
-		209471, -- Nightmare Explosion
 
 		-- Nightmare Horror
 		"nightmare_horror", -- Nightmare Horror
@@ -145,7 +143,7 @@ function mod:GetOptions()
 
 		-- Deathglare Tentacle
 		208697, -- Mind Flay
-		"custom_off_deathglare_marker",
+		tentacleMarker,
 
 		--[[ Stage Two ]]--
 		{215128, "SAY", "FLASH", "PROXIMITY"}, -- Cursed Blood
@@ -154,7 +152,7 @@ function mod:GetOptions()
 		218415, -- Death Blossom
 		"shriveled_eyestalk",
 	},{
-		["stages"] = "general",
+		["infobox"] = "general",
 		["forces"] = -13184, -- Stage One
 		[208689] = -13189, -- Dominator Tentacle
 		[210099] = -13186, -- Nightmare Ichor
@@ -177,13 +175,12 @@ function mod:OnBossEnable()
 	self:RegisterEvent("RAID_BOSS_WHISPER")
 	self:Log("SPELL_CAST_START", "GroundSlam", 208689)
 	self:Log("SPELL_AURA_APPLIED", "NightmarishFury", 215234)
+	self:Log("SPELL_CAST_SUCCESS", "EyeDamageCast", 209471) -- Nightmare Explosion
 	self:Log("SPELL_DAMAGE", "EyeDamage", 210048) -- Nightmare Explosion, only hits the Eye
 
 	-- Nightmare Ichor
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 210099)
-	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 210099)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TouchOfCorruption", 209469)
-	self:Log("SPELL_CAST_START", "NightmareExplosion", 209471)
 
 	-- Nightmare Horror
 	self:Log("SPELL_AURA_APPLIED", "SummonNightmareHorror", 209387) -- Seeping Corruption, buffed on spawn
@@ -214,13 +211,18 @@ end
 
 function mod:OnEngage()
 	wipe(mobCollector)
-	fixateOnMe = nil
 	phase = 1
 	deathBlossomCount = 1
-	bloodsRemaining = self:LFR() and 15 or self:Mythic() and 22 or 20
+	blobsRemaining = self:LFR() and 15 or self:Mythic() and 22 or 20
+	blobsMissed = 0
 	self:CDBar(208689, 11.5) -- Ground Slam
 	self:CDBar("nightmare_horror", self:Mythic() and 80 or 65, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
 
+	self:OpenInfo("infobox", self:SpellName(-13186)) -- Nightmare Ichor
+	self:SetInfo("infobox", 1, L.remaining)
+	self:SetInfo("infobox", 2, blobsRemaining)
+	self:SetInfo("infobox", 3, L.missed)
+	self:SetInfo("infobox", 4, blobsMissed)
 	if self:Mythic() then
 		self:Bar(218415, 60) -- Death Blossom
 	end
@@ -230,7 +232,7 @@ function mod:OnEngage()
 	self:StartSpawnTimer(-13191, 1) -- Corruptor Tentacle
 
 	wipe(deathglareMarked)
-	if self:GetOption("custom_off_deathglare_marker") then
+	if self:GetOption(tentacleMarker) then
 		deathglareMarks = { [6] = true, [5] = true, [4] = true, [3] = true }
 
 		self:RegisterTargetEvents("DeathglareMark")
@@ -264,8 +266,7 @@ function mod:StartSpawnTimer(addType, count)
 	self:ScheduleTimer("StartSpawnTimer", length, addType, count+1)
 end
 
-function mod:DeathglareMark(event, unit)
-	local guid = UnitGUID(unit)
+function mod:DeathglareMark(event, unit, guid)
 	if self:MobId(guid) == 105322 and not deathglareMarked[guid] then
 		local icon = next(deathglareMarks)
 		if icon then -- At least one icon unused
@@ -294,7 +295,7 @@ do
 end
 
 -- Dominator Tentacle
-function mod:RAID_BOSS_WHISPER(_, msg, sender)
+function mod:RAID_BOSS_WHISPER(_, msg)
 	if msg:find("208689", nil, true) then -- Ground Slam
 		self:Message(208689, "Personal", "Alarm", CL.you:format(self:SpellName(208689)))
 		self:Flash(208689)
@@ -319,24 +320,24 @@ do
 	end
 end
 
-function mod:EyeDamage(args)
-	bloodsRemaining = bloodsRemaining - 1
-	if (bloodsRemaining % 5 == 0 or bloodsRemaining < 5) and bloodsRemaining > 0 then
-		self:Message("forces", "Positive", nil, L.bloods_remaining:format(bloodsRemaining), false)
+function mod:EyeDamageCast()
+	if blobsRemaining > 0 then -- Don't count blobs killed after the eye dies as missed
+		blobsMissed = blobsMissed + 1
+		self:SetInfo("infobox", 4, blobsMissed)
 	end
+end
+
+function mod:EyeDamage()
+	blobsRemaining = blobsRemaining - 1
+	blobsMissed = blobsMissed - 1
+	self:SetInfo("infobox", 2, blobsRemaining)
+	self:SetInfo("infobox", 4, blobsMissed)
 end
 
 -- Nightmare Ichor
 function mod:Fixate(args)
 	if self:Me(args.destGUID) then
 		self:TargetMessage(args.spellId, args.destName, "Attention", "Info")
-		fixateOnMe = true
-	end
-end
-
-function mod:FixateRemoved(args)
-	if self:Me(args.destGUID) then
-		fixateOnMe = nil
 	end
 end
 
@@ -347,19 +348,8 @@ function mod:TouchOfCorruption(args)
 	end
 end
 
-do
-	local prev = 0
-	function mod:NightmareExplosion(args)
-		local t = GetTime()
-		if fixateOnMe and t-prev > 3 then -- Explosion has a small radius, you could only get hit if you are fixated and near the Eye
-			prev = t
-			self:Message(args.spellId, "Important", nil, CL.casting:format(args.spellName))
-		end
-	end
-end
-
 -- Nightmare Horror
-function mod:SummonNightmareHorror(args)
+function mod:SummonNightmareHorror()
 	self:Message("nightmare_horror", "Important", "Info", CL.spawned:format(self:SpellName(L.nightmare_horror)), L.nightmare_horror_icon)
 	self:Bar("nightmare_horror", 220, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror < TODO beta timer, need live data
 	self:Bar(210984, 13.8) -- Eye of Fate
@@ -433,7 +423,10 @@ function mod:StuffOfNightmares()
 	if self.isEngaged then -- Gets buffed when the boss spawns
 		self:Message("stages", "Neutral", "Long", CL.stage:format(1), false)
 		phase = phase + 1
-		bloodsRemaining = self:LFR() and 15 or self:Mythic() and 22 or 20
+		blobsRemaining = self:LFR() and 15 or self:Mythic() and 22 or 20
+		blobsMissed = 0
+		self:SetInfo("infobox", 2, blobsRemaining)
+		self:SetInfo("infobox", 4, blobsMissed)
 
 		self:Bar("nightmare_horror", 99, L.nightmare_horror, L.nightmare_horror_icon) -- Summon Nightmare Horror
 		phaseStartTime = GetTime()
@@ -487,7 +480,7 @@ do
 	function mod:CursedBlood(args)
 		if self:Me(args.destGUID) then
 			isOnMe = true
-			self:TargetMessage(args.spellId, args.destName, "Personal", "Alert")
+			self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
 			self:TargetBar(args.spellId, 8, args.destName)
@@ -530,7 +523,7 @@ end
 --[[ Mythic ]]--
 function mod:DeathBlossom(args)
 	self:Message(args.spellId, "Urgent", "Alarm")
-	self:Bar(args.spellId, 15, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 15)
 	deathBlossomCount = deathBlossomCount + 1
 end
 

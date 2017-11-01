@@ -3,10 +3,10 @@ if not ZygorGuidesViewer then return end
 if UnitFactionGroup("player")~="Alliance" then return end
 if ZGV:DoMutex("LevelingAMOP") then return end
 ZygorGuidesViewer.GuideMenuTier = "MOP"
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\The Jade Forest (85-86)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Pandaria (85-90)\\The Jade Forest (85-86)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\JadeForest",
-next="Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Valley of the Four Winds (86-87)",
+next="Zygor's Leveling Guides\\Pandaria (85-90)\\Valley of the Four Winds (86-87)",
 startlevel=85.0,
 dynamic=true,
 },[[
@@ -1210,10 +1210,10 @@ step
 Click the Quest complete box located at the top right of your screen.
 turnin Moving On##30648
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Valley of the Four Winds (86-87)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Pandaria (85-90)\\Valley of the Four Winds (86-87)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\ValleyOfTheFourWinds",
-next="Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Krasarang Wilds (87)",
+next="Zygor's Leveling Guides\\Pandaria (85-90)\\Krasarang Wilds (87)",
 startlevel=86.2,
 dynamic=true,
 },[[
@@ -1267,11 +1267,14 @@ accept Taking a Crop##29940 |goto 81.6,25.2
 step
 talk Ana Thunderfoot##56465
 accept Rampaging Rodents##29910 |goto 82.0,26.5
+stickystart "Marmot Hole"
 step
-click Marmot Hole
-6 Marmot Holes filled |q 29910/2 |goto 82.4,25.4
 clicknpc Plump Marmot##56203
 Move 6 Plump Marmots |q 29910/1 |goto 82.4,25.4
+step
+label "Marmot Hole"
+click Marmot Hole
+6 Marmot Holes filled |q 29910/2 |goto 82.4,25.4
 step
 talk Ana Thunderfoot##56465
 turnin Rampaging Rodents##29910 |goto 82.6,26.3
@@ -1303,8 +1306,12 @@ step
 talk Miss Fanny##56192
 Hit the turnip with average power
 Launch a pink turnip |q 29912/1 |goto 82.9,21.3
+step
+talk Miss Fanny##56192
 Hit the watermelon very softly
 Launch a watermelon |q 29912/2 |goto 82.9,21.3
+step
+talk Miss Fanny##56192
 Hit the tofu as hard as possible
 Launch the Extra-Spicy Tofu |q 29912/3 |goto 82.9,21.3
 step
@@ -1370,7 +1377,7 @@ accept Great Minds Drink Alike##29919 |goto 75.3,35.5
 step
 talk Chen Stormstout##56133
 Tell him you're ready.
-Escort Chen and Li Li |q 29919/1 |goto 75.3,35.5 |n
+Escort Chen and Li Li |q 29919/1 |goto 75.3,35.5
 |tip Make sure you stay close to them even though you don't have to protect them. The quest will bug and you will fail otherwise.
 step
 talk Mudmug##56474
@@ -1382,6 +1389,7 @@ step
 talk Li Li##56138
 accept Yellow and Red Make Orange##29945 |goto 68.9,43.3
 stickystart "meadowmari"
+stickystart "meadow"
 step
 kill Jinanya the Clawblade##56513 |q 29944/2 |goto 67.0,38.7
 step
@@ -1391,7 +1399,10 @@ kill Frenzyhop##56514 |q 29944/3 |goto 64.6,40.7
 step "meadowmari"
 kill Longfang Howler##56524+, Mushan Nomad##56523+, Tawnyhide Stag##56532+, Longfang Howler##56524, Tawnyhide Fawn##56526+
 collect 40 Vial of Animal Blood##76335+ |q 29945/2 |goto 66.5,41.7
+step
+label "meadow"
 click Meadow Marigold
+|tip They look like golden petals on the ground.
 collect 10 Meadow Marigold##76334 |q 29945/1 |goto 66.5,41.7
 You can find more animals and marigolds around: |goto 69.7,46.8
 step
@@ -1406,23 +1417,19 @@ step
 talk Mudmug##56474
 accept Thieves to the Core##29948 |goto 68.7,43.1
 stickystart "orangeturnip"
+stickystart "stolensack"
 step
-Enter the tunnel |goto 69.1,40.0 < 5 |walk
-While in the warren:
-click Stolen Sack of Hops##11499
-collect 6 Stolen Sack of Hops##76337 |q 29948/1
-Throw your Orange-Painted Turnips at Virmen Hoarders |use Orange-Painted Turnip##76370
-Trick 12 Virmen with Orange-Painted Turnips |q 29947/1
-|confirm
-step
-kill Chufa##56537 |q 29946/1 |goto 67.9,37.4
+Enter the tunnel |goto 69.1,40.0 < 10
+kill Chufa##56537 |q 29946/1 |goto 67.9,37.4 |indoors The Twisted Warren
 |tip Don't worry that it is elite, Chen comes to help you.
-step "orangeturnip"
-While in the warren:
-click Stolen Sack of Hops##11499
-collect 6 Stolen Sack of Hops##76337 |q 29948/1
+step
+label "orangeturnip"
 Throw your Orange-Painted Turnips at Virmen Hoarders |use Orange-Painted Turnip##76370
-Trick 12 Virmen with Orange-Painted Turnips |q 29947/1
+Trick 12 Virmen with Orange-Painted Turnips |q 29947/1 |goto 68.99,36.96 |indoors The Twisted Warren
+step
+label "stolensack"
+click Stolen Sack of Hops##11499
+collect 6 Stolen Sack of Hops##76337 |q 29948/1 |goto 68.99,36.96 |indoors The Twisted Warren
 step
 Exit the warren |goto 69.1,40.0 < 5 |walk
 talk Mudmug##56474
@@ -1461,9 +1468,12 @@ kill Manglemaw's Mother##58755 |goto 57.4,26.5
 collect 1 Enormous Crocolisk Tail##79238 |n
 Click the Enormous Crocolisk Tail in your bags |use Enormous Crocolisk Tail##79238
 accept A Crocolisk Tale##30275
+stickystart "Gladeglimmer"
 step
 kill Glade Hunter##57299+, Glade Sprinter##58741+
 collect 5 Spindly Bloodfeather##79198+ |q 30267/2 |goto 59.0,40.2
+step
+label "Gladeglimmer"
 clicknpc Glade Glimmer##57301
 collect 18 Glade Glimmer##79197+ |q 30267/1 |goto 59.0,40.2
 step
@@ -1485,16 +1495,26 @@ talk Zhang Yue##56802
 turnin Ashyo's Vision##29577 |goto 59.8,27.9
 accept The Golden Dream##29581 |goto 59.8,27.9
 stickystart "razorsnapper"
+stickystart "Dreamleafbush"
+stickystart "Gurgling"
 step
+_Go up_ this path |goto 60.8,25.7 < 10 |only if walking
 kill Krosh##56833
 collect Krosh's Back##83767 |q 29758 |goto 65.3,25.82
-click Dreamleaf Bush
-collect Sprig of Dreamleaf####76973 |q 29581/1 |goto 65.3,25.82
 Click Krosh's Back. |use Krosh's Back##83767
 accept Guess Who's Back##29758
-step "razorsnapper"
+step
+label "Dreamleafbush"
+click Dreamleaf Bush
+|tip It is a big green plant next to Krosh
+collect Sprig of Dreamleaf####76973 |q 29581/1 |goto 65.3,25.82
+step
+label "razorsnapper"
 kill 16 Razorback Snapper##56832 |q 29600/1 |goto 63.9,26.5
+step
+label "Gurgling"
 click Gurgling Toadspawn
+|tip These are found in the water around this area. The water will be bubbling if one is there. You can do this while mounted.
 Scoop 8 Toad Eggs |q 29757/1 |goto 63.9,26.5
 step
 talk Zhang Yue##56802
@@ -1578,8 +1598,11 @@ talk Chen Stormstout##56133
 turnin Broken Dreams##29952 |goto 68.8,43.4
 step
 click Muddy Water
-Plan out your path before you start gathering mud. You will slowly lose mud as you swim. When you find a pile of glittering mud, there is usually multiple piles right next to each other. Make sure to grab them all before trying to move to another
-Fill up your vial 100% with mud |q 29951/1 |goto 73.1,55.5
+Plan out your path before you start gathering mud.
+|tip You will slowly lose mud as you swim.
+|tip When you find a pile of glittering mud, there is usually multiple piles right next to each other.
+|tip Make sure to grab them all before trying to move to another
+Fill up your vial 100% with mud |q 29951/1 |goto 70.93,54.75
 step
 talk Mudmug##56474
 turnin Muddy Water##29951 |goto 68.7,43.1
@@ -1739,11 +1762,11 @@ collect Malted Cave Barley |q 30032/2 |goto Valley of the Four Winds 53.6,75.2 |
 step
 Exit the Cave |goto Valley of the Four Winds 53.6,76.3 < 5 |walk
 click Climbing Rope##7548 |only if walking
-Ride to the top of the Cliff |goto 51.2,77.6 < 5 |only if walking
+Ride to the top of the Cliff |goto Krasarang Wilds/0 48.63,27.04 |only if walking
 confirm
 step
 talk Li Li##56138
-turnin The Quest for Better Barley##30032 |goto 52.7,62.8
+turnin The Quest for Better Barley##30032 |goto Valley of the Four Winds 52.7,62.8
 accept The Chen Taste Test##30047 |goto 52.7,62.8
 step
 talk Grainlord Kai##57211
@@ -1810,7 +1833,7 @@ step
 label mudmug
 talk Mudmug##58027
 Tell him to calm down
-kill Eddy##58014 |q 30078/1 |goto 34.9,70.3 |n
+kill Eddy##58014 |q 30078/1 |goto 34.9,70.3
 |tip When Eddy activates his Watery Shield run over bubbles on the ground until it is weakened, then click the bubble.
 Click here to move on to Li Li and Jooga. |next "lili" |confirm
 Cleaned out the brewery. |goto Valley of the Four Winds 36.1,68.9 < 5 |noway |c |next "done" |q 30078 |future
@@ -1818,7 +1841,7 @@ step
 label lili
 talk Li Li##58028
 Tell her you'll help
-kill Jooga##58015 |q 30078/2 |goto 33.0,71.1 |n
+kill Jooga##58015 |q 30078/2 |goto 33.0,71.1
 |tip You can keep Jooga pinned down by clicking the Empty Kegs around the room. Dodge the bananas that he throws at you.
 Click here to move on to Chen and the Fizzy Yellow Alemental. |next "chen" |confirm
 Cleaned out the brewery. |goto Valley of the Four Winds 36.1,68.9 < 5 |noway |c |next "done" |q 30078 |future
@@ -2048,10 +2071,10 @@ talk "Dragonwing" Dan##58843 |goto 20.2,58.5
 Ask him to send you to Ken-Ken |goto Krasarang Wilds 76.4,7.7 <8 |c
 |only if havebuff
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Krasarang Wilds (87)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Pandaria (85-90)\\Krasarang Wilds (87)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\KrasarangWilds",
-next="Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Kun-Lai Summit (87-88)",
+next="Zygor's Leveling Guides\\Pandaria (85-90)\\Kun-Lai Summit (87-88)",
 startlevel=87.0,
 },[[
 step
@@ -2422,9 +2445,9 @@ accept Wisdom Has A Price##30671 |goto 46.0,78.9
 accept Misery##30691 |goto 46.0,78.9
 step
 Go underwater and enter the cave |goto 46.0,79.9 < 5 |walk
-kill Nahassa##60203+
+kill Nahassa##60203
 |tip Nahassa will use an ability called _Feverish Deathbite_ that will cause you to hallucinate that more crocolisks have spawned, they aren't really there so don't panic.
-Put Nahassa out of his misery |q 30691/1 |goto 46.2,83.5
+Put Nahassa out of his misery |q 30691/1 |goto 46.2,83.5 |indoors Mortbreath Grotto
 step
 Click the Complete Quest box that displays on the right side of the screen under your minimap
 turnin Misery##30691
@@ -2592,15 +2615,24 @@ step
 talk Guard Captain Oakenshield##57198
 turnin The Swarm Begins##30622 |goto 11.6,49.5
 accept Students No More##30625 |goto 11.6,49.5
+stickystart "2nd coord"
+stickystart "3rd coord"
+stickystart "4th coord"
 step
 The students may already be in the battlefield when you accept this quest.
 Search at each of the locations if they aren't at the start and if they aren't at any, wait at the very first coordinate.
 |tip When you find them just follow them as you kill the Ik'thik mobs
 kill Ik'thik Bloodrager |q 30625/1 |goto 9.1,54.1
+step
+label "2nd coord"
 Second coordinate |goto 9.0,51.3
 kill Ik'thik Incubator |q 30625/2 |goto 9.0,51.3
+step
+label "3rd coord"
 Third coordinate |goto 9.4,54.0
 kill Ik'thik Tendon-Slicer |q 30625/3 |goto 9.4,54.0
+step
+label "4th coord"
 Fourth coordinate |goto 9.5,58.1
 kill Ik'thik Fearmonger |q 30625/4 |goto 9.5,58.1
 step
@@ -2630,10 +2662,10 @@ click The Commander's Cache##10315
 |tip Upstairs in the inn.
 turnin The Gratitude of Stoneplow##30628 |goto 19.8,55.9
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Kun-Lai Summit (87-88)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Pandaria (85-90)\\Kun-Lai Summit (87-88)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\KunLai",
-next="Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Townlong Steppes (88-89)",
+next="Zygor's Leveling Guides\\Pandaria (85-90)\\Townlong Steppes (88-89)",
 startlevel=87.8,
 },[[
 step
@@ -2654,17 +2686,17 @@ accept Robbing Robbers of Robbers##31286 |goto The Veiled Stair 53.5,65.7
 accept Educating Saurok##31287 |goto The Veiled Stair 53.5,65.7
 step
 Enter the cave |goto The Veiled Stair 55.5,55.8 < 5 |walk
-kill Leechfingers##63494 |q 31287/1 |goto 51.1,43.4 |indoors Hatesacle Burrow
+kill Leechfingers##63494 |q 31287/1 |goto 51.1,43.4 |indoors Hatescale Burrow
 step "blackmarketmerch"
-Before you leave this cave make sure you get 7 Black Market Merchandise |indoors Hatesacle Burrow
+Before you leave this cave make sure you get 7 Black Market Merchandise |indoors Hatescale Burrow
 click Smuggled Brewfather Statue##12103
 click Cursed Hozen Totem##11436
-click Smuggled Cannon11244
+click Smuggled Cannon##11244
 click Priceless Mogu Artifact##12105
 click Evil Monkey Idol##11304
-collect 7 Black Market Merchandise##85891+ |q 31286/1 |indoors Hatesacle Burrow
+collect 7 Black Market Merchandise##85891+ |q 31286/1 |indoors Hatescale Burrow
 step
-Exit the cave |goto 55.2,55.3 < 5 |walk
+Exit the cave |goto 55.2,55.3 < 5 |walk |indoors Hatescale Burrow
 talk Len the Whisperer##63484
 turnin Robbing Robbers of Robbers##31286 |goto 53.5,65.7
 turnin Educating Saurok##31287 |goto 53.5,65.7
@@ -2963,14 +2995,17 @@ talk Lao Muskpaw##59353
 turnin Muskpaw Ranch##31456 |goto 71.1,69.2
 accept The Missing Muskpaw##30488 |goto 71.1,69.2
 accept Fresh Needle Scent##30489 |goto 71.1,69.2
+stickystart "Needle Sprite"
 step
 Head to the back of the cave, killing Sprites as you go
-kill Needle Sprite##55593
-collect 100 Pungent Sprite Needles |q 30489/1
 Kill the Needle Sprites attacking Muskpaw Jr.
 talk Muskpaw Jr.##61693
 turnin The Missing Muskpaw##30488 |goto Kun-Lai Summit/9 64.6,60
 accept At the Yak Wash##30491 |goto Kun-Lai Summit/9 64.6,60
+step
+label "Needle Sprite"
+kill Needle Sprite##55593
+collect 100 Pungent Sprite Needles |q 30489/1
 step
 clicknpc Tuffi##61874 |invehicle |goto 66.0,59.3
 Click the Quest Discovered box that displays on the right side of the screen under your minimap
@@ -3090,7 +3125,6 @@ turnin Instant Courage##30601 |goto 57.2,61.2
 step
 talk Big Sal##59695
 turnin Resupplying Onekeg##30618 |goto 57.7,61.7
--
 step
 talk Uncle Cloverleaf##59696
 accept Comin' Round the Mountain##30487 |goto 57.2,61.2
@@ -3195,20 +3229,17 @@ Use The Tongue of Ba-Shon |use The Tongue of Ba-Sho##81712
 talk Image of Lorewalker Cho##61297
 turnin The Tomb of Shadows##30799
 accept Breaking the Emperor's Shield##30798
-Exit the Tomb of Shadows |goto 55.9,46.1 < 5 |walk
 step
 Follow the path up |goto 55.2,47.6 < 5 |only if walking
 Enter the Tomb of Secrets |goto 53.3,49.3 < 5 |walk
 kill Nakk'rakas##60572 |indoors Tomb of Secrets
 |tip When he casts his shield kill the Imperial Guards until he in vulnerable again |indoors Tomb of Secrets
 Interrupt the Spiritbinding Ritual |q 30798/1 |goto 52.9,51.5 |indoors Tomb of Secrets
-|modelnpc Imperial Guard##60826
 step
 Use The Tongue of Ba-Shon |use The Tongue of Ba-Sho##81712
 talk Image of Lorewalker Cho##61297
 turnin Breaking the Emperor's Shield##30798
 accept Stealing Their Thunder... King##30800
-Exit the Tomb of Secrets |goto 53.3,49.3 < 5 |walk
 step
 Enter the Tomb of Conquerors |goto 53.0,46.5 < 5 |walk
 Follow the path down |indoors Tomb of Conquerors
@@ -3238,7 +3269,6 @@ Use The Tongue of Ba-Shon |use The Tongue of Ba-Sho##81712
 talk Image of Lorewalker Cho##61297
 turnin Chasing the Storm##30802
 accept Fisherman's Tale##30935
-Exit the Tomb of Conquerors |goto Kun-Lai Summit/17 88.3,54.8 < 5 |walk
 step
 talk Mishi##61382
 Tell them you are ready to leave. |q 30935/1 |goto Kun-Lai Summit 53.0,46.4
@@ -3251,11 +3281,15 @@ talk Anduin Wrynn##64540
 turnin Temple of the White Tiger##31392 |goto 68.8,43.1
 accept A Celestial Experience##31394|goto 68.8,43.1
 step
-Talk to Xuen |q 31394/1 |modelnpc Xuen##64528
+talk Xuen##64528
+Speak to Xuen |q 31394/1 |goto 68.9,42.8
+step
 kill Spirit of Violence##64656
 Pass the First Test |q 31394/2 |goto 68.9,42.8
+step
 kill Spirit of Anger##64684
 Pass the Second Test |q 31394/3 |goto 68.9,42.8
+step
 kill Spirit of Hatred##64744
 Pass the Third Test |q 31394/4 |goto 68.9,42.8
 step
@@ -3263,7 +3297,7 @@ talk Anduin Wrynn##64540
 turnin A Celestial Experience##31394 |goto 68.8,43.1
 accept A Witness to History##31512 |goto 68.8,43.1
 step
-Enter the cave here. |goto 63.9,49.8 < 5 |c |walk
+Enter the cave here. |goto 63.9,49.8 < 5 |walk
 |tip The cave is down the mountain below you. You can either go back down the path, or risk jumping off the side of the mountain to get to him.
 Exit the cave |indoors Path of Conquerors |goto 63.2,42.1 < 5 |walk
 confirm
@@ -3809,10 +3843,10 @@ talk Shado-Master Chong##60161
 turnin Unmasking the Yaungol##30690 |goto 44.5,89.9
 accept To Winter's Blossom##30699 |goto 44.5,89.9
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Townlong Steppes (88-89)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Pandaria (85-90)\\Townlong Steppes (88-89)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\TownlongSteppes",
-next="Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Dread Wastes (89-90)",
+next="Zygor's Leveling Guides\\Pandaria (85-90)\\Dread Wastes (89-90)",
 startlevel=88.2,
 },[[
 step
@@ -4493,7 +4527,7 @@ step
 Cross this bridge to the Dread Wastes. |goto 60.8,83.9 < 5
 confirm
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Dread Wastes (89-90)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Pandaria (85-90)\\Dread Wastes (89-90)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\DreadWastes",
 startlevel=89.3,
@@ -4664,18 +4698,16 @@ Next to you:
 talk Korven the Prime##62232
 accept Feeding the Beast##31020
 accept Living Amber##31021
-Leave the tunnel. |goto 66.8,63.8 < 5 |walk
 stickystart "Coldbitecrocolisk"
-stickystart "Livingamber"
-step "Coldbitecrocolisk"
+step
 Go underwater to |goto 65.5,59.1 |walk
 click Amber Fragment
 collect 9 Living Amber##82864 |n
-kill 8 Coldbite Crocolisk##62023 |q 31020/1
-step "Livingamber"
 Click the Living Amber in your bags |use Living Amber##82864
 Feed Korven the Prime 9 Living Amber |q 31021/1
-|modelnpc Korven the Prime##62232
+step
+label "Coldbitecrocolisk"
+kill 8 Coldbite Crocolisk##62023 |q 31020/1
 step
 Next to you:
 talk Korven the Prime##62232
@@ -4711,7 +4743,6 @@ talk Kor'ik##65365 |indoors Amberglow Hollow
 turnin Extending Our Coverage##31087 |goto 48.1,49.6 |indoors Amberglow Hollow
 accept Isolating the Frequency##31088 |goto 48.1,49.6 |indoors Amberglow Hollow
 accept The Color of Our Energy##31090 |goto 48.1,49.6 |indoors Amberglow Hollow
-Leave the building. |goto 46.3,53.1 < 5 |walk
 step
 kill 8 Ik'thik Harvester##63206+ |q 31088/1 |goto 44.9,57.4
 click Amber Collector##12109
@@ -4724,9 +4755,7 @@ Enter the building here. |goto 46.3,53.1 < 5 |walk
 talk Kor'ik##65365 |indoors Amberglow Hollow
 turnin Isolating the Frequency##31088 |goto 48.1,49.6 |indoors Amberglow Hollow
 turnin The Color of Our Energy##31090 |goto 48.1,49.6 |indoors Amberglow Hollow
-step
 accept By the Sea, Nevermore##31089 |goto 48.2,49.8 |indoors Amberglow Hollow
-Leave the building. |goto 46.3,53.1 < 5 |walk
 step
 Use the Klaxxi Tuning Fork in your bags on the Ocean Worn Rocks |use Klaxxi Tuning Fork##84119
 Awaken Kaz'tik the Manipulator |q 31089/1 |goto 43.4,63.3
@@ -4746,7 +4775,7 @@ accept The Kunchong Whisperer##31359 |goto 41.8,72.0
 accept Feed or Be Eaten##31092 |goto 41.8,72.0
 step
 kill Oracle Hiss'ir##63998 |q 31359/1 |goto 41.7,63.6
-He patrols around The Briny Muck.
+|tip He patrols around The Briny Muck.
 step
 click Glowing Amber##11646
 accept Falling to Pieces##31398 |goto 41.9,63.7
@@ -4757,10 +4786,11 @@ kill Brineshell Snapper##63981+, Trained Brineshell Snapper##65330+
 collect 6 Succulent Turtle Filet##86489+ |n |goto 38.1,57.3
 Click the Succulent Turtle Filets in your bags |use Succulent Turtle Filet##86489
 Feed 6 Succulent Turtle Filets to Kovok |q 31092/1
-step "Muckscaleripper"
+step
+label "Muckscaleripper"
 kill Muckscale Ripper##63993+, Muckscale Shaman##64008+, Muckscale Slayer##63999+, Muckscale Flesh-Hunter##63997+
 Kill 10 Muckscale Tribe |q 31359/2 |goto 38.1,57.3
-You can find more Tribe Members and Turtles all over The Briny Muck.
+|tip You can find more Tribe Members and Turtles all over The Briny Muck.
 step
 talk Kaz'tik the Manipulator##63758
 turnin The Kunchong Whisperer##31359 |goto Dread Wastes 54.4,35.6
@@ -4784,7 +4814,6 @@ click Scroll of Auspice |indoors The Amber Vault
 accept Sacred Recipe##31068 |goto Dread Wastes/0 53.1,12.4 |indoors The Amber Vault
 step
 kill Azzix K'tai##62843 |goto 52.7,10.1 |q 31067/1 |indoors The Amber Vault
-Leave the building here |goto 53.6,15.6 < 5 |walk
 step
 talk Jin the Flying Keg##63500
 fpath The Sunset Brewgarden |goto Dread Wastes 50.2,12.2
@@ -4877,13 +4906,9 @@ accept Han Stormstout##31078 |goto 50.2,10.2
 step
 Enter the building here |goto 44.8,15.8 < 5 |walk
 Find the Mark of the Empress |q 31074/1 |goto 44.5,16.8 |indoors Kor'vess
-Leave the building here |goto 44.8,15.8 < 5 |walk
-confirm
 step
 Enter the building here |goto 43.1,14.0 < 5 |walk
 Find the Heartroot of Kypari Kor |q 31074/2 |goto 43.1,14.9 |indoors Kor'vess
-Leave the building here |goto 43.1,14.0 < 5 |walk
-confirm
 step
 Enter the Morrowchamber here. |goto 47.0,16.8 < 5 |walk
 Work your way around one side of the room, if you go down the ramps on eiter side you can go underneath the beam. |indoors Morrowchamber
@@ -4897,7 +4922,6 @@ step
 Inside this building:
 kill Kor'thik Chitinel##62756+, Kor'thik Havoc##62757+, Kor'thik Battlesinger##62758+
 Kill 17 Kor'thik Mantid |q 31133/1
-Leave the building. |goto 46.9,16.8 < 5 |walk
 stickystart "korthikmantidslain"
 step
 clicknpc Withered Husk##62876
@@ -4979,13 +5003,15 @@ accept Blood of Ancients##31086 |goto 38.2,17.2
 step
 click Solidified Amber##11646
 collect Chunk of Solidified Amber##84779 |q 31086/1 |goto 30.2,30.6
+stickystart "Adjunct"
 step
 click Enormous Landslide |goto 30.0,31.1
+|tip Looks like a big pile of rocks blocking the way.
 Enter the building once the landslide is gone. |goto 30.2,31.7 < 8 |walk
-confirm
-step
 Use the Ruining Fork in your bags |use Ruining Fork##84771 |indoors The Amber Hibernal
 Use the Ruining Fork on Iyyokuk the Lucid |q 31085/1 |goto 32.4,33.7 |indoors The Amber Hibernal
+step
+label "Adjunct"
 kill Adjunct G'kkal##63103, Adjunct Okzyk##63102, Adjunct Pivvika##63104 |indoors The Amber Hibernal
 Protect Iyyokuk the Lucid until he escapes |q 31085/2 |goto 32.4,33.7 |indoors The Amber Hibernal
 step
@@ -5144,13 +5170,10 @@ turnin Skeer the Bloodseeker##31175 |goto 25.7,50.3
 accept A Strange Appetite##31176 |goto 25.7,50.3
 accept Fine Dining##31177 |goto 25.7,50.3
 accept A Bloody Delight##31178 |goto 25.7,50.3
-step
-Leave the cave |goto 25.7,53.9 < 10 |walk
-confirm
-stickystart "Remora"
 stickystart "Clacker"
 stickystart "Starfish"
-step "Remora"
+step
+Leave the cave |goto 25.7,53.9 < 10 |walk
 kill Dread Remora##63353
 collect 100 Volatile Blood |q 31178/1 |goto 26.3,58.8
 step "Clacker"
@@ -5160,7 +5183,7 @@ step "Starfish"
 click Spiny Starfish##11880
 collect 12 Starfish Meat |q 31176/1 |goto 26.3,58.8
 step
-Enter this cave |goto 25.7,53.9 < 5 |walk
+Swim underwater and enter this cave |goto 25.7,53.9 < 5 |walk
 talk Skeer the Bloodseeker##63071
 turnin A Strange Appetite##31176 |goto 25.7,50.3
 turnin Fine Dining##31177 |goto 25.7,50.3
@@ -5186,60 +5209,12 @@ step
 talk Kil'ruk the Wind-Reaver##62538
 turnin The Scent of Blood##31179 |goto 55.0,35.9
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Loremaster Guides\\Pandaria (85-90)\\The Jade Forest",{
-author="support@zygorguides.com",
-image=ZGV.DIR.."\\Guides\\Images\\JadeForest",
-condition_end="achieved(6300)",
-},[[
-step
-next "Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\The Jade Forest (85-86)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Loremaster Guides\\Pandaria (85-90)\\Valley of the Four Winds",{
-author="support@zygorguides.com",
-image=ZGV.DIR.."\\Guides\\Images\\ValleyOfTheFourWinds",
-condition_end="achieved(6301)",
-},[[
-step
-next "Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Valley of the Four Winds (86-87)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Loremaster Guides\\Pandaria (85-90)\\Krasarang Wilds",{
-author="support@zygorguides.com",
-image=ZGV.DIR.."\\Guides\\Images\\KrasarangWilds",
-condition_end="achieved(6535)",
-},[[
-step
-next "Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Krasarang Wilds (87)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Loremaster Guides\\Pandaria (85-90)\\Kun-Lai Summit",{
-author="support@zygorguides.com",
-image=ZGV.DIR.."\\Guides\\Images\\KunLai",
-condition_end="achieved(6537)",
-},[[
-step
-next "Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Kun-Lai Summit (87-88)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Loremaster Guides\\Pandaria (85-90)\\Townlong Steppes",{
-author="support@zygorguides.com",
-image=ZGV.DIR.."\\Guides\\Images\\TownlongSteppes",
-condition_end="achieved(6539)",
-},[[
-step
-next "Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Townlong Steppes (88-89)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Loremaster Guides\\Pandaria (85-90)\\Dread Wastes",{
-author="support@zygorguides.com",
-image=ZGV.DIR.."\\Guides\\Images\\DreadWastes",
-condition_end="achieved(6540)",
-},[[
-step
-next "Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Dread Wastes (89-90)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Peak of Serenity\\Monk Daily",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Pandaria (85-90)\\Peak of Serenity\\Monk Daily",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Serenity_Peak",
 monkquest=1,
-condition_invalid="not raceclass('Monk') ",
-condition_invalid_msg="Monk only.",
+condition_valid="raceclass('Monk')",
+condition_valid_msg="Monk only.",
 condition_suggested="raceclass('Monk') and not completedq(31840) or not completedq(31841) or not completedq(31842) or not completedq(31843) or not completedq(31844) or not completedq(31845) or not completedq(31846) and level>=20",
 condition_end="completedq(31840)",
 dynamic=true,
@@ -5250,13 +5225,13 @@ Use your Zen Pilgrimage ability |cast Zen Pilgrimage##126892
 Travel to the Peak of Serenity |goto Kun-Lai Summit 48.6,42.9 |noway |c |q 31856
 step
 talk Master Hight##66260
-accept Practice Makes Perfect: Master Cheng##31840 |daily |or |goto 48.6,42.7
-accept Practice Makes Perfect: Master Woo##31841 |daily |or |goto 48.6,42.7
-accept Practice Makes Perfect: Master Kistane##31842 |daily |or |goto 48.6,42.7
-accept Practice Makes Perfect: Master Yoon##31843 |daily |or |goto 48.6,42.7
-accept Practice Makes Perfect: Master Cheng##31844 |daily |or |goto 48.6,42.7
-accept Practice Makes Perfect: Master Tsang##31845 |daily |or |goto 48.6,42.7
-accept Practice Makes Perfect: Master Hsu##31846 |daily |or |goto 48.6,42.7
+accept Practice Makes Perfect: Master Cheng##31840 |or |goto 48.6,42.7
+accept Practice Makes Perfect: Master Woo##31841 |or |goto 48.6,42.7
+accept Practice Makes Perfect: Master Kistane##31842 |or |goto 48.6,42.7
+accept Practice Makes Perfect: Master Yoon##31843 |or |goto 48.6,42.7
+accept Practice Makes Perfect: Master Cheng##31844 |or |goto 48.6,42.7
+accept Practice Makes Perfect: Master Tsang##31845 |or |goto 48.6,42.7
+accept Practice Makes Perfect: Master Hsu##31846 |or |goto 48.6,42.7
 step
 talk Master Cheng##66138
 Tell him you wish to challenge him
@@ -5316,12 +5291,12 @@ turnin Practice Makes Perfect: Master Cheng##31844 |or |goto 48.6,42.7
 turnin Practice Makes Perfect: Master Tsang##31845 |or |goto 48.6,42.7
 turnin Practice Makes Perfect: Master Hsu##31846 |or |goto 48.6,42.7
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Peak of Serenity\\Monk Quest 20",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Pandaria (85-90)\\Peak of Serenity\\Monk Quest 20",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Serenity_Peak",
 monkquest=20,
-condition_invalid="not raceclass('Monk') ",
-condition_invalid_msg="Monk only.",
+condition_valid="raceclass('Monk')",
+condition_valid_msg="Monk only.",
 condition_suggested="raceclass('Monk') and not completedq(31834) and level>=20",
 condition_end="completedq(31834)",
 dynamic=true,
@@ -5357,12 +5332,12 @@ step
 talk Master Hight##66260
 turnin Practice Makes Perfect: Master Cheng##31840 |goto 48.6,42.7
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Peak of Serenity\\Monk Quest 30",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Pandaria (85-90)\\Peak of Serenity\\Monk Quest 30",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Serenity_Peak",
 monkquest=30,
-condition_invalid="not raceclass('Monk') ",
-condition_invalid_msg="Monk only.",
+condition_valid="raceclass('Monk')",
+condition_valid_msg="Monk only.",
 condition_suggested="raceclass('Monk') and not completedq(31833) and level>=30",
 condition_end="completedq(31833)",
 dynamic=true,
@@ -5398,12 +5373,12 @@ step
 talk Master Hight##66260
 turnin Practice Makes Perfect: Master Woo##31841 |goto 48.6,42.7
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Peak of Serenity\\Monk Quest 40",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Pandaria (85-90)\\Peak of Serenity\\Monk Quest 40",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Serenity_Peak",
 monkquest=40,
-condition_invalid="not raceclass('Monk') ",
-condition_invalid_msg="Monk only.",
+condition_valid="raceclass('Monk')",
+condition_valid_msg="Monk only.",
 condition_suggested="raceclass('Monk') and not completedq(31835) and level>=40",
 condition_end="completedq(31835)",
 dynamic=true,
@@ -5439,12 +5414,12 @@ step
 talk Master Hight##66260
 turnin Practice Makes Perfect: Master Kistane##31842 |goto 48.6,42.7
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Peak of Serenity\\Monk Quest 50",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Pandaria (85-90)\\Peak of Serenity\\Monk Quest 50",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Serenity_Peak",
 monkquest=50,
-condition_invalid="not raceclass('Monk') ",
-condition_invalid_msg="Monk only.",
+condition_valid="raceclass('Monk')",
+condition_valid_msg="Monk only.",
 condition_suggested="raceclass('Monk') and not completedq(31836) and level>=50",
 condition_end="completedq(31836)",
 dynamic=true,
@@ -5480,12 +5455,12 @@ step
 talk Master Hight##66260
 turnin Practice Makes Perfect: Master Yoon##31843 |goto 48.6,42.7
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Peak of Serenity\\Monk Quest 60",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Pandaria (85-90)\\Peak of Serenity\\Monk Quest 60",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Serenity_Peak",
 monkquest=60,
-condition_invalid="not raceclass('Monk') ",
-condition_invalid_msg="Monk only.",
+condition_valid="raceclass('Monk')",
+condition_valid_msg="Monk only.",
 condition_suggested="raceclass('Monk') and not completedq(31837) and level>=60",
 condition_end="completedq(31837)",
 dynamic=true,
@@ -5518,12 +5493,12 @@ step
 talk Master Hight##66260
 turnin Practice Makes Perfect: Master Cheng##31844 |goto 48.6,42.7
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Peak of Serenity\\Monk Quest 70",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Pandaria (85-90)\\Peak of Serenity\\Monk Quest 70",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Serenity_Peak",
 monkquest=70,
-condition_invalid="not raceclass('Monk') ",
-condition_invalid_msg="Monk only.",
+condition_valid="raceclass('Monk')",
+condition_valid_msg="Monk only.",
 condition_suggested="raceclass('Monk') and not completedq(31838) and level>=70",
 condition_end="completedq(31838)",
 dynamic=true,
@@ -5559,12 +5534,12 @@ step
 talk Master Hight##66260
 turnin Practice Makes Perfect: Master Tsang##31845 |goto 48.6,42.7
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Peak of Serenity\\Monk Quest 80",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Pandaria (85-90)\\Peak of Serenity\\Monk Quest 80",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Serenity_Peak",
 monkquest=80,
-condition_invalid="not raceclass('Monk') ",
-condition_invalid_msg="Monk only.",
+condition_valid="raceclass('Monk')",
+condition_valid_msg="Monk only.",
 condition_suggested="raceclass('Monk') and not completedq(31861) and level>=80",
 condition_end="completedq(31861)",
 dynamic=true,
@@ -5600,12 +5575,12 @@ step
 talk Master Hight##66260
 turnin Practice Makes Perfect: Master Hsu##31846 |goto 48.6,42.7
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Leveling Guides\\Pandaria (85-90)\\Peak of Serenity\\Monk Quest 90",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Pandaria (85-90)\\Peak of Serenity\\Monk Quest 90",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Serenity_Peak",
 monkquest=90,
-condition_invalid="not raceclass('Monk') ",
-condition_invalid_msg="Monk only.",
+condition_valid="raceclass('Monk')",
+condition_valid_msg="Monk only.",
 condition_suggested="raceclass('Monk') and not completedq(31844) and level>=90",
 condition_end="completedq(31844)",
 dynamic=true,
@@ -5630,4 +5605,21 @@ Complete Master Hight's Training |q 31844/1 |goto 47.1,40.1
 step
 talk Master Hight##66260
 turnin Complete Your Training: The Final Test##31844 |goto 48.6,42.7
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\The Loremaster\\Loremaster of Pandaria",{
+condition_end="achieved(6541)",
+description="Complete all the storyline achievements in all the zones of the game.",
+},[[
+step
+Use the Pandaria Leveling Guides to complete Loremaster:
+|tip The Leveling guides cover all required questlines for Loremaster.
+|tip Click one of the lines below to load the Leveling guide for that zone.
+Jade Forest Quests |achieve 6300 |loadguide "Zygor's Leveling Guides\\Pandaria (85-90)\\The Jade Forest (85-86)"
+Valley of the Four Winds Quests |achieve 6301 |loadguide "Zygor's Leveling Guides\\Pandaria (85-90)\\Valley of the Four Winds (86-87)"
+Townlong Steppes Quests |achieve 6539 |loadguide "Zygor's Leveling Guides\\Pandaria (85-90)\\Townlong Steppes (88-89)"
+Dread Wastes Quests |achieve 6540 |loadguide "Zygor's Alliance Loremaster Guides\\Pandaria (85-90)\\Dread Wastes"
+Krasarang Wilds Quests |achieve 6535 |loadguide "Zygor's Alliance Loremaster Guides\\Pandaria (85-90)\\Krasarang Wilds"
+Kun-Lai Summit Quests |achieve 6537 |loadguide "Zygor's Leveling Guides\\Pandaria (85-90)\\Kun-Lai Summit (87-88)"
+step
+Congratulations, you have _earned_ the _Loremaster of Pandaria_ achievement!
 ]])

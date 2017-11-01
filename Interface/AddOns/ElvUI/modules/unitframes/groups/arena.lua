@@ -1,28 +1,26 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames');
+local _, ns = ...
+local ElvUF = ns.oUF
+assert(ElvUF, "ElvUI was unable to locate oUF.")
 
 --Cache global variables
 --Lua functions
 local _G = _G
-local pairs, unpack = pairs, unpack
+local unpack = unpack
 local tinsert = table.insert
-local format = format
 --WoW API / Variables
 local CreateFrame = CreateFrame
-local IsInInstance = IsInInstance
-local UnitExists = UnitExists
 local GetArenaOpponentSpec = GetArenaOpponentSpec
 local GetSpecializationInfoByID = GetSpecializationInfoByID
+local IsInInstance = IsInInstance
+local UnitExists = UnitExists
 local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
-local CUSTOM_CLASS_COLORS = CUSTOM_CLASS_COLORS
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: UIParent, ArenaHeaderMover
-
-local _, ns = ...
-local ElvUF = ns.oUF
-assert(ElvUF, "ElvUI was unable to locate oUF.")
+-- GLOBALS: CUSTOM_CLASS_COLORS
 
 local ArenaHeader = CreateFrame('Frame', 'ArenaHeader', UIParent)
 
@@ -39,7 +37,7 @@ function UF:UpdatePrep(event, unit, status)
 	local _, spec, texture, class
 
 	if s and s > 0 then
-		_, spec, _, texture, _, _, class = GetSpecializationInfoByID(s)
+		_, spec, _, texture, _, class = GetSpecializationInfoByID(s)
 	end
 
 	if class and spec then
@@ -54,6 +52,10 @@ function UF:UpdatePrep(event, unit, status)
 end
 
 function UF:Construct_ArenaFrames(frame)
+	frame.RaisedElementParent = CreateFrame('Frame', nil, frame)
+	frame.RaisedElementParent.TextureParent = CreateFrame('Frame', nil, frame.RaisedElementParent)
+	frame.RaisedElementParent:SetFrameLevel(frame:GetFrameLevel() + 100)
+
 	frame.Health = self:Construct_HealthBar(frame, true, true, 'RIGHT')
 	frame.Name = self:Construct_NameText(frame)
 
@@ -67,9 +69,9 @@ function UF:Construct_ArenaFrames(frame)
 
 		frame.Debuffs = self:Construct_Debuffs(frame)
 
-		frame.Castbar = self:Construct_Castbar(frame, 'RIGHT')
+		frame.Castbar = self:Construct_Castbar(frame)
 
-		frame.HealPrediction = UF:Construct_HealComm(frame)
+		frame.HealthPrediction = UF:Construct_HealComm(frame)
 		frame.Trinket = self:Construct_Trinket(frame)
 		frame.PVPSpecIcon = self:Construct_PVPSpecIcon(frame)
 		frame.Range = UF:Construct_Range(frame)

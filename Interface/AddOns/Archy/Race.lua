@@ -36,8 +36,8 @@ local raceMetatable = {
 local RaceID = { Unknown = 0 } -- Populated in AddRace
 private.RaceID = RaceID
 
-local AechaeologyRaceLabelFromID = {} -- Populated in AddRace
-private.AechaeologyRaceLabelFromID = AechaeologyRaceLabelFromID
+local ArchaeologyRaceLabelFromID = {} -- Populated in AddRace
+private.ArchaeologyRaceLabelFromID = ArchaeologyRaceLabelFromID
 
 -- Populated in InitializeRaces
 local CurrencyNameFromRaceID = {
@@ -47,6 +47,27 @@ local CurrencyNameFromRaceID = {
 local KeystoneIDToRace = {} -- Populated in InitializeRaces
 private.KeystoneIDToRace = KeystoneIDToRace
 
+local RaceTextureIDToRaceLabel = {
+	[461829] = "ArchRaceDraenei",
+	[461831] = "ArchRaceDwarf",
+	[461833] = "ArchRaceFossil",
+	[461835] = "ArchRaceNerubian",
+	[461837] = "ArchRaceNightElf",
+	[461839] = "ArchRaceTolvir",
+	[461841] = "ArchRaceTroll",
+	[461843] = "ArchRaceVrykul",
+	[462321] = "ArchRaceOrc",
+	[633000] = "ArchRaceMogu",
+	[633002] = "ArchRacePandaren",
+	[839111] = "ArchRaceMantid",
+	[1030616] = "ArchRaceArakkoa",
+	[1030617] = "ArchRaceDraenorOrc",
+	[1030618] = "ArchRaceOgre",
+	[1445573] = "ArchRaceDemons",
+	[1445575] = "ArchRaceHighborneNightElves",
+	[1445577] = "ArchRaceHighmountainTauren",
+}
+
 -- ----------------------------------------------------------------------------
 -- Helpers.
 -- ----------------------------------------------------------------------------
@@ -55,6 +76,7 @@ function private.InitializeRaces()
 
 	for raceID = 1, _G.GetNumArchaeologyRaces() do
 		local race = private.AddRace(raceID)
+
 		KeystoneIDToRace[race.keystone.ID] = race
 	end
 
@@ -109,13 +131,12 @@ function private.AddRace(raceID)
 		return
 	end
 
-	local raceName, raceTexturePath, keystoneItemID, fragmentsCollected, _, maxFragments = _G.GetArchaeologyRaceInfo(raceID)
-	local _, _, textureName = ("\\"):split(raceTexturePath)
-	local raceLabel = textureName:gsub("-", "")
+	local raceName, raceTextureID, keystoneItemID, fragmentsCollected, _, maxFragments = _G.GetArchaeologyRaceInfo(raceID)
+	local raceLabel = RaceTextureIDToRaceLabel[raceTextureID]
 	local keystoneName, _, _, _, _, _, _, _, _, keystoneTexture, _ = _G.GetItemInfo(keystoneItemID)
 
 	RaceID[raceLabel] = raceID
-	AechaeologyRaceLabelFromID[raceID] = raceLabel
+	ArchaeologyRaceLabelFromID[raceID] = raceLabel
 
 	local race = _G.setmetatable({
 		Artifacts = {},
@@ -126,7 +147,7 @@ function private.AddRace(raceID)
 		maxFragments = maxFragments,
 		name = raceName,
 		numArtifacts = _G.GetNumArtifactsByRace(raceID) or 0,
-		texture = raceTexturePath,
+		texture = raceTextureID,
 		keystone = {
 			ID = keystoneItemID,
 			name = keystoneName,
@@ -146,7 +167,7 @@ function private.AddRace(raceID)
 		local artifactName, artifactDescription, artifactRarity, artifactIcon, hoverDescription, keystoneCount, bgTexture, firstCompletionTime, completionCount = _G.GetArtifactInfoByRace(raceID, artifactIndex)
 		local artifact = {
 			ID = artifactIndex,
-			completionCount = completionCount,
+			completionCount = completionCount or 0,
 			isRare = artifactRarity ~= 0,
 			name = artifactName,
 			texture = artifactIcon,
@@ -190,13 +211,13 @@ end
 
 function Race:GetArtifactCompletionCountByName(targetArtifactName)
 	if not targetArtifactName or targetArtifactName == "" or self.numArtifacts == 0 then
-		return
+		return 0
 	end
 
 	for artifactIndex = 1, self.numArtifacts do
 		local artifactName, _, _, _, _, _, _, _, completionCount = _G.GetArtifactInfoByRace(self.ID, artifactIndex)
 		if artifactName == targetArtifactName then
-			return completionCount
+			return completionCount or 0
 		end
 	end
 
@@ -241,7 +262,7 @@ function Race:UpdateCurrentProject()
 		return
 	end
 
-	local completionCount
+	local completionCount = 0
 	local project = self.currentProject or artifact
 
 	if project then
@@ -251,7 +272,7 @@ function Race:UpdateCurrentProject()
 				project.hasPinged = nil
 
 				completionCount = self:GetArtifactCompletionCountByName(project.name)
-				Archy:Pour(L["You have solved |cFFFFFF00%s|r Artifact - |cFFFFFF00%s|r (Times completed: %d)"]:format(self.name, project.name, completionCount or 0),
+				Archy:Pour(L["You have solved |cFFFFFF00%s|r Artifact - |cFFFFFF00%s|r (Times completed: %d)"]:format(self.name, project.name, completionCount),
 					1, 1, 1, nil, nil, nil, nil, nil, project.icon)
 			end
 		else

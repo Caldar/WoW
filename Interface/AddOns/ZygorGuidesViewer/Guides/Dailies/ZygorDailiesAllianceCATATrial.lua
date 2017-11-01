@@ -3,7 +3,7 @@ if not ZygorGuidesViewer then return end
 if UnitFactionGroup("player")~="Alliance" then return end
 if ZGV:DoMutex("DailiesACATA") then return end
 ZygorGuidesViewer.GuideMenuTier = "TRI"
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Dailies Guides\\Northrend (70 - 80)\\Grizzly Hills\\Blackriver Logging Camp Dailies",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Dailies Guides\\Wrath of the Lich King Dailies\\Grizzly Hills\\Blackriver Logging Camp Dailies",{
 author="support@zygorguides.com",
 description="This guide section will walk you through completing the daily quest in the Blackriver Logging Camp region of Grizzly Hills.\nThere are no pre-quests needed to unlock the daily quest offered in this guide section.",
 },[[
@@ -16,7 +16,7 @@ talk Samir##26424
 accept Filling the Cages##11984 |goto Grizzly Hills,16.2,47.6
 step
 talk Budd##26429
-Tell him it's time to play with the ice trolls |havebuff Budd's Attention Span |q 11984 |goto 16.4,48.3
+Tell him it's time to play with the ice trolls |havebuff 134177 |q 11984 |goto 16.4,48.3
 step
 Use Budd's pet bar skill Tag Troll to have him stun a troll|petaction Tag Troll
 Use your Bounty Hunter's Cage on the stunned troll |use Bounty Hunter's Cage##35736
@@ -88,7 +88,7 @@ step
 You have finished this Dailies Guide. Click here to return to the beginning of the Dailies |confirm
 |next dailies
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Dailies Guides\\Northrend (70 - 80)\\Grizzly Hills\\Blue Sky Logging Grounds Dailies",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Dailies Guides\\Wrath of the Lich King Dailies\\Grizzly Hills\\Blue Sky Logging Grounds Dailies",{
 author="support@zygorguides.com",
 description="This guide section will walk you through completing the daily quests in the Blue Sky Logging Grounds region of Grizzly Hills.\nThere are no pre-quests needed to unlock the daily quests offered in this guide section.",
 },[[
@@ -101,7 +101,7 @@ talk Samir##26424
 accept Filling the Cages##11984 |goto Grizzly Hills,16.2,47.6
 step
 talk Budd##26429
-Tell him it's time to play with the ice trolls |havebuff Budd's Attention Span |q 11984 |goto 16.4,48.3
+Tell him it's time to play with the ice trolls |havebuff 134177 |q 11984 |goto 16.4,48.3
 step
 Use Budd's pet bar skill Tag Troll to have him stun a troll |petaction Tag Troll
 Use your Bounty Hunter's Cage on the stunned troll |use Bounty Hunter's Cage##35736
@@ -204,7 +204,7 @@ step
 You have finished this Dailies Guide. Click here to return to the beginning of the Dailies |confirm
 |next dailies
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Dailies Guides\\Northrend (70 - 80)\\Grizzly Hills\\Granite Springs Dailies",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Dailies Guides\\Wrath of the Lich King Dailies\\Grizzly Hills\\Granite Springs Dailies",{
 author="support@zygorguides.com",
 description="This guide section will walk you through completing the daily quest in the Granite Springs region of Grizzly Hills.",
 },[[
@@ -217,7 +217,7 @@ talk Samir##26424
 accept Filling the Cages##11984 |goto Grizzly Hills,16.2,47.6
 step
 talk Budd##26429
-Tell him it's time to play with the ice trolls |havebuff Budd's Attention Span |q 11984 |goto 16.4,48.3
+Tell him it's time to play with the ice trolls |havebuff 134177 |q 11984 |goto 16.4,48.3
 step
 Use Budd's pet bar skill Tag Troll to have him stun a troll |petaction Tag Troll
 Use your Bounty Hunter's Cage on the stunned troll |use Bounty Hunter's Cage##35736
@@ -291,7 +291,7 @@ step
 You have finished this Dailies Guide. Click here to return to the beginning of the Dailies |confirm
 |next dailies
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Dailies Guides\\Northrend (70 - 80)\\Grizzly Hills\\Venture Bay Dailies",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Dailies Guides\\Wrath of the Lich King Dailies\\Grizzly Hills\\Venture Bay Dailies",{
 author="support@zygorguides.com",
 description="This guide section will walk you through completing the daily quests in the Venture Bay region of Grizzly Hills.\nThere are no pre-quests needed to unlock the daily quests offered in this guide section.",
 },[[
@@ -304,7 +304,7 @@ talk Samir##26424
 accept Filling the Cages##11984 |goto Grizzly Hills,16.2,47.6
 step
 talk Budd##26429
-Tell him it's time to play with the ice trolls |havebuff Budd's Attention Span |q 11984 |goto 16.4,48.3
+Tell him it's time to play with the ice trolls |havebuff 134177 |q 11984 |goto 16.4,48.3
 step
 Use Budd's pet bar skill Tag Troll to have him stun a troll |petaction Tag Troll
 Use your Bounty Hunter's Cage on the stunned troll |use Bounty Hunter's Cage##35736
@@ -419,19 +419,19 @@ step
 You have finished this Dailies Guide. Click here to return to the beginning of the Dailies |confirm
 |next dailies
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Events Guides\\Pilgrim's Bounty\\Pilgrim's Bounty Quests and Cooking 1-300 Guide",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Events Guides\\Pilgrim's Bounty\\Pilgrim's Bounty Quests and Cooking 1-300 Guide",{
 author="support@zygorguides.com",
 condition_suggested=[[isevent("Pilgrim's Bounty")]],
 description="This guide section will walk you through completing the quests for the Pilgrim's Bounty event, as well as getting your Cooking skill from 1-300.",
 },[[
-#include "Pilgrims_Bounty_Quests_Alliance"
+#include "Pilgrim's_Bounty_Quests"
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Events Guides\\Pilgrim's Bounty\\Pilgrim's Bounty Daily Quests",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Events Guides\\Pilgrim's Bounty\\Pilgrim's Bounty Daily Quests",{
 author="support@zygorguides.com",
 condition_suggested=[[isevent("Pilgrim's Bounty")]],
 description="This quide will help run through the Pilgrims Bounty Dailies and Achievements to earn the Title Pilgrim.",
 },[[
-#include "Pilgrims_Bounty_Dailies_Alliance"
+#include "Pilgrim's_Bounty_Dailies"
 ]])
 ZygorGuidesViewer:RegisterGuide("Events\\Warlords of Draenor\\The Iron Horde Invasion",{
 description="Take part in the opening event of the Warlords of Draenor!",

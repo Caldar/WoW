@@ -54,7 +54,7 @@ local wipe = _G.wipe
 local BuildSectionKey = addon.BuildSectionKey
 local SplitSectionKey = addon.SplitSectionKey
 
-local JUNK, FREE_SPACE = addon.BI['Junk'], L["Free space"]
+local JUNK, FREE_SPACE = GetItemSubClassInfo(LE_ITEM_CLASS_MISCELLANEOUS, 0), L["Free space"]
 local JUNK_KEY, FREE_SPACE_KEY = BuildSectionKey(JUNK, JUNK), BuildSectionKey(FREE_SPACE, FREE_SPACE)
 
 local mod = addon:RegisterFilter("FilterOverride", 95, "ABEvent-1.0")
@@ -168,6 +168,8 @@ function mod:GetOptions()
 	local function GetItemId(str)
 		if type(str) == "string" and strmatch(str, "battlepet:") then
 			return 82800 -- Official item (Pet Cage)
+		elseif type(str) == "string" and strmatch(str, "keystone:") then
+			return 138019 -- Official item (Mythic Keystone)
 		elseif str then
 			local link = select(2, GetItemInfo(str))
 			return link and tonumber(link:match("item:(%d+)"))

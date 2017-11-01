@@ -44,7 +44,7 @@ local function configTable()
 				order = 6, type = "range",
 				name = L["Chat Editbox History"],
 				desc = L["The amount of messages to save in the editbox history.\n\n|cffFF0000Note:|r To disable, set to 0."],
-				min = 5, max = 20, step = 1,
+				min = 5, max = 50, step = 1,
 				get = function(info) return E.db.sle.chat.editboxhistory end,
 				set = function(info, value) E.db.sle.chat.editboxhistory = value; end,
 			},
@@ -60,7 +60,7 @@ local function configTable()
 			dpsSpam = {
 				order = 8, type = "toggle",
 				name = L["Filter DPS meters' Spam"],
-				desc = L["Replaces long reports from damage meters with a clickeble hyperlink to reduce chat spam.\nWorks correctly only with general reports such as DPS or HPS. May fail to filter te report of other things"],
+				desc = L["Replaces long reports from damage meters with a clickable hyperlink to reduce chat spam.\nWorks correctly only with general reports such as DPS or HPS. May fail to filter the report of other things."],
 				get = function(info) return E.db.sle.chat.dpsSpam end,
 				set = function(info, value)	E.db.sle.chat.dpsSpam = value; C:SpamFilter() end,
 			},
@@ -75,6 +75,16 @@ local function configTable()
 					["LEFT"] = L["Left"],
 					["RIGHT"] = L["Right"],
 				}
+			},
+			setupDelay = {
+				order = 10,
+				type = "range",
+				name = L["Chat Setup Delay"],
+				desc = L["Manages the delay before S&L will execute hooks to ElvUI's chat positioning. Prevents some weird positioning issues."],
+				hidden = function() return not E.global.sle.advanced.general end,
+				min = 0.5, max = 10, step = .1,
+				get = function(info) return E.global.sle.advanced.chat[ info[#info] ] end,
+				set = function(info, value) E.global.sle.advanced.chat[ info[#info] ] = value; E:StaticPopup_Show("GLOBAL_RL") end,
 			},
 			textureAlpha = {
 				order = 20, type = "group",
@@ -115,7 +125,7 @@ local function configTable()
 					identify = {
 						order = 12, type = "execute",
 						name = L["Identify"],
-						desc = L["Showes the message in each chat frame containing frame's number."],
+						desc = L["Shows the message in each chat frame containing frame's number."],
 						func = function() C:IdentifyChatFrames() end,
 					},
 				},
@@ -137,7 +147,7 @@ local function configTable()
 						order = 2,
 						type = "toggle",
 						name = L["Invite links"],
-						desc = L["Convets specified keywords to links that automatically invite message's author to group."],
+						desc = L["Converts specified keywords to links that automatically invite message's author to group."],
 						set = function(info, value) E.db.sle.chat.invite[ info[#info] ]  = value; C:SpamFilter() end,
 					},
 					color = {

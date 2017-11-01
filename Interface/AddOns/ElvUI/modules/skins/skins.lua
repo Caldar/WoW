@@ -4,7 +4,7 @@ local S = E:NewModule('Skins', 'AceTimer-3.0', 'AceHook-3.0', 'AceEvent-3.0')
 --Cache global variables
 --Lua functions
 local _G = _G
-local unpack, assert, pairs, select, type, pcall = unpack, assert, pairs, select, type, pcall
+local unpack, assert, pairs, ipairs, select, type, pcall = unpack, assert, pairs, ipairs, select, type, pcall
 local tinsert, wipe = table.insert, table.wipe
 --WoW API / Variables
 local SquareButton_SetIcon = SquareButton_SetIcon
@@ -15,14 +15,14 @@ local IsAddOnLoaded = IsAddOnLoaded
 local GetCVarBool = GetCVarBool
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
--- GLOBALS: ScriptErrorsFrame_OnError
+-- GLOBALS: ScriptErrorsFrame
 
 E.Skins = S
 S.addonsToLoad = {}
 S.nonAddonsToLoad = {}
 S.allowBypass = {}
 S.addonCallbacks = {}
-S.nonAddonCallbacks = {}
+S.nonAddonCallbacks = {["CallPriority"] = {}}
 
 local find = string.find
 
@@ -36,11 +36,22 @@ function S:SetOriginalBackdrop()
 	self:SetBackdropBorderColor(unpack(E["media"].bordercolor))
 end
 
+function S:StatusBarColorGradient(bar, value, max, backdrop)
+    local current = (not max and value) or (value and max and max ~= 0 and value/max)
+    if not (bar and current) then return end
+    local r, g, b = E:ColorGradient(current, 0.8,0,0, 0.8,0.8,0, 0,0.8,0)
+    local bg = backdrop or bar.backdrop
+    if bg then bg:SetBackdropColor(r*0.25, g*0.25, b*0.25) end
+    bar:SetStatusBarColor(r, g, b)
+end
+
 function S:HandleButton(f, strip)
 	assert(f, "doesn't exist!")
 	if f.Left then f.Left:SetAlpha(0) end
 	if f.Middle then f.Middle:SetAlpha(0) end
 	if f.Right then f.Right:SetAlpha(0) end
+	if f.LeftSeparator then f.LeftSeparator:SetAlpha(0) end
+	if f.RightSeparator then f.RightSeparator:SetAlpha(0) end
 
 	if f.SetNormalTexture then f:SetNormalTexture("") end
 
@@ -140,14 +151,14 @@ function S:HandleScrollBar(frame, thumbTrim)
 				S:HandleNextPrevButton(frame.ScrollDownButton, true)
 				frame.ScrollDownButton:Size(frame.ScrollDownButton:GetWidth() + 7, frame.ScrollDownButton:GetHeight() + 7)
 			end
-			
+
 			if not frame.trackbg then
 				frame.trackbg = CreateFrame("Frame", nil, frame)
 				frame.trackbg:Point("TOPLEFT", frame.ScrollUpButton, "BOTTOMLEFT", 0, -1)
 				frame.trackbg:Point("BOTTOMRIGHT", frame.ScrollDownButton, "TOPRIGHT", 0, 1)
 				frame.trackbg:SetTemplate("Transparent")
 			end
-			
+
 			if frame.thumbTexture then
 				if not thumbTrim then thumbTrim = 3 end
 				frame.thumbTexture:SetTexture(nil)
@@ -199,8 +210,7 @@ function S:HandleTab(tab)
 end
 
 function S:HandleNextPrevButton(btn, useVertical, inverseDirection)
-	local norm, pushed, disabled
-	local inverseDirection = inverseDirection or btn:GetName() and (find(btn:GetName():lower(), 'left') or find(btn:GetName():lower(), 'prev') or find(btn:GetName():lower(), 'decrement') or find(btn:GetName():lower(), 'back'))
+	inverseDirection = inverseDirection or btn:GetName() and (find(btn:GetName():lower(), 'left') or find(btn:GetName():lower(), 'prev') or find(btn:GetName():lower(), 'decrement') or find(btn:GetName():lower(), 'back'))
 
 	btn:StripTextures()
 	btn:SetNormalTexture(nil)
@@ -272,6 +282,38 @@ function S:HandleRotateButton(btn)
 	btn:GetHighlightTexture():SetAllPoints(btn:GetNormalTexture())
 end
 
+-- Introduced in 7.3
+function S:HandleMaxMinFrame(frame)
+	assert(frame, "does not exist.")
+
+	for _, name in next, {"MaximizeButton", "MinimizeButton"} do
+		if frame then frame:StripTextures() end
+
+		local button = frame[name]
+		button:SetSize(16, 16)
+		button:ClearAllPoints()
+		button:SetPoint("CENTER")
+
+		button:SetNormalTexture("Interface\\AddOns\\ElvUI\\media\\textures\\vehicleexit")
+		button:SetPushedTexture("Interface\\AddOns\\ElvUI\\media\\textures\\vehicleexit")
+		button:SetHighlightTexture("Interface\\AddOns\\ElvUI\\media\\textures\\vehicleexit")
+
+		if not button.backdrop then
+			button:CreateBackdrop("Default", true)
+			button.backdrop:Point("TOPLEFT", button, 1, -1)
+			button.backdrop:Point("BOTTOMRIGHT", button, -1, 1)
+			button:HookScript('OnEnter', S.SetModifiedBackdrop)
+			button:HookScript('OnLeave', S.SetOriginalBackdrop)
+		end
+
+		if name == "MaximizeButton" then
+			button:GetNormalTexture():SetTexCoord(1, 1, 1, -1.2246467991474e-016, 1.1102230246252e-016, 1, 0, -1.144237745222e-017)
+			button:GetPushedTexture():SetTexCoord(1, 1, 1, -1.2246467991474e-016, 1.1102230246252e-016, 1, 0, -1.144237745222e-017)
+			button:GetHighlightTexture():SetTexCoord(1, 1, 1, -1.2246467991474e-016, 1.1102230246252e-016, 1, 0, -1.144237745222e-017)
+		end
+	end
+end
+
 function S:HandleEditBox(frame)
 	frame:CreateBackdrop("Default")
 
@@ -326,10 +368,10 @@ function S:HandleDropDownBox(frame, width)
 	if(button) then
 		button:ClearAllPoints()
 		button:Point("RIGHT", frame, "RIGHT", -10, 3)
-		hooksecurefunc(button, "SetPoint", function(self, point, attachTo, anchorPoint, xOffset, yOffset, noReset)
+		hooksecurefunc(button, "SetPoint", function(self, _, _, _, _, _, noReset)
 			if not noReset then
-				button:ClearAllPoints()
-				button:SetPoint("RIGHT", frame, "RIGHT", E:Scale(-10), E:Scale(3), true)
+				self:ClearAllPoints()
+				self:SetPoint("RIGHT", frame, "RIGHT", E:Scale(-10), E:Scale(3), true)
 			end
 		end)
 
@@ -531,9 +573,11 @@ function S:HandleFollowerPage(follower, hasItems)
 	end
 
 	local xpbar = follower.followerTab.XPBar
-	xpbar:StripTextures()
-	xpbar:SetStatusBarTexture(E["media"].normTex)
-	xpbar:CreateBackdrop("Transparent")
+	if not xpbar.backdrop then
+		xpbar:StripTextures()
+		xpbar:SetStatusBarTexture(E["media"].normTex)
+		xpbar:CreateBackdrop("Transparent")
+	end
 end
 
 function S:HandleShipFollowerPage(followerTab)
@@ -560,16 +604,55 @@ function S:HandleShipFollowerPage(followerTab)
 	end
 end
 
+function S:HandleIconSelectionFrame(frame, numIcons, buttonNameTemplate, frameNameOverride)
+	assert(frame, "HandleIconSelectionFrame: frame argument missing")
+	assert(numIcons and type(numIcons) == "number", "HandleIconSelectionFrame: numIcons argument missing or not a number")
+	assert(buttonNameTemplate and type(buttonNameTemplate) == "string", "HandleIconSelectionFrame: buttonNameTemplate argument missing or not a string")
+
+	local frameName = frameNameOverride or frame:GetName() --We need override in case Blizzard fucks up the naming (guild bank)
+	local scrollFrame = _G[frameName.."ScrollFrame"]
+	local editBox = _G[frameName.."EditBox"]
+	local okayButton = _G[frameName.."OkayButton"] or _G[frameName.."Okay"]
+	local cancelButton = _G[frameName.."CancelButton"] or _G[frameName.."Cancel"]
+
+	frame:StripTextures()
+	frame.BorderBox:StripTextures()
+	scrollFrame:StripTextures()
+	editBox:DisableDrawLayer("BACKGROUND") --Removes textures around it
+
+	frame:SetTemplate("Transparent")
+	frame:Height(frame:GetHeight() + 10)
+	scrollFrame:Height(scrollFrame:GetHeight() + 10)
+
+	S:HandleButton(okayButton)
+	S:HandleButton(cancelButton)
+	S:HandleEditBox(editBox)
+
+	cancelButton:ClearAllPoints()
+	cancelButton:Point("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -5, 5)
+
+	for i = 1, numIcons do
+		local button = _G[buttonNameTemplate..i]
+		local icon = _G[button:GetName().."Icon"]
+		button:StripTextures()
+		button:SetTemplate("Default")
+		button:StyleButton(true)
+		icon:SetInside()
+		icon:SetTexCoord(unpack(E.TexCoords))
+	end
+end
+
 function S:ADDON_LOADED(event, addon)
 	if self.allowBypass[addon] then
-		if S.addonsToLoad[addon] then
+		if self.addonsToLoad[addon] then
 			--Load addons using the old deprecated register method
-			S.addonsToLoad[addon]()
-			S.addonsToLoad[addon] = nil
-		elseif S.addonCallbacks[addon] then
+			self.addonsToLoad[addon]()
+			self.addonsToLoad[addon] = nil
+		elseif self.addonCallbacks[addon] then
 			--Fire events to the skins that rely on this addon
-			for event in pairs(S.addonCallbacks[addon]) do
-				S.addonCallbacks[addon][event] = nil;
+			for index, event in ipairs(self.addonCallbacks[addon]["CallPriority"]) do
+				self.addonCallbacks[addon][event] = nil;
+				self.addonCallbacks[addon]["CallPriority"][index] = nil
 				E.callbacks:Fire(event)
 			end
 		end
@@ -578,12 +661,13 @@ function S:ADDON_LOADED(event, addon)
 
 	if not E.initialized then return end
 
-	if S.addonsToLoad[addon] then
-		S.addonsToLoad[addon]()
-		S.addonsToLoad[addon] = nil
-	elseif S.addonCallbacks[addon] then
-		for event in pairs(S.addonCallbacks[addon]) do
-			S.addonCallbacks[addon][event] = nil;
+	if self.addonsToLoad[addon] then
+		self.addonsToLoad[addon]()
+		self.addonsToLoad[addon] = nil
+	elseif self.addonCallbacks[addon] then
+		for index, event in ipairs(self.addonCallbacks[addon]["CallPriority"]) do
+			self.addonCallbacks[addon][event] = nil;
+			self.addonCallbacks[addon]["CallPriority"][index] = nil
 			E.callbacks:Fire(event)
 		end
 	end
@@ -625,12 +709,12 @@ function S:AddCallbackForAddon(addonName, eventName, loadFunc, forceLoad, bypass
 
 	--Create an event registry for this addon, so that we can fire multiple events when this addon is loaded
 	if not self.addonCallbacks[addonName] then
-		self.addonCallbacks[addonName] = {}
+		self.addonCallbacks[addonName] = {["CallPriority"] = {}}
 	end
-	
-	if self.addonCallbacks[addonName][eventName] then
+
+	if self.addonCallbacks[addonName][eventName] or E.ModuleCallbacks[eventName] or E.InitialModuleCallbacks[eventName] then
 		--Don't allow a registered callback to be overwritten
-		E:Print("Invalid argument #2 to S:AddCallbackForAddon (event name is already registered, please use a unique event name)")
+		E:Print("Invalid argument #2 to S:AddCallbackForAddon (event name:", eventName, "is already registered, please use a unique event name)")
 		return
 	end
 
@@ -642,6 +726,7 @@ function S:AddCallbackForAddon(addonName, eventName, loadFunc, forceLoad, bypass
 	else
 		--Insert eventName in this addons' registry
 		self.addonCallbacks[addonName][eventName] = true
+		self.addonCallbacks[addonName]["CallPriority"][#self.addonCallbacks[addonName]["CallPriority"] + 1] = eventName
 	end
 end
 
@@ -656,14 +741,15 @@ function S:AddCallback(eventName, loadFunc)
 		return
 	end
 
-	if self.nonAddonCallbacks[eventName] then
+	if self.nonAddonCallbacks[eventName] or E.ModuleCallbacks[eventName] or E.InitialModuleCallbacks[eventName] then
 		--Don't allow a registered callback to be overwritten
-		E:Print("Invalid argument #1 to S:AddCallback (event name is already registered, please use a unique event name)")
+		E:Print("Invalid argument #1 to S:AddCallback (event name:", eventName, "is already registered, please use a unique event name)")
 		return
 	end
 
 	--Add event name to registry
 	self.nonAddonCallbacks[eventName] = true
+	self.nonAddonCallbacks["CallPriority"][#self.nonAddonCallbacks["CallPriority"] + 1] = eventName
 
 	--Register loadFunc to be called when event is fired
 	E.RegisterCallback(E, eventName, loadFunc)
@@ -673,18 +759,20 @@ function S:Initialize()
 	self.db = E.private.skins
 
 	--Fire events for Blizzard addons that are already loaded
-	for addon, events in pairs(self.addonCallbacks) do
+	for addon in pairs(self.addonCallbacks) do
 		if IsAddOnLoaded(addon) then
-			for event in pairs(events) do
+			for index, event in ipairs(S.addonCallbacks[addon]["CallPriority"]) do
 				self.addonCallbacks[addon][event] = nil;
+				self.addonCallbacks[addon]["CallPriority"][index] = nil
 				E.callbacks:Fire(event)
 			end
 		end
 	end
 	--Fire event for all skins that doesn't rely on a Blizzard addon
-	for eventName in pairs(self.nonAddonCallbacks) do
-		self.addonCallbacks[eventName] = nil;
-		E.callbacks:Fire(eventName)
+	for index, event in ipairs(self.nonAddonCallbacks["CallPriority"]) do
+		self.nonAddonCallbacks[event] = nil;
+		self.nonAddonCallbacks["CallPriority"][index] = nil
+		E.callbacks:Fire(event)
 	end
 
 	--Old deprecated load functions. We keep this for the time being in case plugins make use of it.
@@ -693,7 +781,7 @@ function S:Initialize()
 			self.addonsToLoad[addon] = nil;
 			local _, catch = pcall(loadFunc)
 			if(catch and GetCVarBool('scriptErrors') == true) then
-				ScriptErrorsFrame_OnError(catch, false)
+				ScriptErrorsFrame:OnError(catch, false, false)
 			end
 		end
 	end
@@ -701,7 +789,7 @@ function S:Initialize()
 	for _, loadFunc in pairs(self.nonAddonsToLoad) do
 		local _, catch = pcall(loadFunc)
 		if(catch and GetCVarBool('scriptErrors') == true) then
-			ScriptErrorsFrame_OnError(catch, false)
+			ScriptErrorsFrame:OnError(catch, false, false)
 		end
 	end
 	wipe(self.nonAddonsToLoad)
@@ -709,4 +797,8 @@ end
 
 S:RegisterEvent('ADDON_LOADED')
 
-E:RegisterModule(S:GetName())
+local function InitializeCallback()
+	S:Initialize()
+end
+
+E:RegisterModule(S:GetName(), InitializeCallback)

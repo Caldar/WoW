@@ -271,16 +271,8 @@ local function GetProfileData(profileType)
 		profileData = E:CopyTable(profileData, ElvDB.global)
 		profileData = E:RemoveTableDuplicates(profileData, G)
 
-	elseif profileType == "filtersNP" then
-		profileKey = "filtersNP"
-
-		profileData["nameplate"] = {}
-		profileData["nameplate"]["filter"] = {}
-		profileData["nameplate"]["filter"] = E:CopyTable(profileData["nameplate"]["filter"], ElvDB.global.nameplate.filter)
-		profileData = E:RemoveTableDuplicates(profileData, G)
-
-	elseif profileType == "filtersUF" then
-		profileKey = "filtersUF"
+	elseif profileType == "filters" then
+		profileKey = "filters"
 
 		profileData["unitframe"] = {}
 		profileData["unitframe"]["aurafilters"] = {}
@@ -288,18 +280,12 @@ local function GetProfileData(profileType)
 		profileData["unitframe"]["buffwatch"] = {}
 		profileData["unitframe"]["buffwatch"] = E:CopyTable(profileData["unitframe"]["buffwatch"], ElvDB.global.unitframe.buffwatch)
 		profileData = E:RemoveTableDuplicates(profileData, G)
-
-	elseif profileType == "filtersAll" then
-		profileKey = "filtersAll"
+	elseif profileType == "styleFilters" then
+		profileKey = "styleFilters"
 
 		profileData["nameplate"] = {}
-		profileData["nameplate"]["filter"] = {}
-		profileData["nameplate"]["filter"] = E:CopyTable(profileData["nameplate"]["filter"], ElvDB.global.nameplate.filter)
-		profileData["unitframe"] = {}
-		profileData["unitframe"]["aurafilters"] = {}
-		profileData["unitframe"]["aurafilters"] = E:CopyTable(profileData["unitframe"]["aurafilters"], ElvDB.global.unitframe.aurafilters)
-		profileData["unitframe"]["buffwatch"] = {}
-		profileData["unitframe"]["buffwatch"] = E:CopyTable(profileData["unitframe"]["buffwatch"], ElvDB.global.unitframe.buffwatch)
+		profileData["nameplate"]["filters"] = {}
+		profileData["nameplate"]["filters"] = E:CopyTable(profileData["nameplate"]["filters"], ElvDB.global.nameplate.filters)
 		profileData = E:RemoveTableDuplicates(profileData, G)
 	end
 
@@ -372,9 +358,16 @@ function D:Decode(dataString)
 
 		local serializedData, success
 		serializedData, profileInfo = E:SplitString(decompressedData, "^^::") -- "^^" indicates the end of the AceSerializer string
+
+		if not profileInfo then
+			E:Print("Error importing profile. String is invalid or corrupted!")
+			return
+		end
+
 		serializedData = format("%s%s", serializedData, "^^") --Add back the AceSerializer terminator
 		profileType, profileKey = E:SplitString(profileInfo, "::")
 		success, profileData = D:Deserialize(serializedData)
+
 		if not success then
 			E:Print("Error deserializing:", profileData)
 			return
@@ -382,12 +375,20 @@ function D:Decode(dataString)
 	elseif stringType == "Table" then
 		local profileDataAsString
 		profileDataAsString, profileInfo = E:SplitString(dataString, "}::") -- "}::" indicates the end of the table
-		profileDataAsString = format("%s%s", profileDataAsString, "}") --Add back the missing "}"
-		profileType, profileKey = E:SplitString(profileInfo, "::")
+
+		if not profileInfo then
+			E:Print("Error extracting profile info. Invalid import string!")
+			return
+		end
+
 		if not profileDataAsString then
 			E:Print("Error extracting profile data. Invalid import string!")
 			return
 		end
+
+		profileDataAsString = format("%s%s", profileDataAsString, "}") --Add back the missing "}"
+		profileDataAsString = gsub(profileDataAsString, "\124\124", "\124") --Remove escape pipe characters
+		profileType, profileKey = E:SplitString(profileInfo, "::")
 
 		local profileToTable = loadstring(format("%s %s", "return", profileDataAsString))
 		if profileToTable then
@@ -436,15 +437,10 @@ local function SetImportedProfile(profileType, profileKey, profileData, force)
 		E:CopyTable(ElvDB.global, profileData)
 		E:StaticPopup_Show('IMPORT_RL')
 
-	elseif profileType == "filtersNP" then
-		E:CopyTable(ElvDB.global.nameplate, profileData.nameplate)
-
-	elseif profileType == "filtersUF" then
+	elseif profileType == "filters" then
 		E:CopyTable(ElvDB.global.unitframe, profileData.unitframe)
-
-	elseif profileType == "filtersAll" then
+	elseif profileType == "styleFilters" then
 		E:CopyTable(ElvDB.global.nameplate, profileData.nameplate)
-		E:CopyTable(ElvDB.global.unitframe, profileData.unitframe)
 	end
 
 	--Update all ElvUI modules
@@ -546,4 +542,8 @@ E.PopupDialogs["IMPORT_RL"] = {
 	preferredIndex = 3
 }
 
-E:RegisterModule(D:GetName())
+local function InitializeCallback()
+	D:Initialize()
+end
+
+E:RegisterModule(D:GetName(), InitializeCallback)

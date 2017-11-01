@@ -13,7 +13,8 @@ rematch:InitModule(function()
 		panel.Loadouts[i].HP:SetMinMaxValues(0,100)
 		panel.Loadouts[i]:RegisterForClicks("AnyUp")
 		panel.Loadouts[i].Pet.Pet:SetID(i)
-		rematch:AddLevelingBorder(panel.Loadouts[i].Pet.Pet)
+		rematch:AddSpecialBorder(panel.Loadouts[i].Pet.Pet)
+      panel.Loadouts[i].Pet.Pet.isLoadoutSlot = true
 	end
 	-- there's no event for when loadout pets change (really!) so we hooksecurefunc them
 	hooksecurefunc(C_PetJournal,"SetAbility",function() rematch:StartTimer("LoadoutsChanging",0,panel.UpdateLoadouts) end)
@@ -43,7 +44,7 @@ function panel:UpdateLoadouts()
 		button.petID = petID
 		rematch:FillPetListButton(button.Pet,petID,true)
 		if petID then
-			local _,_,level,xp,maxXP,displayID = C_PetJournal.GetPetInfoByPetID(petID)
+			local speciesID,_,level,xp,maxXP,displayID = C_PetJournal.GetPetInfoByPetID(petID)
 			local health, maxHealth = C_PetJournal.GetPetStats(petID)
 			if level~=25 then
 				button.XP:Show()
@@ -69,30 +70,40 @@ function panel:UpdateLoadouts()
 			-- update model of loaded pet (if it's a different model; to avoid model restarting at first frame)
 			if button.displayID ~= displayID then
 				button.displayID = displayID
-				button.Model:SetDisplayInfo(displayID)
+				local _,loadoutSceneID = C_PetJournal.GetPetModelSceneInfoBySpeciesID(speciesID)
+				button.ModelScene:TransitionToModelSceneID(loadoutSceneID, CAMERA_TRANSITION_TYPE_IMMEDIATE, CAMERA_MODIFICATION_TYPE_DISCARD, true)
+				local actor = button.ModelScene:GetActorByTag("pet")
+				if actor then
+					actor:SetModelByCreatureDisplayID(displayID)
+					actor:SetAnimationBlendOperation(LE_MODEL_BLEND_OPERATION_NONE)
+				end
 			end
-			button.Model:Show()
+			button.ModelScene:Show()
 		else
 			button.XP:Hide()
 			button.HP:Hide()
-			button.Model:Hide()
+			button.ModelScene:Hide()
 		end
 		-- update loaded abilities
 		for j=1,3 do
 			button.Abilities[j]:SetShown(petID and true)
 			if petID then
-				panel:FillAbilityButton(button.Abilities[j],petID,info[j])
+				panel:FillAbilityButton(button.Abilities[j],petID,info[j],true)
 			end
 		end
-		button.queueControl = rematch:IsSlotQueueControlled(i)
+		button.queueControl = rematch:GetSpecialSlot(i)=="leveling"
 		-- update background
 		button.InsetBack:SetDesaturated(not petID)
-		-- update leveling border if a slot is controlled by the queue
-		if rematch:IsSlotQueueControlled(i) then
-			button.Pet.Pet.Leveling:SetShown(not settings.QueuePaused)
-			button.Pet.Pet.Leveling:SetDesaturated(not rematch:IsPetLeveling(petID))
+      -- if slot is special (leveling, ignored, random)
+      local specialPetID = rematch:GetSpecialSlot(i)
+      if specialPetID then
+			button.Pet.Pet.SpecialBorder:Show()
+         button.Pet.Pet.SpecialFootnote:Show()
+         rematch:SetFootnoteIcon(button.Pet.Pet.SpecialFootnote,specialPetID)
+         button.Pet.Pet.SpecialFootnote.tooltipTitle,button.Pet.Pet.SpecialFootnote.tooltipBody = rematch:GetSpecialTooltip(specialPetID)
 		else
-			button.Pet.Pet.Leveling:Hide()
+			button.Pet.Pet.SpecialBorder:Hide()
+         button.Pet.Pet.SpecialFootnote:Hide()
 		end
 
 		button.LockOverlay:SetShown((C_PetBattles.GetPVPMatchmakingInfo() or not C_PetJournal.IsJournalUnlocked()) and true)
@@ -119,11 +130,11 @@ function panel:LoadoutButtonReceivePet()
 			rematch:SlotPet(slot,petID)
 			if otherSlot then
 				-- if an already-slotted pet is being slotted, swap its leveling slot status with the other slot
-				local otherLeveling = rematch:IsSlotQueueControlled(otherSlot)
-				rematch:SetLevelingSlot(otherSlot,rematch:IsSlotQueueControlled(slot))
-				rematch:SetLevelingSlot(slot,otherLeveling)
+				local otherLeveling = rematch:GetSpecialSlot(otherSlot)
+				rematch:SetSpecialSlot(otherSlot,rematch:GetSpecialSlot(slot))
+				rematch:SetSpecialSlot(slot,otherLeveling)
 			else
-				rematch:SetLevelingSlot(slot,nil)
+				rematch:SetSpecialSlot(slot,nil)
 			end
 			rematch:UpdateQueue()
 			return true
@@ -184,10 +195,14 @@ function panel:AbilityButtonOnClick(button)
 end
 
 -- fills an ability button for loadout (both main and flyout buttons)
-function panel:FillAbilityButton(button,petID,abilityID)
+function panel:FillAbilityButton(button,petID,abilityID,withNumber)
 	if rematch:GetIDType(petID)~="pet" then
 		button.abilityID = nil
 		button.Icon:SetTexture("Interface\\PaperDoll\\UI-Backpack-EmptySlot")
+		if button.NumberBG then
+			button.NumberBG:Hide()
+			button.Number:Hide()
+		end
 		return
 	end
 	button.abilityID = abilityID
@@ -207,6 +222,16 @@ function panel:FillAbilityButton(button,petID,abilityID)
 					button.Cover:Hide()
 					button.Level:Hide()
 					button.Icon:SetDesaturated(false)
+				end
+				if withNumber then
+					if settings.ShowAbilityNumbers and settings.ShowAbilityNumbersLoaded and button.NumberBG then
+						button.NumberBG:Show()
+						button.Number:Show()
+						button.Number:SetText(i>3 and "2" or "1")
+					else
+						button.NumberBG:Hide()
+						button.Number:Hide()
+					end
 				end
 				return
 			end

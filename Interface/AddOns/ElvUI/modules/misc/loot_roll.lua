@@ -26,7 +26,6 @@ local C_LootHistoryGetItem = C_LootHistory.GetItem
 local C_LootHistoryGetPlayerInfo = C_LootHistory.GetPlayerInfo
 local ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
-local CUSTOM_CLASS_COLORS = CUSTOM_CLASS_COLORS
 local NEED = NEED
 local GREED = GREED
 local ROLL_DISENCHANT = ROLL_DISENCHANT
@@ -34,7 +33,8 @@ local PASS = PASS
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: GameTooltip, AlertFrameHolder, WorldFrame
--- GLOBALS: MAX_PLAYER_LEVEL, UIParent
+-- GLOBALS: MAX_PLAYER_LEVEL, UIParent, AlertFrame
+-- GLOBALS: CUSTOM_CLASS_COLORS
 
 local pos = 'TOP';
 local cancelled_rolls = {}
@@ -204,7 +204,7 @@ function M:CreateRollFrame()
 end
 
 local function GetFrame()
-	for i,f in ipairs(M.RollBars) do
+	for _,f in ipairs(M.RollBars) do
 		if not f.rollID then return f end
 	end
 
@@ -229,7 +229,7 @@ function M:START_LOOT_ROLL(event, rollID, time)
 	f.pass:SetText(0)
 	f.disenchant:SetText(0)
 
-	local texture, name, count, quality, bop, canNeed, canGreed, canDisenchant = GetLootRollItemInfo(rollID)
+	local texture, name, _, quality, bop, canNeed, canGreed, canDisenchant = GetLootRollItemInfo(rollID)
 	f.button.icon:SetTexture(texture)
 	f.button.link = GetLootRollItemLink(rollID)
 
@@ -281,8 +281,8 @@ function M:START_LOOT_ROLL(event, rollID, time)
 end
 
 function M:LOOT_HISTORY_ROLL_CHANGED(event, itemIdx, playerIdx)
-	local rollID, itemLink, numPlayers, isDone, winnerIdx, isMasterLoot = C_LootHistoryGetItem(itemIdx);
-	local name, class, rollType, roll, isWinner = C_LootHistoryGetPlayerInfo(itemIdx, playerIdx);
+	local rollID = C_LootHistoryGetItem(itemIdx);
+	local name, class, rollType = C_LootHistoryGetPlayerInfo(itemIdx, playerIdx);
 
 	local rollIsHidden = true
 	if name and rollType then

@@ -3,6 +3,8 @@ if not ZGV then return end
 
 local tinsert,twipe,tsort=tinsert,table.wipe,table.sort
 
+ZGV.F = {}
+
 function ZGV.TableKeys (tab)
 	local t={},k,v
 	for k,v in pairs(tab) do table.insert(t,k) end
@@ -86,23 +88,27 @@ end
 
 -- Ported from Skins.lua
 -- set textures in a button that has its normal/pushed/hilite textures named ntx,ptx,htx  - this was more useful some time ago...
-function ZGV.SetNPHtx(but,n,p,h)
+function ZGV.F.SetNPHtx(but,n,p,h)
 	assert(but,"How am I to set textures in a nil!?")
 	but.ntx:SetTexture(n)
 	but.ptx:SetTexture(p or n)
 	but.htx:SetTexture(h or n)
 end
 
-function ZGV.BetterTexCoord(obj,x,w,y,h)
+-- set sprite from texture:
+-- SetSpriteTexCoord(textureobject,2,4,3,8) -- sets texture coords on textureobject to crop to sprite in the 2nd of 4 columns, 1st of 8 rows.
+-- SetSpriteTexCoord(textureobject,10,4,8) -- to crop to 11th sprite in a 4x8 setup, counting left to right, top to bottom. Equivalent to the above.
+function ZGV.F.SetSpriteTexCoord(obj,x,w,y,h)
+	if not h then  x,w,y,h=(x or 0),w,nil,y  y=math.floor(x/w)+1  x=(x%w)+1  end
 	obj:SetTexCoord((x-1)/w,x/w,(y-1)/h,y/h)
 end
 
 local function CreateTexWithCoordsNum(obj,tx,x,w,y,h,flip)
-	--return CreateTextureWithCoords(obj,tx,(x-1)/w,x/w-(w/h)*0.0004,(y-1)/h,y/h-(w/h)*0.0004,blend,flip) ~~ Why is there -(w/h)*0.0004? It just clips icons strangely. ~~ Jeremiah  
 	return CreateTextureWithCoords(obj,tx,(x-1)/w,x/w,(y-1)/h,y/h,blend,flip)
 end
 
-function ZGV.AssignButtonTexture(obj,tx,num,total,flip)
+-- Assign four button sprites from an Nx4 texture, arranged in N columns of 4 rows of button states, left to right.
+function ZGV.F.AssignButtonTexture(obj,tx,num,total,flip)
 	ZGV.ChainCall(obj):SetNormalTexture(CreateTexWithCoordsNum(obj,tx,num,total,1,4,flip))
 		:SetPushedTexture(CreateTexWithCoordsNum(obj,tx,num,total,2,4,flip))
 		:SetHighlightTexture(CreateTexWithCoordsNum(obj,tx,num,total,3,4,flip))
@@ -219,12 +225,16 @@ function ZGV:IsPlayerInCombat()
 	return self.db.profile.fakecombat or UnitAffectingCombat("player")
 end
 
-function ZGV.FormatLevel(l)
+function ZGV.FormatLevel(l,mono)
 	local int = math.floor(l)
 	local frac = l-int
 	frac=math.round(frac*20)
 	if frac>0 then
-		return ("%d |cffbbbbbb(+%d bars)|r"):format(int,frac)
+		if mono then
+			return ("%d (+%d bars)|r"):format(int,frac)
+		else
+			return ("%d |cffbbbbbb(+%d bars)|r"):format(int,frac)
+		end
 		--return ("%d |cffbbbbbb+%d|r|T"..ZGV.DIR.."\\Skins\\levelbar:8:16|t"):format(int,frac)
 	else
 		return tostring(int)
@@ -252,7 +262,7 @@ end
 
 -- HAR HAR we can into hexaccurate colors não
 -- at least we're as precise as WoW lua allows us to
-function ZGV.HTMLColor(code)
+function ZGV.F.HTMLColor(code)
 	assert(code:match("#[0-9A-Fa-f]+$") and (#code==7 or #code==9),"Bogus code given: \""..code.."\")")
 	local r,g,b,a=tonumber("0x"..code:sub(2,3))/0xff,
 				  tonumber("0x"..code:sub(4,5))/0xff,
@@ -836,6 +846,8 @@ end
 ZGV.EventDelayFrame:SetScript("OnUpdate",OnUpdateHandler)
 ZGV.EventDelayFrame:SetScript("OnEvent",OnEventHandler)
 
+
+
 -- Sometimes GetItemInfo does not return the information you want: In its current
 -- form, it doesn't maintain the cache between sessions.
 
@@ -847,20 +859,73 @@ ZGV.EventDelayFrame:SetScript("OnEvent",OnEventHandler)
 
 -- Expire old items, to prevent cache from becoming unwieldy and having outdated
 -- items in it.
-function ZGV.cachedItemsExpire()
+
+local gii_cache
+
+function ZGV:GetItemInfo(id)
+
+	if not gii_cache then 
+		-- not yet initialised, return whatever blizz gave us
+		gii_cache=self.db and self.db.global.gii_cache
+		return GetItemInfo(id)
+	end
+
+	if gii_cache[id] and gii_cache[id][1] then  
+		gii_cache[id].timestamp=time()
+		return unpack(gii_cache[id])
+	end
+
+	local live_result={GetItemInfo(id)}
+	--self:Debug("GII from "..debugstack(2,1,0))
+	if live_result[1] then
+		-- got something out of GII, store it
+		gii_cache[id]=live_result
+		gii_cache[id].timestamp=time()
+		-- no live result, but we have stored data
+		-- update its last access time
+		return unpack(live_result)
+	else
+		-- nothing, but we will have data shortly
+		gii_cache[id]={}
+		return nil
+	end
+end
+
+function ZGV:GetItemInfoWipe()
+	ZGV:Print("Brute-flushing GetItemInfo cache.")
+	for i=1,10000 do GetItemInfo(i) end
+end
+
+function ZGV:PurgeItemCache()
+	table.wipe(gii_cache)
+end
+
+function ZGV:GET_ITEM_INFO_RECEIVED(event,id)
+	-- only store the items we requested
+	--ZGV:Debug("GIIR "..id)
+	if gii_cache and gii_cache[id] then
+		gii_cache[id] = {GetItemInfo(id)}
+		gii_cache[id].timestamp=time()
+	end
+end
+
+function ZGV:ExpireItemCache()
 	local gii_cache = ZGV.db.global.gii_cache
 	local currentTimestamp = time()
-	for ident, data in pairs(gii_cache) do
+	for id,data in pairs(gii_cache) do
 		-- No timestamp? Automatically expire it.
-		if not data.timestamp then
-			ZGV.db.global.gii_cache[ident] = nil
-		else -- Expire if older than a week.
-			if currentTimestamp - data.timestamp > 604800 then -- A week (7*24*60*60)
-				ZGV.db.global.gii_cache[ident] = nil
-			end
+		if not data.timestamp  or  currentTimestamp - data.timestamp > 604800 then -- A week (7*24*60*60)
+			gii_cache[id] = nil
 		end
 	end
 end
+
+tinsert(ZGV.startups,{"Functions: itemcache setup",function(self)
+	gii_cache=self.db.global.gii_cache
+	ZGV:ExpireItemCache()
+end})
+
+
 
 function ZGV:DebugMap()
 	local s=""
@@ -887,13 +952,6 @@ function ZGV:DebugMap()
 	
 	ZGV:ShowDump(s,"DebugMap")
 end
-
-tinsert(ZGV.startups,{"Functions: itemcache setup",function(self)
-	if not ZGV.db.global.itemCache then
-		ZGV.db.global.itemCache = {}
-	end
-	ZGV.cachedItemsExpire()
-end})
 
 --[[
 -- new implementation is in zgv.lua
@@ -1126,7 +1184,7 @@ function IL.ProcessItemLink(itemlink,keepDecor,...) --  (warning, potential smal
 	-- Verify link sanity
 	if tonumber(itemlink) then itemlink=("item:%d::::::::%d"):format(tonumber(itemlink),level) end
 	local prefix,itemstring,suffix = itemlink:match("(.*)item:([0-9-:]*)(.*)")
-	if not itemstring then return "BAD" end
+	if not itemstring then return itemlink,"BAD" end
 
 	-- Prepare data
 	local tab={strsplit(":",itemstring)}
@@ -1280,7 +1338,8 @@ function ZGV.Licence:CheckExpirationPopup()
 	if expired_E then
 		if not ZGV.db.profile.expired_elite_shown then
 			text1 = "Subscription expired"
-			text2 = "\nOh noes! Your guides have expired. No worries, simply update to renew your license. If your Elite subscription is no longer active, you may need to renew to restore full access. Thanks!"
+			--text2 = "\nOh noes! Your guides have expired. No worries, simply update to renew your license. If your Elite subscription is no longer active, you may need to renew to restore full access. Thanks!"
+			text2 = "\nHey! Zygor Guides requires an update. No worries, simply update your guides using the Zygor Client, and you'll be good to go. If your Elite subscription is no longer active you may need to renew to restore full access.\n\nTip: You can keep your guides always up to date and avoid seeing this message by enabling automatic updates under Options / Preferences in the Zygor Guides Client."
 			show = true
 			if expired_S then
 				ZGV.db.profile.expired_elite_shown = true
@@ -1292,7 +1351,7 @@ function ZGV.Licence:CheckExpirationPopup()
 
 	if expired_S and not show then 
 		text1 = "Guides outdated"
-		text2 = "\nHey! Zygor Guides requires an update. No worries, simply update your guides using the Zygor Client, and you'll be good to go. Thanks!"
+		text2 = "\nHey! Zygor Guides requires an update. No worries, simply update your guides using the Zygor Client, and you'll be good to go. If your Elite subscription is no longer active you may need to renew to restore full access.\n\nTip: You can keep your guides always up to date and avoid seeing this message by enabling automatic updates under Options / Preferences in the Zygor Guides Client."
 		show = true
 	end
 
@@ -1313,14 +1372,18 @@ end
 function ZGV.Licence:CheckExpirationWarning()
 	if not ZGV.Licences then return end
 
+	local text2 = "\nHey! Zygor Guides requires an update. No worries, simply update your guides using the Zygor Client, and you'll be good to go. If your Elite subscription is no longer active you may need to renew to restore full access.\n\nTip: You can keep your guides always up to date and avoid seeing this message by enabling automatic updates under Options / Preferences in the Zygor Guides Client."
+
 	local exptime = ZGV.Licences.DATE_E
 	if exptime and not ZGV.Licence.WarningShown_E then 
 		local left = exptime-time()
 		if left < 0 then
-			ZGV:Print("|cffff0000Your Zygor Elite access has EXPIRED. Please update your guides or renew your subscription.")
+			--ZGV:Print("|cffff0000Your Zygor Elite access has EXPIRED. Please update your guides or renew your subscription.")
+			ZGV:Print(text2)
 			ZGV.Licence.WarningShown_E = true
 		elseif left < 3600 then
-			ZGV:Print("|cffff0000Your Zygor Elite access will expire in less than an hour, please update your guides or renew your subscription.")
+			--ZGV:Print("|cffff0000Your Zygor Elite access will expire in less than an hour, please update your guides or renew your subscription.")
+			ZGV:Print(text2)
 			ZGV.Licence.WarningShown_E = true
 		end
 	end
@@ -1328,10 +1391,12 @@ function ZGV.Licence:CheckExpirationWarning()
 	if exptime and not ZGV.Licence.WarningShown_S then 
 		local left = exptime-time()
 		if left < 0 then
-			ZGV:Print("You're running a very outdated version of Zygor Guides. Please update your guides to the latest version.")
+			--ZGV:Print("You're running a very outdated version of Zygor Guides. Please update your guides to the latest version.")
+			ZGV:Print(text2)
 			ZGV.Licence.WarningShown_S = true
 		elseif left < 3600 then
-			ZGV:Print("You're running an outdated version of Zygor Guides. Please update your guides to the latest version.")
+			--ZGV:Print("You're running an outdated version of Zygor Guides. Please update your guides to the latest version.")
+			ZGV:Print(text2)
 			ZGV.Licence.WarningShown_S = true
 		end
 	end
@@ -1345,6 +1410,10 @@ function ZGV.MinimizeStack(stack)
 		stack = stack:gsub(truncated,"[ZGV]")
 	end
 	return stack
+end
+
+function ZGV.F.SetVisible(f,isvisible)
+	if isvisible then f:Show() else f:Hide() end
 end
 
 
@@ -1474,3 +1543,36 @@ function ZGV.Profiler:Enable(what)
 	self:SetEnabled(true,true)
 end
 
+
+local wmuRegistry
+function ZGV.WMU_Suspend()
+	-- unregister and store all WORLD_MAP_UPDATE registrants, to avoid excess processing when
+	-- retrieving info from stateful map APIs
+	wmuRegistry = {GetFramesRegisteredForEvent("WORLD_MAP_UPDATE")}
+	for _, frame in ipairs(wmuRegistry) do
+		frame:UnregisterEvent("WORLD_MAP_UPDATE")
+	end
+end
+-- restore WORLD_MAP_UPDATE to all frames in the registry
+function ZGV.WMU_Resume()
+	assert(wmuRegistry)
+	for _, frame in ipairs(wmuRegistry) do
+		frame:RegisterEvent("WORLD_MAP_UPDATE")
+	end
+	wmuRegistry = nil
+end
+
+function ZGV.softassert(cond,msg)
+	if not cond then geterrorhandler()(msg) end
+	return cond
+end
+
+-- /run for i=0,12 do  local link="\124Hinstancelock:"..UnitGUID("player")..":1651:0:"..(2^i).."\124h[Karazhan boss "..(2^i).."]\124h"  print(link) end
+function ZGV.IsSavedBossDead(instanceid,bossbit)
+	RequestRaidInfo()
+	for i=1,GetNumSavedInstances() do
+		local link = GetSavedInstanceChatLink(i)
+		local instance,bits = link:match(":(%d+):%d+:(%d+)\124h")
+		if tonumber(instance)==instanceid and bit.band(tonumber(bits) or 0,bossbit)==bossbit then return true end
+	end
+end

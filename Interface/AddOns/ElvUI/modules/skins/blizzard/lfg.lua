@@ -13,6 +13,7 @@ local C_LFGList_GetApplicationInfo = C_LFGList.GetApplicationInfo
 
 local function LoadSkin()
 	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.lfg ~= true then return end
+
 	PVEFrame:StripTextures()
 	PVEFrameLeftInset:StripTextures()
 	RaidFinderQueueFrame:StripTextures(true)
@@ -45,7 +46,7 @@ local function LoadSkin()
 	LFGDungeonReadyDialogRoleIconTexture:SetTexture("Interface\\LFGFrame\\UI-LFG-ICONS-ROLEBACKGROUNDS")
 	LFGDungeonReadyDialogRoleIconTexture:SetAlpha(0.5)
 	hooksecurefunc("LFGDungeonReadyPopup_Update", function()
-		local proposalExists, id, typeID, subtypeID, name, texture, role, hasResponded, totalEncounters, completedEncounters, numMembers, isLeader = GetLFGProposal();
+		local _, _, _, _, _, _, role = GetLFGProposal()
 		if LFGDungeonReadyDialogRoleIcon:IsShown() then
 			if role == "DAMAGER" then
 				LFGDungeonReadyDialogRoleIconTexture:SetTexCoord(LFDQueueFrameRoleButtonDPS.background:GetTexCoord())
@@ -292,6 +293,8 @@ local function LoadSkin()
 	RaidFinderFrameFindRaidButton:StripTextures()
 	S:HandleButton(RaidFinderFrameFindRaidButton)
 	RaidFinderQueueFrame:StripTextures()
+	RaidFinderQueueFrameScrollFrameScrollBar:StripTextures()
+	S:HandleScrollBar(RaidFinderQueueFrameScrollFrameScrollBar)
 
 	-- Scenario finder
 	ScenarioFinderFrameInset:DisableDrawLayer("BORDER")
@@ -333,7 +336,6 @@ local function LoadSkin()
 
 	ScenarioQueueFrameFindGroupButton:StripTextures()
 	S:HandleButton(ScenarioQueueFrameFindGroupButton)
-
 
 	S:HandleDropDownBox(ScenarioQueueFrameTypeDropDown)
 
@@ -451,15 +453,6 @@ local function LoadSkin()
 	LFGListFrame.CategorySelection.FindGroupButton:ClearAllPoints()
 	LFGListFrame.CategorySelection.FindGroupButton:Point("BOTTOMRIGHT", -6, 3)
 
-	--Fix issue with labels not following changes to GameFontNormal as they should
-	local function SetLabelFontObject(self, btnIndex)
-		local button = self.CategoryButtons[btnIndex]
-		if button then
-			button.Label:SetFontObject(GameFontNormal)
-		end
-	end
-	hooksecurefunc("LFGListCategorySelection_AddButton", SetLabelFontObject)
-
 	LFGListFrame.EntryCreation.Inset:StripTextures()
 	S:HandleButton(LFGListFrame.EntryCreation.CancelButton, true)
 	S:HandleButton(LFGListFrame.EntryCreation.ListGroupButton, true)
@@ -481,6 +474,7 @@ local function LoadSkin()
 	S:HandleCheckBox(LFGListFrame.EntryCreation.ItemLevel.CheckButton)
 	S:HandleCheckBox(LFGListFrame.EntryCreation.HonorLevel.CheckButton)
 	S:HandleCheckBox(LFGListFrame.EntryCreation.VoiceChat.CheckButton)
+	S:HandleCheckBox(LFGListFrame.EntryCreation.PrivateGroup.CheckButton)
 
 	LFGListFrame.EntryCreation.ActivityFinder.Dialog:StripTextures()
 	LFGListFrame.EntryCreation.ActivityFinder.Dialog:SetTemplate("Transparent")
@@ -533,13 +527,44 @@ local function LoadSkin()
 	LFGListFrame.SearchPanel.SignUpButton:Point("BOTTOMRIGHT", -6, 3)
 	LFGListFrame.SearchPanel.ResultsInset:StripTextures()
 	S:HandleScrollBar(LFGListSearchPanelScrollFrameScrollBar)
-	LFGListFrame.SearchPanel.AutoCompleteFrame:StripTextures()
-	LFGListFrame.SearchPanel.AutoCompleteFrame:SetTemplate("Transparent")
 
 	S:HandleButton(LFGListFrame.SearchPanel.FilterButton)
+	LFGListFrame.SearchPanel.FilterButton:SetPoint("LEFT", LFGListFrame.SearchPanel.SearchBox, "RIGHT", 5, 0)
 	S:HandleButton(LFGListFrame.SearchPanel.RefreshButton)
-	LFGListFrame.SearchPanel.RefreshButton:Size(26)
+	LFGListFrame.SearchPanel.RefreshButton:Size(24)
+	LFGListFrame.SearchPanel.RefreshButton.Icon:SetPoint("CENTER")
 
+	hooksecurefunc("LFGListSearchPanel_UpdateAutoComplete", function(self)
+		for i = 1, LFGListFrame.SearchPanel.AutoCompleteFrame:GetNumChildren() do
+			local child = select(i, LFGListFrame.SearchPanel.AutoCompleteFrame:GetChildren())
+			if child and not child.isSkinned and child:GetObjectType() == "Button" then
+				S:HandleButton(child)
+				child.isSkinned = true
+			end
+		end
+
+		local text = self.SearchBox:GetText()
+		local matchingActivities = C_LFGList.GetAvailableActivities(self.categoryID, nil, self.filters, text)
+		local numResults = math.min(#matchingActivities, MAX_LFG_LIST_SEARCH_AUTOCOMPLETE_ENTRIES)
+
+		for i = 2, numResults do
+			local button = self.AutoCompleteFrame.Results[i]
+			if button and not button.moved then
+				button:SetPoint("TOPLEFT", self.AutoCompleteFrame.Results[i-1], "BOTTOMLEFT", 0, -2)
+				button:SetPoint("TOPRIGHT", self.AutoCompleteFrame.Results[i-1], "BOTTOMRIGHT", 0, -2)
+				button.moved = true
+			end
+		end
+		self.AutoCompleteFrame:SetHeight(numResults * (self.AutoCompleteFrame.Results[1]:GetHeight() + 3.5) + 8)
+	end)
+
+	LFGListFrame.SearchPanel.AutoCompleteFrame:StripTextures()
+	LFGListFrame.SearchPanel.AutoCompleteFrame:CreateBackdrop("Transparent")
+	LFGListFrame.SearchPanel.AutoCompleteFrame.backdrop:SetPoint("TOPLEFT", LFGListFrame.SearchPanel.AutoCompleteFrame, "TOPLEFT", 0, 3)
+	LFGListFrame.SearchPanel.AutoCompleteFrame.backdrop:SetPoint("BOTTOMRIGHT", LFGListFrame.SearchPanel.AutoCompleteFrame, "BOTTOMRIGHT", 6, 3)
+
+	LFGListFrame.SearchPanel.AutoCompleteFrame:SetPoint("TOPLEFT", LFGListFrame.SearchPanel.SearchBox, "BOTTOMLEFT", -2, -8)
+	LFGListFrame.SearchPanel.AutoCompleteFrame:SetPoint("TOPRIGHT", LFGListFrame.SearchPanel.SearchBox, "BOTTOMRIGHT", -4, -8)
 
 	--ApplicationViewer (Custom Groups)
 	LFGListFrame.ApplicationViewer.InfoBackground:SetTexCoord(unpack(E.TexCoords))
@@ -581,10 +606,13 @@ local function LoadSkin()
 			if not button.isSkinned then
 				button:SetTemplate("Default")
 				button.Icon:SetDrawLayer("BACKGROUND", 2)
+				button.Icon:SetTexCoord(unpack(E.TexCoords))
 				button.Icon:SetInside()
 				button.Cover:Hide()
 				button.HighlightTexture:SetColorTexture(1, 1, 1, 0.1)
 				button.HighlightTexture:SetInside()
+				--Fix issue with labels not following changes to GameFontNormal as they should
+				button.Label:SetFontObject(GameFontNormal)
 				button.isSkinned = true
 			end
 
@@ -603,13 +631,39 @@ S:AddCallback("LFG", LoadSkin)
 
 local function LoadSecondarySkin()
 	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.lfg ~= true then return end
+
+	ChallengesFrame:DisableDrawLayer("BACKGROUND")
 	ChallengesFrameInset:StripTextures()
 	ChallengesFrameInset:Hide()
 	ChallengesFrameInsetBg:Hide()
 
+	-- Mythic Dungeon Tab
+	ChallengesFrame.WeeklyBest:SetPoint("TOPLEFT")
+	ChallengesFrame.WeeklyBest:SetPoint("BOTTOMRIGHT")
+	ChallengesFrame.WeeklyBest.Child.Star:SetPoint("TOPLEFT", 54, -27)
+	ChallengesFrame.WeeklyBest.Child.Label:ClearAllPoints()
+	ChallengesFrame.WeeklyBest.Child.Label:Point("TOPLEFT", ChallengesFrame.WeeklyBest.Child.Star, "TOPRIGHT", -16, 1)
+	ChallengesFrame.GuildBest:StripTextures()
+	ChallengesFrame.GuildBest:CreateBackdrop("Transparent")
+	ChallengesFrame.GuildBest.Line:Hide()
+	ChallengesFrame.GuildBest:ClearAllPoints()
+	ChallengesFrame.GuildBest:Point("TOPLEFT", ChallengesFrame.WeeklyBest.Child.Star, "BOTTOMRIGHT", -16, 50)
+
 	-- Mythic+ KeyStoneFrame
 	S:HandleCloseButton(ChallengesKeystoneFrame.CloseButton)
 	S:HandleButton(ChallengesKeystoneFrame.StartButton, true)
+
+	hooksecurefunc("ChallengesFrame_Update", function(self)
+		for _, frame in ipairs(self.DungeonIcons) do
+			if not frame.backdrop then
+				frame:CreateBackdrop("Transparent")
+				frame.backdrop:SetAllPoints()
+				frame:DisableDrawLayer("BORDER")
+				frame.Icon:SetTexCoord(unpack(E.TexCoords))
+				frame.Icon:SetInside()
+			end
+		end
+	end)
 end
 
 S:AddCallbackForAddon("Blizzard_ChallengesUI", "Challenges", LoadSecondarySkin)

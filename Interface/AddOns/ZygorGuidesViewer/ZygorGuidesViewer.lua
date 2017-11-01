@@ -2,7 +2,7 @@ assert(not _G['ZGV'],"Two ZygorGuideViewers loaded!\nWe're doomed!")
 
 local addonName,ZygorGuidesViewer = ...
 
-ZygorGuidesViewer = LibStub("AceAddon-3.0"):NewAddon(ZygorGuidesViewer,addonName, "AceConsole-3.0","AceEvent-3.0","AceTimer-3.0")
+ZygorGuidesViewer = LibStub("AceAddon-3.0"):NewAddon(ZygorGuidesViewer,addonName, "AceConsole-3.0","AceEvent-3.0","AceTimer-3.0","AceHook-3.0")
 
 local ZGV=ZygorGuidesViewer
 --global exports
@@ -27,10 +27,6 @@ local HBDPins=ZGV.HBDPins
 --ZGV.name = L['name_plain']
 
 ZGV.Vars={}
-
---if addonName:find("DEV") then ZGV.DEV=true end
-if addonName:find("BETA") then ZGV.BETA=true end
-if addonName:find("BETA") then ZGV.DEV=true  if ZygorGuidesViewerFrame_DevLabel then ZygorGuidesViewerFrame_DevLabel:SetText("BETA") end  end
 
 -- Time to add some testing. ~~ Jeremiah
 ZGV.TestFramework = {}
@@ -60,6 +56,7 @@ ZGV.Expansion_Mists = (build>=15799)
 ZGV.Expansion_Warlords = (build>=18566)
 ZGV.Expansion_Legion = (build>=22248)
 
+ZGV.Patch_7_2 = (build>=23721)
 
 -- local libs
 
@@ -95,7 +92,7 @@ ZGV.CartographerDatabase = { }
 local MAX_GUIDES_HISTORY = 30
 
 
-local STARTUP_INTENSITY=50
+ZGV.STARTUP_INTENSITY=30
 ZGV.startups = {}
 
 
@@ -187,13 +184,12 @@ StaticPopupDialogs['ZYGORGUIDESVIEWER_DEFAULT'] = {
 ZGV.loadtime = debugprofilestop()
 ZGV.loadtimeGT = GetTime()
 
-local gii_cache -- GetItemInfo cached data
-
 function ZGV:OnInitialize()
 	ZGV.db = LibStub("AceDB-3.0"):New("ZygorGuidesViewerSettings")
 	
 	ZGV.db.global.gii_cache=ZGV.db.global.gii_cache or {}
-	gii_cache=ZGV.db.global.gii_cache
+
+	ZGV.db.global.sv_version = tonumber(ZGV.db.global.sv_version) or 1  + 1
 
 	self:WarnAboutDebugSettings()
 
@@ -346,9 +342,6 @@ function ZGV:OnInitialize()
 	ZGV.db.char.questrewards=ZGV.db.char.questrewards or {}
 	hooksecurefunc("SendQuestChoiceResponse",function(...) ZGV:QuestRewardSelect(...) end)
 
-	if TaskPOI_OnClick then hooksecurefunc("TaskPOI_OnClick", function(self,button) ZGV:SuggestWorldQuestGuide(self) end) end
-
-
 	if self.DEV then
 		ZGV.DebugFrame = ZGV.ChainCall(CreateFrame("FRAME","ZygorDebugFrame",UIParent)) :SetPoint("TOPLEFT") :SetSize(1,1) .__END
 		ZGV.DebugFrame.text1 = ZGV.ChainCall(ZGV.DebugFrame:CreateFontString()) :SetPoint("TOPLEFT") :SetFontObject(SystemFont_Tiny) .__END
@@ -396,6 +389,7 @@ function ZGV:OnEnable()
 
 	self:AddEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	self:AddEvent("LOADING_SCREEN_DISABLED")
+	self:AddEvent("LOADING_SCREEN_ENABLED")
 
 	self:AddEvent("TAXIMAP_OPENED")
 
@@ -411,6 +405,15 @@ function ZGV:OnEnable()
 
 	self:Hook_QuestChoice()
 
+	if TaskPOI_OnClick then hooksecurefunc("TaskPOI_OnClick", function(self,button) ZGV:SuggestWorldQuestGuide(self) end) end
+	if WorldMapPOI_OnClick then hooksecurefunc("WorldMapPOI_OnClick", function(self,button) ZGV:SuggestBrokenRareGuide(self) end) end
+
+	if WorldQuestTrackerAddon then
+		local WQT=LibStub ("AceAddon-3.0"):GetAddon("WorldQuestTrackerAddon")
+		ZGV:Hook(WQT,"OnQuestClicked", ZGV.WQTwrapper)
+		self:AddEvent("SUPER_TRACKED_QUEST_CHANGED") -- legion popups
+	end
+
 	--self.Localizers:PruneNPCs()  -- off until we start doing it by data, not by name. ~sinus 2013-04-09
 
 	self.Log.entries = self.db.char.debuglog
@@ -419,6 +422,8 @@ function ZGV:OnEnable()
 	-- waiting for QUEST_LOG_UPDATE for true initialization...
 
 	if ZGV_DEV then ZGV_DEV() end
+	self:SetBeta()
+	--if ZGV.BETA and ZygorGuidesViewerFrame_DevLabel then ZygorGuidesViewerFrame_DevLabel:SetText("BETA") end
 
 	if self.db.profile.frame_anchor then
 		self.db.profile.frame_anchor[2]=UIParent
@@ -451,7 +456,7 @@ function ZGV:Startup_LoadGuides_Threaded()
 		local newreg = {}
 		for i=1,#self.registeredguides do
 			local guide=self.registeredguides[i]
-			if self.GuideFuncs:IsGuideBanned(guide.title) then
+			if self.GuideFuncs:IsGuideBanned(guide.title) or (guide.beta and not ZGV.BETA) then
 				self.registeredguides[i]=nil
 			else
 				tinsert(newreg,guide)
@@ -479,14 +484,14 @@ function ZGV:Startup_LoadGuides_Threaded()
 
 
 			count=count+1
-			if debugprofilestop()-t>50 then  -- let it take us down to 3fps, it's the startup. -- NOOOO! - 2016-03-28 21:21:06 sinus
+			if debugprofilestop()-t>self.STARTUP_INTENSITY then  -- let it take us down to 3fps, it's the startup. -- NOOOO! - 2016-03-28 21:21:06 sinus
 				self.loadprogress = i/#self.registeredguides
 				self:SendMessage("ZYGORGV_LOADING")
 				t=debugprofilestop()
-				yield((full_load and "parsing fully" or "parsing headers")..(" (%d%%)"):format(count/count_total*100))
+				yield("loadguides: " .. (full_load and "parsing fully" or "parsing headers")..(" (%d%%)"):format(count/count_total*100))
 			end
 		until true end
-		yield(full_load and "parsed fully" or "parsed headers")
+		yield("loadguides: " .. (full_load and "parsed fully" or "parsed headers"))
 
 		for i,guide in ipairs(self.registeredguides) do
 			if guide.startlevel and not guide.endlevel and guide.next then
@@ -503,7 +508,7 @@ function ZGV:Startup_LoadGuides_Threaded()
 			--]]
 		end
 
-		yield("startleveling")
+		yield("loadguides: startleveling")
 	end
 
 
@@ -528,8 +533,9 @@ function ZGV:Startup_LoadGuides_Threaded()
 
 	-- sort guides, according to preset sortings.
 	SortGroups(self.registered_groups)
-	yield("sorting groups")
+	yield("loadguides: sorting groups")
 
+	--[[
 	if #self.registeredmapspotsets>0 then
 		for i,guide in ipairs(self.registeredmapspotsets) do
 			if guide.rawdata then
@@ -572,6 +578,7 @@ function ZGV:Startup_LoadGuides_Threaded()
 		self.Frame:AlignFrame()
 	end
 	yield("map spots")
+	--]]
 
 	-- WIPE!
 	--self.ParseQuestChains=nil
@@ -579,8 +586,13 @@ function ZGV:Startup_LoadGuides_Threaded()
 	self.RegisterGuide=function() ZGV:Print("Too late to RegisterGuide at this point!") end
 	self.RegisterMapSpots=nil
 
+	SetMapToCurrentZone()  -- to counter any leftovers from mapping addons
+
 	self:SendMessage("ZYGORGV_LOADING")
 
+	self.guidesloaded=true
+
+	yield("loadguides: complete.")
 end
 
 ZGV.maint_done={}
@@ -624,6 +636,7 @@ local function _StartupThread()
 
 	self:SetWaypointAddon(self.db.profile.waypointaddon)
 
+	ZGV.HBD:FixPhasedContinents()
 	
 	waitformaint("maint_startup_modules") ---------------------
 
@@ -638,6 +651,8 @@ local function _StartupThread()
 		if type(startup)=="table" then  name,func=unpack(startup)
 		elseif type(startup)=="function" then  name="unnamed("..i..")"  func=startup  end
 
+		self:Debug("&startup Starting module: |cffffffff%s",name)
+
 		local thread = coroutine.create(function() func(self) end)
 		local t=debugprofilestop()
 		repeat
@@ -651,13 +666,13 @@ local function _StartupThread()
 
 			if self.db.profile.safe_startup then t=debugprofilestop() yield(("Startup module: |cffffddee%s|r took %d ms"):format(name,t1)) end
 
-			if not self.db.profile.safe_startup then self:Debug("&startup Startup module: %s in %d ms",name,t1) end
-			if not ok then  self:Error("Error during initialization sequence '"..name.."':\n"..ret.."\n-- STACKTRACE: --\n"..ZGV.MinimizeStack(debugstack(thread)))  end
+			--if not self.db.profile.safe_startup then self:Debug("&startup Startup module: %s in %d ms",name,t1) end
+			if not ok then  self:ErrorThrow("Error during initialization sequence '"..name.."':\n"..ret.."\n-- STACKTRACE: --\n"..ZGV.MinimizeStack(debugstack(thread)))  end
 
 			--if self.db.profile.safe_startup then t=debugprofilestop() yield("Finished startup module: "..name..(" in %d ms"):format(t1))
 			--elseif debugprofilestop()-t>100 then t=debugprofilestop() yield("(startup modules up to "..i..")") end
 			
-			if debugprofilestop()-t>100 then t=debugprofilestop() yield("(startup modules up to "..i..")") end
+			if debugprofilestop()-t>self.STARTUP_INTENSITY/2 then t=debugprofilestop() yield("(startup modules up to "..name..")") end
 
 		until coroutine.status(thread)=="dead"
 	end
@@ -665,7 +680,7 @@ local function _StartupThread()
 	ZGV.Profiler:Stop("startup-total")
 
 	self.startups=nil  -- clear out, save memory
-	self:Debug("&startup Startups are done.")
+	self:Debug("&startup Startup modules are done.")
 
 
 	-- TODO maybe... for now let it be standalone
@@ -691,7 +706,7 @@ local function _StartupThread()
 
 	--self.Frame:SetShown(self.db.profile.enable_viewer)
 
-	ZGV:Startup_LoadGuides_Threaded()
+	self:Startup_LoadGuides_Threaded()
 
 	if #self.ParseLog>0 then
 		self:ShowDump(self.ParseLog,"Errors in guides",true)
@@ -733,12 +748,10 @@ local function _StartupThread()
 	--while self.ItemScore and self.ItemScore.GearFinder and self.ItemScore.GearFinder.started and not self.ItemScore.GearFinder.cached do yield("waiting for GearFinder") end
 
 	
-	self.loading=nil  -- disable startup steps
-	self.guidesloaded=true  -- completely disable the startup thread
-
 	ZGV:SendMessage("ZYGOR_GUIDES_PARSED", "done")
 
 	self:Print(L['welcome_guides']:format(#self.registeredguides),false,"force")
+	self:Print("|CFFFFFF01Uploaded by Ghostx1@Codedeception.net",false,"force")
 
 	self.Checklist:CatchEvent("_GUIDES_LOADED_")
 
@@ -764,7 +777,7 @@ local function _StartupThread()
 
 	--if ZGV.AnimatePopup then ZGV:ShowAnimatedPopup() end -- if we have animated popup, show it
 
-	collectgarbage()
+	--collectgarbage()
 	return "end"
 end
 
@@ -808,10 +821,13 @@ function ZGV:StartupStep()  -- called from MasterFrame
 
 	local thistime=0
 	local thisframet = debugprofilestop()
-	while debugprofilestop()-thisframet<STARTUP_INTENSITY do
+	self:Debug("&startup Startup frame %d...",startup_frames)
+	while debugprofilestop()-thisframet<self.STARTUP_INTENSITY do
 		local t = debugprofilestop()
+
 		local good,ret = resume(thread)  -- THIS IS WHERE STARTUP THINGS HAPPEN.
-		t = debugprofilestop()-t   startup_ticks = startup_ticks + 1		startup_time=startup_time + t
+
+		t = debugprofilestop()-t	startup_ticks = startup_ticks + 1	startup_time=startup_time + t
 		self:Debug("&startup &_SUB0 Startup frame %d tick %d |cffeeff88%s|r took |cffffeeaa%d|rms",startup_frames,startup_ticks,tostring(ret),t)
 
 		self.startuptimes[ret]=(self.startuptimes[ret] or 0) + t
@@ -855,6 +871,10 @@ function ZGV:LOADING_SCREEN_DISABLED()
 	self.loading_screen_disabled=true
 end
 
+function ZGV:LOADING_SCREEN_ENABLED()
+	self:Debug("&startup LOADING_SCREEN_ENABLED Freeze!")
+	self.loading_screen_disabled=false
+end
 
 -- my event handling. Multiple handlers allowed, just for the heck of it.
 
@@ -895,7 +915,7 @@ function ZGV:EventHandler(event,...)
 end
 
 function ZGV:LoadInitialGuide()
-	if not self.guidesloaded then return end -- let the OnGuidesLoaded func call us.
+	if not self.guidesloaded then self:ErrorThrow("Guides failed to load! Cannot load initial guide.") return end
 	if self.initialGuideLoaded then return end
 
 	--if self.db.char["starting"] then
@@ -913,6 +933,7 @@ function ZGV:LoadInitialGuide()
 				ZGV.Gold.generate_guide()
 			end
 		else
+			ZGV:Debug("Loading initial guide: %s step %d",self.db.char.guidename or "?",self.db.char.step or 0)
 			self:SetGuide(self.db.char.guidename,self.db.char.step)
 			self.db.char.stephistory = history
 		end
@@ -966,6 +987,7 @@ ZGV.GuideTitles = {
 	["DUNGEONS"]=L['guidepicker_dungeon'] ,
 	["GEAR"]=L['guidepicker_gear'] ,
 }
+setmetatable(ZGV.GuideTitles,{__index=function(i,v) return v end})
 
 function ZGV:GetGuideByTitle(title)
 	if not title then return end
@@ -977,6 +999,9 @@ end
 
 function ZGV:SetGuide(name,step,hack) --hack used for testing
 	if not name then return end
+	-- record if previous active guide had any points of interest
+	local was_poi = self.CurrentGuide and self.CurrentGuide.poi
+
 	step=step or 1
 	--self:Debug("SetGuide "..name.." ("..tostring(step)..")")
 
@@ -1026,7 +1051,7 @@ function ZGV:SetGuide(name,step,hack) --hack used for testing
 				end
 
 				self.BadGuidePopup.OnDecline = function(self)
-					ZGV.Menu:Show(self.guide)
+					ZGV.GuideMenu:OpenGuide(self.guide)
 				end
 
 				self.BadGuidePopup.noMinimize = 1 --Can not minimize this one
@@ -1042,7 +1067,8 @@ function ZGV:SetGuide(name,step,hack) --hack used for testing
 			return "BAD"
 		end
 
-		if self.CurrentGuide then self.CurrentGuide:Unload() end
+		-- unload guides, unless they have points of interest
+		if self.CurrentGuide and not self.CurrentGuide.poi then self.CurrentGuide:Unload() end
 
 		guide:Parse(true)
 
@@ -1113,6 +1139,11 @@ function ZGV:SetGuide(name,step,hack) --hack used for testing
 	--ZGV.Pointer:SetWaypointToFirst()
 	ZGV.Pointer:SetArrowToFirstCompletableGoal()
 
+	--If needed, refresh POIs to show/hide guide specific points
+	if ZGV.Poi.Ready and (was_poi or self.CurrentGuide.poi) then
+		ZGV.Poi:RegisterPoints()
+	end
+
 	ZygorGuidesViewer_ProgressBar_Update()
 end
 
@@ -1179,6 +1210,7 @@ function ZGV:ClearRecentActivities()
 		wipe(self.recentKills)
 		-- self.completedQuestTitles = {} -- let's not use this anymore, with GetQuestID available
 	end
+	self.step_share_onceflag = nil
 end
 
 function ZGV:FocusStep(num,forcefocus)
@@ -1299,6 +1331,16 @@ function ZGV:FocusStep(num,forcefocus)
 
 	--self:TryToDisplayCreature()
 	--self:UpdateMinimapArrow(true)
+
+	--Hide goal image popup if it exists
+	if ZGV.GoalPopupImageFrame then
+		ZGV.GoalPopupImageFrame:Hide()
+	end
+
+	--Maybe show map preview
+	if (not GetPlayerFacing() or ZGV.db.char.fakeinstance) and ZGV.db.profile.preview_control=="step" then
+		ZGV.PointerMap:ShowPreview()
+	end
 
 	--self:AnimateGears()
 	if ZGV.Gold.Appraiser and ZGV.Gold.Appraiser.Loaded and ZGV.Gold.Appraiser.AddGuideItemsToBuy then
@@ -1627,7 +1669,9 @@ end
 -- 09-09-24:
 local lastcompletion=0
 local lastnextsuggested
+local justcompletedgoals={}
 function ZGV:TryToCompleteStep(force)
+	if not self.loading_screen_disabled then return end
 	if not self.CurrentStep or not self.CurrentGuide then return end
 
 	if self.BUTTONS_INLINE then
@@ -1690,11 +1734,17 @@ function ZGV:TryToCompleteStep(force)
 
 	local confirmcompleted = false
 	local confirmfound = false
+	wipe(justcompletedgoals)
 	for i,goal in ipairs(self.CurrentStep.goals) do
 		local iscomplete = goal:IsComplete()
 		if iscomplete and not self.recentlyCompletedGoals[goal] then
 			self.recentlyCompletedGoals[goal] = true
+			justcompletedgoals[goal] = true
 			goal:OnCompleted()
+		elseif not iscomplete and self.recentlyCompletedGoals[goal] then
+			self.recentlyCompletedGoals[goal] = false
+			justcompletedgoals[goal] = false
+			goal:OnUncompleted()
 		end
 
 		if goal.action == "confirm" and goal.always then
@@ -1787,7 +1837,7 @@ function ZGV:MaybeSuggestNextGuide()
 	if nextguide then
 		local nextsuggested = (nextguide:GetStatus()=="SUGGESTED")
 		ZGV.suggesting = nextsuggested
-		if not lastnextsuggested and nextsuggested and self.db.profile.n_popup_sis then -- plain guide popup block is in AWP
+		if not lastnextsuggested and nextsuggested and self.db.profile.n_popup_guides then -- plain guide popup block is in AWP
 			nextguide:AdvertiseWithPopup()
 		end
 		lastnextsuggested = nextsuggested
@@ -1817,9 +1867,9 @@ function ZGV:InitializeDropDown(frame)
 --		if (i == 1) then
 --			info.isTitle = 1
 --		end
-		UIDropDownMenu_AddButton(info)
+		UIDropDownFork_AddButton(info)
 	end
-	UIDropDownMenu_SetText(frame, self.CurrentGuideName)
+	UIDropDownFork_SetText(frame, self.CurrentGuideName)
 end
 
 
@@ -1967,13 +2017,15 @@ local actionicon={
 	["next"]=14,
 	["poi_treasure"]=15,
 	["poi_rare"]=16,
+	["poi_questobjective"]=8,
 	["poiannounce"]=0,
 	["poiaccess"]=0,
 	["poicurrency"]=0,
+	["image"]=9,
 }
 setmetatable(actionicon,{__index=function() return 2 end})
 
-local poi_actions = {poi_treasure=1, poi_rare=1, poiannounce=1, poiaccess=1, poicurrency=1}
+local poi_actions = {poi_treasure=1, poi_rare=1, poi_questobjective=1, poiannounce=1, poiaccess=1, poicurrency=1}
 
 local goals_temp = {}
 
@@ -2191,33 +2243,33 @@ function ZGV:UpdateFrame(full,onupdate)
 				frame.lines[line].label:ClearAllPoints()
 
 				local did_header
-				if (stepdata.requirement or self.db.profile.stepnumbers) then
-					local numbertext = self.db.profile.stepnumbers and L['step_num']:format(self.stepframes[stepframenum].stepnum)
-					local reqtext = stepdata.requirement and ((stepdata:AreRequirementsMet() and "|cff44aa44" or "|cffbb0000") .. "(" .. (table.concat(stepdata.requirement,L["stepreqor"])):gsub("!([a-zA-Z ]+)",L["req_not"]:format("%1")) .. ")")
-					local leveltext = (stepdata.level and stepdata.level>0 and self.db.profile.stepnumbers) and L['step_level']:format(stepdata.level or "?")
-					local titletext = stepdata:GetTitle()  titletext=titletext and " "..titletext
+				local numbertext = self.db.profile.stepnumbers and L['step_num']:format(self.stepframes[stepframenum].stepnum)
+				local leveltext = (stepdata.level and stepdata.level>0 and self.db.profile.stepnumbers) and L['step_level']:format(stepdata.level or "?")
+				local reqtext = stepdata.requirement and (stepdata:AreRequirementsMet() and "|cff44aa44" or "|cffbb0000") .. L["stepreq"]:format((table.concat(stepdata.requirement,L["stepreqor"])):gsub("!([a-zA-Z ]+)",L["stepreqnot"]:format("%1")))
+				local titletext -- = stepdata:GetTitle()  titletext=titletext and " "..titletext
+				local betatext = (self.CurrentGuide.beta or stepdata.beta) and L['stepbeta']
 
-					if showbriefsteps and not reqtext then
-						frame.lines[line].briefhidden = true
-					end
-
-					if (numbertext or leveltext or reqtext or titletext) then
-						frame.lines[line].label:SetPoint("TOPLEFT")
-						frame.lines[line].label:SetPoint("TOPRIGHT")
-						frame.lines[line].label:SetText((numbertext or "")..(leveltext or "")..(reqtext or "")..(titletext or ""))
-						--frame.lines[line].label:SetMultilineIndent(1)
-						frame.lines[line].goal = nil
-						frame.lines[line].label:SetFont(FONT,round(self.db.profile.fontsecsize))
-						frame.lines[line].icon:Hide()
-						frame.lines[line].back:Show()
-						-- TODO how about we let skin decide?
-						frame.lines[line].back:SetBackdropColor(0,0,0,0.3)
-						frame.lines[line].back:SetBackdropBorderColor(0,0,0,0.3)
-						frame.lines[line].isheader=true
-						line=line+1
-						did_header=true
-					end
+				if showbriefsteps and not reqtext then
+					frame.lines[line].briefhidden = true
 				end
+
+				if (numbertext or leveltext or reqtext or titletext or betatext) then
+					frame.lines[line].label:SetPoint("TOPLEFT")
+					frame.lines[line].label:SetPoint("TOPRIGHT")
+					frame.lines[line].label:SetText((numbertext or "")..(leveltext or "")..(reqtext or "")..(titletext or "")..(betatext or ""))
+					--frame.lines[line].label:SetMultilineIndent(1)
+					frame.lines[line].goal = nil
+					frame.lines[line].label:SetFont(FONT,round(self.db.profile.fontsecsize))
+					frame.lines[line].icon:Hide()
+					frame.lines[line].back:Show()
+					-- TODO how about we let skin decide?
+					frame.lines[line].back:SetBackdropColor(0,0,0,0.3*ZGV.db.profile.opacitymain)
+					frame.lines[line].back:SetBackdropBorderColor(0,0,0,0.3*ZGV.db.profile.opacitymain)
+					frame.lines[line].isheader=true
+					line=line+1
+					did_header=true
+				end
+
 				if not did_header then
 					frame.lines[line].label:SetPoint("TOPLEFT",frame.lines[line],"TOPLEFT",icon_indent+2,0)
 					frame.lines[line].label:SetPoint("TOPRIGHT")
@@ -2260,7 +2312,7 @@ function ZGV:UpdateFrame(full,onupdate)
 					if not goals then goals=stepdata.goals end
 
 					local canhidetravel=false
-					if self.db.profile.hideinlinetravel then for i,goal in ipairs(goals) do if not goal:IsInlineTravel() then canhidetravel=true end end end
+					if not self.db.profile.showinlinetravel then for i,goal in ipairs(goals) do if not goal:IsInlineTravel() then canhidetravel=true end end end
 
 
 					local hadstickies
@@ -2299,7 +2351,8 @@ function ZGV:UpdateFrame(full,onupdate)
 
 						if self.recentlyChangedGoals[goal] ~= status then  -- TODO: move all "goal changes state" code here?
 							self.recentlyChangedGoals[goal] = status
-							if goal.x then do_showwaypoints = true end -- in case we need to advance to an incomplete point. May be overkill, but why not.
+							--if goal.x then do_showwaypoints = true end -- in case we need to advance to an incomplete point. May be overkill, but why not.
+							-- sinus 2016-11-16 20:21:08 - no, let's only advance from goals being completed, in goal:OnComplete.
 						end
 
 						if status=="hidden" and not self.db.profile.showwrongsteps then
@@ -2331,11 +2384,11 @@ function ZGV:UpdateFrame(full,onupdate)
 
 							if self.db.profile.showwrongsteps and status=="hidden" then goaltxt = "|cff880000[*BAD*]|r "..goaltxt end
 
-							if goaltxt~="?" and goaltxt~="" and frame.lines[line] then -- Why is frame.lines[line] sometimes missing? ~~Jeremiah
-								local link = ((goal.tooltip and not self.db.profile.tooltipsbelow) or (goal.x and not self.db.profile.windowlocked) or goal.image) and " |cffdd44ff*|r" or ""  -- goto asterisk
+							if goaltxt~="?" and goaltxt~="" and frame.lines[line] then
+								local link = ((goal.tooltip and not self.db.profile.tooltipsbelow) or (goal.x and not self.db.profile.windowlocked)) and " |cffdd44ff*|r" or ""  -- goto asterisk
 								if stepdata:IsCurrentlySticky() then link="" end
-								if not frame.lines[line] then error ("line does not exist") end
-								if not frame.lines[line].label then error ("label does not exist") end
+								if not frame.lines[line] then error ("line "..line.." does not exist") end
+								if not frame.lines[line].label then error ("label in line "..line.." does not exist") end
 								if not goal or not goal.action then error("invalid goal") end
 								frame.lines[line].label:SetFont(FONT,round(goal.action~="info" and self.db.profile.fontsize + (self.CurrentSkinStyle.StepFontSizeMod or 0) or self.db.profile.fontsecsize)) -- TODO skindata() friendly?
 								frame.lines[line].label:SetText(indent..goaltxt..link)
@@ -2353,10 +2406,25 @@ function ZGV:UpdateFrame(full,onupdate)
 								frame.lines[line].label:SetText(indent.."|cffeeeecc".. goal.tooltip.."|r")
 								--frame.lines[line].label:SetMultilineIndent(1)
 								frame.lines[line].goal = nil
+								frame.lines[line].tipgoal = goal
 								frame.lines[line].briefhidden = true
 								frame.lines[line].special = (goal.parentStep.is_sticky and goal.parentStep~=ZGV.CurrentStep and "stickyline")
 									 or (goal.parentStep.is_poi and goal.parentStep~=ZGV.CurrentStep and "poiline")
 								line=line+1
+							end
+							if goal.loadguideZZZZ then
+								frame.lines[line].label:SetFont(FONT,round(self.db.profile.fontsecsize))
+								local guide = goal.loadguide:match("\\([^\\]+)$")
+								if guide then
+									local g,step = guide:match("(.*)::(%d+)")
+									if g then guide=g end
+									frame.lines[line].label:SetText(indent.."|cffeeeecc".. guide .."|r")
+									--frame.lines[line].label:SetMultilineIndent(1)
+									frame.lines[line].goal = goal
+									--frame.lines[line].special = (goal.parentStep.is_sticky and goal.parentStep~=ZGV.CurrentStep and "stickyline")
+									--	 or (goal.parentStep.is_poi and goal.parentStep~=ZGV.CurrentStep and "poiline")
+									line=line+1
+								end
 							end
 						end
 					end
@@ -2538,6 +2606,9 @@ function ZGV:UpdateFrame(full,onupdate)
 				-- POI COLORS
 				local pr,pg,pb,pa = 0.4,0.4,0.4,0.5
 
+				sa = sa * self.db.profile.opacitymain
+				pa = pa * self.db.profile.opacitymain
+
 				if frame.is_sticky and self.db.profile.stickydisplay==3 then
 					frame:SetBackdropBorderColor(sr,sg,sb,1)
 				elseif frame.is_poi then
@@ -2546,217 +2617,224 @@ function ZGV:UpdateFrame(full,onupdate)
 					frame:SetBackdropBorderColor(0,0,0,1)
 				end
 
-				-- ICONS and status for ALL steps. Why not.
-				for l=1,LINES_PER_STEP do
+				--// Show icons and backgrounds for all lines of the step.
 
-					line = frame.lines[l]
-					if not line then break end
+					for l=1,LINES_PER_STEP do
 
-					local icon = line.icon
-					local back = line.back
+						line = frame.lines[l]
+						if not line then break end
 
-					local goal = line.goal
+						local icon = line.icon
+						local back = line.back
 
-					if goal then
-						local label = line.label
-						local clicker = line.clicker
-						local anim_w2g = line.anim_w2g
-						local anim_w2r = line.anim_w2r
-						local anim_r2r = line.anim_r2r
-
-						local status,progress = goal:GetStatus()
-						progress = tonumber(progress) or 0
-
-						-- prepare completion effects
-
-						-- set justCompleted only once per completion
-						-- except if this is the goal that when completed makes guide progress to 
-						local justCompleted = false
-						if status=="complete" and not self.recentlyCompletedGoals[goal] then
-							self.recentlyCompletedGoals[goal] = true
-							justCompleted = true
-							goal:OnCompleted()
-						end
-
-						-- ICONS
-
-						if goal and self.db.profile.goalicons then
-							label:SetPoint("TOPLEFT",line,"TOPLEFT",icon_indent+2,0)
-							icon:SetPoint("CENTER",line,"TOPLEFT",self.db.profile.fontsize*0.5+1,-self.db.profile.fontsize*0.5-1)
-							icon:SetSize(self.CurrentSkinStyle.StepLineIconSize * self.db.profile.fontsize,self.CurrentSkinStyle.StepLineIconSize * self.db.profile.fontsize) -- TODO SkinData friendly?
-							icon:Show()
-
-							if goal.next then
-								icon:SetIcon(actionicon.next)
-							elseif poi_actions[goal.action] then
-								icon:SetIcon(actionicon[goal.action])
-							elseif status=="passive" then
-
-								if goal.action=="talk" or goal.action=="from" or goal.action=="goto" or
-								goal.action=="goldcollect" or goal.action=="goldtracker" then
-									icon:SetIcon(actionicon[goal.action])
-								else
-									icon:SetIcon(1)
-								end
-								icon:SetDesaturated(false)
-
-							elseif status=="incomplete" then
-
-								icon:SetIcon(actionicon[goal.action])
-								icon:SetDesaturated(false)
-
-							elseif status=="complete" then
-
-								icon:SetIcon(3)
-								icon:SetDesaturated(false)
-
-							elseif status=="impossible" then
-
-								icon:SetIcon(actionicon[goal.action])
-								icon:SetDesaturated(true)
-
-							elseif status=="obsolete" then
-
-								--icon:SetIcon(actionicon[goal.action])
-								--icon:SetDesaturated(false)
-								icon:SetIcon(actionicon[goal.action])
-								icon:SetDesaturated(true)
-
-							else	-- maybe hidden, maybe WTF
-								icon:SetIcon(1)
-							end
-						else
-							label:SetPoint("TOPLEFT",line,"TOPLEFT",0,0)
-							icon:Hide()
-						end
-
-
-						-- BACKGROUNDS
-
-						if self.db.profile.goalbackgrounds then
-
-							back:Show()
-
-							-- COLORS
-
-							local r,g,b,a=0,0,0,0
-
-							if status=="passive" then
-								--if line.special=="stickyline" then
-								--	r,g,b,a = 0.2,0.15,0,1
-								--else
-									r,g,b,a = 0,0,0,0
-								--end
-
-							elseif status=="incomplete" then
-
-								local inc=self.db.profile.goalbackincomplete
-								local pro=self.db.profile.goalbackprogressing
-								local com=self.db.profile.goalbackcomplete
-								r,g,b = self.gradient3(self.db.profile.goalbackprogress and progress*0.7 or 0,  inc.r,inc.g,inc.b, pro.r,pro.g,pro.b, com.r,com.g,com.b, 0.5)
-								a = self.db.profile.goalbackincomplete.a
-
-								--local r,g,b,a = gradientRGBA(self.db.profile.goalbackincomplete,self.db.profile.goalbackcomplete,self.db.profile.goalbackprogress and progress*0.7 or 0)
-
-							elseif status=="complete" then
-
-								r,g,b,a = fromRGBA(self.db.profile.goalbackcomplete)
-
-							elseif status=="impossible" then
-
-								r,g,b,a = fromRGBA(self.db.profile.goalbackimpossible)
-
-							elseif status=="obsolete" then  -- TODO: remove?
-
-								r,g,b,a = fromRGBA(self.db.profile.goalbackobsolete)
-
-							elseif status=="warning" then
-
-								r,g,b,a = fromRGBA(self.db.profile.goalbackwarning)
-							end
-
-							-- FLASHES
-
-							if status=="incomplete" and (goal.action~="goto" and goal.action~="fly") and self.db.profile.goalupdateflash and progress>(self.recentGoalProgress[goal] or 1) and self.frameNeedsResizing==0 and stepdata==self.CurrentStep then
-
-								if line.special=="stickyline" then  r,g,b,a=mix4(sr,sg,sb,sa, r,g,b,0.3)  end
-								if line.special=="poiline" then  r,g,b,a=mix4(sr,sg,sb,sa, r,g,b,0.3)  end
-
-								anim_w2r.r,anim_w2r.g,anim_w2r.b,anim_w2r.a = r,g,b,a
-								anim_w2r:Play()
-								self:Debug("Animating progress: "..goal:GetText())
-
-								-- self.completionelapsed = 0  -- experimental delay
-
-							elseif status=="complete" and justCompleted and self.db.profile.goalcompletionflash and self.frameNeedsResizing==0 then
-
-								anim_w2g:Play()
-								self:Debug("Animating completion.")
-
-								-- self.completionelapsed = 0  -- experimental delay
-							elseif goal.parentStep.PoiStep and goal.parentStep.PoiStep.flashGoals then
-								anim_r2r.sr,anim_r2r.sg,anim_r2r.sb,anim_r2r.sa=mix4(r,g,b,a, 0.6,0.6,0.6,1)
-								anim_r2r.r,anim_r2r.g,anim_r2r.b,anim_r2r.a = r,g,b,a
-								anim_r2r:Play()
-							end
-
-							if  (anim_w2r:IsDone() or not anim_w2r:IsPlaying()) 
-							and (anim_w2g:IsDone() or not anim_w2g:IsPlaying())
-							and (anim_r2r:IsDone() or not anim_r2r:IsPlaying()) then
-								if line.special=="stickyline" and self.db.profile.stickycolored then  r,g,b,a=mix4(sr,sg,sb,sa, r,g,b,a*0.5)  end
-								if line.special=="poiline" and self.db.profile.stickycolored then  r,g,b,a=mix4(sr,sg,sb,sa, r,g,b,a*0.5)  end
-								back:SetBackdropColor(r,g,b,a)
-								back:SetBackdropBorderColor(r,g,b,a)
-							end
-
-						else
-							back:Hide()
-						end
+						local goal = line.goal
 
 						if goal then
-							if self.recentGoalProgress[goal]~=progress then
-								goal.dirtytext=true
+							local label = line.label
+							local clicker = line.clicker
+							local anim_w2g = line.anim_w2g
+							local anim_w2r = line.anim_w2r
+							local anim_r2r = line.anim_r2r
+
+							local status,progress = goal:GetStatus()
+							progress = tonumber(progress) or 0
+
+							-- prepare completion effects
+
+							-- set justCompleted only once per completion
+							-- except if this is the goal that when completed makes guide progress to 
+							local justCompleted = justcompletedgoals[goal]
+
+							-- ICONS
+
+							if goal and self.db.profile.goalicons then
+								label:SetPoint("TOPLEFT",line,"TOPLEFT",icon_indent+2,(l==1 and -2 or -1))
+								icon:SetPoint("CENTER",line,"TOPLEFT",self.db.profile.fontsize*0.5+1,-self.db.profile.fontsize*0.5-1)
+								icon:SetSize(self.CurrentSkinStyle.StepLineIconSize * self.db.profile.fontsize,self.CurrentSkinStyle.StepLineIconSize * self.db.profile.fontsize) -- TODO SkinData friendly?
+								icon:Show()
+
+								if goal.next or goal.loadguide then
+									icon:SetIcon(actionicon.next)
+								elseif goal.action=="achieve" and goal.achieveid then
+									icon:SetTexture(select(10,GetAchievementInfo(goal.achieveid)))
+									icon:SetTexCoord(0,1,0,1)
+								elseif poi_actions[goal.action] then
+									icon:SetIcon(actionicon[goal.action])
+								elseif status=="passive" then
+
+									if goal.action=="talk" or goal.action=="from" or goal.action=="goto" or
+									goal.action=="goldcollect" or goal.action=="goldtracker" or (goal.action=="image" and not goal.inline) then
+										icon:SetIcon(actionicon[goal.action])
+									elseif (goal.action=="image" and goal.inline) then
+										icon:SetIcon(0)
+									else
+										icon:SetIcon(1)
+									end
+									icon:SetDesaturated(false)
+
+								elseif status=="incomplete" then
+
+									icon:SetIcon(actionicon[goal.action])
+									icon:SetDesaturated(false)
+
+								elseif status=="complete" then
+
+									icon:SetIcon(3)
+									icon:SetDesaturated(false)
+
+								elseif status=="impossible" then
+
+									icon:SetIcon(actionicon[goal.action])
+									icon:SetDesaturated(true)
+
+								elseif status=="obsolete" then
+
+									--icon:SetIcon(actionicon[goal.action])
+									--icon:SetDesaturated(false)
+									icon:SetIcon(actionicon[goal.action])
+									icon:SetDesaturated(true)
+
+								else	-- maybe hidden, maybe WTF
+									icon:SetIcon(1)
+								end
+							else
+								label:SetPoint("LEFT",line,"TOPLEFT",0,-1)
+								icon:Hide()
 							end
 
-							self.recentGoalProgress[goal] = progress
 
-							-- unpause when completing a goal
+							-- BACKGROUNDS
 
-							if justCompleted and goal.parentStep==self.CurrentStep then
-								self.pause=nil
+							if self.db.profile.goalbackgrounds then
+
+								back:Show()
+
+								-- COLORS
+
+								local r,g,b,a=0,0,0,0
+
+								if status=="passive" then
+									--if line.special=="stickyline" then
+									--	r,g,b,a = 0.2,0.15,0,1
+									--else
+										r,g,b,a = 0,0,0,0
+									--end
+									if self.db.profile.highlight_goto and goal.x and ZGV.Pointer.DestinationWaypoint and ZGV.Pointer.DestinationWaypoint.goal==goal then
+										r,g,b,a = 1,1,1,0.1
+									end
+
+								elseif status=="incomplete" then
+
+									local inc=self.db.profile.goalbackincomplete
+									local pro=self.db.profile.goalbackprogressing
+									local com=self.db.profile.goalbackcomplete
+									r,g,b = self.gradient3(self.db.profile.goalbackprogress and progress*0.7 or 0,  inc.r,inc.g,inc.b, pro.r,pro.g,pro.b, com.r,com.g,com.b, 0.5)
+									a = self.db.profile.goalbackincomplete.a
+
+									--local r,g,b,a = gradientRGBA(self.db.profile.goalbackincomplete,self.db.profile.goalbackcomplete,self.db.profile.goalbackprogress and progress*0.7 or 0)
+
+								elseif status=="complete" then
+
+									r,g,b,a = fromRGBA(self.db.profile.goalbackcomplete)
+
+								elseif status=="impossible" then
+
+									r,g,b,a = fromRGBA(self.db.profile.goalbackimpossible)
+
+								elseif status=="obsolete" then  -- TODO: remove?
+
+									r,g,b,a = fromRGBA(self.db.profile.goalbackobsolete)
+
+								elseif status=="warning" then
+
+									r,g,b,a = fromRGBA(self.db.profile.goalbackwarning)
+								end
+
+								-- FLASHES
+
+								a = a * ZGV.db.profile.opacitymain
+
+								if status=="incomplete" and (goal.action~="goto" and goal.action~="fly") and self.db.profile.goalupdateflash and progress>(self.recentGoalProgress[goal] or 1) and self.frameNeedsResizing==0 and stepdata==self.CurrentStep then
+
+									if line.special=="stickyline" then  r,g,b,a=mix4(sr,sg,sb,sa, r,g,b,0.3)  end
+									if line.special=="poiline" then  r,g,b,a=mix4(sr,sg,sb,sa, r,g,b,0.3)  end
+
+									anim_w2r.r,anim_w2r.g,anim_w2r.b,anim_w2r.a = r,g,b,a
+									anim_w2r:Play()
+									self:Debug("Animating progress: "..goal:GetText())
+
+									-- self.completionelapsed = 0  -- experimental delay
+
+								elseif status=="complete" and justCompleted and self.db.profile.goalcompletionflash and self.frameNeedsResizing==0 then
+
+									anim_w2g:Play()
+									self:Debug("Animating completion.")
+
+									-- self.completionelapsed = 0  -- experimental delay
+								elseif goal.parentStep.PoiStep and goal.parentStep.PoiStep.flashGoals then
+									anim_r2r.sr,anim_r2r.sg,anim_r2r.sb,anim_r2r.sa=mix4(r,g,b,a, 0.6,0.6,0.6,1)
+									anim_r2r.r,anim_r2r.g,anim_r2r.b,anim_r2r.a = r,g,b,a
+									anim_r2r:Play()
+								end
+
+								if  (anim_w2r:IsDone() or not anim_w2r:IsPlaying()) 
+								and (anim_w2g:IsDone() or not anim_w2g:IsPlaying())
+								and (anim_r2r:IsDone() or not anim_r2r:IsPlaying()) then
+									if line.special=="stickyline" and self.db.profile.stickycolored then  r,g,b,a=mix4(sr,sg,sb,sa, r,g,b,a*0.5)  end
+									if line.special=="poiline" and self.db.profile.stickycolored then  r,g,b,a=mix4(sr,sg,sb,sa, r,g,b,a*0.5)  end
+									back:SetBackdropColor(r,g,b,a)
+									back:SetBackdropBorderColor(r,g,b,a)
+								end
+
+							else
+								back:Hide()
 							end
-						end
 
-						if status=="impossible" then
-							line:SetAlpha(0.4)
+							if goal then
+								if self.recentGoalProgress[goal]~=progress then
+									goal.dirtytext=true
+								end
+
+								self.recentGoalProgress[goal] = progress
+
+								-- unpause when completing a goal
+
+								if justCompleted and goal.parentStep==self.CurrentStep then
+									self.pause=nil
+								end
+							end
+
+							if status=="impossible" then
+								line:SetAlpha(0.4)
+							else
+								line:SetAlpha(1.0)
+							end
+
+						elseif line.isheader then
+							-- leave it! it should handle its own back.
+
+						elseif line.special=="stickyseparator" and self.db.profile.stickydisplay==1 then
+							icon:Hide()
+							back:SetBackdropColor(sr,sg,sb,1)
+							back:SetBackdropBorderColor(sr,sg,sb,1)
+							back:Show()
+						elseif line.special=="stickyline" and self.db.profile.stickycolored then
+							icon:Hide()
+							back:SetBackdropColor(sr,sg,sb,sa)
+							back:SetBackdropBorderColor(sr,sg,sb,sa)
+							back:Show()
+						elseif line.special=="poiline" and self.db.profile.stickycolored then
+							icon:Hide()
+							back:SetBackdropColor(sr,sg,sb,sa)
+							back:SetBackdropBorderColor(sr,sg,sb,sa)
+							back:Show()
 						else
-							line:SetAlpha(1.0)
+							-- no goal? ah, subtitle.
+							icon:Hide()
+							back:Hide()
 						end
-
-					elseif line.isheader then
-						-- leave it! it should handle its own back.
-
-					elseif line.special=="stickyseparator" and self.db.profile.stickydisplay==1 then
-						icon:Hide()
-						back:SetBackdropColor(sr,sg,sb,1)
-						back:SetBackdropBorderColor(sr,sg,sb,1)
-						back:Show()
-					elseif line.special=="stickyline" and self.db.profile.stickycolored then
-						icon:Hide()
-						back:SetBackdropColor(sr,sg,sb,sa)
-						back:SetBackdropBorderColor(sr,sg,sb,sa)
-						back:Show()
-					elseif line.special=="poiline" and self.db.profile.stickycolored then
-						icon:Hide()
-						back:SetBackdropColor(sr,sg,sb,sa)
-						back:SetBackdropBorderColor(sr,sg,sb,sa)
-						back:Show()
-					else
-						-- no goal? ah, subtitle.
-						icon:Hide()
-						back:Hide()
 					end
-				end
+				--\\
 
 				-- check if step was flashing due to poi force, if so reduce flash counter
 				local poigoal = frame.lines[1] and frame.lines[1].goal
@@ -2775,7 +2853,7 @@ function ZGV:UpdateFrame(full,onupdate)
 					currentBackdropColor[1] = min(1,currentBackdropColor[1] + 0.3)
 					currentBackdropColor[2] = min(1,currentBackdropColor[2] + 0.3)
 					currentBackdropColor[3] = min(1,currentBackdropColor[3] + 0.3)
-					currentBackdropColor[4] = 1
+					currentBackdropColor[4] = ZGV.db.profile.opacitymain
 					frame.lines[ZGV.CurrentStep.current_waypoint_goal].back:SetBackdropColor(unpack(currentBackdropColor))
 				end
 				
@@ -2821,7 +2899,7 @@ function ZGV:UpdateFrame(full,onupdate)
 				--]]
 
 				-- TODO this is really dirty
-				self.db.profile.stepbackalpha=1.0
+				self.db.profile.stepbackalpha=1.0 * ZGV.db.profile.opacitymain * ZGV.db.profile.opacitymain  -- twice, to make it more transparent, as it's overlaid on normal window background anyway.
 				if stepdata:AreRequirementsMet() then
 					if stepdata:IsComplete() then
 						frame:SetBackdropColor(fromRGBmul_a(self.db.profile.goalbackcomplete,0.5,self.db.profile.stepbackalpha))
@@ -3061,7 +3139,7 @@ function ZGV:UpdateFrameCurrent()
 								vis=true
 
 							elseif goal.petaction then
-								local num,name,subtext,tex = FindPetActionInfo(goal.petaction)
+								local num,name,subtext,tex = ZGV.FindPetActionInfo(goal.petaction)
 								if num then
 									petaction:SetID(num)
 									petaction.tooltipName=name
@@ -3369,7 +3447,7 @@ local spamthrot
 function ZGV:Print(s,ifdebug,force)
 	if ifdebug then self:Debug(s) end
 
-	if self.db.profile.quiet and not force then return end
+	if not self.db.profile.noisy and not force then return end
 
 	if not ZGV.DEV and not ZGV.db.profile.debug and not force then  -- spam throttle on clients only
 		if s==spamthrot_last then
@@ -3412,6 +3490,7 @@ function ZGV:ThunderStageForceUpdate()
 
 	local lastmap,lastfloor
 
+	ZGV.WMU_Suspend()
 	if GetCurrentMapAreaID()~=928 then
 		lastmap,lastfloor = GetCurrentMapAreaID(),GetCurrentMapDungeonLevel()
 		SetMapByID(928) --Thunder Isle
@@ -3435,7 +3514,7 @@ function ZGV:ThunderStageForceUpdate()
 	end
 
 	if lastmap then SetMapByID(lastmap) SetDungeonMapLevel(lastfloor) end
-
+	ZGV.WMU_Resume()
 	thunder_stack=nil
 end
 
@@ -3539,19 +3618,43 @@ function ZGV:MatchProfs(fitprof,levelmin,levelmax)
 end
 
 local eventtex = {
-	CALENDAR_DARKMOONFAIRETEROKKA = "DARKMOON FAIRE",
-	CALENDAR_DARKMOONFAIREELWYNN = "DARKMOON FAIRE",
-	CALENDAR_DARKMOONFAIREMULGORE = "DARKMOON FAIRE",
-	CALENDAR_NOBLEGARDEN = "NOBLEGARDEN",
-	CALENDAR_BREWFEST = "BREWFEST",
-	CALENDAR_HARVESTFESTIVAL = "HARVEST FESTIVAL",
-	CALENDAR_HARVESTFESTIVAL_PILGRIM = "PILGRIM'S BOUNTY",
-	CALENDAR_WINTERVEIL = "FEAST OF WINTER VEIL",
-	CALENDAR_LUNARFESTIVAL = "LUNAR FESTIVAL",
-	CALENDAR_LOVEINTHEAIR = "LOVE IS IN THE AIR",
-	CALENDAR_CHILDRENSWEEK = "CHILDREN'S WEEK",
-	CALENDAR_MIDSUMMER = "MIDSUMMER FIRE FESTIVAL",
-	CALENDAR_HALLOWSEND = "HALLOW'S END",
+	[235485]="FEAST OF WINTER VEIL",
+	[235484]="FEAST OF WINTER VEIL",
+	[235482]="FEAST OF WINTER VEIL",
+	[235477]="NOBLEGARDEN",
+	[235476]="NOBLEGARDEN",
+	[235475]="NOBLEGARDEN",
+	[235474]="MIDSUMMER FIRE FESTIVAL",
+	[235473]="MIDSUMMER FIRE FESTIVAL",
+	[235472]="MIDSUMMER FIRE FESTIVAL",
+	[235471]="LUNAR FESTIVAL",
+	[235470]="LUNAR FESTIVAL",
+	[235469]="LUNAR FESTIVAL",
+	[235468]="LOVE IS IN THE AIR",
+	[235467]="LOVE IS IN THE AIR",
+	[235466]="LOVE IS IN THE AIR",
+	[235465]="PILGRIM'S BOUNTY",  -- shared with HARVEST FESTIVAL
+	[235464]="PILGRIM'S BOUNTY",  -- shared with HARVEST FESTIVAL
+	[235463]="PILGRIM'S BOUNTY",  -- shared with HARVEST FESTIVAL
+	[235462]="HALLOW'S END",
+	[235461]="HALLOW'S END",
+	[235460]="HALLOW'S END",
+	[307365]="DAY OF THE DEAD",
+	[840589]="DAY OF THE DEAD",
+	[307364]="DAY OF THE DEAD",
+	[235448]="DARKMOON FAIRE",
+	[235447]="DARKMOON FAIRE",
+	[235446]="DARKMOON FAIRE",
+	[235445]="CHILDREN'S WEEK",
+	[235444]="CHILDREN'S WEEK",
+	[235443]="CHILDREN'S WEEK",
+	[235442]="BREWFEST",
+	[235441]="BREWFEST",
+	[235440]="BREWFEST",
+	[235457]="FIREWORKS SPECTACULAR", -- shared with "FIREWORKS CELEBRATION" on new year
+	--[1129677]="PET BATTLE BONUS EVENT",
+	--[1467045]="LEGION DUNGEON EVENT",
+	--[1616334]="PVP BRAWL: TEMPLE OF HOTMOGU",
 }
 
 function ZGV:FindEvent(eventName)
@@ -3573,21 +3676,26 @@ function ZGV:FindEvent(eventName)
 		if month~=calmonth or year~=calyear then  return false  end  -- couldn't set the month correctly. Seriously, WTF?
 	end
 	
-	for event=1, CalendarGetNumDayEvents(0,day) do --0 current month, 1 next month, -1 last month... Always want the current day.
-		local name,hr,mn,eventType,eventStatus,eventType2,texture = CalendarGetDayEvent(0,day,event)
-		name=name:upper() texture=texture:upper()
+	for event=1, CalendarGetNumDayEvents(0,day) do  repeat  --0 current month, 1 next month, -1 last month... Always want the current day.
+		local texture
 
-		if (texture=="CALENDAR_HARVESTFESTIVAL" and month>10) then --Stay the same
-			texture="CALENDAR_HARVESTFESTIVAL_PILGRIM" --Lovely work around for Harvest Festival and Pilgrim's Bounty having the same texture
+		local eventdata = C_Calendar.GetDayEvent(0,day,event)
+		if not eventdata then break end --continue
+
+		texture = eventtex[eventdata.iconTexture]
+		eventdata.title=eventdata.title:upper() 
+
+		if (texture=="HARVEST FESTIVAL" and month>=11) then
+			texture="PILGRIM'S BOUNTY" --Lovely work around for Harvest Festival and Pilgrim's Bounty having the same texture
 		end
 
-		if eventType=="HOLIDAY" --We don't care about any other events
-		and eventStatus~="END"  --If it is the last day of a holiday it ended at 2am so ignore it.
-		and (eventName==name or eventName==eventtex[texture] or eventName==texture) then --Does the ring fit?
+		if eventdata.calendarType=="HOLIDAY" --We don't care about any other events
+		and eventdata.sequenceType~="END"  --If it is the last day of a holiday it ended at 2am so ignore it.
+		and (eventName==eventdata.title or eventName==texture) then --Does the ring fit?
 			return true
 		end
-	end
-	return false -- Nothing else was returned so it is all wrong.
+	until true end
+	return false -- Nothing else was returned, so the event is not active.
 end
 
 tinsert(ZGV.startups,{"Preiniting Calendar",function(self)
@@ -3626,13 +3734,13 @@ function ZGV:PLAYER_REGEN_DISABLED()
 	self:UpdateCooldowns()
 	if self.db.profile.hideincombat then
 		if self.Frame:IsVisible() then
-			ZGV.UIFrameFade.UIFrameFadeOut(self.Frame,0.5,ZGV.db.profile.opacitymain,0.0)
+			ZGV.UIFrameFade.UIFrameFadeOut(self.Frame,0.5,1.0,0.0)
 			self.hiddenincombat = true
 		end
 
 		--[[ CreatureViewer removal, 7.0
 		if self.CV.Frame:IsVisible() then
-			ZGV.UIFrameFade.UIFrameFadeOut(self.CV.Frame,0.5,ZGV.db.profile.opacitymain,0.0)
+			ZGV.UIFrameFade.UIFrameFadeOut(self.CV.Frame,0.5,1.0,0.0)
 			self.cvhiddenincombat = true
 		end
 		--]]
@@ -3655,13 +3763,13 @@ function ZGV:PLAYER_REGEN_ENABLED()
 	self:UpdateCooldowns()
 
 	if self.hiddenincombat then
-		ZGV.UIFrameFade.UIFrameFadeIn(self.Frame,0.5,0.0,ZGV.db.profile.opacitymain)
+		ZGV.UIFrameFade.UIFrameFadeIn(self.Frame,0.5,0.0,1.0)
 		self.hiddenincombat = nil
 	end
 
 	--[[ CreatureViewer removal, 7.0
 	if self.cvhiddenincombat then
-		ZGV.UIFrameFade.UIFrameFadeIn(self.CV.Frame,0.5,0.0,ZGV.db.profile.opacitymain) --This will fade the creature viewer to the same level as the window. Not a bad thing imo
+		ZGV.UIFrameFade.UIFrameFadeIn(self.CV.Frame,0.5,0.0,1.0) --This will fade the creature viewer to the same level as the window. Not a bad thing imo
 		self.cvhiddenincombat = nil
 	end
 	--]]
@@ -3694,7 +3802,7 @@ function ZGV:WORLD_MAP_UPDATE()
 end
 
 function ZGV:NEW_WMO_CHUNK()
-	if not WorldMapFrame:IsVisible() then SetMapToCurrentZone() end  -- force map reset, otherwise floor numbers will still be wrong
+	if not WorldMapFrame:IsVisible() then ZGV.WMU_Suspend() SetMapToCurrentZone() ZGV.WMU_Resume() end  -- force map reset, otherwise floor numbers will still be wrong
 	self:CacheCurrentMapID()
 end
 
@@ -3705,7 +3813,7 @@ function ZGV:PLAYER_ENTERING_WORLD()
 end
 
 function ZGV:ZONE_CHANGED_INDOORS()
-	if not WorldMapFrame:IsVisible() then SetMapToCurrentZone() end
+	if not WorldMapFrame:IsVisible() then ZGV.WMU_Suspend() SetMapToCurrentZone() ZGV.WMU_Resume() end
 	self:CacheCurrentMapID()
 end
 
@@ -3714,7 +3822,7 @@ function ZGV:ZONE_CHANGED()
 end
 
 function ZGV:ZONE_CHANGED_NEW_AREA()
-	if not WorldMapFrame:IsVisible() then SetMapToCurrentZone() end
+	if not WorldMapFrame:IsVisible() then ZGV.WMU_Suspend() SetMapToCurrentZone() ZGV.WMU_Resume() end
 	self:CacheCurrentMapID()
 end
 
@@ -3757,6 +3865,8 @@ end
 ZGV.CurrentMapID,ZGV.CurrentMapFloor = 0,0
 
 function ZGV:CacheCurrentMapID()
+	if not self.loading_screen_disabled then return end
+
 	local _,_,m,f=HBD:GetPlayerZonePosition(true)
 	if m and m~=0 and m~=13 and m~=14 and m~=-1 and m~=485 and m~=466 and m~=613 and m~=862 and m~=962      -- multi-zone, whole-continent maps
 	then
@@ -3772,7 +3882,7 @@ function ZGV:FindData(array,what,data)
 end
 
 function ZGV:Frame_OnShow()
-	if ZGV.initialized then PlaySound("igQuestLogOpen") end
+	if ZGV.initialized then PlaySound(SOUNDKIT.IG_QUEST_LOG_OPEN) end
 	self:Debug("ZGV:Frame_OnShow")
 	--ZygorGuidesViewerFrame_Filter()
 	--[[
@@ -3808,7 +3918,7 @@ function ZGV:Frame_OnShow()
 end
 
 function ZGV:Frame_OnHide()
-	PlaySound("igQuestLogClose")
+	PlaySound(SOUNDKIT.IG_QUEST_LOG_CLOSE)
 	self.db.profile.enable_viewer = false
 
 	if not InCombatLockdown() then
@@ -3932,7 +4042,7 @@ function ZGV:GoalOnClick(goalframe,button)
 	self.GoalClickedTime = curTime
 	goalframe = goalframe:GetParent()
 	local stepframe = goalframe:GetParent()
-	local goal = goalframe.goal
+	local goal = goalframe.goal or goalframe.tipgoal
 
 	if not goal then return end
 
@@ -3960,7 +4070,7 @@ function ZGV:GoalOnClick(goalframe,button)
 end
 
 function ZGV:GoalOnEnter(goalframe)
-	local goal = goalframe:GetParent().goal
+	local goal = goalframe:GetParent().goal or goalframe:GetParent().tipgoal
 	if not goal then return end
 
 	local step = goal.parentStep
@@ -4087,16 +4197,6 @@ local function group_to_array(group)
 	return arr
 end
 
-local function BuildDropDown_GuideMenu(level,value)
-	local self=ZGV
-	--[[
-	local menu = { }
-
-	menu = group_to_array(self.registered_groups)
-	EasyMenu(menu,ZGVFMenu,"ZygorGuidesViewerFrame_Border_TitleBar",30,10,"MENU",3)
-	--]]
-end
-
 function ZGV:GetMostRecentGuide(gtype)
 	local guides = self.db.char.guides_history[gtype]
 	if guides and guides[1] then
@@ -4113,7 +4213,7 @@ function ZGV:GetMostRecentGuide(gtype)
 
 end
 
-
+-- RETIRE AFTER NEW MENU
 function ZGV:GetGuidesHistory(gtype)
 	local unwrapped={}
 	for gi,guide_and_step in ipairs(self.db.char.guides_history) do
@@ -4131,11 +4231,11 @@ end
 function ZGV:OpenGuideMenu(path)
 	if self.Menu then 
 		if path=="HOME" and ZGV.CurrentGuide and not ZGV.CurrentGuideName:match("GOLD\\") and not ZGV.CurrentGuideName:match("PETSMOUNTS\\Pets") then
-			ZGV.Menu:Show()
-			ZGV.Menu:NavigateToGuide(ZGV.CurrentGuide)
+			ZGV.GuideMenu:Show()
+			ZGV.GuideMenu:Open("Current")
 			return
 		end
-		ZGV.Menu:Show(path)
+		ZGV.GuideMenu:Show(path)
 	end
 end
 
@@ -4275,7 +4375,7 @@ function ZGV:OpenQuickStepMenu(stepframe,goalframe)
 	ZGVFMenu.goalframe=goalframe
 
 	local step = stepframe.step
-	local goal = goalframe.goal
+	local goal = goalframe.goal or goalframe.tipgoal
 
 	local menu = {
 		{
@@ -4329,26 +4429,26 @@ function ZGV:OpenQuickStepMenu(stepframe,goalframe)
 		})
 	end
 
-	local id = goal.npcid or (goal.mobs and goal.mobs[1] and goal.mobs[1].id) or (goal.action=="kill" and goal.targetid)
 	--[[ CreatureViewer removal, 7.0
-	if id then
-		local name = self.Localizers:GetTranslatedNPC(id) or "(creature)"
-		tinsert(menu,{
-			text = L['qmenu_goal_creature_data']:format(name),
-			tooltipTitle = L['qmenu_goal_creature'],
-			tooltipTitleText = L['qmenu_goal_creature_desc']:format(name),
-			tooltipOnButton = true,
-			func = function()
-				self.db.profile.viewcreature=true
-				self.CreatureViewer:ShowCreature(id,name)
-				if self.CreatureViewer.failed then
-					self:Print("Creature is not yet available - too far.")
-				end
-			end,
-			--Try both and hopefully one works.
-			isNotRadio=true,
-		})
-	end
+		local id = goal.npcid or (goal.mobs and goal.mobs[1] and goal.mobs[1].id) or (goal.action=="kill" and goal.targetid)
+		if id then
+			local name = self.Localizers:GetTranslatedNPC(id) or "(creature)"
+			tinsert(menu,{
+				text = L['qmenu_goal_creature_data']:format(name),
+				tooltipTitle = L['qmenu_goal_creature'],
+				tooltipTitleText = L['qmenu_goal_creature_desc']:format(name),
+				tooltipOnButton = true,
+				func = function()
+					self.db.profile.viewcreature=true
+					self.CreatureViewer:ShowCreature(id,name)
+					if self.CreatureViewer.failed then
+						self:Print("Creature is not yet available - too far.")
+					end
+				end,
+				--Try both and hopefully one works.
+				isNotRadio=true,
+			})
+		end
 	--]]
 
 	if goal:IsCompleteable() then
@@ -4477,6 +4577,26 @@ function ZGV:OpenQuickStepMenu(stepframe,goalframe)
 			isNotRadio=true,
 		})
 	end
+
+	tinsert(menu,{
+		text = L['qmenu_shareto'],
+		hasArrow = true,
+		menuList = {
+			{ text = L['qmenu_shareto_party'], checked = function() return self.db.profile.share_target=="PARTY" end, func = function() self.db.profile.share_target="PARTY"  CloseDropDownForks() end },
+			{ text = L['qmenu_shareto_raid'], checked = function() return self.db.profile.share_target=="RAID" end, func = function() self.db.profile.share_target="RAID" CloseDropDownForks() end },
+			{ text = L['qmenu_shareto_say'], checked = function() return self.db.profile.share_target=="SAY" end, func = function() self.db.profile.share_target="SAY" CloseDropDownForks() end },
+		}
+	})
+
+	local rolegoals
+	for i,g in ipairs(step.goals) do  if g.grouprole then   rolegoals=true  break  end end
+	if rolegoals then
+		tinsert(menu,{
+			text = L['qmenu_share_allgrouproles'],
+			func = function() step:ShareToChat(self.db.profile.share_target or "SAY","rolegoals","brand") end,
+		})
+	end
+
 	--[[
 		{
 			text = L['opt_miniresizeup'],
@@ -4513,7 +4633,14 @@ function ZGV:OpenQuickStepMenu(stepframe,goalframe)
 			func = function() ZGV:SearchForCompleteableGoal() end
 		}
 	--]]
-	EasyMenu(menu,ZGVFMenu,goalframe:GetName(),0,0,"MENU",3)
+
+	tinsert(menu,{
+		text = L['qmenu_close'],
+		hasArrow = false,
+		func = function()  CloseDropDownForks() end,
+	})
+
+	EasyFork(menu,ZGVFMenu,goalframe:GetName(),0,0,"MENU",3)  -- replacement for EasyMenu, just not as insecure.
 end
 
 --[[
@@ -4567,7 +4694,7 @@ function ZGV:OpenQuickSteps()
 		ZGVFMenu.goalframe=nil
 	end
 
-	EasyMenu(menu,ZGVFMenu,"cursor",0,0,"MENU",3)
+	EasyFork(menu,ZGVFMenu,"cursor",0,0,"MENU",3)
 end
 --]]
 
@@ -4644,7 +4771,16 @@ function ZGV:RegisterGuide(title,data,extra)
 
 	local guide = ZGV.GuideProto:New(title,data,extra)
 
+	if ZGV.BETAguides and guide then guide.beta=true end
+
 	tinsert(self.registeredguides,guide)
+end
+
+function ZGV.BETASTART()
+	ZGV.BETAguides=true
+end
+function ZGV.BETAEND()
+	ZGV.BETAguides=false
 end
 
 ZGV.registered_mapspotset_groups = { groups={},guides={}}
@@ -4730,14 +4866,16 @@ function ZGV:UnregisterGuide(name)
 end
 --]]
 
+-- Simulate a yieldable pcall.
+-- As it's not possible to yield inside pcall, let's use a coroutine to trap errors instead.
 function ZGV.coroutine_safe_pcall(f,arg)
 	local co = coroutine.create(f)
 	while true do
 		local status, a,b,c,d,e = coroutine.resume(co,arg)
-		if coroutine.status(co) == "suspended" then
-			arg = coroutine.yield(a)   -- suspend across `mypcall'
-		else
-			return status, a,b,c,d,e   -- error or normal return
+		if coroutine.status(co) == "suspended" then -- it yielded! pass the yield if possible, otherwise just continue immediately
+			arg = coroutine.running() and coroutine.yield(a)
+		else -- it returned or crashed! return the error or any normal return values.
+			return status, a,b,c,d,e
 		end
 	end
 end
@@ -4962,8 +5100,6 @@ function ZGV:Debug (msg,...)
 		func = func:gsub(".*\\([^\\]-:%d+): in function `(.-)'","%1:%2") or func
 		func = func:gsub(".*\\([^\\]-:%d+): in function.-string \"*(:.-)\"","%1:%2") or func
 		func = func:gsub(".*\\([^\\]-:%d+): in function <.->","%1:<local>") or func
-	else
-		func=""
 	end
 
 	if true then -- self and self.db and self.db.profile and self.db.profile.debug and not self.db.profile.quiet then
@@ -4987,9 +5123,17 @@ function ZGV:Debug (msg,...)
 		end
 		if not chatframe then chatframe=ChatFrame1 end
 
-		chatframe:AddMessage(("|cffffee77Z|r: %s%06.03f+%03d|r |cff00ddbb#%d: %s%s  |cffaaaaaa(%s)"):format(timecolor,(t-self.loadtimeGT),debugms,self.DebugI,debugcolor,formatted_msg,func))
+		if func then
+			chatframe:AddMessage(("|cffffee77Z|r: %s%06.03f+%03d|r |cff00ddbb#%d: %s%s  |cffaaaaaa(%s)"):format(timecolor,(t-self.loadtimeGT),debugms,self.DebugI,debugcolor,formatted_msg,func))
+		else
+			chatframe:AddMessage(("|cffffee77Z|r: %s%06.03f+%03d|r |cff00ddbb#%d: %s%s"):format(timecolor,(t-self.loadtimeGT),debugms,self.DebugI,debugcolor,formatted_msg))
+		end
 	end
-	self.Log:Add("%s (%s)",formatted_msg,func)
+	if func then
+		self.Log:Add("%s (%s)",formatted_msg,func)
+	else
+		self.Log:Add("%s",formatted_msg)
+	end
 
 	--local debug_time=debugprofilestop()-initial_time
 end
@@ -5309,9 +5453,11 @@ function ZGV:FindGuides(sub)
 	end
 	--]]
 	for gi,g in pairs(self.registeredguides) do
-		if not g.poi or (g.poi and ZGV.DEV) then
+		if not (g.poi or g.type=="TEST") or ZGV.db.profile.debug_display then
 			if (g.title_short and g.title_short:lower():find(sub,1,true)) then
-				tinsert(found,g)
+				if not (ZGV.db.profile.gmhidecompleted and (g:GetStatus()=="OUTLEVELED" or g:GetStatus()=="COMPLETE")) then
+					tinsert(found,g)
+				end
 			elseif g.keywords then
 				for _,word in pairs(g.keywords) do
 					if word:lower():find(sub,1,true) then
@@ -5366,8 +5512,14 @@ ZGV.ParseLog = ""
 
 function ZGV:Error(s,...)
 	if (...) then s=s:format(...) end
-	self:Print(s)
+	self:Print("|cffff0000ERROR:|r "..s)
 	ZGV.ParseLog = ZGV.ParseLog .. s .. "\n"
+	return s
+end
+
+function ZGV:ErrorThrow(...)
+	local s = self:Error(...)
+	geterrorhandler()(s)
 end
 
 -- HBD migration snip: Ship Arrival Times 
@@ -5539,7 +5691,7 @@ function ZGV:UPDATE_MOUSEOVER_UNIT()
 			end
 		end
 		if found then
-			PlaySound("gsTitleOptionExit")
+			PlaySound(SOUNDKIT.GS_TITLE_OPTION_EXIT)
 			ZGV.TargetPingFrame:ClearAllPoints()
 			local x,y=GetCursorPosition()
 			ZGV.TargetPingFrame:SetPoint("CENTER",nil,"BOTTOMLEFT",x,y)
@@ -5602,7 +5754,7 @@ function ZGV:UPDATE_MOUSEOVER_UNIT()
 			if not GameTooltip:IsShown() or GameTooltip:GetAlpha()<0.9 then self.firing=nil end
 		end)
 		function ZGV.TargetPingFrame:Start()
-			PlaySound("gsTitleOptionExit")
+			PlaySound(SOUNDKIT.GS_TITLE_OPTION_EXIT)
 			--self:SetPoint("CENTER",nil,"BOTTOMLEFT",x,y)
 			self.firing=1
 			self:Show()
@@ -5615,7 +5767,7 @@ function ZGV:UPDATE_MOUSEOVER_UNIT()
 			for i=1,NUMFLY do local t=self.tex[i]  if t.life>0.01 then t:Fly(elapsed) else t:Hide() end end
 		end)
 		function ZGV.TargetPingFrame:Start()
-			PlaySound("gsTitleOptionExit")
+			PlaySound(SOUNDKIT.GS_TITLE_OPTION_EXIT)
 			--self:SetPoint("CENTER",nil,"BOTTOMLEFT",x,y)
 			local x,y=GetCursorPosition()
 			for i=1,NUMFLY do  self.tex[i]:Start(x,y)  end
@@ -5664,40 +5816,6 @@ function ZGV:WarnAboutDebugSettings()
 	if self.db.profile.fakelevel then self:Print("WARNING, DEBUG: Fake level is set to "..self.db.profile.fakelevel) end
 end
 
-local uncached_calls = 0
-
-function ZGV:GetItemInfo(ident)
-	local live_result = {GetItemInfo(ident)}
-	if not gii_cache then 
-		-- not yet initialised, return whatever blizz gave us
-		return live_result
-	elseif live_result[1] then 
-		-- got something out of GII, store it
-		gii_cache[ident]=live_result
-		gii_cache[ident].timestamp=time()
-	elseif gii_cache[ident] and gii_cache[ident][1] then  
-		-- no live result, but we have stored data
-		-- update its last access time
-		gii_cache[ident].timestamp=time()
-	else
-		-- nothing, but we will have data shortly
-		gii_cache[ident]={}
-		return nil
-	end
-	return unpack(gii_cache[ident])
-end
-
-function ZGV:PurgeItemInfo()
-	ZGV.db.global.gii_cache=nil
-end
-
-function ZGV:GET_ITEM_INFO_RECEIVED(event,ident)
-	-- only store the items we requested
-	if gii_cache[ident] then
-		gii_cache[ident] = {GetItemInfo(ident)}
-		gii_cache[ident].timestamp=time()
-	end
-end
 
 function ZGV:PLAYER_LEVEL_UP(event,level)
 	local title,message,guide
@@ -5728,40 +5846,56 @@ function ZGV:PLAYER_LEVEL_UP(event,level)
 	end
 end
 
-function ZGV:SuggestWorldQuestGuide(object)
-	if not object.worldQuest then return end
+function ZGV:SUPER_TRACKED_QUEST_CHANGED()
+	if not WorldQuestTrackerAddon then return end
+	if not WorldQuestTrackerAddon.db.profile.use_tracker then return end
+	if not WorldQuestTrackerAddon.IsQuestBeingTracked(GetSuperTrackedQuestID()) then return end
+	ZGV:SuggestWorldQuestGuide(nil,GetSuperTrackedQuestID(),"force")
+end
 
-	local guidetitle = "Dailies Guides\\Legion\\Legion World Quests"
+function ZGV.WQTwrapper(object)
+	if not WorldQuestTrackerAddon.db.profile.use_tracker then return end
+	
+	if not WorldQuestTrackerAddon.IsQuestBeingTracked(object.questID) then
+		ZGV:SuggestWorldQuestGuide(nil,object.questID,"force")
+	end
+end
 
-	if IsWorldQuestWatched(object.questID) then
+function ZGV:SuggestWorldQuestGuide(object,questID,force)
+	local questID = object and object.worldQuest and object.questID or questID
+	if not questID then return end
+
+	local guidetitle = "Dailies Guides\\Legion\\World Quests"
+
+	if IsWorldQuestWatched(questID) or force then
 		local guide = self:GetGuideByTitle(guidetitle)
 		if not guide then return end
 		if not guide.parsed then guide:Parse(true) end
 		local labelstep
 		for labelname,labeldata in pairs(guide.steplabels) do
-			if labelname == "quest-"..object.questID then
+			if labelname == "quest-"..questID then
 				labelstep = labeldata[1]
 				break
 			end
 		end
 
 		if not labelstep then
-			ZGV:Debug("&_SUB &worldquests no label for "..object.questID)
+			ZGV:Debug("&_SUB &worldquests no label for "..questID)
 			return
 		end
 		
-		local questTitle = C_TaskQuest.GetQuestInfoByQuestID(object.questID)
+		local questTitle = C_TaskQuest.GetQuestInfoByQuestID(questID)
 
 		if not questTitle then 
-			ZGV:Debug("&_SUB &worldquests no title for "..object.questID)
+			ZGV:Debug("&_SUB &worldquests no title for "..questID)
 			return
 		end
 
 		if ZGV.CurrentGuide==guide then
-			ZGV:Debug("&_SUB &worldquests switching to "..object.questID)
-			ZGV:SetGuide(guidetitle,labelstep)
+			ZGV:Debug("&_SUB &worldquests switching to "..questID)
+			ZGV:FocusStep(labelstep,true)
 		else
-			ZGV:Debug("&_SUB &worldquests popup for "..object.questID)
+			ZGV:Debug("&_SUB &worldquests popup for "..questID)
 			ZGV.NotificationCenter.AddButton(
 			"worldquest",
 			questTitle,
@@ -5780,13 +5914,58 @@ function ZGV:SuggestWorldQuestGuide(object)
 	end
 end
 
+function ZGV:SuggestBrokenRareGuide(object)
+	local poiID = object and object.poiID
+	if not poiID then return end
+
+	local guidetitle = "Dailies Guides\\Legion\\World Quests"
+
+	local guide = self:GetGuideByTitle(guidetitle)
+	if not guide then return end
+	if not guide.parsed then guide:Parse(true) end
+	local labelstep
+	for labelname,labeldata in pairs(guide.steplabels) do
+		if labelname == "rare-"..poiID then
+			labelstep = labeldata[1]
+			break
+		end
+	end
+
+	if not labelstep then
+		ZGV:Debug("&_SUB &worldquests no label for rare "..poiID)
+		return
+	end
+	
+	if ZGV.CurrentGuide==guide then
+		ZGV:Debug("&_SUB &worldquests switching to "..poiID)
+		ZGV:FocusStep(labelstep,true)
+	else
+		ZGV:Debug("&_SUB &worldquests popup for "..poiID)
+		ZGV.NotificationCenter.AddButton(
+		"worldquest",
+		object.name,
+		"Click here to open the guide for this rare elite",
+		ZGV.DIR.."\\Skins\\guideicons-big",
+		{0, 0.25, 0, 0.25},
+		function() ZGV:SetGuide(guidetitle,labelstep) end,
+		nil,
+		1,
+		10, --poptime
+		30, --removetime
+		false, --quiet
+		nil,--onopen
+		"worldquest")
+	end
+end
+
+
 local SimpleThreadFrame = CreateFrame("FRAME","ZygorGuidesViewerSimpleThreadFrame")
 SimpleThreadFrame.threads = {}
 local function SimpleThreadFrame_OnUpdate(frame,elapsed)
 	for thread,tparm in pairs(frame.threads) do
 		if coroutine.status(thread)~="dead" then
 			local ok,err = coroutine.resume(thread,unpack(tparm))
-			if not ok then self:Error("Timerize error: "..tostring(err)) end
+			if not ok then ZGV:Error("Timerize error: "..tostring(err)) end
 		else
 			frame.threads[thread]=nil
 			if next(frame.threads)==nil then SimpleThreadFrame:SetScript("OnUpdate",nil) end
@@ -5801,88 +5980,136 @@ function ZGV:Timerize(func,...)
 end
 
 
-local Checklist = {}
-local CL=Checklist
-ZGV.Checklist = Checklist
-Checklist.events_sequence = {}
-Checklist.events_fired = {}
-Checklist.framenum = 0
-Checklist.starttime = debugprofilestop()
+-- Startup Checklist. Eventually abandoned, but may be useful someday.
+	local Checklist = {}
+	local CL=Checklist
+	ZGV.Checklist = Checklist
+	Checklist.events_sequence = {}
+	Checklist.events_fired = {}
+	Checklist.framenum = 0
+	Checklist.starttime = debugprofilestop()
 
-function Checklist:SetupListener()
-	local Listener = CreateFrame("FRAME","ZygorGuidesViewerChecklistListener")
-	Listener:SetScript("OnEvent", ZGV.Checklist.FrameOnEvent)
-	Listener:SetScript("OnUpdate", ZGV.Checklist.FrameOnUpdate)
-	Listener:UnregisterAllEvents()
+	function Checklist:SetupListener()
+		local Listener = CreateFrame("FRAME","ZygorGuidesViewerChecklistListener")
+		Listener:SetScript("OnEvent", ZGV.Checklist.FrameOnEvent)
+		Listener:SetScript("OnUpdate", ZGV.Checklist.FrameOnUpdate)
+		Listener:UnregisterAllEvents()
 
-	-- listed in usual startup order
-	Listener:RegisterEvent("ADDON_LOADED")
-	Listener:RegisterEvent("VARIABLES_LOADED")
-	Listener:RegisterEvent("SPELLS_CHANGED") -- not on all startups
-	Listener:RegisterEvent("PLAYER_LOGIN")
-	Listener:RegisterEvent("PLAYER_ENTERING_WORLD")
-	Listener:RegisterEvent("QUEST_LOG_UPDATE")
-	Listener:RegisterEvent("PLAYER_ALIVE") -- not on all startups
-	Listener:RegisterEvent("ZONE_CHANGED_NEW_AREA") -- does NOT fire on a reload
+		-- listed in usual startup order
+		Listener:RegisterEvent("ADDON_LOADED")
+		Listener:RegisterEvent("VARIABLES_LOADED")
+		Listener:RegisterEvent("SPELLS_CHANGED") -- not on all startups
+		Listener:RegisterEvent("PLAYER_LOGIN")
+		Listener:RegisterEvent("PLAYER_ENTERING_WORLD")
+		Listener:RegisterEvent("QUEST_LOG_UPDATE")
+		Listener:RegisterEvent("PLAYER_ALIVE") -- not on all startups
+		Listener:RegisterEvent("ZONE_CHANGED_NEW_AREA") -- does NOT fire on a reload
 
-	Listener:RegisterEvent("PLAYER_CONTROL_GAINED")
-	Listener:RegisterEvent("NEW_WMO_CHUNK")
-	self.Listener = Listener
-end
-
-function Checklist:CatchEvent(event,...)
-	if not self.events_fired[event] then
-		self.events_fired[event] = 1
-		--frame:UnregisterEvent(event)
-		local s = event.." f=" .. self.framenum .. (" t=%.3f"):format(debugprofilestop()-self.starttime)
-			.. "  DG ".. ((abs((ZGV.HBD:TranslateZoneCoordinates(0.5,0.5,1077,0,1018,0) or 0) - 0.41)<0.1) and "OK" or "FAIL")
-			.. "  TSL ".. ((abs((ZGV.HBD:TranslateZoneCoordinates(0.5,0.5,1072,0,1024,0) or 0) - 0.347)<0.1) and "OK" or "FAIL")
-			.. "  you're in "..ZGV.Pointer.GetMapNameByID2(ZGV.HBD:GetPlayerZone() or 0)
-		--print(s)
-		tinsert(self.events_sequence,s)
+		Listener:RegisterEvent("PLAYER_CONTROL_GAINED")
+		Listener:RegisterEvent("NEW_WMO_CHUNK")
+		self.Listener = Listener
 	end
-	if self.events_fired["_FIRST_FRAME_"] and self.events_fired["QUEST_LOG_UPDATE"] and self.events_fired["_GUIDES_LOADED_"] and self.events_fired["ZONE_CHANGED_NEW_AREA"] then
-		if ZGV.db.profile.delayed_startup then
-			print("*** Starting up from checklist!")
-			ZGV:LoadInitialGuide()
-		else
-			print("*** Checklist complete! Would start now.")
+
+	function Checklist:CatchEvent(event,...)
+		if not self.events_fired[event] then
+			self.events_fired[event] = 1
+			--frame:UnregisterEvent(event)
+			local s = event.." f=" .. self.framenum .. (" t=%.3f"):format(debugprofilestop()-self.starttime)
+				.. "  DG ".. ((abs((ZGV.HBD:TranslateZoneCoordinates(0.5,0.5,1077,0,1018,0) or 0) - 0.41)<0.1) and "OK" or "FAIL")
+				.. "  TSL ".. ((abs((ZGV.HBD:TranslateZoneCoordinates(0.5,0.5,1072,0,1024,0) or 0) - 0.347)<0.1) and "OK" or "FAIL")
+				.. "  you're in "..ZGV.Pointer.GetMapNameByID2(ZGV.HBD:GetPlayerZone() or 0)
+			--print(s)
+			tinsert(self.events_sequence,s)
 		end
-		self.Listener:UnregisterAllEvents()
-		self.Listener:Hide()
+		if self.events_fired["_FIRST_FRAME_"] and self.events_fired["QUEST_LOG_UPDATE"] and self.events_fired["_GUIDES_LOADED_"] and self.events_fired["ZONE_CHANGED_NEW_AREA"] then
+			if ZGV.db.profile.delayed_startup then
+				print("*** Starting up from checklist!")
+				ZGV:LoadInitialGuide()
+			else
+				print("*** Checklist complete! Would start now.")
+			end
+			self.Listener:UnregisterAllEvents()
+			self.Listener:Hide()
+		end
 	end
-end
 
-function Checklist.FrameOnUpdate(frame,elapsed)
-	Checklist.framenum = Checklist.framenum + 1
-	Checklist:CatchEvent("_FIRST_FRAME_")
-	frame:SetScript("OnUpdate",nil)
-end
-function Checklist.FrameOnEvent(frame,event,...)
-	Checklist:CatchEvent(event,...)
-end
---Checklist:SetupListener()
-
+	function Checklist.FrameOnUpdate(frame,elapsed)
+		Checklist.framenum = Checklist.framenum + 1
+		Checklist:CatchEvent("_FIRST_FRAME_")
+		frame:SetScript("OnUpdate",nil)
+	end
+	function Checklist.FrameOnEvent(frame,event,...)
+		Checklist:CatchEvent(event,...)
+	end
+	--Checklist:SetupListener()
+--
 
 function ZGV.IsLegionOn()
 	return PlayerCompletedQuest(44663) or ZGV:GetPlayerPreciseLevel()>=101
 end
 
-
--- Prevent Blizzard world map taint errors
-function WorldMapFrame.UIElementsFrame.ActionButton.GetDisplayLocation(self, useAlternateLocation)
-	if InCombatLockdown() then return end
-	return WorldMapActionButtonMixin.GetDisplayLocation(self, useAlternateLocation)
+function ZGV:IsBoostedChar()
+	return IsQuestFlaggedCompleted(34398)
 end
 
-function WorldMapFrame.UIElementsFrame.ActionButton.Refresh(self)
-	if InCombatLockdown() then return end
-	WorldMapActionButtonMixin.Refresh(self)
+function ZGV.IsLegionBoatLock()
+	return (IsQuestFlaggedCompleted(40519) or IsQuestFlaggedCompleted(43926)) and not (IsQuestFlaggedCompleted(40593) or IsQuestFlaggedCompleted(40607))
 end
+
+function ZGV:SetBeta(val)
+	if val~=nil then ZGV.BETA=val return end
+	if self.db.profile.debug_beta~=nil then ZGV.BETA=self.db.profile.debug_beta return end
+	ZGV.BETA = self.Licences and self.Licences.DATE_E and self.Licences.DATE_E>time()
+end
+
 
 
 function ZGV:FakeWidescreen()
 	WorldFrame:ClearAllPoints()
 	WorldFrame:SetPoint("TOPLEFT",ParentUI,"TOPLEFT",0,-150)
 	WorldFrame:SetPoint("BOTTOMRIGHT",ParentUI,"BOTTOMRIGHT",0,150)
+end
+
+function ZGV:SaveChromieProgress()
+	-- returns the number of cleared dragonshrines in Death of Chromie scenario, increased by 1 to mimic |count 1..8
+	if not C_Scenario.IsInScenario() then return 1 end
+
+	ZGV.DragonShrineCount = ZGV.DragonShrineCount or 1
+
+	if GetCurrentMapAreaID()~=1177 then return ZGV.DragonShrineCount end
+	local count = 5
+	for i=1,GetNumMapLandmarks() do
+		local _, name, _, _, _, _, _, _, _, areaID, poiID, _, atlasIcon, _ = C_WorldMap.GetMapLandmarkInfo(i)
+		if poiID~=5325 then
+			count=count-1
+		end
+	end
+	ZGV.DragonShrineCount = count
+	return count
+end
+
+local dragonshrines = {
+	[5317] = "Obsidian", -- Zorathides
+	[5318] = "Obsidian", -- dragonshrine
+	[5319] = "Ruby", -- Talar Icechill 
+	[5320] = "Ruby", -- dragonshrine
+	[5321] = "Azure", -- Void Garg 
+	[5322] = "Azure", -- dragonshrine
+	[5323] = "Emerald", -- Thalas Vyle
+	[5324] = "Emerald", -- dragonshrine
+}
+function ZGV:IsDragonshrineUp(name)
+	if not C_Scenario.IsInScenario() then return false end
+
+	if not ZGV.DragonShrineCache then ZGV.DragonShrineCache={} end
+	if GetCurrentMapAreaID()~=1177 then return ZGV.DragonShrineCache[name] end
+	for i=1,GetNumMapLandmarks() do
+		local _, _, _, _, _, _, _, _, _, areaID, poiID, _ = C_WorldMap.GetMapLandmarkInfo(i)
+		if dragonshrines[poiID] and dragonshrines[poiID]==name then
+			ZGV.DragonShrineCache[name]=true
+			return true
+		end
+	end
+	ZGV.DragonShrineCache[name]=false
+	return false
 end

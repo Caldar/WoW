@@ -1,33 +1,92 @@
 
-LS_TOASTS_CFG_GLOBAL = {
-	["Default"] = {
-		["sfx_enabled"] = true,
-		["fadeout_delay"] = 2,
-		["point"] = {
-			"BOTTOMRIGHT", -- [1]
-			"UIParent", -- [2]
-			"BOTTOMRIGHT", -- [3]
-			-50, -- [4]
-			50, -- [5]
+LS_TOASTS_GLOBAL_CONFIG = {
+	["profileKeys"] = {
+		["Nothing - Feathermoon"] = "Default",
+		["Failure - Feathermoon"] = "Default",
+		["Calastir - Feathermoon"] = "Default",
+		["Caladyth - Feathermoon"] = "Default",
+		["Calastir - Kirin Tor"] = "Default",
+		["Calanthea - Feathermoon"] = "Default",
+		["Calandrea - Feathermoon"] = "Default",
+		["Calistah - Scarlet Crusade"] = "Default",
+		["Sinister - Feathermoon"] = "Default",
+		["Calandrea - Scarlet Crusade"] = "Default",
+		["Souptruck - Feathermoon"] = "Default",
+		["Censure - Feathermoon"] = "Default",
+	},
+	["profiles"] = {
+		["Default"] = {
+			["point"] = {
+				["rP"] = "BOTTOMRIGHT",
+				["p"] = "BOTTOMRIGHT",
+				["y"] = 229,
+				["x"] = -12,
+			},
+			["growth_direction"] = "UP",
+			["colors"] = {
+				["enabled"] = true,
+			},
+			["version"] = 7030004,
+			["types"] = {
+				["garrison_6_0"] = {
+					["enabled"] = false,
+					["dnd"] = true,
+				},
+				["loot_currency"] = {
+					["enabled"] = true,
+					["dnd"] = false,
+				},
+				["instance"] = {
+					["enabled"] = true,
+					["dnd"] = false,
+				},
+				["world"] = {
+					["enabled"] = true,
+					["dnd"] = false,
+				},
+				["loot_special"] = {
+					["enabled"] = true,
+					["ilvl"] = true,
+					["dnd"] = false,
+					["threshold"] = 1,
+				},
+				["recipe"] = {
+					["enabled"] = true,
+					["dnd"] = false,
+				},
+				["loot_gold"] = {
+					["enabled"] = true,
+					["dnd"] = false,
+					["threshold"] = 1,
+				},
+				["archaeology"] = {
+					["enabled"] = true,
+					["dnd"] = false,
+				},
+				["achievement"] = {
+					["enabled"] = true,
+					["dnd"] = false,
+				},
+				["collection"] = {
+					["enabled"] = true,
+					["dnd"] = false,
+				},
+				["loot_common"] = {
+					["threshold"] = 1,
+					["ilvl"] = true,
+					["enabled"] = true,
+					["quest"] = false,
+					["dnd"] = false,
+				},
+				["garrison_7_0"] = {
+					["enabled"] = true,
+					["dnd"] = true,
+				},
+				["transmog"] = {
+					["enabled"] = true,
+					["dnd"] = false,
+				},
+			},
 		},
-		["garrison_enabled"] = true,
-		["archaeology_enabled"] = true,
-		["world_enabled"] = true,
-		["achievement_enabled"] = true,
-		["growth_direction"] = "UP",
-		["dnd"] = {
-			["achievement"] = false,
-			["archaeology"] = false,
-			["recipe"] = false,
-			["instance"] = false,
-			["loot"] = false,
-			["garrison"] = true,
-			["world"] = false,
-		},
-		["instance_enabled"] = true,
-		["max_active_toasts"] = 10,
-		["scale"] = 1,
-		["recipe_enabled"] = true,
-		["loot_enabled"] = true,
 	},
 }

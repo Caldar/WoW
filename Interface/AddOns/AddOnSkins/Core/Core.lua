@@ -1,7 +1,14 @@
 local AS = unpack(AddOnSkins)
+
 local AddOnName = ...
-local ES
-local FoundError
+
+local AcceptFrame
+
+local select, pairs, ipairs, type, pcall = select, pairs, ipairs, type, pcall
+local floor, print, format, strlower, strfind, strmatch = floor, print, format, strlower, strfind, strmatch
+local sort, tinsert, tonumber = sort, tinsert, tonumber
+local _G = _G
+local IsAddOnLoaded, GetAddOnMetadata, C_Timer = IsAddOnLoaded, GetAddOnMetadata, C_Timer
 
 function AS:CheckOption(optionName, ...)
 	for i = 1, select('#', ...) do
@@ -9,23 +16,12 @@ function AS:CheckOption(optionName, ...)
 		if not addon then break end
 		if not IsAddOnLoaded(addon) then return false end
 	end
-	return AddOnSkinsOptions[optionName]
+
+	return self.db[optionName]
 end
 
 function AS:SetOption(optionName, value)
-	AddOnSkinsOptions[optionName] = value
-end
-
-function AS:DisableOption(optionName)
-	AS:SetOption(optionName, false)
-end
-
-function AS:EnableOption(optionName)
-	AS:SetOption(optionName, true)
-end
-
-function AS:ToggleOption(optionName)
-	AddOnSkinsOptions[optionName] = not AddOnSkinsOptions[optionName]
+	self.db[optionName] = value
 end
 
 function AS:Scale(Number)
@@ -59,7 +55,7 @@ function AS:Print(string)
 end
 
 function AS:PrintURL(url)
-	return format("|cFFFFFFFF[|Hurl:%s|h%s|h]|r", url, url)
+	return format("|cFFC495DD[|Hurl:%s|h%s|h]|r", url, url)
 end
 
 function AS:Round(num, idp)
@@ -95,7 +91,7 @@ end
 function AS:RegisterSkin(skinName, skinFunc, ...)
 	local events = {}
 	local priority = 1
-	for i = 1,select('#', ...) do
+	for i = 1, select('#', ...) do
 		local event = select(i, ...)
 		if not event then break end
 		if type(event) == 'number' then
@@ -107,6 +103,16 @@ function AS:RegisterSkin(skinName, skinFunc, ...)
 	local registerMe = { func = skinFunc, events = events, priority = priority }
 	if not AS.register[skinName] then AS.register[skinName] = {} end
 	AS.register[skinName][skinFunc] = registerMe
+end
+
+function AS:UnregisterSkin(skinName, skinFunc)
+	if not AS.register[skinName] then return end
+
+	if skinFunc then
+		AS.register[skinName][skinFunc] = nil
+	else
+		AS.register[skinName] = nil
+	end
 end
 
 local function GenerateEventFunction(event)
@@ -123,7 +129,6 @@ local function GenerateEventFunction(event)
 end
 
 function AS:RegisteredSkin(skinName, priority, func, events)
-	local events = events
 	for c, _ in pairs(events) do
 		if strfind(c, '%[') then
 			local conflict = strmatch(c, '%[([!%w_]+)%]')
@@ -136,28 +141,33 @@ function AS:RegisteredSkin(skinName, priority, func, events)
 		if not strfind(event, '%[') then
 			if not AS.events[event] then
 				AS[event] = GenerateEventFunction(event)
-				AS:RegisterEvent(event); 
-				AS.events[event] = {} 
+				AS:RegisterEvent(event)
+				AS.events[event] = {}
 			end
 			AS.events[event][skinName] = true
 		end
 	end
 end
 
+function AS:RegisterForPreload(skinName, skinFunc, addonName)
+	AS.preload[addonName] = { func = skinFunc, addon = skinName }
+end
+
+function AS:RunPreload(addonName)
+	if AS.preload[addonName] then
+		pcall(AS.preload[addonName].func, self, 'ADDON_LOADED', addonName)
+	end
+end
+
 function AS:CallSkin(skin, func, event, ...)
-	local pass, errormsg = pcall(func, self, event, ...)
-	if not pass then
-		local message = '%s %s: |cfFFF0000There was an error in the|r |cff0AFFFF%s|r |cffFF0000skin|r.'
-		local errormessage = '%s Error: %s'
-		DEFAULT_CHAT_FRAME:AddMessage(format(message, AS.Title, AS.Version, skin))
-		FoundError = true
-		if AS:CheckOption('SkinDebug') then
-			if GetCVarBool('scriptErrors') then
-				LoadAddOn('Blizzard_DebugTools')
-				ScriptErrorsFrame_OnError(errormsg, false)
-			else
-				DEFAULT_CHAT_FRAME:AddMessage(format(errormessage, skin, errormsg))
-			end
+	if (AS:CheckOption('SkinDebug')) then
+		func(self, event, ...)
+	else
+		local pass = pcall(func, self, event, ...)
+		if not pass then
+			local message = '%s %s: |cfFFF0000There was an error in the|r |cff0AFFFF%s|r |cffFF0000skin|r.'
+			DEFAULT_CHAT_FRAME:AddMessage(format(message, AS.Title, AS.Version, skin))
+			AS.FoundError = true
 		end
 	end
 end
@@ -181,31 +191,10 @@ end
 function AS:StartSkinning(event)
 	AS:UnregisterEvent(event)
 
-	AS:UpdateLocale()
-
-	local EP = LibStub('LibElvUIPlugin-1.0', true)
-	if EP then
-		EP:RegisterPlugin(AddOnName, AS.GetOptions)
-	else
-		AS:GetOptions()
-	end
-
 	AS:UpdateMedia()
-
-	if AS:CheckAddOn('ElvUI') then
-		ES = ElvUI[1]:GetModule('EnhancedShadows', true)
-	end
 
 	AS.Mult = 768/AS.ScreenHeight/UIParent:GetScale()
 	AS.ParchmentEnabled = AS:CheckOption('Parchment')
-
-	if not AS:CheckAddOn('ElvUI') then
-		for skin, alldata in pairs(AS.register) do
-			if AS:CheckOption(skin) == nil then
-				AS:EnableOption(skin)
-			end
-		end
-	end
 
 	for skin, alldata in pairs(AS.register) do
 		for _, data in pairs(alldata) do
@@ -221,24 +210,17 @@ function AS:StartSkinning(event)
 		end
 	end
 
-	if FoundError then
+	if AS.FoundError then
 		AS:Print(format('%s: Please report this to Azilroka immediately @ %s', AS.Version, AS:PrintURL(AS.TicketTracker)))
-	end
-	
-	AS:EmbedInit()
-
-	if AS:CheckOption('LoginMsg') then 
-		AS:Print(format("Version: |cFF1784D1%s|r Loaded!", AS.Version))
 	end
 end
 
 function AS:UpdateMedia()
-	local LSM = AS.LSM
-	AS.Blank = LSM:Fetch('background', "Solid")
-	AS.Font = LSM:Fetch('font', "Arial Narrow")
-	AS.ActionBarFont = LSM:Fetch('font', "Arial Narrow")
-	AS.PixelFont = LSM:Fetch('font', "Arial Narrow")
-	AS.NormTex = LSM:Fetch('statusbar', "Blizzard Character Skills Bar")
+	AS.Blank = AS.LSM:Fetch('background', "Solid")
+	AS.Font = AS.LSM:Fetch('font', "Arial Narrow")
+	AS.ActionBarFont = AS.LSM:Fetch('font', "Arial Narrow")
+	AS.PixelFont = AS.LSM:Fetch('font', "Arial Narrow")
+	AS.NormTex = AS.LSM:Fetch('statusbar', "Blizzard Character Skills Bar")
 	AS.BackdropColor = { 0, 0, 0 }
 	AS.BorderColor = { 1, 1, 1 }
 	AS.PixelPerfect = false
@@ -246,22 +228,34 @@ function AS:UpdateMedia()
 end
 
 function AS:Init(event, addon)
-	if event == 'ADDON_LOADED' and addon == AddOnName then
-		AS:UpdateMedia()
-		if AS:CheckAddOn('ElvUI') then
-			local ElvUIVersion, MinElvUIVersion = tonumber(GetAddOnMetadata('ElvUI', 'Version')), 10.00
-			if ElvUIVersion < MinElvUIVersion then
-				AS:AcceptFrame(format('%s - Required ElvUI Version %s. You currently have %s.\n Download ElvUI @ %s', AS.Title, MinElvUIVersion, ElvUIVersion, AS:PrintURL('http://www.tukui.org/dl.php')), function(self) print(AS:PrintURL('http://www.tukui.org/dl.php')) self:Hide() end)
-				AS:Print('Loading Aborted')
-				AS:UnregisterAllEvents()
-				return
-			end
-			AS:InjectProfile()
-		end
-		AS:CreateDataText()
+	if event == 'ADDON_LOADED' and IsAddOnLoaded(AddOnName) then
+		self:RunPreload(addon)
 	end
 	if event == 'PLAYER_LOGIN' then
+		AS:SetupProfile()
+
 		AS:UpdateMedia()
+
+		AS:UpdateLocale()
+
+		AS.EP = LibStub('LibElvUIPlugin-1.0', true)
+
+		if _G.EnhancedShadows then
+			AS.ES = _G.EnhancedShadows
+		end
+
+		if AS.EP then
+			AS.EP:RegisterPlugin(AddOnName, AS.GetOptions)
+		else
+			AS:GetOptions()
+		end
+
+		AS:EmbedInit()
+
+		if AS:CheckOption('LoginMsg') then
+			AS:Print(format("Version: |cFF1784D1%s|r Loaded!", AS.Version))
+		end
+
 		AS:RegisterEvent('PET_BATTLE_CLOSE', 'AddNonPetBattleFrames')
 		AS:RegisterEvent('PET_BATTLE_OPENING_START', 'RemoveNonPetBattleFrames')
 		AS:RegisterEvent('PLAYER_ENTERING_WORLD', 'StartSkinning')

@@ -5,6 +5,7 @@ local DT = E:GetModule('DataTexts')
 --Lua functions
 local time = time
 local select = select
+local max = math.max
 local join = string.join
 --WoW API / Variables
 local UnitGUID = UnitGUID
@@ -32,7 +33,7 @@ local function GetDPS(self)
 	else
 		DPS = (DMGTotal) / (combatTime)
 	end
-	self.text:SetFormattedText(displayString, L["DPS"], DPS)
+	self.text:SetFormattedText(displayString, L["DPS"], E:ShortValue(DPS))
 end
 
 local function OnEvent(self, event, ...)
@@ -51,6 +52,7 @@ local function OnEvent(self, event, ...)
 
 		-- only use events from the player
 		local id = select(4, ...)
+		local overKill
 
 		if id == playerID or id == petID then
 			if timeStamp == 0 then timeStamp = select(1, ...) end
@@ -61,8 +63,8 @@ local function OnEvent(self, event, ...)
 			else
 				lastDMGAmount = select(15, ...)
 			end
-
-			DMGTotal = DMGTotal + lastDMGAmount
+			if select(16, ...) == nil then overKill = 0 else overKill = select(16, ...) end
+			DMGTotal = DMGTotal +  max(0, lastDMGAmount - overKill)
 		end
 	elseif event == "UNIT_PET" then
 		petID = UnitGUID("pet")
@@ -77,7 +79,7 @@ local function OnClick(self)
 end
 
 local function ValueColorUpdate(hex)
-	displayString = join("", "%s: ", hex, "%.1f|r")
+	displayString = join("", "%s: ", hex, "%s")
 
 	if lastPanel ~= nil then
 		OnEvent(lastPanel)
@@ -85,14 +87,4 @@ local function ValueColorUpdate(hex)
 end
 E['valueColorUpdateFuncs'][ValueColorUpdate] = true;
 
---[[
-	DT:RegisterDatatext(name, events, eventFunc, updateFunc, clickFunc, onEnterFunc)
-
-	name - name of the datatext (required)
-	events - must be a table with string values of event names to register
-	eventFunc - function that gets fired when an event gets triggered
-	updateFunc - onUpdate script target function
-	click - function to fire when clicking the datatext
-	onEnterFunc - function to fire OnEnter
-]]
-DT:RegisterDatatext('DPS', {'PLAYER_ENTERING_WORLD', 'COMBAT_LOG_EVENT_UNFILTERED', "PLAYER_LEAVE_COMBAT", 'PLAYER_REGEN_DISABLED', 'UNIT_PET'}, OnEvent, nil, OnClick)
+DT:RegisterDatatext('DPS', {'PLAYER_ENTERING_WORLD', 'COMBAT_LOG_EVENT_UNFILTERED', "PLAYER_LEAVE_COMBAT", 'PLAYER_REGEN_DISABLED', 'UNIT_PET'}, OnEvent, nil, OnClick, nil, nil, STAT_DPS_SHORT)

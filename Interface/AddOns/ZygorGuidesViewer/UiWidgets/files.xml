@@ -13,5 +13,6 @@
 	<Script file="ScrollTable.lua"/>
 	<Script file="SuggestBox.lua"/>
 	<Script file="RadioButton.lua"/>
+	<Script file="ActionButton.lua"/>
 
 </Ui>

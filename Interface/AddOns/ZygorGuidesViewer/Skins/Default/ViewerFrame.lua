@@ -7,7 +7,6 @@ local L = ZGV.L
 local UIFrameFadeOut,UIFrameFadeIn=ZGV.UIFrameFade.UIFrameFadeOut,ZGV.UIFrameFade.UIFrameFadeIn  -- prevent taint
 
 local hide_timer_main = 0
-local hide_timer_class = 0
 local hide_timer_proff = 0
 
 local doborderrgb = function(self)
@@ -99,7 +98,7 @@ function ZygorGuidesViewer_ProgressBar_Update()
 	if not ZGV.db.char.maint_enableprogressbar then return end
 	if not ZGV.CurrentGuide or not ZGV.CurrentGuide.CurrentStepNum or not ZGV.db.profile.progress then return end
 	local TotalSize=ZygorGuidesViewerFrame_Step1:GetWidth()
-	local percent,num = ZGV.CurrentGuide:GetCompletion()
+	local percent,num = ZGV.CurrentGuide:GetCompletion(ZGV.db.profile.levelprogbar)
 
 	local progressbar=ZGV.Frame.Border.ProgressBar
 	local progresstex=ZGV.Frame.Border.ProgressBar.tex
@@ -147,7 +146,7 @@ function ZygorGuidesViewer_ProgressBar_Refresh()
 	local progressbar=ZGV.Frame.Border.ProgressBar
 	local progresstex=ZGV.Frame.Border.ProgressBar.tex
 
-	if ZGV.db.profile.levelprogbar == "level" then
+	if ZGV.db.profile.levelprogbar == "level" or ZGV.db.profile.levelprogbar == "quests" then
 		progresstex:SetVertexColor(unpack(ZGV.CurrentSkinStyle:SkinData("ProgressBarColor2") or {0.53,0.81,0.98,1}))
 	elseif ZGV.db.profile.levelprogbar == "steps" then
 		progresstex:SetVertexColor(unpack(ZGV.CurrentSkinStyle:SkinData("ProgressBarColor") or {0,1,0,1}))
@@ -170,8 +169,8 @@ end
 
 function ZygorGuidesViewer_ProgressBar_OnEnter()
 	if not ZGV.CurrentGuide then return end
-	local percent,num = ZGV.CurrentGuide:GetCompletion()
-	local _,compText=ZGV.CurrentGuide:GetCompletionText()
+	local percent,num = ZGV.CurrentGuide:GetCompletion(ZGV.db.profile.levelprogbar)
+	local _,compText=ZGV.CurrentGuide:GetCompletionText(ZGV.db.profile.levelprogbar)
 
 
 	local progressbar=ZGV.Frame.Border.ProgressBar
@@ -255,27 +254,30 @@ function ZygorGuidesViewer_ProgressBar_OnExit()
 end
 
 function ZygorGuidesViewer_ProgressBar_OnClick()
+	-- quests > level if set > steps > inventory
 	if ZGV.CurrentGuide.endlevel then
 		if ZGV.db.profile.levelprogbar == "level" then
 			ZGV.db.profile.levelprogbar = "steps"
 		elseif ZGV.db.profile.levelprogbar == "steps" then
+			ZGV.db.profile.levelprogbar = "quests"
+		elseif ZGV.db.profile.levelprogbar == "quests" then
 			ZGV.db.profile.levelprogbar = "inventory"
 		elseif ZGV.db.profile.levelprogbar == "inventory" then
 			ZGV.db.profile.levelprogbar = "level"
-		else -- backwards compatibility ~~ Jeremiah
-			ZGV.db.profile.levelprogbar = "steps"
+		else
+			ZGV.db.profile.levelprogbar = "quests"
 		end
 		ZygorGuidesViewer_ProgressBar_OnEnter()
 		ZygorGuidesViewer_ProgressBar_Update()
 	else
-		if ZGV.db.profile.levelprogbar == "level" then
+		if ZGV.db.profile.levelprogbar == "quests" then
 			ZGV.db.profile.levelprogbar = "steps"
 		elseif ZGV.db.profile.levelprogbar == "steps" then
 			ZGV.db.profile.levelprogbar = "inventory"
 		elseif ZGV.db.profile.levelprogbar == "inventory" then
-			ZGV.db.profile.levelprogbar = "steps" -- Not level based, don't go back to level.
-		else -- backwards compatibility ~~ Jeremiah
-			ZGV.db.profile.levelprogbar = "steps"
+			ZGV.db.profile.levelprogbar = "quests"
+		else
+			ZGV.db.profile.levelprogbar = "quests"
 		end
 		ZygorGuidesViewer_ProgressBar_OnEnter()
 		ZygorGuidesViewer_ProgressBar_Update()
@@ -401,6 +403,7 @@ function ZygorGuidesViewerFrame_Step_Setup(num)
 
 	local iconcount=16
 	local function icon_seticon(self,n)
+		self:SetTexture(ZGV.CurrentSkinStyle:SkinData("StepLineIcons"))
 		self:SetTexCoord((n-1)/iconcount,n/iconcount,0,1)
 	end
 
@@ -529,109 +532,6 @@ local function SpotLabel_OnHyperlinkLeave(self,linkdata,link)
 	--print("hyper leave")
 	GameTooltip:Hide()
 	ZGV.hasTooltipOverSpotLink=nil
-end
-
-function ZygorGuidesViewerFrame_Spot_Setup(num)
-	local function obj(name) return _G['ZygorGuidesViewerFrame_Spot'..num..(name and '_'..name or '')] end
-
-	local spotname = 'ZygorGuidesViewerFrame_Spot'..num
-	local spot = _G[spotname]
-
-	spot.lines={}
-
-	spot:SetBackdrop({bgFile = ZGV.DIR.."\\Skins\\white", edgeFile=ZGV.DIR.."\\Skins\\Default\\midnight\\roundcorners", tile = true, edgeSize=8, tileSize = 8, insets = { left = 8, right = 8, top = 8, bottom = 8 }})
-
-	--spot.border:SetAllPoints()
-	--spot.border:SetBackdrop({ edgeFile = ZGV.DIR.."\\Skins\\popup_border", edgeSize = 16 })
-
-	spot:EnableMouse(true)
-	spot:SetScript("OnClick", Spot_OnClick)
-	spot:SetScript("OnUpdate", Spot_OnUpdate)
-	spot:RegisterForDrag("LeftButton")
-	spot:RegisterForClicks("LeftButtonUp","RightButtonUp")
-
-	ZGV.spotframes[num] = spot
-
-	for i=1,LINES_PER_STEP do
-		local line = obj("Line"..i)
-		local label = line.label
-		if not label then break end
-
-		--local icon = obj("Line"..i.."Icon")
-		--local clicker = obj("Line"..i.."Clicker")
-
-		line:ClearAllPoints()
-		if i==1 then
-			-- overridden in ZGV:UpdateFrame anyway
-			--line:SetPoint("TOPLEFT",step,ZGV.STEPMARGIN_X,-ZGV.STEPMARGIN_Y)
-			--line:SetPoint("TOPRIGHT",step,-ZGV.STEPMARGIN_X,-ZGV.STEPMARGIN_Y)
-		else
-			line:SetPoint("TOPLEFT",obj("Line"..(i-1)),"BOTTOMLEFT",0,0)
-			line:SetPoint("TOPRIGHT",obj("Line"..(i-1)),"BOTTOMRIGHT",0,0)
-		end
-		line:SetHeight(12)
-		line.num = i
-
-		--label:SetMultilineIndent(true)
-
-		label:ClearAllPoints()
-		label:SetPoint("TOPLEFT",0,0)
-		label:SetPoint("TOPRIGHT",0,0)
-
-		label:SetHyperlinksEnabled(true)
-		label:SetScript("OnHyperlinkEnter", SpotLabel_OnHyperlinkEnter)
-		label:SetScript("OnHyperlinkLeave", SpotLabel_OnHyperlinkLeave)
-		label:SetScript("OnLeave", SpotLabel_OnHyperlinkLeave)
-		label:SetShadowColor(0,0,0,1)
-		label:SetShadowOffset(0.5,-0.5)
-
-		spot.arrow:SetTexture(ZGV.DIR.."\\Arrows\\Midnight\\arrow")
-		spot.arrowdist:SetFont(STANDARD_TEXT_FONT,9)
-
-		spot.lines[i]=line
-
-		--[[
-		icon:ClearAllPoints()
-		icon:SetPoint("TOPLEFT",0,1)
-		icon:SetTexture(ZGV.DIR.."\\Skins\\icons")
-		icon.SetIcon = icon_seticon
-		icon:SetIcon(1)
-
-		back:ClearAllPoints()
-		back:SetPoint("TOPLEFT")
-		back:SetPoint("BOTTOMRIGHT")
-
-		clicker:ClearAllPoints()
-		clicker:SetPoint("TOPLEFT")
-		clicker:SetPoint("BOTTOMRIGHT")
-		--clicker.num = i
-		--clicker:RegisterForClicks("LeftButtonUp","RightButtonUp")
-		clicker:SetScript("OnClick",clicker_onclick)
-		clicker:SetScript("OnEnter",clicker_onenter)
-		clicker:SetScript("OnLeave",clicker_onleave)
-		clicker:EnableMouse(false)
-		--]]
-
-		--line.icon=icon
-		--line.back=back
-		--line.clicker=clicker
-		--line.anim_w2g = obj("Line"..i.."Back_white2green")
-		--line.anim_w2r = obj("Line"..i.."Back_white2rgba")
-
-	end
-
-	-- lay them out
-
-	spot:ClearAllPoints()
-	if num==1 then
-		spot:SetPoint("TOPLEFT","ZygorGuidesViewerFrame_ScrollChild","TOPLEFT",0,0)
-		spot:SetPoint("TOPRIGHT","ZygorGuidesViewerFrame_ScrollChild","TOPRIGHT",0,0)
-	else
-		spot:SetPoint("TOPLEFT",_G['ZygorGuidesViewerFrame_Spot'..(num-1)],"BOTTOMLEFT",0,-ZGV.STEP_SPACING)
-		spot:SetPoint("TOPRIGHT",_G['ZygorGuidesViewerFrame_Spot'..(num-1)],"BOTTOMRIGHT",0,-ZGV.STEP_SPACING)
-		--frame:SetPoint("TOPLEFT",getglobal("ZygorGuidesViewerFrame_Step"..(stepnum-1)),"BOTTOMLEFT",0,-STEP_SPACING)
-		--frame:SetPoint("TOPRIGHT",getglobal("ZygorGuidesViewerFrame_Step"..(stepnum-1)),"BOTTOMRIGHT",0,-STEP_SPACING)
-	end
 end
 
 function ZygorGuidesViewerFrame_ActionButton_OnEnter(self)
@@ -790,13 +690,6 @@ function ZygorGuidesViewerFrame_OnLoad(self)
 		ZGV:AddActionButtons(1,i)
 	end
 
-	--[[
-	-- Map spots are DOWN for now. TODO skinify! Naaah, ignore.
-	for i=1,20 do
-		ZygorGuidesViewerFrame_Spot_Setup(i)
-	end
-	--]]
-
 
 	-- scrollbar
 
@@ -878,7 +771,7 @@ end
 function ZygorGuidesViewerFrame_OnShow()
 	if not ZGV.Frame then return end
 	ZGV:Frame_OnShow()
-	if ZGV.DEV or ZGV.BETA then ZygorGuidesViewerFrame_DevLabel:Show() else ZygorGuidesViewerFrame_DevLabel:Hide() end
+	if (ZGV.DEV or ZGV.BETA) and ZGV.db.profile.debug_display then ZygorGuidesViewerFrame_DevLabel:Show() else ZygorGuidesViewerFrame_DevLabel:Hide() end
 	if ZGV.BETA then ZygorGuidesViewerFrame_DevLabel:SetText("BETA") end
 end
 
@@ -943,7 +836,7 @@ function ZygorGuidesViewerFrame_OnUpdate(self,elapsed)
 			self.mouseCount = self.mouseCount+elapsed
 			self.leftCount=0
 			if self.mouseCount>ZGV.db.profile.bordershowdelay then
-				UIFrameFadeIn(Border,fadespeed,0.0,profile.opacitymain)
+				UIFrameFadeIn(Border,fadespeed,0.0,1.0)
 				ZGV.borderfadedout=nil
 			end
 			GuideButton.delay=-2
@@ -955,7 +848,7 @@ function ZygorGuidesViewerFrame_OnUpdate(self,elapsed)
 			self.mouseCount=0
 			--print("Mouseout", self.leftCount, ZGV.db.profile.borderhidedelay, ZGV.borderfadedout)
 			if self.leftCount>ZGV.db.profile.borderhidedelay and Border:GetAlpha()>0.05 and not ZGV.borderfadedout then
-				UIFrameFadeOut(Border,fadespeed,profile.opacitymain,0.0)
+				UIFrameFadeOut(Border,fadespeed,1.0,0.0)
 				ZGV.borderfadedout=true
 			end
 		end
@@ -1193,8 +1086,10 @@ end
 
 function ZygorGuidesViewerFrame_OnMouseWheel(self,delta)
 	if IsControlKeyDown() then
-		ZGV.db.profile.framescale = ZGV.db.profile.framescale + delta * 0.2
-		if ZGV.db.profile.framescale<0.4 then ZGV.db.profile.framescale=0.4 end
+		if delta>0 then delta=0.2 else delta=-0.2 end
+		ZGV.db.profile.framescale = ZGV.db.profile.framescale + delta
+		if ZGV.db.profile.framescale<0.8 then ZGV.db.profile.framescale=0.8 end
+		if ZGV.db.profile.framescale>1.6 then ZGV.db.profile.framescale=1.6 end
 		self:SetScale(ZGV.db.profile.framescale)
 	end
 end
@@ -1205,7 +1100,7 @@ end
 
 function ZygorGuidesViewerFrame_LockButton_OnClick(self,button)
 	ZygorGuidesViewer:SetOption("Display","windowlocked")
-	if ZGV.optionpanels['display']:IsVisible() then ZGV:OpenOptions('display') end
+	ZGV.GuideMenu:RefreshOptions("ZygorGuidesViewer-Display")
 	self:GetScript("OnEnter")(self)
 end
 
@@ -1219,7 +1114,7 @@ end
 -------------------
 
 function ZygorGuidesViewerFrame_SettingsButton_OnClick(self,button)
-	ZygorGuidesViewer:OpenOptions("display")
+	ZygorGuidesViewer:OpenOptions()
 end
 
 function ZygorGuidesViewerFrame_SettingsButton_OnEnter(self)
@@ -1239,13 +1134,6 @@ function ZygorGuidesViewerFrame_FindNearest_UpdateVisibility()
 		hide_timer_main = hide_timer_main + 1
 	end
 
-	if FindNearestFrameClass:IsMouseOver() then 
-		hide_timer_class = 0
-		hide_timer_main = 0
-	else
-		hide_timer_class = hide_timer_class + 1
-	end
-
 	if FindNearestFrameProff:IsMouseOver() then 
 		hide_timer_proff = 0
 		hide_timer_main = 0
@@ -1255,11 +1143,7 @@ function ZygorGuidesViewerFrame_FindNearest_UpdateVisibility()
 
 	if hide_timer_main>300 then
 		FindNearestFrame:Hide()
-		FindNearestFrameClass:Hide()
 		FindNearestFrameProff:Hide()
-	end
-	if hide_timer_class>300 then
-		FindNearestFrameClass:Hide()
 	end
 	if hide_timer_proff>300 then
 		FindNearestFrameProff:Hide()
@@ -1291,7 +1175,6 @@ function ZygorGuidesViewerFrame_SearchButton_OnClick(self,button)
 	end
 
 	hide_timer_main = 0
-	hide_timer_class = 0
 	hide_timer_proff = 0
 
 
@@ -1313,6 +1196,7 @@ function ZygorGuidesViewerFrame_SearchButton_OnClick(self,button)
 			:SetFont(ZGV.FontBold,titleTextSize)
 		.__END
 
+		--[[
 		-- Classes submenu
 		self.FindNearestFrameClass = CHAIN(CreateFrame("Frame","FindNearestFrameClass",self))
 			:SetBackdrop(SkinData("Backdrop"))
@@ -1328,6 +1212,7 @@ function ZygorGuidesViewerFrame_SearchButton_OnClick(self,button)
 			:SetTextColor(1, 1, 1)
 			:SetFont(ZGV.FontBold,titleTextSize)
 		.__END
+		--]]
 
 		-- Proffesions submenu
 		self.FindNearestFrameProff = CHAIN(CreateFrame("Frame","FindNearestFrameProff",self))
@@ -1345,298 +1230,114 @@ function ZygorGuidesViewerFrame_SearchButton_OnClick(self,button)
 			:SetFont(ZGV.FontBold,titleTextSize)
 		.__END
 
-		-- Create rectangle for auctioneer item.
-		self.AuctioneerFrame = CHAIN(CreateFrame("Button","AuctioneerFrame",FindNearestFrame))
-			:SetPoint("TOPLEFT", self.FindNearestFrameTitle, "BOTTOMLEFT", 0, -2)
-			:SetSize(rowWidth,rowHeight)
-			--:SetBackdrop(SkinData("Backdrop"))
-			:SetBackdropColor({1,1,1})
-			:SetScript("OnClick",function(self)
-				ZGV.WhoWhere:FindNPC("A")
-				self:GetParent():Hide()
-				FindNearestFrameProff:Hide()
-				FindNearestFrameClass:Hide()
-			end)
-			:SetScript("OnEnter", function(self)
-				self:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background"}) 
-				FindNearestFrameProff:Hide()
-				FindNearestFrameClass:Hide()
-			end)
-			:SetScript("OnLeave", function(self)
-				self:SetBackdrop(nil)
-			end)
-			:Show()
-		.__END
-		self.AuctioneerFrameIcon = CHAIN(self.AuctioneerFrame:CreateTexture())
-			:SetAllPoints()
-			:SetPoint("TOPLEFT", self.AuctioneerFrame, "TOPLEFT", iconLeftAdjust, iconTopAdjust)
-			:SetPoint("BOTTOMRIGHT", self.AuctioneerFrame, "TOPLEFT", iconSize+iconLeftAdjust, -iconSize+iconTopAdjust)
-			:SetTexture("Interface\\Minimap\\Tracking\\Auctioneer")
-		.__END
-		self.AuctioneerFrameText = CHAIN(self.AuctioneerFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall"))
-			:SetPoint("LEFT", self.AuctioneerFrame, "LEFT", textLeftAdjust, 0)
-			:SetText("Auctioneer")
-			:SetTextColor(1, 1, 1)
-			:SetFont(ZGV.Font,textSize)
-		.__END
-		
-		-- Create rectangle for banker item.
-		self.BankerFrame = CHAIN(CreateFrame("Button","BankerFrame",FindNearestFrame))
-			:SetPoint("TOPLEFT", self.AuctioneerFrame, "TOPLEFT", 0, -rowHeight)
-			:SetSize(rowWidth,rowHeight)
-			--:SetBackdrop(SkinData("Backdrop"))
-			:SetBackdropColor({1,1,1})
-			:SetScript("OnClick",function(self)
-				ZGV.WhoWhere:FindNPC("B")
-				self:GetParent():Hide()
-				FindNearestFrameProff:Hide()
-				FindNearestFrameClass:Hide()
-			end)
-			:SetScript("OnEnter", function(self)
-				self:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background"}) 
-				FindNearestFrameProff:Hide()
-				FindNearestFrameClass:Hide()
-			end)
-			:SetScript("OnLeave", function(self)
-				self:SetBackdrop(nil)
-			end)
-			:Show()
-		.__END
-		self.BankerFrameIcon = CHAIN(self.BankerFrame:CreateTexture())
-			:SetAllPoints()
-			:SetPoint("TOPLEFT", self.BankerFrame, "TOPLEFT", iconLeftAdjust, iconTopAdjust)
-			:SetPoint("BOTTOMRIGHT", self.BankerFrame, "TOPLEFT", iconSize+iconLeftAdjust, -iconSize+iconTopAdjust)
-			:SetTexture("Interface\\Minimap\\Tracking\\Banker")
-		.__END
-		self.BankerFrameText = CHAIN(self.BankerFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall"))
-			:SetPoint("LEFT", self.BankerFrame, "LEFT", textLeftAdjust, 0)
-			:SetText("Banker")
-			:SetTextColor(1, 1, 1)
-			:SetFont(ZGV.Font,textSize)
-		.__END
+		local find_nearest_types = {
+			[1] = {name="Auctioneer",icon="Interface\\Minimap\\Tracking\\Auctioneer"},
+			[2] = {name="Banker",icon="Interface\\Minimap\\Tracking\\Banker"},
+			[3] = {name="Innkeeper",icon="Interface\\Minimap\\Tracking\\Innkeeper"},
+			[4] = {name="Mailbox",icon="Interface\\Minimap\\Tracking\\Mailbox"},
+			[5] = {name="Profession Trainers",icon="Interface\\Minimap\\Tracking\\Profession"},
+			[6] = {name="Repair",icon="Interface\\Minimap\\Tracking\\Repair"},
+			[7] = {name="Riding Trainer",icon="Interface\\Minimap\\Tracking\\StableMaster"},
+			[8] = {name="Stable Master",icon="Interface\\Minimap\\Tracking\\StableMaster"},
+			[9] = {name="Vendor",icon="Interface\\Minimap\\Tracking\\Food"},
+		       [10] = {name="Reset Waypoint",icon=nil},
+		}
 
-		self.ClassTrainerFrame = CHAIN(CreateFrame("Button","ClassTrainerFrame",FindNearestFrame))
-			:SetPoint("TOPLEFT", self.BankerFrame, "TOPLEFT", 0, -rowHeight)
-			:SetSize(rowWidth,rowHeight)
-			--:SetBackdrop(SkinData("Backdrop"))
-			:SetBackdropColor({1,1,1})
-			:SetScript("OnClick",function(self)
-				FindNearestFrameProff:Hide()
-				FindNearestFrameClass:Show()
-				hide_timer_class = 0
-			end)
-			:SetScript("OnEnter", function(self)
-				self:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background"}) 
-				FindNearestFrameProff:Hide()
-				FindNearestFrameClass:Show()
-				hide_timer_class = 0
-			end)
-			:SetScript("OnLeave", function(self)
-				self:SetBackdrop(nil)
-			end)
-			:Show()
-		.__END
-		self.ClassTrainerFrameIcon = CHAIN(self.ClassTrainerFrame:CreateTexture())
-			:SetAllPoints()
-			:SetPoint("TOPLEFT", self.ClassTrainerFrame, "TOPLEFT", iconLeftAdjust, iconTopAdjust)
-			:SetPoint("BOTTOMRIGHT", self.ClassTrainerFrame, "TOPLEFT", iconSize+iconLeftAdjust, -iconSize+iconTopAdjust)
-			:SetTexture("Interface\\Minimap\\Tracking\\Profession")
-		.__END
-		self.ClassTrainerFrameText = CHAIN(self.ClassTrainerFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall"))
-			:SetPoint("LEFT", self.ClassTrainerFrame, "LEFT", textLeftAdjust, 0)
-			:SetText("Class Trainers")
-			:SetTextColor(1, 1, 1)
-			:SetFont(ZGV.Font,textSize)
-		.__END
-
-
-		local WWclasses = {
-			[1] = {name="DeathKnight", tag="Dk"},
-			[2] = {name="Druid", tag="Dr"},
-			[3] = {name="Hunter", tag="Hu"},
-			[4] = {name="Mage", tag="Ma"},
-			[5] = {name="Monk", tag="Mo"},
-			[6] = {name="Paladin", tag="Pa"},
-			[7] = {name="Priest", tag="Pr"},
-			[8] = {name="Rogue", tag="Ro"},
-			[9] = {name="Shaman", tag="Sh"},
-			[10] = {name="Warlock", tag="Wl"},
-			[11] = {name="Warrior", tag="Wa"}
-			}
-
-		local WWclasses_previous = self.FindNearestFrameClass
-		local WWclasses_correction = 0
-
-		for _,class in ipairs(WWclasses) do
-			self["FindNearestFrameClass"..class.tag] = CHAIN(CreateFrame("Button","FindNearestFrameClass"..class.tag,FindNearestFrameClass))
-				:SetPoint("TOPLEFT", WWclasses_previous, "TOPLEFT", 0, WWclasses_correction)
+		local previous=nil
+		for id,data in ipairs(find_nearest_types) do
+			local type=data.name
+			local icon=data.icon
+			local tempframe = CHAIN(CreateFrame("Button",nil,FindNearestFrame))
 				:SetSize(rowWidth,rowHeight)
 				:SetBackdropColor({1,1,1})
 				:SetScript("OnClick",function(self)
-					ZGV.WhoWhere:FindNPC("C"..class.tag)
-					FindNearestFrame:Hide()
+					ZGV.WhoWhere:FindNPC(type)
+					self:GetParent():Hide()
 					FindNearestFrameProff:Hide()
-					FindNearestFrameClass:Hide()
 				end)
 				:SetScript("OnEnter", function(self)
 					self:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background"}) 
+					FindNearestFrameProff:Hide()
 				end)
 				:SetScript("OnLeave", function(self)
 					self:SetBackdrop(nil)
 				end)
+				:Show()
 			.__END
-			self["FindNearestFrameClass"..class.tag.."Icon"] = CHAIN(self["FindNearestFrameClass"..class.tag]:CreateTexture())
+			self[type.."Frame"]=tempframe
+			if not previous then 
+				tempframe:SetPoint("TOPLEFT", self.FindNearestFrameTitle, "BOTTOMLEFT", 0, -2)
+			else
+				tempframe:SetPoint("TOPLEFT", previous, "TOPLEFT", 0, -rowHeight)
+			end
+			previous=self[type.."Frame"]
+
+			self[type.."FrameIcon"] = CHAIN(tempframe:CreateTexture())
 				:SetAllPoints()
-				:SetPoint("TOPLEFT", self["FindNearestFrameClass"..class.tag], "TOPLEFT", iconLeftAdjust, iconTopAdjust)
-				:SetPoint("BOTTOMRIGHT", self["FindNearestFrameClass"..class.tag], "TOPLEFT", iconSize+iconLeftAdjust, -iconSize+iconTopAdjust)
+				:SetPoint("TOPLEFT", tempframe, "TOPLEFT", iconLeftAdjust, iconTopAdjust)
+				:SetPoint("BOTTOMRIGHT", tempframe, "TOPLEFT", iconSize+iconLeftAdjust, -iconSize+iconTopAdjust)
+				:SetTexture(icon)
 			.__END
-			self["FindNearestFrameClass"..class.tag.."Text"] = CHAIN(self["FindNearestFrameClass"..class.tag]:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall"))
-				:SetPoint("LEFT", self["FindNearestFrameClass"..class.tag], "LEFT", textLeftAdjust, 0)
-				:SetText(class.name)
+			self[type.."FrameText"] = CHAIN(tempframe:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall"))
+				:SetPoint("LEFT", tempframe, "LEFT", textLeftAdjust, 0)
+				:SetText(type)
 				:SetTextColor(1, 1, 1)
 				:SetFont(ZGV.Font,textSize)
 			.__END
-			WWclasses_previous = self["FindNearestFrameClass"..class.tag]
-			WWclasses_correction = -rowHeight
 		end
 
-		-- Create rectangle for inkeeper item.
-		self.InnkeeperFrame = CHAIN(CreateFrame("Button","InnkeeperFrame",FindNearestFrame))
-			:SetPoint("TOPLEFT", self.ClassTrainerFrame, "TOPLEFT", 0, -rowHeight)
-			:SetSize(rowWidth,rowHeight)
-			--:SetBackdrop(SkinData("Backdrop"))
-			:SetBackdropColor({1,1,1})
-			:SetScript("OnClick",function(self)
-				ZGV.WhoWhere:FindNPC("I")
-				self:GetParent():Hide()
-				FindNearestFrameProff:Hide()
-				FindNearestFrameClass:Hide()
-			end)
-			:SetScript("OnEnter", function(self)
-				self:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background"}) 
-				FindNearestFrameProff:Hide()
-				FindNearestFrameClass:Hide()
-			end)
-			:SetScript("OnLeave", function(self)
-				self:SetBackdrop(nil)
-			end)
-			:Show()
-		.__END
-		self.InnkeeperFrameIcon = CHAIN(self.InnkeeperFrame:CreateTexture())
-			:SetAllPoints()
-			:SetPoint("TOPLEFT", self.InnkeeperFrame, "TOPLEFT", iconLeftAdjust, iconTopAdjust)
-			:SetPoint("BOTTOMRIGHT", self.InnkeeperFrame, "TOPLEFT", iconSize+iconLeftAdjust, -iconSize+iconTopAdjust)
-			:SetTexture("Interface\\Minimap\\Tracking\\Innkeeper")
-		.__END
-		self.InnkeeperFrameText = CHAIN(self.InnkeeperFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall"))
-			:SetPoint("LEFT", self.InnkeeperFrame, "LEFT", textLeftAdjust, 0)
-			:SetText("Innkeeper")
-			:SetTextColor(1, 1, 1)
-			:SetFont(ZGV.Font,textSize)
-		.__END
-
-		-- Create rectangle for mailbox item.
-		self.MailboxFrame = CHAIN(CreateFrame("Button","MailboxFrame",FindNearestFrame))
-			:SetPoint("TOPLEFT", self.InnkeeperFrame, "TOPLEFT", 0, -rowHeight)
-			:SetSize(rowWidth,rowHeight)
-			--:SetBackdrop(SkinData("Backdrop"))
-			:SetBackdropColor({1,1,1})
-			:SetScript("OnClick",function(self)
+		-- Handle special cases
+		self.MailboxFrame:SetScript("OnClick",function(self)
 				ZGV.WhoWhere:FindMailbox()
 				self:GetParent():Hide()
 				FindNearestFrameProff:Hide()
-				FindNearestFrameClass:Hide()
 			end)
-			:SetScript("OnEnter", function(self)
+		self["Profession TrainersFrame"]:SetScript("OnClick",function(self)
+				FindNearestFrameProff:Show()
+				hide_timer_proff = 0
+			end)
+		self["Profession TrainersFrame"]:SetScript("OnEnter", function(self)
 				self:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background"}) 
+				FindNearestFrameProff:Show()
+				hide_timer_proff = 0
+			end)
+		self["Reset WaypointFrame"]:SetScript("OnClick",function(self)
+				self:GetParent():Hide()
 				FindNearestFrameProff:Hide()
-				FindNearestFrameClass:Hide()
+				ZGV.Pointer:ClearWaypoints("manual")
+				ZGV:ShowWaypoints()
 			end)
-			:SetScript("OnLeave", function(self)
-				self:SetBackdrop(nil)
-			end)
-			:Show()
-		.__END
-		self.MailboxFrameIcon = CHAIN(self.MailboxFrame:CreateTexture())
-			:SetAllPoints()
-			:SetPoint("TOPLEFT", self.MailboxFrame, "TOPLEFT", iconLeftAdjust, iconTopAdjust)
-			:SetPoint("BOTTOMRIGHT", self.MailboxFrame, "TOPLEFT", iconSize+iconLeftAdjust, -iconSize+iconTopAdjust)
-			:SetTexture("Interface\\Minimap\\Tracking\\Mailbox")
-		.__END
-		self.MailboxFrameText = CHAIN(self.MailboxFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall"))
-			:SetPoint("LEFT", self.MailboxFrame, "LEFT", textLeftAdjust, 0)
-			:SetText("Mailbox")
-			:SetTextColor(1, 1, 1)
-			:SetFont(ZGV.Font,textSize)
-		.__END
-
-		-- Create rectangle for profession trainer item.
-		self.ProfessionTrainerFrame = CHAIN(CreateFrame("Button","ProfessionTrainerFrame",FindNearestFrame))
-			:SetPoint("TOPLEFT", self.MailboxFrame, "TOPLEFT", 0, -rowHeight)
-			:SetSize(rowWidth,rowHeight)
-			--:SetBackdrop(SkinData("Backdrop"))
-			:SetBackdropColor({1,1,1})
-			:SetScript("OnClick",function(self)
-				FindNearestFrameProff:Show()
-				FindNearestFrameClass:Hide()
-				hide_timer_proff = 0
-			end)
-			:SetScript("OnEnter", function(self)
-				self:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background"}) 
-				FindNearestFrameProff:Show()
-				FindNearestFrameClass:Hide()
-				hide_timer_proff = 0
-			end)
-			:SetScript("OnLeave", function(self)
-				self:SetBackdrop(nil)
-			end)
-			:Show()
-		.__END
-		self.ProfessionTrainerFrameIcon = CHAIN(self.ProfessionTrainerFrame:CreateTexture())
-			:SetAllPoints()
-			:SetPoint("TOPLEFT", self.ProfessionTrainerFrame, "TOPLEFT", iconLeftAdjust, iconTopAdjust)
-			:SetPoint("BOTTOMRIGHT", self.ProfessionTrainerFrame, "TOPLEFT", iconSize+iconLeftAdjust, -iconSize+iconTopAdjust)
-			:SetTexture("Interface\\Minimap\\Tracking\\Profession")
-		.__END
-		self.ProfessionTrainerFrameText = CHAIN(self.ProfessionTrainerFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall"))
-			:SetPoint("LEFT", self.ProfessionTrainerFrame, "LEFT", textLeftAdjust, 0)
-			:SetText("Profession Trainers")
-			:SetTextColor(1, 1, 1)
-			:SetFont(ZGV.Font,textSize)
-		.__END
-
 
 		local WWproffes = {
-			[1] = {name="Alchemy", tag="Al"},
-			[2] = {name="Archaeology", tag="Ar"},
-			[3] = {name="Blacksmithing", tag="Bl"},
-			[4] = {name="Cooking", tag="Co"},
-			[5] = {name="Enchanting", tag="Ec"},
-			[6] = {name="Engineering", tag="En"},
-			[7] = {name="First Aid", tag="Fa"},
-			[8] = {name="Fishing", tag="Fi"},
-			[9] = {name="Herbalism", tag="He"},
-			[10] = {name="Inscription", tag="In"},
-			[11] = {name="Jewelcrafting", tag="Je"},
-			[12] = {name="Leatherworking", tag="Le"},
-			[13] = {name="Mining", tag="Mi"},
-			[14] = {name="Skinning", tag="Sk"},
-			[15] = {name="Tailoring", tag="Ta"},
+			[1] = "Alchemy",
+			[2] = "Archaeology",
+			[3] = "Blacksmithing",
+			[4] = "Cooking",
+			[5] = "Enchanting",
+			[6] = "Engineering",
+			[7] = "First Aid",
+			[8] = "Fishing",
+			[9] = "Herbalism",
+			[10] = "Inscription",
+			[11] = "Jewelcrafting",
+			[12] = "Leatherworking",
+			[13] = "Mining",
+			[14] = "Skinning",
+			[15] = "Tailoring",
 		}
 
 		local WWproffes_previous = self.FindNearestFrameProff
 		local WWproffes_correction = 0
 
-		for _,proff in ipairs(WWproffes) do
-			self["FindNearestFrameProff"..proff.tag] = CHAIN(CreateFrame("Button","FindNearestFrameProff"..proff.tag,FindNearestFrameProff))
+		for id,proff in ipairs(WWproffes) do
+			self["FindNearestFrameProff"..proff] = CHAIN(CreateFrame("Button",nil,FindNearestFrameProff))
 				:SetPoint("TOPLEFT", WWproffes_previous, "TOPLEFT", 0, WWproffes_correction)
 				:SetSize(rowWidth,rowHeight)
 				:SetBackdropColor({1,1,1})
 				:SetScript("OnClick",function(self)
-					ZGV.WhoWhere:FindNPC("T"..proff.tag)
+					ZGV.WhoWhere:FindNPC("Trainer"..proff)
 					FindNearestFrame:Hide()
 					FindNearestFrameProff:Hide()
-					FindNearestFrameClass:Hide()
 				end)
 				:SetScript("OnEnter", function(self)
 					self:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background"}) 
@@ -1645,201 +1346,23 @@ function ZygorGuidesViewerFrame_SearchButton_OnClick(self,button)
 					self:SetBackdrop(nil)
 				end)
 			.__END
-			self["FindNearestFrameProff"..proff.tag.."Icon"] = CHAIN(self["FindNearestFrameProff"..proff.tag]:CreateTexture())
+			self["FindNearestFrameProff"..proff.."Icon"] = CHAIN(self["FindNearestFrameProff"..proff]:CreateTexture())
 				:SetAllPoints()
-				:SetPoint("TOPLEFT", self["FindNearestFrameProff"..proff.tag], "TOPLEFT", iconLeftAdjust, iconTopAdjust)
-				:SetPoint("BOTTOMRIGHT", self["FindNearestFrameProff"..proff.tag], "TOPLEFT", iconSize+iconLeftAdjust, -iconSize+iconTopAdjust)
+				:SetPoint("TOPLEFT", self["FindNearestFrameProff"..proff], "TOPLEFT", iconLeftAdjust, iconTopAdjust)
+				:SetPoint("BOTTOMRIGHT", self["FindNearestFrameProff"..proff], "TOPLEFT", iconSize+iconLeftAdjust, -iconSize+iconTopAdjust)
 			.__END
-			self["FindNearestFrameProff"..proff.tag.."Text"] = CHAIN(self["FindNearestFrameProff"..proff.tag]:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall"))
-				:SetPoint("LEFT", self["FindNearestFrameProff"..proff.tag], "LEFT", textLeftAdjust, 0)
-				:SetText(proff.name)
+			self["FindNearestFrameProff"..proff.."Text"] = CHAIN(self["FindNearestFrameProff"..proff]:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall"))
+				:SetPoint("LEFT", self["FindNearestFrameProff"..proff], "LEFT", textLeftAdjust, 0)
+				:SetText(proff)
 				:SetTextColor(1, 1, 1)
 				:SetFont(ZGV.Font,textSize)
 			.__END
-			WWproffes_previous = self["FindNearestFrameProff"..proff.tag]
+			WWproffes_previous = self["FindNearestFrameProff"..proff]
 			WWproffes_correction = -rowHeight
 		end
 
-		-- Create rectangle for repair item.
-		self.RepairFrame = CHAIN(CreateFrame("Button","RepairFrame",FindNearestFrame))
-			:SetPoint("TOPLEFT", self.ProfessionTrainerFrame, "TOPLEFT", 0, -rowHeight)
-			:SetSize(rowWidth,rowHeight)
-			--:SetBackdrop(SkinData("Backdrop"))
-			:SetBackdropColor({1,1,1})
-			:SetScript("OnClick",function(self)
-				ZGV.WhoWhere:FindNPC("R")
-				self:GetParent():Hide()
-				FindNearestFrameProff:Hide()
-				FindNearestFrameClass:Hide()
-			end)
-			:SetScript("OnEnter", function(self)
-				self:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background"}) 
-				FindNearestFrameProff:Hide()
-				FindNearestFrameClass:Hide()
-			end)
-			:SetScript("OnLeave", function(self)
-				self:SetBackdrop(nil)
-			end)
-			:Show()
-		.__END
-		self.RepairFrameIcon = CHAIN(self.RepairFrame:CreateTexture())
-			:SetAllPoints()
-			:SetPoint("TOPLEFT", self.RepairFrame, "TOPLEFT", iconLeftAdjust, iconTopAdjust)
-			:SetPoint("BOTTOMRIGHT", self.RepairFrame, "TOPLEFT", iconSize+iconLeftAdjust, -iconSize+iconTopAdjust)
-			:SetTexture("Interface\\Minimap\\Tracking\\Repair")
-		.__END
-		self.RepairFrameText = CHAIN(self.RepairFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall"))
-			:SetPoint("LEFT", self.RepairFrame, "LEFT", textLeftAdjust, 0)
-			:SetText("Repair")
-			:SetTextColor(1, 1, 1)
-			:SetFont(ZGV.Font,textSize)
-		.__END
-
-	
-		-- Create rectangle for riding trainer item.
-		self.RidingTrainerFrame = CHAIN(CreateFrame("Button","RidingTrainerFrame",FindNearestFrame))
-			:SetPoint("TOPLEFT", self.RepairFrame, "TOPLEFT", 0, -rowHeight)
-			:SetSize(rowWidth,rowHeight)
-			--:SetBackdrop(SkinData("Backdrop"))
-			:SetBackdropColor({1,1,1})
-			:SetScript("OnClick",function(self)
-				ZGV.WhoWhere:FindNPC("TRt")
-				self:GetParent():Hide()
-				FindNearestFrameProff:Hide()
-				FindNearestFrameClass:Hide()
-			end)
-			:SetScript("OnEnter", function(self)
-				self:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background"}) 
-				FindNearestFrameProff:Hide()
-				FindNearestFrameClass:Hide()
-			end)
-			:SetScript("OnLeave", function(self)
-				self:SetBackdrop(nil)
-			end)
-			:Show()
-		.__END
-		self.RidingTrainerFrameIcon = CHAIN(self.RidingTrainerFrame:CreateTexture())
-			:SetAllPoints()
-			:SetPoint("TOPLEFT", self.RidingTrainerFrame, "TOPLEFT", iconLeftAdjust, iconTopAdjust)
-			:SetPoint("BOTTOMRIGHT", self.RidingTrainerFrame, "TOPLEFT", iconSize+iconLeftAdjust, -iconSize+iconTopAdjust)
-			:SetTexture("Interface\\Minimap\\Tracking\\StableMaster")
-		.__END
-		self.RidingTrainerFrameText = CHAIN(self.RidingTrainerFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall"))
-			:SetPoint("LEFT", self.RidingTrainerFrame, "LEFT", textLeftAdjust, 0)
-			:SetText("Riding Trainer")
-			:SetTextColor(1, 1, 1)
-			:SetFont(ZGV.Font,textSize)
-		.__END
-		
-
-		-- Create rectangle for riding trainer item.
-		self.StableMasterFrame = CHAIN(CreateFrame("Button","StableMasterFrame",FindNearestFrame))
-			:SetPoint("TOPLEFT", self.RidingTrainerFrame, "TOPLEFT", 0, -rowHeight)
-			:SetSize(rowWidth,rowHeight)
-			--:SetBackdrop(SkinData("Backdrop"))
-			:SetBackdropColor({1,1,1})
-			:SetScript("OnClick",function(self)
-				ZGV.WhoWhere:FindNPC("S")
-				self:GetParent():Hide()
-				FindNearestFrameProff:Hide()
-				FindNearestFrameClass:Hide()
-			end)
-			:SetScript("OnEnter", function(self)
-				self:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background"}) 
-				FindNearestFrameProff:Hide()
-				FindNearestFrameClass:Hide()
-			end)
-			:SetScript("OnLeave", function(self)
-				self:SetBackdrop(nil)
-			end)
-			:Show()
-		.__END
-		self.StableMasterFrameIcon = CHAIN(self.StableMasterFrame:CreateTexture())
-			:SetAllPoints()
-			:SetPoint("TOPLEFT", self.StableMasterFrame, "TOPLEFT", iconLeftAdjust, iconTopAdjust)
-			:SetPoint("BOTTOMRIGHT", self.StableMasterFrame, "TOPLEFT", iconSize+iconLeftAdjust, -iconSize+iconTopAdjust)
-			:SetTexture("Interface\\Minimap\\Tracking\\StableMaster")
-		.__END
-		self.StableMasterFrameText = CHAIN(self.StableMasterFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall"))
-			:SetPoint("LEFT", self.StableMasterFrame, "LEFT", textLeftAdjust, 0)
-			:SetText("Stable Master")
-			:SetTextColor(1, 1, 1)
-			:SetFont(ZGV.Font,textSize)
-		.__END
-
-	
-		-- Create rectangle for vendor item.
-		self.VendorFrame = CHAIN(CreateFrame("Button","VendorFrame",FindNearestFrame))
-			:SetPoint("TOPLEFT", self.StableMasterFrame, "TOPLEFT", 0, -rowHeight)
-			:SetSize(rowWidth,rowHeight)
-			:SetBackdropColor({1,1,1})
-			:SetScript("OnClick",function(self)
-				ZGV.WhoWhere:FindNPC("V")
-				FindNearestFrameProff:Hide()
-				FindNearestFrameClass:Hide()
-				self:GetParent():Hide()
-			end)
-			:SetScript("OnEnter", function(self)
-				self:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background"}) 
-				FindNearestFrameProff:Hide()
-				FindNearestFrameClass:Hide()
-			end)
-			:SetScript("OnLeave", function(self)
-				self:SetBackdrop(nil)
-			end)
-			:Show()
-		.__END
-		self.VendorFrameIcon = CHAIN(self.VendorFrame:CreateTexture())
-			:SetAllPoints()
-			:SetPoint("TOPLEFT", self.VendorFrame, "TOPLEFT", iconLeftAdjust, iconTopAdjust)
-			:SetPoint("BOTTOMRIGHT", self.VendorFrame, "TOPLEFT", iconSize+iconLeftAdjust, -iconSize+iconTopAdjust)
-			:SetTexture("Interface\\Minimap\\Tracking\\Food")
-		.__END
-		self.VendorFrameText = CHAIN(self.VendorFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall"))
-			:SetPoint("LEFT", self.VendorFrame, "LEFT", textLeftAdjust, 0)
-			:SetText("Vendor")
-			:SetTextColor(1, 1, 1)
-			:SetFont(ZGV.Font,textSize)
-		.__END
-
-
-		-- Create rectangle for mailbox item.
-		self.RemoveFrame = CHAIN(CreateFrame("Button","RemoveFrame",FindNearestFrame))
-			:SetPoint("TOPLEFT", self.VendorFrame, "TOPLEFT", 0, -rowHeight)
-			:SetSize(rowWidth,rowHeight)
-			--:SetBackdrop(SkinData("Backdrop"))
-			:SetBackdropColor({1,1,1})
-			:SetScript("OnClick",function(self)
-				self:GetParent():Hide()
-				FindNearestFrameProff:Hide()
-				FindNearestFrameClass:Hide()
-				ZGV.Pointer:ClearWaypoints("manual")
-				ZGV:ShowWaypoints()
-			end)
-			:SetScript("OnEnter", function(self)
-				self:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background"}) 
-			end)
-			:SetScript("OnLeave", function(self)
-				self:SetBackdrop(nil)
-			end)
-			:Show()
-		.__END
-		self.RemoveFrameIcon = CHAIN(self.RemoveFrame:CreateTexture())
-			:SetAllPoints()
-			:SetPoint("TOPLEFT", self.MailboxFrame, "TOPLEFT", iconLeftAdjust, iconTopAdjust)
-			:SetPoint("BOTTOMRIGHT", self.MailboxFrame, "TOPLEFT", iconSize+iconLeftAdjust, -iconSize+iconTopAdjust)
-			--:SetTexture("Interface\\Minimap\\Tracking\\Mailbox")
-		.__END
-		self.RemoveFrameText = CHAIN(self.RemoveFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall"))
-			:SetPoint("LEFT", self.RemoveFrame, "LEFT", textLeftAdjust, 0)
-			:SetText("Reset Waypoint")
-			:SetTextColor(1, 1, 1)
-			:SetFont(ZGV.Font,textSize)
-		.__END
-
 		tinsert(UISpecialFrames, "FindNearestFrame") 
 		tinsert(UISpecialFrames, "FindNearestFrameProff") 
-		tinsert(UISpecialFrames, "FindNearestFrameClass") 
 	else
 		if self.FindNearestFrame:IsShown() then
 			self.FindNearestFrame:Hide()
@@ -1850,11 +1373,6 @@ function ZygorGuidesViewerFrame_SearchButton_OnClick(self,button)
 
 	-- Move npc finder above or below the guide viewer, depending on space above the viewer
 
-	FindNearestFrameClass:ClearAllPoints()
-	FindNearestFrameClass:SetHeight(220)    
-	FindNearestFrameClass:SetWidth(140)
-	FindNearestFrameClass:Hide()
-
 	FindNearestFrameProff:ClearAllPoints()
 	FindNearestFrameProff:SetHeight(300)    
 	FindNearestFrameProff:SetWidth(140)
@@ -1864,13 +1382,11 @@ function ZygorGuidesViewerFrame_SearchButton_OnClick(self,button)
 		self.FindNearestFrame:SetPoint("TOPLEFT", ZygorGuidesViewerFrame, "BOTTOMLEFT", 0, -10 )
 		self.FindNearestFrame:SetPoint("BOTTOMLEFT", ZygorGuidesViewerFrame, "BOTTOMLEFT", 0, -totalHeight)
 		self.FindNearestFrame:SetPoint("BOTTOMRIGHT", ZygorGuidesViewerFrame, "BOTTOMLEFT", rowWidth + rowBorder, 10)
-		FindNearestFrameClass:SetPoint('TOPLEFT',FindNearestFrame,'TOPRIGHT',5,0)
 		FindNearestFrameProff:SetPoint('TOPLEFT',FindNearestFrame,'TOPRIGHT',5,0)
 	else
 		self.FindNearestFrame:SetPoint("TOPLEFT", ZygorGuidesViewerFrame, "TOPLEFT", 0, totalHeight)
 		self.FindNearestFrame:SetPoint("BOTTOMLEFT", ZygorGuidesViewerFrame, "TOPLEFT", 0, 10)
 		self.FindNearestFrame:SetPoint("BOTTOMRIGHT", ZygorGuidesViewerFrame, "TOPLEFT", rowWidth + rowBorder, 10)
-		FindNearestFrameClass:SetPoint('BOTTOMLEFT',FindNearestFrame,'BOTTOMRIGHT',5,0)
 		FindNearestFrameProff:SetPoint('BOTTOMLEFT',FindNearestFrame,'BOTTOMRIGHT',5,0)
 	end
 
@@ -1904,7 +1420,7 @@ function ZygorGuidesViewerFrame_PrevButton_OnClick(self,button)
 		end
 	end
 	if ZGV.db.profile.flipsounds then
-		PlaySound("igMiniMapZoomIn")
+		PlaySound(SOUNDKIT.IG_MINIMAP_ZOOM_IN)
 	end
 end
 
@@ -1925,7 +1441,7 @@ function ZygorGuidesViewerFrame_NextButton_OnClick(self,button)
 		ZygorGuidesViewer:SkipStep(button=="RightButton",false,true)
 	end
 	if ZGV.db.profile.flipsounds then
-		PlaySound("igMiniMapZoomIn")
+		PlaySound(SOUNDKIT.IG_MINIMAP_ZOOM_IN)
 	end
 end
 
@@ -2020,7 +1536,8 @@ end
 --------------------
 
 function ZygorGuidesViewerFrame_Guides_MiniButton_OnClick(self,button)
-	ZygorGuidesViewer:SetOption("Display","hideinlinetravel")
+	ZygorGuidesViewer:SetOption("Display","showinlinetravel")
+	ZGV.GuideMenu:RefreshOptions("ZygorGuidesViewer-Display")
 	--if ZGV.optionpanels['display']:IsVisible() then ZGV:OpenOptions('display') end
 	--ZGV:UpdateMiniMode()
 
@@ -2037,7 +1554,7 @@ end
 
 function ZGV:Guides_Mini_to_Full()
 	ZygorGuidesViewer:SetOption("Display","dispmodepri")
-	if ZGV.optionpanels['display']:IsVisible() then ZGV:OpenOptions('display') end
+	--if ZGV.optionpanels['display']:IsVisible() then ZGV:OpenOptions('display') end
 	ZygorGuidesViewer:ReanchorFrame()
 	ZygorGuidesViewer:AlignFrame()
 end
@@ -2045,8 +1562,8 @@ end
 
 function ZygorGuidesViewerFrame_Guides_MiniButton_OnEnter(self,button)
 	GameTooltip:SetOwner(ZGV.Frame, "ANCHOR_TOP")
-	GameTooltip:SetText(L[ZGV.db.profile.hideinlinetravel and 'frame_hideinlinetravel_off' or 'frame_hideinlinetravel_on'])
-	GameTooltip:AddLine(L[ZGV.db.profile.hideinlinetravel and 'frame_hideinlinetravel_goon' or 'frame_hideinlinetravel_gooff'],0,1,0)
+	GameTooltip:SetText(L[ZGV.db.profile.showinlinetravel and 'frame_showinlinetravel_on' or 'frame_showinlinetravel_off'])
+	GameTooltip:AddLine(L[ZGV.db.profile.showinlinetravel and 'frame_showinlinetravel_gooff' or 'frame_showinlinetravel_goon'],0,1,0)
 	--GameTooltip:AddLine(L['frame_minright'],0,1,0)
 	GameTooltip:Show()
 end
@@ -2056,15 +1573,15 @@ end
 function ZygorGuidesViewerFrame_Guides_GuideButton_OnClick(self,button)
 	local path
 	if (ZGV.Menu and ZGV.Menu.Frame and ZGV.Menu.Frame:IsVisible() and ((button=="RightButton")==(ZGV.Menu.path=="SUGGESTED"))) then
-		ZGV.Menu:Hide()
+		ZGV.GuideMenu:Hide()
 	else
 		if button=="RightButton" and self.suggestedguide then
 			ZGV:SetGuide(self.suggestedguide)
 		else
 			if button=="RightButton" then
-				ZGV:OpenGuideMenu("SUGGESTED")
-			else
-				ZGV:OpenGuideMenu("HOME")
+				ZGV.GuideMenu:Show("Suggested")
+		else
+				ZGV.GuideMenu:Show()
 			end
 		end
 		--[[

@@ -37,7 +37,7 @@ function AS:Blizzard_Bags()
 			ItemButton.Backdrop:SetFrameLevel(ItemButton:GetFrameLevel() + 4)
 			ItemButton.Backdrop:SetBackdropColor(0, 0, 0, 0)
 			ItemButton.Backdrop:SetScript('OnUpdate', function(self)
-				local isQuestItem, questId, isActive = GetContainerItemQuestInfo(ItemButton:GetParent():GetID(), ItemButton:GetID());
+				local isQuestItem, questId, isActive = GetContainerItemQuestInfo(ItemButton:GetParent():GetID(), ItemButton:GetID())
 				local Quality = select(4, GetContainerItemInfo(ItemButton:GetParent():GetID(), ItemButton:GetID()))
 				ItemButton:SetBackdropBorderColor(unpack(AS.BorderColor))
 				if Quality and BAG_ITEM_QUALITY_COLORS[Quality] then
@@ -54,7 +54,7 @@ function AS:Blizzard_Bags()
 			end)
 			ItemButton.Backdrop:SetScript('OnHide', function(self)
 				local Quality = select(4, GetContainerItemInfo(ItemButton:GetParent():GetID(), ItemButton:GetID()))
-				local isQuestItem, questId, isActive = GetContainerItemQuestInfo(ItemButton:GetParent():GetID(), ItemButton:GetID());
+				local isQuestItem, questId, isActive = GetContainerItemQuestInfo(ItemButton:GetParent():GetID(), ItemButton:GetID())
 				if Quality and (Quality > LE_ITEM_QUALITY_COMMON and BAG_ITEM_QUALITY_COLORS[Quality]) then
 					ItemButton:SetBackdropBorderColor(BAG_ITEM_QUALITY_COLORS[Quality].r, BAG_ITEM_QUALITY_COLORS[Quality].g, BAG_ITEM_QUALITY_COLORS[Quality].b)
 				elseif isQuestItem then
@@ -66,13 +66,13 @@ function AS:Blizzard_Bags()
 			-- End of hax.
 
 			ItemButton.searchOverlay:SetAllPoints(ItemButton.icon)
-			ItemButton.searchOverlay:SetTexture(0, 0, 0, .8)
+			ItemButton.searchOverlay:SetColorTexture(0, 0, 0, .8)
 
 			ItemButton:SetNormalTexture('')
 			AS:StyleButton(ItemButton)
 			hooksecurefunc(ItemButton.IconBorder, 'SetVertexColor', function(self, r, g, b, a)
 				local Quality = select(4, GetContainerItemInfo(ItemButton:GetParent():GetID(), ItemButton:GetID()))
-				local isQuestItem, questId, isActive = GetContainerItemQuestInfo(ItemButton:GetParent():GetID(), ItemButton:GetID());
+				local isQuestItem, questId, isActive = GetContainerItemQuestInfo(ItemButton:GetParent():GetID(), ItemButton:GetID())
 				if Quality and Quality > LE_ITEM_QUALITY_COMMON then
 					ItemButton:SetBackdropBorderColor(r, g, b)
 				elseif isQuestItem then
@@ -86,8 +86,8 @@ function AS:Blizzard_Bags()
 			end)
 		end
 
-		Bag.Backdrop:Point("TOPLEFT", 4, -2)
-		Bag.Backdrop:Point("BOTTOMRIGHT", 1, 1)
+		Bag.Backdrop:SetPoint("TOPLEFT", 4, -2)
+		Bag.Backdrop:SetPoint("BOTTOMRIGHT", 1, 1)
 		_G["ContainerFrame"..i.."BackgroundTop"]:Kill()
 		_G["ContainerFrame"..i.."BackgroundMiddle1"]:Kill()
 		_G["ContainerFrame"..i.."BackgroundMiddle2"]:Kill()
@@ -139,7 +139,7 @@ function AS:Blizzard_Bags()
 	BagItemAutoSortButton:GetNormalTexture():SetInside()
 	AS:SkinTexture(BagItemAutoSortButton:GetPushedTexture())
 	BagItemAutoSortButton:GetPushedTexture():SetInside()
-	BagItemAutoSortButton:Size(22)
+	BagItemAutoSortButton:SetSize(22, 22)
 
 	BagItemAutoSortButton:SetScript('OnShow', function(self)
 		local a, b, c, d, e = self:GetPoint()
@@ -153,7 +153,7 @@ function AS:Blizzard_Bags()
 		AS:SkinTexture(Token.icon)
 		AS:CreateBackdrop(Token, 'Default')
 		Token.Backdrop:SetOutside(Token.icon)
-		Token.icon:Point("LEFT", Token.count, "RIGHT", 3, 0)
+		Token.icon:SetPoint("LEFT", Token.count, "RIGHT", 3, 0)
 	end
 
 	AS:SkinFrame(BankFrame, nil, nil, true)
@@ -163,9 +163,9 @@ function AS:Blizzard_Bags()
 	AS:StripTextures(BankSlotsFrame)
 
 	AS:SkinButton(BankFramePurchaseButton)
-	BankFramePurchaseButton:Height(22)
+	BankFramePurchaseButton:SetHeight(22)
 	
-	BankItemSearchBox:Size(159, 16)
+	BankItemSearchBox:SetSize(159, 16)
 	AS:SkinEditBox(BankItemSearchBox)
 
 	AS:SkinButton(BankItemAutoSortButton)
@@ -175,7 +175,7 @@ function AS:Blizzard_Bags()
 	BankItemAutoSortButton:GetNormalTexture():SetInside()
 	AS:SkinTexture(BankItemAutoSortButton:GetPushedTexture())
 	BankItemAutoSortButton:GetPushedTexture():SetInside()
-	BankItemAutoSortButton:Size(20)
+	BankItemAutoSortButton:SetSize(20, 20)
 	BankItemAutoSortButton:SetPoint("LEFT", BankItemSearchBox, "RIGHT", 4, 0)
 
 	-- Bank Bags

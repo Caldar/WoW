@@ -3,14 +3,15 @@ if not ZygorGuidesViewer then return end
 if UnitFactionGroup("player")~="Alliance" then return end
 if ZGV:DoMutex("TitlesA") then return end
 ZygorGuidesViewer.GuideMenuTier = "TRI"
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Titles\\Miscellaneous Titles\\The Diplomat\\Timbermaw Hold Faction",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Titles\\Wrath of the Lich King Titles\\General\\The Explorer\\Kalimdor",{
 author="support@zygorguides.com",
+description="This guide section will walk you through completing the Explorer achievement.",
 },[[
-#include "A_Timbermaw_Faction"
+leechsteps "Zygor's Achievement Guides\\Exploration\\Kalimdor\\Explore Kalimdor"
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Titles\\Exploration\\Kalimdor",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Titles\\Wrath of the Lich King Titles\\Reputations\\The Diplomat\\Timbermaw Hold Faction",{
 author="support@zygorguides.com",
-description="This guide section will walk you through completing\nthe Explorer achievement.",
+keywords={"The, Diplomat"},
 },[[
-leechsteps "Zygor's Alliance Achievements Guides\\Exploration\\Kalimdor\\Explore Kalimdor"
+#include "Timbermaw_Rep"
 ]])

@@ -125,8 +125,12 @@ function TOTEMS:Initialize()
 
 	self:PositionAndSize()
 
-	E:CreateMover(bar, 'TotemBarMover', L["Class Bar"]);
+	E:CreateMover(bar, 'TotemBarMover', L["Class Totems"]);
 	self:ToggleEnable()
 end
 
-E:RegisterModule(TOTEMS:GetName())
+local function InitializeCallback()
+	TOTEMS:Initialize()
+end
+
+E:RegisterModule(TOTEMS:GetName(), InitializeCallback)

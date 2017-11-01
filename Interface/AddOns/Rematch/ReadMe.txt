@@ -62,9 +62,9 @@ Leveling Queue
 Rematch has a robust system for leveling pets with the leveling queue. The queue is a place to put all the pets you want to level.
 
 - You can order the queue however you like, or let the addon sort the queue for you.
-- When you save a team with one of these leveling pets, its slot will be reserved for future leveling pets (noted by a blue up-arrow icon).
-- When loading a team with a saved leveling slot, the reserved slot will be filled by the top-most pet from the queue (or the most preferred, see below).
-- You can also right-click a pet in the team list and choose "Put Leveling Pet Here" to convert it to a leveing pet.
+- To mark a slot for leveling pets, right-click one of the three loaded slots and choose "Put Leveling Pet Here".
+- When a team is saved with these designated leveling slots, the slots will be filled by the top-most pets from the queue (or the most preferred, see below).
+- You can also right-click a pet in the team list and choose "Put Leveling Pet Here" to convert a slot in an already-saved team into a leveing pet.
 - When a pet reaches level 25 (gratz!) it will automatically leave the queue and the next leveling pet will take its place.
 - In the Queue button menu, you can fill the queue with many pets at once. For instance: in the pet panel, filter pets to High Level (15-24) and Rare, then choose Fill Queue to add level 15-24 rares to the queue.
 - For some opponents, just grabbing the top pet from the queue can kill your low level pets, or you want finer control over what pets load for a specific target. If you right-click a team that contains a leveling pet, you can click "Set Preferences" to choose various health and level ranges to refine which pet the queue will pick when a team loads.

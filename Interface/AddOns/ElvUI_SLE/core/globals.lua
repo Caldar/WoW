@@ -8,6 +8,7 @@ local repooc = slePath..[[SLE_Chat_Logo:0:2|t ]]
 local darth = slePath..[[SLE_Chat_LogoD:0:2|t ]]
 local friend = slePath..[[Chat_Friend:16:16|t ]]
 local test = slePath..[[Chat_Test:16:16|t ]]
+local blizzicon = blizzPath..[[%s:12:12:0:0:64:64:4:60:4:60|t]]
 -- local rpg = slePath..[[Chat_RPG:13:35|t]]
 
 local orc = blizzPath..[[Achievement_Character_Orc_Male:16:16|t ]]
@@ -48,6 +49,11 @@ SLE.rolePaths = {
 		TANK = [[Interface\AddOns\ElvUI_SLE\media\textures\role\mg-tank]],
 		HEALER = [[Interface\AddOns\ElvUI_SLE\media\textures\role\mg-healer]],
 		DAMAGER = [[Interface\AddOns\ElvUI_SLE\media\textures\role\mg-dps]]
+	},
+	["Lyn"] = {
+		TANK = [[Interface\AddOns\ElvUI_SLE\media\textures\role\lyn-tank]],
+		HEALER = [[Interface\AddOns\ElvUI_SLE\media\textures\role\lyn-healer]],
+		DAMAGER = [[Interface\AddOns\ElvUI_SLE\media\textures\role\lyn-dps]]
 	},
 }
 
@@ -128,14 +134,16 @@ SLE.SpecialChatIcons = {
 	["US"] = {
 		["Spirestone"] = {
 			["Sifupooc"] = repooc,
-			["Sifpooc"] = repooc,
+			--["Sifpooc"] = repooc,
 			["Dapooc"] = repooc,
 			["Lapooc"] = repooc,
 			["Warpooc"] = repooc,
 			["Repooc"] = repooc,
 			["Cursewordz"] = repooc,
 			--Adapt Roster
+			--["Mylune"] = friend,
 			["Loosh"] = goldicon,
+			["Looshana"] = goldicon,
 			["Alooshy"] = goldicon,
 			["Aloosh"] = goldicon
 		},
@@ -144,7 +152,6 @@ SLE.SpecialChatIcons = {
 			["Darthpred"] = darth,
 			--Repooc's Toon
 			["Repooc"] = repooc,
-			["Repooc"] = repooc
 		},
 		["WyrmrestAccord"] = {
 			["Dapooc"] = repooc,
@@ -158,6 +165,14 @@ SLE.SpecialChatIcons = {
 		["Brill(EU)"] = {
 			["Дартпредатор"] = darth,
 			["Киландра"] = darth,
+		},
+		["Stormrage"] = {
+			["Sifpooc"] = repooc,
+			["Looshana"] = goldicon,
+			["Lloosh"] = goldicon,
+			["Looshella"] = goldicon,
+			["Urgfelstorm"] = blizzicon:format("inv_misc_bomb_02"),
+			["Cakenina"] = blizzicon:format("inv_misc_food_145_cake")
 		},
 	},
 	["CN"] = {},

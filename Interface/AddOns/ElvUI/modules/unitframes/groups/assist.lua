@@ -1,26 +1,32 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames');
-
---Cache global variables
---WoW API / Variables
-local RegisterAttributeDriver = RegisterAttributeDriver
-local InCombatLockdown = InCombatLockdown
-
---Global variables that we don't cache, list them here for mikk's FindGlobals script
--- GLOBALS: UnitFrame_OnEnter, UnitFrame_OnLeave
-
 local _, ns = ...
 local ElvUF = ns.oUF
 assert(ElvUF, "ElvUI was unable to locate oUF.")
 
-function UF:Construct_AssistFrames(unitGroup)
+--Cache global variables
+--Lua functions
+local max = math.max
+--WoW API / Variables
+local CreateFrame = CreateFrame
+local InCombatLockdown = InCombatLockdown
+local RegisterAttributeDriver = RegisterAttributeDriver
+
+--Global variables that we don't cache, list them here for mikk's FindGlobals script
+-- GLOBALS: UnitFrame_OnEnter, UnitFrame_OnLeave
+
+function UF:Construct_AssistFrames()
 	self:SetScript('OnEnter', UnitFrame_OnEnter)
 	self:SetScript('OnLeave', UnitFrame_OnLeave)
 
+	self.RaisedElementParent = CreateFrame('Frame', nil, self)
+	self.RaisedElementParent.TextureParent = CreateFrame('Frame', nil, self.RaisedElementParent)
+	self.RaisedElementParent:SetFrameLevel(self:GetFrameLevel() + 100)
+
 	self.Health = UF:Construct_HealthBar(self, true)
 	self.Name = UF:Construct_NameText(self)
-	self.Threat = UF:Construct_Threat(self)
-	self.RaidIcon = UF:Construct_RaidIcon(self)
+	self.ThreatIndicator = UF:Construct_Threat(self)
+	self.RaidTargetIndicator = UF:Construct_RaidIcon(self)
 	self.Range = UF:Construct_Range(self)
 
 	if not self.isChild then

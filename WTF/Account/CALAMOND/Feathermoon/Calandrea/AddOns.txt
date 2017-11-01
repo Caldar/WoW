@@ -9,8 +9,10 @@ PetTracker_Upgrades: disabled
 Rematch: disabled
 ElvUI_EverySecondCounts: enabled
 LoggerHeadLite: enabled
-ZygorGuidesViewer: enabled
+ZygorGuidesViewer: disabled
 Cartographer: enabled
 Cartographer3: enabled
 TellMeWhen: disabled
 TellMeWhen_Options: disabled
+Archy: disabled
+WIM: disabled

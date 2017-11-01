@@ -6,6 +6,10 @@ setmetatable(L, {__index = function(L, key)
 	return value
 end})
 
+L['ALT key'] = ALT_KEY
+L['ALT + CTRL key'] = ALT_KEY_TEXT .. ' + ' .. CTRL_KEY
+L['ALT + SHIFT key'] = ALT_KEY_TEXT .. ' + ' .. SHIFT_KEY
+
 local locale = GetLocale()
 if(locale == 'deDE') then
 	L["Drag items into the window below to add more."] = "Ziehe Gegenstände in das Fenster, um sie hinzuzufügen."
@@ -13,44 +17,68 @@ L["Items blacklisted from potentially being processed."] = "Ausgeschlossene Gege
 L["Right-click to remove item"] = "Rechtsklicke, um den Gegenstand zu entfernen"
 
 elseif(locale == 'esES') then
-	-- L["Drag items into the window below to add more."] = ""
--- L["Items blacklisted from potentially being processed."] = ""
--- L["Right-click to remove item"] = ""
+	--Translation missing 
+L["Drag items into the window below to add more."] = "Drag items into the window below to add more."
+--Translation missing 
+L["Items blacklisted from potentially being processed."] = "Items blacklisted from potentially being processed."
+--Translation missing 
+L["Right-click to remove item"] = "Right-click to remove item"
 
 elseif(locale == 'esMX') then
-	-- L["Drag items into the window below to add more."] = ""
--- L["Items blacklisted from potentially being processed."] = ""
--- L["Right-click to remove item"] = ""
+	--Translation missing 
+L["Drag items into the window below to add more."] = "Drag items into the window below to add more."
+--Translation missing 
+L["Items blacklisted from potentially being processed."] = "Items blacklisted from potentially being processed."
+--Translation missing 
+L["Right-click to remove item"] = "Right-click to remove item"
 
 elseif(locale == 'frFR') then
-	-- L["Drag items into the window below to add more."] = ""
--- L["Items blacklisted from potentially being processed."] = ""
--- L["Right-click to remove item"] = ""
+	--Translation missing 
+L["Drag items into the window below to add more."] = "Drag items into the window below to add more."
+--Translation missing 
+L["Items blacklisted from potentially being processed."] = "Items blacklisted from potentially being processed."
+--Translation missing 
+L["Right-click to remove item"] = "Right-click to remove item"
 
 elseif(locale == 'itIT') then
-	-- L["Drag items into the window below to add more."] = ""
--- L["Items blacklisted from potentially being processed."] = ""
--- L["Right-click to remove item"] = ""
+	--Translation missing 
+L["Drag items into the window below to add more."] = "Drag items into the window below to add more."
+--Translation missing 
+L["Items blacklisted from potentially being processed."] = "Items blacklisted from potentially being processed."
+--Translation missing 
+L["Right-click to remove item"] = "Right-click to remove item"
 
 elseif(locale == 'koKR') then
-	-- L["Drag items into the window below to add more."] = ""
--- L["Items blacklisted from potentially being processed."] = ""
--- L["Right-click to remove item"] = ""
+	--Translation missing 
+L["Drag items into the window below to add more."] = "Drag items into the window below to add more."
+--Translation missing 
+L["Items blacklisted from potentially being processed."] = "Items blacklisted from potentially being processed."
+--Translation missing 
+L["Right-click to remove item"] = "Right-click to remove item"
 
 elseif(locale == 'ptBR') then
-	-- L["Drag items into the window below to add more."] = ""
--- L["Items blacklisted from potentially being processed."] = ""
--- L["Right-click to remove item"] = ""
+	--Translation missing 
+L["Drag items into the window below to add more."] = "Drag items into the window below to add more."
+--Translation missing 
+L["Items blacklisted from potentially being processed."] = "Items blacklisted from potentially being processed."
+--Translation missing 
+L["Right-click to remove item"] = "Right-click to remove item"
 
 elseif(locale == 'ruRU') then
-	-- L["Drag items into the window below to add more."] = ""
--- L["Items blacklisted from potentially being processed."] = ""
--- L["Right-click to remove item"] = ""
+	--Translation missing 
+L["Drag items into the window below to add more."] = "Drag items into the window below to add more."
+--Translation missing 
+L["Items blacklisted from potentially being processed."] = "Items blacklisted from potentially being processed."
+--Translation missing 
+L["Right-click to remove item"] = "Right-click to remove item"
 
 elseif(locale == 'zhCN') then
-	-- L["Drag items into the window below to add more."] = ""
--- L["Items blacklisted from potentially being processed."] = ""
--- L["Right-click to remove item"] = ""
+	--Translation missing 
+L["Drag items into the window below to add more."] = "Drag items into the window below to add more."
+--Translation missing 
+L["Items blacklisted from potentially being processed."] = "Items blacklisted from potentially being processed."
+--Translation missing 
+L["Right-click to remove item"] = "Right-click to remove item"
 
 elseif(locale == 'zhTW') then
 	L["Drag items into the window below to add more."] = "將物品拖曳到下方的視窗內，加入到忽略清單。"

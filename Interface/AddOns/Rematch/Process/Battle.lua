@@ -75,20 +75,11 @@ end
 
 -- returns either a direct petID if petOwner==1 or a table of stats if petOwner==2
 function battle:GetBattlePetID(petOwner,petIndex)
-	local petID
 	if petOwner==1 then -- for ally pets petID is simply the loaded pet
-		petID = C_PetJournal.GetPetLoadOutInfo(petIndex)
-	else -- for enemy pets the petID is a table of its stats
-		local speciesID = C_PetBattles.GetPetSpeciesID(petOwner,petIndex)
-		local level = C_PetBattles.GetLevel(petOwner,petIndex)
-		local rarity = C_PetBattles.GetBreedQuality(petOwner,petIndex)
-		local health = C_PetBattles.GetMaxHealth(petOwner,petIndex)
-		local power = C_PetBattles.GetPower(petOwner,petIndex)
-		local speed = C_PetBattles.GetSpeed(petOwner,petIndex)
-		local breed = rematch:GetBreedByBattleSlot(petOwner,petIndex)
-		petID = {speciesID=speciesID,level=level,rarity=rarity,health=health,power=power,speed=speed,breed=breed}
+		return (C_PetJournal.GetPetLoadOutInfo(petIndex))
+	else -- for enemy pets the petID it's "battle:owner:index"
+		return format("battle:%d:%d",petOwner,petIndex)
 	end
-	return petID
 end
 
 --- does a ShowPetCard for the petOwner,petIndex battle unit

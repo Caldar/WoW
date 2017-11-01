@@ -15,8 +15,8 @@ StatBlockCoreDB = {
 		["Calandrea - Feathermoon"] = "Default",
 		["Calastir - Kirin Tor"] = "Default",
 		["Calastir - Feathermoon"] = "Default",
-		["Nothing - Feathermoon"] = "Default",
 		["Failure - Feathermoon"] = "Default",
+		["Nothing - Feathermoon"] = "Default",
 		["Calandrea - Scarlet Crusade"] = "Default",
 		["Souptruck - Feathermoon"] = "Default",
 		["Censure - Feathermoon"] = "Default",
@@ -31,11 +31,11 @@ StatBlockCoreDB = {
 					["posy"] = 340.479992389679,
 				},
 				["Skada"] = {
-					["enabled"] = false,
 					["posx"] = 981.43982181311,
-					["showtext"] = false,
-					["lock"] = true,
+					["enabled"] = false,
 					["posy"] = 17.0669332122743,
+					["lock"] = true,
+					["showtext"] = false,
 				},
 				["ArkInventory_Bags"] = {
 					["notipincombat"] = true,
@@ -104,8 +104,13 @@ StatBlockCoreDB = {
 					["posx"] = 1078.39966339589,
 					["posy"] = 13.5468795800161,
 				},
-				["TellMeWhen"] = {
+				["AdiBags"] = {
+					["notipincombat"] = true,
+					["showtext"] = false,
+					["lock"] = true,
 					["enabled"] = false,
+					["posx"] = 1060.79911691429,
+					["posy"] = 36.4799991846085,
 				},
 				["Rematch"] = {
 					["enabled"] = false,
@@ -131,13 +136,8 @@ StatBlockCoreDB = {
 					["posx"] = 1023.03989900828,
 					["showtext"] = false,
 				},
-				["AdiBags"] = {
-					["notipincombat"] = true,
-					["showtext"] = false,
-					["lock"] = true,
+				["TellMeWhen"] = {
 					["enabled"] = false,
-					["posx"] = 1060.79911691429,
-					["posy"] = 36.4799991846085,
 				},
 			},
 			["globalAlpha"] = 0,

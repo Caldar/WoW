@@ -21,31 +21,27 @@ mod.respawnTime = 30
 --
 
 local rotCount = 1
-local mindControlledPlayers = 0
 local myInfestedStacks = 0
-
---------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:GetLocale()
+local infestedStacks = {}
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
+local rotMarker = mod:AddMarkerOption(false, "player", 1, 203096, 1, 2, 3, 4, 5) -- Rot
 function mod:GetOptions()
 	return {
 		--[[ General ]]--
 		202977, -- Infested Breath
 		{203096, "SAY", "FLASH", "PROXIMITY"}, -- Rot
-		{204463, "SAY", "FLASH"}, -- Volatile Rot
+		rotMarker,
+		{204463, "SAY", "FLASH", "ICON"}, -- Volatile Rot
 		203552, -- Heart of the Swarm
 		203045, -- Infested Ground
 		"berserk",
 
 		--[[ Mythic ]]--
-		204504, -- Infested
+		{204504, "INFOBOX"}, -- Infested
 		{225943, "SAY", "FLASH"}, -- Infested Mind
 		205070, -- Spread Infestation
 	},{
@@ -60,6 +56,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Rot", 203096)
 	self:Log("SPELL_AURA_REMOVED", "RotRemoved", 203096)
 	self:Log("SPELL_AURA_APPLIED", "VolatileRot", 204463)
+	self:Log("SPELL_AURA_REMOVED", "VolatileRotRemoved", 204463)
 	self:Log("SPELL_CAST_START", "HeartOfTheSwarm", 203552)
 	self:Log("SPELL_AURA_APPLIED", "InfestedGroundDamage", 203045)
 	self:Log("SPELL_PERIODIC_DAMAGE", "InfestedGroundDamage", 203045)
@@ -73,14 +70,15 @@ end
 
 function mod:OnEngage()
 	rotCount = 1
-	mindControlledPlayers = 0
 	myInfestedStacks = 0
-	self:Berserk(480) -- Can be delayed by a few sec
+	wipe(infestedStacks)
+	self:Berserk(self:Normal() and 600 or 480) -- Can be delayed by 2nd phase
 	self:CDBar(203096, 5.8) -- Rot
 	self:CDBar(204463, 22.8) -- Volatile Rot
 	self:CDBar(202977, 37) -- Infested Breath
 	self:CDBar(203552, 90) -- Heart of the Swarm
 	if self:Mythic() then
+		self:OpenInfo(204504, self:SpellName(204504)) -- Infested
 		self:Bar(225943, 49) -- Infested Mind
 	end
 end
@@ -89,16 +87,13 @@ end
 -- Event Handlers
 --
 
-do
-	local prev = 0
-	function mod:UNIT_SPELLCAST_START(_, spellName, _, _, spellId)
-		if spellId == 202977 then -- Infested Breath
-			self:Message(spellId, "Urgent", "Alarm", CL.casting:format(spellName))
-			self:Bar(spellId, 8, CL.cast:format(spellName)) -- 3s cast time + 5s channel
+function mod:UNIT_SPELLCAST_START(_, spellName, _, _, spellId)
+	if spellId == 202977 then -- Infested Breath
+		self:Message(spellId, "Urgent", "Alarm", CL.casting:format(spellName))
+		self:CastBar(spellId, 8) -- 3s cast time + 5s channel
 
-			if self:BarTimeLeft(203552) > 37 then -- Heart of the Swarm
-				self:CDBar(spellId, 37)
-			end
+		if self:BarTimeLeft(203552) > 37 then -- Heart of the Swarm
+			self:CDBar(spellId, 37)
 		end
 	end
 end
@@ -121,6 +116,9 @@ do
 		if not isOnMe then
 			self:OpenProximity(args.spellId, 10, proxList)
 		end
+		if self:GetOption(rotMarker) then
+			SetRaidTarget(args.destName, #proxList)
+		end
 
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
@@ -140,6 +138,9 @@ do
 			self:CloseProximity(args.spellId)
 		end
 
+		if self:GetOption(rotMarker) then
+			SetRaidTarget(args.destName, 0)
+		end
 		tDeleteItem(proxList, args.destName)
 
 		if not isOnMe then -- Don't change proximity if it's on you and expired on someone else
@@ -153,20 +154,25 @@ do
 end
 
 function mod:VolatileRot(args)
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
+		self:Flash(args.spellId)
+	end
+	self:PrimaryIcon(args.spellId, args.destName)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, self:Tank())
 	self:TargetBar(args.spellId, 8, args.destName)
 	if self:BarTimeLeft(203552) > 23 then -- Heart of the Swarm
 		self:CDBar(args.spellId, 23)
 	end
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:Flash(args.spellId)
-	end
+end
+
+function mod:VolatileRotRemoved(args)
+	self:PrimaryIcon(args.spellId)
 end
 
 function mod:HeartOfTheSwarm(args)
 	self:Message(args.spellId, "Neutral", "Info", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, 23.7, CL.cast:format(args.spellName)) -- 3.7s cast time + 20s channel
+	self:CastBar(args.spellId, 23.7) -- 3.7s cast time + 20s channel
 	-- This is basically a phase, so start timers for next "normal" phase here
 	self:CDBar(args.spellId, 120)
 	self:CDBar(203096, 36.5) -- Rot, 23.7 + 12.8
@@ -189,18 +195,32 @@ do
 	end
 end
 
-function mod:Infested(args)
-	if self:Mythic() and self:Me(args.destGUID) then
-		if args.amount > 6 and args.amount < 11 then -- be careful at 7-9, at 10 you're getting mc'd
-			self:StackMessage(args.spellId, args.destName, args.amount, "Personal", "Warning")
+do
+	local prev = 0
+	function mod:Infested(args)
+		if self:Mythic() then
+			infestedStacks[args.destName] = args.amount
+			if self:Me(args.destGUID) then
+				if args.amount > 6 and args.amount < 11 then -- be careful at 7-9, at 10 you're getting mc'd
+					self:StackMessage(args.spellId, args.destName, args.amount, "Personal", "Warning")
+				end
+				myInfestedStacks = args.amount
+			end
+			local t = GetTime()
+			if t-prev > 2 then
+				prev = t
+				self:SetInfoByTable(args.spellId, infestedStacks)
+			end
 		end
-		myInfestedStacks = args.amount
 	end
 end
 
 function mod:InfestedRemoved(args)
-	if self:Me(args.destGUID) then
-		myInfestedStacks = 0
+	if self:Mythic() then
+		infestedStacks[args.destName] = nil
+		if self:Me(args.destGUID) then
+			myInfestedStacks = 0
+		end
 	end
 end
 
@@ -213,7 +233,7 @@ function mod:InfestedMindCast(args)
 		self:Message(args.spellId, "Attention", "Long", CL.incoming:format(args.spellName))
 	end
 
-	self:Bar(args.spellId, 3, CL.cast:format(args.spellName))
+	self:CastBar(args.spellId, 3)
 
 	if self:BarTimeLeft(203552) > 36 then -- Heart of the Swarm
 		self:CDBar(args.spellId, 36)

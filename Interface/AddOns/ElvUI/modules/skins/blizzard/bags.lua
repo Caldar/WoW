@@ -43,7 +43,7 @@ local function LoadSkin()
 		if not button.skinned then
 			for i=1, button:GetNumRegions() do
 				local region = select(i, button:GetRegions())
-				if region and region:GetObjectType() == 'Texture' and region ~= button.searchOverlay then
+				if region and region:GetObjectType() == 'Texture' and region ~= button.searchOverlay and region ~= button.UpgradeIcon then
 					region:SetTexture(nil)
 				end
 			end
@@ -181,7 +181,7 @@ local function LoadSkin()
 
 		if not button.isBag then
 			local container = button:GetParent():GetID();
-			local texture, _, _, _, _, _, itemLink = GetContainerItemInfo(container, button:GetID())
+			local _, _, _, _, _, _, itemLink = GetContainerItemInfo(container, button:GetID())
 			local isQuestItem, questId = GetContainerItemQuestInfo(container, button:GetID())
 			button.type = nil
 			button.ilink = itemLink
@@ -228,4 +228,4 @@ local function LoadSkin()
 	SkinBags()
 end
 
-S:AddCallback("Bags", LoadSkin)
+S:AddCallback("SkinBags", LoadSkin)

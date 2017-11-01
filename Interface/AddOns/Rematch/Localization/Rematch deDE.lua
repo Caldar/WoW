@@ -2,208 +2,69 @@
 
 if GetLocale()=="deDE" then
 
--- New strings in 4.3.5
-	L["%s Click to search for all versions of this pet."] = nil
-	L["Use the pet card on the unit frames during a pet battle instead of the default tooltip."] = nil
-	L["Use Pet Cards In Battle"] = nil
-	L["Use the pet card when viewing a link of a pet someone else sent you instead of the default link."] = nil
-	L["%s Click to search for all teams that include this pet."] = nil
-	L["Use Pet Cards For Links"] = nil
 
--- Strings removed in 4.3.5
-	L["The number of Rematch teams that includes this pet."] = nil
-
--- New strings in 4.3.4
-	L["Automatically track whether the loaded team won or lost only in a PVP battle and never for a PVE battle."] = nil
-	L["Also prefer uninjured pets when loading pets from the queue."] = nil
-	L["Show a card with team details when you mouseover a team.\n\n%sIMPORTANT:\124r While this option is enabled, clicking a team will lock the team card instead of loading it. %sDouble-Click\124r to load a team with this option enabled, just as you would Double-Click a pet to summon it."] = nil
-	L["Show Team Cards"] = nil
-	L["While pinned, the pet card will display where you last moved it.\n\nClick this to unpin the pet card and snap it back to the pets."] = nil
-	L["Totals Across All Teams"] = nil
-	L["Show Pet Card"] = nil
-	L["And At Full Health"] = nil
-
--- Strings removed in 4.3.4
-	L["While pinned, pet cards will display where you last moved it.\n\nClick this to unpin the pet card and snap it back to the pets."] = nil
-	L["Automatically track whether the loaded team won or lost only in a PVP battle and never for a PVP battle."] = nil
-
--- New strings in 4.3.1
-	L["Hide the win record button displayed to the right of each team.\n\nYou can still manually edit a team's win record from its right-click menu and automatic tracking will continue if enabled."] = nil
-	L["For PVP Battles Only"] = nil
-	L["Instead of displaying the win percentage of a team on the win record button, display the total number of wins.\n\nTeam tabs that are sorted by win record will sort by total wins also."] = nil
-	L["Sort teams in this tab by their wins.\n\nFavorited teams will still list at the top."] = nil
-	L["Sort By Wins"] = nil
-	L["Automatically track whether the loaded team won or lost only in a PVP battle and never for a PVP battle."] = nil
-	L["Hide Win Record Buttons"] = nil
-	L["At the end of each battle, automatically record whether the loaded team won or lost.\n\nForfeits always count as a loss.\n\nYou can still manually update a team's win record at any time."] = nil
-
--- Strings removed in 4.3.1
-	L["Hide Win Record"] = nil
-	L["Hide the win record displayed beside each team. You can still manually edit a team's win record from its right-click menu and automatic tracking will continue if enabled."] = nil
-	L["At the end of each battle, automatically record whether the loaded team won or lost.\n\nForfeits always count as a loss.\n\nThe game doesn't recognize a draw and will mark any battles you don't win as a loss.\n\nYou can still manually update a team's win record at any time to adjust these discrepancies."] = nil
-	L["Sort By Win Record"] = nil
-	L["Sort teams in this tab by the percent of battles they've won in their Win Record.\n\nFavorited teams will still list at the top."] = nil
-	L["Instead of displaying the win percentage of a team, display the total number of wins."] = nil
-
--- New strings in 4.3.0
-	L["A filter must be active before it can be saved."] = nil
-	L["Injured pets cannot be caged."] = nil
-	L["Auto Track Win Record"] = nil
-	L["Sharing is disabled in options."] = nil
-	L["This will look for teams with names that may include win-loss-draw stats and pull those into an actual win record before removing the numbers from the team name.\n\nDo you want to convert these teams?\n\nThe currently loaded team will be unloaded to prevent major complications.\n\n\124cffff1111Please backup your teams before attempting this!"] = nil
-	L["Hide the win record displayed beside each team. You can still manually edit a team's win record from its right-click menu and automatic tracking will continue if enabled."] = nil
-	L["+1 Loss"] = nil
-	L["%s%d teams and %d battles were converted."] = nil
-	L["+1 Draw"] = nil
-	L["The Leveling Queue is empty."] = nil
-	L["Edit Win Record"] = nil
-	L["Are you sure?"] = nil
-	L["Draws:"] = nil
-	L["Sort By Win Record"] = nil
-	L["This is already the top-most leveling pet."] = nil
-	L["Are you sure you want to remove the custom sort order?\n\nThe saved order of teams will be lost and turning this option back on will not restore the old order."] = nil
-	L["+1 Win"] = nil
-	L["Targeting Options"] = nil
-	L["Convert Team Names To Win Records"] = nil
-	L["Done!"] = nil
-	L["This will remove win record data for all teams and cannot be undone!"] = nil
-	L["Instead of displaying the win percentage of a team, display the total number of wins."] = nil
-	L["Press Ctrl+C to copy these teams to the clipboard. Then paste them into an email to yourself or a text file someplace safe.\n\nIf you ever need to restore your teams, paste them back in with Import Teams."] = nil
-	L["Convert"] = nil
-	L["Please Wait..."] = nil
-	L["Sort teams in this tab by the percent of battles they've won in their Win Record.\n\nFavorited teams will still list at the top."] = nil
-	L["This option is disabled while Custom Sort is active."] = nil
-	L["While checked, you can rearrange the order of teams within this tab from the teams' right-click menu."] = nil
-	L["Reset Win Record"] = nil
-	L["Backup All Teams"] = nil
-	L["Reset All Win Records"] = nil
-	L["Slotted pets cannot be caged."] = nil
-	L["This will export all teams across all tabs into text that you can paste elsehwere, such as an email to yourself or a text file someplace safe. You can later restore these teams with the Import Teams option."] = nil
-	L["Display Total Wins Instead"] = nil
-	L["Are you sure you want to remove all wins, losses and draws from the team \"%s\"?"] = nil
-	L["At the end of each battle, automatically record whether the loaded team won or lost.\n\nForfeits always count as a loss.\n\nThe game doesn't recognize a draw and will mark any battles you don't win as a loss.\n\nYou can still manually update a team's win record at any time to adjust these discrepancies."] = nil
-	L["Note: These are just your teams and their notes and preferences. Tab information, sort orders, win records, specific breeds and other settings are not included.\n\nFor the most complete backup of all your addon data, please backup your Word of Warcraft\\WTF folder."] = nil
-	L["Slotted pets cannot be released."] = nil
-	L["Losses:"] = nil
-	L["%s%s\124r Battles"] = nil
-	L["Wins:"] = nil
-	L["Win Record"] = nil
-	L["Hide Win Record"] = nil
-
--- Strings removed in 4.3.0
-	L["While checked, you can rearrange the order of teams within this tab."] = nil
-	L["Are you sure you want to sort teams alphabetically in this tab?\n\nThe custom sort order will be lost and cannot be undone."] = nil
-	L["Team & Targeting Options"] = nil
-
--- New strings in 4.2.0
-	L["Fill the leveling queue with one of each version of a pet that can level from the filtered pet list, regardless whether you have any at level 25 or one in the queue already."] = nil
-	L["Fill the leveling queue with one of each version of a pet that can level from the filtered pet list, and for which you don't have a level 25 or one in the queue already."] = nil
-
--- Strings removed in 4.2.0
-	L["Fill the leveling queue with one of each species that can level from the filtered pet browser, regardless whether you have any at level 25 already."] = nil
-	L["Fill the leveling queue with one of each species that can level from the filtered pet browser, and for which you don't have a level 25 already."] = nil
-
--- New strings in 4.1.10
-	L["In addition to the filters in this menu, you can further refine the pet list with the search box. Some search examples:\n\nPets: %sBlack Tabby\124r\nZones: %sSilithus\124r\nAbilities: %sSandstorm\124r\nText in abilities: %sBleed\124r\nLevels: %slevel=21-23\124r\nStats: %sspeed>300\124r\n\nSearches in \"quotes\" will limit results to only complete matches."] = nil
-	L["Find Pets With This Ability"] = nil
-	L["When pets are sorted by name, sort them by the name given with the Rename option instead of their original name."] = nil
-	L["Sort By Chosen Name"] = nil
-
--- Strings removed in 4.1.10
-	L["In addition to the filters in this menu, you can further refine the pet list with the search box. Some search examples:\n\nPets: %sBlack Tabby\124r\nZones: %sSilithus\124r\nAbilities: %sSandstorm\124r\nText in abilities: %sBleed\124r\nLevels: %slevel=21-23\124r\nStats: %sspeed>300\124r"] = nil
-
--- New strings in 4.1.9
-	L["Rematch Debug Info"] = nil
-	L["Draw attention to the safari hat button while a pet below max level is loaded.\n\nAlso show the Rematch window when a low level pet loads and the safari hat is not equipped."] = nil
-
--- Strings removed in 4.1.9
-	L["Draw attention to the safari hat button while a team with a leveling pet is loaded and the hat is not equipped.\n\nAlso show the Rematch window when a team with a leveling pet loads and the safari hat is not equipped."] = nil
-
--- New strings in 4.1.8
-	L["Safari Hat Reminder"] = nil
-	L["Draw attention to the safari hat button while a team with a leveling pet is loaded and the hat is not equipped.\n\nAlso show the Rematch window when a team with a leveling pet loads and the safari hat is not equipped."] = nil
-
--- Strings removed in 4.1.8
-	L["The Leveling Queue Is Empty"] = nil
-
--- New strings in 4.1.7
-	L["Total Pets"] = nil
-	L["Move Toolbar To Bottom"] = nil
-	L["Toolbar Options"] = nil
-	L["Move the toolbar buttons (Revive Battle Pets, Battle Pet Bandages, Safari Hat, etc) to the bottom of the standalone window.\n\nAlso convert the red panel buttons (Save, Save As, Find Battle) to toolbar buttons."] = nil
-	L["You can also double-click a pet to summon or dismiss it."] = nil
-	L["Pet Filter Options"] = nil
-
--- Strings removed in 4.1.7
-	L["Pet Filters"] = nil
-
--- New strings in 4.1.6
-	L["Show the Rematch window after leaving a pet battle."] = nil
-	L["Show After Pet Battle"] = nil
-	L["Alternate Lore Font"] = nil
-	L["When a toolbar button is used with a right click, dismiss the Rematch window after performing its action."] = nil
-	L["This treat's buff is already active."] = nil
-	L["Use a more normal-looking font for lore text on the back of the pet card."] = nil
-	L["Use an alternate style of lists for Pets, Teams and Queue to display more on the screen at once.\n\n\124cffff4040This option requires a Reload."] = nil
-	L["Hide On Toolbar Right Click"] = nil
-	L["Summons a random pet from your favorites."] = nil
-	L["Auto load upon targeting only, not mouseover.\n\n\124cffff4040WARNING!\124r This is not recommended! It can be too late to load pets if you target with right click!"] = nil
-
--- Strings removed in 4.1.6
-	L["Use an alternate style of lists for Pets, Teams and Queue that shrinks each list item to display more on the screen at once.\n\n\124cffff4040This option requires a Reload."] = nil
-
--- New strings in 4.1.4
-	L["Are you sure you want to delete the script named %s%s\124r?"] = nil
-	L["Pet Filter Script Error"] = nil
-	L["Hybrid Counters"] = nil
-	L["Create a new pet filter."] = nil
-	L["\124TInterface\\RaidFrame\\ReadyCheck-Ready:16\124t Script ran without errors!"] = nil
-	L["New Script"] = nil
-	L["line "] = nil
-	L["Script"] = nil
-	L["Partially Leveled"] = nil
-	L["Unique Abilities"] = nil
-	L["Error in %s"] = nil
-	L["Delete Script"] = nil
-	L["These variables are defined as the script runs for each pet:\n\n\124cffffd200owned\124r \124cffaaaaaa(boolean)\124r\nWhether the pet is owned by the player.\n\n\124cffffd200petID\124r \124cffaaaaaa(string)\124r\nUnique ID of the owned pet, such as \"BattlePet-0-000004A98F18\".\n\n\124cffffd200speciesID\124r \124cffaaaaaa(number)\124r\nShared ID of the pet's family. Black Tabby Cats are species 42.\n\n\124cffffd200customName\124r \124cffaaaaaa(string)\124r\nName given to the pet by the player.\n\n\124cffffd200level\124r \124cffaaaaaa(number)\124r\nLevel of the pet, or nil for uncollected pets.\n\n\124cffffd200xp\124r \124cffaaaaaa(number)\124r\nAmount of xp the pet has in its current level.\n\n\124cffffd200maxXp\124r \124cffaaaaaa(number)\124r\nTotal amount of xp required to reach the pet's next level.\n\n\124cffffd200displayID\124r \124cffaaaaaa(number)\124r\nA numeric representation of a pet's model skin.\n\n\124cffffd200isFavorite\124r \124cffaaaaaa(boolean)\124r\nWhether the pet is favorited by the player.\n\n\124cffffd200name\124r \124cffaaaaaa(string)\124r\nTrue name of the pet species.\n\n\124cffffd200icon\124r \124cffaaaaaa(string)\124r\nTexture path of the pet's icon.\n\n\124cffffd200petType\124r \124cffaaaaaa(number)\124r\nValue between 1 and 10 for its type. 1=Humanoid, 2=Dragonkin, etc.\n\n\124cffffd200creatureID\124r \124cffaaaaaa(number)\124r\nThe npcID of the pet when it's summoned.\n\n\124cffffd200sourceText\124r \124cffaaaaaa(string)\124r\nFormatted text describing where the pet is from.\n\n\124cffffd200description\124r \124cffaaaaaa(string)\124r\nLore text of the species.\n\n\124cffffd200isWild\124r \124cffaaaaaa(boolean)\124r\nWhether the pet was a captured wild pet.\n\n\124cffffd200canBattle\124r \124cffaaaaaa(boolean)\124r\nWhether the pet can battle.\n\n\124cffffd200tradable\124r \124cffaaaaaa(boolean)\124r\nWhether the pet can be caged.\n\n\124cffffd200unique\124r \124cffaaaaaa(boolean)\124r\nWhether no more than one of the pet can be known at a time.\n\n\124cffffd200abilityList\124r \124cffaaaaaa(table)\124r\nArray of abilityIDs used by the species.\n\n\124cffffd200levelList\124r \124cffaaaaaa(table)\124r\nArray of levels the abilityIDs are learned."] = nil
-	L["\124cffffd200-\124r Scripts are a way to create custom pet filters.\n\n\124cffffd200-\124r Scripts are Lua code and require some knowledge of the language and API to create your own filters.\n\n\124cffffd200-\124r Scripts run for each pet and should return true if the pet is to be listed.\n\n\124cffffd200-\124r Some variables are filled in as the script runs for each pet. See \124cffffd200Pet Variables\124r.\n\n\124cffffd200-\124r Scripts run in a restricted environment with no access outside its environment. See \124cffffd200Exposed API\124r.\n\n\124cffffd200-\124r All variables/tables created exist only in this environment and disappear when the filter finishes.\n\n\124cffffd200-\124r If the first line of the script is a --comment, it will be used as a tooltip in the Script menu."] = nil
-	L["\124TInterface\\RaidFrame\\ReadyCheck-NotReady:16\124t Error %s"] = nil
-	L["Unnamed Pets"] = nil
-	L["Pets Without Rares"] = nil
-	L["Test"] = nil
-	L["The script environment is restricted with access to only common Lua and the following:\n\n\124cffffd200C_PetJournal \124cffaaaaaa(table)\124r\nThe default API for journal functions.\n\n\124cffffd200C_PetBattles \124cffaaaaaa(table)\124r\nThe default API for the battle UI.\n\n\124cffffd200GetBreed \124cffaaaaaa(function)\nArgument:\124r petID\n\124cffaaaaaaReturns:\124r The numeric breed (3-12) of a petID if one of the supported breed addons is enabled.\n\n\124cffffd200GetSource \124cffaaaaaa(function)\nArgument:\124r speciesID\n\124cffaaaaaaReturns:\124r The numeric source (1-10) of a speciesID. 1=Drop, 2=Quest, etc.\n\nA few iterator functions are also provided if you need to compare a pet against others. These are used in a for loop such as:\n\n\124cffcccccc    for speciesID in \124cffffd200AllSpeciesIDs()\124cffcccccc do\n      -- do something with speciesID\n    end\124r\n\n\124cffffd200AllSpeciesIDs \124cffaaaaaa(iterator function)\nReturns:\124r The next speciesID of all existing unique pets.\n\n\124cffffd200AllPetIDs \124cffaaaaaa(iterator function)\nReturns:\124r The next petID of all owned pets.\n\n\124cffffd200AllPets \124cffaaaaaa(iterator function)\nReturns:\124r The next petID or speciesID of all pets in the master list. Owned pets return a petID string, uncollected pets return a speciesID number.\n\n\124cffffd200AllAbilities \124cffaaaaaa(iterator function)\nArgument:\124r speciesID\n\124cffaaaaaaReturns:\124r The next abilityID and level of the ability for a speciesID.\n\124cffffd200Note:\124r abilityList and levelList are already defined for each pet as your script runs. Use this iterator if you need to gather abilities of other pets for comparison. See the Unique Abilities script for an example.\n\n\124cffffd200If you would like anything else exposed please post a comment on wowinterface, curse or warcraftpet's Rematch 4.0 thread."] = nil
-	L["Pet Variables"] = nil
-	L["Exposed API"] = nil
-
--- New strings in 4.1.2
-	L["Current Scale: %d%%"] = nil
-	L["Change the relative size of the standalone window to anywhere between 50% and 200% of its standard size."] = nil
-	L["Click here to choose a different scale for the standalone window."] = nil
-	L["This scale determines the relative size of the standalone window, where 100% is the standard size."] = nil
-	L["Use Custom Scale"] = nil
-	L["\n\n%sThis will close the journal and open the standalone window."] = nil
-	L["Custom Scale"] = nil
-	L["Keep this scale?"] = nil
-
--- Strings removed in 4.1.2
-	L["Smaller Standalone Window"] = nil
-	L["Shrink the standalone window and pet cards by 20%."] = nil
-	L["No Preferences"] = nil
-
--- New strings in 4.1.1
-	L["%s%s Preferences Paused"] = nil
-	L["%s Resume Preferences"] = nil
-	L["%s Pause Preferences"] = nil
-	L["Pause Preferences"] = nil
-
--- New strings in 4.1.0
-	L["Tab"] = nil
-	L["Tab Preferences"] = nil
-	L["Leveling Preferences For %s:"] = nil
-	L["Set leveling preferences for all teams within this tab.\n\nIf a team within this tab also has preferences, the tab's preferences will take priority over the team's preferences."] = nil
-	L["Team Preferences"] = nil
-	L["%s %sTab Preferences"] = nil
-	L["Save Without Leveling Slots"] = nil
+-- Menus\TeamMenus.lua
+    L["When a team auto loads, show the Rematch window if any pets are injured."] = "Zeige das Rematch-Fenster, wenn ein Team automatisch geladen wird und darin enthaltene Haustiere verletzt sind."
+    L["Auto load upon targeting only, not mouseover.\n\n\124cffff4040WARNING!\124r This is not recommended! It can be too late to load pets if you target with right-click!"] = "Automatisches Laden nur bei gezieltem Anvisieren, nicht bei Mouseover.\n\n\124cffff4040WARNUNG!\124r Dies ist nicht empfohlen! Es kann zu spät zum Laden von Haustieren sein, wenn du sie mit Rechtsklick anvisierst!"
+    
+-- Panels\OptionPanel.lua
+    L["Targeting Options"] = "Zieloptionen"
+    L["Use Custom Scale"] = "Verwende eigene Skalierung"
+    L["Current Scale: %d%%"] = "Derzeitige Skalierung: %d%%"
+    L["Click here to choose a different scale for the standalone window."] = "Klicke hier, um eine andere Skalierung für das freistehende Fenster zu wählen."
+    L["\n\n%sThis will close the journal and open the standalone window."] = "\n\n%sDies wird den Wildtierführer schließen und das freistehende Fenster öffnen."
+    L["Or With Panel Tabs"] = "Oder mit Reiterschaltflächen"
+    L["Don't let the Pets, Teams, Queue or Options tabs minimize the standalone window."] = "Lass die Haustier-, Team-, Listen oder Optionenreiter nicht das freistehende Fenster minimieren."
+    L["Use an alternate style of lists for Pets, Teams and Queue to display more on the screen at once.\n\n\124cffff4040This option requires a Reload."] = "Verwende einen alternativen Listenstil für Haustiere, Teams und Liste, um mehr Inhalt auf einmal zeigen zu können.\n\n\124cffff4040Diese Option erfordert einen Reload."
+    L["On Loaded Abilities Too"] = "Auch bei geladenen Fähigkeiten"
+    L["In addition to the flyouts, show the numbers 1 and 2 on loaded abilities."] = "Zusätzlich zur Anzeige bei den ausklappbaren Fähigkeiten die Nummern 1 und 2 bei geladenen Fähigkeiten zeigen."
+    L["Toolbar Options"] = "Optionen für die Symbolleiste"
+    L["Move Toolbar To Bottom"] = "Verschiebe Symbolleiste nach unten"
+    L["Move the toolbar buttons (Revive Battle Pets, Battle Pet Bandages, Safari Hat, etc) to the bottom of the standalone window.\n\nAlso convert the red panel buttons (Save, Save As, Find Battle) to toolbar buttons."] = "Verschiebe die Knöpfe der Symbolleiste (Haustiere beleben, Kampfhaustierbandagen, Safarihelm, usw.) an die untere Kante des freistehenden Fensters.\n\nWandle außerdem die roten Schaltflächen (Speichern, Speichern als, Kampf finden) in Symbolleistenknöpfe um."
+    L["Hide On Toolbar Right Click"] = "Verstecke Symbolleiste bei Rechtsklick"
+    L["When a toolbar button is used with a right click, dismiss the Rematch window after performing its action."] = "Wenn eine Schaltfläche der Symbolleiste per Rechtsklick betätigt wird, wird das Rematch-Fenster nach Ausführung der Aktion minimiert."    
+    L["Safari Hat Reminder"] = "Safarihut-Erinnerung"
+    L["Draw attention to the safari hat button while a pet below max level is loaded.\n\nAlso show the Rematch window when a low level pet loads and the safari hat is not equipped."] = "Mache auf die Safarihut-Schaltfläche aufmerksam, wenn ein Haustier unter maximalem Level geladen ist.\n\nZeige außerdem das Rematch-Fenster, wenn ein kleinstufiges Haustier geladen wird und der Safarihut nicht ausgerüstet ist."
+    L["Use Pet Cards In Battle"] = "Verwende Haustierkarten im Kampf"
+    L["Use the pet card on the unit frames during a pet battle instead of the default tooltip."] = "Verwende die Haustierkarte auf den Einheitenfenstern während eines Haustierkampf anstelle des Standardtooltips."
+    L["Use Pet Cards For Links"] = "Verwende Haustierkarten für Verlinkungen"
+    L["Use the pet card when viewing a link of a pet someone else sent you instead of the default link."] = "Verwende die Haustierkarte anstelle der Standardanzeige, wenn du einen Haustierlink anschaust, den dir jemand gesendet hat."
+    L["Alternate Lore Font"] = "Alternative Geschichts-Schriftart"
+    L["Use a more normal-looking font for lore text on the back of the pet card."] = "Verwende eine normaler aussehende Schriftart für die Geschichten auf der Rückseite der Haustierkarten."
+    L["Show Species ID On Pet Cards"] = "Zeige Spezien-ID auf den Haustierkarten"
+    L["Display the numerical species ID of a pet as a stat on their pet card."] = "Zeige die numerische Spezien-ID eines Haustier als zusätzlichen Wert auf dessen Haustierkarte."
+    L["Load Healthiest Pets"] = "Lade gesündeste Haustiere"
+    L["When a team loads, if any pet is injured or dead and there's another version with more health \124cffffffffand identical stats\124r, load the healthier version.\n\nPets in the leveling queue are exempt from this option.\n\n\124cffffffffNote:\124r This is only when a team loads. It will not automatically swap in healthier pets when you leave battle."] = "Wenn ein Team geladen wird und ein Haustier verletzt oder tot ist und es eine andere Version mit mehr Leben \124cffffffffund identischen Werten\124r gibt, lade die gesündere Version.\n\nHaustiere in der Warteschlange sind von dieser Option ausgenommen.\n\n\124cffffffffAnmerkung:\124r Dies geschieht nur, wenn ein Team geladen wird. Es wird nicht automatisch ein gesünderes Haustier eingetauscht, wenn du den Kampf verlässt."
+    L["Auto Track Win Record"] = "Automatisch Siegesrekorde aufzeichnen"
+    L["At the end of each battle, automatically record whether the loaded team won or lost.\n\nForfeits always count as a loss.\n\nYou can still manually update a team's win record at any time."] = "Am Ende jedes Kampfes automatisch aufzeichnen, ob das geladene Team gewonnen oder verloren hat.\n\nAufgeben zählt immer als Niederlage.\n\nDu kannst immer noch jederzeit die Rekorde von Teams manuell anpassen."
+    L["For PVP Battles Only"] = "Nur für PvP-Kämpfe"
+    L["Automatically track whether the loaded team won or lost only in a PVP battle and never for a PVE battle."] = "Nur in PvP-Kämpfen automatisch aufzeichnen, ob das geladene Team gewonnen oder verloren hat und nie für PvE-Kämpfe."
+    L["Display Total Wins Instead"] = "Zeige stattdessen gesamte Siege"
+    L["Instead of displaying the win percentage of a team on the win record button, display the total number of wins.\n\nTeam tabs that are sorted by win record will sort by total wins also."] = "Anstelle der Anzeige von prozentualen Gewinnen eines Teams auf der Rekordschaltfläche die Gesamtanzahl von Siegen anzeigen.\n\nTeamreiter, die nach Siegesrekorden sortiert sind, werden dann nach Gesamtsiegen sortiert."    
+    L["Hide Win Record Buttons"] = "Verstecke die Anzeige der Siegesrekorde"
+    L["Hide the win record button displayed to the right of each team.\n\nYou can still manually edit a team's win record from its right-click menu and automatic tracking will continue if enabled."] = "Verstecke die Anzeige der Siegesrekorde, die rechts von jedem Team angezeigt wird.\n\nDu kannst immer noch den Siegesrekorde manuell anpassen, indem du das Rechtsklickmenü öffnest und die automatische Verfolgung wird fortgeführt, sofern es aktiviert ist."
+    L["Share In Legacy Format"] = "Im veralteten Format teilen"
+    L["When exporting teams or sending to another Rematch user, use the old format.\n\nUse this option when sharing teams with someone on an older Rematch that's unable to import or receive newer teams."] = "Beim Export von Teams oder Versenden an andere Rematch-Nutzer das alte Format verwenden.\n\Benutze diese Option, wenn du Teams mit jemandem teilen möchtest, der eine alte Rematch-Version verwendet, welche noch noch nicht in der Lage ist, neuere Teams zu erhalten oder importieren."
+    L["Prioritize Breed On Import"] = "Bevorzuge Züchtungen beim Import"
+    L["When importing or receiving teams, fill the team with the best matched breed as the first priority instead of the highest level."] = "Beim Import oder Erhalt von Team das Team mit den am besten passenden Züchtungen als erste Priorität anstelle von höchstem Level auffüllen."    
+    L["Randomize Abilities Too"] = "Auch zufällige Fähigkeiten"
+    L["For random pets, randomize the pets' abilities also."] = "Für zufällige Haustiere auch deren Fähigkeiten zufällig auswählen."
+    L["And At Full Health"] = "Und bei vollem Leben"
+    L["Also prefer uninjured pets when loading pets from the queue."] = "Bevorzuge zudem unverletzte Haustiere beim Laden von Haustieren aus der Warteschlange."
+    L["Pet Filter Options"] = "Filteroptionen für Haustiere"
+    L["Sort By Chosen Name"] = "Nach selbstgewähltem Namen sortieren"
+    L["When pets are sorted by name, sort them by the name given with the Rename option instead of their original name."] = "Wenn Haustiere nach Namen sortiert sind, sortiere sie nach den Namen, die sie durch Umbenennung erhalten haben anstelle ihrer Originalnamen."
+    L["Don't Sort By Relevance"] = "Nicht nach Relevanz sortieren"
+    L["When searching for something by name in the search box, do not sort the results by relevance.\n\nWhen sorted by relevance, pets with the search term in their name are listed first, followed by terms in notes, then abilities and then source text last."] = "Sortiere die Ergebnisse nicht nach Relevanz, wenn du nach etwas per Namenseingabe in der Suchbox suchst.\n\nWenn es nach Relevanz sortiert ist, werden Haustiere, die den Suchbegriff im Namen haben, zuerst aufgelistet, gefolgt von Suchbegriffen in Notizen, dann Fähigkeiten und zuletzt Quellentexten."
+    L["Hide Non-Battle Pets"] = "Verstecke nicht kampffähige Haustiere"
+    L["Only list pets that can battle. Do not list pets like balloons, squires and other companion pets that cannot battle."] = "Liste nur Haustiere auf, die kämpfen können. Zeige keine Haustiere wie Ballons, Knappen und andere Begleiter, die nicht kämpfen können."
+    L["Confirmation Options"] = "Bestätigungsoptionen"
+    L["Don't Remind About Backups"] = "Nicht an Backups erinnern"
+    L["Don't show a popup offering to backup teams every once in a while. Generally, the popup appears sometime after the number of teams increases by 50."] = "Zeige kein Popup, welches gelegentlich anbietet, eine Sicherung von Teams zu machen. Generell erscheint das Popup irgendwann, wenn die Anzahl an Teams um 50 erhöht wird."    
+    L["Show After Pet Battle"] = "Zeige nach Haustierkampf"
+    L["Show the Rematch window after leaving a pet battle."] = "Zeige das Rematch-Fenster nach dem Verlassen eines Haustierkampfes."
+    L["No Summon On Double Click"] = "Kein Beschwören per Doppelklick"
+    L["Do nothing when pets within Rematch are double-clicked. The normal behavior of double click throughout Rematch is to summon or dismiss the pet."] = "Mache nichts, wenn Pets innerhalb von Rematch doppeltgeklickt werden. Das normale Verhalten von Doppelklicks über Rematch ist die Beschwörung oder Freigabe des Haustiers."  
 
 	-- 4.1.0-beta-04
 	L["When manually clearing filters, don't clear the search box too.\n\nSome actions, such as logging in or Find Similar, will always clear search regardless of this setting."] = "Das Suchfeld nicht leeren wenn Filter manuell entfernt werden.\n\nManche Aktionen, wie zum Beispiel neu ins Spiel einloggen oder \"Ähnliche finden\", werden trotzdem das Suchfeld leeren."
@@ -507,7 +368,7 @@ if GetLocale()=="deDE" then
 	L["When automatically showing the Rematch window, show the minimized standalone window."] = "Wenn das Rematch Fenster automatisch geöffnet wird, zeige die minimierte und freihstehende Version."
 	L["Maximized Standalone"] = "Maximiert freistehend"
 	L["When automatically showing the Rematch window, show the maximized standalone window."] = "Wenn das Rematch Fenster automatisch geöffnet wird, zeige die maximierte und freihstehende Version."
-	L["Pet Journal"] = "Wildierführer"
+	L["Pet Journal"] = "Wildtierführer"
 	L["When automatically showing the Rematch window, show the pet journal."] = "Wenn das Rematch Fenster automatisch geöffnet wird, zeige den Wildtierführer"
 	L["Standalone Window Options"] = "Optionen für das freistehende Fenster"
 	L["Single Panel Mode"] = "Einzelnes Benutzerfeld"

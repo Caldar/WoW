@@ -815,10 +815,7 @@ function addon:TalentGroupChanged()
     self:FireMessage("BINDINGS_CHANGED")
 end
 
--- Ensure we trigger a bindings change the first time the player enters the
--- world.
 function addon:PlayerEnteringWorld()
-    self:UnregisterEvent("PLAYER_ENTERING_WORLD")
     self:FireMessage("BINDINGS_CHANGED")
 end
 
@@ -1037,11 +1034,35 @@ function addon:BLACKLIST_CHANGED()
     self:ApplyAttributes()
 end
 
+local contains = function(arr, value)
+    for idx, key in ipairs(arr) do
+        if key == value then
+            return true
+        end
+    end
+    return false
+end
+
 SLASH_CLIQUE1 = "/clique"
 SlashCmdList["CLIQUE"] = function(msg, editbox)
-    if SpellBookFrame:IsVisible() then
-        CliqueConfig:ShowWithSpellBook()
+    local profile = (msg or ""):match("^profile (.+)$")
+    if profile then
+        if InCombatLockdown() then
+            addon:Printf("Cannot change profiles while in combat lockdown")
+        else
+            local availableProfiles = addon.db:GetProfiles({})
+            if contains(availableProfiles, profile) then
+                addon:Printf("Switching to profile '%s'", profile)
+                addon.db:SetProfile(profile)
+            else
+                addon:Printf("Cannot find profile '%s'", profile)
+            end
+        end
     else
-        ShowUIPanel(CliqueConfig)
+        if SpellBookFrame:IsVisible() then
+            CliqueConfig:ShowWithSpellBook()
+        else
+            ShowUIPanel(CliqueConfig)
+        end
     end
 end

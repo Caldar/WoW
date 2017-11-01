@@ -1,10 +1,9 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local S = E:GetModule('Skins')
 
-local format = string.format
-
 local function LoadSkin()
 	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.guild ~= true then return end
+
 	GuildFrame:StripTextures(true)
 	GuildFrame:SetTemplate("Transparent")
 	--GuildLevelFrame:Kill()
@@ -76,8 +75,6 @@ local function LoadSkin()
 		"RP",
 		"Weekdays",
 		"Weekends",
-		"LevelAny",
-		"LevelMax",
 	}
 
 	for _, frame in pairs(checkbuttons) do
@@ -87,6 +84,8 @@ local function LoadSkin()
 	S:HandleCheckBox(GuildRecruitmentTankButton:GetChildren())
 	S:HandleCheckBox(GuildRecruitmentHealerButton:GetChildren())
 	S:HandleCheckBox(GuildRecruitmentDamagerButton:GetChildren())
+	S:HandleButton(GuildRecruitmentLevelAnyButton)
+	S:HandleButton(GuildRecruitmentLevelMaxButton)
 
 	for i=1,5 do
 		S:HandleTab(_G["GuildFrameTab"..i])
@@ -101,11 +100,9 @@ local function LoadSkin()
 	GuildFactionBar.backdrop:Point("TOPLEFT", GuildFactionBar.progress, "TOPLEFT", -E.Border, E.Border)
 	GuildFactionBar.backdrop:Point("BOTTOMRIGHT", GuildFactionBar, "BOTTOMRIGHT", E.Spacing, E.PixelMode and 1 or 0)
 
-
 	--Roster
 	S:HandleScrollBar(GuildRosterContainerScrollBar, 5)
 	S:HandleCheckBox(GuildRosterShowOfflineButton)
-
 
 	for i=1, 4 do
 		_G["GuildRosterColumnButton"..i]:StripTextures(true)
@@ -123,9 +120,18 @@ local function LoadSkin()
 	GuildMemberOfficerNoteBackground:SetTemplate("Transparent")
 	GuildMemberRankDropdown:SetFrameLevel(GuildMemberRankDropdown:GetFrameLevel() + 5)
 	S:HandleDropDownBox(GuildMemberRankDropdown, 175)
+
 	--Increase height of GuildMemberDetailFrame by changing global variables
-	GUILD_DETAIL_NORM_HEIGHT = 225; --Default 175
-	GUILD_DETAIL_OFFICER_HEIGHT = 278; --Default 228
+	local GUILD_DETAIL_OFFICER_HEIGHT = GUILD_DETAIL_OFFICER_HEIGHT
+	local GUILD_DETAIL_NORM_HEIGHT = GUILD_DETAIL_NORM_HEIGHT
+	hooksecurefunc(GuildMemberDetailFrame, "SetHeight", function(self, _, breakLoop)
+		if breakLoop then return; end
+		if CanViewOfficerNote() then
+			GuildMemberDetailFrame:SetHeight(GUILD_DETAIL_OFFICER_HEIGHT + 50 + GuildMemberDetailName:GetHeight() + GuildMemberDetailRankLabel:GetHeight(), true)
+		else
+			GuildMemberDetailFrame:SetHeight(GUILD_DETAIL_NORM_HEIGHT + 50 + GuildMemberDetailName:GetHeight() + GuildMemberDetailRankLabel:GetHeight(), true)
+		end
+	end)
 
 	--News
 	GuildNewsFrame:StripTextures()
@@ -139,8 +145,9 @@ local function LoadSkin()
 	GuildNewsFiltersFrame:SetTemplate("Transparent")
 	S:HandleCloseButton(GuildNewsFiltersFrameCloseButton)
 
-	for i=1, 6 do
-		S:HandleCheckBox(_G["GuildNewsFilterButton"..i])
+	for i = 1, #GuildNewsFiltersFrame.GuildNewsFilterButtons do
+		local checkbox = GuildNewsFiltersFrame.GuildNewsFilterButtons[i]
+		S:HandleCheckBox(checkbox)
 	end
 
 	GuildNewsFiltersFrame:Point("TOPLEFT", GuildFrame, "TOPRIGHT", 4, -20)
@@ -236,3 +243,21 @@ local function LoadSkin()
 end
 
 S:AddCallbackForAddon("Blizzard_GuildUI", "Guild", LoadSkin)
+
+local function LoadSecondarySkin()
+	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.guild ~= true then return end
+
+	GuildInviteFrame:StripTextures()
+	GuildInviteFrame:SetTemplate('Transparent')
+	GuildInviteFrame.Points:ClearAllPoints()
+	GuildInviteFrame.Points:Point('TOP', GuildInviteFrame, 'CENTER', 15, -25)
+	S:HandleButton(GuildInviteFrameJoinButton)
+	S:HandleButton(GuildInviteFrameDeclineButton)
+	GuildInviteFrame:Height(225)
+	GuildInviteFrame:HookScript("OnEvent", function()
+		GuildInviteFrame:Height(225)
+	end)
+	GuildInviteFrameWarningText:Kill()
+end
+
+S:AddCallback("GuildInvite", LoadSecondarySkin)

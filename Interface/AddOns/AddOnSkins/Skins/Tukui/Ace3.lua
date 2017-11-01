@@ -33,14 +33,18 @@ function AS:Ace3()
 			local frame = widget.dropdown
 			local button = widget.button
 			local text = widget.text
-			AS:SkinBackdropFrame(frame, 'Default')
+			frame:StripTextures()
 
 			button:ClearAllPoints()
 			button:Point('RIGHT', frame, 'RIGHT', -20, 0)
 
 			AS:SkinNextPrevButton(button, true)
-			frame.Backdrop:Point('TOPLEFT', 20, -2)
-			frame.Backdrop:Point('BOTTOMRIGHT', button, 'BOTTOMRIGHT', 2, -2)
+
+			if not frame.Backdrop then
+				AS:CreateBackdrop(frame)
+				frame.Backdrop:Point("TOPLEFT", 20, -2)
+				frame.Backdrop:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", 2, -2)
+			end
 			button:SetParent(frame.Backdrop)
 			text:SetParent(frame.Backdrop)
 			button:HookScript('OnClick', function(this)
@@ -51,7 +55,7 @@ function AS:Ace3()
 			local frame = widget.frame
 			local button = frame.dropButton
 			local text = frame.text
-			AS:SkinBackdropFrame(frame, 'Default')
+			AS:StripTextures(frame)
 
 			AS:SkinNextPrevButton(button, true)
 			frame.text:ClearAllPoints()
@@ -60,21 +64,25 @@ function AS:Ace3()
 			button:ClearAllPoints()
 			button:Point('RIGHT', frame, 'RIGHT', -10, -6)
 
-			if TYPE == 'LSM30_Font' then
-				frame.Backdrop:Point('TOPLEFT', 20, -17)
-			elseif TYPE == 'LSM30_Sound' then
-				frame.Backdrop:Point('TOPLEFT', 20, -17)
-				widget.soundbutton:SetParent(frame.Backdrop)
-				widget.soundbutton:ClearAllPoints()
-				widget.soundbutton:Point('LEFT', frame.Backdrop, 'LEFT', 2, 0)
-			elseif TYPE == 'LSM30_Statusbar' then
-				frame.Backdrop:Point('TOPLEFT', 20, -17)
-				widget.bar:SetParent(frame.Backdrop)
-				widget.bar:SetInside()
-			elseif TYPE == 'LSM30_Border' or TYPE == 'LSM30_Background' then
-				frame.Backdrop:Point('TOPLEFT', 42, -16)
+			if not frame.Backdrop then
+				AS:CreateBackdrop(frame, "Default")
+				if TYPE == 'LSM30_Font' then
+					frame.Backdrop:Point('TOPLEFT', 0, -17)
+				elseif TYPE == 'LSM30_Sound' then
+					frame.Backdrop:Point('TOPLEFT', 0, -17)
+					widget.soundbutton:SetParent(frame.Backdrop)
+					widget.soundbutton:ClearAllPoints()
+					widget.soundbutton:Point('LEFT', frame.Backdrop, 'LEFT', 2, 0)
+				elseif TYPE == 'LSM30_Statusbar' then
+					frame.Backdrop:Point('TOPLEFT', 0, -17)
+					widget.bar:SetParent(frame.Backdrop)
+					widget.bar:SetInside()
+				elseif TYPE == 'LSM30_Border' or TYPE == 'LSM30_Background' then
+					frame.Backdrop:Point('TOPLEFT', 22, -16)
+				end
+
+				frame.Backdrop:Point('BOTTOMRIGHT', button, 'BOTTOMRIGHT', 2, -2)
 			end
-			frame.Backdrop:Point('BOTTOMRIGHT', button, 'BOTTOMRIGHT', 2, -2)
 			button:SetParent(frame.Backdrop)
 			text:SetParent(frame.Backdrop)
 			button:HookScript('OnClick', function(this, button)
@@ -88,7 +96,7 @@ function AS:Ace3()
 			local button = widget.button
 
 			AS:SkinEditBox(frame)
-			frame:Height(17)
+			frame:SetHeight(17)
 			AS:SkinButton(button)
 		elseif TYPE == 'Button' then
 			local frame = widget.frame
@@ -102,8 +110,8 @@ function AS:Ace3()
 			AS:SkinSlideBar(frame)
 
 			AS:SetTemplate(editbox, 'Default')
-			editbox:Height(15)
-			editbox:Point('TOP', frame, 'BOTTOM', 0, -1)
+			editbox:SetHeight(15)
+			editbox:SetPoint('TOP', frame, 'BOTTOM', 0, -1)
 
 			lowtext:SetPoint('TOPLEFT', frame, 'BOTTOMLEFT', 2, -2)
 			hightext:SetPoint('TOPRIGHT', frame, 'BOTTOMRIGHT', -2, -2)
@@ -134,12 +142,15 @@ function AS:Ace3()
 						AS:StripTextures(child)
 					end
 				end
+			elseif TYPE == "Window" then
+				AS:StripTextures(frame)
+				AS:SkinCloseButton(frame.obj.closebutton)
 			end
 			AS:SetTemplate(frame, 'Transparent')
 
 			if widget.treeframe then
 				AS:SetTemplate(widget.treeframe, 'Transparent')
-				frame:Point('TOPLEFT', widget.treeframe, 'TOPRIGHT', 1, 0)
+				frame:SetPoint('TOPLEFT', widget.treeframe, 'TOPRIGHT', 1, 0)
 
 				local oldCreateButton = widget.CreateButton
 				widget.CreateButton = function(self)
@@ -178,7 +189,10 @@ function AS:Ace3()
 				local oldCreateTab = widget.CreateTab
 				widget.CreateTab = function(self, id)
 					local tab = oldCreateTab(self, id)
-					AS:StripTextures(tab)
+					AS:SkinBackdropFrame(tab, "Transparent")
+					tab.Backdrop:SetFrameLevel(tab:GetFrameLevel() - 2)
+					tab.Backdrop:Point("TOPLEFT", 10, -3)
+					tab.Backdrop:Point("BOTTOMRIGHT", -10, 0)
 					return tab
 				end
 			end

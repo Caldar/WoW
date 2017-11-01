@@ -4,11 +4,13 @@ local Sticky = LibStub("LibSimpleSticky-1.0")
 --Cache global variables
 --Lua functions
 local _G = _G
-local type, unpack, pairs = type, unpack, pairs
+local type, unpack, pairs, error = type, unpack, pairs, error
 local format, split, find = string.format, string.split, string.find
 --WoW API / Variables
 local CreateFrame = CreateFrame
 local InCombatLockdown = InCombatLockdown
+local IsControlKeyDown = IsControlKeyDown
+local IsShiftKeyDown = IsShiftKeyDown
 local ERR_NOT_IN_COMBAT = ERR_NOT_IN_COMBAT
 
 --Global variables that we don't cache, list them here for the mikk's Find Globals script
@@ -49,7 +51,7 @@ local coordFrame = CreateFrame('Frame')
 coordFrame:SetScript('OnUpdate', UpdateCoords)
 coordFrame:Hide()
 
-local function CreateMover(parent, name, text, overlay, snapOffset, postdrag)
+local function CreateMover(parent, name, text, overlay, snapOffset, postdrag, shouldDisable)
 	if not parent then return end --If for some reason the parent isnt loaded yet
 	if E.CreatedMovers[name].Created then return end
 
@@ -75,6 +77,7 @@ local function CreateMover(parent, name, text, overlay, snapOffset, postdrag)
 	f.postdrag = postdrag
 	f.overlay = overlay
 	f.snapOffset = snapOffset or -2
+	f.shouldDisable = shouldDisable
 
 	f:SetFrameLevel(parent:GetFrameLevel() + 1)
 	if overlay == true then
@@ -343,7 +346,7 @@ function E:SaveMoverDefaultPosition(name)
 	E.CreatedMovers[name]["postdrag"](_G[name], E:GetScreenQuadrant(_G[name]))
 end
 
-function E:CreateMover(parent, name, text, overlay, snapoffset, postdrag, moverTypes)
+function E:CreateMover(parent, name, text, overlay, snapoffset, postdrag, moverTypes, shouldDisable)
 	if not moverTypes then moverTypes = 'ALL,GENERAL' end
 
 	if E.CreatedMovers[name] == nil then
@@ -354,6 +357,7 @@ function E:CreateMover(parent, name, text, overlay, snapoffset, postdrag, moverT
 		E.CreatedMovers[name]["postdrag"] = postdrag
 		E.CreatedMovers[name]["snapoffset"] = snapoffset
 		E.CreatedMovers[name]["point"] = GetPoint(parent)
+		E.CreatedMovers[name]["shouldDisable"] = shouldDisable
 
 		E.CreatedMovers[name]["type"] = {}
 		local types = {split(',', moverTypes)}
@@ -363,7 +367,7 @@ function E:CreateMover(parent, name, text, overlay, snapoffset, postdrag, moverT
 		end
 	end
 
-	CreateMover(parent, name, text, overlay, snapoffset, postdrag)
+	CreateMover(parent, name, text, overlay, snapoffset, postdrag, shouldDisable)
 end
 
 function E:ToggleMovers(show, moverType)
@@ -412,9 +416,10 @@ function E:EnableMover(name)
 	end
 
 	--Make sure we add anchor information from a potential profile switch
-	if E.db["movers"] and E.db["movers"][name] and type(E.db["movers"][name]) == 'string' then
-		self.CreatedMovers[name]["point"] = E.db["movers"][name]
-	end
+	--Commented out, as it created an issue with trying to reset a mover after having used EnableMover on it. Not sure if this code is even needed anymore.
+	-- if E.db["movers"] and E.db["movers"][name] and type(E.db["movers"][name]) == 'string' then
+		-- self.CreatedMovers[name]["point"] = E.db["movers"][name]
+	-- end
 
 	if self.configMode then
 		_G[name]:Show()
@@ -468,7 +473,10 @@ function E:SetMoversPositions()
 	--Because of that, we can allow ourselves to re-enable all disabled movers here,
 	--as the subsequent updates to these elements will disable them again if needed.
 	for name in pairs(E.DisabledMovers) do
-		E:EnableMover(name)
+		local shouldDisable = ((E.DisabledMovers[name].shouldDisable and E.DisabledMovers[name]["shouldDisable"]()) or false)
+		if not shouldDisable then
+			E:EnableMover(name)
+		end
 	end
 
 	for name, _ in pairs(E.CreatedMovers) do

@@ -8,33 +8,64 @@ local unpack, pairs = unpack, pairs
 local tinsert = table.insert
 local max = math.max
 --WoW API / Variables
-local CreateFrame = CreateFrame
-local LootSlotHasItem = LootSlotHasItem
-local CursorUpdate = CursorUpdate
-local ResetCursor = ResetCursor
-local IsModifiedClick = IsModifiedClick
-local HandleModifiedItemClick = HandleModifiedItemClick
-local GetLootSlotLink = GetLootSlotLink
-local StaticPopup_Hide = StaticPopup_Hide
-local CursorOnUpdate = CursorOnUpdate
-local ToggleDropDownMenu = ToggleDropDownMenu
-local MasterLooterFrame_UpdatePlayers = MasterLooterFrame_UpdatePlayers
 local CloseLoot = CloseLoot
-local GetNumLootItems = GetNumLootItems
-local IsFishingLoot = IsFishingLoot
-local UnitIsFriend = UnitIsFriend
-local UnitIsDead = UnitIsDead
-local UnitName = UnitName
-local GetCVar = GetCVar
+local CreateFrame = CreateFrame
+local CursorOnUpdate = CursorOnUpdate
+local CursorUpdate = CursorUpdate
+local DoMasterLootRoll = DoMasterLootRoll
 local GetCursorPosition = GetCursorPosition
+local GetCVar = GetCVar
 local GetLootSlotInfo = GetLootSlotInfo
+local GetLootSlotLink = GetLootSlotLink
+local GetNumLootItems = GetNumLootItems
 local GiveMasterLoot = GiveMasterLoot
+local IsFishingLoot = IsFishingLoot
+local IsModifiedClick = IsModifiedClick
+local L_ToggleDropDownMenu = L_ToggleDropDownMenu
+local L_UIDropDownMenu_AddButton = L_UIDropDownMenu_AddButton
+local L_UIDropDownMenu_CreateInfo = L_UIDropDownMenu_CreateInfo
+local LootSlotHasItem = LootSlotHasItem
+local MasterLooterFrame_UpdatePlayers = MasterLooterFrame_UpdatePlayers
+local ResetCursor = ResetCursor
+local StaticPopup_Hide = StaticPopup_Hide
+local UnitIsDead = UnitIsDead
+local UnitIsFriend = UnitIsFriend
+local UnitName = UnitName
 local ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
-local TEXTURE_ITEM_QUEST_BANG = TEXTURE_ITEM_QUEST_BANG
 local LOOT = LOOT
+local TEXTURE_ITEM_QUEST_BANG = TEXTURE_ITEM_QUEST_BANG
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: GameTooltip, LootFrame, LootSlot, GroupLootDropDown, UISpecialFrames
+-- GLOBALS: UIParent, GameFontNormalLeft, MasterLooterFrame_Show, MASTER_LOOTER
+-- GLOBALS: ASSIGN_LOOT, REQUEST_ROLL, HandleModifiedItemClick
+
+--This function is copied from FrameXML and modified to use DropDownMenu library function calls
+--Using the regular DropDownMenu code causes taints in various places.
+local function GroupLootDropDown_Initialize()
+	local info = L_UIDropDownMenu_CreateInfo();
+	info.isTitle = 1;
+	info.text = MASTER_LOOTER;
+	info.fontObject = GameFontNormalLeft;
+	info.notCheckable = 1;
+	L_UIDropDownMenu_AddButton(info);
+
+	info = L_UIDropDownMenu_CreateInfo();
+	info.notCheckable = 1;
+	info.text = ASSIGN_LOOT;
+	info.func = MasterLooterFrame_Show;
+	L_UIDropDownMenu_AddButton(info);
+	info.text = REQUEST_ROLL;
+	info.func = function() DoMasterLootRoll(LootFrame.selectedSlot); end;
+	L_UIDropDownMenu_AddButton(info);
+end
+
+--Create the new group loot dropdown frame and initialize it
+local ElvUIGroupLootDropDown = CreateFrame("Frame", "ElvUIGroupLootDropDown", UIParent, "L_UIDropDownMenuTemplate")
+ElvUIGroupLootDropDown:SetID(1)
+ElvUIGroupLootDropDown:Hide()
+L_UIDropDownMenu_Initialize(ElvUIGroupLootDropDown, nil, "MENU");
+ElvUIGroupLootDropDown.initialize = GroupLootDropDown_Initialize;
 
 local coinTextureIDs = {
 	[133784] = true,
@@ -49,7 +80,7 @@ local coinTextureIDs = {
 local lootFrame, lootFrameHolder
 local iconSize = 30;
 
-local sq, ss, sn
+local ss
 local OnEnter = function(self)
 	local slot = self:GetID()
 	if(LootSlotHasItem(slot)) then
@@ -86,8 +117,6 @@ local OnClick = function(self)
 	else
 		StaticPopup_Hide("CONFIRM_LOOT_DISTRIBUTION")
 		ss = self:GetID()
-		sq = self.quality
-		sn = self.name:GetText()
 		LootSlot(ss)
 	end
 end
@@ -193,7 +222,7 @@ function M:LOOT_CLOSED()
 end
 
 function M:OPEN_MASTER_LOOT_LIST()
-	ToggleDropDownMenu(1, nil, GroupLootDropDown, lootFrame.slots[ss], 0, 0)
+	L_ToggleDropDownMenu(1, nil, ElvUIGroupLootDropDown, lootFrame.slots[ss], 0, 0)
 end
 
 function M:UPDATE_MASTER_LOOT_LIST()
@@ -238,7 +267,7 @@ function M:LOOT_OPENED(event, autoloot)
 	if(items > 0) then
 		for i=1, items do
 			local slot = lootFrame.slots[i] or createSlot(i)
-			local textureID, item, quantity, quality, locked, isQuestItem, questId, isActive = GetLootSlotInfo(i)
+			local textureID, item, quantity, quality, _, isQuestItem, questId, isActive = GetLootSlotInfo(i)
 			local color = ITEM_QUALITY_COLORS[quality]
 
 			if coinTextureIDs[textureID] then
@@ -297,7 +326,6 @@ function M:LOOT_OPENED(event, autoloot)
 		end
 		slot.icon:SetTexture[[Interface\Icons\INV_Misc_Herb_AncientLichen]]
 
-		items = 1
 		w = max(w, slot.name:GetStringWidth())
 
 		slot.count:Hide()
@@ -333,7 +361,7 @@ function M:LoadLoot()
 	lootFrame.title:FontTemplate(nil, nil, 'OUTLINE')
 	lootFrame.title:Point('BOTTOMLEFT', lootFrame, 'TOPLEFT', 0,  1)
 	lootFrame.slots = {}
-	lootFrame:SetScript("OnHide", function(self)
+	lootFrame:SetScript("OnHide", function()
 		StaticPopup_Hide"CONFIRM_LOOT_DISTRIBUTION"
 		CloseLoot()
 	end)
@@ -346,10 +374,7 @@ function M:LoadLoot()
 	self:RegisterEvent("UPDATE_MASTER_LOOT_LIST")
 
 	E:CreateMover(lootFrameHolder, "LootFrameMover", L["Loot Frame"])
-	if(GetCVar("lootUnderMouse") == "1") then
-		E:DisableMover("LootFrameMover")
-	end
-	
+
 	-- Fuzz
 	LootFrame:UnregisterAllEvents()
 	tinsert(UISpecialFrames, 'ElvLootFrame')

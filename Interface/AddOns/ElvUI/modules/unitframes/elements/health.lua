@@ -7,7 +7,6 @@ local random = random
 --WoW API / Variables
 local CreateFrame = CreateFrame
 local UnitIsTapDenied = UnitIsTapDenied
-local UnitIsTapDeniedByPlayer = UnitIsTapDeniedByPlayer
 local UnitReaction = UnitReaction
 local UnitIsPlayer = UnitIsPlayer
 local UnitClass = UnitClass
@@ -21,7 +20,6 @@ function UF:Construct_HealthBar(frame, bg, text, textPos)
 	local health = CreateFrame('StatusBar', nil, frame)
 	UF['statusbars'][health] = true
 
-	health:SetFrameStrata("LOW")
 	health:SetFrameLevel(10) --Make room for Portrait and Power which should be lower by default
 	health.PostUpdate = self.PostUpdateHealth
 
@@ -35,7 +33,6 @@ function UF:Construct_HealthBar(frame, bg, text, textPos)
 	if text then
 		health.value = frame.RaisedElementParent:CreateFontString(nil, 'OVERLAY')
 		UF:Configure_FontString(health.value)
-		health.value:SetParent(frame)
 
 		local x = -2
 		if textPos == 'LEFT' then
@@ -47,7 +44,7 @@ function UF:Construct_HealthBar(frame, bg, text, textPos)
 
 	health.colorTapping = true
 	health.colorDisconnected = true
-	health:CreateBackdrop('Default', nil, nil, self.thinBorders)
+	health:CreateBackdrop('Default', nil, nil, self.thinBorders, true)
 
 	return health
 end
@@ -60,7 +57,7 @@ function UF:Configure_HealthBar(frame)
 	health.Smooth = self.db.smoothbars
 
 	--Text
-	if health.value then
+	if db.health and health.value then
 		local attachPoint = self:GetObjectAnchorPoint(frame, db.health.attachTextTo)
 		health.value:ClearAllPoints()
 		health.value:Point(db.health.position, attachPoint, db.health.position, db.health.xOffset, db.health.yOffset)
@@ -186,8 +183,8 @@ function UF:PostUpdateHealth(unit, min, max)
 		self:SetValue(min)
 	end
 
-	if parent.ResurrectIcon then
-		parent.ResurrectIcon:SetAlpha(min == 0 and 1 or 0)
+	if parent.ResurrectIndicator then
+		parent.ResurrectIndicator:SetAlpha(min == 0 and 1 or 0)
 	end
 
 	local r, g, b = self:GetStatusBarColor()

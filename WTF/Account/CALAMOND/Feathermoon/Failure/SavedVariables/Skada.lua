@@ -4,12 +4,121 @@ SkadaPerCharDB = {
 		{
 			["healingabsorbed"] = 0,
 			["dispells"] = 0,
-			["ccbreaks"] = 0,
+			["endtime"] = 1475277229,
+			["ffdamagedone"] = 0,
 			["time"] = 96,
 			["interrupts"] = 0,
-			["endtime"] = 1475277229,
-			["gotboss"] = true,
+			["ccbreaks"] = 0,
+			["auras"] = {
+			},
+			["mobtaken"] = 45897246,
 			["damage"] = 45897246,
+			["starttime"] = 1475277133,
+			["deaths"] = 0,
+			["mobs"] = {
+				["Dargrul"] = {
+					["players"] = {
+						["Devlynn-Magtheridon"] = {
+							["taken"] = 6097238,
+							["done"] = 7183236,
+							["role"] = "TANK",
+							["class"] = "DEMONHUNTER",
+						},
+						["Forhire-GrizzlyHills"] = {
+							["taken"] = 14737080,
+							["done"] = 1393535,
+							["role"] = "DAMAGER",
+							["class"] = "ROGUE",
+						},
+						["Holyhunter-GrizzlyHills"] = {
+							["taken"] = 8033378,
+							["done"] = 1548670,
+							["role"] = "DAMAGER",
+							["class"] = "HUNTER",
+						},
+						["Nardia-Fenris"] = {
+							["taken"] = 4871785,
+							["done"] = 1458830,
+							["role"] = "HEALER",
+							["class"] = "PRIEST",
+						},
+						["Failure"] = {
+							["taken"] = 7216009,
+							["done"] = 1083312,
+							["role"] = "DAMAGER",
+							["class"] = "PALADIN",
+						},
+					},
+					["hdone"] = 0,
+					["done"] = 12667583,
+					["taken"] = 40955490,
+					["htakenspell"] = {
+					},
+					["htaken"] = 0,
+					["hdonespell"] = {
+					},
+				},
+				["Molten Charskin"] = {
+					["players"] = {
+						["Devlynn-Magtheridon"] = {
+							["taken"] = 609915,
+							["done"] = 210051,
+							["role"] = "TANK",
+							["class"] = "DEMONHUNTER",
+						},
+						["Forhire-GrizzlyHills"] = {
+							["taken"] = 0,
+							["done"] = 314583,
+							["role"] = "DAMAGER",
+							["class"] = "ROGUE",
+						},
+						["Holyhunter-GrizzlyHills"] = {
+							["taken"] = 2105793,
+							["done"] = 303793,
+							["role"] = "DAMAGER",
+							["class"] = "HUNTER",
+						},
+						["Nardia-Fenris"] = {
+							["taken"] = 263568,
+							["done"] = 751709,
+							["role"] = "HEALER",
+							["class"] = "PRIEST",
+						},
+						["Failure"] = {
+							["taken"] = 1962480,
+							["done"] = 309621,
+							["role"] = "DAMAGER",
+							["class"] = "PALADIN",
+						},
+					},
+					["hdone"] = 0,
+					["done"] = 1889757,
+					["taken"] = 4941756,
+					["htakenspell"] = {
+					},
+					["htaken"] = 0,
+					["hdonespell"] = {
+					},
+				},
+			},
+			["gotboss"] = true,
+			["power"] = {
+				nil, -- [1]
+				495, -- [2]
+				905, -- [3]
+				60, -- [4]
+				[18] = 739,
+				[13] = 15,
+				[9] = 44,
+				[0] = 36750,
+			},
+			["healing"] = 8430087,
+			["damagetaken"] = 14557340,
+			["multistrikes"] = 0,
+			["shielding"] = 710332,
+			["overhealing"] = 4002068.83984375,
+			["name"] = "Dargrul the Underking",
+			["mobname"] = "Dargrul the Underking",
 			["players"] = {
 				{
 					["last"] = 1475277228,
@@ -94,6 +203,10 @@ SkadaPerCharDB = {
 					["role"] = "HEALER",
 					["time"] = 95,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 710332,
 					["damage"] = 5135353,
 					["damagespells"] = {
 						["Nightmare Essence"] = {
@@ -185,6 +298,50 @@ SkadaPerCharDB = {
 							["damage"] = 379261,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+						["Player-78-0AA03C09"] = {
+							["role"] = "TANK",
+							["name"] = "Devlynn-Magtheridon",
+							["amount"] = 3260642,
+							["class"] = "DEMONHUNTER",
+							["shielding"] = 546858,
+						},
+						["Creature-0-3132-1458-22533-62982-00006EF17F"] = {
+							["amount"] = 0,
+							["role"] = "NONE",
+							["name"] = "Mindbender",
+							["shielding"] = 0,
+						},
+						["Player-68-08A915DB"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Forhire-GrizzlyHills",
+							["amount"] = 444155,
+							["class"] = "ROGUE",
+							["shielding"] = 0,
+						},
+						["Player-114-05A8BED4"] = {
+							["role"] = "HEALER",
+							["name"] = "Nardia-Fenris",
+							["amount"] = 1089781,
+							["class"] = "PRIEST",
+							["shielding"] = 131072,
+						},
+						["Player-118-00547BF9"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Failure",
+							["amount"] = 990744,
+							["class"] = "PALADIN",
+							["shielding"] = 24955,
+						},
+						["Player-68-089D9725"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Holyhunter-GrizzlyHills",
+							["amount"] = 370036,
+							["class"] = "HUNTER",
+							["shielding"] = 7447,
+						},
+					},
 					["power"] = {
 						[13] = {
 							["amount"] = 15,
@@ -199,11 +356,9 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 2210539,
-					["shielding"] = 710332,
 					["id"] = "Player-114-05A8BED4",
-					["first"] = 1475277133,
-					["ccbreaks"] = 0,
+					["maxhp"] = 809922,
+					["overhealing"] = 3432440.83984375,
 					["damagetakenspells"] = {
 						["Magma Breaker"] = {
 							["crushing"] = 0,
@@ -276,7 +431,8 @@ SkadaPerCharDB = {
 							["damage"] = 433808,
 						},
 					},
-					["overhealing"] = 3432440.83984375,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 						["Power Word: Radiance"] = {
 							["shielding"] = 0,
@@ -379,50 +535,8 @@ SkadaPerCharDB = {
 					},
 					["name"] = "Nardia",
 					["healing"] = 6155358,
-					["healed"] = {
-						["Player-78-0AA03C09"] = {
-							["role"] = "TANK",
-							["name"] = "Devlynn-Magtheridon",
-							["amount"] = 3260642,
-							["class"] = "DEMONHUNTER",
-							["shielding"] = 546858,
-						},
-						["Creature-0-3132-1458-22533-62982-00006EF17F"] = {
-							["amount"] = 0,
-							["role"] = "NONE",
-							["name"] = "Mindbender",
-							["shielding"] = 0,
-						},
-						["Player-68-08A915DB"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Forhire-GrizzlyHills",
-							["amount"] = 444155,
-							["class"] = "ROGUE",
-							["shielding"] = 0,
-						},
-						["Player-114-05A8BED4"] = {
-							["role"] = "HEALER",
-							["name"] = "Nardia-Fenris",
-							["amount"] = 1089781,
-							["class"] = "PRIEST",
-							["shielding"] = 131072,
-						},
-						["Player-118-00547BF9"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Failure",
-							["amount"] = 990744,
-							["class"] = "PALADIN",
-							["shielding"] = 24955,
-						},
-						["Player-68-089D9725"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Holyhunter-GrizzlyHills",
-							["amount"] = 370036,
-							["class"] = "HUNTER",
-							["shielding"] = 7447,
-						},
-					},
-					["maxhp"] = 809922,
+					["first"] = 1475277133,
+					["damagetaken"] = 2210539,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [1]
@@ -509,6 +623,10 @@ SkadaPerCharDB = {
 					["role"] = "TANK",
 					["time"] = 94,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 0,
 					["damage"] = 6707153,
 					["damagespells"] = {
 						["Soul Carver"] = {
@@ -639,6 +757,16 @@ SkadaPerCharDB = {
 							["damage"] = 823252,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+						["Player-78-0AA03C09"] = {
+							["role"] = "TANK",
+							["name"] = "Devlynn-Magtheridon",
+							["amount"] = 1403984,
+							["class"] = "DEMONHUNTER",
+							["shielding"] = 0,
+						},
+					},
 					["power"] = {
 						[18] = {
 							["amount"] = 739,
@@ -652,11 +780,9 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 7393287,
-					["shielding"] = 0,
 					["id"] = "Player-78-0AA03C09",
-					["first"] = 1475277133,
-					["ccbreaks"] = 0,
+					["maxhp"] = 963930,
+					["overhealing"] = 249748,
 					["damagetakenspells"] = {
 						["Magma Breaker"] = {
 							["crushing"] = 0,
@@ -729,7 +855,8 @@ SkadaPerCharDB = {
 							["damage"] = 2640173,
 						},
 					},
-					["overhealing"] = 249748,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 						["Soul Cleave"] = {
 							["shielding"] = 0,
@@ -776,16 +903,8 @@ SkadaPerCharDB = {
 					},
 					["name"] = "Devlynn",
 					["healing"] = 1403984,
-					["healed"] = {
-						["Player-78-0AA03C09"] = {
-							["role"] = "TANK",
-							["name"] = "Devlynn-Magtheridon",
-							["amount"] = 1403984,
-							["class"] = "DEMONHUNTER",
-							["shielding"] = 0,
-						},
-					},
-					["maxhp"] = 963930,
+					["first"] = 1475277133,
+					["damagetaken"] = 7393287,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [2]
@@ -878,6 +997,10 @@ SkadaPerCharDB = {
 					["role"] = "DAMAGER",
 					["time"] = 94,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 0,
 					["damage"] = 14737080,
 					["damagespells"] = {
 						["Deadly Poison"] = {
@@ -1039,6 +1162,16 @@ SkadaPerCharDB = {
 							["damage"] = 1356593,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+						["Player-68-08A915DB"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Forhire-GrizzlyHills",
+							["amount"] = 502282,
+							["class"] = "ROGUE",
+							["shielding"] = 0,
+						},
+					},
 					["power"] = {
 						[4] = {
 							["amount"] = 60,
@@ -1056,11 +1189,9 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 1708118,
-					["shielding"] = 0,
 					["id"] = "Player-68-08A915DB",
-					["first"] = 1475277133,
-					["ccbreaks"] = 0,
+					["maxhp"] = 733815,
+					["overhealing"] = 319880,
 					["damagetakenspells"] = {
 						["Magma Breaker"] = {
 							["crushing"] = 0,
@@ -1105,7 +1236,8 @@ SkadaPerCharDB = {
 							["damage"] = 1109975,
 						},
 					},
-					["overhealing"] = 319880,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 						["Ancient Healing Potion"] = {
 							["shielding"] = 0,
@@ -1138,16 +1270,8 @@ SkadaPerCharDB = {
 					},
 					["name"] = "Forhire",
 					["healing"] = 502282,
-					["healed"] = {
-						["Player-68-08A915DB"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Forhire-GrizzlyHills",
-							["amount"] = 502282,
-							["class"] = "ROGUE",
-							["shielding"] = 0,
-						},
-					},
-					["maxhp"] = 733815,
+					["first"] = 1475277133,
+					["damagetaken"] = 1708118,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [3]
@@ -1199,6 +1323,10 @@ SkadaPerCharDB = {
 					["role"] = "DAMAGER",
 					["time"] = 93,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 0,
 					["damage"] = 9178489,
 					["damagespells"] = {
 						["Greater Blessing of Might"] = {
@@ -1286,6 +1414,9 @@ SkadaPerCharDB = {
 							["damage"] = 705039,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+					},
 					["power"] = {
 						[9] = {
 							["amount"] = 44,
@@ -1295,11 +1426,9 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 1392933,
-					["shielding"] = 0,
 					["id"] = "Player-118-00547BF9",
-					["first"] = 1475277134,
-					["ccbreaks"] = 0,
+					["maxhp"] = 1887900,
+					["overhealing"] = 0,
 					["damagetakenspells"] = {
 						["Magma Breaker"] = {
 							["crushing"] = 0,
@@ -1344,14 +1473,14 @@ SkadaPerCharDB = {
 							["damage"] = 774470,
 						},
 					},
-					["overhealing"] = 0,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 					},
 					["name"] = "Failure",
 					["healing"] = 0,
-					["healed"] = {
-					},
-					["maxhp"] = 1313829,
+					["first"] = 1475277134,
+					["damagetaken"] = 1392933,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [4]
@@ -1417,6 +1546,10 @@ SkadaPerCharDB = {
 					["role"] = "DAMAGER",
 					["time"] = 92,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 0,
 					["damage"] = 10139171,
 					["damagespells"] = {
 						["Sidewinders"] = {
@@ -1513,6 +1646,16 @@ SkadaPerCharDB = {
 							["damage"] = 2717723,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+						["Player-68-089D9725"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Holyhunter-GrizzlyHills",
+							["amount"] = 368463,
+							["class"] = "HUNTER",
+							["shielding"] = 0,
+						},
+					},
 					["power"] = {
 						[2] = {
 							["amount"] = 495,
@@ -1521,11 +1664,9 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 1852463,
-					["shielding"] = 0,
 					["id"] = "Player-68-089D9725",
-					["first"] = 1475277135,
-					["ccbreaks"] = 0,
+					["maxhp"] = 652878,
+					["overhealing"] = 0,
 					["damagetakenspells"] = {
 						["Magma Wave"] = {
 							["crushing"] = 0,
@@ -1556,7 +1697,8 @@ SkadaPerCharDB = {
 							["damage"] = 303793,
 						},
 					},
-					["overhealing"] = 0,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 						["Exhilaration"] = {
 							["shielding"] = 0,
@@ -1575,126 +1717,12 @@ SkadaPerCharDB = {
 					},
 					["name"] = "Holyhunter",
 					["healing"] = 368463,
-					["healed"] = {
-						["Player-68-089D9725"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Holyhunter-GrizzlyHills",
-							["amount"] = 368463,
-							["class"] = "HUNTER",
-							["shielding"] = 0,
-						},
-					},
-					["maxhp"] = 652878,
+					["first"] = 1475277135,
+					["damagetaken"] = 1852463,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [5]
 			},
-			["deaths"] = 0,
-			["mobs"] = {
-				["Dargrul"] = {
-					["players"] = {
-						["Devlynn-Magtheridon"] = {
-							["taken"] = 6097238,
-							["done"] = 7183236,
-							["role"] = "TANK",
-							["class"] = "DEMONHUNTER",
-						},
-						["Forhire-GrizzlyHills"] = {
-							["taken"] = 14737080,
-							["done"] = 1393535,
-							["role"] = "DAMAGER",
-							["class"] = "ROGUE",
-						},
-						["Holyhunter-GrizzlyHills"] = {
-							["taken"] = 8033378,
-							["done"] = 1548670,
-							["role"] = "DAMAGER",
-							["class"] = "HUNTER",
-						},
-						["Nardia-Fenris"] = {
-							["taken"] = 4871785,
-							["done"] = 1458830,
-							["role"] = "HEALER",
-							["class"] = "PRIEST",
-						},
-						["Failure"] = {
-							["taken"] = 7216009,
-							["done"] = 1083312,
-							["role"] = "DAMAGER",
-							["class"] = "PALADIN",
-						},
-					},
-					["hdone"] = 0,
-					["done"] = 12667583,
-					["taken"] = 40955490,
-					["htakenspell"] = {
-					},
-					["htaken"] = 0,
-					["hdonespell"] = {
-					},
-				},
-				["Molten Charskin"] = {
-					["players"] = {
-						["Devlynn-Magtheridon"] = {
-							["taken"] = 609915,
-							["done"] = 210051,
-							["role"] = "TANK",
-							["class"] = "DEMONHUNTER",
-						},
-						["Forhire-GrizzlyHills"] = {
-							["taken"] = 0,
-							["done"] = 314583,
-							["role"] = "DAMAGER",
-							["class"] = "ROGUE",
-						},
-						["Holyhunter-GrizzlyHills"] = {
-							["taken"] = 2105793,
-							["done"] = 303793,
-							["role"] = "DAMAGER",
-							["class"] = "HUNTER",
-						},
-						["Nardia-Fenris"] = {
-							["taken"] = 263568,
-							["done"] = 751709,
-							["role"] = "HEALER",
-							["class"] = "PRIEST",
-						},
-						["Failure"] = {
-							["taken"] = 1962480,
-							["done"] = 309621,
-							["role"] = "DAMAGER",
-							["class"] = "PALADIN",
-						},
-					},
-					["hdone"] = 0,
-					["done"] = 1889757,
-					["taken"] = 4941756,
-					["htakenspell"] = {
-					},
-					["htaken"] = 0,
-					["hdonespell"] = {
-					},
-				},
-			},
-			["mobtaken"] = 45897246,
-			["starttime"] = 1475277133,
-			["healing"] = 8430087,
-			["power"] = {
-				nil, -- [1]
-				495, -- [2]
-				905, -- [3]
-				60, -- [4]
-				[18] = 739,
-				[13] = 15,
-				[9] = 44,
-				[0] = 36750,
-			},
-			["multistrikes"] = 0,
-			["overhealing"] = 4002068.83984375,
-			["shielding"] = 710332,
-			["name"] = "Dargrul the Underking",
-			["mobname"] = "Dargrul the Underking",
-			["damagetaken"] = 14557340,
 			["mobhdone"] = 0,
 			["last_action"] = 1475277133,
 			["mobdone"] = 14557340,
@@ -1702,12 +1730,108 @@ SkadaPerCharDB = {
 		{
 			["healingabsorbed"] = 0,
 			["dispells"] = 0,
-			["ccbreaks"] = 0,
+			["endtime"] = 1475276864,
+			["ffdamagedone"] = 0,
 			["time"] = 106,
 			["interrupts"] = 0,
-			["endtime"] = 1475276864,
-			["gotboss"] = true,
+			["ccbreaks"] = 0,
+			["auras"] = {
+			},
+			["mobtaken"] = 41186311,
 			["damage"] = 41186311,
+			["starttime"] = 1475276758,
+			["deaths"] = 1,
+			["mobs"] = {
+				["Wormspeaker Devout"] = {
+					["players"] = {
+						["Holyhunter-GrizzlyHills"] = {
+							["taken"] = 1708366,
+							["done"] = 50996,
+							["role"] = "DAMAGER",
+							["class"] = "HUNTER",
+						},
+						["Nardia-Fenris"] = {
+							["taken"] = 190830,
+							["done"] = 0,
+							["role"] = "HEALER",
+							["class"] = "PRIEST",
+						},
+						["Failure"] = {
+							["taken"] = 487506,
+							["done"] = 0,
+							["role"] = "DAMAGER",
+							["class"] = "PALADIN",
+						},
+					},
+					["hdone"] = 0,
+					["done"] = 50996,
+					["taken"] = 2386702,
+					["htakenspell"] = {
+					},
+					["htaken"] = 0,
+					["hdonespell"] = {
+					},
+				},
+				["Naraxas"] = {
+					["players"] = {
+						["Devlynn-Magtheridon"] = {
+							["taken"] = 7779065,
+							["done"] = 9457164,
+							["role"] = "TANK",
+							["class"] = "DEMONHUNTER",
+						},
+						["Forhire-GrizzlyHills"] = {
+							["taken"] = 13858182,
+							["done"] = 2233252,
+							["role"] = "DAMAGER",
+							["class"] = "ROGUE",
+						},
+						["Holyhunter-GrizzlyHills"] = {
+							["taken"] = 6353124,
+							["done"] = 1279983,
+							["role"] = "DAMAGER",
+							["class"] = "HUNTER",
+						},
+						["Nardia-Fenris"] = {
+							["taken"] = 4848554,
+							["done"] = 871974,
+							["role"] = "HEALER",
+							["class"] = "PRIEST",
+						},
+						["Failure"] = {
+							["taken"] = 5960684,
+							["done"] = 1503514,
+							["role"] = "DAMAGER",
+							["class"] = "PALADIN",
+						},
+					},
+					["hdone"] = 0,
+					["done"] = 15345887,
+					["taken"] = 38799609,
+					["htakenspell"] = {
+					},
+					["htaken"] = 0,
+					["hdonespell"] = {
+					},
+				},
+			},
+			["gotboss"] = true,
+			["power"] = {
+				nil, -- [1]
+				550, -- [2]
+				630, -- [3]
+				62, -- [4]
+				[18] = 816,
+				[13] = 15,
+				[9] = 31,
+			},
+			["healing"] = 11320935,
+			["damagetaken"] = 20201599,
+			["multistrikes"] = 0,
+			["shielding"] = 1519107,
+			["overhealing"] = 5618767.7890625,
+			["name"] = "Naraxas",
+			["mobname"] = "Naraxas",
 			["players"] = {
 				{
 					["last"] = 1475276864,
@@ -1784,6 +1908,10 @@ SkadaPerCharDB = {
 					["role"] = "TANK",
 					["time"] = 106,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 0,
 					["damage"] = 7779065,
 					["damagespells"] = {
 						["Sigil of Flame"] = {
@@ -1933,6 +2061,16 @@ SkadaPerCharDB = {
 							["damage"] = 1387120,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+						["Player-78-0AA03C09"] = {
+							["role"] = "TANK",
+							["name"] = "Devlynn-Magtheridon",
+							["amount"] = 4153261,
+							["class"] = "DEMONHUNTER",
+							["shielding"] = 0,
+						},
+					},
 					["power"] = {
 						[18] = {
 							["amount"] = 816,
@@ -1945,11 +2083,9 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 12050119,
-					["shielding"] = 0,
 					["id"] = "Player-78-0AA03C09",
-					["first"] = 1475276758,
-					["ccbreaks"] = 0,
+					["maxhp"] = 963930,
+					["overhealing"] = 750185,
 					["damagetakenspells"] = {
 						["Devouring"] = {
 							["crushing"] = 0,
@@ -2008,7 +2144,8 @@ SkadaPerCharDB = {
 							["damage"] = 7431320,
 						},
 					},
-					["overhealing"] = 750185,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 						["Soul Cleave"] = {
 							["shielding"] = 0,
@@ -2055,16 +2192,8 @@ SkadaPerCharDB = {
 					},
 					["name"] = "Devlynn",
 					["healing"] = 4153261,
-					["healed"] = {
-						["Player-78-0AA03C09"] = {
-							["role"] = "TANK",
-							["name"] = "Devlynn-Magtheridon",
-							["amount"] = 4153261,
-							["class"] = "DEMONHUNTER",
-							["shielding"] = 0,
-						},
-					},
-					["maxhp"] = 963930,
+					["first"] = 1475276758,
+					["damagetaken"] = 12050119,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [1]
@@ -2127,18 +2256,14 @@ SkadaPerCharDB = {
 							["uptime"] = 3,
 						},
 					},
+					["ffdamagedonespells"] = {
+					},
 					["role"] = "DAMAGER",
 					["time"] = 100,
 					["interrupts"] = 0,
-					["power"] = {
-						[9] = {
-							["amount"] = 31,
-							["spells"] = {
-								[202270] = 18,
-								[217020] = 13,
-							},
-						},
-					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 385708,
+					["ccbreaks"] = 0,
 					["damage"] = 6448190,
 					["damagespells"] = {
 						["Greater Blessing of Might"] = {
@@ -2261,16 +2386,16 @@ SkadaPerCharDB = {
 								{
 									["ts"] = 1475276807.98102,
 									["amount"] = -32844,
+									["hp"] = 908650,
 									["spellid"] = 217851,
 									["srcname"] = "Naraxas",
-									["hp"] = 908650,
 								}, -- [2]
 								{
 									["ts"] = 1475276808.06203,
 									["amount"] = -110964,
+									["srcname"] = "Naraxas",
 									["hp"] = 797686,
 									["spellid"] = 188493,
-									["srcname"] = "Naraxas",
 								}, -- [3]
 								{
 									["hp"] = 746354,
@@ -2289,9 +2414,9 @@ SkadaPerCharDB = {
 								{
 									["ts"] = 1475276808.97506,
 									["amount"] = -32885,
+									["hp"] = 725449,
 									["spellid"] = 217851,
 									["srcname"] = "Naraxas",
-									["hp"] = 725449,
 								}, -- [6]
 								{
 									["hp"] = 683042,
@@ -2308,9 +2433,9 @@ SkadaPerCharDB = {
 								{
 									["ts"] = 1475276809.97509,
 									["amount"] = -33975,
+									["hp"] = 606084,
 									["spellid"] = 217851,
 									["srcname"] = "Naraxas",
-									["hp"] = 606084,
 								}, -- [9]
 								{
 									["absorb"] = 0,
@@ -2347,9 +2472,9 @@ SkadaPerCharDB = {
 								{
 									["ts"] = 1475276824.31414,
 									["amount"] = -856326,
+									["srcname"] = "Naraxas",
 									["hp"] = 679382,
 									["spellid"] = 88163,
-									["srcname"] = "Naraxas",
 								}, -- [14]
 								{
 									["spellname"] = "Failure dies",
@@ -2361,11 +2486,27 @@ SkadaPerCharDB = {
 							},
 						}, -- [1]
 					},
-					["damagetaken"] = 2213693,
-					["shielding"] = 385708,
+					["healed"] = {
+						["Player-118-00547BF9"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Failure",
+							["amount"] = 385708,
+							["class"] = "PALADIN",
+							["shielding"] = 385708,
+						},
+					},
+					["power"] = {
+						[9] = {
+							["amount"] = 31,
+							["spells"] = {
+								[202270] = 18,
+								[217020] = 13,
+							},
+						},
+					},
 					["id"] = "Player-118-00547BF9",
-					["first"] = 1475276759,
-					["ccbreaks"] = 0,
+					["maxhp"] = 1887900,
+					["overhealing"] = 0,
 					["damagetakenspells"] = {
 						["Toxic Retch"] = {
 							["crushing"] = 0,
@@ -2410,7 +2551,8 @@ SkadaPerCharDB = {
 							["damage"] = 856326,
 						},
 					},
-					["overhealing"] = 0,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 						["Shield of Vengeance"] = {
 							["shielding"] = 385708,
@@ -2429,16 +2571,8 @@ SkadaPerCharDB = {
 					},
 					["name"] = "Failure",
 					["healing"] = 385708,
-					["healed"] = {
-						["Player-118-00547BF9"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Failure",
-							["amount"] = 385708,
-							["class"] = "PALADIN",
-							["shielding"] = 385708,
-						},
-					},
-					["maxhp"] = 1313829,
+					["first"] = 1475276759,
+					["damagetaken"] = 2213693,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [2]
@@ -2511,6 +2645,10 @@ SkadaPerCharDB = {
 					["role"] = "HEALER",
 					["time"] = 103,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 1133399,
 					["damage"] = 5039384,
 					["damagespells"] = {
 						["Nightmare Essence"] = {
@@ -2600,6 +2738,44 @@ SkadaPerCharDB = {
 							["damage"] = 604189,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+						["Player-78-0AA03C09"] = {
+							["role"] = "TANK",
+							["name"] = "Devlynn-Magtheridon",
+							["amount"] = 2686443,
+							["class"] = "DEMONHUNTER",
+							["shielding"] = 496969,
+						},
+						["Player-68-08A915DB"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Forhire-GrizzlyHills",
+							["amount"] = 923058,
+							["class"] = "ROGUE",
+							["shielding"] = 48423,
+						},
+						["Player-114-05A8BED4"] = {
+							["role"] = "HEALER",
+							["name"] = "Nardia-Fenris",
+							["amount"] = 1052230,
+							["class"] = "PRIEST",
+							["shielding"] = 388635,
+						},
+						["Player-118-00547BF9"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Failure",
+							["amount"] = 836412,
+							["class"] = "PALADIN",
+							["shielding"] = 113492,
+						},
+						["Player-68-089D9725"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Holyhunter-GrizzlyHills",
+							["amount"] = 602752,
+							["class"] = "HUNTER",
+							["shielding"] = 85880,
+						},
+					},
 					["power"] = {
 						[13] = {
 							["amount"] = 15,
@@ -2608,11 +2784,9 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 1271667,
-					["shielding"] = 1133399,
 					["id"] = "Player-114-05A8BED4",
-					["first"] = 1475276759,
-					["ccbreaks"] = 0,
+					["maxhp"] = 809922,
+					["overhealing"] = 4561295.7890625,
 					["damagetakenspells"] = {
 						["Rancid Maw"] = {
 							["crushing"] = 0,
@@ -2643,7 +2817,8 @@ SkadaPerCharDB = {
 							["damage"] = 723783,
 						},
 					},
-					["overhealing"] = 4561295.7890625,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 						["Power Word: Radiance"] = {
 							["shielding"] = 0,
@@ -2732,44 +2907,8 @@ SkadaPerCharDB = {
 					},
 					["name"] = "Nardia",
 					["healing"] = 6100895,
-					["healed"] = {
-						["Player-78-0AA03C09"] = {
-							["role"] = "TANK",
-							["name"] = "Devlynn-Magtheridon",
-							["amount"] = 2686443,
-							["class"] = "DEMONHUNTER",
-							["shielding"] = 496969,
-						},
-						["Player-68-08A915DB"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Forhire-GrizzlyHills",
-							["amount"] = 923058,
-							["class"] = "ROGUE",
-							["shielding"] = 48423,
-						},
-						["Player-114-05A8BED4"] = {
-							["role"] = "HEALER",
-							["name"] = "Nardia-Fenris",
-							["amount"] = 1052230,
-							["class"] = "PRIEST",
-							["shielding"] = 388635,
-						},
-						["Player-118-00547BF9"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Failure",
-							["amount"] = 836412,
-							["class"] = "PALADIN",
-							["shielding"] = 113492,
-						},
-						["Player-68-089D9725"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Holyhunter-GrizzlyHills",
-							["amount"] = 602752,
-							["class"] = "HUNTER",
-							["shielding"] = 85880,
-						},
-					},
-					["maxhp"] = 809922,
+					["first"] = 1475276759,
+					["damagetaken"] = 1271667,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [3]
@@ -2869,6 +3008,10 @@ SkadaPerCharDB = {
 					["role"] = "DAMAGER",
 					["time"] = 104,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 0,
 					["damage"] = 13858182,
 					["damagespells"] = {
 						["Garrote"] = {
@@ -3019,6 +3162,16 @@ SkadaPerCharDB = {
 							["damage"] = 1364076,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+						["Player-68-08A915DB"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Forhire-GrizzlyHills",
+							["amount"] = 681071,
+							["class"] = "ROGUE",
+							["shielding"] = 0,
+						},
+					},
 					["power"] = {
 						[4] = {
 							["amount"] = 62,
@@ -3036,11 +3189,9 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 3020196,
-					["shielding"] = 0,
 					["id"] = "Player-68-08A915DB",
-					["first"] = 1475276759,
-					["ccbreaks"] = 0,
+					["maxhp"] = 733815,
+					["overhealing"] = 307287,
 					["damagetakenspells"] = {
 						["Toxic Retch"] = {
 							["crushing"] = 0,
@@ -3085,7 +3236,8 @@ SkadaPerCharDB = {
 							["damage"] = 972299,
 						},
 					},
-					["overhealing"] = 307287,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 						["Crimson Vial"] = {
 							["shielding"] = 0,
@@ -3132,16 +3284,8 @@ SkadaPerCharDB = {
 					},
 					["name"] = "Forhire",
 					["healing"] = 681071,
-					["healed"] = {
-						["Player-68-08A915DB"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Forhire-GrizzlyHills",
-							["amount"] = 681071,
-							["class"] = "ROGUE",
-							["shielding"] = 0,
-						},
-					},
-					["maxhp"] = 733815,
+					["first"] = 1475276759,
+					["damagetaken"] = 3020196,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [4]
@@ -3200,6 +3344,10 @@ SkadaPerCharDB = {
 					["role"] = "DAMAGER",
 					["time"] = 101,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 0,
 					["damage"] = 8061490,
 					["damagespells"] = {
 						["Sidewinders"] = {
@@ -3289,6 +3437,9 @@ SkadaPerCharDB = {
 							["damage"] = 1454618,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+					},
 					["power"] = {
 						[2] = {
 							["amount"] = 550,
@@ -3297,11 +3448,9 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 1645924,
-					["shielding"] = 0,
 					["id"] = "Player-68-089D9725",
-					["first"] = 1475276761,
-					["ccbreaks"] = 0,
+					["maxhp"] = 652878,
+					["overhealing"] = 0,
 					["damagetakenspells"] = {
 						["Toxic Retch"] = {
 							["crushing"] = 0,
@@ -3346,111 +3495,18 @@ SkadaPerCharDB = {
 							["damage"] = 50996,
 						},
 					},
-					["overhealing"] = 0,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 					},
 					["name"] = "Holyhunter",
 					["healing"] = 0,
-					["healed"] = {
-					},
-					["maxhp"] = 652878,
+					["first"] = 1475276761,
+					["damagetaken"] = 1645924,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [5]
 			},
-			["deaths"] = 1,
-			["mobs"] = {
-				["Wormspeaker Devout"] = {
-					["players"] = {
-						["Holyhunter-GrizzlyHills"] = {
-							["taken"] = 1708366,
-							["done"] = 50996,
-							["role"] = "DAMAGER",
-							["class"] = "HUNTER",
-						},
-						["Nardia-Fenris"] = {
-							["taken"] = 190830,
-							["done"] = 0,
-							["role"] = "HEALER",
-							["class"] = "PRIEST",
-						},
-						["Failure"] = {
-							["taken"] = 487506,
-							["done"] = 0,
-							["role"] = "DAMAGER",
-							["class"] = "PALADIN",
-						},
-					},
-					["hdone"] = 0,
-					["done"] = 50996,
-					["taken"] = 2386702,
-					["htakenspell"] = {
-					},
-					["htaken"] = 0,
-					["hdonespell"] = {
-					},
-				},
-				["Naraxas"] = {
-					["players"] = {
-						["Devlynn-Magtheridon"] = {
-							["taken"] = 7779065,
-							["done"] = 9457164,
-							["role"] = "TANK",
-							["class"] = "DEMONHUNTER",
-						},
-						["Forhire-GrizzlyHills"] = {
-							["taken"] = 13858182,
-							["done"] = 2233252,
-							["role"] = "DAMAGER",
-							["class"] = "ROGUE",
-						},
-						["Holyhunter-GrizzlyHills"] = {
-							["taken"] = 6353124,
-							["done"] = 1279983,
-							["role"] = "DAMAGER",
-							["class"] = "HUNTER",
-						},
-						["Nardia-Fenris"] = {
-							["taken"] = 4848554,
-							["done"] = 871974,
-							["role"] = "HEALER",
-							["class"] = "PRIEST",
-						},
-						["Failure"] = {
-							["taken"] = 5960684,
-							["done"] = 1503514,
-							["role"] = "DAMAGER",
-							["class"] = "PALADIN",
-						},
-					},
-					["hdone"] = 0,
-					["done"] = 15345887,
-					["taken"] = 38799609,
-					["htakenspell"] = {
-					},
-					["htaken"] = 0,
-					["hdonespell"] = {
-					},
-				},
-			},
-			["mobtaken"] = 41186311,
-			["starttime"] = 1475276758,
-			["healing"] = 11320935,
-			["power"] = {
-				nil, -- [1]
-				550, -- [2]
-				630, -- [3]
-				62, -- [4]
-				[18] = 816,
-				[13] = 15,
-				[9] = 31,
-			},
-			["multistrikes"] = 0,
-			["overhealing"] = 5618767.7890625,
-			["shielding"] = 1519107,
-			["name"] = "Naraxas",
-			["mobname"] = "Naraxas",
-			["damagetaken"] = 20201599,
 			["mobhdone"] = 0,
 			["last_action"] = 1475276758,
 			["mobdone"] = 15396883,
@@ -3458,12 +3514,120 @@ SkadaPerCharDB = {
 		{
 			["healingabsorbed"] = 0,
 			["dispells"] = 0,
-			["ccbreaks"] = 0,
+			["endtime"] = 1475276562,
+			["ffdamagedone"] = 0,
 			["time"] = 125,
 			["interrupts"] = 0,
-			["endtime"] = 1475276562,
-			["gotboss"] = true,
+			["ccbreaks"] = 0,
+			["auras"] = {
+			},
+			["mobtaken"] = 46900296,
 			["damage"] = 46900296,
+			["starttime"] = 1475276437,
+			["deaths"] = 0,
+			["mobs"] = {
+				["Bellowing Idol"] = {
+					["players"] = {
+						["Devlynn-Magtheridon"] = {
+							["taken"] = 2307432,
+							["done"] = 298802,
+							["role"] = "TANK",
+							["class"] = "DEMONHUNTER",
+						},
+						["Forhire-GrizzlyHills"] = {
+							["taken"] = 663406,
+							["done"] = 135788,
+							["role"] = "DAMAGER",
+							["class"] = "ROGUE",
+						},
+						["Holyhunter-GrizzlyHills"] = {
+							["taken"] = 2480559,
+							["done"] = 346895,
+							["role"] = "DAMAGER",
+							["class"] = "HUNTER",
+						},
+						["Nardia-Fenris"] = {
+							["taken"] = 787756,
+							["done"] = 219451,
+							["role"] = "HEALER",
+							["class"] = "PRIEST",
+						},
+						["Failure"] = {
+							["taken"] = 1653215,
+							["done"] = 225973,
+							["role"] = "DAMAGER",
+							["class"] = "PALADIN",
+						},
+					},
+					["hdone"] = 0,
+					["done"] = 1226909,
+					["taken"] = 7892368,
+					["htakenspell"] = {
+					},
+					["htaken"] = 0,
+					["hdonespell"] = {
+					},
+				},
+				["Ularogg Cragshaper"] = {
+					["players"] = {
+						["Devlynn-Magtheridon"] = {
+							["taken"] = 8062315,
+							["done"] = 8103814,
+							["role"] = "TANK",
+							["class"] = "DEMONHUNTER",
+						},
+						["Forhire-GrizzlyHills"] = {
+							["taken"] = 11195462,
+							["done"] = 48720,
+							["role"] = "DAMAGER",
+							["class"] = "ROGUE",
+						},
+						["Holyhunter-GrizzlyHills"] = {
+							["taken"] = 8017509,
+							["done"] = 69111,
+							["role"] = "DAMAGER",
+							["class"] = "HUNTER",
+						},
+						["Nardia-Fenris"] = {
+							["taken"] = 4306945,
+							["done"] = 67709,
+							["role"] = "HEALER",
+							["class"] = "PRIEST",
+						},
+						["Failure"] = {
+							["taken"] = 7425697,
+							["done"] = 35517,
+							["role"] = "DAMAGER",
+							["class"] = "PALADIN",
+						},
+					},
+					["hdone"] = 0,
+					["done"] = 8324871,
+					["taken"] = 39007928,
+					["htakenspell"] = {
+					},
+					["htaken"] = 0,
+					["hdonespell"] = {
+					},
+				},
+			},
+			["gotboss"] = true,
+			["power"] = {
+				[0] = 42000,
+				[2] = 550,
+				[18] = 1021,
+				[3] = 620,
+				[4] = 53,
+				[9] = 52,
+				[13] = 15,
+			},
+			["healing"] = 5934706,
+			["damagetaken"] = 9583219,
+			["multistrikes"] = 0,
+			["shielding"] = 568163,
+			["overhealing"] = 11888768.2539063,
+			["name"] = "Ularogg Cragshaper",
+			["mobname"] = "Ularogg Cragshaper",
 			["players"] = {
 				{
 					["last"] = 1475276561,
@@ -3534,6 +3698,10 @@ SkadaPerCharDB = {
 					["role"] = "TANK",
 					["time"] = 124,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 0,
 					["damage"] = 10369747,
 					["damagespells"] = {
 						["Soul Carver"] = {
@@ -3683,6 +3851,16 @@ SkadaPerCharDB = {
 							["damage"] = 1408192,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+						["Player-78-0AA03C09"] = {
+							["role"] = "TANK",
+							["name"] = "Devlynn-Magtheridon",
+							["amount"] = 2186322,
+							["class"] = "DEMONHUNTER",
+							["shielding"] = 0,
+						},
+					},
 					["power"] = {
 						[18] = {
 							["amount"] = 1021,
@@ -3695,11 +3873,9 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 8434055,
-					["shielding"] = 0,
 					["id"] = "Player-78-0AA03C09",
-					["first"] = 1475276437,
-					["ccbreaks"] = 0,
+					["maxhp"] = 963930,
+					["overhealing"] = 4178770,
 					["damagetakenspells"] = {
 						["Shadow Mend"] = {
 							["crushing"] = 0,
@@ -3758,7 +3934,8 @@ SkadaPerCharDB = {
 							["damage"] = 4626792,
 						},
 					},
-					["overhealing"] = 4178770,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 						["Soul Cleave"] = {
 							["shielding"] = 0,
@@ -3805,16 +3982,8 @@ SkadaPerCharDB = {
 					},
 					["name"] = "Devlynn",
 					["healing"] = 2186322,
-					["healed"] = {
-						["Player-78-0AA03C09"] = {
-							["role"] = "TANK",
-							["name"] = "Devlynn-Magtheridon",
-							["amount"] = 2186322,
-							["class"] = "DEMONHUNTER",
-							["shielding"] = 0,
-						},
-					},
-					["maxhp"] = 963930,
+					["first"] = 1475276437,
+					["damagetaken"] = 8434055,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [1]
@@ -3894,6 +4063,10 @@ SkadaPerCharDB = {
 					["role"] = "HEALER",
 					["time"] = 124,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 568163,
 					["damage"] = 5094701,
 					["damagespells"] = {
 						["Nightmare Essence"] = {
@@ -3987,6 +4160,50 @@ SkadaPerCharDB = {
 							["damage"] = 463453,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+						["Player-78-0AA03C09"] = {
+							["role"] = "TANK",
+							["name"] = "Devlynn-Magtheridon",
+							["amount"] = 2773855,
+							["class"] = "DEMONHUNTER",
+							["shielding"] = 556923,
+						},
+						["Player-68-08A915DB"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Forhire-GrizzlyHills",
+							["amount"] = 101530,
+							["class"] = "ROGUE",
+							["shielding"] = 11240,
+						},
+						["Player-114-05A8BED4"] = {
+							["role"] = "HEALER",
+							["name"] = "Nardia-Fenris",
+							["amount"] = 187558,
+							["class"] = "PRIEST",
+							["shielding"] = 0,
+						},
+						["Player-68-089D9725"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Holyhunter-GrizzlyHills",
+							["amount"] = 234934,
+							["class"] = "HUNTER",
+							["shielding"] = 0,
+						},
+						["Creature-0-3132-1458-22533-62982-00006EEEF3"] = {
+							["amount"] = 0,
+							["role"] = "NONE",
+							["name"] = "Mindbender",
+							["shielding"] = 0,
+						},
+						["Player-118-00547BF9"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Failure",
+							["amount"] = 439339,
+							["class"] = "PALADIN",
+							["shielding"] = 0,
+						},
+					},
 					["power"] = {
 						[13] = {
 							["amount"] = 15,
@@ -4001,11 +4218,9 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 287160,
-					["shielding"] = 568163,
 					["id"] = "Player-114-05A8BED4",
-					["first"] = 1475276437,
-					["ccbreaks"] = 0,
+					["maxhp"] = 789015,
+					["overhealing"] = 7513233.25390625,
 					["damagetakenspells"] = {
 						["Falling Debris"] = {
 							["crushing"] = 0,
@@ -4022,7 +4237,8 @@ SkadaPerCharDB = {
 							["damage"] = 287160,
 						},
 					},
-					["overhealing"] = 7513233.25390625,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 						["Power Word: Radiance"] = {
 							["shielding"] = 0,
@@ -4125,50 +4341,8 @@ SkadaPerCharDB = {
 					},
 					["name"] = "Nardia",
 					["healing"] = 3737216,
-					["healed"] = {
-						["Player-78-0AA03C09"] = {
-							["role"] = "TANK",
-							["name"] = "Devlynn-Magtheridon",
-							["amount"] = 2773855,
-							["class"] = "DEMONHUNTER",
-							["shielding"] = 556923,
-						},
-						["Player-68-08A915DB"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Forhire-GrizzlyHills",
-							["amount"] = 101530,
-							["class"] = "ROGUE",
-							["shielding"] = 11240,
-						},
-						["Player-114-05A8BED4"] = {
-							["role"] = "HEALER",
-							["name"] = "Nardia-Fenris",
-							["amount"] = 187558,
-							["class"] = "PRIEST",
-							["shielding"] = 0,
-						},
-						["Player-68-089D9725"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Holyhunter-GrizzlyHills",
-							["amount"] = 234934,
-							["class"] = "HUNTER",
-							["shielding"] = 0,
-						},
-						["Creature-0-3132-1458-22533-62982-00006EEEF3"] = {
-							["amount"] = 0,
-							["role"] = "NONE",
-							["name"] = "Mindbender",
-							["shielding"] = 0,
-						},
-						["Player-118-00547BF9"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Failure",
-							["amount"] = 439339,
-							["class"] = "PALADIN",
-							["shielding"] = 0,
-						},
-					},
-					["maxhp"] = 789015,
+					["first"] = 1475276437,
+					["damagetaken"] = 287160,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [2]
@@ -4213,6 +4387,10 @@ SkadaPerCharDB = {
 					["role"] = "DAMAGER",
 					["time"] = 123,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 0,
 					["damage"] = 9078912,
 					["damagespells"] = {
 						["Greater Blessing of Might"] = {
@@ -4313,6 +4491,9 @@ SkadaPerCharDB = {
 							["damage"] = 642089,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+					},
 					["power"] = {
 						[9] = {
 							["amount"] = 52,
@@ -4322,11 +4503,9 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 261490,
-					["shielding"] = 0,
 					["id"] = "Player-118-00547BF9",
-					["first"] = 1475276437,
-					["ccbreaks"] = 0,
+					["maxhp"] = 1887900,
+					["overhealing"] = 0,
 					["damagetakenspells"] = {
 						["Falling Debris"] = {
 							["crushing"] = 0,
@@ -4343,14 +4522,14 @@ SkadaPerCharDB = {
 							["damage"] = 261490,
 						},
 					},
-					["overhealing"] = 0,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 					},
 					["name"] = "Failure",
 					["healing"] = 0,
-					["healed"] = {
-					},
-					["maxhp"] = 1293681,
+					["first"] = 1475276437,
+					["damagetaken"] = 261490,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [3]
@@ -4409,6 +4588,10 @@ SkadaPerCharDB = {
 					["role"] = "DAMAGER",
 					["time"] = 117,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 0,
 					["damage"] = 10498068,
 					["damagespells"] = {
 						["Sidewinders"] = {
@@ -4498,6 +4681,9 @@ SkadaPerCharDB = {
 							["damage"] = 2117811,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+					},
 					["power"] = {
 						[2] = {
 							["amount"] = 550,
@@ -4506,11 +4692,9 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 416006,
-					["shielding"] = 0,
 					["id"] = "Player-68-089D9725",
-					["first"] = 1475276443,
-					["ccbreaks"] = 0,
+					["maxhp"] = 652878,
+					["overhealing"] = 0,
 					["damagetakenspells"] = {
 						["Falling Debris"] = {
 							["crushing"] = 0,
@@ -4527,14 +4711,14 @@ SkadaPerCharDB = {
 							["damage"] = 416006,
 						},
 					},
-					["overhealing"] = 0,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 					},
 					["name"] = "Holyhunter",
 					["healing"] = 0,
-					["healed"] = {
-					},
-					["maxhp"] = 652878,
+					["first"] = 1475276443,
+					["damagetaken"] = 416006,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [4]
@@ -4628,6 +4812,10 @@ SkadaPerCharDB = {
 					["role"] = "DAMAGER",
 					["time"] = 115,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 0,
 					["damage"] = 11858868,
 					["damagespells"] = {
 						["Deadly Poison"] = {
@@ -4778,6 +4966,16 @@ SkadaPerCharDB = {
 							["damage"] = 1463039,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+						["Player-68-08A915DB"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Forhire-GrizzlyHills",
+							["amount"] = 11168,
+							["class"] = "ROGUE",
+							["shielding"] = 0,
+						},
+					},
 					["power"] = {
 						[4] = {
 							["amount"] = 53,
@@ -4795,11 +4993,9 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 184508,
-					["shielding"] = 0,
 					["id"] = "Player-68-08A915DB",
-					["first"] = 1475276446,
-					["ccbreaks"] = 0,
+					["maxhp"] = 733815,
+					["overhealing"] = 196765,
 					["damagetakenspells"] = {
 						["Falling Debris"] = {
 							["crushing"] = 0,
@@ -4816,7 +5012,8 @@ SkadaPerCharDB = {
 							["damage"] = 184508,
 						},
 					},
-					["overhealing"] = 196765,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 						["Leech"] = {
 							["shielding"] = 0,
@@ -4835,125 +5032,12 @@ SkadaPerCharDB = {
 					},
 					["name"] = "Forhire",
 					["healing"] = 11168,
-					["healed"] = {
-						["Player-68-08A915DB"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Forhire-GrizzlyHills",
-							["amount"] = 11168,
-							["class"] = "ROGUE",
-							["shielding"] = 0,
-						},
-					},
-					["maxhp"] = 733815,
+					["first"] = 1475276446,
+					["damagetaken"] = 184508,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [5]
 			},
-			["deaths"] = 0,
-			["mobs"] = {
-				["Bellowing Idol"] = {
-					["players"] = {
-						["Devlynn-Magtheridon"] = {
-							["taken"] = 2307432,
-							["done"] = 298802,
-							["role"] = "TANK",
-							["class"] = "DEMONHUNTER",
-						},
-						["Forhire-GrizzlyHills"] = {
-							["taken"] = 663406,
-							["done"] = 135788,
-							["role"] = "DAMAGER",
-							["class"] = "ROGUE",
-						},
-						["Holyhunter-GrizzlyHills"] = {
-							["taken"] = 2480559,
-							["done"] = 346895,
-							["role"] = "DAMAGER",
-							["class"] = "HUNTER",
-						},
-						["Nardia-Fenris"] = {
-							["taken"] = 787756,
-							["done"] = 219451,
-							["role"] = "HEALER",
-							["class"] = "PRIEST",
-						},
-						["Failure"] = {
-							["taken"] = 1653215,
-							["done"] = 225973,
-							["role"] = "DAMAGER",
-							["class"] = "PALADIN",
-						},
-					},
-					["hdone"] = 0,
-					["done"] = 1226909,
-					["taken"] = 7892368,
-					["htakenspell"] = {
-					},
-					["htaken"] = 0,
-					["hdonespell"] = {
-					},
-				},
-				["Ularogg Cragshaper"] = {
-					["players"] = {
-						["Devlynn-Magtheridon"] = {
-							["taken"] = 8062315,
-							["done"] = 8103814,
-							["role"] = "TANK",
-							["class"] = "DEMONHUNTER",
-						},
-						["Forhire-GrizzlyHills"] = {
-							["taken"] = 11195462,
-							["done"] = 48720,
-							["role"] = "DAMAGER",
-							["class"] = "ROGUE",
-						},
-						["Holyhunter-GrizzlyHills"] = {
-							["taken"] = 8017509,
-							["done"] = 69111,
-							["role"] = "DAMAGER",
-							["class"] = "HUNTER",
-						},
-						["Nardia-Fenris"] = {
-							["taken"] = 4306945,
-							["done"] = 67709,
-							["role"] = "HEALER",
-							["class"] = "PRIEST",
-						},
-						["Failure"] = {
-							["taken"] = 7425697,
-							["done"] = 35517,
-							["role"] = "DAMAGER",
-							["class"] = "PALADIN",
-						},
-					},
-					["hdone"] = 0,
-					["done"] = 8324871,
-					["taken"] = 39007928,
-					["htakenspell"] = {
-					},
-					["htaken"] = 0,
-					["hdonespell"] = {
-					},
-				},
-			},
-			["mobtaken"] = 46900296,
-			["starttime"] = 1475276437,
-			["healing"] = 5934706,
-			["power"] = {
-				[0] = 42000,
-				[2] = 550,
-				[18] = 1021,
-				[3] = 620,
-				[4] = 53,
-				[9] = 52,
-				[13] = 15,
-			},
-			["multistrikes"] = 0,
-			["overhealing"] = 11888768.2539063,
-			["shielding"] = 568163,
-			["name"] = "Ularogg Cragshaper",
-			["mobname"] = "Ularogg Cragshaper",
-			["damagetaken"] = 9583219,
 			["mobhdone"] = 0,
 			["last_action"] = 1475276437,
 			["mobdone"] = 9551780,
@@ -4961,12 +5045,115 @@ SkadaPerCharDB = {
 		{
 			["healingabsorbed"] = 0,
 			["dispells"] = 0,
-			["ccbreaks"] = 0,
+			["endtime"] = 1475276008,
+			["ffdamagedone"] = 0,
 			["time"] = 82,
 			["interrupts"] = 0,
-			["endtime"] = 1475276008,
-			["gotboss"] = true,
+			["ccbreaks"] = 0,
+			["auras"] = {
+			},
+			["mobtaken"] = 43617835,
 			["damage"] = 43617835,
+			["starttime"] = 1475275926,
+			["deaths"] = 0,
+			["mobs"] = {
+				["Rokmora"] = {
+					["players"] = {
+						["Devlynn-Magtheridon"] = {
+							["taken"] = 5585259,
+							["done"] = 5544533,
+							["role"] = "TANK",
+							["class"] = "DEMONHUNTER",
+						},
+						["Forhire-GrizzlyHills"] = {
+							["taken"] = 12344572,
+							["done"] = 429301,
+							["role"] = "DAMAGER",
+							["class"] = "ROGUE",
+						},
+						["Holyhunter-GrizzlyHills"] = {
+							["taken"] = 9062588,
+							["done"] = 430059,
+							["role"] = "DAMAGER",
+							["class"] = "HUNTER",
+						},
+						["Nardia-Fenris"] = {
+							["taken"] = 3932797,
+							["done"] = 162368,
+							["role"] = "HEALER",
+							["class"] = "PRIEST",
+						},
+						["Failure"] = {
+							["taken"] = 7888461,
+							["done"] = 253571,
+							["role"] = "DAMAGER",
+							["class"] = "PALADIN",
+						},
+					},
+					["hdone"] = 0,
+					["done"] = 6819832,
+					["taken"] = 38813677,
+					["htakenspell"] = {
+					},
+					["htaken"] = 0,
+					["hdonespell"] = {
+					},
+				},
+				["Blightshard Skitter"] = {
+					["players"] = {
+						["Holyhunter-GrizzlyHills"] = {
+							["taken"] = 2274580,
+							["done"] = 56477,
+							["role"] = "DAMAGER",
+							["class"] = "HUNTER",
+						},
+						["Devlynn-Magtheridon"] = {
+							["taken"] = 2008331,
+							["done"] = 677829,
+							["role"] = "TANK",
+							["class"] = "DEMONHUNTER",
+						},
+						["Nardia-Fenris"] = {
+							["taken"] = 205528,
+							["done"] = 105353,
+							["role"] = "HEALER",
+							["class"] = "PRIEST",
+						},
+						["Failure"] = {
+							["taken"] = 315719,
+							["done"] = 195641,
+							["role"] = "DAMAGER",
+							["class"] = "PALADIN",
+						},
+					},
+					["hdone"] = 0,
+					["done"] = 1035300,
+					["taken"] = 4804158,
+					["htakenspell"] = {
+					},
+					["htaken"] = 0,
+					["hdonespell"] = {
+					},
+				},
+			},
+			["gotboss"] = true,
+			["power"] = {
+				nil, -- [1]
+				495, -- [2]
+				902, -- [3]
+				63, -- [4]
+				[18] = 731,
+				[13] = 12,
+				[9] = 42,
+				[0] = 42000,
+			},
+			["healing"] = 7260477,
+			["damagetaken"] = 11385181,
+			["multistrikes"] = 0,
+			["shielding"] = 848714,
+			["overhealing"] = 7573399.60546875,
+			["name"] = "Rokmora",
+			["mobname"] = "Rokmora",
 			["players"] = {
 				{
 					["last"] = 1475276006,
@@ -5030,6 +5217,10 @@ SkadaPerCharDB = {
 					["role"] = "DAMAGER",
 					["time"] = 80,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 0,
 					["damage"] = 11337168,
 					["damagespells"] = {
 						["Sidewinders"] = {
@@ -5115,6 +5306,9 @@ SkadaPerCharDB = {
 							["damage"] = 1892669,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+					},
 					["power"] = {
 						[2] = {
 							["amount"] = 495,
@@ -5123,11 +5317,9 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 486536,
-					["shielding"] = 0,
 					["id"] = "Player-68-089D9725",
-					["first"] = 1475275926,
-					["ccbreaks"] = 0,
+					["maxhp"] = 652878,
+					["overhealing"] = 0,
 					["damagetakenspells"] = {
 						["Attack"] = {
 							["crushing"] = 0,
@@ -5158,14 +5350,14 @@ SkadaPerCharDB = {
 							["damage"] = 430059,
 						},
 					},
-					["overhealing"] = 0,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 					},
 					["name"] = "Holyhunter",
 					["healing"] = 0,
-					["healed"] = {
-					},
-					["maxhp"] = 652878,
+					["first"] = 1475275926,
+					["damagetaken"] = 486536,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [1]
@@ -5217,6 +5409,10 @@ SkadaPerCharDB = {
 					["role"] = "DAMAGER",
 					["time"] = 81,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 0,
 					["damage"] = 8204180,
 					["damagespells"] = {
 						["Greater Blessing of Might"] = {
@@ -5313,6 +5509,9 @@ SkadaPerCharDB = {
 							["damage"] = 603950,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+					},
 					["power"] = {
 						[9] = {
 							["amount"] = 42,
@@ -5322,11 +5521,9 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 749289,
-					["shielding"] = 0,
 					["id"] = "Player-118-00547BF9",
-					["first"] = 1475275926,
-					["ccbreaks"] = 0,
+					["maxhp"] = 1887900,
+					["overhealing"] = 0,
 					["damagetakenspells"] = {
 						["Choking Dust"] = {
 							["crushing"] = 0,
@@ -5371,14 +5568,14 @@ SkadaPerCharDB = {
 							["damage"] = 195641,
 						},
 					},
-					["overhealing"] = 0,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 					},
 					["name"] = "Failure",
 					["healing"] = 0,
-					["healed"] = {
-					},
-					["maxhp"] = 1293681,
+					["first"] = 1475275926,
+					["damagetaken"] = 749289,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [2]
@@ -5472,6 +5669,10 @@ SkadaPerCharDB = {
 					["role"] = "HEALER",
 					["time"] = 80,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 848714,
 					["damage"] = 4138325,
 					["damagespells"] = {
 						["Nightmare Essence"] = {
@@ -5561,6 +5762,44 @@ SkadaPerCharDB = {
 							["damage"] = 420931,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+						["Player-78-0AA03C09"] = {
+							["role"] = "TANK",
+							["name"] = "Devlynn-Magtheridon",
+							["amount"] = 2775701,
+							["class"] = "DEMONHUNTER",
+							["shielding"] = 417793,
+						},
+						["Player-68-08A915DB"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Forhire-GrizzlyHills",
+							["amount"] = 293241,
+							["class"] = "ROGUE",
+							["shielding"] = 17010,
+						},
+						["Player-114-05A8BED4"] = {
+							["role"] = "HEALER",
+							["name"] = "Nardia-Fenris",
+							["amount"] = 339434,
+							["class"] = "PRIEST",
+							["shielding"] = 164576,
+						},
+						["Player-118-00547BF9"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Failure",
+							["amount"] = 925207,
+							["class"] = "PALADIN",
+							["shielding"] = 226301,
+						},
+						["Player-68-089D9725"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Holyhunter-GrizzlyHills",
+							["amount"] = 217400,
+							["class"] = "HUNTER",
+							["shielding"] = 23034,
+						},
+					},
 					["power"] = {
 						[13] = {
 							["amount"] = 12,
@@ -5575,11 +5814,9 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 267721,
-					["shielding"] = 848714,
 					["id"] = "Player-114-05A8BED4",
-					["first"] = 1475275926,
-					["ccbreaks"] = 0,
+					["maxhp"] = 789015,
+					["overhealing"] = 5437469.60546875,
 					["damagetakenspells"] = {
 						["Shatter"] = {
 							["crushing"] = 0,
@@ -5610,7 +5847,8 @@ SkadaPerCharDB = {
 							["damage"] = 105353,
 						},
 					},
-					["overhealing"] = 5437469.60546875,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 						["Power Word: Radiance"] = {
 							["shielding"] = 0,
@@ -5713,44 +5951,8 @@ SkadaPerCharDB = {
 					},
 					["name"] = "Nardia",
 					["healing"] = 4550983,
-					["healed"] = {
-						["Player-78-0AA03C09"] = {
-							["role"] = "TANK",
-							["name"] = "Devlynn-Magtheridon",
-							["amount"] = 2775701,
-							["class"] = "DEMONHUNTER",
-							["shielding"] = 417793,
-						},
-						["Player-68-08A915DB"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Forhire-GrizzlyHills",
-							["amount"] = 293241,
-							["class"] = "ROGUE",
-							["shielding"] = 17010,
-						},
-						["Player-114-05A8BED4"] = {
-							["role"] = "HEALER",
-							["name"] = "Nardia-Fenris",
-							["amount"] = 339434,
-							["class"] = "PRIEST",
-							["shielding"] = 164576,
-						},
-						["Player-118-00547BF9"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Failure",
-							["amount"] = 925207,
-							["class"] = "PALADIN",
-							["shielding"] = 226301,
-						},
-						["Player-68-089D9725"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Holyhunter-GrizzlyHills",
-							["amount"] = 217400,
-							["class"] = "HUNTER",
-							["shielding"] = 23034,
-						},
-					},
-					["maxhp"] = 789015,
+					["first"] = 1475275926,
+					["damagetaken"] = 267721,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [3]
@@ -5830,6 +6032,10 @@ SkadaPerCharDB = {
 					["role"] = "TANK",
 					["time"] = 81,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 0,
 					["damage"] = 7593590,
 					["damagespells"] = {
 						["Soul Carver"] = {
@@ -5961,6 +6167,16 @@ SkadaPerCharDB = {
 							["damage"] = 904503,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+						["Player-78-0AA03C09"] = {
+							["role"] = "TANK",
+							["name"] = "Devlynn-Magtheridon",
+							["amount"] = 2672394,
+							["class"] = "DEMONHUNTER",
+							["shielding"] = 0,
+						},
+					},
 					["power"] = {
 						[18] = {
 							["amount"] = 731,
@@ -5974,11 +6190,9 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 9308848,
-					["shielding"] = 0,
 					["id"] = "Player-78-0AA03C09",
-					["first"] = 1475275926,
-					["ccbreaks"] = 0,
+					["maxhp"] = 963930,
+					["overhealing"] = 1951917,
 					["damagetakenspells"] = {
 						["Razor Shards"] = {
 							["crushing"] = 0,
@@ -6051,7 +6265,8 @@ SkadaPerCharDB = {
 							["damage"] = 5365788,
 						},
 					},
-					["overhealing"] = 1951917,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 						["Soul Cleave"] = {
 							["shielding"] = 0,
@@ -6098,16 +6313,8 @@ SkadaPerCharDB = {
 					},
 					["name"] = "Devlynn",
 					["healing"] = 2672394,
-					["healed"] = {
-						["Player-78-0AA03C09"] = {
-							["role"] = "TANK",
-							["name"] = "Devlynn-Magtheridon",
-							["amount"] = 2672394,
-							["class"] = "DEMONHUNTER",
-							["shielding"] = 0,
-						},
-					},
-					["maxhp"] = 963930,
+					["first"] = 1475275926,
+					["damagetaken"] = 9308848,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [4]
@@ -6186,6 +6393,10 @@ SkadaPerCharDB = {
 					["role"] = "DAMAGER",
 					["time"] = 79,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 0,
 					["damage"] = 12344572,
 					["damagespells"] = {
 						["Mutilate"] = {
@@ -6343,6 +6554,16 @@ SkadaPerCharDB = {
 							["damage"] = 989442,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+						["Player-68-08A915DB"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Forhire-GrizzlyHills",
+							["amount"] = 37100,
+							["class"] = "ROGUE",
+							["shielding"] = 0,
+						},
+					},
 					["power"] = {
 						[4] = {
 							["amount"] = 63,
@@ -6360,11 +6581,9 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 572787,
-					["shielding"] = 0,
 					["id"] = "Player-68-08A915DB",
-					["first"] = 1475275928,
-					["ccbreaks"] = 0,
+					["maxhp"] = 733815,
+					["overhealing"] = 184013,
 					["damagetakenspells"] = {
 						["Shatter"] = {
 							["crushing"] = 0,
@@ -6395,7 +6614,8 @@ SkadaPerCharDB = {
 							["damage"] = 143486,
 						},
 					},
-					["overhealing"] = 184013,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 						["Leech"] = {
 							["shielding"] = 0,
@@ -6414,120 +6634,12 @@ SkadaPerCharDB = {
 					},
 					["name"] = "Forhire",
 					["healing"] = 37100,
-					["healed"] = {
-						["Player-68-08A915DB"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Forhire-GrizzlyHills",
-							["amount"] = 37100,
-							["class"] = "ROGUE",
-							["shielding"] = 0,
-						},
-					},
-					["maxhp"] = 733815,
+					["first"] = 1475275928,
+					["damagetaken"] = 572787,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [5]
 			},
-			["deaths"] = 0,
-			["mobs"] = {
-				["Rokmora"] = {
-					["players"] = {
-						["Devlynn-Magtheridon"] = {
-							["taken"] = 5585259,
-							["done"] = 5544533,
-							["role"] = "TANK",
-							["class"] = "DEMONHUNTER",
-						},
-						["Forhire-GrizzlyHills"] = {
-							["taken"] = 12344572,
-							["done"] = 429301,
-							["role"] = "DAMAGER",
-							["class"] = "ROGUE",
-						},
-						["Holyhunter-GrizzlyHills"] = {
-							["taken"] = 9062588,
-							["done"] = 430059,
-							["role"] = "DAMAGER",
-							["class"] = "HUNTER",
-						},
-						["Nardia-Fenris"] = {
-							["taken"] = 3932797,
-							["done"] = 162368,
-							["role"] = "HEALER",
-							["class"] = "PRIEST",
-						},
-						["Failure"] = {
-							["taken"] = 7888461,
-							["done"] = 253571,
-							["role"] = "DAMAGER",
-							["class"] = "PALADIN",
-						},
-					},
-					["hdone"] = 0,
-					["done"] = 6819832,
-					["taken"] = 38813677,
-					["htakenspell"] = {
-					},
-					["htaken"] = 0,
-					["hdonespell"] = {
-					},
-				},
-				["Blightshard Skitter"] = {
-					["players"] = {
-						["Holyhunter-GrizzlyHills"] = {
-							["taken"] = 2274580,
-							["done"] = 56477,
-							["role"] = "DAMAGER",
-							["class"] = "HUNTER",
-						},
-						["Devlynn-Magtheridon"] = {
-							["taken"] = 2008331,
-							["done"] = 677829,
-							["role"] = "TANK",
-							["class"] = "DEMONHUNTER",
-						},
-						["Nardia-Fenris"] = {
-							["taken"] = 205528,
-							["done"] = 105353,
-							["role"] = "HEALER",
-							["class"] = "PRIEST",
-						},
-						["Failure"] = {
-							["taken"] = 315719,
-							["done"] = 195641,
-							["role"] = "DAMAGER",
-							["class"] = "PALADIN",
-						},
-					},
-					["hdone"] = 0,
-					["done"] = 1035300,
-					["taken"] = 4804158,
-					["htakenspell"] = {
-					},
-					["htaken"] = 0,
-					["hdonespell"] = {
-					},
-				},
-			},
-			["mobtaken"] = 43617835,
-			["starttime"] = 1475275926,
-			["healing"] = 7260477,
-			["power"] = {
-				nil, -- [1]
-				495, -- [2]
-				902, -- [3]
-				63, -- [4]
-				[18] = 731,
-				[13] = 12,
-				[9] = 42,
-				[0] = 42000,
-			},
-			["multistrikes"] = 0,
-			["overhealing"] = 7573399.60546875,
-			["shielding"] = 848714,
-			["name"] = "Rokmora",
-			["mobname"] = "Rokmora",
-			["damagetaken"] = 11385181,
 			["mobhdone"] = 0,
 			["last_action"] = 1475275926,
 			["mobdone"] = 7855132,
@@ -6535,12 +6647,78 @@ SkadaPerCharDB = {
 		{
 			["healingabsorbed"] = 0,
 			["dispells"] = 0,
-			["ccbreaks"] = 0,
+			["endtime"] = 1475275884,
+			["ffdamagedone"] = 0,
 			["time"] = 21,
 			["interrupts"] = 0,
-			["endtime"] = 1475275884,
-			["gotboss"] = true,
+			["ccbreaks"] = 0,
+			["auras"] = {
+			},
+			["mobtaken"] = 15366125,
 			["damage"] = 15366125,
+			["starttime"] = 1475275863,
+			["deaths"] = 0,
+			["mobs"] = {
+				["Understone Drudge"] = {
+					["players"] = {
+						["Devlynn-Magtheridon"] = {
+							["taken"] = 3704135,
+							["done"] = 1795711,
+							["role"] = "TANK",
+							["class"] = "DEMONHUNTER",
+						},
+						["Forhire-GrizzlyHills"] = {
+							["taken"] = 3102440,
+							["done"] = 0,
+							["role"] = "DAMAGER",
+							["class"] = "ROGUE",
+						},
+						["Holyhunter-GrizzlyHills"] = {
+							["taken"] = 4720476,
+							["done"] = 0,
+							["role"] = "DAMAGER",
+							["class"] = "HUNTER",
+						},
+						["Nardia-Fenris"] = {
+							["taken"] = 1325487,
+							["done"] = 0,
+							["role"] = "HEALER",
+							["class"] = "PRIEST",
+						},
+						["Failure"] = {
+							["taken"] = 2513587,
+							["done"] = 0,
+							["role"] = "DAMAGER",
+							["class"] = "PALADIN",
+						},
+					},
+					["hdone"] = 0,
+					["done"] = 1795711,
+					["taken"] = 15366125,
+					["htakenspell"] = {
+					},
+					["htaken"] = 0,
+					["hdonespell"] = {
+					},
+				},
+			},
+			["gotboss"] = true,
+			["power"] = {
+				[0] = 31500,
+				[13] = 9,
+				[18] = 163,
+				[2] = 165,
+				[4] = 20,
+				[9] = 11,
+				[3] = 218,
+			},
+			["healing"] = 1352216,
+			["damagetaken"] = 1795711,
+			["multistrikes"] = 0,
+			["shielding"] = 0,
+			["overhealing"] = 3174496.328125,
+			["name"] = "Understone Drudge",
+			["mobname"] = "Understone Drudge",
 			["players"] = {
 				{
 					["last"] = 1475275884,
@@ -6610,6 +6788,10 @@ SkadaPerCharDB = {
 					["role"] = "HEALER",
 					["time"] = 21,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 0,
 					["damage"] = 1325487,
 					["damagespells"] = {
 						["Nightmare Essence"] = {
@@ -6695,6 +6877,44 @@ SkadaPerCharDB = {
 							["damage"] = 376995,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+						["Player-78-0AA03C09"] = {
+							["role"] = "TANK",
+							["name"] = "Devlynn-Magtheridon",
+							["amount"] = 544499,
+							["class"] = "DEMONHUNTER",
+							["shielding"] = 0,
+						},
+						["Player-68-08A915DB"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Forhire-GrizzlyHills",
+							["amount"] = 0,
+							["class"] = "ROGUE",
+							["shielding"] = 0,
+						},
+						["Player-114-05A8BED4"] = {
+							["role"] = "HEALER",
+							["name"] = "Nardia-Fenris",
+							["amount"] = 0,
+							["class"] = "PRIEST",
+							["shielding"] = 0,
+						},
+						["Player-118-00547BF9"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Failure",
+							["amount"] = 0,
+							["class"] = "PALADIN",
+							["shielding"] = 0,
+						},
+						["Player-68-089D9725"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Holyhunter-GrizzlyHills",
+							["amount"] = 372725,
+							["class"] = "HUNTER",
+							["shielding"] = 0,
+						},
+					},
 					["power"] = {
 						[13] = {
 							["amount"] = 9,
@@ -6709,14 +6929,13 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 0,
-					["shielding"] = 0,
 					["id"] = "Player-114-05A8BED4",
-					["first"] = 1475275863,
-					["ccbreaks"] = 0,
+					["maxhp"] = 789015,
+					["overhealing"] = 1754189.328125,
 					["damagetakenspells"] = {
 					},
-					["overhealing"] = 1754189.328125,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 						["Power Word: Radiance"] = {
 							["shielding"] = 0,
@@ -6791,44 +7010,8 @@ SkadaPerCharDB = {
 					},
 					["name"] = "Nardia",
 					["healing"] = 917224,
-					["healed"] = {
-						["Player-78-0AA03C09"] = {
-							["role"] = "TANK",
-							["name"] = "Devlynn-Magtheridon",
-							["amount"] = 544499,
-							["class"] = "DEMONHUNTER",
-							["shielding"] = 0,
-						},
-						["Player-68-08A915DB"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Forhire-GrizzlyHills",
-							["amount"] = 0,
-							["class"] = "ROGUE",
-							["shielding"] = 0,
-						},
-						["Player-114-05A8BED4"] = {
-							["role"] = "HEALER",
-							["name"] = "Nardia-Fenris",
-							["amount"] = 0,
-							["class"] = "PRIEST",
-							["shielding"] = 0,
-						},
-						["Player-118-00547BF9"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Failure",
-							["amount"] = 0,
-							["class"] = "PALADIN",
-							["shielding"] = 0,
-						},
-						["Player-68-089D9725"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Holyhunter-GrizzlyHills",
-							["amount"] = 372725,
-							["class"] = "HUNTER",
-							["shielding"] = 0,
-						},
-					},
-					["maxhp"] = 789015,
+					["first"] = 1475275863,
+					["damagetaken"] = 0,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [1]
@@ -6893,6 +7076,10 @@ SkadaPerCharDB = {
 					["role"] = "TANK",
 					["time"] = 21,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 0,
 					["damage"] = 3704135,
 					["damagespells"] = {
 						["Banshee's Blight"] = {
@@ -7008,6 +7195,16 @@ SkadaPerCharDB = {
 							["damage"] = 313800,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+						["Player-78-0AA03C09"] = {
+							["role"] = "TANK",
+							["name"] = "Devlynn-Magtheridon",
+							["amount"] = 434992,
+							["class"] = "DEMONHUNTER",
+							["shielding"] = 0,
+						},
+					},
 					["power"] = {
 						[18] = {
 							["amount"] = 163,
@@ -7020,11 +7217,9 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 1795711,
-					["shielding"] = 0,
 					["id"] = "Player-78-0AA03C09",
-					["first"] = 1475275863,
-					["ccbreaks"] = 0,
+					["maxhp"] = 963930,
+					["overhealing"] = 1369307,
 					["damagetakenspells"] = {
 						["Attack"] = {
 							["crushing"] = 0,
@@ -7041,7 +7236,8 @@ SkadaPerCharDB = {
 							["damage"] = 1795711,
 						},
 					},
-					["overhealing"] = 1369307,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 						["Soul Cleave"] = {
 							["shielding"] = 0,
@@ -7088,16 +7284,8 @@ SkadaPerCharDB = {
 					},
 					["name"] = "Devlynn",
 					["healing"] = 434992,
-					["healed"] = {
-						["Player-78-0AA03C09"] = {
-							["role"] = "TANK",
-							["name"] = "Devlynn-Magtheridon",
-							["amount"] = 434992,
-							["class"] = "DEMONHUNTER",
-							["shielding"] = 0,
-						},
-					},
-					["maxhp"] = 963930,
+					["first"] = 1475275863,
+					["damagetaken"] = 1795711,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [2]
@@ -7141,6 +7329,10 @@ SkadaPerCharDB = {
 					["role"] = "DAMAGER",
 					["time"] = 20,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 0,
 					["damage"] = 2513587,
 					["damagespells"] = {
 						["Wake of Ashes"] = {
@@ -7237,6 +7429,9 @@ SkadaPerCharDB = {
 							["damage"] = 556002,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+					},
 					["power"] = {
 						[9] = {
 							["amount"] = 11,
@@ -7246,21 +7441,19 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 0,
-					["shielding"] = 0,
 					["id"] = "Player-118-00547BF9",
-					["first"] = 1475275864,
-					["ccbreaks"] = 0,
+					["maxhp"] = 1887900,
+					["overhealing"] = 0,
 					["damagetakenspells"] = {
 					},
-					["overhealing"] = 0,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 					},
 					["name"] = "Failure",
 					["healing"] = 0,
-					["healed"] = {
-					},
-					["maxhp"] = 1293681,
+					["first"] = 1475275864,
+					["damagetaken"] = 0,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [3]
@@ -7339,6 +7532,10 @@ SkadaPerCharDB = {
 					["role"] = "DAMAGER",
 					["time"] = 19,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 0,
 					["damage"] = 3102440,
 					["damagespells"] = {
 						["Fan of Knives"] = {
@@ -7480,6 +7677,16 @@ SkadaPerCharDB = {
 							["damage"] = 248706,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+						["Player-68-08A915DB"] = {
+							["role"] = "DAMAGER",
+							["name"] = "Forhire-GrizzlyHills",
+							["amount"] = 0,
+							["class"] = "ROGUE",
+							["shielding"] = 0,
+						},
+					},
 					["power"] = {
 						[4] = {
 							["amount"] = 20,
@@ -7498,14 +7705,13 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 0,
-					["shielding"] = 0,
 					["id"] = "Player-68-08A915DB",
-					["first"] = 1475275865,
-					["ccbreaks"] = 0,
+					["maxhp"] = 733815,
+					["overhealing"] = 51000,
 					["damagetakenspells"] = {
 					},
-					["overhealing"] = 51000,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 						["Leech"] = {
 							["shielding"] = 0,
@@ -7524,16 +7730,8 @@ SkadaPerCharDB = {
 					},
 					["name"] = "Forhire",
 					["healing"] = 0,
-					["healed"] = {
-						["Player-68-08A915DB"] = {
-							["role"] = "DAMAGER",
-							["name"] = "Forhire-GrizzlyHills",
-							["amount"] = 0,
-							["class"] = "ROGUE",
-							["shielding"] = 0,
-						},
-					},
-					["maxhp"] = 733815,
+					["first"] = 1475275865,
+					["damagetaken"] = 0,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [4]
@@ -7584,6 +7782,10 @@ SkadaPerCharDB = {
 					["role"] = "DAMAGER",
 					["time"] = 18,
 					["interrupts"] = 0,
+					["ffdamagedonespells"] = {
+					},
+					["ffdamagedone"] = 0,
+					["shielding"] = 0,
 					["damage"] = 4720476,
 					["damagespells"] = {
 						["Sidewinders"] = {
@@ -7662,6 +7864,9 @@ SkadaPerCharDB = {
 							["damage"] = 1575996,
 						},
 					},
+					["ccbreaks"] = 0,
+					["healed"] = {
+					},
 					["power"] = {
 						[2] = {
 							["amount"] = 165,
@@ -7670,88 +7875,23 @@ SkadaPerCharDB = {
 							},
 						},
 					},
-					["damagetaken"] = 0,
-					["shielding"] = 0,
 					["id"] = "Player-68-089D9725",
-					["first"] = 1475275866,
-					["ccbreaks"] = 0,
+					["maxhp"] = 652878,
+					["overhealing"] = 0,
 					["damagetakenspells"] = {
 					},
-					["overhealing"] = 0,
+					["ffdamagedonetargets"] = {
+					},
 					["healingspells"] = {
 					},
 					["name"] = "Holyhunter",
 					["healing"] = 0,
-					["healed"] = {
-					},
-					["maxhp"] = 652878,
+					["first"] = 1475275866,
+					["damagetaken"] = 0,
 					["dispells"] = 0,
 					["multistrikes"] = 0,
 				}, -- [5]
 			},
-			["deaths"] = 0,
-			["mobs"] = {
-				["Understone Drudge"] = {
-					["players"] = {
-						["Devlynn-Magtheridon"] = {
-							["taken"] = 3704135,
-							["done"] = 1795711,
-							["role"] = "TANK",
-							["class"] = "DEMONHUNTER",
-						},
-						["Forhire-GrizzlyHills"] = {
-							["taken"] = 3102440,
-							["done"] = 0,
-							["role"] = "DAMAGER",
-							["class"] = "ROGUE",
-						},
-						["Holyhunter-GrizzlyHills"] = {
-							["taken"] = 4720476,
-							["done"] = 0,
-							["role"] = "DAMAGER",
-							["class"] = "HUNTER",
-						},
-						["Nardia-Fenris"] = {
-							["taken"] = 1325487,
-							["done"] = 0,
-							["role"] = "HEALER",
-							["class"] = "PRIEST",
-						},
-						["Failure"] = {
-							["taken"] = 2513587,
-							["done"] = 0,
-							["role"] = "DAMAGER",
-							["class"] = "PALADIN",
-						},
-					},
-					["hdone"] = 0,
-					["done"] = 1795711,
-					["taken"] = 15366125,
-					["htakenspell"] = {
-					},
-					["htaken"] = 0,
-					["hdonespell"] = {
-					},
-				},
-			},
-			["mobtaken"] = 15366125,
-			["starttime"] = 1475275863,
-			["healing"] = 1352216,
-			["power"] = {
-				[0] = 31500,
-				[13] = 9,
-				[18] = 163,
-				[2] = 165,
-				[4] = 20,
-				[9] = 11,
-				[3] = 218,
-			},
-			["multistrikes"] = 0,
-			["overhealing"] = 3174496.328125,
-			["shielding"] = 0,
-			["name"] = "Understone Drudge",
-			["mobname"] = "Understone Drudge",
-			["damagetaken"] = 1795711,
 			["mobhdone"] = 0,
 			["last_action"] = 1475275863,
 			["mobdone"] = 1795711,
@@ -7763,6 +7903,7 @@ SkadaPerCharDB = {
 		["ccbreaks"] = 0,
 		["time"] = 430,
 		["interrupts"] = 0,
+		["multistrikes"] = 0,
 		["damage"] = 456451276,
 		["players"] = {
 			{
@@ -7852,6 +7993,127 @@ SkadaPerCharDB = {
 				["role"] = "DAMAGER",
 				["time"] = 928,
 				["interrupts"] = 0,
+				["ffdamagedonespells"] = {
+				},
+				["ffdamagedone"] = 0,
+				["deathlog"] = {
+					{
+						["ts"] = 1475277219.997,
+						["amount"] = -24880,
+						["hp"] = 493910,
+						["spellid"] = 209921,
+						["srcname"] = "Molten Charskin",
+					}, -- [1]
+					{
+						["ts"] = 1475277222.012,
+						["amount"] = -25127,
+						["hp"] = 486367,
+						["spellid"] = 209921,
+						["srcname"] = "Molten Charskin",
+					}, -- [2]
+					{
+						["ts"] = 1475277224.021,
+						["amount"] = -24464,
+						["hp"] = 479023,
+						["spellid"] = 209921,
+						["srcname"] = "Molten Charskin",
+					}, -- [3]
+					{
+						["absorb"] = 0,
+						["amount"] = 5991,
+						["ts"] = 1475277226.139,
+						["hp"] = 482208,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [4]
+					{
+						["absorb"] = 0,
+						["amount"] = 5989,
+						["ts"] = 1475277227.004,
+						["hp"] = 485392,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [5]
+					{
+						["absorb"] = 0,
+						["amount"] = 5989,
+						["ts"] = 1475277205.785,
+						["hp"] = 468546,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [6]
+					{
+						["absorb"] = 0,
+						["amount"] = 2692,
+						["ts"] = 1475277206.486,
+						["hp"] = 469977,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [7]
+					{
+						["absorb"] = 0,
+						["amount"] = 5989,
+						["ts"] = 1475277207.641,
+						["hp"] = 473161,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [8]
+					{
+						["absorb"] = 0,
+						["amount"] = 30658,
+						["ts"] = 1475277208.876,
+						["hp"] = 489458,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [9]
+					{
+						["absorb"] = 0,
+						["amount"] = 5991,
+						["ts"] = 1475277209.492,
+						["hp"] = 492643,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [10]
+					{
+						["absorb"] = 0,
+						["amount"] = 17181,
+						["ts"] = 1475277210.202,
+						["hp"] = 501776,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [11]
+					{
+						["absorb"] = 0,
+						["amount"] = 5991,
+						["ts"] = 1475277211.348,
+						["hp"] = 504961,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [12]
+					{
+						["absorb"] = 0,
+						["amount"] = 22512,
+						["ts"] = 1475277211.376,
+						["hp"] = 516928,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [13]
+					{
+						["ts"] = 1475277215.98,
+						["amount"] = -26589,
+						["hp"] = 508946,
+						["spellid"] = 209921,
+						["srcname"] = "Molten Charskin",
+					}, -- [14]
+					{
+						["ts"] = 1475277217.993,
+						["amount"] = -25207,
+						["hp"] = 501379,
+						["spellid"] = 209921,
+						["srcname"] = "Molten Charskin",
+					}, -- [15]
+					["pos"] = 6,
+				},
 				["damage"] = 119996621,
 				["damagespells"] = {
 					["Auto Shot"] = {
@@ -7989,6 +8251,16 @@ SkadaPerCharDB = {
 						["damage"] = 27703335,
 					},
 				},
+				["overhealing"] = 0,
+				["healed"] = {
+					["Player-68-089D9725"] = {
+						["role"] = "DAMAGER",
+						["name"] = "Holyhunter-GrizzlyHills",
+						["amount"] = 2124814,
+						["class"] = "HUNTER",
+						["shielding"] = 0,
+					},
+				},
 				["power"] = {
 					[2] = {
 						["amount"] = 5115,
@@ -7997,128 +8269,38 @@ SkadaPerCharDB = {
 						},
 					},
 				},
-				["damagetaken"] = 20487001,
-				["deathlog"] = {
-					{
-						["ts"] = 1475277219.997,
-						["amount"] = -24880,
-						["spellid"] = 209921,
-						["srcname"] = "Molten Charskin",
-						["hp"] = 493910,
-					}, -- [1]
-					{
-						["ts"] = 1475277222.012,
-						["amount"] = -25127,
-						["spellid"] = 209921,
-						["srcname"] = "Molten Charskin",
-						["hp"] = 486367,
-					}, -- [2]
-					{
-						["ts"] = 1475277224.021,
-						["amount"] = -24464,
-						["spellid"] = 209921,
-						["srcname"] = "Molten Charskin",
-						["hp"] = 479023,
-					}, -- [3]
-					{
-						["absorb"] = 0,
-						["amount"] = 5991,
-						["ts"] = 1475277226.139,
-						["hp"] = 482208,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [4]
-					{
-						["absorb"] = 0,
-						["amount"] = 5989,
-						["ts"] = 1475277227.004,
-						["hp"] = 485392,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [5]
-					{
-						["absorb"] = 0,
-						["amount"] = 5989,
-						["ts"] = 1475277205.785,
-						["hp"] = 468546,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [6]
-					{
-						["absorb"] = 0,
-						["amount"] = 2692,
-						["ts"] = 1475277206.486,
-						["hp"] = 469977,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [7]
-					{
-						["absorb"] = 0,
-						["amount"] = 5989,
-						["ts"] = 1475277207.641,
-						["hp"] = 473161,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [8]
-					{
-						["absorb"] = 0,
-						["amount"] = 30658,
-						["ts"] = 1475277208.876,
-						["hp"] = 489458,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [9]
-					{
-						["absorb"] = 0,
-						["amount"] = 5991,
-						["ts"] = 1475277209.492,
-						["hp"] = 492643,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [10]
-					{
-						["absorb"] = 0,
-						["amount"] = 17181,
-						["ts"] = 1475277210.202,
-						["hp"] = 501776,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [11]
-					{
-						["absorb"] = 0,
-						["amount"] = 5991,
-						["ts"] = 1475277211.348,
-						["hp"] = 504961,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [12]
-					{
-						["absorb"] = 0,
-						["amount"] = 22512,
-						["ts"] = 1475277211.376,
-						["hp"] = 516928,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [13]
-					{
-						["ts"] = 1475277215.98,
-						["amount"] = -26589,
-						["spellid"] = 209921,
-						["srcname"] = "Molten Charskin",
-						["hp"] = 508946,
-					}, -- [14]
-					{
-						["ts"] = 1475277217.993,
-						["amount"] = -25207,
-						["spellid"] = 209921,
-						["srcname"] = "Molten Charskin",
-						["hp"] = 501379,
-					}, -- [15]
-					["pos"] = 6,
-				},
 				["id"] = "Player-68-089D9725",
 				["maxhp"] = 652878,
-				["overhealing"] = 0,
+				["healingspells"] = {
+					["Exhilaration"] = {
+						["shielding"] = 0,
+						["id"] = 109304,
+						["healing"] = 1842321,
+						["absorbed"] = 0,
+						["min"] = 368463,
+						["multistrike"] = 0,
+						["name"] = "Exhilaration",
+						["critical"] = 0,
+						["max"] = 368465,
+						["overhealing"] = 0,
+						["hits"] = 5,
+						["multistrikes"] = 0,
+					},
+					["Gift of the Naaru"] = {
+						["shielding"] = 0,
+						["id"] = 59543,
+						["healing"] = 282493,
+						["absorbed"] = 0,
+						["min"] = 56497,
+						["multistrike"] = 0,
+						["name"] = "Gift of the Naaru",
+						["critical"] = 0,
+						["max"] = 56499,
+						["overhealing"] = 0,
+						["hits"] = 5,
+						["multistrikes"] = 0,
+					},
+				},
 				["damagetakenspells"] = {
 					["Stone Bolt"] = {
 						["crushing"] = 0,
@@ -8359,48 +8541,12 @@ SkadaPerCharDB = {
 						["damage"] = 2046246,
 					},
 				},
-				["healingspells"] = {
-					["Exhilaration"] = {
-						["shielding"] = 0,
-						["id"] = 109304,
-						["healing"] = 1842321,
-						["absorbed"] = 0,
-						["min"] = 368463,
-						["multistrike"] = 0,
-						["name"] = "Exhilaration",
-						["critical"] = 0,
-						["max"] = 368465,
-						["overhealing"] = 0,
-						["hits"] = 5,
-						["multistrikes"] = 0,
-					},
-					["Gift of the Naaru"] = {
-						["shielding"] = 0,
-						["id"] = 59543,
-						["healing"] = 282493,
-						["absorbed"] = 0,
-						["min"] = 56497,
-						["multistrike"] = 0,
-						["name"] = "Gift of the Naaru",
-						["critical"] = 0,
-						["max"] = 56499,
-						["overhealing"] = 0,
-						["hits"] = 5,
-						["multistrikes"] = 0,
-					},
+				["ffdamagedonetargets"] = {
 				},
 				["shielding"] = 0,
 				["name"] = "Holyhunter",
 				["healing"] = 2124814,
-				["healed"] = {
-					["Player-68-089D9725"] = {
-						["role"] = "DAMAGER",
-						["name"] = "Holyhunter-GrizzlyHills",
-						["amount"] = 2124814,
-						["class"] = "HUNTER",
-						["shielding"] = 0,
-					},
-				},
+				["damagetaken"] = 20487001,
 				["dispells"] = 0,
 				["ccbreaks"] = 0,
 				["multistrikes"] = 0,
@@ -8492,6 +8638,129 @@ SkadaPerCharDB = {
 				["role"] = "TANK",
 				["time"] = 980,
 				["interrupts"] = 0,
+				["ffdamagedonespells"] = {
+				},
+				["ffdamagedone"] = 0,
+				["deathlog"] = {
+					{
+						["absorb"] = 0,
+						["amount"] = 11981,
+						["ts"] = 1475277222.432,
+						["hp"] = 906693,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 94472,
+					}, -- [1]
+					{
+						["ts"] = 1475277222.663,
+						["amount"] = 22512,
+						["absorb"] = 0,
+						["srcname"] = "Nardia-Fenris",
+						["hp"] = 918660,
+						["spellid"] = 81751,
+					}, -- [2]
+					{
+						["ts"] = 1475277223.238,
+						["amount"] = 31760,
+						["absorb"] = 0,
+						["hp"] = 935543,
+						["spellid"] = 207693,
+						["srcname"] = "Devlynn-Magtheridon",
+					}, -- [3]
+					{
+						["absorb"] = 0,
+						["amount"] = 22512,
+						["ts"] = 1475277223.298,
+						["hp"] = 947510,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [4]
+					{
+						["absorb"] = 0,
+						["amount"] = 11979,
+						["ts"] = 1475277223.307,
+						["hp"] = 953878,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 94472,
+					}, -- [5]
+					{
+						["absorb"] = 0,
+						["amount"] = 18910,
+						["ts"] = 1475277223.895,
+						["hp"] = 963930,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [6]
+					{
+						["ts"] = 1475277224.021,
+						["amount"] = -22678,
+						["hp"] = 957122,
+						["srcname"] = "Molten Charskin",
+						["spellid"] = 209921,
+					}, -- [7]
+					{
+						["absorb"] = 0,
+						["amount"] = 5989,
+						["ts"] = 1475277224.288,
+						["hp"] = 960306,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [8]
+					{
+						["absorb"] = 0,
+						["amount"] = 6817,
+						["ts"] = 1475277224.505,
+						["hp"] = 963930,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [9]
+					{
+						["ts"] = 1475277225.035,
+						["amount"] = -272395,
+						["hp"] = 882159,
+						["spellid"] = 200721,
+						["srcname"] = "Dargrul",
+					}, -- [10]
+					{
+						["absorb"] = 0,
+						["amount"] = 5989,
+						["ts"] = 1475277225.21,
+						["hp"] = 885343,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [11]
+					{
+						["ts"] = 1475277225.235,
+						["amount"] = 31760,
+						["absorb"] = 0,
+						["hp"] = 902226,
+						["srcname"] = "Devlynn-Magtheridon",
+						["spellid"] = 207693,
+					}, -- [12]
+					{
+						["ts"] = 1475277226.034,
+						["amount"] = -22832,
+						["hp"] = 895372,
+						["spellid"] = 209921,
+						["srcname"] = "Molten Charskin",
+					}, -- [13]
+					{
+						["absorb"] = 0,
+						["amount"] = 5989,
+						["ts"] = 1475277226.139,
+						["hp"] = 898556,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [14]
+					{
+						["absorb"] = 0,
+						["amount"] = 5989,
+						["ts"] = 1475277227.004,
+						["hp"] = 901740,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [15]
+					["pos"] = 1,
+				},
 				["damage"] = 107127155,
 				["damagespells"] = {
 					["Sigil of Flame"] = {
@@ -8659,6 +8928,16 @@ SkadaPerCharDB = {
 						["damage"] = 11704105,
 					},
 				},
+				["overhealing"] = 19891994,
+				["healed"] = {
+					["Player-78-0AA03C09"] = {
+						["role"] = "TANK",
+						["name"] = "Devlynn-Magtheridon",
+						["amount"] = 26091223,
+						["class"] = "DEMONHUNTER",
+						["shielding"] = 0,
+					},
+				},
 				["power"] = {
 					[18] = {
 						["amount"] = 7944,
@@ -8672,130 +8951,52 @@ SkadaPerCharDB = {
 						},
 					},
 				},
-				["damagetaken"] = 84093123,
-				["deathlog"] = {
-					{
-						["absorb"] = 0,
-						["amount"] = 11981,
-						["ts"] = 1475277222.432,
-						["hp"] = 906693,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 94472,
-					}, -- [1]
-					{
-						["ts"] = 1475277222.663,
-						["amount"] = 22512,
-						["absorb"] = 0,
-						["srcname"] = "Nardia-Fenris",
-						["hp"] = 918660,
-						["spellid"] = 81751,
-					}, -- [2]
-					{
-						["ts"] = 1475277223.238,
-						["amount"] = 31760,
-						["absorb"] = 0,
-						["hp"] = 935543,
-						["spellid"] = 207693,
-						["srcname"] = "Devlynn-Magtheridon",
-					}, -- [3]
-					{
-						["absorb"] = 0,
-						["amount"] = 22512,
-						["ts"] = 1475277223.298,
-						["hp"] = 947510,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [4]
-					{
-						["absorb"] = 0,
-						["amount"] = 11979,
-						["ts"] = 1475277223.307,
-						["hp"] = 953878,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 94472,
-					}, -- [5]
-					{
-						["absorb"] = 0,
-						["amount"] = 18910,
-						["ts"] = 1475277223.895,
-						["hp"] = 963930,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [6]
-					{
-						["ts"] = 1475277224.021,
-						["amount"] = -22678,
-						["srcname"] = "Molten Charskin",
-						["spellid"] = 209921,
-						["hp"] = 957122,
-					}, -- [7]
-					{
-						["absorb"] = 0,
-						["amount"] = 5989,
-						["ts"] = 1475277224.288,
-						["hp"] = 960306,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [8]
-					{
-						["absorb"] = 0,
-						["amount"] = 6817,
-						["ts"] = 1475277224.505,
-						["hp"] = 963930,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [9]
-					{
-						["ts"] = 1475277225.035,
-						["amount"] = -272395,
-						["spellid"] = 200721,
-						["srcname"] = "Dargrul",
-						["hp"] = 882159,
-					}, -- [10]
-					{
-						["absorb"] = 0,
-						["amount"] = 5989,
-						["ts"] = 1475277225.21,
-						["hp"] = 885343,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [11]
-					{
-						["ts"] = 1475277225.235,
-						["amount"] = 31760,
-						["absorb"] = 0,
-						["hp"] = 902226,
-						["srcname"] = "Devlynn-Magtheridon",
-						["spellid"] = 207693,
-					}, -- [12]
-					{
-						["ts"] = 1475277226.034,
-						["amount"] = -22832,
-						["spellid"] = 209921,
-						["srcname"] = "Molten Charskin",
-						["hp"] = 895372,
-					}, -- [13]
-					{
-						["absorb"] = 0,
-						["amount"] = 5989,
-						["ts"] = 1475277226.139,
-						["hp"] = 898556,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [14]
-					{
-						["absorb"] = 0,
-						["amount"] = 5989,
-						["ts"] = 1475277227.004,
-						["hp"] = 901740,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [15]
-					["pos"] = 1,
-				},
 				["id"] = "Player-78-0AA03C09",
 				["maxhp"] = 963930,
-				["overhealing"] = 19891994,
+				["healingspells"] = {
+					["Soul Cleave"] = {
+						["shielding"] = 0,
+						["id"] = 228477,
+						["healing"] = 14983826,
+						["absorbed"] = 0,
+						["min"] = 0,
+						["multistrike"] = 0,
+						["name"] = "Soul Cleave",
+						["critical"] = 16,
+						["max"] = 608979,
+						["overhealing"] = 6254276,
+						["hits"] = 54,
+						["multistrikes"] = 0,
+					},
+					["Consume Soul"] = {
+						["shielding"] = 0,
+						["id"] = 203794,
+						["healing"] = 7286459,
+						["absorbed"] = 0,
+						["min"] = 0,
+						["multistrike"] = 0,
+						["name"] = "Consume Soul",
+						["critical"] = 63,
+						["max"] = 251406,
+						["overhealing"] = 12472330,
+						["hits"] = 178,
+						["multistrikes"] = 0,
+					},
+					["Feast of Souls"] = {
+						["shielding"] = 0,
+						["id"] = 207693,
+						["healing"] = 3820938,
+						["absorbed"] = 0,
+						["min"] = 0,
+						["multistrike"] = 0,
+						["name"] = "Feast of Souls",
+						["critical"] = 0,
+						["max"] = 31762,
+						["overhealing"] = 1165388,
+						["hits"] = 157,
+						["multistrikes"] = 0,
+					},
+				},
 				["damagetakenspells"] = {
 					["Stone Bolt"] = {
 						["crushing"] = 0,
@@ -9190,62 +9391,12 @@ SkadaPerCharDB = {
 						["damage"] = 45606589,
 					},
 				},
-				["healingspells"] = {
-					["Soul Cleave"] = {
-						["shielding"] = 0,
-						["id"] = 228477,
-						["healing"] = 14983826,
-						["absorbed"] = 0,
-						["min"] = 0,
-						["multistrike"] = 0,
-						["name"] = "Soul Cleave",
-						["critical"] = 16,
-						["max"] = 608979,
-						["overhealing"] = 6254276,
-						["hits"] = 54,
-						["multistrikes"] = 0,
-					},
-					["Consume Soul"] = {
-						["shielding"] = 0,
-						["id"] = 203794,
-						["healing"] = 7286459,
-						["absorbed"] = 0,
-						["min"] = 0,
-						["multistrike"] = 0,
-						["name"] = "Consume Soul",
-						["critical"] = 63,
-						["max"] = 251406,
-						["overhealing"] = 12472330,
-						["hits"] = 178,
-						["multistrikes"] = 0,
-					},
-					["Feast of Souls"] = {
-						["shielding"] = 0,
-						["id"] = 207693,
-						["healing"] = 3820938,
-						["absorbed"] = 0,
-						["min"] = 0,
-						["multistrike"] = 0,
-						["name"] = "Feast of Souls",
-						["critical"] = 0,
-						["max"] = 31762,
-						["overhealing"] = 1165388,
-						["hits"] = 157,
-						["multistrikes"] = 0,
-					},
+				["ffdamagedonetargets"] = {
 				},
 				["shielding"] = 0,
 				["name"] = "Devlynn",
 				["healing"] = 26091223,
-				["healed"] = {
-					["Player-78-0AA03C09"] = {
-						["role"] = "TANK",
-						["name"] = "Devlynn-Magtheridon",
-						["amount"] = 26091223,
-						["class"] = "DEMONHUNTER",
-						["shielding"] = 0,
-					},
-				},
+				["damagetaken"] = 84093123,
 				["dispells"] = 0,
 				["ccbreaks"] = 0,
 				["multistrikes"] = 0,
@@ -9334,18 +9485,131 @@ SkadaPerCharDB = {
 						["uptime"] = 2,
 					},
 				},
+				["ffdamagedonespells"] = {
+				},
 				["role"] = "DAMAGER",
 				["time"] = 952,
 				["interrupts"] = 0,
-				["power"] = {
-					[9] = {
-						["amount"] = 404,
-						["spells"] = {
-							[202270] = 220,
-							[217020] = 184,
-						},
-					},
+				["ffdamagedone"] = 0,
+				["deathlog"] = {
+					{
+						["absorb"] = 0,
+						["amount"] = 22512,
+						["ts"] = 1475277224.505,
+						["hp"] = 1220913,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [1]
+					{
+						["ts"] = 1475277225.035,
+						["amount"] = -308842,
+						["hp"] = 912071,
+						["spellid"] = 200721,
+						["srcname"] = "Dargrul",
+					}, -- [2]
+					{
+						["ts"] = 1475277226.034,
+						["amount"] = -25386,
+						["hp"] = 886685,
+						["spellid"] = 209921,
+						["srcname"] = "Molten Charskin",
+					}, -- [3]
+					{
+						["ts"] = 1475277219.997,
+						["amount"] = -24764,
+						["hp"] = 1110012,
+						["spellid"] = 209921,
+						["srcname"] = "Molten Charskin",
+					}, -- [4]
+					{
+						["absorb"] = 0,
+						["amount"] = 30659,
+						["ts"] = 1475277220.528,
+						["hp"] = 1140671,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [5]
+					{
+						["absorb"] = 0,
+						["amount"] = 5990,
+						["ts"] = 1475277220.585,
+						["hp"] = 1146661,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [6]
+					{
+						["absorb"] = 0,
+						["amount"] = 5991,
+						["ts"] = 1475277221.43,
+						["hp"] = 1152652,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [7]
+					{
+						["ts"] = 1475277222.012,
+						["amount"] = -25081,
+						["hp"] = 1127571,
+						["spellid"] = 209921,
+						["srcname"] = "Molten Charskin",
+					}, -- [8]
+					{
+						["ts"] = 1475277222.432,
+						["amount"] = 11982,
+						["absorb"] = 0,
+						["hp"] = 1139553,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 94472,
+					}, -- [9]
+					{
+						["absorb"] = 0,
+						["amount"] = 22512,
+						["ts"] = 1475277222.677,
+						["hp"] = 1162065,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [10]
+					{
+						["absorb"] = 0,
+						["amount"] = 22512,
+						["ts"] = 1475277223.298,
+						["hp"] = 1184577,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [11]
+					{
+						["absorb"] = 0,
+						["amount"] = 11980,
+						["ts"] = 1475277223.307,
+						["hp"] = 1196557,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 94472,
+					}, -- [12]
+					{
+						["absorb"] = 0,
+						["amount"] = 22512,
+						["ts"] = 1475277223.895,
+						["hp"] = 1219069,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [13]
+					{
+						["ts"] = 1475277224.021,
+						["amount"] = -26658,
+						["hp"] = 1192411,
+						["spellid"] = 209921,
+						["srcname"] = "Molten Charskin",
+					}, -- [14]
+					{
+						["absorb"] = 0,
+						["amount"] = 5990,
+						["ts"] = 1475277224.288,
+						["hp"] = 1198401,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [15]
+					["pos"] = 4,
 				},
+				["overhealing"] = 2415,
 				["damage"] = 84161988,
 				["damagespells"] = {
 					["Divine Storm"] = {
@@ -9491,16 +9755,16 @@ SkadaPerCharDB = {
 							{
 								["ts"] = 1475276807.98102,
 								["amount"] = -32844,
+								["hp"] = 908650,
 								["spellid"] = 217851,
 								["srcname"] = "Naraxas",
-								["hp"] = 908650,
 							}, -- [2]
 							{
 								["ts"] = 1475276808.06203,
 								["amount"] = -110964,
+								["srcname"] = "Naraxas",
 								["hp"] = 797686,
 								["spellid"] = 188493,
-								["srcname"] = "Naraxas",
 							}, -- [3]
 							{
 								["hp"] = 746354,
@@ -9519,9 +9783,9 @@ SkadaPerCharDB = {
 							{
 								["ts"] = 1475276808.97506,
 								["amount"] = -32885,
+								["hp"] = 725449,
 								["spellid"] = 217851,
 								["srcname"] = "Naraxas",
-								["hp"] = 725449,
 							}, -- [6]
 							{
 								["hp"] = 683042,
@@ -9538,9 +9802,9 @@ SkadaPerCharDB = {
 							{
 								["ts"] = 1475276809.97509,
 								["amount"] = -33975,
+								["hp"] = 606084,
 								["spellid"] = 217851,
 								["srcname"] = "Naraxas",
-								["hp"] = 606084,
 							}, -- [9]
 							{
 								["absorb"] = 0,
@@ -9577,9 +9841,9 @@ SkadaPerCharDB = {
 							{
 								["ts"] = 1475276824.31414,
 								["amount"] = -856326,
+								["srcname"] = "Naraxas",
 								["hp"] = 679382,
 								["spellid"] = 88163,
-								["srcname"] = "Naraxas",
 							}, -- [14]
 							{
 								["spellname"] = "Failure dies",
@@ -9597,9 +9861,9 @@ SkadaPerCharDB = {
 							{
 								["ts"] = 1475276185.97401,
 								["amount"] = -122445,
+								["hp"] = 253742,
 								["spellid"] = 226296,
 								["srcname"] = "Vileshard Hulk",
-								["hp"] = 253742,
 							}, -- [1]
 							{
 								["absorb"] = 0,
@@ -9612,9 +9876,9 @@ SkadaPerCharDB = {
 							{
 								["ts"] = 1475276186.97403,
 								["amount"] = -122446,
+								["hp"] = 137246,
 								["spellid"] = 226296,
 								["srcname"] = "Vileshard Hulk",
-								["hp"] = 137246,
 							}, -- [3]
 							{
 								["absorb"] = 0,
@@ -9635,9 +9899,9 @@ SkadaPerCharDB = {
 							{
 								["ts"] = 1475276187.96706,
 								["amount"] = -122445,
+								["hp"] = 140110,
 								["spellid"] = 226296,
 								["srcname"] = "Vileshard Hulk",
-								["hp"] = 140110,
 							}, -- [6]
 							{
 								["absorb"] = 0,
@@ -9650,16 +9914,16 @@ SkadaPerCharDB = {
 							{
 								["ts"] = 1475276188.97608,
 								["amount"] = -122445,
+								["srcname"] = "Vileshard Hulk",
 								["spellid"] = 226296,
 								["hp"] = 23615,
-								["srcname"] = "Vileshard Hulk",
 							}, -- [8]
 							{
 								["ts"] = 1475276189.99209,
 								["amount"] = -122446,
+								["hp"] = 1,
 								["spellid"] = 226296,
 								["srcname"] = "Vileshard Hulk",
-								["hp"] = 1,
 							}, -- [9]
 							{
 								["spellname"] = "Failure dies",
@@ -9711,128 +9975,42 @@ SkadaPerCharDB = {
 						},
 					}, -- [2]
 				},
-				["damagetaken"] = 17264650,
-				["deathlog"] = {
-					{
-						["absorb"] = 0,
-						["amount"] = 22512,
-						["ts"] = 1475277224.505,
-						["hp"] = 1220913,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [1]
-					{
-						["ts"] = 1475277225.035,
-						["amount"] = -308842,
-						["spellid"] = 200721,
-						["srcname"] = "Dargrul",
-						["hp"] = 912071,
-					}, -- [2]
-					{
-						["ts"] = 1475277226.034,
-						["amount"] = -25386,
-						["spellid"] = 209921,
-						["srcname"] = "Molten Charskin",
-						["hp"] = 886685,
-					}, -- [3]
-					{
-						["ts"] = 1475277219.997,
-						["amount"] = -24764,
-						["spellid"] = 209921,
-						["srcname"] = "Molten Charskin",
-						["hp"] = 1110012,
-					}, -- [4]
-					{
-						["absorb"] = 0,
-						["amount"] = 30659,
-						["ts"] = 1475277220.528,
-						["hp"] = 1140671,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [5]
-					{
-						["absorb"] = 0,
-						["amount"] = 5990,
-						["ts"] = 1475277220.585,
-						["hp"] = 1146661,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [6]
-					{
-						["absorb"] = 0,
-						["amount"] = 5991,
-						["ts"] = 1475277221.43,
-						["hp"] = 1152652,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [7]
-					{
-						["ts"] = 1475277222.012,
-						["amount"] = -25081,
-						["spellid"] = 209921,
-						["srcname"] = "Molten Charskin",
-						["hp"] = 1127571,
-					}, -- [8]
-					{
-						["ts"] = 1475277222.432,
-						["amount"] = 11982,
-						["absorb"] = 0,
-						["hp"] = 1139553,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 94472,
-					}, -- [9]
-					{
-						["absorb"] = 0,
-						["amount"] = 22512,
-						["ts"] = 1475277222.677,
-						["hp"] = 1162065,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [10]
-					{
-						["absorb"] = 0,
-						["amount"] = 22512,
-						["ts"] = 1475277223.298,
-						["hp"] = 1184577,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [11]
-					{
-						["absorb"] = 0,
-						["amount"] = 11980,
-						["ts"] = 1475277223.307,
-						["hp"] = 1196557,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 94472,
-					}, -- [12]
-					{
-						["absorb"] = 0,
-						["amount"] = 22512,
-						["ts"] = 1475277223.895,
-						["hp"] = 1219069,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [13]
-					{
-						["ts"] = 1475277224.021,
-						["amount"] = -26658,
-						["spellid"] = 209921,
-						["srcname"] = "Molten Charskin",
-						["hp"] = 1192411,
-					}, -- [14]
-					{
-						["absorb"] = 0,
-						["amount"] = 5990,
-						["ts"] = 1475277224.288,
-						["hp"] = 1198401,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [15]
-					["pos"] = 4,
+				["healed"] = {
+					["Player-118-00547BF9"] = {
+						["role"] = "DAMAGER",
+						["name"] = "Failure",
+						["amount"] = 765056,
+						["class"] = "PALADIN",
+						["shielding"] = 765056,
+					},
+				},
+				["power"] = {
+					[9] = {
+						["amount"] = 404,
+						["spells"] = {
+							[202270] = 220,
+							[217020] = 184,
+						},
+					},
 				},
 				["id"] = "Player-118-00547BF9",
-				["maxhp"] = 1293681,
-				["overhealing"] = 2415,
+				["maxhp"] = 1887900,
+				["healingspells"] = {
+					["Shield of Vengeance"] = {
+						["shielding"] = 765056,
+						["id"] = 184662,
+						["healing"] = 765056,
+						["absorbed"] = 0,
+						["min"] = 0,
+						["multistrike"] = 0,
+						["name"] = "Shield of Vengeance",
+						["critical"] = 0,
+						["max"] = 84721,
+						["overhealing"] = 2415,
+						["hits"] = 19,
+						["multistrikes"] = 0,
+					},
+				},
 				["damagetakenspells"] = {
 					["Stone Bolt"] = {
 						["crushing"] = 0,
@@ -10143,34 +10321,12 @@ SkadaPerCharDB = {
 						["damage"] = 1369035,
 					},
 				},
-				["healingspells"] = {
-					["Shield of Vengeance"] = {
-						["shielding"] = 765056,
-						["id"] = 184662,
-						["healing"] = 765056,
-						["absorbed"] = 0,
-						["min"] = 0,
-						["multistrike"] = 0,
-						["name"] = "Shield of Vengeance",
-						["critical"] = 0,
-						["max"] = 84721,
-						["overhealing"] = 2415,
-						["hits"] = 19,
-						["multistrikes"] = 0,
-					},
+				["ffdamagedonetargets"] = {
 				},
 				["shielding"] = 765056,
 				["name"] = "Failure",
 				["healing"] = 765056,
-				["healed"] = {
-					["Player-118-00547BF9"] = {
-						["role"] = "DAMAGER",
-						["name"] = "Failure",
-						["amount"] = 765056,
-						["class"] = "PALADIN",
-						["shielding"] = 765056,
-					},
-				},
+				["damagetaken"] = 17264650,
 				["dispells"] = 0,
 				["ccbreaks"] = 0,
 				["multistrikes"] = 0,
@@ -10273,23 +10429,129 @@ SkadaPerCharDB = {
 						["uptime"] = 8,
 					},
 				},
+				["ffdamagedonespells"] = {
+				},
 				["role"] = "HEALER",
 				["time"] = 912,
 				["interrupts"] = 0,
-				["power"] = {
-					[13] = {
-						["amount"] = 171,
-						["spells"] = {
-							[589] = 171,
-						},
-					},
-					[0] = {
-						["amount"] = 252000,
-						["spells"] = {
-							[123051] = 252000,
-						},
-					},
+				["ffdamagedone"] = 0,
+				["deathlog"] = {
+					{
+						["ts"] = 1475277225.791,
+						["amount"] = -347859,
+						["hp"] = 379435,
+						["spellid"] = 200338,
+						["srcname"] = "Dargrul",
+					}, -- [1]
+					{
+						["ts"] = 1475277226.034,
+						["amount"] = -20678,
+						["hp"] = 369544,
+						["spellid"] = 209921,
+						["srcname"] = "Molten Charskin",
+					}, -- [2]
+					{
+						["absorb"] = 0,
+						["amount"] = 40222,
+						["ts"] = 1475277228.277,
+						["hp"] = 399000,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 110745,
+					}, -- [3]
+					{
+						["absorb"] = 0,
+						["amount"] = 26145,
+						["ts"] = 1475277211.124,
+						["hp"] = 796598,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 110745,
+					}, -- [4]
+					{
+						["absorb"] = 0,
+						["amount"] = 5990,
+						["ts"] = 1475277211.334,
+						["hp"] = 800985,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [5]
+					{
+						["absorb"] = 0,
+						["amount"] = 12203,
+						["ts"] = 1475277211.369,
+						["hp"] = 809922,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [6]
+					{
+						["absorb"] = 0,
+						["amount"] = 0,
+						["ts"] = 1475277211.982,
+						["hp"] = 809922,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [7]
+					{
+						["absorb"] = 0,
+						["amount"] = 0,
+						["ts"] = 1475277212.605,
+						["hp"] = 809922,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 94472,
+					}, -- [8]
+					{
+						["absorb"] = 0,
+						["amount"] = 0,
+						["ts"] = 1475277212.642,
+						["hp"] = 809922,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [9]
+					{
+						["ts"] = 1475277215.98,
+						["amount"] = -25721,
+						["hp"] = 797619,
+						["spellid"] = 209921,
+						["srcname"] = "Molten Charskin",
+					}, -- [10]
+					{
+						["absorb"] = -12021,
+						["amount"] = -14141,
+						["ts"] = 1475277217.993,
+						["hp"] = 790855,
+						["srcname"] = "Molten Charskin",
+						["spellid"] = 209921,
+					}, -- [11]
+					{
+						["ts"] = 1475277219.997,
+						["amount"] = -26312,
+						["hp"] = 778269,
+						["spellid"] = 209921,
+						["srcname"] = "Molten Charskin",
+					}, -- [12]
+					{
+						["ts"] = 1475277222.012,
+						["amount"] = -25963,
+						["hp"] = 765850,
+						["spellid"] = 209921,
+						["srcname"] = "Molten Charskin",
+					}, -- [13]
+					{
+						["ts"] = 1475277224.021,
+						["amount"] = -26191,
+						["hp"] = 753322,
+						["spellid"] = 209921,
+						["srcname"] = "Molten Charskin",
+					}, -- [14]
+					{
+						["ts"] = 1475277225.331,
+						["amount"] = -433808,
+						["hp"] = 753322,
+						["spellid"] = 88163,
+						["srcname"] = "Molten Charskin",
+					}, -- [15]
+					["pos"] = 4,
 				},
+				["overhealing"] = 36380390.8710938,
 				["damage"] = 45647748,
 				["damagespells"] = {
 					["Nightmare Essence"] = {
@@ -10410,9 +10672,9 @@ SkadaPerCharDB = {
 							{
 								["ts"] = 1475276263.41701,
 								["amount"] = -198049,
+								["hp"] = 44071,
 								["spellid"] = 186269,
 								["srcname"] = "Blightshard Shaper",
-								["hp"] = 44071,
 							}, -- [1]
 							{
 								["absorb"] = 0,
@@ -10425,9 +10687,9 @@ SkadaPerCharDB = {
 							{
 								["ts"] = 1475276264.06303,
 								["amount"] = -119652,
+								["hp"] = 1,
 								["spellid"] = 226296,
 								["srcname"] = "Vileshard Hulk",
-								["hp"] = 1,
 							}, -- [3]
 							{
 								["spellname"] = "Nardia dies",
@@ -10438,9 +10700,9 @@ SkadaPerCharDB = {
 							{
 								["ts"] = 1475276258.11005,
 								["amount"] = -195731,
+								["hp"] = 319850,
 								["spellid"] = 186269,
 								["srcname"] = "Blightshard Shaper",
-								["hp"] = 319850,
 							}, -- [5]
 							{
 								["absorb"] = 0,
@@ -10461,9 +10723,9 @@ SkadaPerCharDB = {
 							{
 								["ts"] = 1475276259.04408,
 								["amount"] = -119652,
+								["hp"] = 299734,
 								["spellid"] = 226296,
 								["srcname"] = "Vileshard Hulk",
-								["hp"] = 299734,
 							}, -- [8]
 							{
 								["absorb"] = 0,
@@ -10476,9 +10738,9 @@ SkadaPerCharDB = {
 							{
 								["ts"] = 1475276260.0501,
 								["amount"] = -119650,
+								["hp"] = 251220,
 								["spellid"] = 226296,
 								["srcname"] = "Vileshard Hulk",
-								["hp"] = 251220,
 							}, -- [10]
 							{
 								["absorb"] = -16217,
@@ -10507,141 +10769,192 @@ SkadaPerCharDB = {
 							{
 								["ts"] = 1475276262.04514,
 								["amount"] = -119650,
+								["hp"] = 196033,
 								["spellid"] = 226296,
 								["srcname"] = "Vileshard Hulk",
-								["hp"] = 196033,
 							}, -- [14]
 							{
 								["ts"] = 1475276263.05015,
 								["amount"] = -119650,
+								["hp"] = 138802,
 								["spellid"] = 226296,
 								["srcname"] = "Vileshard Hulk",
-								["hp"] = 138802,
 							}, -- [15]
 							["pos"] = 5,
 						},
 					}, -- [1]
 				},
-				["damagetaken"] = 14160733,
-				["deathlog"] = {
-					{
-						["ts"] = 1475277225.791,
-						["amount"] = -347859,
-						["spellid"] = 200338,
-						["srcname"] = "Dargrul",
-						["hp"] = 379435,
-					}, -- [1]
-					{
-						["ts"] = 1475277226.034,
-						["amount"] = -20678,
-						["spellid"] = 209921,
-						["srcname"] = "Molten Charskin",
-						["hp"] = 369544,
-					}, -- [2]
-					{
-						["absorb"] = 0,
-						["amount"] = 40222,
-						["ts"] = 1475277228.277,
-						["hp"] = 399000,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 110745,
-					}, -- [3]
-					{
-						["absorb"] = 0,
-						["amount"] = 26145,
-						["ts"] = 1475277211.124,
-						["hp"] = 796598,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 110745,
-					}, -- [4]
-					{
-						["absorb"] = 0,
-						["amount"] = 5990,
-						["ts"] = 1475277211.334,
-						["hp"] = 800985,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [5]
-					{
-						["absorb"] = 0,
-						["amount"] = 12203,
-						["ts"] = 1475277211.369,
-						["hp"] = 809922,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [6]
-					{
-						["absorb"] = 0,
+				["healed"] = {
+					["Player-78-0AA03C09"] = {
+						["role"] = "TANK",
+						["name"] = "Devlynn-Magtheridon",
+						["amount"] = 23366352,
+						["class"] = "DEMONHUNTER",
+						["shielding"] = 3245178,
+					},
+					["Creature-0-3132-1458-22533-62982-00006EF0B4"] = {
 						["amount"] = 0,
-						["ts"] = 1475277211.982,
-						["hp"] = 809922,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [7]
-					{
-						["absorb"] = 0,
+						["role"] = "NONE",
+						["name"] = "Mindbender",
+						["shielding"] = 0,
+					},
+					["Player-68-08A915DB"] = {
+						["role"] = "DAMAGER",
+						["name"] = "Forhire-GrizzlyHills",
+						["amount"] = 6084178,
+						["class"] = "ROGUE",
+						["shielding"] = 274771,
+					},
+					["Player-114-05A8BED4"] = {
+						["role"] = "HEALER",
+						["name"] = "Nardia-Fenris",
+						["amount"] = 7679238,
+						["class"] = "PRIEST",
+						["shielding"] = 1168438,
+					},
+					["Creature-0-3132-1458-22533-62982-00006EF17F"] = {
 						["amount"] = 0,
-						["ts"] = 1475277212.605,
-						["hp"] = 809922,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 94472,
-					}, -- [8]
-					{
-						["absorb"] = 0,
+						["role"] = "NONE",
+						["name"] = "Mindbender",
+						["shielding"] = 0,
+					},
+					["Player-118-00547BF9"] = {
+						["role"] = "DAMAGER",
+						["name"] = "Failure",
+						["amount"] = 13199984,
+						["class"] = "PALADIN",
+						["shielding"] = 2204305,
+					},
+					["Creature-0-3132-1458-22533-62982-00006EEEF3"] = {
 						["amount"] = 0,
-						["ts"] = 1475277212.642,
-						["hp"] = 809922,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [9]
-					{
-						["ts"] = 1475277215.98,
-						["amount"] = -25721,
-						["spellid"] = 209921,
-						["srcname"] = "Molten Charskin",
-						["hp"] = 797619,
-					}, -- [10]
-					{
-						["absorb"] = -12021,
-						["amount"] = -14141,
-						["ts"] = 1475277217.993,
-						["hp"] = 790855,
-						["srcname"] = "Molten Charskin",
-						["spellid"] = 209921,
-					}, -- [11]
-					{
-						["ts"] = 1475277219.997,
-						["amount"] = -26312,
-						["spellid"] = 209921,
-						["srcname"] = "Molten Charskin",
-						["hp"] = 778269,
-					}, -- [12]
-					{
-						["ts"] = 1475277222.012,
-						["amount"] = -25963,
-						["spellid"] = 209921,
-						["srcname"] = "Molten Charskin",
-						["hp"] = 765850,
-					}, -- [13]
-					{
-						["ts"] = 1475277224.021,
-						["amount"] = -26191,
-						["spellid"] = 209921,
-						["srcname"] = "Molten Charskin",
-						["hp"] = 753322,
-					}, -- [14]
-					{
-						["ts"] = 1475277225.331,
-						["amount"] = -433808,
-						["spellid"] = 88163,
-						["srcname"] = "Molten Charskin",
-						["hp"] = 753322,
-					}, -- [15]
-					["pos"] = 4,
+						["role"] = "NONE",
+						["name"] = "Mindbender",
+						["shielding"] = 0,
+					},
+					["Player-68-089D9725"] = {
+						["role"] = "DAMAGER",
+						["name"] = "Holyhunter-GrizzlyHills",
+						["amount"] = 6382478,
+						["class"] = "HUNTER",
+						["shielding"] = 289987,
+					},
+				},
+				["power"] = {
+					[13] = {
+						["amount"] = 171,
+						["spells"] = {
+							[589] = 171,
+						},
+					},
+					[0] = {
+						["amount"] = 252000,
+						["spells"] = {
+							[123051] = 252000,
+						},
+					},
 				},
 				["id"] = "Player-114-05A8BED4",
 				["maxhp"] = 789015,
-				["overhealing"] = 36380390.8710938,
+				["healingspells"] = {
+					["Power Word: Radiance"] = {
+						["shielding"] = 0,
+						["id"] = 194509,
+						["healing"] = 7566666,
+						["absorbed"] = 0,
+						["min"] = 0,
+						["multistrike"] = 0,
+						["name"] = "Power Word: Radiance",
+						["critical"] = 38,
+						["max"] = 145235,
+						["overhealing"] = 4253819,
+						["hits"] = 152,
+						["multistrikes"] = 0,
+					},
+					["Divine Star"] = {
+						["shielding"] = 0,
+						["id"] = 110745,
+						["healing"] = 3210491,
+						["absorbed"] = 0,
+						["min"] = 0,
+						["multistrike"] = 0,
+						["name"] = "Divine Star",
+						["critical"] = 38,
+						["max"] = 52289,
+						["overhealing"] = 2686269,
+						["hits"] = 208,
+						["multistrikes"] = 0,
+					},
+					["Plea"] = {
+						["shielding"] = 0,
+						["id"] = 200829,
+						["healing"] = 3258238,
+						["absorbed"] = 0,
+						["min"] = 0,
+						["multistrike"] = 0,
+						["name"] = "Plea",
+						["critical"] = 9,
+						["max"] = 130716,
+						["overhealing"] = 552688,
+						["hits"] = 56,
+						["multistrikes"] = 0,
+					},
+					["Smite"] = {
+						["shielding"] = 3381321,
+						["id"] = 208771,
+						["healing"] = 3381321,
+						["absorbed"] = 0,
+						["min"] = 270,
+						["multistrike"] = 0,
+						["name"] = "Smite",
+						["critical"] = 0,
+						["max"] = 90760,
+						["overhealing"] = 0,
+						["hits"] = 121,
+						["multistrikes"] = 0,
+					},
+					["Shadow Mend"] = {
+						["shielding"] = 0,
+						["id"] = 186263,
+						["healing"] = 2372072,
+						["absorbed"] = 0,
+						["min"] = 1356,
+						["multistrike"] = 0,
+						["name"] = "Shadow Mend",
+						["critical"] = 2,
+						["max"] = 429289,
+						["overhealing"] = 213288,
+						["hits"] = 10,
+						["multistrikes"] = 0,
+					},
+					["Atonement"] = {
+						["shielding"] = 0,
+						["id"] = 81751,
+						["healing"] = 33122084,
+						["absorbed"] = 0,
+						["min"] = 0,
+						["multistrike"] = 0,
+						["name"] = "Atonement",
+						["critical"] = 620,
+						["max"] = 248832,
+						["overhealing"] = 26830813,
+						["hits"] = 3975,
+						["multistrikes"] = 0,
+					},
+					["Power Word: Shield"] = {
+						["shielding"] = 3801358,
+						["id"] = 17,
+						["healing"] = 3801358,
+						["absorbed"] = 0,
+						["min"] = 0,
+						["multistrike"] = 0,
+						["name"] = "Power Word: Shield",
+						["critical"] = 0,
+						["max"] = 156837,
+						["overhealing"] = 1843513.87109375,
+						["hits"] = 141,
+						["multistrikes"] = 0,
+					},
+				},
 				["damagetakenspells"] = {
 					["Stone Bolt"] = {
 						["crushing"] = 0,
@@ -10896,164 +11209,12 @@ SkadaPerCharDB = {
 						["damage"] = 1756011,
 					},
 				},
-				["healingspells"] = {
-					["Power Word: Radiance"] = {
-						["shielding"] = 0,
-						["id"] = 194509,
-						["healing"] = 7566666,
-						["absorbed"] = 0,
-						["min"] = 0,
-						["multistrike"] = 0,
-						["name"] = "Power Word: Radiance",
-						["critical"] = 38,
-						["max"] = 145235,
-						["overhealing"] = 4253819,
-						["hits"] = 152,
-						["multistrikes"] = 0,
-					},
-					["Divine Star"] = {
-						["shielding"] = 0,
-						["id"] = 110745,
-						["healing"] = 3210491,
-						["absorbed"] = 0,
-						["min"] = 0,
-						["multistrike"] = 0,
-						["name"] = "Divine Star",
-						["critical"] = 38,
-						["max"] = 52289,
-						["overhealing"] = 2686269,
-						["hits"] = 208,
-						["multistrikes"] = 0,
-					},
-					["Plea"] = {
-						["shielding"] = 0,
-						["id"] = 200829,
-						["healing"] = 3258238,
-						["absorbed"] = 0,
-						["min"] = 0,
-						["multistrike"] = 0,
-						["name"] = "Plea",
-						["critical"] = 9,
-						["max"] = 130716,
-						["overhealing"] = 552688,
-						["hits"] = 56,
-						["multistrikes"] = 0,
-					},
-					["Smite"] = {
-						["shielding"] = 3381321,
-						["id"] = 208771,
-						["healing"] = 3381321,
-						["absorbed"] = 0,
-						["min"] = 270,
-						["multistrike"] = 0,
-						["name"] = "Smite",
-						["critical"] = 0,
-						["max"] = 90760,
-						["overhealing"] = 0,
-						["hits"] = 121,
-						["multistrikes"] = 0,
-					},
-					["Shadow Mend"] = {
-						["shielding"] = 0,
-						["id"] = 186263,
-						["healing"] = 2372072,
-						["absorbed"] = 0,
-						["min"] = 1356,
-						["multistrike"] = 0,
-						["name"] = "Shadow Mend",
-						["critical"] = 2,
-						["max"] = 429289,
-						["overhealing"] = 213288,
-						["hits"] = 10,
-						["multistrikes"] = 0,
-					},
-					["Atonement"] = {
-						["shielding"] = 0,
-						["id"] = 81751,
-						["healing"] = 33122084,
-						["absorbed"] = 0,
-						["min"] = 0,
-						["multistrike"] = 0,
-						["name"] = "Atonement",
-						["critical"] = 620,
-						["max"] = 248832,
-						["overhealing"] = 26830813,
-						["hits"] = 3975,
-						["multistrikes"] = 0,
-					},
-					["Power Word: Shield"] = {
-						["shielding"] = 3801358,
-						["id"] = 17,
-						["healing"] = 3801358,
-						["absorbed"] = 0,
-						["min"] = 0,
-						["multistrike"] = 0,
-						["name"] = "Power Word: Shield",
-						["critical"] = 0,
-						["max"] = 156837,
-						["overhealing"] = 1843513.87109375,
-						["hits"] = 141,
-						["multistrikes"] = 0,
-					},
+				["ffdamagedonetargets"] = {
 				},
 				["shielding"] = 7182679,
 				["name"] = "Nardia",
 				["healing"] = 56712230,
-				["healed"] = {
-					["Player-78-0AA03C09"] = {
-						["role"] = "TANK",
-						["name"] = "Devlynn-Magtheridon",
-						["amount"] = 23366352,
-						["class"] = "DEMONHUNTER",
-						["shielding"] = 3245178,
-					},
-					["Creature-0-3132-1458-22533-62982-00006EF0B4"] = {
-						["amount"] = 0,
-						["role"] = "NONE",
-						["name"] = "Mindbender",
-						["shielding"] = 0,
-					},
-					["Player-68-08A915DB"] = {
-						["role"] = "DAMAGER",
-						["name"] = "Forhire-GrizzlyHills",
-						["amount"] = 6084178,
-						["class"] = "ROGUE",
-						["shielding"] = 274771,
-					},
-					["Player-114-05A8BED4"] = {
-						["role"] = "HEALER",
-						["name"] = "Nardia-Fenris",
-						["amount"] = 7679238,
-						["class"] = "PRIEST",
-						["shielding"] = 1168438,
-					},
-					["Creature-0-3132-1458-22533-62982-00006EF17F"] = {
-						["amount"] = 0,
-						["role"] = "NONE",
-						["name"] = "Mindbender",
-						["shielding"] = 0,
-					},
-					["Player-118-00547BF9"] = {
-						["role"] = "DAMAGER",
-						["name"] = "Failure",
-						["amount"] = 13199984,
-						["class"] = "PALADIN",
-						["shielding"] = 2204305,
-					},
-					["Creature-0-3132-1458-22533-62982-00006EEEF3"] = {
-						["amount"] = 0,
-						["role"] = "NONE",
-						["name"] = "Mindbender",
-						["shielding"] = 0,
-					},
-					["Player-68-089D9725"] = {
-						["role"] = "DAMAGER",
-						["name"] = "Holyhunter-GrizzlyHills",
-						["amount"] = 6382478,
-						["class"] = "HUNTER",
-						["shielding"] = 289987,
-					},
-				},
+				["damagetaken"] = 14160733,
 				["dispells"] = 0,
 				["ccbreaks"] = 0,
 				["multistrikes"] = 0,
@@ -11194,6 +11355,129 @@ SkadaPerCharDB = {
 				["role"] = "DAMAGER",
 				["time"] = 928,
 				["interrupts"] = 0,
+				["ffdamagedonespells"] = {
+				},
+				["ffdamagedone"] = 0,
+				["deathlog"] = {
+					{
+						["ts"] = 1475277222.012,
+						["amount"] = -23304,
+						["hp"] = 725579,
+						["spellid"] = 209921,
+						["srcname"] = "Molten Charskin",
+					}, -- [1]
+					{
+						["absorb"] = 0,
+						["amount"] = 11979,
+						["ts"] = 1475277222.432,
+						["hp"] = 732749,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 94472,
+					}, -- [2]
+					{
+						["absorb"] = 0,
+						["amount"] = 1781,
+						["ts"] = 1475277222.677,
+						["hp"] = 733815,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [3]
+					{
+						["absorb"] = 0,
+						["amount"] = 0,
+						["ts"] = 1475277223.005,
+						["hp"] = 733815,
+						["srcname"] = "Forhire-GrizzlyHills",
+						["spellid"] = 143924,
+					}, -- [4]
+					{
+						["absorb"] = 0,
+						["amount"] = 0,
+						["ts"] = 1475277223.298,
+						["hp"] = 733815,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [5]
+					{
+						["absorb"] = 0,
+						["amount"] = 0,
+						["ts"] = 1475277223.307,
+						["hp"] = 733815,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 94472,
+					}, -- [6]
+					{
+						["absorb"] = 0,
+						["amount"] = 0,
+						["ts"] = 1475277223.895,
+						["hp"] = 733815,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [7]
+					{
+						["ts"] = 1475277224.021,
+						["amount"] = -23989,
+						["hp"] = 725337,
+						["spellid"] = 209921,
+						["srcname"] = "Molten Charskin",
+					}, -- [8]
+					{
+						["absorb"] = 0,
+						["amount"] = 1448,
+						["ts"] = 1475277224.211,
+						["hp"] = 726785,
+						["srcname"] = "Forhire-GrizzlyHills",
+						["spellid"] = 143924,
+					}, -- [9]
+					{
+						["absorb"] = 0,
+						["amount"] = 5989,
+						["ts"] = 1475277224.288,
+						["hp"] = 730370,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [10]
+					{
+						["absorb"] = 0,
+						["amount"] = 5756,
+						["ts"] = 1475277224.505,
+						["hp"] = 733815,
+						["srcname"] = "Nardia-Fenris",
+						["spellid"] = 81751,
+					}, -- [11]
+					{
+						["absorb"] = 0,
+						["amount"] = 0,
+						["ts"] = 1475277225.436,
+						["hp"] = 733815,
+						["srcname"] = "Forhire-GrizzlyHills",
+						["spellid"] = 143924,
+					}, -- [12]
+					{
+						["ts"] = 1475277226.034,
+						["amount"] = -23265,
+						["hp"] = 725593,
+						["spellid"] = 209921,
+						["srcname"] = "Molten Charskin",
+					}, -- [13]
+					{
+						["absorb"] = 0,
+						["amount"] = 1348,
+						["ts"] = 1475277226.638,
+						["hp"] = 726941,
+						["srcname"] = "Forhire-GrizzlyHills",
+						["spellid"] = 143924,
+					}, -- [14]
+					{
+						["absorb"] = 0,
+						["amount"] = 5150,
+						["ts"] = 1475277227.86,
+						["hp"] = 732091,
+						["srcname"] = "Forhire-GrizzlyHills",
+						["spellid"] = 143924,
+					}, -- [15]
+					["pos"] = 1,
+				},
 				["damage"] = 99517764,
 				["damagespells"] = {
 					["Fan of Knives"] = {
@@ -11378,16 +11662,26 @@ SkadaPerCharDB = {
 						["damage"] = 10798617,
 					},
 				},
+				["overhealing"] = 1681291,
+				["healed"] = {
+					["Player-68-08A915DB"] = {
+						["role"] = "DAMAGER",
+						["name"] = "Forhire-GrizzlyHills",
+						["amount"] = 2639224,
+						["class"] = "ROGUE",
+						["shielding"] = 0,
+					},
+				},
 				["power"] = {
 					[4] = {
 						["amount"] = 524,
 						["spells"] = {
+							[1833] = 2,
 							[14189] = 135,
-							[1329] = 276,
 							[212743] = 26,
 							[16511] = 51,
 							[703] = 34,
-							[1833] = 2,
+							[1329] = 276,
 						},
 					},
 					[3] = {
@@ -11397,130 +11691,52 @@ SkadaPerCharDB = {
 						},
 					},
 				},
-				["damagetaken"] = 17686938,
-				["deathlog"] = {
-					{
-						["ts"] = 1475277222.012,
-						["amount"] = -23304,
-						["spellid"] = 209921,
-						["srcname"] = "Molten Charskin",
-						["hp"] = 725579,
-					}, -- [1]
-					{
-						["absorb"] = 0,
-						["amount"] = 11979,
-						["ts"] = 1475277222.432,
-						["hp"] = 732749,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 94472,
-					}, -- [2]
-					{
-						["absorb"] = 0,
-						["amount"] = 1781,
-						["ts"] = 1475277222.677,
-						["hp"] = 733815,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [3]
-					{
-						["absorb"] = 0,
-						["amount"] = 0,
-						["ts"] = 1475277223.005,
-						["hp"] = 733815,
-						["srcname"] = "Forhire-GrizzlyHills",
-						["spellid"] = 143924,
-					}, -- [4]
-					{
-						["absorb"] = 0,
-						["amount"] = 0,
-						["ts"] = 1475277223.298,
-						["hp"] = 733815,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [5]
-					{
-						["absorb"] = 0,
-						["amount"] = 0,
-						["ts"] = 1475277223.307,
-						["hp"] = 733815,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 94472,
-					}, -- [6]
-					{
-						["absorb"] = 0,
-						["amount"] = 0,
-						["ts"] = 1475277223.895,
-						["hp"] = 733815,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [7]
-					{
-						["ts"] = 1475277224.021,
-						["amount"] = -23989,
-						["spellid"] = 209921,
-						["srcname"] = "Molten Charskin",
-						["hp"] = 725337,
-					}, -- [8]
-					{
-						["absorb"] = 0,
-						["amount"] = 1448,
-						["ts"] = 1475277224.211,
-						["hp"] = 726785,
-						["srcname"] = "Forhire-GrizzlyHills",
-						["spellid"] = 143924,
-					}, -- [9]
-					{
-						["absorb"] = 0,
-						["amount"] = 5989,
-						["ts"] = 1475277224.288,
-						["hp"] = 730370,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [10]
-					{
-						["absorb"] = 0,
-						["amount"] = 5756,
-						["ts"] = 1475277224.505,
-						["hp"] = 733815,
-						["srcname"] = "Nardia-Fenris",
-						["spellid"] = 81751,
-					}, -- [11]
-					{
-						["absorb"] = 0,
-						["amount"] = 0,
-						["ts"] = 1475277225.436,
-						["hp"] = 733815,
-						["srcname"] = "Forhire-GrizzlyHills",
-						["spellid"] = 143924,
-					}, -- [12]
-					{
-						["ts"] = 1475277226.034,
-						["amount"] = -23265,
-						["spellid"] = 209921,
-						["srcname"] = "Molten Charskin",
-						["hp"] = 725593,
-					}, -- [13]
-					{
-						["absorb"] = 0,
-						["amount"] = 1348,
-						["ts"] = 1475277226.638,
-						["hp"] = 726941,
-						["srcname"] = "Forhire-GrizzlyHills",
-						["spellid"] = 143924,
-					}, -- [14]
-					{
-						["absorb"] = 0,
-						["amount"] = 5150,
-						["ts"] = 1475277227.86,
-						["hp"] = 732091,
-						["srcname"] = "Forhire-GrizzlyHills",
-						["spellid"] = 143924,
-					}, -- [15]
-					["pos"] = 1,
-				},
 				["id"] = "Player-68-08A915DB",
 				["maxhp"] = 733815,
-				["overhealing"] = 1681291,
+				["healingspells"] = {
+					["Crimson Vial"] = {
+						["shielding"] = 0,
+						["id"] = 185311,
+						["healing"] = 535975,
+						["absorbed"] = 0,
+						["min"] = 0,
+						["multistrike"] = 0,
+						["name"] = "Crimson Vial",
+						["critical"] = 0,
+						["max"] = 61304,
+						["overhealing"] = 383581,
+						["hits"] = 15,
+						["multistrikes"] = 0,
+					},
+					["Ancient Healing Potion"] = {
+						["shielding"] = 0,
+						["id"] = 188016,
+						["healing"] = 1421053,
+						["absorbed"] = 0,
+						["min"] = 393250,
+						["multistrike"] = 0,
+						["name"] = "Ancient Healing Potion",
+						["critical"] = 0,
+						["max"] = 559086,
+						["overhealing"] = 256205,
+						["hits"] = 3,
+						["multistrikes"] = 0,
+					},
+					["Leech"] = {
+						["shielding"] = 0,
+						["id"] = 143924,
+						["healing"] = 682196,
+						["absorbed"] = 0,
+						["min"] = 0,
+						["multistrike"] = 0,
+						["name"] = "Leech",
+						["critical"] = 0,
+						["max"] = 10690,
+						["overhealing"] = 1041505,
+						["hits"] = 676,
+						["multistrikes"] = 0,
+					},
+				},
 				["damagetakenspells"] = {
 					["Stone Bolt"] = {
 						["crushing"] = 0,
@@ -11817,62 +12033,12 @@ SkadaPerCharDB = {
 						["damage"] = 1265330,
 					},
 				},
-				["healingspells"] = {
-					["Crimson Vial"] = {
-						["shielding"] = 0,
-						["id"] = 185311,
-						["healing"] = 535975,
-						["absorbed"] = 0,
-						["min"] = 0,
-						["multistrike"] = 0,
-						["name"] = "Crimson Vial",
-						["critical"] = 0,
-						["max"] = 61304,
-						["overhealing"] = 383581,
-						["hits"] = 15,
-						["multistrikes"] = 0,
-					},
-					["Ancient Healing Potion"] = {
-						["shielding"] = 0,
-						["id"] = 188016,
-						["healing"] = 1421053,
-						["absorbed"] = 0,
-						["min"] = 393250,
-						["multistrike"] = 0,
-						["name"] = "Ancient Healing Potion",
-						["critical"] = 0,
-						["max"] = 559086,
-						["overhealing"] = 256205,
-						["hits"] = 3,
-						["multistrikes"] = 0,
-					},
-					["Leech"] = {
-						["shielding"] = 0,
-						["id"] = 143924,
-						["healing"] = 682196,
-						["absorbed"] = 0,
-						["min"] = 0,
-						["multistrike"] = 0,
-						["name"] = "Leech",
-						["critical"] = 0,
-						["max"] = 10690,
-						["overhealing"] = 1041505,
-						["hits"] = 676,
-						["multistrikes"] = 0,
-					},
+				["ffdamagedonetargets"] = {
 				},
 				["shielding"] = 0,
 				["name"] = "Forhire",
 				["healing"] = 2639224,
-				["healed"] = {
-					["Player-68-08A915DB"] = {
-						["role"] = "DAMAGER",
-						["name"] = "Forhire-GrizzlyHills",
-						["amount"] = 2639224,
-						["class"] = "ROGUE",
-						["shielding"] = 0,
-					},
-				},
+				["damagetaken"] = 17686938,
 				["dispells"] = 0,
 				["ccbreaks"] = 0,
 				["multistrikes"] = 0,
@@ -13004,8 +13170,10 @@ SkadaPerCharDB = {
 			},
 		},
 		["mobtaken"] = 456451276,
+		["ffdamagedone"] = 0,
 		["healing"] = 88332547,
-		["multistrikes"] = 0,
+		["auras"] = {
+		},
 		["power"] = {
 			[0] = 252000,
 			[13] = 171,
@@ -13015,11 +13183,11 @@ SkadaPerCharDB = {
 			[9] = 404,
 			[2] = 5115,
 		},
-		["overhealing"] = 57956090.8710938,
 		["shielding"] = 7947735,
-		["name"] = "Total",
 		["starttime"] = 1475275686,
+		["name"] = "Total",
 		["damagetaken"] = 153692445,
+		["overhealing"] = 57956090.8710938,
 		["mobhdone"] = 0,
 		["last_action"] = 1475275686,
 		["mobdone"] = 140195005,

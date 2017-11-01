@@ -1,7 +1,4 @@
-local SharedMedia = LibStub("LibSharedMedia-3.0");
-local L = WeakAuras.L;
-
--- GLOBALS: WeakAuras UIParent AceGUIWidgetLSMlists
+local L = WeakAuras.L
 
 local function createOptions(id, data)
   local options = {
@@ -16,15 +13,15 @@ local function createOptions(id, data)
       name = L["Align"],
       order = 10,
       values = WeakAuras.align_types,
-      hidden = function() return (data.grow == "LEFT" or data.grow == "RIGHT" or data.grow == "HORIZONTAL" or data.grow == "CIRCLE") end,
-      disabled = function() return data.grow == "CIRCLE" end
+      hidden = function() return (data.grow == "LEFT" or data.grow == "RIGHT" or data.grow == "HORIZONTAL" or data.grow == "CIRCLE" or data.grow == "COUNTERCIRCLE") end,
+      disabled = function() return data.grow == "CIRCLE" or data.grow == "COUNTERCIRCLE" end
     },
     rotated_align = {
       type = "select",
       name = L["Align"],
       order = 10,
       values = WeakAuras.rotated_align_types,
-      hidden = function() return (data.grow == "UP" or data.grow == "DOWN" or data.grow == "VERTICAL" or data.grow == "CIRCLE") end,
+      hidden = function() return (data.grow == "UP" or data.grow == "DOWN" or data.grow == "VERTICAL" or data.grow == "CIRCLE" or data.grow == "COUNTERCIRCLE") end,
       get = function() return data.align; end,
       set = function(info, v) data.align = v; WeakAuras.Add(data); end
     },
@@ -33,7 +30,7 @@ local function createOptions(id, data)
       name = L["Constant Factor"],
       order = 10,
       values = WeakAuras.circular_group_constant_factor_types,
-      hidden = function() return data.grow ~= "CIRCLE" end
+      hidden = function() return data.grow ~= "CIRCLE" or data.grow == "COUNTERCIRCLE" end
     },
     space = {
       type = "range",
@@ -42,7 +39,7 @@ local function createOptions(id, data)
       softMin = 0,
       softMax = 300,
       bigStep = 1,
-      hidden = function() return data.grow == "CIRCLE" and data.constantFactor == "RADIUS" end
+      hidden = function() return (data.grow == "CIRCLE" or data.grow == "COUNTERCIRCLE") and data.constantFactor == "RADIUS" end
     },
     rotation = {
       type = "range",
@@ -51,7 +48,7 @@ local function createOptions(id, data)
       min = 0,
       max = 360,
       bigStep = 3,
-      hidden = function() return data.grow ~= "CIRCLE" end
+      hidden = function() return data.grow ~= "CIRCLE" and data.grow ~= "COUNTERCIRCLE" end
     },
     stagger = {
       type = "range",
@@ -61,7 +58,7 @@ local function createOptions(id, data)
       max = 50,
       step = 0.1,
       bigStep = 1,
-      hidden = function() return data.grow == "CIRCLE" end
+      hidden = function() return data.grow == "CIRCLE" or data.grow == "COUNTERCIRCLE" end
     },
     radius = {
       type = "range",
@@ -70,7 +67,7 @@ local function createOptions(id, data)
       softMin = 0,
       softMax = 500,
       bigStep = 1,
-      hidden = function() return not(data.grow == "CIRCLE" and data.constantFactor == "RADIUS") end
+      hidden = function() return not((data.grow == "CIRCLE" or data.grow == "COUNTERCIRCLE") and data.constantFactor == "RADIUS") end
     },
     animate = {
       type = "toggle",
@@ -122,22 +119,36 @@ local function createOptions(id, data)
       order = 48,
       values = WeakAuras.group_sort_types
     },
+    hybridPosition = {
+      type = "select",
+      name = L["Hybrid Position"],
+      order = 48.1,
+      values = WeakAuras.group_hybrid_position_types,
+      hidden = function() return not(data.sort == "hybrid") end,
+    },
+    hybridSortMode = {
+      type = "select",
+      name = L["Hybrid Sort Mode"],
+      order = 48.2,
+      values = WeakAuras.group_hybrid_sort_types,
+      hidden = function() return not(data.sort == "hybrid") end,
+    },
     sortHybrid = {
-            type = "multiselect",
-            name = L["Select the auras you always want to be listed first"],
-            order = 49,
-            hidden = function() return not(data.sort == "hybrid") end,
-            values = function()
-				return data.controlledChildren
-            end,
-            get = function(info, id)
-				return data.sortHybridTable and data.sortHybridTable [id] or false;
-            end,
-            set = function(info, id)
-				if not data.sortHybridTable then data.sortHybridTable = {}; end
-					local cur = data.sortHybridTable and data.sortHybridTable[id] or false;
-                    data.sortHybridTable[id] = not(cur);
-            end,
+      type = "multiselect",
+      name = L["Select the auras you always want to be listed first"],
+      order = 49,
+      hidden = function() return not(data.sort == "hybrid") end,
+      values = function()
+        return data.controlledChildren
+      end,
+      get = function(info, id)
+        return data.sortHybridTable and data.sortHybridTable [id] or false;
+      end,
+      set = function(info, id)
+        if not data.sortHybridTable then data.sortHybridTable = {}; end
+        local cur = data.sortHybridTable and data.sortHybridTable[id] or false;
+        data.sortHybridTable[id] = not(cur);
+      end,
     },
     spacer = {
       type = "header",
@@ -154,7 +165,7 @@ local function createOptions(id, data)
   return options;
 end
 
-local function createThumbnail(parent, fullCreate)
+local function createThumbnail(parent)
   local borderframe = CreateFrame("FRAME", nil, parent);
   borderframe:SetWidth(32);
   borderframe:SetHeight(32);
@@ -176,7 +187,7 @@ local function modifyThumbnail(parent, borderframe, data, fullModify, size)
   local region = borderframe.region;
   size = size or 24;
 
-  local selfPoint,actualSelfPoint;
+  local selfPoint;
   if(data.grow == "RIGHT" or data.grow == "HORIZONTAL") then
     selfPoint = "LEFT";
     if(data.align == "LEFT") then
@@ -205,15 +216,14 @@ local function modifyThumbnail(parent, borderframe, data, fullModify, size)
     elseif(data.align == "RIGHT") then
       selfPoint = selfPoint.."RIGHT";
     end
-  elseif(data.grow == "CIRCLE") then
+  elseif(data.grow == "CIRCLE" or data.grow == "COUNTERCIRCLE") then
     selfPoint = "CENTER";
-    actualSelfPoint = "CENTER";
   end
   data.selfPoint = selfPoint;
 
   local maxWidth, maxHeight = 0, 0;
   local radius = 0;
-  if(data.grow == "CIRCLE") then
+  if(data.grow == "CIRCLE" or data.grow == "COUNTERCIRCLE") then
     if(data.constantFactor == "RADIUS") then
       radius = data.radius;
     else
@@ -235,7 +245,7 @@ local function modifyThumbnail(parent, borderframe, data, fullModify, size)
         maxHeight = maxHeight + childData.height;
         maxHeight = maxHeight + (index > 1 and data.space or 0);
         maxWidth = math.max(maxWidth, childData.width);
-      elseif(data.grow == "CIRCLE") then
+      elseif(data.grow == "CIRCLE" or data.grow == "COUNTERCIRCLE") then
         maxWidth = math.max(maxWidth, childData.width);
         maxHeight = math.max(maxHeight, childData.height);
       end
@@ -245,7 +255,7 @@ local function modifyThumbnail(parent, borderframe, data, fullModify, size)
     maxHeight = maxHeight + (math.abs(data.stagger) * (#data.controlledChildren - 1));
   elseif(data.grow == "UP" or data.grow == "DOWN" or data.grow == "VERTICAL") then
     maxWidth = maxWidth + (math.abs(data.stagger) * (#data.controlledChildren - 1));
-  elseif(data.grow == "CIRCLE") then
+  elseif(data.grow == "CIRCLE" or data.grow == "COUNTERCIRCLE") then
     maxWidth = maxWidth + (2 * radius);
     maxHeight = maxHeight + (2 * radius);
   end
@@ -262,7 +272,7 @@ local function modifyThumbnail(parent, borderframe, data, fullModify, size)
   region:SetHeight(maxHeight * scale);
 
   local xOffset, yOffset = 0, 0;
-  if(math.abs(data.stagger) > 0.1 and not data.grow == "CIRCLE") then
+  if(math.abs(data.stagger) > 0.1 and not (data.grow == "CIRCLE" or data.grow == "COUNTERCIRCLE")) then
     if(data.grow == "RIGHT" or data.grow == "LEFT" or data.grow == "HORIZONTAL") then
       if(data.align == "LEFT" and data.stagger > 0) then
         yOffset = yOffset - (data.stagger * (#data.controlledChildren - 1));
@@ -292,8 +302,11 @@ local function modifyThumbnail(parent, borderframe, data, fullModify, size)
 
   local angle = data.rotation or 0;
   local angleInc = 360 / (#data.controlledChildren ~= 0 and #data.controlledChildren or 1);
-  local radius = 0;
-  if(data.grow == "CIRCLE") then
+  if (data.grow == "COUNTERCIRCLE") then
+    angleInc = -angleInc;
+  end
+  radius = 0;
+  if(data.grow == "CIRCLE" or data.grow == "COUNTERCIRCLE") then
     if(data.constantFactor == "RADIUS") then
       radius = data.radius;
     else
@@ -307,7 +320,7 @@ local function modifyThumbnail(parent, borderframe, data, fullModify, size)
   for index, childId in pairs(data.controlledChildren) do
     local childData = WeakAuras.GetData(childId);
     if(childData) then
-      if(data.grow == "CIRCLE") then
+      if(data.grow == "CIRCLE" or data.grow == "COUNTERCIRCLE") then
         yOffset = cos(angle) * radius * -1;
         xOffset = sin(angle) * radius;
         angle = angle + angleInc;
@@ -377,7 +390,7 @@ local function modifyThumbnail(parent, borderframe, data, fullModify, size)
     else
       region.children[index]:SetPoint("CENTER", region, "CENTER");
     end
-  elseif(data.grow == "CIRCLE") then
+  elseif(data.grow == "CIRCLE" or data.grow == "COUNTERCIRCLE") then
     region.children[index]:SetWidth(1);
     region.children[index]:SetHeight(1);
     region.children[index]:SetPoint("CENTER", region, "CENTER");
@@ -414,12 +427,12 @@ local function createIcon()
       t2:SetPoint("TOP", t1, "BOTTOM", 0, -2 + (28 * self.elapsed));
       t2:SetAlpha(1 - (2 * self.elapsed));
     elseif(self.elapsed < 1.5) then
-      -- do nothing
+    -- do nothing
     elseif(self.elapsed < 2) then
       t2:SetPoint("TOP", t1, "BOTTOM", 0, -2 + (28 * (2 - self.elapsed)));
       t2:SetAlpha((2 * self.elapsed) - 3);
     elseif(self.elapsed < 3) then
-      -- do nothing
+    -- do nothing
     else
       self.elapsed = self.elapsed - 3;
     end

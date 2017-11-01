@@ -11,29 +11,106 @@ AdiBagsDB = {
 			},
 		},
 		["ItemCategory"] = {
+			["profiles"] = {
+				["Default"] = {
+					["splitBySubclass"] = {
+						["Tradeskill"] = false,
+						["Consumable"] = true,
+						["Trade Goods"] = false,
+						["Miscellaneous"] = false,
+					},
+				},
+			},
 		},
 		["NewItem"] = {
 		},
 		["AdiBags_TooltipInfo"] = {
 		},
-		["Equipment"] = {
-		},
-		["ItemSets"] = {
-		},
-		["CurrencyFrame"] = {
-		},
-		["DataSource"] = {
-		},
-		["Junk"] = {
+		["Legion"] = {
 		},
 		["MoneyFrame"] = {
 		},
+		["CurrencyFrame"] = {
+			["profiles"] = {
+				["Default"] = {
+					["shown"] = {
+						["Mark of the World Tree"] = false,
+						["Elder Charm of Good Fortune"] = false,
+						["Nethershard"] = false,
+						["Valor"] = false,
+						["Lesser Charm of Good Fortune"] = false,
+						["Seal of Tempered Fate"] = false,
+						["Artifact Fragment"] = false,
+						["Warforged Seal"] = false,
+						["Mote of Darkness"] = false,
+						["Timewarped Badge"] = false,
+						["Curious Coin"] = false,
+						["Oil"] = false,
+						["Epicurean's Award"] = false,
+						["Tol Barad Commendation"] = false,
+						["Seal of Inevitable Fate"] = false,
+						["Timeless Coin"] = false,
+						["Essence of Corrupted Deathwing"] = false,
+						["Apexis Crystal"] = false,
+						["Darkmoon Prize Ticket"] = false,
+						["Garrison Resources"] = false,
+						["Ironpaw Token"] = false,
+						["Mogu Rune of Fate"] = false,
+						["Champion's Seal"] = false,
+						["Legionfall War Supplies"] = false,
+					},
+				},
+			},
+		},
+		["DataSource"] = {
+		},
+		["ItemSets"] = {
+		},
+		["Junk"] = {
+		},
+		["Equipment"] = {
+		},
 	},
 	["profileKeys"] = {
+		["Sinister - Feathermoon"] = "Default",
+		["Calastir - Scarlet Crusade"] = "Default",
+		["Calanthea - Feathermoon"] = "Default",
+		["Pyric - Feathermoon"] = "Default",
+		["Caldar - Feathermoon"] = "Default",
+		["Failure - Feathermoon"] = "Default",
+		["Aristedes - Feathermoon"] = "Default",
+		["Calistah - Scarlet Crusade"] = "Default",
+		["Caladyth - Feathermoon"] = "Default",
 		["Nothing - Feathermoon"] = "Default",
+		["Calastir - Kirin Tor"] = "Default",
+		["Calastir - Feathermoon"] = "Default",
+		["Censure - Kirin Tor"] = "Default",
+		["Calandrea - Feathermoon"] = "Default",
+		["Calandrea - Scarlet Crusade"] = "Default",
+		["Souptruck - Feathermoon"] = "Default",
+		["Censure - Feathermoon"] = "Default",
 	},
 	["profiles"] = {
 		["Default"] = {
+			["virtualStacks"] = {
+				["stackable"] = true,
+				["notWhenTrading"] = 3,
+			},
+			["columnWidth"] = {
+				["Bank"] = 8,
+				["Backpack"] = 8,
+			},
+			["maxHeight"] = 0.5,
+			["positions"] = {
+				["anchor"] = {
+					["xOffset"] = -20.333251953125,
+					["yOffset"] = 234.999649047852,
+				},
+			},
+			["compactLayout"] = true,
+			["rightClickConfig"] = false,
+			["autoDeposit"] = true,
+			["scale"] = 0.9,
 		},
 	},
 }

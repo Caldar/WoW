@@ -3,6 +3,7 @@ local B = E:GetModule('Blizzard');
 
 --No point caching anything here, but list them here for mikk's FindGlobals script
 -- GLOBALS: IsAddOnLoaded, CreateFrame, TalkingHeadFrame, UIPARENT_MANAGED_FRAME_POSITIONS, TalkingHead_LoadUI
+-- GLOBALS: Model_ApplyUICamera, AlertFrame, ipairs, table
 
 function B:ScaleTalkingHeadFrame()
 	local scale = E.db.general.talkingHeadFrameScale or 1
@@ -45,7 +46,7 @@ local function InitializeTalkingHead()
 	TalkingHeadFrame:SetPoint("BOTTOM", 0, 265)
 
 	E:CreateMover(TalkingHeadFrame, "TalkingHeadFrameMover", L["Talking Head Frame"])
-	
+
 	--Iterate through all alert subsystems in order to find the one created for TalkingHeadFrame, and then remove it.
 	--We do this to prevent alerts from anchoring to this frame when it is shown.
 	for index, alertFrameSubSystem in ipairs(AlertFrame.alertFrameSubSystems) do

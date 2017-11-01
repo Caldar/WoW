@@ -48,6 +48,7 @@ function AS:Blizzard_Mail(event, addon)
 	AS:SkinButton(OpenMailReplyButton)
 	AS:SkinButton(OpenMailDeleteButton)
 	AS:SkinButton(OpenMailCancelButton)
+	AS:SkinButton(OpenAllMail)
 
 	AS:StripTextures(OpenMailScrollFrame, true)
 	AS:SetTemplate(OpenMailScrollFrame, 'Default')
@@ -64,20 +65,20 @@ function AS:Blizzard_Mail(event, addon)
 	AS:StyleButton(OpenMailLetterButton)
 	AS:SkinTexture(OpenMailLetterButtonIconTexture)
 	OpenMailLetterButtonIconTexture:ClearAllPoints()
-	OpenMailLetterButtonIconTexture:Point("TOPLEFT", 2, -2)
-	OpenMailLetterButtonIconTexture:Point("BOTTOMRIGHT", -2, 2)
+	OpenMailLetterButtonIconTexture:SetPoint("TOPLEFT", 2, -2)
+	OpenMailLetterButtonIconTexture:SetPoint("BOTTOMRIGHT", -2, 2)
 
 	AS:StripTextures(OpenMailMoneyButton)
 	AS:SetTemplate(OpenMailMoneyButton, 'Default', true)
 	AS:StyleButton(OpenMailMoneyButton)
 	AS:SkinTexture(OpenMailMoneyButtonIconTexture)
 	OpenMailMoneyButtonIconTexture:ClearAllPoints()
-	OpenMailMoneyButtonIconTexture:Point("TOPLEFT", 2, -2)
-	OpenMailMoneyButtonIconTexture:Point("BOTTOMRIGHT", -2, 2)
+	OpenMailMoneyButtonIconTexture:SetPoint("TOPLEFT", 2, -2)
+	OpenMailMoneyButtonIconTexture:SetPoint("BOTTOMRIGHT", -2, 2)
 
-	OpenMailReplyButton:Point("RIGHT", OpenMailDeleteButton, "LEFT", -2, 0)
-	OpenMailDeleteButton:Point("RIGHT", OpenMailCancelButton, "LEFT", -2, 0)
-	SendMailMailButton:Point("RIGHT", SendMailCancelButton, "LEFT", -2, 0)
+	OpenMailReplyButton:SetPoint("RIGHT", OpenMailDeleteButton, "LEFT", -2, 0)
+	OpenMailDeleteButton:SetPoint("RIGHT", OpenMailCancelButton, "LEFT", -2, 0)
+	SendMailMailButton:SetPoint("RIGHT", SendMailCancelButton, "LEFT", -2, 0)
 
 	for _, Attachment in pairs({"SendMailAttachment", "OpenMailAttachmentButton"}) do
 		for i = 1, ATTACHMENTS_MAX_SEND do
@@ -92,12 +93,12 @@ function AS:Blizzard_Mail(event, addon)
 	end
 
 	hooksecurefunc("InboxFrame_Update", function()
-		local numItems, totalItems = GetInboxNumItems();
-		local index = ((InboxFrame.pageNum - 1) * INBOXITEMS_TO_DISPLAY) + 1;
+		local numItems, totalItems = GetInboxNumItems()
+		local index = ((InboxFrame.pageNum - 1) * INBOXITEMS_TO_DISPLAY) + 1
 
 		for i = 1, INBOXITEMS_TO_DISPLAY do
 			if ( index <= numItems ) then
-				local packageIcon, stationeryIcon, sender, subject, money, CODAmount, daysLeft, itemCount, wasRead, x, y, z, isGM, firstItemQuantity = GetInboxHeaderInfo(index);
+				local packageIcon, stationeryIcon, sender, subject, money, CODAmount, daysLeft, itemCount, wasRead, x, y, z, isGM, firstItemQuantity = GetInboxHeaderInfo(index)
 				_G["MailItem"..i.."Button"]:SetBackdropBorderColor(unpack(AS.BorderColor))
 				if ( packageIcon ) and ( not isGM ) then
 					local ItemLink = GetInboxItemLink(index, 1)
@@ -121,8 +122,8 @@ function AS:Blizzard_Mail(event, addon)
 			AttachmentButton:SetBackdropBorderColor(unpack(AS.BorderColor))
 			if ItemLink then
 				local Quality = select(3, GetItemInfo(ItemLink))
-				if (Quality > LE_ITEM_QUALITY_COMMON and BAG_ITEM_QUALITY_COLORS[Quality]) then
-					AttachmentButton:SetBackdropBorderColor(BAG_ITEM_QUALITY_COLORS[Quality].r, BAG_ITEM_QUALITY_COLORS[Quality].g, BAG_ITEM_QUALITY_COLORS[Quality].b);
+				if Quality and Quality > LE_ITEM_QUALITY_COMMON and BAG_ITEM_QUALITY_COLORS[Quality] then
+					AttachmentButton:SetBackdropBorderColor(BAG_ITEM_QUALITY_COLORS[Quality].r, BAG_ITEM_QUALITY_COLORS[Quality].g, BAG_ITEM_QUALITY_COLORS[Quality].b)
 				end
 			end
 		end
@@ -131,12 +132,12 @@ function AS:Blizzard_Mail(event, addon)
 	hooksecurefunc("SendMailFrame_Update", function()
 		for i = 1, ATTACHMENTS_MAX_SEND do
 			local ItemLink = GetSendMailItemLink(i)
-			local AttachmentButton = _G["SendMailAttachment"..i];
+			local AttachmentButton = _G["SendMailAttachment"..i]
 			AttachmentButton:SetBackdropBorderColor(unpack(AS.BorderColor))
 			if ItemLink then
 				local Quality = select(3, GetItemInfo(ItemLink))
-				if (Quality > LE_ITEM_QUALITY_COMMON and BAG_ITEM_QUALITY_COLORS[Quality]) then
-					AttachmentButton:SetBackdropBorderColor(BAG_ITEM_QUALITY_COLORS[Quality].r, BAG_ITEM_QUALITY_COLORS[Quality].g, BAG_ITEM_QUALITY_COLORS[Quality].b);
+				if Quality and Quality > LE_ITEM_QUALITY_COMMON and BAG_ITEM_QUALITY_COLORS[Quality] then
+					AttachmentButton:SetBackdropBorderColor(BAG_ITEM_QUALITY_COLORS[Quality].r, BAG_ITEM_QUALITY_COLORS[Quality].g, BAG_ITEM_QUALITY_COLORS[Quality].b)
 				end
 			end
 			local Texture = _G["SendMailAttachment"..i]:GetNormalTexture()

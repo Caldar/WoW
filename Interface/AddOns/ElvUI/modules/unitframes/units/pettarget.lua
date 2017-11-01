@@ -1,18 +1,17 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames');
+local _, ns = ...
+local ElvUF = ns.oUF
+assert(ElvUF, "ElvUI was unable to locate oUF.")
 
 --Cache global variables
 --Lua functions
 local _G = _G
-local pairs = pairs
-local format = format
+local tinsert = table.insert
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: ElvUF_Pet
 
-local _, ns = ...
-local ElvUF = ns.oUF
-assert(ElvUF, "ElvUI was unable to locate oUF.")
 
 function UF:Construct_PetTargetFrame(frame)
 	frame.Health = self:Construct_HealthBar(frame, true, true, 'RIGHT')
@@ -25,7 +24,7 @@ function UF:Construct_PetTargetFrame(frame)
 	frame.Portrait2D = self:Construct_Portrait(frame, 'texture')
 	frame.InfoPanel = self:Construct_InfoPanel(frame)
 	frame.Buffs = self:Construct_Buffs(frame)
-	frame.Threat = self:Construct_Threat(frame)
+	frame.ThreatIndicator = self:Construct_Threat(frame)
 	frame.Debuffs = self:Construct_Debuffs(frame)
 	frame.Range = UF:Construct_Range(frame)
 	frame.customTexts = {}

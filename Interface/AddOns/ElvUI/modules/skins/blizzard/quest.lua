@@ -20,16 +20,15 @@ end
 
 local function LoadSkin()
 	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.quest ~= true then return end
+
 	S:HandleScrollBar(QuestProgressScrollFrameScrollBar)
 	S:HandleScrollBar(QuestRewardScrollFrameScrollBar)
-
 
 	S:HandleScrollBar(QuestDetailScrollFrameScrollBar)
 	QuestProgressScrollFrame:StripTextures()
 
 	QuestGreetingScrollFrame:StripTextures()
 	S:HandleScrollBar(QuestGreetingScrollFrameScrollBar)
-
 
 	QuestInfoSkillPointFrame:StripTextures()
 	QuestInfoSkillPointFrame:StyleButton()
@@ -73,12 +72,12 @@ local function LoadSkin()
 		self.spellTex:Height(self:GetHeight() + 217)
 	end)
 
-	hooksecurefunc("QuestInfo_Display", function(template, parentFrame)
+	hooksecurefunc("QuestInfo_Display", function()
 		for i = 1, #QuestInfoRewardsFrame.RewardButtons do
 			local questItem = QuestInfoRewardsFrame.RewardButtons[i]
 			if not questItem:IsShown() then break end
 
-			local point, relativeTo, relativePoint, x, y = questItem:GetPoint()
+			local point, relativeTo, relativePoint, _, y = questItem:GetPoint()
 			if point and relativeTo and relativePoint then
 				if i == 1 then
 					questItem:Point(point, relativeTo, relativePoint, 0, y)
@@ -93,11 +92,13 @@ local function LoadSkin()
 		end
 	end)
 
+	-- The Icon Border should be in Quality Color
 	hooksecurefunc("QuestInfo_GetRewardButton", function(rewardsFrame, index)
 		local rewardButton = rewardsFrame.RewardButtons[index];
 		if(not rewardButton.skinned) then
 			rewardButton.NameFrame:Hide()
 			rewardButton.Icon:SetTexCoord(unpack(E.TexCoords))
+			rewardButton.IconBorder:SetAlpha(0)
 			rewardButton:CreateBackdrop("Default")
 			rewardButton.backdrop:SetOutside(rewardButton.Icon)
 			rewardButton.Icon:SetDrawLayer("OVERLAY")
@@ -107,6 +108,13 @@ local function LoadSkin()
 		end
 	end)
 
+	--Reward: Title
+	QuestInfoPlayerTitleFrame.FrameLeft:SetTexture(nil)
+	QuestInfoPlayerTitleFrame.FrameCenter:SetTexture(nil)
+	QuestInfoPlayerTitleFrame.FrameRight:SetTexture(nil)
+	QuestInfoPlayerTitleFrame.Icon:SetTexCoord(unpack(E.TexCoords))
+	QuestInfoPlayerTitleFrame:CreateBackdrop("Default")
+	QuestInfoPlayerTitleFrame.backdrop:SetOutside(QuestInfoPlayerTitleFrame.Icon)
 
 	--Quest Frame
 	QuestFrame:StripTextures(true)
@@ -137,10 +145,6 @@ local function LoadSkin()
 	S:HandleButton(QuestFrameCompleteButton, true)
 	S:HandleButton(QuestFrameGoodbyeButton, true)
 	S:HandleButton(QuestFrameCompleteQuestButton, true)
-	S:HandleButton(QuestFrameDetailPanel.IgnoreButton, true)
-	S:HandleButton(QuestFrameDetailPanel.UnignoreButton, true)
-	S:HandleButton(QuestFrameProgressPanel.IgnoreButton, true)
-	S:HandleButton(QuestFrameProgressPanel.UnignoreButton, true)
 	S:HandleCloseButton(QuestFrameCloseButton, QuestFrame.backdrop)
 
 	for i=1, 6 do
@@ -169,7 +173,7 @@ local function LoadSkin()
 	--QuestLogDetailScrollFrame:StripTextures()
 	--S:HandleCloseButton(QuestLogDetailFrameCloseButton)
 
-	hooksecurefunc("QuestFrame_ShowQuestPortrait", function(parentFrame, portrait, text, name, x, y)
+	hooksecurefunc("QuestFrame_ShowQuestPortrait", function(parentFrame, _, _, _, x, y)
 		QuestNPCModel:ClearAllPoints();
 		QuestNPCModel:Point("TOPLEFT", parentFrame, "TOPRIGHT", x + 18, y);
 	end)

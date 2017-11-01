@@ -1,15 +1,21 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local mod = E:GetModule('DataBars');
+local LSM = LibStub("LibSharedMedia-3.0")
 
 --Cache global variables
 --Lua functions
 local _G = _G
 local format = format
-
 --WoW API / Variables
-local UnitHonor, UnitHonorMax, UnitHonorLevel, GetMaxPlayerHonorLevel, CanPrestige = UnitHonor, UnitHonorMax, UnitHonorLevel, GetMaxPlayerHonorLevel, CanPrestige
+local CanPrestige = CanPrestige
+local GetMaxPlayerHonorLevel = GetMaxPlayerHonorLevel
+local ToggleTalentFrame = ToggleTalentFrame
+local UnitHonor = UnitHonor
+local UnitHonorLevel = UnitHonorLevel
+local UnitHonorMax = UnitHonorMax
+local UnitIsPVP = UnitIsPVP
 local UnitLevel = UnitLevel
-local MAX_PLAYER_LEVEL = 110 --Hardcoded until Legion is released properly, then use MAX_PLAYER_LEVEL
+local MAX_PLAYER_LEVEL = MAX_PLAYER_LEVEL
 local PVP_HONOR_PRESTIGE_AVAILABLE = PVP_HONOR_PRESTIGE_AVAILABLE
 local HONOR = HONOR
 local MAX_HONOR_LEVEL = MAX_HONOR_LEVEL
@@ -20,12 +26,21 @@ local InCombatLockdown = InCombatLockdown
 
 function mod:UpdateHonor(event, unit)
 	if not mod.db.honor.enable then return end
-	if event == "HONOR_PRESTIGE_UPDATE"  and unit ~= "player" then return end
+	if event == "HONOR_PRESTIGE_UPDATE" and unit ~= "player" then return end
+	if event == "PLAYER_FLAGS_CHANGED" and unit ~= "player" then return end
+
 	local bar = self.honorBar
 	local showHonor = UnitLevel("player") >= MAX_PLAYER_LEVEL
-	if not showHonor or (event == "PLAYER_REGEN_DISABLED" and self.db.honor.hideInCombat) then
+
+	if (self.db.honor.hideInCombat and (event == "PLAYER_REGEN_DISABLED" or InCombatLockdown())) then
+		showHonor = false
+	elseif (self.db.honor.hideOutsidePvP and not UnitIsPVP("player")) then
+		showHonor = false
+	end
+
+	if not showHonor then
 		bar:Hide()
-	elseif showHonor and (not self.db.honor.hideInCombat or not InCombatLockdown()) then
+	else
 		bar:Show()
 
 		local current = UnitHonor("player");
@@ -54,53 +69,25 @@ function mod:UpdateHonor(event, unit)
 		local text = ''
 		local textFormat = self.db.honor.textFormat
 
-		if textFormat == 'PERCENT' then
-			if (CanPrestige()) then
-				text = PVP_HONOR_PRESTIGE_AVAILABLE
-			elseif (level == levelmax) then
-				text = MAX_HONOR_LEVEL
-			else
+		if (CanPrestige()) then
+			text = PVP_HONOR_PRESTIGE_AVAILABLE
+		elseif (level == levelmax) then
+			text = MAX_HONOR_LEVEL
+		else
+			if textFormat == 'PERCENT' then
 				text = format('%d%%', current / max * 100)
-			end
-		elseif textFormat == 'CURMAX' then
-			if (CanPrestige()) then
-				text = PVP_HONOR_PRESTIGE_AVAILABLE
-			elseif (level == levelmax) then
-				text = MAX_HONOR_LEVEL
-			else
+			elseif textFormat == 'CURMAX' then
 				text = format('%s - %s', E:ShortValue(current), E:ShortValue(max))
-			end
-		elseif textFormat == 'CURPERC' then
-			if (CanPrestige()) then
-				text = PVP_HONOR_PRESTIGE_AVAILABLE
-			elseif (level == levelmax) then
-				text = MAX_HONOR_LEVEL
-			else
+			elseif textFormat == 'CURPERC' then
 				text = format('%s - %d%%', E:ShortValue(current), current / max * 100)
-			end
-		elseif textFormat == 'CUR' then
-			if (CanPrestige()) then
-				text = PVP_HONOR_PRESTIGE_AVAILABLE
-			elseif (level == levelmax) then
-				text = MAX_HONOR_LEVEL
-			else
+			elseif textFormat == 'CUR' then
 				text = format('%s', E:ShortValue(current))
-			end
-		elseif textFormat == 'REM' then
-			if (CanPrestige()) then
-				text = PVP_HONOR_PRESTIGE_AVAILABLE
-			elseif (level == levelmax) then
-				text = MAX_HONOR_LEVEL
-			else
+			elseif textFormat == 'REM' then
 				text = format('%s', E:ShortValue(max-current))
-			end
-		elseif textFormat == 'CURREM' then
-			if (CanPrestige()) then
-				text = PVP_HONOR_PRESTIGE_AVAILABLE
-			elseif (level == levelmax) then
-				text = MAX_HONOR_LEVEL
-			else
+			elseif textFormat == 'CURREM' then
 				text = format('%s - %s', E:ShortValue(current), E:ShortValue(max-current))
+			elseif textFormat == 'CURPERCREM' then
+				text = format('%s - %d%% (%s)', E:ShortValue(current), current / max * 100, E:ShortValue(max - current))
 			end
 		end
 
@@ -108,6 +95,7 @@ function mod:UpdateHonor(event, unit)
 	end
 end
 
+local PRESTIGE_TEXT = PVP_PRESTIGE_RANK_UP_TITLE..HEADER_COLON
 function mod:HonorBar_OnEnter()
 	if mod.db.honor.mouseover then
 		E:UIFrameFadeIn(self, 0.4, self:GetAlpha(), 1)
@@ -119,10 +107,12 @@ function mod:HonorBar_OnEnter()
 	local max = UnitHonorMax("player");
 	local level = UnitHonorLevel("player");
 	local levelmax = GetMaxPlayerHonorLevel();
+	local prestigeLevel = UnitPrestige("player");
 
 	GameTooltip:AddLine(HONOR)
 
 	GameTooltip:AddDoubleLine(L["Current Level:"], level, 1, 1, 1)
+	GameTooltip:AddDoubleLine(PRESTIGE_TEXT, prestigeLevel, 1, 1, 1)
 	GameTooltip:AddLine(' ')
 
 	if (CanPrestige()) then
@@ -137,7 +127,7 @@ function mod:HonorBar_OnEnter()
 end
 
 function mod:HonorBar_OnClick()
-
+	ToggleTalentFrame(3) --3 is PvP
 end
 
 function mod:UpdateHonorDimensions()
@@ -145,7 +135,7 @@ function mod:UpdateHonorDimensions()
 	self.honorBar:Height(self.db.honor.height)
 	self.honorBar.statusBar:SetOrientation(self.db.honor.orientation)
 	self.honorBar.statusBar:SetReverseFill(self.db.honor.reverseFill)
-	self.honorBar.text:FontTemplate(nil, self.db.honor.textSize)
+	self.honorBar.text:FontTemplate(LSM:Fetch("font", self.db.honor.font), self.db.honor.textSize, self.db.honor.fontOutline)
 	if self.db.honor.mouseover then
 		self.honorBar:SetAlpha(0)
 	else
@@ -175,7 +165,8 @@ function mod:LoadHonorBar()
 	self.honorBar.eventFrame:Hide()
 	self.honorBar.eventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
 	self.honorBar.eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-	self.honorBar.eventFrame:SetScript("OnEvent", function(self, event) mod:UpdateHonor(event) end)
+	self.honorBar.eventFrame:RegisterEvent("PLAYER_FLAGS_CHANGED")
+	self.honorBar.eventFrame:SetScript("OnEvent", function(self, event, unit) mod:UpdateHonor(event, unit) end)
 
 	self:UpdateHonorDimensions()
 	E:CreateMover(self.honorBar, "HonorBarMover", L["Honor Bar"])

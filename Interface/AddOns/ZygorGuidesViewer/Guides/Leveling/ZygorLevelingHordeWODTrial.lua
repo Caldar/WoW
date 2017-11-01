@@ -3,8 +3,8 @@ if not ZygorGuidesViewer then return end
 if UnitFactionGroup("player")~="Horde" then return end
 if ZGV:DoMutex("LevelingHWOD") then return end
 ZygorGuidesViewer.GuideMenuTier = "TRI"
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Tanaan Jungle (90-90)",{
-next="Zygor's Horde Leveling Guides\\Draenor (90-100)\\Frostfire Ridge (90-92)",
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Tanaan Jungle (90-90)",{
+next="Zygor's Leveling Guides\\Draenor (90-100)\\Frostfire Ridge (90-92)",
 image=ZGV.DIR.."\\Guides\\Images\\TanaanJungle",
 startlevel=90,
 },[[
@@ -324,10 +324,10 @@ Get to the docks |q The Home Stretch##34446/1 |goto 44.4,80.5
 step
 talk Archmage Khadgar##78563
 turnin The Home Stretch##34446 |goto 44.4,80.7
-accept The Home of the Frostwolves##33868 |next Zygor's Horde Leveling Guides\\Draenor (90-100)\\Frostfire Ridge (90-92)
+accept The Home of the Frostwolves##33868 |next Zygor's Leveling Guides\\Draenor (90-100)\\Frostfire Ridge (90-92)
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Frostfire Ridge (90-92)",{
-next="Zygor's Horde Leveling Guides\\Draenor (90-100)\\Gorgrond (92-94)",
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Frostfire Ridge (90-92)",{
+next="Zygor's Leveling Guides\\Draenor (90-100)\\Gorgrond (92-94)",
 image=ZGV.DIR.."\\Guides\\Images\\FrostfireRidge",
 startlevel=90.5,
 },[[
@@ -420,8 +420,8 @@ click Drudgeboat Salvage##230880
 collect 10 Drudgeboat Salvage##111907 |q What We Need##34822/1 |goto Frostfire Ridge 42.7,62.2
 step
 _Enter_ the cave |goto Frostfire Ridge 40.2,60.1 < 20 |walk
-_Go down_ the path |goto Frostfire Ridge 40.4,58.8 < 10 |walk
-kill Groog##80167 |q The Ogron Live?##34823/1 |goto 41.9,59.0
+_Go down_ the path |goto Frostfire Ridge 40.4,58.8 < 10 |walk |indoors Raider's Hideout
+kill Groog##80167 |q The Ogron Live?##34823/1 |goto 41.9,59.0 |indoors Raider's Hideout
 step
 talk Rokhan##78487
 turnin The Ogron Live?##34823 |goto Frostwall 51.3,51.3
@@ -1733,5 +1733,5 @@ _Run up_ the path |goto Frostfire Ridge/0 83.3,75.6 < 20 |only if walking
 kill General Vul'gath##77104 |q Vul'gaths End##34075/1 |goto Frostfire Ridge/0 83.9,74.9
 step
 talk Scout Ruk'Gan##77210
-turnin Vul'gaths End##34075 |goto Frostfire Ridge/0 82.8,76.3 |next Zygor's Horde Leveling Guides\\Draenor (90-100)\\Gorgrond (92-94)
+turnin Vul'gaths End##34075 |goto Frostfire Ridge/0 82.8,76.3 |next Zygor's Leveling Guides\\Draenor (90-100)\\Gorgrond (92-94)
 ]])

@@ -74,7 +74,8 @@ function Gathering:IsValidChore()
 
 	if ZGV.db.profile.gold_gathering_type~="all" and not self.meta.skillreq[ZGV.db.profile.gold_gathering_type] then return false,"type filter" end
 	if (not ZGV.db.profile.gold_gathering_mode and (#self.good_items<=0 or (self.scale and self.scale<Goldguide.TIER_DEMAND_MEDIUM))) then return false,"mode filter" end
-	if not self:AreRequirementsMet() then return false,"requirements not met" end
+	local reqs_met,err = self:AreRequirementsMet()
+	if not reqs_met then return false,"requirements not met",err end
 
 	local query = string.lower(Goldguide.MainFrame.MenuFrame.SearchEdit:GetText())
 	if query and query~="" then 
@@ -88,5 +89,5 @@ end
 
 
 function Gathering.dynamic_sort(a,b)
-	return Goldguide.dynamic_sort("gathering",a,b, "time","zerolast", ZGV.db.profile.goldsort['gathering'][1],ZGV.db.profile.goldsort['gathering'][2], "dispgold","desc")
+	return Goldguide.dynamic_sort("gathering",a,b, "time","zerolast", ZGV.db.profile.goldsort['gathering'][1],ZGV.db.profile.goldsort['gathering'][2], "dispgold","desc", "name","asc")
 end

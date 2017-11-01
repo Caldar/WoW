@@ -119,8 +119,13 @@ end
 
 function rematch:GetBreedByStats(speciesID,level,rarity,health,power,speed)
 	-- for BPBID lifting the breed from the tooltip it generates since it doesn't expose its calculate function :(
-	if source=="BattlePetBreedID" and BPBID_BreedTooltip2TextLeft1 and BPBID_BreedTooltip2TextLeft1:IsVisible() then
-		return (BPBID_BreedTooltip2TextLeft1:GetText() or ""):match(":\124r (.+)")
+	if source=="BattlePetBreedID" then
+		local breedID = BPBID_Internal.CalculateBreedID(speciesID,rarity,level,health,power,speed,false,false)
+		if type(breedID)=="number" then
+			return rematch.breedNames[breedID-2]
+		else
+			return breedID
+		end
 	elseif source=="PetTracker_Breeds" then
 		return PetTracker:GetBreedIcon(PetTracker.Predict:Breed(speciesID,level,rarity,health,power,speed),0.95)
 	elseif source=="LibPetBreedInfo-1.0" then

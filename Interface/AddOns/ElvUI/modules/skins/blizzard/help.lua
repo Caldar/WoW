@@ -3,6 +3,7 @@ local S = E:GetModule('Skins')
 
 local function LoadSkin()
 	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.help ~= true then return end
+
 	local frames = {
 		"HelpFrameLeftInset",
 		"HelpFrameMainInset",
@@ -86,9 +87,9 @@ local function LoadSkin()
 		b:StripTextures(true)
 		S:HandleButton(b, true)
 	end
-	
+
 	--Navigation buttons
-    S:HandleButton(HelpBrowserNavHome)
+	S:HandleButton(HelpBrowserNavHome)
 	HelpBrowserNavHome:Size(26)
 	HelpBrowserNavHome:ClearAllPoints()
 	HelpBrowserNavHome:SetPoint("BOTTOMLEFT", HelpBrowser, "TOPLEFT", -5, 9)

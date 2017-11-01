@@ -3,7 +3,7 @@ if not ZygorGuidesViewer then return end
 if UnitFactionGroup("player")~="Alliance" then return end
 if ZGV:DoMutex("PetsMountsAMOP") then return end
 ZygorGuidesViewer.GuideMenuTier = "MOP"
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Dropped Mounts\\Amber Primordial Direhorn",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Dropped Mounts\\Amber Primordial Direhorn",{
 keywords={"amber","primordial","direhorn","ground","mount"},
 condition_end="hasmount(138424)",
 model={47718},
@@ -41,7 +41,7 @@ learnmount Amber Primordial Direhorn##138424 |use Reins of the Amber Primordial 
 step
 Congratulations, you have attained the Amber Primordial Direhorn mount!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Dropped Mounts\\Black Primal Raptor",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Dropped Mounts\\Black Primal Raptor",{
 keywords={"black","primal","raptor","ground","mount"},
 condition_end="hasmount(138642)",
 model={47828},
@@ -49,7 +49,6 @@ description="This guide will help you acquire the Black Primal Raptor Mount moun
 },[[
 step
 To attain this mount, you must kill the beasts on the Isle of Giants.
-To effectively kill them, you will need to be at least level 90 with _Heroic Level Dungeon Gear_.
 It is also recommended that you bring a friend for the _Primal_ enemies if below the max level.
 confirm
 step
@@ -64,22 +63,42 @@ learnmount Black Primal Raptor##138642 |use Reins of the Black Primal Raptor##94
 step
 Congratulations, you have attained the _Black Primal Raptor_!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Dropped Mounts\\Cobalt Primordial Direhorn",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Dropped Mounts\\Cobalt Primordial Direhorn",{
 keywords={"cobalt","primordial","direhorn","ground","mount"},
-condition_end="hasmount(138423)",
 model={47716},
-description="This guide will help you acquire the Cobalt Primordial Direhorn Mount mount.",
+condition_end="hasmount(130965)",
+description="This guide will help you acquire the Cobalt Primordial Direhorn mount.",
 },[[
 step
-kill Oondasta##69161 |goto Isle of Giants 50.6,54.4
-|tip This can still be a difficult kill so bringing a friend or two wouldln't hurt.
-collect Reins of the Cobalt Primordial Direhorn##94228
+kill Oondasta##69161
+collect Reins of the Cobalt Primordial Direhorn##94228 |goto Isle of Giants/0 50.05,56.93
+|tip This mount has a very low drop rate.
 step
-learnmount Cobalt Primordial Direhorn##138423 |use Reins of the Cobalt Primordial Direhorn##94228
-step
-Congratulations, you have attained the Cobalt Primordial Direhorn mount!
+learnmount Cobalt Primordial Direhorn##130965 |use Reins of the Cobalt Primordial Direhorn##94228
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Dropped Mounts\\Jade Primordial Direhorn",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Dropped Mounts\\Green Primal Raptor",{
+keywords={"green","primal","raptor","ground","mount"},
+condition_end="hasmount(138643)",
+model={47827},
+description="This guide will help you acquire the Green Primal Raptor Mount mount.",
+},[[
+step
+To attain this mount, you must kill the beasts on the Isle of Giants.
+It is also recommended that you bring a friend for the _Primal_ enemies if below the max level.
+confirm
+step
+kill Primal Direhorn##70016+, Primal Direhorn Hatchling##70012+, Young Primal Devilsaur##69993+, Primal Devilsaur##70011+, Young Primal Devilsaur##69993+, Pterrorwing Skyscreamer##70020+
+|tip Any dinasour on this island can drop the Primal Egg.
+collect Primal Egg##94295 |goto Isle of Giants 46.7,71.6
+step
+Once you collect the _Primal Egg_, you will have to wait 3 days for it to hatch.
+collect Reins of the Green Primal Raptor##94293
+step
+learnmount Green Primal Raptor##138643 |use Reins of the Green Primal Raptor##94293
+step
+Congratulations, you have attained the _Green Primal Raptor_!
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Dropped Mounts\\Jade Primordial Direhorn",{
 keywords={"jade","primordial","direhorn","ground","mount"},
 condition_end="hasmount(138426)",
 model={47717},
@@ -117,7 +136,29 @@ learnmount Jade Primordial Direhorn##138426 |use Reins of the Jade Primordial Di
 step
 Congratulations, you have attained the Jade Primordial Direhorn mount!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Dropped Mounts\\Slate Primordial Direhorn",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Dropped Mounts\\Red Primal Raptor",{
+keywords={"green","primal","raptor","ground","mount"},
+condition_end="hasmount(138641)",
+model={47826},
+description="This guide will help you acquire the Red Primal Raptor Mount mount.",
+},[[
+step
+To attain this mount, you must kill the beasts on the Isle of Giants.
+It is also recommended that you bring a friend for the _Primal_ enemies if below the max level.
+confirm
+step
+kill Primal Direhorn##70016+, Primal Direhorn Hatchling##70012+, Young Primal Devilsaur##69993+, Primal Devilsaur##70011+, Young Primal Devilsaur##69993+, Pterrorwing Skyscreamer##70020+
+|tip Any dinasour on this island can drop the Primal Egg.
+collect Primal Egg##94295 |goto Isle of Giants 46.7,71.6
+step
+Once you collect the _Primal Egg_, you will have to wait 3 days for it to hatch.
+collect Reins of the Red Primal Raptor##94291
+step
+learnmount Red Primal Raptor##138641 |use Reins of the Red Primal Raptor##94291
+step
+Congratulations, you have attained the _Red Primal Raptor_!
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Dropped Mounts\\Slate Primordial Direhorn",{
 keywords={"slate","primordial","direhorn","ground","mount"},
 condition_end="hasmount(138425)",
 model={47715},
@@ -155,7 +196,20 @@ learnmount Slate Primordial Direhorn##138425 |use Reins of the Slate Primordial 
 step
 Congratulations, you have attained the Slate Primordial Direhorn mount!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Black Dragon Turtle",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Dropped Mounts\\Son of Galleon",{
+keywords={"son","of","galleon","ground","mount"},
+model={45264},
+condition_end="hasmount(138423)",
+description="This guide will help you acquire the Son of Galleon mount.",
+},[[
+step
+kill Galleon##62346
+collect Son of Galleon's Saddle##89783 |goto Valley of the Four Winds/0 70.74,63.79
+|tip This mount has a very low drop rate.
+step
+learnmount Son of Galleon##130965 |use Son of Galleon's Saddle##89783
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Black Dragon Turtle",{
 keywords={"black","dragon","turtle","ground","mount"},
 model={43717},
 condition_end="hasmount(127286)",
@@ -195,7 +249,7 @@ buy Reins of the Black Dragon Turtle##91008 |goto Stormwind City 67.8,18.6
 step
 learnmount Black Dragon Turtle##127286 |use Reins of the Black Dragon Turtle##91008
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Blue Dragon Turtle",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Blue Dragon Turtle",{
 keywords={"blue","dragon","turtle","ground","mount"},
 model={43718},
 condition_end="hasmount(127287)",
@@ -235,7 +289,7 @@ buy Reins of the Blue Dragon Turtle##91009 |goto Stormwind City 67.8,18.6
 step
 learnmount Blue Dragon Turtle##127287 |use Reins of the Blue Dragon Turtle##91009
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Brown Dragon Turtle",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Brown Dragon Turtle",{
 keywords={"brown","dragon","turtle","ground","mount"},
 model={43719},
 condition_end="hasmount(127288)",
@@ -275,7 +329,7 @@ buy Reins of the Brown Dragon Turtle##91005 |goto Stormwind City 67.8,18.6
 step
 learnmount Brown Dragon Turtle##127288 |use Reins of the Brown Dragon Turtle##91005
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Great Black Dragon Turtle",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Great Black Dragon Turtle",{
 keywords={"great","black","dragon","turtle","ground","mount"},
 model={43723},
 condition_end="hasmount(127295)",
@@ -315,7 +369,7 @@ buy Reins of the Great Black Dragon Turtle##91011 |goto Stormwind City 67.8,18.6
 step
 learnmount Great Black Dragon Turtle##127295 |use Reins of the Great Black Dragon Turtle##91011
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Great Blue Dragon Turtle",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Great Blue Dragon Turtle",{
 keywords={"great","blue","dragon","turtle","ground","mount"},
 model={43724},
 condition_end="hasmount(127302)",
@@ -355,7 +409,7 @@ buy Reins of the Brown Dragon Turtle##91013 |goto Stormwind City 67.8,18.6
 step
 learnmount Great Blue Dragon Turtle##127302 |use Reins of the Great Blue Dragon Turtle##91013
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Great Brown Dragon Turtle",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Great Brown Dragon Turtle",{
 keywords={"great","brown","dragon","ninja","turtle","ground","mount"},
 model={43725},
 condition_end="hasmount(127308)",
@@ -395,7 +449,7 @@ buy Reins of the Great Brown Dragon Turtle##91014 |goto Stormwind City 67.8,18.6
 step
 learnmount Great Brown Dragon Turtle##127308 |use Reins of the Great Brown Dragon Turtle##91014
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Great Green Dragon Turtle",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Great Green Dragon Turtle",{
 keywords={"great","green","dragon","turtle","mount","ground","mount"},
 model={43722},
 condition_end="hasmount(127293)",
@@ -435,7 +489,7 @@ buy Reins of the Great Green Dragon Turtle##91012 |goto Stormwind City 67.8,18.6
 step
 learnmount Great Green Dragon Turtle##127293 |use Reins of the Great Green Dragon Turtle##91012
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Great Purple Dragon Turtle",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Great Purple Dragon Turtle",{
 keywords={"great","purple","dragon","turtle","ground","mount"},
 model={43726},
 condition_end="hasmount(127310)",
@@ -475,7 +529,7 @@ buy Reins of the Great Purple Dragon Turtle##91015 |goto Stormwind City 67.8,18.
 step
 learnmount Great Purple Dragon Turtle##127310 |use Reins of the Great Purple Dragon Turtle##91015
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Great Red Dragon Turtle",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Great Red Dragon Turtle",{
 keywords={"great","red","dragon","turtle","ground","mount"},
 model={42352},
 condition_end="hasmount(120822)",
@@ -515,7 +569,7 @@ buy Reins of the Great Red Dragon Turtle##91010 |goto Stormwind City 67.8,18.6
 step
 learnmount Great Red Dragon Turtle##120822 |use Reins of the Great Red Dragon Turtle##91010
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Green Dragon Turtle",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Green Dragon Turtle",{
 keywords={"green","dragon","turtle","ground","mount"},
 model={42250},
 condition_end="hasmount(120395)",
@@ -555,7 +609,7 @@ buy Reins of the Green Dragon Turtle##91004 |goto Stormwind City 67.8,18.6
 step
 learnmount Green Dragon Turtle##120395 |use Reins of the Green Dragon Turtle##91004
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Purple Dragon Turtle",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Purple Dragon Turtle",{
 keywords={"purple","dragon","turtle","ground","mount"},
 model={43910},
 condition_end="hasmount(127289)",
@@ -595,7 +649,7 @@ buy Reins of the Purple Dragon Turtle##91006 |goto Stormwind City 67.8,18.6
 step
 learnmount Purple Dragon Turtle##127289 |use Reins of the Purple Dragon Turtle##91006
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Red Dragon Turtle",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Red Dragon Turtle",{
 keywords={"red","dragon","turtle","ground","mount"},
 model={43721},
 condition_end="hasmount(127290)",
@@ -635,7 +689,7 @@ buy Reins of the Red Dragon Turtle##91007 |goto Stormwind City 67.8,18.6
 step
 learnmount Red Dragon Turtle##127290 |use Reins of the Red Dragon Turtle##91007
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Miscellaneous\\Bone-White Primal Raptor",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Miscellaneous\\Bone-White Primal Raptor",{
 keywords={"bone","white","primal","raptor","ground","mount"},
 condition_end="hasmount(138640)",
 model={47825},
@@ -660,25 +714,39 @@ learnmount Bone-White Primal Raptor##138640 |use Reins of the Bone-White Primal 
 step
 Congratulations, you have attained the _Bone-White Primal Raptor_!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Miscellaneous\\Brawler's Burly Mushan Beast",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Miscellaneous\\Brawler's Burly Mushan Beast",{
 keywords={"brawler's","burly","mushan","beast","ground","mount"},
 condition_end="hasmount(142641)",
 model={48858},
 description="This guide will help you acquire the Brawler's Burly Mushan Beast mount.",
 },[[
 step
-This mount is obtained through the Brawler's Guild. You must reach rank 10 in the Brawler's Guild to purchase this mount.
-Click here to be taken to the Achievement guide containing the information needed to reach rank 10. |confirm |next "Zygor's Alliance Achievements Guides\\Events\\Brawler's Guild Achievements\\I've Got the Biggest Brawls of Them All" |only if ZGV.guidesets['AchievementsAMOP']
-Click here to be taken to the World Event guide containing the information needed to reach rank 10. |confirm |next "Zygor's Alliance Events Guides\\Brawler's Guild\\Bizmo's Brawlpub" |only if ZGV.guidesets['DailiesAMOP']
-confirm |only if not ZGV.guidesets ['DailiesAMOP'] and not ZGV.guidesets['AchievementsAMOP']
-only if ZGV:GetReputation(1419).friendRep<9000
-step
-talk Quackenbush##68363
-buy 1 Brawler's Burly Mushan Beast##98405 |goto Deeprun Tram/2 54.4,29.8
-step
-learnmount Brawler's Burly Mushan Beast##142641 |use Brawler's Burly Mushan Beast##98405
+This mount was obtained through the old Brawler's Guild. You had to reach rank 10 in the old Brawler's Guild to purchase this mount.
+This mount is no long available in-game
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Player vs. Player Mounts\\Ashhide Mushan Beast",{
+ZGV.BETASTART()
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Miscellaneous\\Crimson Deathcharger",{
+keywords={"crimson","death","charger","ground","mount"},
+condition_end="hasmount(73313)",
+model={25279},
+description="This guide will help you acquire the Crimson Deathcharger mount.",
+},[[
+step
+This mount is a reward given to players that complete the quest line to acquire the Legendary Shadowmourne
+|tip Shadowmourne's quest line takes several months to complete and is not all soloable.
+|tip Only Paladins, Death Knights, and Warriors can complete this quest and obtain Shadowmourne.
+|tip This mount can also be bought on the AH.
+confirm
+step
+collect Reins of the Crimson Deathcharger##52200
+step
+learnmount Reins of the Crimson Deathcharger##73313 |use Reins of the Crimson Deathcharger##52200
+step
+_Congratulations!_
+You are now the proud owner of a _Crimson Deathcharger_.
+]])
+ZGV.BETAEND()
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Player vs. Player Mounts\\Ashhide Mushan Beast",{
 keywords={"ashhide","mushan","beast","ground","mount"},
 condition_end="hasmount(148428)",
 model={51484},
@@ -708,7 +776,7 @@ step
 Use the _Reins of the Ashhide Mushan Beast_ in your bags |use Reins of the Ashhide Mushan Beast##103638
 learnmount Ashhide Mushan Beast##148428
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Raid Mounts\\Kor'kron Juggernaut",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Raid Mounts\\Kor'kron Juggernaut",{
 keywords={"kor'kron","juggernaut","garrosh","hellscream","siege","of","orgrimmar","ground","mount"},
 model={51485},
 condition_end="hasmount(148417)",
@@ -725,7 +793,7 @@ step
 Use the _Kor'kron Juggernaut_ in your bags |use Kor'kron Juggernaut##104253
 learnmount Kor'kron Juggernaut##148417
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Raid Mounts\\Spawn of Horridon",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Raid Mounts\\Spawn of Horridon",{
 keywords={"spawn","horridon","direhorn","ground","mount"},
 condition_end="hasmount(136471)",
 model={47238},
@@ -738,7 +806,7 @@ collect Spawn of Horridon##93666 |goto Throne of Thunder/2 27.4,79.1
 step
 learnmount Spawn of Horridon##136471 |use Spawn of Horridon##93666
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Amber Scorpion",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Amber Scorpion",{
 keywords={"amber","scorpion","the","klaxxi","exalted","ground","mount"},
 model={43090},
 condition_end="hasmount(123886)",
@@ -748,7 +816,7 @@ step
 label "a"
 This mount requires you to be _Exalted_ with _The Klaxxi_.
 In order to become Exalted with the Klaxxi, refer to the Zygor Guides Reputation section.
-Click here for the daily quests. |next "Zygor's Alliance Dailies Guides\\Pandaria (85 - 90)\\The Klaxxi Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
+Click here for the daily quests. |next "Zygor's Dailies Guides\\Mists of Pandaria Dailies\\The Klaxxi Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
 Click here to check your progress. |confirm
 Click here to be taken to The Klaxxi Quartermaster to purchase the mount. |next "buy" |only if rep("The Klaxxi")>=Exalted
 step
@@ -765,7 +833,7 @@ talk Ambersmith Zikk##64599
 buy Reins of the Amber Scorpion##85262 |goto Dread Wastes 55.0,35.6
 learnmount Amber Scorpion##123886 |use Reins of the Amber Scorpion##85262
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Azure Riding Crane",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Azure Riding Crane",{
 keywords={"azure","riding","crane","exalted","the","golden","lotus","ground","mount"},
 model={43704},
 condition_end="hasmount(127174)",
@@ -784,7 +852,7 @@ talk Jaluu the Generous##59908
 buy Reins of the Azure Riding Crane##87781 |goto Vale of Eternal Blossoms 84.2,62.6
 learnmount Azure Riding Crane##127174 |use Reins of the Azure Riding Crane##87781
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Azure Water Strider",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Azure Water Strider",{
 keywords={"azure","water","strider","waterwalking","exalted","the","anglers","ground","mount"},
 model={41711},
 condition_end="hasmount(118089)",
@@ -792,7 +860,7 @@ description="This guide will help you acquire the Azure Water Strider mount.",
 },[[
 step
 This mount requires you to be _Exalted_ with _The Anglers_.
-Click here to be taken to start _The Anglers_ dailies. |next "Zygor's Alliance Dailies Guides\\Pandaria (85 - 90)\\The Anglers Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
+Click here to be taken to start _The Anglers_ dailies. |next "Zygor's Dailies Guides\\Mists of Pandaria Dailies\\The Anglers Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
 Click here to be taken to The Anglers' Quartermaster to purchase the mount. |next "buy" |only if rep("The Anglers")>=Exalted
 Click here to check your progress. |confirm
 step
@@ -813,7 +881,7 @@ talk Nat Pagle##63721
 buy Reins of the Azure Water Strider##81354 |goto Krasarang Wilds 68.4,43.5
 learnmount Azure Water Strider##118089 |goto Krasarang Wilds 68.4,43.5 |use Reins of the Azure Water Strider##81354
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Black Riding Goat",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Black Riding Goat",{
 keywords={"black","riding","goat","exalted","the","tillers","ground","mount"},
 model={44836},
 condition_end="hasmount(130138)",
@@ -823,12 +891,12 @@ step
 label "a"
 This mount requires you to be _Exalted_ with _The Tillers_.
 Routing to the proper section. |next "dailies" |only if not completedq(31945)
-Click here in order to do The Tillers dailies. |next "Zygor's Alliance Dailies Guides\\Pandaria (85 - 90)\\The Tillers Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
+Click here in order to do The Tillers dailies. |next "Zygor's Dailies Guides\\Mists of Pandaria Dailies\\The Tillers Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
 Routing to the proper section. |next "buy" |only if rep("The Tillers")>=Exalted
 Click here to check your progress. |next "b" |confirm
 step
 label "dailies"
-#include "tillers_prequests"
+#include "Tillers_Quests"
 next "a"
 step
 label "b"
@@ -845,7 +913,7 @@ talk Gina Mudclaw##58706
 buy Reins of the Black Riding Goat##89391 |goto Valley of the Four Winds 53.2,51.6
 learnmount Black Riding Goat##130138 |use Reins of the Black Riding Goat##89391
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Blue Shado-Pan Riding Tiger",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Blue Shado-Pan Riding Tiger",{
 keywords={"blue","shado-pan","shado","pan","riding","tiger","exalted","the","ground","mount"},
 model={43900},
 condition_end="hasmount(129934)",
@@ -856,7 +924,7 @@ label "a"
 This mount requires you to be _Exalted_ with _The Shado-Pan_.
 Use the daily guides to earn Reputation with the Shado-Pan.
 Routing to the proper section |next |only if not completedq(31389)
-Click here to be taken to the reputation guide to begin becoming Exalted with The Shado-Pan. |next "Zygor's Alliance Dailies Guides\\Pandaria (85 - 90)\\The Shado-Pan Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
+Click here to be taken to the reputation guide to begin becoming Exalted with The Shado-Pan. |next "Zygor's Dailies Guides\\Mists of Pandaria Dailies\\The Shado-Pan Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
 Click here to be taken to The Shado-Pan Quartermaster to purchase the mount. |next "buy" |only if rep("Shado-Pan")>=Exalted
 Click here to check your progress. |next "b" |confirm
 step
@@ -883,7 +951,7 @@ talk Rushi the Fox##64595
 buy Reins of the Blue Shado-Pan Riding Tiger##89307 |goto Townlong Steppes 48.8,70.5
 learnmount Blue Shado-Pan Riding Tiger##129934 |use Reins of the Blue Shado-Pan Riding Tiger##89307
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Brown Riding Goat",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Brown Riding Goat",{
 keywords={"brown","riding","goat","exalted","the","tillers","ground","mount"},
 model={44807},
 condition_end="hasmount(130086)",
@@ -893,12 +961,12 @@ step
 label "a"
 This mount requires you to be _Exalted_ with _The Tillers_.
 Routing to the proper section. |next "dailies" |only if not completedq(31945)
-Click here in |next "Zygor's Alliance Dailies Guides\\Pandaria (85 - 90)\\The Tillers Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
+Click here in |next "Zygor's Dailies Guides\\Mists of Pandaria Dailies\\The Tillers Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
 Routing to the proper section. |next "buy" |only if rep("The Tillers")>=Exalted
 Click here to check your progress. |next "b" |confirm
 step
 label "dailies"
-#include "tillers_prequests"
+#include "Tillers_Quests"
 next "a"
 step
 label "b"
@@ -915,7 +983,36 @@ talk Gina Mudclaw##58706
 buy Reins of the Brown Riding Goat##89362 |goto Valley of the Four Winds 53.2,51.6
 learnmount Brown Riding Goat##130086 |use Reins of the Brown Riding Goat##89362
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Golden Riding Crane",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Crimson Prime Direhorn",{
+keywords={"crimson","prime","direhorn","exalted","sunreaver","onslaught","ground","mount"},
+model={48101},
+condition_end="hasmount(140250)",
+description="This guide will help you acquire the Crimson Prime Direhorn mount.",
+},[[
+step
+You must be a Horde to obtain this mount!
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Golden Primal Direhorn",{
+keywords={"golden","prime","direhorn","exalted","sunreaver","onslaught","ground","mount"},
+model={48100},
+condition_end="hasmount(140249)",
+description="This guide will help you acquire the Golden Prime Direhorn mount.",
+},[[
+step
+To obtain this mount you must first become exalted with the Kirin Tor Offensive
+Click here to check out our Kirin Tor Offensive reputation guide |next "Zygor's Reputations Guides\\Mists of Pandaria Reputations\\Kirin Tor Offensive"
+Gain Exalted reputation with the Kirin Tor Offensive |condition rep("Kirin Tor Offensive")>=Exalted
+confirm
+step
+talk Hiren Loresong##68000
+buy Reins of the Golden Primal Direhorn##95564 |goto Isle of Thunder/2 64.4,74.4
+|tip This costs 3,000 gold.
+learnmount Golden Primal Direhorn##140249 |use Reins of the Golden Primal Direhorn##95564
+step
+_Congratulations!_
+You are now the proud owner of a Golden Primal Direhorn.
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Golden Riding Crane",{
 keywords={"golden","riding","crane","exalted","the","golden","lotus","ground","mount"},
 model={43705},
 condition_end="hasmount(127176)",
@@ -934,7 +1031,7 @@ talk Jaluu the Generous##59908
 buy Reins of the Golden Riding Crane##87782 |goto Vale of Eternal Blossoms 84.2,62.6
 learnmount Golden Riding Crane##127176 |goto Vale of Eternal Blossoms 84.2,62.6 |use Reins of the Golden Riding Crane##87782
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Green Shado-Pan Riding Tiger",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Green Shado-Pan Riding Tiger",{
 keywords={"green","shado","pan","riding","tiger","ground","mount","exalted","the","shado-pan"},
 model={44759},
 condition_end="hasmount(129932)",
@@ -945,7 +1042,7 @@ label "a"
 This mount requires you to be _Exalted_ with _The Shado-Pan_.
 Use the daily guides to earn Reputation with the Shado-Pan.
 Routing to the proper section |next |only if not completedq(31389)
-Click here to be taken to the reputation guide to begin becoming Exalted with The Shado-Pan. |next "Zygor's Alliance Dailies Guides\\Pandaria (85 - 90)\\The Shado-Pan Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
+Click here to be taken to the reputation guide to begin becoming Exalted with The Shado-Pan. |next "Zygor's Dailies Guides\\Mists of Pandaria Dailies\\The Shado-Pan Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
 Click here to be taken to The Shado-Pan Quartermaster to purchase the mount. |next "buy" |only if rep("Shado-Pan")>=Exalted
 Click here to check your progress. |next "b" |confirm
 step
@@ -972,7 +1069,7 @@ talk Rushi the Fox##64595
 buy Reins of the Green Shado-Pan Riding Tiger##89305 |n
 learnmount Shado-Pan Riding Tiger##129932 |goto Townlong Steppes 48.8,70.5 |use Reins of the Green Shado-Pan Riding Tiger##89305
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Red Shado-Pan Riding Tiger",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Red Shado-Pan Riding Tiger",{
 keywords={"red","shado-pan","shado","pan","riding","tiger","exalted","the","ground","mount"},
 model={44757},
 condition_end="hasmount(129935)",
@@ -983,7 +1080,7 @@ label "a"
 This mount requires you to be _Exalted_ with _The Shado-Pan_.
 Use the daily guides to earn Reputation with the Shado-Pan.
 Routing to the proper section |next |only if not completedq(31389)
-Click here to be taken to the reputation guide to begin becoming Exalted with The Shado-Pan. |next "Zygor's Alliance Dailies Guides\\Pandaria (85 - 90)\\The Shado-Pan Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
+Click here to be taken to the reputation guide to begin becoming Exalted with The Shado-Pan. |next "Zygor's Dailies Guides\\Mists of Pandaria Dailies\\The Shado-Pan Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
 Click here to be taken to The Shado-Pan Quartermaster to purchase the mount. |next "buy" |only if rep("Shado-Pan")>=Exalted
 Click here to check your progress. |next "b" |confirm
 step
@@ -1010,7 +1107,7 @@ talk Rushi the Fox##64595
 buy Reins of the Red Shado-Pan Riding Tiger##89306 |n
 learnmount Red Shado-Pan Riding Tiger##129935 |goto Townlong Steppes 48.8,70.5 |use Reins of the Red Shado-Pan Riding Tiger##89306
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Regal Riding Crane",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\Regal Riding Crane",{
 keywords={"regal","riding","crane","exalted","the","golden","lotus","ground","mount"},
 model={43706},
 condition_end="hasmount(127177)",
@@ -1029,7 +1126,7 @@ talk Jaluu the Generous##59908
 buy Reins of the Regal Riding Crane##87783 |n
 learnmount Regal Riding Crane##127177 |goto Vale of Eternal Blossoms 84.2,62.6 |use Reins of the Regal Riding Crane##87783
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\White Riding Goat",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Reputation Mounts\\White Riding Goat",{
 keywords={"exalted","the","tillers","white","riding","goat","ground","mount"},
 model={44837},
 condition_end="hasmount(130137)",
@@ -1039,12 +1136,12 @@ step
 label "a"
 This mount requires you to be _Exalted_ with _The Tillers_.
 Routing to the proper section. |next "dailies" |only if not completedq(31945)
-Click here in |next "Zygor's Alliance Dailies Guides\\Pandaria (85 - 90)\\The Tillers Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
+Click here in |next "Zygor's Dailies Guides\\Mists of Pandaria Dailies\\The Tillers Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
 Routing to the proper section. |next "buy" |only if rep("The Tillers")>=Exalted
 Click here to check your progress. |next "b" |confirm
 step
 label "dailies"
-#include "tillers_prequests"
+#include "Tillers_Quests"
 next "a"
 step
 label "b"
@@ -1061,7 +1158,7 @@ talk Gina Mudclaw##58706
 buy Reins of the White Riding Goat##89390 |n
 learnmount White Riding Goat##130137 |goto Valley of the Four Winds 53.2,51.6 |use Reins of the White Riding Goat##89390
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Unavailable Mounts\\Kor'kron War Wolf",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Unavailable Mounts\\Kor'kron War Wolf",{
 keywords={"kor'kron","kor","kron","war","wolf","siege","of","orgrimmar"},
 model={51482},
 condition_end="hasmount(148396)",
@@ -1071,7 +1168,18 @@ step
 The Kor'kron War Wolf was a reward for completing the achievement "Ahead of the Game (10/25 Player)" in Siege of Orgrimmar before the release of Warlords of Draenor
 This mount was retired from service in patch 6.0
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Vendor Mounts\\Blonde Riding Yak",{
+ZGV.BETASTART()
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Unavailable Mounts\\Primal Flamesaber",{
+keywords={"primal","flame","saber","heroes","of","storm"},
+model={74298},
+condition_end="hasmount(232405)",
+description="This mount has been removed from the game.",
+},[[
+step
+This mount was a reward from a Promotional Event in Heroes of the Storm and is no longer obtainable
+]])
+ZGV.BETAEND()
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Vendor Mounts\\Blonde Riding Yak",{
 keywords={"blonde","riding","yak","ground","mount"},
 model={43712},
 condition_end="hasmount(127220)",
@@ -1082,7 +1190,7 @@ talk Uncle Bigpocket##64518
 buy Reins of the Blonde Riding Yak##87789 |n
 learnmount Blonde Riding Yak##127220 |goto Kun-Lai Summit 65.4,61.8 |use Reins of the Blonde Riding Yak##87789
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Vendor Mounts\\Grand Expedition Yak",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Vendor Mounts\\Grand Expedition Yak",{
 keywords={"grand","expedition","yak","ground","mount"},
 model={42703},
 condition_end="hasmount(122708)",
@@ -1093,7 +1201,7 @@ talk Uncle Bigpocket##64518
 buy Reins of the Grand Expedition Yak##84101 |n
 learnmount Grand Expedition Yak##122708 |goto Kun-Lai Summit 65.4,61.8 |use Reins of the Grand Expedition Yak##84101
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Ground Mounts\\Vendor Mounts\\Grey Riding Yak",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Vendor Mounts\\Grey Riding Yak",{
 keywords={"grey","riding","yak","ground","mount"},
 model={43711},
 condition_end="hasmount(127216)",
@@ -1104,7 +1212,21 @@ talk Uncle Bigpocket##64518
 buy Reins of the Grey Riding Yak##87788 |n
 learnmount Grey Riding Yak##127216 |goto Kun-Lai Summit 65.4,61.8 |use Reins of the Grey Riding Yak##87788
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Achievement Mounts\\Armored Skyscreamer",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Achievement Mounts\\Armored Blue Dragonhawk",{
+keywords={"armored","Blue","dragon","hawk","flying","mount"},
+model={48816},
+condition_end="hasmount(142478)",
+description="This guide will help you acquire the Armored Blue Dragonhawk mount.",
+},[[
+step
+This mount requires you to complete the achievement _Mount Parade_, this is to collect 200 unique mounts on one character.
+|achieve 8304
+step
+Once this achievement is completed check your in-game mailbox
+collect 1 Armored Blue Dragonhawk##98259
+learnmount Armored Blue Dragonhawk##142478 |use Armored Blue Dragonhawk##98259
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Achievement Mounts\\Armored Skyscreamer",{
 keyword="armored skyscreamer flying mount",
 model={47256},
 condition_end="hasmount(136400)",
@@ -1117,7 +1239,7 @@ collect Armored Skyscreamer##93662
 step
 learnmount Armored Skyscreamer##136400 |use Armored Skyscreamer##93662
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Achievement Mounts\\Crimson Cloud Serpent",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Achievement Mounts\\Crimson Cloud Serpent",{
 keywords={"crimson","cloud","serpent","flying","mount"},
 model={41592},
 condition_end="hasmount(127156)",
@@ -1132,7 +1254,7 @@ Check your in-game mail for your new mount!
 collect 1 Reins of the Crimson Cloud Serpent##87769
 learnmount Crimson Cloud Serpent##127156 |use Reins of the Crimson Cloud Serpent##87769
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Achievement Mounts\\Heavenly Crimson Cloud Serpent",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Achievement Mounts\\Heavenly Crimson Cloud Serpent",{
 keywords={"heavenly","crimson","cloud","serpent","flying","mount"},
 model={43692},
 condition_end="hasmount(127161)",
@@ -1147,7 +1269,40 @@ Check your in-game mail for your new mount!
 collect 1 Reins of the Heavenly Crimson Cloud Serpent##87773
 learnmount Heavenly Crimson Cloud Serpent##127161 |use Reins of the Heavenly Crimson Cloud Serpent##87773
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Achievement Mounts\\Pandaren Kite",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Achievement Mounts\\Grand Gryphon",{
+keywords={"grand","gryphon","operation:","shieldwall","flying","mount"},
+model={47166},
+condition_end="hasmount(136163)",
+description="This guide will help you acquire the Grand Gryphon mount.",
+},[[
+step
+For this mount you will need to complete the achivement Operation Shieldwall Campaign
+Click here to check out our Operation Shieldwall guide |confirm |next "Zygor's Reputations Guides\\Mists of Pandaria Reputations\\Operation: Shieldwall\\Operation: Shieldwall" |or
+|achieve 7928 |or
+step
+collect Grand Gryphon##93385 |n
+|tip Check your in-game mail.
+learnmount Grand Gryphon##136163 |use Grand Gryphon##93385
+step
+_Congratulations!_
+You collected the _Grand Gryphon_ mount
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Achievement Mounts\\Jade Pandaren Kite",{
+keywords={"jade","pandaren","kite","flying","mount"},
+model={42147},
+condition_end="hasmount(133023)",
+description="This guide will help you acquire the Jade Pandaren Kite mount.",
+},[[
+step
+This mount requires you to have the Achievement: We're Going to Need More Saddles
+For this achievement you will need to collect 150 unique mounts on one character
+|achieve 7860
+step
+Check your in-game mail for your new mount!
+collect 1 Jade Pandaren Kite##91802 |n
+learnmount Jade Pandaren Kite##133023 |use Jade Pandaren Kite##91802
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Achievement Mounts\\Pandaren Kite",{
 keywords={"pandaren","kite","flying","mount"},
 model={41903},
 condition_end="hasmount(118737)",
@@ -1162,7 +1317,7 @@ Check your in-game mail for your new mount!
 collect 1 Pandaren Kite String##81559 |n
 learnmount Pandaren Kite##118737 |use Pandaren Kite String##81559
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Achievement Mounts\\Thundering Jade Cloud Serpent",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Achievement Mounts\\Thundering Jade Cloud Serpent",{
 keywords={"thundering","jade","cloud","serpent","flying","mount"},
 model={43686},
 condition_end="hasmount(124408)",
@@ -1176,7 +1331,7 @@ talk Goram##46572
 buy 1 Reins of the Thundering Jade Cloud Serpent##85666 |n
 learnmount Thundering Jade Cloud Serpent##124408 |goto Orgrimmar 48.2,75.6 |use Reins of the Thundering Jade Cloud Serpent##85666
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Achievement Mounts\\Spawn of Galakras",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Achievement Mounts\\Spawn of Galakras",{
 keywords={"spawn","of","galakras","siege","of","orgrimmar","flying","mount"},
 model={51479},
 condition_end="hasmount(148392)",
@@ -1192,7 +1347,7 @@ step
 Use the _Reins of Galakras_ in your bags |use Reins of Galakras##104208
 learnmount Spawn of Galakras##148392
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Blizzard Store Mounts\\Armored Bloodwing",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Blizzard Store Mounts\\Armored Bloodwing",{
 author="support@zygorguides.com",
 keywords={"blizzard","store","armored","bloodwing","flying","mount"},
 condition_end="hasmount(139595)",
@@ -1203,11 +1358,10 @@ step
 This mount can be purchased for $25.00 from the official _Blizzard Store_.
 After purchasing, check your in-game mailbox.
 collect Armored Bloodwing##95341
-modeldisplay 48020
 step
 learnmount Armored Bloodwing##139595 |use Armored Bloodwing##95341
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Blizzard Store Mounts\\Enchanted Fey Dragon",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Blizzard Store Mounts\\Enchanted Fey Dragon",{
 keywords={"blizzard","store","enchanted","fey","dragon","flying","mount"},
 model={59583},
 condition_end="hasmount(142878)",
@@ -1222,7 +1376,7 @@ learnmount Enchanted Fey Dragon##142878 |use Enchanted Fey Dragon##97989
 step
 Congratulations, you have attained the Enchanted Fey Dragon mount!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Blizzard Store Mounts\\Warforged Nightmare",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Blizzard Store Mounts\\Warforged Nightmare",{
 keywords={"blizzard","store","warforged","nightmare","flying","mount"},
 model={55896},
 condition_end="hasmount(163024)",
@@ -1237,37 +1391,33 @@ learnmount Warforged Nightmare##163024 |use Warforged Nightmare#112326
 step
 Congratulations, you have attained the Warforged Nightmare mount!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Dropped Mounts\\Thundering Cobalt Cloud Serpent",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Dropped Mounts\\Thundering Cobalt Cloud Serpent",{
 keywords={"heavenly","onyx","cloud","serpent","sha","of","anger","flying","mount"},
 model={47981},
 condition_end="hasmount(139442)",
 description="This guide will help you acquire the Thundering Cobalt Cloud Serpent.",
 },[[
 step
-You will need to be in a Raid group, as this will require defeating a World Boss.
-confirm
-step
 kill Nalak##69099
 collect Reins of the Thundering Cobalt Cloud Serpent##95057 |goto Isle of Thunder/0 58.6,39.9
+|tip This mount has a very low drop rate.
 step
-learnmount Thundering Cobalt Cloud Serpent##139442 |use Reins of the Heavenly Onyx Cloud Serpent##95057
+learnmount Thundering Cobalt Cloud Serpent##139442 |use Reins of the Thundering Cobalt Cloud Serpent##95057
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Dropped Mounts\\Heavenly Onyx Cloud Serpent",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Dropped Mounts\\Heavenly Onyx Cloud Serpent",{
 keywords={"heavenly","onyx","cloud","serpent","sha","of","anger","flying","mount"},
 model={43689},
 condition_end="hasmount(127158)",
 description="This guide will help you acquire the Heavenly Onyx Cloud Serpent mount.",
 },[[
 step
-You will need to be in a Raid group, as this will require defeating a World Boss.
-confirm
-step
 kill Sha of Anger##60491
-collect Reins of the Heavenly Onyx Cloud Serpent##87771 |goto Kun-Lai Summit 50.5,82.1
+collect Reins of the Heavenly Onyx Cloud Serpent##87771 |goto Kun-Lai Summit/0 53.77,64.62
+|tip This mount has a very low drop rate.
 step
 learnmount Heavenly Onyx Cloud Serpent##127158 |use Reins of the Heavenly Onyx Cloud Serpent##87771
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Dropped Mounts\\Thundering Onyx Cloud Serpent",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Dropped Mounts\\Thundering Onyx Cloud Serpent",{
 keywords={"thundering","onyx","cloud","serpent","huolon","flying","mount"},
 model={51488},
 condition_end="hasmount(148476)",
@@ -1282,7 +1432,7 @@ step
 Use the _Reins of the Thundering Onyx Cloud Serpent_ in your bags |use Reins of the Thundering Onyx Cloud Serpent##104269
 learnmount Thundering Onyx Cloud Serpent##148476
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Dropped Mounts\\Thundering Ruby Cloud Serpent",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Dropped Mounts\\Thundering Ruby Cloud Serpent",{
 keywords={"thundering","ruby","cloud","serpent","alani","skyshard","flying","mount"},
 model={45797},
 condition_end="hasmount(132036)",
@@ -1291,7 +1441,6 @@ description="This guide will help you acquire the Thundering Ruby Cloud Serpent 
 step
 This mount is a drop from _Alani, the Stormborn_.
 In order to fight him, you will need to kill any level 90 in pandaria to get _skyshards_.
-It also helps if you have _Heroic Level Gear_ to ensure you kill him on your first chance.
 confirm
 step
 kill any _level 90_ in pandaria.
@@ -1305,14 +1454,14 @@ kill Alani##64403
 collect 1 Reins of the Thundering Ruby Cloud Serpent##90655 |goto Vale of Eternal Blossoms 50.6,43.6
 step
 kill this point, you must be _Exalted_ with _Order of the Cloud Serpent_ and _The August Celestials_.
-Click here to be taken to the August Celestials reputations guide to gain reputation with them. |confirm |next "Zygor's Alliance Reputations Guides\\Mists of Pandaria\\The Order of the Cloud Serpent" |only if rep('Order of the Cloud Serpent')<Exalted and ZGV.guidesets['ReputationsAMOP']
+Click here to be taken to the August Celestials reputations guide to gain reputation with them. |confirm |next "Zygor's Reputations Guides\\Mists of Pandaria Reputations\\The Order of the Cloud Serpent" |only if rep('Order of the Cloud Serpent')<Exalted and ZGV.guidesets['ReputationsAMOP']
 Click here to be taken to the Order of the Cloud Serpent reputations guide to gain reputation with them. |confirm |next "Zygor's Allianct Reputations Guides\\Mists of Pandaria\\The August Celestials" |only if rep('The August Celestials')<Exalted and ZGV.guidesets['ReputationsAMOP']
 confirm
 only if rep('The August Celestials')<Exalted or rep('Order of the Cloud Serpent')<Exalted
 step
 learnmount Thundering Ruby Cloud Serpent##132036 |use Reins of the Thundering Ruby Cloud Serpent##90655
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Miscellaneous Mounts\\Hearthsteed",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Miscellaneous Mounts\\Hearthsteed",{
 keywords={"hearthstone","flying","mount"},
 model={48931},
 condition_end="hasmount(142073)",
@@ -1328,7 +1477,7 @@ learnmount Hearthsteed##142073 |use Hearthsteed##98618
 step
 Congratulations, you have attained the Hearthsteed mount!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Miscellaneous Mounts\\Imperial Quilen",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Miscellaneous Mounts\\Imperial Quilen",{
 keywords={"collector's","collectors","edition","flying","mount"},
 model={43254},
 condition_end="hasmount(124659)",
@@ -1342,7 +1491,7 @@ step
 Check your in-game mail for your new mount!
 learnmount Imperial Quilen##124659 |use Imperial Quilen##85870
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Miscellaneous Mounts\\Onyx Cloud Serpent",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Miscellaneous Mounts\\Onyx Cloud Serpent",{
 keywords={"exalted","shado-pan","shado","pan","flying","mount"},
 model={41990},
 condition_end="hasmount(127154)",
@@ -1351,7 +1500,7 @@ description="This guide will help you acquire the Onyx Cloud Serpent mount.",
 step
 This mount requires you to be _Exalted_ with _Shado-Pan_.
 In order to become Exalted with the Shado-Pan, refer to the Zygor Guides Reputation section.
-Click here to be sent to the Shado-Pan daily quests. |next "Zygor's Alliance Dailies Guides\\Pandaria (85 - 90)\\The Shado-Pan Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
+Click here to be sent to the Shado-Pan daily quests. |next "Zygor's Dailies Guides\\Mists of Pandaria Dailies\\The Shado-Pan Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
 Exalted with the Shado-Pan |achieve 6366
 step
 label "quest"
@@ -1379,7 +1528,7 @@ turnin Surprise Attack!##31277 |goto 49.0,70.6
 step
 learnmount Onyx Cloud Serpent##127154 |use Reins of the Onyx Cloud Serpent##87768
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Profession Mounts\\Engineering\\Depleted-Kyparium Rocket",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Profession Mounts\\Engineering\\Depleted-Kyparium Rocket",{
 keywords={"engineering","flying","mount","depleted","kyparium"},
 model={43637},
 condition_end="hasmount(126507)",
@@ -1448,7 +1597,7 @@ step
 label bought
 learnmount Depleted-Kyparium Rocket##126507 |use Depleted-Kyparium Rocket##87250
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Profession Mounts\\Engineering\\Geosynchronous World Spinner",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Profession Mounts\\Engineering\\Geosynchronous World Spinner",{
 keywords={"engineering","flying","mount"},
 model={43638},
 condition_end="hasmount(126508)",
@@ -1506,7 +1655,7 @@ step
 label "bought"
 learnmount Geosynchronous World Spinner##126508 |use Geosynchronous World Spinner##87251
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Profession Mounts\\Engineering\\Sky Golem",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Profession Mounts\\Engineering\\Sky Golem",{
 keywords={"engineering","flying","mount"},
 model={46686},
 condition_end="hasmount(134359)",
@@ -1567,7 +1716,7 @@ learnmount Sky Golem##134359
 step
 Congratulations, you have learned the _Sky Golem_ mount!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Profession Mounts\\Jewelcrafting\\Jade Panther",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Profession Mounts\\Jewelcrafting\\Jade Panther",{
 keywords={"jewelcrafting","jade","panther","mount","flying"},
 model={42502},
 condition_end="hasmount(121837)",
@@ -1628,7 +1777,7 @@ step
 label bought
 learnmount Jade Panther##121837 |use Jade Panther##83088
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Profession Mounts\\Jewelcrafting\\Jeweled Onyx Panther",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Profession Mounts\\Jewelcrafting\\Jeweled Onyx Panther",{
 keywords={"jewelcrafting","jeweled","onyx","panther","mount","flying"},
 model={42185},
 condition_end="hasmount(120043)",
@@ -1658,7 +1807,7 @@ step
 label "bought"
 learnmount Jeweled Onyx Panther##120043 |use Jeweled Onyx Panther##82453
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Profession Mounts\\Jewelcrafting\\Ruby Panther",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Profession Mounts\\Jewelcrafting\\Ruby Panther",{
 keywords={"jewelcrafting","ruby","panther","mount","flying"},
 model={42499},
 condition_end="hasmount(121838)",
@@ -1719,7 +1868,7 @@ step
 label "bought"
 learnmount Ruby Panther##121838 |use Ruby Panther##83087
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Profession Mounts\\Jewelcrafting\\Sapphire Panther",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Profession Mounts\\Jewelcrafting\\Sapphire Panther",{
 keywords={"jewelcrafting","sapphire","panther","mount","flying"},
 model={42500},
 condition_end="hasmount(121836)",
@@ -1780,7 +1929,7 @@ step
 label "bought"
 learnmount Sapphire Panther##121836 |use Sapphire Panther##83090
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Profession Mounts\\Jewelcrafting\\Sunstone Panther",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Profession Mounts\\Jewelcrafting\\Sunstone Panther",{
 keywords={"jewelcrafting","sunstone","panther","mount","flying"},
 model={42501},
 condition_end="hasmount(121839)",
@@ -1841,7 +1990,7 @@ step
 label "bought"
 learnmount Sunstone Panther##121839 |use Sunstone Panther##83089
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Raid Mounts\\Astral Cloud Serpent",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Raid Mounts\\Astral Cloud Serpent",{
 keywords={"mount","astral","cloud","serpent","flying"},
 model={46087},
 condition_end="hasmount(127170)",
@@ -1850,10 +1999,10 @@ description="This guide will help you acquire the Astral Cloud Serpent mount.",
 step
 This mount is contained in _Caches of Pure Energy_ found inside the _Mogu'Shan Vaults_ raid.
 click Cache of Pure Energy##214383
-collect 1 Reins of the Astral Cloud Serpent##87777
+collect 1 Reins of the Astral Cloud Serpent##87777 |goto Mogu'shan Vaults/3 22.7,51.7
 learnmount Astral Cloud Serpent##127170 |use Reins of the Astral Cloud Serpent##87777
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Raid Mounts\\Clutch of Ji-kun",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Raid Mounts\\Clutch of Ji-kun",{
 keywords={"mount","Clutch","of","Ji-kun","flying"},
 model={47983},
 condition_end="hasmount(139448)",
@@ -1866,7 +2015,7 @@ collect 1 Clutch of Ji-kun##95059 |goto Throne of Thunder/4 53.8,49.8
 step
 learnmount Clutch of Ji-kun##139448 |use Clutch of Ji-kun##95059
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Reputation Mounts\\Azure Cloud Serpent",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Reputation Mounts\\Azure Cloud Serpent",{
 keywords={"azure","cloud","serpent","mount","order","of","the","cloud","serpent","exalted","flying"},
 model={41989},
 condition_end="hasmount(123992)",
@@ -1876,11 +2025,11 @@ step
 label "a"
 This mount requires you to be _Exalted_ with _The Order of the Cloud Serpent_.
 Routing to the proper section. |next |only if not completedq(30142)
-Click here for the Golden Lotus Daily Quests. |next "Zygor's Alliance Dailies Guides\\Pandaria (85 - 90)\\The Order of the Cloud Serpent Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
+Click here for the Golden Lotus Daily Quests. |next "Zygor's Dailies Guides\\Mists of Pandaria Dailies\\The Order of the Cloud Serpent Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
 Click here to be taken to The Order of the cloud Serpent Quartermaster to purchase the mount. |next "buy" |only if rep("Order of the Cloud Serpent")>=Exalted
 Click here to check your progress. |next b |confirm
 step
-#include "A_Cloud_Serpent_Pre"
+#include "CS_PreQuests"
 next "a"
 step
 label "b"
@@ -1897,7 +2046,7 @@ talk San Redscale##58414
 buy Reins of the Azure Cloud Serpent##85430 |goto The Jade Forest 56.8,44.4
 learnmount Azure Cloud Serpent##123992 |goto The Jade Forest 56.8,44.4 |use Reins of the Azure Cloud Serpent##85430
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Reputation Mounts\\Golden Cloud Serpent",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Reputation Mounts\\Golden Cloud Serpent",{
 keywords={"golden","cloud","serpent","mount","order","of","the","golden","lotus","exalted","flying"},
 model={41991},
 condition_end="hasmount(123993)",
@@ -1907,11 +2056,11 @@ step
 label "a"
 This mount requires you to be _Exalted_ with _The Order of the Cloud Serpent_.
 Routing to the proper section. |next |only if not completedq(30142)
-Click here for the Golden Lotus Daily Quests. |next "Zygor's Alliance Dailies Guides\\Pandaria (85 - 90)\\The Order of the Cloud Serpent Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
+Click here for the Golden Lotus Daily Quests. |next "Zygor's Dailies Guides\\Mists of Pandaria Dailies\\The Order of the Cloud Serpent Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
 Click here to be taken to The Order of the cloud Serpent Quartermaster to purchase the mount. |next "buy" |only if rep("Order of the Cloud Serpent")>=Exalted
 Click here to check your progress. |next "b" |confirm
 step
-#include "A_Cloud_Serpent_Pre"
+#include "CS_PreQuests"
 next "a"
 step
 label "b"
@@ -1929,7 +2078,7 @@ talk San Redscale##58414
 buy Reins of the Golden Cloud Serpent##85429 |goto The Jade Forest 56.8,44.4
 learnmount Golden Cloud Serpent##123993 |goto The Jade Forest 56.8,44.4 |use Reins of the Golden Cloud Serpent##85429
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Reputation Mounts\\Grand Armored Gryphon",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Reputation Mounts\\Grand Armored Gryphon",{
 keywords={"grand","armored","gryphon","operation:","shieldwall","exalted","flying","mount"},
 model={46929},
 condition_end="hasmount(135416)",
@@ -1940,8 +2089,8 @@ label "a"
 This mount requires you to be _Exalted_ with _Operation: Shieldwall_.
 Use the daily guides to earn Reputation with the Operation: Shieldwall.
 Click here to be taken to the pre-quests for the Operation: Shieldwall. |confirm |next "pre" |only if not ZGV.guidesets["DailiesAMOP"] and not ZGV.guidesets["ReputationsAMOP"] and not completedq(32108)
-Click here to be taken to the reputation guide to begin becoming Exalted with the Operation: Shieldwall. |next "Zygor's Alliance Dailies Guides\\Pandaria (85 - 90)\\Operation: Shieldwall Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"] and not ZGV.guidesets["ReputationsAMOP"]
-Click here to be taken to the reputation guide to begin becoming Exalted with the Operation: Shieldwall. |next "Zygor's Alliance Reputations Guides\\Mists of Pandaria\\Operation:Shieldwall" |confirm |only if ZGV.guidesets["ReputationsAMOP"]
+Click here to be taken to the reputation guide to begin becoming Exalted with the Operation: Shieldwall. |next "Zygor's Dailies Guides\\Mists of Pandaria Dailies\\Operation: Shieldwall Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"] and not ZGV.guidesets["ReputationsAMOP"]
+Click here to be taken to the reputation guide to begin becoming Exalted with the Operation: Shieldwall. |next "Zygor's Reputations Guides\\Mists of Pandaria Reputations\\Operation: Shieldwall\\Operation: Shieldwall" |confirm |only if ZGV.guidesets["ReputationsAMOP"]
 Click here to be taken to the Operation: Shieldwall Quartermaster to purchase the mount. |next "buy" |only if rep("Operation: Shieldwall")>=Exalted
 Click here to check your progress. |next "b" |confirm
 step
@@ -1987,7 +2136,30 @@ talk Agent Malley##69059
 buy Grand Armored Gryphon##93168 |goto Krasarang Wilds 89.6,33.4
 learnmount Grand Armored Gryphon##135416 |goto Krasarang Wilds 89.6,33.4 |use Grand Armored Gryphon##93168
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Reputation Mounts\\Jade Cloud Serpent",{
+ZGV.BETASTART()
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Ground Mounts\\Faction Mounts\\Heavenly Golden Cloud Serpent",{
+keywords={"heavenly","golden","cloud","serpent","flying","mount"},
+model={43693},
+condition_end="hasmount(127164)",
+description="This guide will help you acquire the Heavenly Golden Cloud Serpent mount.",
+},[[
+step
+To earn this mount you must be exalted with the Emperor Shaohao Reputation
+Click here to check out our Emperor Shaohao guide |next "Zygor's Reputations Guides\\Mists of Pandaria Reputations\\Emperor Shaohao"
+Earn Exalted with the Emperor Shaohao |condition rep('Emperor Shaohao')==Exalted
+step
+talk Mistweaver Ku##73306
+buy Reins of the Heavenly Golden Cloud Serpent##87774 |goto Timeless Isle/0 42.8,54.8
+|tip This costs 100,000 Timeless Coins.
+|tip These coins can be collected by killing enemies and looting chests on the Timeless Isle.
+step
+learnmount Heavenly Golden Cloud Serpent##127164 |use Reins of the Heavenly Golden Cloud Serpent##87774
+step
+_Congratulations!_
+You are now the proud owner of a _Heavenly Golden Cloud Serpent_.
+]])
+ZGV.BETAEND()
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Reputation Mounts\\Jade Cloud Serpent",{
 keywords={"jade","cloud","serpent","the","golden","lotus","exalted","mount","flying"},
 model={40590},
 condition_end="hasmount(113199)",
@@ -1997,11 +2169,11 @@ step
 label "a"
 This mount requires you to be _Exalted_ with _The Order of the Cloud Serpent_.
 Routing to the proper section. |next |only if not completedq(30142)
-Click here for the Golden Lotus Daily Quests. |next "Zygor's Alliance Dailies Guides\\Pandaria (85 - 90)\\The Order of the Cloud Serpent Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
+Click here for the Golden Lotus Daily Quests. |next "Zygor's Dailies Guides\\Mists of Pandaria Dailies\\The Order of the Cloud Serpent Dailies" |confirm |only if ZGV.guidesets["DailiesAMOP"]
 Click here to be taken to The Order of the cloud Serpent Quartermaster to purchase the mount. |next "buy" |only if rep("Order of the Cloud Serpent")>=Exalted
 Click here to check your progress. |next "b" |confirm
 step
-#include "A_Cloud_Serpent_Pre"
+#include "CS_PreQuests"
 next "a"
 step
 label "b"
@@ -2019,7 +2191,7 @@ talk San Redscale##58414
 buy Reins of the Jade Cloud Serpent##79802 |goto The Jade Forest 56.8,44.4
 learnmount Jade Cloud Serpent##113199 |goto The Jade Forest 56.8,44.4 |use Reins of the Jade Cloud Serpent##79802
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Reputation Mounts\\Red Flying Cloud",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Reputation Mounts\\Red Flying Cloud",{
 keywords={"red","flying","cloud","exalted","the","lorewalkers","mount","flying"},
 model={44808},
 condition_end="hasmount(130092)",
@@ -2028,14 +2200,14 @@ description="This guide will help you acquire the Red Flying Cloud mount.",
 step
 This mount requires you to be _Exalted_ with _The Lorewalkers_.
 In order to become Exalted with the Lorewalkers, refer to the Zygor Guides Reputation section.
-Click here to access the Lorewalkers guide. |next "Zygor's Alliance Reputations Guides\\Mists of Pandaria\\Lorewalkers" |confirm |only if ZGV.guidesets["ReputationsAMOP"]
+Click here to access the Lorewalkers guide. |next "Zygor's Reputations Guides\\Mists of Pandaria Reputations\\Lorewalkers" |confirm |only if ZGV.guidesets["ReputationsAMOP"]
 Exalted with the Lorewalkers |achieve 6548
 step
 talk Tan Shin Tiao##64605
 buy Disc of the Red Flying Cloud##89363 |goto Vale of Eternal Blossoms 82.2,29.4
 learnmount Red Flying Cloud##130092 |goto Vale of Eternal Blossoms 82.2,29.4 |use Disc of the Red Flying Cloud##89363
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Reputation Mounts\\Thundering August Cloud Serpent",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Reputation Mounts\\Thundering August Cloud Serpent",{
 keywords={"thundering","august","cloud","serpent","exalted","celestials","mount","flying"},
 model={43686},
 condition_end="hasmount(129918)",
@@ -2054,7 +2226,7 @@ talk Instructor Windspear##64484
 buy Reins of the Thundering August Cloud Serpent##89304 |goto Vale of Eternal Blossoms 85.8,62.3
 learnmount Thundering August Cloud Serpent##129918 |goto Vale of Eternal Blossoms 85.8,62.3 |use Reins of the Thundering August Cloud Serpent##89304
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Trading Card Mounts\\Ghastly Charger",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Trading Card Mounts\\Ghastly Charger",{
 keywords={"trading","card","game","ghastly","charger","mount","flying"},
 condition_end="hasmount(136505)",
 model={48014},
@@ -2064,7 +2236,7 @@ step
 This mount can only be obtained through the World of Warcraft Trading Card Game Expansion: "Betrayal of the Guardian". The official release date is mid February 2013.
 confirm
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Unavailable Mounts\\Ashen Pandaren Phoenix",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Unavailable Mounts\\Ashen Pandaren Phoenix",{
 keywords={"ashen","pandaren","phoenix","pheonix","challenge","mode","silver"},
 condition_end="hasmount(132117)",
 model={45521},
@@ -2074,7 +2246,17 @@ step
 The Ashen Pandaren Phoenix was the reward for completing all Mists of Pandaria challenge mode dungeons with silver or better time.
 This mount was retired from service in patch 6.0
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Unavailable Mounts\\Crimson Pandaren Phoenix",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Unavailable Mounts\\Big Blizzard Bear",{
+keywords={"big","blizzard","bear","ground","mount"},
+condition_end="hasmount(58983)",
+model={27567},
+description="This mount has been removed from the game.",
+},[[
+step
+The Big Blizzard Bear was a reward for going to the 2008 BlizzCon
+It was also obtainable for a time via DirectTV subscription in the USA
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Unavailable Mounts\\Crimson Pandaren Phoenix",{
 keywords={"crimson","pandaren","phoenix","pheonix","challenge","mode","silver"},
 condition_end="hasmount(129552)",
 model={44633},
@@ -2084,7 +2266,7 @@ step
 The Crimson Pandaren Phoenix was the reward for completing all Mists of Pandaria challenge mode dungeons with silver or better time.
 This mount was retired from service in patch 6.0
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Unavailable Mounts\\Emerald Pandaren Phoenix",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Unavailable Mounts\\Emerald Pandaren Phoenix",{
 keywords={"emerald","pandaren","phoenix","pheonix","challenge","mode","silver"},
 condition_end="hasmount(132118)",
 model={45520},
@@ -2094,7 +2276,7 @@ step
 The Emerald Pandaren Phoenix was the reward for completing all Mists of Pandaria challenge mode dungeons with silver or better time.
 This mount was retired from service in patch 6.0
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Unavailable Mounts\\Grievous Gladiator's Cloud Serpent",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Unavailable Mounts\\Grievous Gladiator's Cloud Serpent",{
 keywords={"grievous","gladiators","gladiator's","cloud","serpent","arena"},
 condition_end="hasmount(148619)",
 model={51360},
@@ -2104,7 +2286,7 @@ step
 The Grievous Gladiator's Cloud Serpent was the reward for top ranking arena teams at the conclusion of Arena Season 14
 This mount was retired from service in at the conclusion of Arena Season 14
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Unavailable Mounts\\Malevolent Gladiator's Cloud Serpent",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Unavailable Mounts\\Malevolent Gladiator's Cloud Serpent",{
 keywords={"malevolent","gladiator's","cloud","serpent","arena"},
 condition_end="hasmount(139407)",
 model={47976},
@@ -2114,7 +2296,7 @@ step
 The Malevolent Gladiator's Cloud Serpent was the reward for top ranking arena teams at the conclusion of Arena Season 12
 This mount was retired from service in at the conclusion of Arena Season 12
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Unavailable Mounts\\Prideful Gladiator's Cloud Serpent",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Unavailable Mounts\\Prideful Gladiator's Cloud Serpent",{
 keywords={"prideful","gladiator's","cloud","serpent","arena"},
 condition_end="hasmount(148620)",
 model={51359},
@@ -2124,7 +2306,7 @@ step
 The Prideful Gladiator's Cloud Serpent was the reward for top ranking arena teams at the conclusion of Arena Season 15
 This mount was retired from service in at the conclusion of Arena Season 15
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Unavailable Mounts\\Tyrannical Gladiator's Cloud Serpent",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Unavailable Mounts\\Tyrannical Gladiator's Cloud Serpent",{
 keywords={"tyrannical","gladiator's","cloud","serpent","arena"},
 condition_end="hasmount(148618)",
 model={51361},
@@ -2134,7 +2316,7 @@ step
 The Tyrannical Gladiator's Cloud Serpent was the reward for top ranking arena teams at the conclusion of Arena Season 13
 This mount was retired from service in at the conclusion of Arena Season 13
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Pets & Mounts Guide\\Mounts\\Flying Mounts\\Unavailable Mounts\\Violet Pandaren Phoenix",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Mounts\\Flying Mounts\\Unavailable Mounts\\Violet Pandaren Phoenix",{
 keywords={"violet","pandaren","phoenix","pheonix","challenge","mode","silver"},
 condition_end="hasmount(132119)",
 model={45522},

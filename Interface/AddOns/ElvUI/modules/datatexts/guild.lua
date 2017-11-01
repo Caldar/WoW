@@ -20,13 +20,12 @@ local SetItemRef = SetItemRef
 local GetQuestDifficultyColor = GetQuestDifficultyColor
 local UnitInParty = UnitInParty
 local UnitInRaid = UnitInRaid
-local EasyMenu = EasyMenu
+local L_EasyMenu = L_EasyMenu
 local IsShiftKeyDown = IsShiftKeyDown
 local GetGuildInfo = GetGuildInfo
 local ToggleGuildFrame = ToggleGuildFrame
 local GetGuildFactionInfo = GetGuildFactionInfo
 local GetCurrentMapAreaID = GetCurrentMapAreaID
-local CUSTOM_CLASS_COLORS = CUSTOM_CLASS_COLORS
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 local GUILD_MOTD = GUILD_MOTD
 local COMBAT_FACTION_CHANGE = COMBAT_FACTION_CHANGE
@@ -35,6 +34,7 @@ local REMOTE_CHAT = REMOTE_CHAT
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: GuildFrame, LookingForGuildFrame, GuildFrame_LoadUI, LookingForGuildFrame_LoadUI
+-- GLOBALS: CUSTOM_CLASS_COLORS
 
 local tthead, ttsubh, ttoff = {r=0.4, g=0.78, b=1}, {r=0.75, g=0.9, b=1}, {r=.3,g=1,b=.3}
 local activezone, inactivezone = {r=0.3, g=1.0, b=0.3}, {r=0.65, g=0.65, b=0.65}
@@ -124,7 +124,6 @@ local eventHandlers = {
 	-- when we enter the world and guildframe is not available then
 	-- load guild frame, update guild message and guild xp
 	["PLAYER_ENTERING_WORLD"] = function()
-
 		if not GuildFrame and IsInGuild() then
 			LoadAddOn("Blizzard_GuildUI")
 			GuildRoster()
@@ -143,7 +142,6 @@ local eventHandlers = {
 			end
 		end
 	end,
-
 	["PLAYER_GUILD_UPDATE"] = function()
 		GuildRoster()
 	end,
@@ -151,8 +149,8 @@ local eventHandlers = {
 	["GUILD_MOTD"] = function (self, arg1)
 		guildMotD = arg1
 	end,
-	["ELVUI_FORCE_RUN"] = function() end,
-	["ELVUI_COLOR_UPDATE"] = function() end,
+	["ELVUI_FORCE_RUN"] = E.noop,
+	["ELVUI_COLOR_UPDATE"] = E.noop,
 }
 
 
@@ -168,7 +166,7 @@ local function OnEvent(self, event, ...)
 	end
 end
 
-local menuFrame = CreateFrame("Frame", "GuildDatatTextRightClickMenu", E.UIParent, "UIDropDownMenuTemplate")
+local menuFrame = CreateFrame("Frame", "GuildDatatTextRightClickMenu", E.UIParent, "L_UIDropDownMenuTemplate")
 local menuList = {
 	{ text = OPTIONS_MENU, isTitle = true, notCheckable=true},
 	{ text = INVITE, hasArrow = true, notCheckable=true,},
@@ -202,7 +200,7 @@ local function Click(self, btn)
 				classc, levelc = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[info[9]], GetQuestDifficultyColor(info[3])
 				if UnitInParty(info[1]) or UnitInRaid(info[1]) then
 					grouped = "|cffaaaaaa*|r"
-				elseif not info[11] then
+				elseif not (info[11] and info[4] == REMOTE_CHAT) then
 					menuCountInvites = menuCountInvites + 1
 					grouped = ""
 					menuList[2].menuList[menuCountInvites] = {text = format(levelNameString, levelc.r*255,levelc.g*255,levelc.b*255, info[3], classc.r*255,classc.g*255,classc.b*255, info[1], ""), arg1 = info[1],notCheckable=true, func = inviteClick}
@@ -213,7 +211,7 @@ local function Click(self, btn)
 			end
 		end
 
-		EasyMenu(menuList, menuFrame, "cursor", 0, 0, "MENU", 2)
+		L_EasyMenu(menuList, menuFrame, "cursor", 0, 0, "MENU", 2)
 	else
 		ToggleGuildFrame()
 	end
@@ -245,7 +243,6 @@ local function OnEnter(self, _, noUpdate)
 	if standingID ~= 8 then -- Not Max Rep
 		barMax = barMax - barMin
 		barValue = barValue - barMin
-		barMin = 0
 		DT.tooltip:AddLine(format(standingString, COMBAT_FACTION_CHANGE, E:ShortValue(barValue), E:ShortValue(barMax), ceil((barValue / barMax) * 100)))
 	end
 
@@ -293,16 +290,4 @@ local function ValueColorUpdate(hex)
 end
 E['valueColorUpdateFuncs'][ValueColorUpdate] = true
 
---[[
-	DT:RegisterDatatext(name, events, eventFunc, updateFunc, clickFunc, onEnterFunc, onLeaveFunc)
-
-	name - name of the datatext (required)
-	events - must be a table with string values of event names to register
-	eventFunc - function that gets fired when an event gets triggered
-	updateFunc - onUpdate script target function
-	click - function to fire when clicking the datatext
-	onEnterFunc - function to fire OnEnter
-	onLeaveFunc - function to fire OnLeave, if not provided one will be set for you that hides the tooltip.
-]]
-
-DT:RegisterDatatext('Guild', {'PLAYER_ENTERING_WORLD', 'CHAT_MSG_SYSTEM', "GUILD_ROSTER_UPDATE", "PLAYER_GUILD_UPDATE", "GUILD_MOTD"}, OnEvent, nil, Click, OnEnter)
+DT:RegisterDatatext('Guild', {'PLAYER_ENTERING_WORLD', 'CHAT_MSG_SYSTEM', "GUILD_ROSTER_UPDATE", "PLAYER_GUILD_UPDATE", "GUILD_MOTD"}, OnEvent, nil, Click, OnEnter, nil, GUILD)

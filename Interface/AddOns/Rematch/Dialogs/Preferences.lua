@@ -47,7 +47,7 @@ function rematch:ShowPreferencesTooltip(prefSet,prefKey,prefLoaded,info)
 		wipe(info)
 	end
 	local prefType = prefLoaded and L["Leveling Preferences"] or prefSet=="team" and L["Team Preferences"] or prefSet=="tab" and L["Tab Preferences"]
-	tinsert(info,format("%s %s%s","\124TInterface\\AddOns\\Rematch\\textures\\footnotes:16:16:0:0:128:64:65:95:1:31\124t",rematch.hexWhite,prefType))
+	tinsert(info,format("%s %s%s","\124TInterface\\AddOns\\Rematch\\textures\\footnotes:16:16:0:0:256:128:65:95:1:31\124t",rematch.hexWhite,prefType))
 	local minHP, expectedDD, allowMM, maxHP, minXP, maxXP, fromTab, override
 	minHP,fromTab = rematch:GetPrefStatValue("minHP",prefSet,prefKey,prefLoaded)
 	override = override or fromTab
@@ -96,6 +96,7 @@ end
 function rematch:GetPrefSetFrom(frame)
 	local prefLoaded -- will be true if both team and tab have preferences (only relevant for loaded team)
 	local parent = frame:GetParent()
+   local prefSet,prefKey,prefLoaded
 	if parent.forLoadedTeam then
 		local hasTeamPreferences = rematch:HasPreferences(saved[settings.loadedTeam])
 		local hasTabPreferences = rematch:HasPreferences(nil,rematch:GetTabFromTeam(settings.loadedTeam))
@@ -197,7 +198,7 @@ function rematch:UpdatePreferencesDialog()
 	end
 
 	-- update name of team/tab
-	pref.Top.Label:SetText(format(L["Leveling Preferences For %s:"],prefSet=="team" and "Team" or "Tab"))
+	pref.Top.Label:SetText(format(L["Leveling Preferences For %s:"],prefSet=="team" and L["Team"] or L["Tab"]))
 	if prefSet=="team" then
 		pref.Top.PrefKey:SetText(rematch:GetTeamTitle(prefKey,true))
 		pref.Top.RadioTeam:SetChecked(true)

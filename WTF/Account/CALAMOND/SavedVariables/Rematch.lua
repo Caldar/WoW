@@ -1,5 +1,29 @@
 
 RematchSaved = {
+	[117934] = {
+		{
+			"BattlePet-0-000005F582E9", -- [1]
+			509, -- [2]
+			511, -- [3]
+			310, -- [4]
+			746, -- [5]
+		}, -- [1]
+		{
+			"BattlePet-0-000005F58260", -- [1]
+			420, -- [2]
+			440, -- [3]
+			595, -- [4]
+			87, -- [5]
+		}, -- [2]
+		{
+			"BattlePet-0-000005F582A1", -- [1]
+			119, -- [2]
+			312, -- [3]
+			159, -- [4]
+			443, -- [5]
+		}, -- [3]
+		["teamName"] = "Sissix",
+	},
 }
 RematchSettings = {
 	["ScriptFilters"] = {
@@ -26,13 +50,14 @@ RematchSettings = {
 	},
 	["QueueSortOrder"] = 1,
 	["XPos"] = 781.666687011719,
+	["HidePetToast"] = true,
 	["FavoriteFilters"] = {
 	},
 	["Sort"] = {
 		["Order"] = 1,
 		["FavoritesFirst"] = true,
 	},
-	["JournalPanel"] = 3,
+	["JournalPanel"] = 1,
 	["BackupCount"] = 0,
 	["TeamGroups"] = {
 		{
@@ -45,19 +70,21 @@ RematchSettings = {
 		},
 		["Strong"] = {
 		},
-		["Rarity"] = {
+		["Moveset"] = {
 		},
 		["Favorite"] = {
 		},
 		["Collected"] = {
 		},
-		["Sources"] = {
+		["Rarity"] = {
+		},
+		["Similar"] = {
 		},
 		["Breed"] = {
 		},
 		["Script"] = {
 		},
-		["Similar"] = {
+		["Sources"] = {
 		},
 		["Level"] = {
 		},
@@ -66,7 +93,10 @@ RematchSettings = {
 		["Types"] = {
 		},
 	},
-	["JournalUsed"] = true,
+	["YPos"] = 297.999969482422,
+	["SpecialSlots"] = {
+	},
+	["loadedTeam"] = 117934,
 	["CollapsedOptHeaders"] = {
 		true, -- [1]
 		true, -- [2]
@@ -81,16 +111,45 @@ RematchSettings = {
 		true, -- [11]
 	},
 	["SlimListButtons"] = false,
-	["PreferredMode"] = 1,
+	["ElvUIToastDefaulted"] = true,
 	["ActivePanel"] = 1,
 	["Sanctuary"] = {
+		["BattlePet-0-000005F58260"] = {
+			1, -- [1]
+			true, -- [2]
+			87, -- [3]
+			19, -- [4]
+			1088, -- [5]
+			210, -- [6]
+			235, -- [7]
+			4, -- [8]
+		},
+		["BattlePet-0-000005F582E9"] = {
+			1, -- [1]
+			true, -- [2]
+			746, -- [3]
+			25, -- [4]
+			1481, -- [5]
+			357, -- [6]
+			211, -- [7]
+			4, -- [8]
+		},
+		["BattlePet-0-000005F582A1"] = {
+			1, -- [1]
+			true, -- [2]
+			443, -- [3]
+			25, -- [4]
+			1400, -- [5]
+			260, -- [6]
+			325, -- [7]
+			4, -- [8]
+		},
 	},
-	["LevelingSlots"] = {
-	},
+	["PreferredMode"] = 1,
 	["CornerPos"] = "BOTTOMLEFT",
-	["YPos"] = 297.999969482422,
 	["LevelingQueue"] = {
 	},
+	["JournalUsed"] = true,
 	["UseTypeBar"] = false,
 	["SelectedTab"] = 1,
 	["PetNotes"] = {

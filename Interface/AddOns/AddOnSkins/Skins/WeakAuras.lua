@@ -6,9 +6,12 @@ function AS:WeakAuras()
 	local function Skin_WeakAuras(frame, ftype)
 		if not frame.Backdrop then
 			AS:CreateBackdrop(frame, 'Transparent')
-			AS:SkinTexture(frame.icon)
-			frame.icon.SetTexCoord = AS.Noop
+			if frame.icon then
+				AS:SkinTexture(frame.icon)
+				frame.icon.SetTexCoord = AS.Noop
+			end
 			if ftype == 'icon' then
+				frame:SetFrameLevel(frame:GetFrameLevel() + 3)
 				frame.Backdrop:HookScript('OnUpdate', function(self)
 					self:SetAlpha(self:GetParent().icon:GetAlpha())
 				end)
@@ -24,7 +27,7 @@ function AS:WeakAuras()
 		end
 
 		if ftype == 'icon' then
-			if IsAddOnLoaded('ElvUI') and AS:CheckOption('WeakAuraIconCooldown') then ElvUI[1]:RegisterCooldown(frame.cooldown) end
+			if AS:CheckAddOn('ElvUI') and AS:CheckOption('WeakAuraIconCooldown') then ElvUI[1]:RegisterCooldown(frame.cooldown) end
 		end
 	end
 
@@ -54,8 +57,7 @@ function AS:WeakAuras()
 	end
 	
 	for weakAura, _ in pairs(WeakAuras.regions) do
-		if WeakAuras.regions[weakAura].regionType == 'icon'
-		   or WeakAuras.regions[weakAura].regionType == 'aurabar' then
+		if WeakAuras.regions[weakAura].regionType == 'icon' or WeakAuras.regions[weakAura].regionType == 'aurabar' then
 			Skin_WeakAuras(WeakAuras.regions[weakAura].region, WeakAuras.regions[weakAura].regionType)
 		end
 	end

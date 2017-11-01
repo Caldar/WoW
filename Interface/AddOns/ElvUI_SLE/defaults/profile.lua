@@ -73,9 +73,19 @@ P["sle"] = {
 			["visibility"] = "show",
 		},
 	},
-		--Bags
+	--Bags
 	["bags"] = {
 		["lootflash"] = true,
+		["artifactPower"] = {
+			["enable"] = false,
+			["color"] = {r = 230, g = 204, b = 128},
+			["short"] = false,
+			["fonts"] = {
+				["font"] = "PT Sans Narrow",
+				["size"] = 12,
+				["outline"] = "OUTLINE",
+			},
+		},
 	},
 	--Blizzard
 	["blizzard"] = {
@@ -95,7 +105,7 @@ P["sle"] = {
 			["alpha"] = 0.5,
 		},
 		["combathide"] = "NONE",
-		["editboxhistory"] = 5,
+		["editboxhistory"] = 20,
 		["justify"] = {
 			["frame1"] = "LEFT",
 			["frame2"] = "LEFT",
@@ -348,7 +358,9 @@ P["sle"] = {
 		},
 		["legion"] = {
 			["nightmare"] = false,
+			["trial"] = false,
 			["palace"] = false,
+			["tomb"] = false,
 		},
 	},
 	--Loot 
@@ -449,6 +461,11 @@ P["sle"] = {
 				["size"] = 12,
 				["outline"] = "NONE",
 			},
+			["questFontSuperHuge"] = {
+				["font"] = "PT Sans Narrow",
+				["size"] = 24,
+				["outline"] = "NONE",
+			},
 		},
 	},
 	--Minimap Module
@@ -515,6 +532,7 @@ P["sle"] = {
 			["customColor"] = {r = 1, g = 1, b = 1 },
 			["customColor_Coords"] = {r = 1, g = 1, b = 1 },
 			["combathide"] = false,
+			["orderhallhide"] = false,
 			["portals"] = {
 				["enable"] = true,
 				["HSplace"] = true,
@@ -540,8 +558,18 @@ P["sle"] = {
 	},
 	--Nameplate Options
 	["nameplates"] = {
-		["showthreat"] = false,
-		["targetcount"] = false,
+		["threat"] = {
+			["enable"] = false,
+			["font"] = "PT Sans Narrow",
+			["fontOutline"] = "OUTLINE",
+			["size"] = 12,
+		},
+		["targetcount"] = {
+			["enable"] = false,
+			["font"] = "PT Sans Narrow",
+			["fontOutline"] = "OUTLINE",
+			["size"] = 12,
+		},
 		["visibleRange"] = 60,
 	},
 	--Order Halls
@@ -684,6 +712,12 @@ P["sle"] = {
 			["enable"] = false,
 			["NameStyle"] = "SHORT",
 			["DifStyle"] = "SHORT",
+			["raids"] = {
+				["nightmare"] = true,
+				["trial"] = true,
+				["nighthold"] = true,
+				["sargeras"] = true,
+			},
 		},
 	},
 	--UI Buttons
@@ -739,16 +773,57 @@ P["sle"] = {
 					["texture"] = "DEFAULT",
 					["customTexture"] = "",
 				},
+				["pvpIconText"] = {
+					["enable"] = false,
+					["xoffset"] = 0,
+					["yoffset"] = 0,
+				},
+				["auras"] = {
+					["buffs"] = {
+						["threshold"] = 4,
+					},
+					["debuffs"] = {
+						["threshold"] = 4,
+					},
+				},
 				["higherPortrait"] = false,
 				["portraitAlpha"] = 0.35,
+			},
+			["pet"] = {
+				["higherPortrait"] = false,
+				["portraitAlpha"] = 0.35,
+				["auras"] = {
+					["buffs"] = {
+						["threshold"] = 4,
+					},
+					["debuffs"] = {
+						["threshold"] = 4,
+					},
+				},
 			},
 			["target"] = {
 				["higherPortrait"] = false,
 				["portraitAlpha"] = 0.35,
+				["auras"] = {
+					["buffs"] = {
+						["threshold"] = 4,
+					},
+					["debuffs"] = {
+						["threshold"] = 4,
+					},
+				},
 			},
 			["focus"] = {
 				["higherPortrait"] = false,
 				["portraitAlpha"] = 0.35,
+				["auras"] = {
+					["buffs"] = {
+						["threshold"] = 4,
+					},
+					["debuffs"] = {
+						["threshold"] = 4,
+					},
+				},
 			},
 			["party"] = {
 				["offline"] = {
@@ -762,6 +837,14 @@ P["sle"] = {
 				["role"] = {
 					["xoffset"] = 0,
 					["yoffset"] = 0,
+				},
+				["auras"] = {
+					["buffs"] = {
+						["threshold"] = 4,
+					},
+					["debuffs"] = {
+						["threshold"] = 4,
+					},
 				},
 				["higherPortrait"] = false,
 				["portraitAlpha"] = 0.35,
@@ -779,6 +862,14 @@ P["sle"] = {
 					["xoffset"] = 0,
 					["yoffset"] = 0,
 				},
+				["auras"] = {
+					["buffs"] = {
+						["threshold"] = 4,
+					},
+					["debuffs"] = {
+						["threshold"] = 4,
+					},
+				},
 				["higherPortrait"] = false,
 				["portraitAlpha"] = 0.35,
 			},
@@ -791,6 +882,14 @@ P["sle"] = {
 					["texture"] = "ALERT",
 					["CustomTexture"] = "",
 				},
+				["auras"] = {
+					["buffs"] = {
+						["threshold"] = 4,
+					},
+					["debuffs"] = {
+						["threshold"] = 4,
+					},
+				},
 				["role"] = {
 					["xoffset"] = 0,
 					["yoffset"] = 0,
@@ -799,10 +898,26 @@ P["sle"] = {
 				["portraitAlpha"] = 0.35,
 			},
 			["boss"] = {
+				["auras"] = {
+					["buffs"] = {
+						["threshold"] = 4,
+					},
+					["debuffs"] = {
+						["threshold"] = 4,
+					},
+				},
 				["higherPortrait"] = false,
 				["portraitAlpha"] = 0.35,
 			},
 			["arena"] = {
+				["auras"] = {
+					["buffs"] = {
+						["threshold"] = 4,
+					},
+					["debuffs"] = {
+						["threshold"] = 4,
+					},
+				},
 				["higherPortrait"] = false,
 				["portraitAlpha"] = 0.35,
 			},

@@ -119,22 +119,21 @@ end
 
 -- Check race/class requirement and condition_visible
 function Step:AreRequirementsMet(case)
+	if self.beta and not ZGV.BETA then return false,"beta disabled" end
 	if self.requirement then
 		local raceclass=false
 		for i,v in pairs(self.requirement) do if ZGV:RaceClassMatch(v) then raceclass=true break end end
-		if not raceclass then return false end
+		if not raceclass then return false,"raceclass mismatch" end
 	end
 
 	if self.condition_visible then
-		ZGV.Parser.ConditionEnv._SetLocal(self.parentGuide,self,self.goals[1])
-		if not self.condition_visible() then return false end
+		ZGV.Parser.ConditionEnv:_SetLocal(self.parentGuide,self,self.goals[1])
+		if not self.condition_visible() then return false,"condition fail" end
 	end
 
-	if case=="focus" and self.is_sticky_only then return false end
+	if case=="focus" and self.is_sticky_only then return false,"sticky only" end
 
 	return true
-	-- wrong
-	--- wtf? why?
 end
 
 --- Run before the step is displayed. May be called periodically to update.
@@ -582,7 +581,7 @@ function Step:GetNextValidStep()
 	local stepnum,guide
 	repeat
 		step, stepnum,guide = step:GetNextStep()
-		numskips=numskips+1  assert(numskips<2000,"2000 skips and no valid next step found!")
+		numskips=numskips+1  assert(numskips<5000,"5000 skips and no valid next step found!")
 	until not step or step:AreRequirementsMet() or ZGV.db.profile.showwrongsteps
 	return step,stepnum,guide -- or nil if none.
 end
@@ -621,4 +620,18 @@ function Step:IsCurrentlySticky()
 	if not ZGV.CurrentStickies then return false end
 	for k,v in ipairs(ZGV.CurrentStickies) do if v==self then return true end end
 	return false
+end
+
+function Step:ShareToChat(target,sharesource,brand)
+	if target=="PARTY" and not IsInGroup() then ZGV:Error(ERR_NOT_IN_GROUP) return end
+	if target=="RAID" and not IsInRaid() then ZGV:Error(ERR_NOT_IN_RAID) return end
+	local goals
+	if sharesource=="rolegoals" then
+		for i,g in ipairs(self.goals) do  if g.grouprole and g:IsVisible() then   goals=goals or {}  tinsert(goals,g)  end end
+	end
+	if not goals then return end
+	if brand and not ZGV.step_share_onceflag then  ZGV.step_share_onceflag=true  SendChatMessage(L['goalshare_brand']:format(self.parentGuide.title_short,self.num),target) end
+	for i,g in ipairs(goals) do
+		SendChatMessage(g:GetTextForSharing("withtip"),target)
+	end
 end

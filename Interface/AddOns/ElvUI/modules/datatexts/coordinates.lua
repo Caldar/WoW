@@ -13,8 +13,11 @@ local ToggleFrame = ToggleFrame
 
 local displayString = ""
 local x, y = 0, 0
+local inRestrictedArea = false
 
 local function Update(self, elapsed)
+	if inRestrictedArea then return; end
+
 	self.timeSinceUpdate = (self.timeSinceUpdate or 0) + elapsed
 
 	if self.timeSinceUpdate > 0.1 then
@@ -27,6 +30,18 @@ local function Update(self, elapsed)
 	end
 end
 
+local function OnEvent(self)
+	local x = GetPlayerMapPosition("player")
+	if not x then
+		inRestrictedArea = true
+		self.text:SetText("N/A")
+		self:Hide()
+	else
+		inRestrictedArea = false
+		self:Show()
+	end
+end
+
 local function Click()
 	ToggleFrame(WorldMapFrame)
 end
@@ -36,15 +51,4 @@ local function ValueColorUpdate(hex)
 end
 E['valueColorUpdateFuncs'][ValueColorUpdate] = true
 
---[[
-	DT:RegisterDatatext(name, events, eventFunc, updateFunc, clickFunc, onEnterFunc, onLeaveFunc)
-
-	name - name of the datatext (required)
-	events - must be a table with string values of event names to register
-	eventFunc - function that gets fired when an event gets triggered
-	updateFunc - onUpdate script target function
-	click - function to fire when clicking the datatext
-	onEnterFunc - function to fire OnEnter
-	onLeaveFunc - function to fire OnLeave, if not provided one will be set for you that hides the tooltip.
-]]
-DT:RegisterDatatext('Coords', nil, nil, Update, Click)
+DT:RegisterDatatext('Coords', {"PLAYER_ENTERING_WORLD"}, OnEvent, Update, Click, nil, nil, L["Coords"])

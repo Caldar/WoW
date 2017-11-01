@@ -4,81 +4,101 @@ if UnitFactionGroup("player")~="Horde" then return end
 if ZGV:DoMutex("PetsHCATA") then return end
 ZygorGuidesViewer.GuideMenuTier = "TRI"
 ZGV.CommonPets=true
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Pets & Mounts Guide\\Pets\\Snowshoe Rabbit",{
-pet=72,
-description="This guide will walk you through obtaining the Critter pet: Snowshoe Rabbit\nThis pet is sold from an Alliance only vendor. You will need to earn it on an Alliance character or purchase it from the Auction House.",
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Aquatic Pets\\Small Frog",{
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining the Aquatic pet: Small Frog.",
+model={6297},
+pet=419,
 },[[
 step
-#include "auctioneer"
-buy 1 Rabbit Crate (Snowshoe)##8497
-|tip This pet must be bought with an Alliance character or through the Auction House
-modeldisplay 16191
-step
-learnpet Snowshoe Rabbit##7560 |use Rabbit Crate (Snowshoe)##8497
+Challenge one to a pet battle and capture it
+|tip The Small Frog is level 3.
+learnpet Small Frog##61071 |goto Northern Barrens 36.2,44.0
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Pets & Mounts Guide\\Pets\\Squirrel",{
-pet=379,
-description="This guide will walk you through obtaining\nthe Critter pet: Squirrel",
-},[[
-step
-Challenge one to a pet battle and capture it.
-|tip The Squirrel is level 1.
-learnpet Squirrel##61081 |goto Elwynn Forest 46.7,71.4
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Pets & Mounts Guide\\Pets\\Bombay Cat",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Beast Pets\\Bombay Cat",{
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining the Beast pet: Bombay Cat.",
+model={5556},
 pet=40,
-description="This guide will walk you through obtaining the Beast pet: Bombay Cat\nThis pet is sold from an Alliance only vendor. You will need to earn it on an Alliance character or purchase it from the Auction House.",
 },[[
 step
 #include "auctioneer"
 buy 1 Cat Carrier (Bombay)##8485
 |tip This pet must be bought with an Alliance character or through the Auction House
-modeldisplay 5556
 step
 learnpet Bombay Cat##7385  |use Cat Carrier (Bombay)##8485
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Pets & Mounts Guide\\Pets\\Cornish Rex Cat",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Beast Pets\\Cornish Rex Cat",{
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining the Beast pet: Cornish Rex Cat.",
+model={5586},
 pet=41,
-description="This guide will walk you through obtaining the Beast pet: Cornish Rex Cat\nThis pet is sold from an Alliance only vendor. You will need to earn it on an Alliance character or purchase it from the Auction House.",
 },[[
 step
 #include "auctioneer"
 buy 1 Cat Carrier (Cornish Rex)##8486
 |tip This pet must be bought with an Alliance character or through the Auction House
-modeldisplay 5586
 step
 learnpet Cornish Rex Cat##7384 |use Cat Carrier (Cornish Rex)##8486
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Pets & Mounts Guide\\Pets\\Hare",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Beast Pets\\Orange Tabby Cat",{
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining the Beast pet: Orange Tabby Cat.",
+model={5554},
+pet=43,
+},[[
+step
+#include "auctioneer"
+buy 1 Cat Carrier (Orange Tabby)##8487
+|tip This pet must be bought with an Alliance character or through the Auction House
+step
+learnpet Orange Tabby Cat##7382 |use Cat Carrier (Orange Tabby)##8487
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Beast Pets\\Silver Tabby Cat",{
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining the Beast pet: Silver Tabby Cat.",
+model={5555},
+pet=45,
+},[[
+step
+#include "auctioneer"
+buy 1 Cat Carrier (Silver Tabby)##8488
+tip This pet must be bought with an Alliance character or through the Auction House
+step
+learnpet Silver Tabby Cat##7381 |use Cat Carrier (Silver Tabby)##8488
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Critter Pets\\Hare",{
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining the Critter pet: Hare.",
+model={1560},
 pet=448,
-description="This guide will walk you through obtaining\nthe Critter pet: Hare",
 },[[
 step
 Challenge one to a pet battle and capture it
 |tip The Hares around this area are level 1.
 learnpet Hare##61751 |goto Durotar 47.3,30.5
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Pets & Mounts Guide\\Pets\\Orange Tabby Cat",{
-pet=43,
-description="This guide will walk you through obtaining the Beast pet: Orange Tabby Cat\nThis pet is sold from an Alliance only vendor. You will need to earn it on an Alliance character or purchase it from the Auction House.",
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Critter Pets\\Snowshoe Rabbit",{
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining the Critter pet: Snowshoe Rabbit.",
+model={328},
+pet=72,
 },[[
 step
 #include "auctioneer"
-buy 1 Cat Carrier (Orange Tabby)##8487
+buy 1 Rabbit Crate (Snowshoe)##8497
 |tip This pet must be bought with an Alliance character or through the Auction House
-modeldisplay 5554
 step
-learnpet Orange Tabby Cat##7382 |use Cat Carrier (Orange Tabby)##8487
+learnpet Snowshoe Rabbit##7560 |use Rabbit Crate (Snowshoe)##8497
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Pets & Mounts Guide\\Pets\\Silver Tabby Cat",{
-pet=45,
-description="This guide will walk you through obtaining the Beast pet: Silver Tabby Cat\nThis pet is sold from an Alliance only vendor. You will need to earn it on an Alliance character or purchase it from the Auction House.",
+ZygorGuidesViewer:RegisterGuide("Zygor's Pets & Mounts Guide\\Battle Pets\\Critter Pets\\Undercity Rat",{
+author="support@zygorguides.com",
+description="This guide will walk you through obtaining the Critter pet: Undercity Rat.",
+model={1141},
+pet=454,
 },[[
 step
-#include "auctioneer"
-buy 1 Cat Carrier (Silver Tabby)##8488
-tip This pet must be bought with an Alliance character or through the Auction House
-modeldisplay 5555
-step
-learnpet Silver Tabby Cat##7381 |use Cat Carrier (Silver Tabby)##8488
+Challenge one to a pet battle and capture it
+|tip The Undercity Rats are level 2.
+learnpet Undercity Rat##61889 |goto Undercity 70.9,35.4
 ]])

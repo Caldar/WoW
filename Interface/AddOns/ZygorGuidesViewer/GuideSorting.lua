@@ -6,16 +6,16 @@ ZygorGuidesViewer:RegisterGuideSorting({
 	"BETA",
 	"Leveling",
 	"Loremaster",
-	"Dailies",
-	"Events",
 	"Dungeons",
 	"Gear",
-	"Professions",
-	"Achievements",
+	"Dailies",
+	"Events",
+	"Reputations",
 	"Gold",
+	"Professions",
 	"Pets & Mounts",
 	"Titles",
-	"Reputations",
+	"Achievements",
 	"Macros",
 })
 
@@ -38,7 +38,8 @@ ZygorGuidesViewer:RegisterGuideSorting({
 	"Pandaria (85-90)",
 	"Draenor (90-100)",
 	"Legion (100-110)",
-	"Peak of Serenity"})
+	"Peak of Serenity",
+	"The Loremaster"})
 
 -- Leveling alliance starters
 ZygorGuidesViewer:RegisterGuideSorting({

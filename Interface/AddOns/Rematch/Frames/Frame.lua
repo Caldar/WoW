@@ -64,6 +64,7 @@ function frame:OnHide()
 	rematch:HideWidgets()
 	rematch:HideDialog()
 	rematch:SetESCable("RematchFrame",false)
+	C_PetJournal.ClearRecentFanfares()
 	-- when frame hides due to entering battle, we may not actually be in battle yet; this will wait
 	if not C_PetBattles.IsInBattle() then
 		C_Timer.After(0.75,frame.CheckIfHidingForBattle)
@@ -144,8 +145,10 @@ function frame:PanelTabOnClick()
 		settings.Minimized = nil
 		RematchFrame:SelectPanel(self:GetID())
 	elseif settings.ActivePanel==self:GetID() then
-		-- if we're clicking the same tab, then minimize
-		frame:ToggleSize()
+		if not (settings.LockDrawer and settings.DontMinTabToggle) then
+			-- if we're clicking the same tab (and settings "Don't Minimize With ESC Key" and "Or With Panel Tabs" not checked), minimize
+			frame:ToggleSize()
+		end
 	else -- otherwise select new tab
 		frame:SelectPanel(self:GetID())
 	end

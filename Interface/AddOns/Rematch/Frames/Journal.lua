@@ -9,6 +9,9 @@ journal.layouts = {{"left","mid","right"},{"left","mid",nil,"right"},{"left","mi
 
 journal.elements = {} -- table of frames/regions in the default journal to be hidden, indexed by the element and their original alpha
 
+journal.notLoaded = true -- becomes nil once the journal successfully loads
+journal.defaultHidden = nil -- becomes true while default journal's widgets are hidden
+
 rematch:InitModule(function()
 	rematch.Journal = journal
 	settings = RematchSettings
@@ -110,6 +113,7 @@ function journal:ShowElement(element)
 	end
 end
 
+-- this is the OnShow of RematchJournal, not the default (which does a Configure)
 function journal:OnShow()
 	journal:HideElement(PetJournal)
 	journal:HideElement(CollectionsJournalCloseButton)
@@ -118,6 +122,7 @@ function journal:OnShow()
 	end
 end
 
+-- this is the OnHide of RematchJournal, not the default
 function journal:OnHide()
 	rematch:HideWidgets()
 	rematch:HideDialog()
@@ -135,10 +140,13 @@ end
 
 -- this returns the standalone frame when the journal hides
 function journal:DefaultJournalOnHide()
-	if journal.showStandaloneOnHide then
+	if journal.showStandaloneOnHide and not InCombatLockdown() then
 		journal.showStandaloneOnHide = nil
 		-- wait a frame to let UISpecialFrames go through everything (otherwise standalone frame can be next frame to hide)
 		C_Timer.After(0,function() rematch.Frame:Show() end)
+	end
+	if journal:IsShown() then
+		journal:Hide()
 	end
 end
 
@@ -151,14 +159,8 @@ function journal:ConfigureJournal(hide)
 		rematch.Frame:Hide() -- hide standalone Frame (Frame and Journal can't coexist)
 	end
 
-	rematch:HideWidgets()
-	rematch:HideDialog()
-	rematch:HideNotes(settings.NotesNoESC)
-	rematch.MiniPanel:Hide()
-	rematch.MiniQueue:Hide()
-
 	if UseRematchButton then
-		UseRematchButton:Show()
+		UseRematchButton:SetShown(not InCombatLockdown()) -- may not be visible; this is checkbutton on default journal
 		UseRematchButton:SetChecked(not settings.UseDefaultJournal)
 	end
 
@@ -169,12 +171,17 @@ function journal:ConfigureJournal(hide)
 			journal:ClearAllPoints()
 			journal:Hide()
 			journal:SetShownExtras(true)
-		else
+		elseif not settings.UseDefaultJournal then
 			rematch:print(L["You are in combat. Try again when out of combat."])
-			UseRematchButton:Hide()
 		end
 		return
 	end
+
+	rematch:HideWidgets(nil,true)
+	rematch:HideDialog()
+	rematch:HideNotes(settings.NotesNoESC)
+	rematch.MiniPanel:Hide()
+	rematch.MiniQueue:Hide()
 
 	rematch.timeUIChanged = GetTime()
 
@@ -253,26 +260,14 @@ end
 -- hook of the function that calls SetItemRef to show the FloatingBattlePetTooltip
 -- note the dot notation! (SetItemRef doesn't pass a parent frame)
 function journal.SetItemRef(link,text,button)
-	if settings.PetCardForLinks and not IsModifiedClick("CHATLINK") then
-	  local battlepet,speciesID,level,rarity,health,power,speed,petID = link:match("(battlepet):(%d+):(%d+):(%d+):(%d+):(%d+):(%d+):(.+)")
-	  if battlepet and speciesID then
-			speciesID=tonumber(speciesID)
-			level=tonumber(level)
-			rarity=tonumber(rarity)+1
-			health=tonumber(health)
-			power=tonumber(power)
-			speed=tonumber(speed)
-			local breed = rematch:GetBreedByStats(speciesID,level,rarity,health,power,speed)
-			FloatingBattlePetTooltip:Hide()
-			if rematch:GetIDType(petID)~="pet" or not C_PetJournal.GetPetInfoByPetID(petID) then
-				petID = {speciesID=speciesID,level=level,rarity=rarity,health=health,power=power,speed=speed,breed=breed}
-			end
-			if rematch.PetCard:CurrentPetIDIsDifferent(petID) then
-				rematch.PetCard.locked = true
-				rematch:ShowPetCard(FloatingBattlePetTooltip,petID,true)
-			else
-				rematch:HidePetCard()
-			end
+	if settings.PetCardForLinks and not IsModifiedClick("CHATLINK") and link:match("battlepet:%d+:%d+:%d+:%d+:%d+:%d+:.+") then
+		FloatingBattlePetTooltip:Hide()
+		local petID = link
+		if rematch.PetCard:CurrentPetIDIsDifferent(petID) then
+			rematch.PetCard.locked = true
+			rematch:ShowPetCard(FloatingBattlePetTooltip,petID,true)
+		else
+			rematch:HidePetCard()
 		end
 	end
 end

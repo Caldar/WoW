@@ -97,7 +97,9 @@
 		<NormalFont style="GameFontHighlight"/>
 		<Scripts>
 			<OnEnter>
-				Rematch.ShowTooltip(self)
+				if not IsMouseButtonDown() then
+					Rematch.ShowTooltip(self)
+				end
 			</OnEnter>
 			<OnLeave>
 				Rematch:HideTooltip()
@@ -240,7 +242,7 @@
 			</Button>
 
 			<!-- title area of card is visible on front and back -->
-			<Frame parentKey="Title" useParentLevel="true" forceAlpha="true">
+			<Frame parentKey="Title" useParentLevel="true" ignoreParentAlpha="true">
 				<Size x="248" y="48"/>
 				<Anchors>
 					<Anchor point="TOP" x="0" y="-25"/>
@@ -272,7 +274,7 @@
 						</Anchors>
 						<Layers>
 							<Layer level="BORDER">
-								<Texture parentKey="Texture" mask="Textures\MinimapMask" setAllPoints="true"/>
+								<Texture parentKey="Texture" setAllPoints="true"/>
 							</Layer>
 							<Layer level="ARTWORK">
 								<!-- thin gold border around Icon -->
@@ -361,7 +363,7 @@
 			</Frame> <!-- Title -->
 			
 			<!-- front is border encompassing whole card inset -->
-			<Frame parentKey="Front" forceAlpha="true">
+			<Frame parentKey="Front" ignoreParentAlpha="true">
 				<Anchors> <!-- 254 width -->
 					<Anchor point="TOPLEFT" x="2" y="-22"/>
 					<Anchor point="BOTTOMRIGHT" x="-4" y="2"/>
@@ -458,6 +460,14 @@
 								</Texture>
 							</Layer>
 							<Layer level="BORDER">
+								<!-- shadow under pet model -->
+								<Texture file="Interface\PetBattles\PetJournal" alpha="0.85">
+									<Size x="192" y="128"/>	
+									<Anchors>
+										<Anchor point="BOTTOMRIGHT" relativePoint="TOPRIGHT" x="-3" y="-190"/>
+									</Anchors>
+									<TexCoords left="0.52734375" right="0.75" top="0.02246094" bottom="0.09277344"/>	
+								</Texture>
 								<!-- pennant texture behind level -->
 								<Texture parentKey="LevelBG" file="Interface\AchievementFrame\UI-Achievement-Guild">
 									<Size x="40" y="45"/>
@@ -660,58 +670,67 @@
 
 							</Frame>
 
+
+							<!-- the model for the pet on the front of the card -->
+							<ModelScene parentKey="ModelScene" useParentLevel="true" inherits="ModelSceneMixinTemplate" mixin="CollectionsWrappedModelSceneMixin">
+								<KeyValues>
+									<KeyValue key="normalIntensity" value="0.75" type="number"/>
+									<KeyValue key="highlightIntensity" value="1.2" type="number"/>
+								</KeyValues>
+
+								<Size x="168" y="172"/>
+								<Anchors>
+									<Anchor point="TOPRIGHT" x="-3" y="-3"/>
+								</Anchors>
+
+								<Scripts>
+									<OnMouseUp inherit="append">
+										if RematchPetCard.petID then
+											RematchPetCard.UnwrapPet()
+										end
+									</OnMouseUp>
+									<OnEnter method="OnMouseEnter" />
+									<OnLeave method="OnMouseLeave" />
+									<OnShow method="OnShow" />
+									<OnHide>
+										if IsMouseButtonDown() then
+											-- don't get model stuck in rotate mode
+											self:GetScript("OnMouseUp")(self,"LeftButton")
+										end
+									</OnHide>
+								</Scripts>
+								<Animations>
+									<AnimationGroup parentKey="UnwrapAnim" setToFinalAlpha="true">
+										<Alpha parentKey="WrappedAnim" startDelay="1.2" fromAlpha="1" toAlpha="0" duration=".3" order="1"/>
+										<Alpha parentKey="UnwrappedAnim" startDelay="1.2" fromAlpha="0" toAlpha="1" duration=".3" order="1"/>
+									</AnimationGroup>
+								</Animations>
+							</ModelScene>
+
+							<!-- separate leveling model since SetModel() and SetDisplayInfo() can't co-exist -->
+							<PlayerModel parentKey="LevelingModel">
+								<Size x="168" y="172"/>
+								<Anchors>
+									<Anchor point="TOPRIGHT" x="-3" y="-3"/>
+								</Anchors>
+								<Scripts>
+									<OnShow>
+										-- old style models require a little more maintenance
+										self:SetCamDistanceScale(0.45)
+										self:SetPosition(0,0,0.25)
+										self:SetModel("Interface\\Buttons\\talktomequestion_ltblue.m2")
+									</OnShow>
+								</Scripts>
+							</PlayerModel>
+
 						</Frames>
+
 					</Frame> <!-- Middle -->
-
-					<!-- pet model is independant of middle -->
-					<PlayerModel parentKey="Model" useParentLevel="true">
-						<Anchors>
-							<Anchor point="TOPLEFT" x="80" y="-53"/>
-							<Anchor point="BOTTOMRIGHT" relativeKey="$parent.Middle" x="-3" y="24"/>
-						</Anchors>
-						<Layers>
-							<Layer level="BACKGROUND">
-								<Texture file="Interface\PetBattles\PetJournal">
-									<Size x="160" y="96"/>	
-									<Anchors>
-										<Anchor point="BOTTOM" x="0" y="0"/>
-									</Anchors>
-									<TexCoords left="0.52734375" right="0.79687500" top="0.02246094" bottom="0.09277344"/>	
-								</Texture>
-							</Layer>
-						</Layers>
-						<Scripts>
-							<OnLoad>
-								Model_OnLoad(self)
-								self:SetRotation(-MODELFRAME_DEFAULT_ROTATION)
-							</OnLoad>
-						</Scripts>
-					</PlayerModel>
-
-					<!-- floating blue ? is a separate model to avoid quirks with changing scale -->
-					<PlayerModel parentKey="LevelingModel" useParentLevel="true">
-						<Anchors>
-							<Anchor point="TOPLEFT" x="80" y="-53"/>
-							<Anchor point="BOTTOMRIGHT" relativeKey="$parent.Middle" x="-3" y="24"/>
-						</Anchors>
-						<Layers>
-							<Layer level="BACKGROUND">
-								<Texture file="Interface\PetBattles\PetJournal">
-									<Size x="160" y="96"/>	
-									<Anchors>
-										<Anchor point="BOTTOM" x="0" y="0"/>
-									</Anchors>
-									<TexCoords left="0.52734375" right="0.79687500" top="0.02246094" bottom="0.09277344"/>	
-								</Texture>
-							</Layer>
-						</Layers>
-					</PlayerModel>
-	
 				</Frames>
 			</Frame> <!-- Front -->
 
 			<!-- back of card -->
-			<Frame parentKey="Back" forceAlpha="true">
+			<Frame parentKey="Back" ignoreParentAlpha="true">
 				<Anchors> <!-- 254 width -->
 					<Anchor point="TOPLEFT" x="2" y="-22"/>
 					<Anchor point="BOTTOMRIGHT" x="-4" y="2"/>

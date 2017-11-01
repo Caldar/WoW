@@ -7,6 +7,9 @@ UF.LSM = LSM
 --Lua functions
 local _G = _G
 local select, pairs, type, unpack, assert, tostring = select, pairs, type, unpack, assert, tostring
+local min = math.min
+local tinsert = table.insert
+local find, gsub, format = string.find, string.gsub, string.format
 --WoW API / Variables
 local hooksecurefunc = hooksecurefunc
 local CreateFrame = CreateFrame
@@ -23,7 +26,6 @@ local RegisterStateDriver = RegisterStateDriver
 local UnregisterAttributeDriver = UnregisterAttributeDriver
 local CompactRaidFrameManager_UpdateShown = CompactRaidFrameManager_UpdateShown
 local CompactRaidFrameContainer = CompactRaidFrameContainer
-local CompactUnitFrame_UnregisterEvents = CompactUnitFrame_UnregisterEvents
 local MAX_RAID_MEMBERS = MAX_RAID_MEMBERS
 local MAX_BOSS_FRAMES = MAX_BOSS_FRAMES
 
@@ -35,13 +37,7 @@ local MAX_BOSS_FRAMES = MAX_BOSS_FRAMES
 
 local _, ns = ...
 local ElvUF = ns.oUF
-local AceTimer = LibStub:GetLibrary("AceTimer-3.0")
 assert(ElvUF, "ElvUI was unable to locate oUF.")
-
-local opposites = {
-	['DEBUFFS'] = 'BUFFS',
-	['BUFFS'] = 'DEBUFFS'
-}
 
 UF['headerstoload'] = {}
 UF['unitgroupstoload'] = {}
@@ -70,7 +66,7 @@ UF['classMaxResourceBar'] = {
 	['WARLOCK'] = 5,
 	['MONK'] = 6,
 	['MAGE'] = 4,
-	['ROGUE'] = 8,
+	['ROGUE'] = 10,
 	["DRUID"] = 5
 }
 
@@ -217,10 +213,6 @@ local DIRECTION_TO_VERTICAL_SPACING_MULTIPLIER = {
 	LEFT_UP = 1,
 }
 
-local find, gsub, split, format = string.find, string.gsub, string.split, string.format
-local min, abs = math.min, math.abs
-local tremove, tinsert = table.remove, table.insert
-
 function UF:ConvertGroupDB(group)
 	local db = self.db.units[group.groupName]
 	if db.point and db.columnAnchorPoint then
@@ -255,11 +247,10 @@ function UF:Construct_UF(frame, unit)
 	frame.SHADOW_SPACING = 3
 	frame.CLASSBAR_YOFFSET = 0	--placeholder
 	frame.BOTTOM_OFFSET = 0 --placeholder
-	frame:SetFrameLevel(5)
 
 	frame.RaisedElementParent = CreateFrame('Frame', nil, frame)
-	frame.RaisedElementParent:SetFrameStrata("MEDIUM")
-	frame.RaisedElementParent:SetFrameLevel(frame:GetFrameLevel() + 10)
+	frame.RaisedElementParent.TextureParent = CreateFrame('Frame', nil, frame.RaisedElementParent)
+	frame.RaisedElementParent:SetFrameLevel(frame:GetFrameLevel() + 100)
 
 	if not self['groupunits'][unit] then
 		local stringTitle = E:StringTitle(unit)
@@ -415,6 +406,7 @@ function UF:Update_StatusBars()
 	for statusbar in pairs(UF['statusbars']) do
 		if statusbar and statusbar:GetObjectType() == 'StatusBar' and not statusbar.isTransparent then
 			statusbar:SetStatusBarTexture(statusBarTexture)
+			if statusbar.texture then statusbar.texture = statusBarTexture end --Update .texture on oUF Power element
 		elseif statusbar and statusbar:GetObjectType() == 'Texture' then
 			statusbar:SetTexture(statusBarTexture)
 		end
@@ -473,7 +465,7 @@ function UF:Update_AllFrames()
 	self:UpdateAllHeaders()
 end
 
-function UF:CreateAndUpdateUFGroup(group, numGroup, template)
+function UF:CreateAndUpdateUFGroup(group, numGroup)
 	if InCombatLockdown() then self:RegisterEvent('PLAYER_REGEN_ENABLED'); return end
 
 	for i=1, numGroup do
@@ -645,6 +637,7 @@ function UF.groupPrototype:Configure_Groups(self)
 	if self.mover then
 		self.mover.positionOverride = DIRECTION_TO_GROUP_ANCHOR_POINT[direction]
 		E:UpdatePositionOverride(self.mover:GetName())
+		self:GetScript("OnSizeChanged")(self) --Mover size is not updated if frame is hidden, so call an update manually
 	end
 
 	self:SetSize(width - db.horizontalSpacing, height - db.verticalSpacing)
@@ -742,7 +735,7 @@ function UF:CreateHeader(parent, groupFilter, overrideName, template, groupName,
 	local db = UF.db['units'][group]
 	ElvUF:SetActiveStyle("ElvUF_"..E:StringTitle(group))
 	local header = ElvUF:SpawnHeader(overrideName, headerTemplate, nil,
-			'oUF-initialConfigFunction', ("self:SetWidth(%d); self:SetHeight(%d); self:SetFrameLevel(5)"):format(db.width, db.height),
+			'oUF-initialConfigFunction', ("self:SetWidth(%d); self:SetHeight(%d);"):format(db.width, db.height),
 			'groupFilter', groupFilter,
 			'showParty', true,
 			'showRaid', true,
@@ -768,10 +761,7 @@ function UF:CreateAndUpdateHeaderGroup(group, groupFilter, template, headerUpdat
 	if(raidFilter and numGroups and (self[group] and not self[group].blockVisibilityChanges)) then
 		local inInstance, instanceType = IsInInstance()
 		if(inInstance and (instanceType == 'raid' or instanceType == 'pvp')) then
-			local _, _, _, _, maxPlayers, _, _, mapID, maxPlayersInstance = GetInstanceInfo()
-			--[[if maxPlayersInstance > 0 then
-				maxPlayers = maxPlayersInstance
-			end]]
+			local _, _, _, _, maxPlayers, _, _, mapID = GetInstanceInfo()
 
 			if UF.mapIDs[mapID] then
 				maxPlayers = UF.mapIDs[mapID]
@@ -942,6 +932,23 @@ function UF:LoadUnits()
 	self['headerstoload'] = nil
 end
 
+function UF:RegisterRaidDebuffIndicator()
+	local _, instanceType = IsInInstance();
+	local ORD = ns.oUF_RaidDebuffs or oUF_RaidDebuffs
+	if ORD then
+		ORD:ResetDebuffData()
+
+		local instance = E.global.unitframe.raidDebuffIndicator.instanceFilter
+		local other = E.global.unitframe.raidDebuffIndicator.otherFilter
+
+		if instanceType == "party" or instanceType == "raid" then
+			ORD:RegisterDebuffs(E.global.unitframe.aurafilters[instance].spells)
+		else
+			ORD:RegisterDebuffs(E.global.unitframe.aurafilters[other].spells)
+		end
+	end
+end
+
 function UF:UpdateAllHeaders(event)
 	if InCombatLockdown() then
 		self:RegisterEvent('PLAYER_REGEN_ENABLED', 'UpdateAllHeaders')
@@ -952,21 +959,11 @@ function UF:UpdateAllHeaders(event)
 		self:UnregisterEvent('PLAYER_REGEN_ENABLED')
 	end
 
-	local _, instanceType = IsInInstance();
-	local ORD = ns.oUF_RaidDebuffs or oUF_RaidDebuffs
-	if ORD then
-		ORD:ResetDebuffData()
-
-		if instanceType == "party" or instanceType == "raid" then
-			ORD:RegisterDebuffs(E.global.unitframe.aurafilters.RaidDebuffs.spells)
-		else
-			ORD:RegisterDebuffs(E.global.unitframe.aurafilters.CCDebuffs.spells)
-		end
-	end
-
 	if E.private["unitframe"]["disabledBlizzardFrames"].party then
 		ElvUF:DisableBlizzard('party')
 	end
+
+	self:RegisterRaidDebuffIndicator()
 
 	local smartRaidFilterEnabled = self.db.smartRaidFilter
 	for group, header in pairs(self['headers']) do
@@ -996,7 +993,7 @@ local function HideRaid()
 	end
 end
 
-function UF:DisableBlizzard(event)
+function UF:DisableBlizzard()
 	if (not E.private["unitframe"]["disabledBlizzardFrames"].raid) and (not E.private["unitframe"]["disabledBlizzardFrames"].party) then return; end
 	if not CompactRaidFrameManager_UpdateShown then
 		E:StaticPopup_Show("WARNING_BLIZZARD_ADDONS")
@@ -1009,7 +1006,6 @@ function UF:DisableBlizzard(event)
 		CompactRaidFrameContainer:UnregisterAllEvents()
 
 		HideRaid()
-		--hooksecurefunc("CompactUnitFrame_RegisterEvents", CompactUnitFrame_UnregisterEvents) -- breaks nameplates names
 	end
 end
 
@@ -1098,6 +1094,7 @@ function ElvUF:DisableBlizzard(unit)
 				HandleFrame(('PartyMemberFrame%d'):format(i))
 			end
 		end
+		HandleFrame(PartyMemberBackground)
 	elseif(unit:match'(arena)%d?$' == 'arena') and E.private["unitframe"]["disabledBlizzardFrames"].arena then
 		local id = unit:match'arena(%d)'
 
@@ -1121,71 +1118,23 @@ function UF:ADDON_LOADED(event, addon)
 	self:UnregisterEvent("ADDON_LOADED");
 end
 
-function UF:PLAYER_ENTERING_WORLD(event)
-	self:Update_AllFrames()
-	self:UnregisterEvent(event)
+local hasEnteredWorld = false
+function UF:PLAYER_ENTERING_WORLD()
+	if not hasEnteredWorld then
+		--We only want to run Update_AllFrames once when we first log in or /reload
+		self:Update_AllFrames()
+		hasEnteredWorld = true
+	else
+		local _, instanceType = IsInInstance()
+		if instanceType ~= "none" then
+			--We need to update headers when we zone into an instance
+			UF:UpdateAllHeaders()
+		end
+	end
 end
 
 function UF:UnitFrameThreatIndicator_Initialize(_, unitFrame)
 	unitFrame:UnregisterAllEvents() --Arena Taint Fix
-end
-
-function UF:Initialize()
-	self.db = E.db["unitframe"]
-	self.thinBorders = self.db.thinBorders or E.PixelMode
-	if E.private["unitframe"].enable ~= true then return; end
-	E.UnitFrames = UF;
-
-	local ElvUF_Parent = CreateFrame('Frame', 'ElvUF_Parent', E.UIParent, 'SecureHandlerStateTemplate');
-	RegisterStateDriver(ElvUF_Parent, "visibility", "[petbattle] hide; show")
-
-	self:UpdateColors()
-	ElvUF:RegisterStyle('ElvUF', function(frame, unit)
-		self:Construct_UF(frame, unit)
-	end)
-
-	self:LoadUnits()
-	self:RegisterEvent('PLAYER_ENTERING_WORLD')
-
-	--InterfaceOptionsFrameCategoriesButton9:SetScale(0.0001)
-	--[[if E.private["unitframe"]["disabledBlizzardFrames"].arena and E.private["unitframe"]["disabledBlizzardFrames"].focus and E.private["unitframe"]["disabledBlizzardFrames"].party then
-		InterfaceOptionsFrameCategoriesButton10:SetScale(0.0001)
-	end
-
-	if E.private["unitframe"]["disabledBlizzardFrames"].target then
-		InterfaceOptionsCombatPanelTargetOfTarget:SetScale(0.0001)
-		InterfaceOptionsCombatPanelTargetOfTarget:SetAlpha(0)
-	end]]
-
-	if E.private["unitframe"]["disabledBlizzardFrames"].party and E.private["unitframe"]["disabledBlizzardFrames"].raid then
-		self:DisableBlizzard()
-		--InterfaceOptionsFrameCategoriesButton11:SetScale(0.0001)
-
-		self:RegisterEvent('GROUP_ROSTER_UPDATE', 'DisableBlizzard')
-		UIParent:UnregisterEvent('GROUP_ROSTER_UPDATE') --This may fuck shit up.. we'll see...
-	else
-		CompactUnitFrameProfiles:RegisterEvent('VARIABLES_LOADED')
-	end
-
-	if (not E.private["unitframe"]["disabledBlizzardFrames"].party) and (not E.private["unitframe"]["disabledBlizzardFrames"].raid) then
-		E.RaidUtility.Initialize = E.noop
-	end
-
-	if E.private["unitframe"]["disabledBlizzardFrames"].arena then
-		self:SecureHook('UnitFrameThreatIndicator_Initialize')
-
-		if not IsAddOnLoaded('Blizzard_ArenaUI') then
-			self:RegisterEvent('ADDON_LOADED')
-		else
-			ElvUF:DisableBlizzard('arena')
-		end
-	end
-
-	local ORD = ns.oUF_RaidDebuffs or oUF_RaidDebuffs
-	if not ORD then return end
-	ORD.ShowDispelableDebuff = true
-	ORD.FilterDispellableDebuff = true
-	ORD.MatchBySpellName = false
 end
 
 function UF:ResetUnitSettings(unit)
@@ -1214,14 +1163,7 @@ end
 
 local ignoreSettings = {
 	['position'] = true,
-	['playerOnly'] = true,
-	["selfBuffs"] = true,
-	['useBlacklist'] = true,
-	['useWhitelist'] = true,
-	['noDuration'] = true,
-	['onlyDispellable'] = true,
-	['useFilter'] = true,
-	['bossAuras'] = true,
+	['priority'] = true,
 }
 
 local ignoreSettingsGroup = {
@@ -1296,14 +1238,16 @@ function UF:ToggleTransparentStatusBar(isTransparent, statusBar, backdropTex, ad
 	local statusBarOrientation = statusBar:GetOrientation()
 	if isTransparent then
 		if statusBar.backdrop then
-			statusBar.backdrop:SetTemplate("Transparent")
+			statusBar.backdrop:SetTemplate("Transparent", nil, nil, nil, true)
 			statusBar.backdrop.ignoreUpdates = true
 		elseif statusBar:GetParent().template then
-			statusBar:GetParent():SetTemplate("Transparent")
+			statusBar:GetParent():SetTemplate("Transparent", nil, nil, nil, true)
 			statusBar:GetParent().ignoreUpdates = true
 		end
 
 		statusBar:SetStatusBarTexture(0, 0, 0, 0)
+		if statusBar.texture then statusBar.texture = statusBar:GetStatusBarTexture() end --Needed for Power element
+
 		backdropTex:ClearAllPoints()
 		if statusBarOrientation == 'VERTICAL' then
 			backdropTex:Point("TOPLEFT", statusBar, "TOPLEFT")
@@ -1329,13 +1273,15 @@ function UF:ToggleTransparentStatusBar(isTransparent, statusBar, backdropTex, ad
 		end
 	else
 		if statusBar.backdrop then
-			statusBar.backdrop:SetTemplate("Default", nil, nil, not statusBar.PostCastStart and self.thinBorders)
+			statusBar.backdrop:SetTemplate("Default", nil, nil, not statusBar.PostCastStart and self.thinBorders, true)
 			statusBar.backdrop.ignoreUpdates = nil
 		elseif statusBar:GetParent().template then
-			statusBar:GetParent():SetTemplate("Default", nil, nil, self.thinBorders)
+			statusBar:GetParent():SetTemplate("Default", nil, nil, self.thinBorders, true)
 			statusBar:GetParent().ignoreUpdates = nil
 		end
 		statusBar:SetStatusBarTexture(LSM:Fetch("statusbar", self.db.statusbar))
+		if statusBar.texture then statusBar.texture = statusBar:GetStatusBarTexture() end
+
 		if adjustBackdropPoints then
 			backdropTex:ClearAllPoints()
 			if statusBarOrientation == 'VERTICAL' then
@@ -1359,4 +1305,69 @@ function UF:ToggleTransparentStatusBar(isTransparent, statusBar, backdropTex, ad
 	end
 end
 
-E:RegisterInitialModule(UF:GetName())
+function UF:Initialize()
+	self.db = E.db["unitframe"]
+	self.thinBorders = self.db.thinBorders or E.PixelMode
+	if E.private["unitframe"].enable ~= true then return; end
+	E.UnitFrames = UF;
+
+	local ElvUF_Parent = CreateFrame('Frame', 'ElvUF_Parent', E.UIParent, 'SecureHandlerStateTemplate');
+	ElvUF_Parent:SetFrameStrata("LOW")
+	RegisterStateDriver(ElvUF_Parent, "visibility", "[petbattle] hide; show")
+
+	self:UpdateColors()
+	ElvUF:RegisterStyle('ElvUF', function(frame, unit)
+		self:Construct_UF(frame, unit)
+	end)
+
+	self:LoadUnits()
+	self:RegisterEvent('PLAYER_ENTERING_WORLD')
+
+	--InterfaceOptionsFrameCategoriesButton9:SetScale(0.0001)
+	--[[if E.private["unitframe"]["disabledBlizzardFrames"].arena and E.private["unitframe"]["disabledBlizzardFrames"].focus and E.private["unitframe"]["disabledBlizzardFrames"].party then
+		InterfaceOptionsFrameCategoriesButton10:SetScale(0.0001)
+	end
+
+	if E.private["unitframe"]["disabledBlizzardFrames"].target then
+		InterfaceOptionsCombatPanelTargetOfTarget:SetScale(0.0001)
+		InterfaceOptionsCombatPanelTargetOfTarget:SetAlpha(0)
+	end]]
+
+	if E.private["unitframe"]["disabledBlizzardFrames"].party and E.private["unitframe"]["disabledBlizzardFrames"].raid then
+		self:DisableBlizzard()
+		--InterfaceOptionsFrameCategoriesButton11:SetScale(0.0001)
+
+		self:RegisterEvent('GROUP_ROSTER_UPDATE', 'DisableBlizzard')
+		UIParent:UnregisterEvent('GROUP_ROSTER_UPDATE') --This may fuck shit up.. we'll see...
+	else
+		CompactUnitFrameProfiles:RegisterEvent('VARIABLES_LOADED')
+	end
+
+	if (not E.private["unitframe"]["disabledBlizzardFrames"].party) and (not E.private["unitframe"]["disabledBlizzardFrames"].raid) then
+		E.RaidUtility.Initialize = E.noop
+	end
+
+	if E.private["unitframe"]["disabledBlizzardFrames"].arena then
+		self:SecureHook('UnitFrameThreatIndicator_Initialize')
+
+		if not IsAddOnLoaded('Blizzard_ArenaUI') then
+			self:RegisterEvent('ADDON_LOADED')
+		else
+			ElvUF:DisableBlizzard('arena')
+		end
+	end
+
+	local ORD = ns.oUF_RaidDebuffs or oUF_RaidDebuffs
+	if not ORD then return end
+	ORD.ShowDispellableDebuff = true
+	ORD.FilterDispellableDebuff = true
+	ORD.MatchBySpellName = false
+	
+	self:UpdateRangeCheckSpells()
+end
+
+local function InitializeCallback()
+	UF:Initialize()
+end
+
+E:RegisterInitialModule(UF:GetName(), InitializeCallback)

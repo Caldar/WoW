@@ -3,12 +3,12 @@ if not ZygorGuidesViewer then return end
 if UnitFactionGroup("player")~="Alliance" then return end
 if ZGV:DoMutex("DailiesAWOD") then return end
 ZygorGuidesViewer.GuideMenuTier = "WOD"
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Dailies Guides\\Warlords of Draenor\\Lunarfall Inn Dungeon Dailies",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Dailies Guides\\Warlords of Draenor Dailies\\Lunarfall Inn Dungeon Dailies",{
 description="This guide will take you through the Lunarfall Inn dungeon dailies.",
 },[[
 step
 label "start"
-#include "A_Garrison_Medium_Building", building="Inn"
+#include "Garrison_Medium_Building", building="Inn"
 Accept the quests from the two NPCs that spawned today:
 confirm
 step
@@ -58,15 +58,15 @@ step
 kill Teron'gor##77734 |q Go Fetch##37146/2 |goto Auchindoun/0 49.6,33.5
 |tip Teron'gor is the final boss of the dungeon.
 step
-#include "A_Garrison_Medium_Building", action="talk Lilian Voss##87996", building="Inn"
+#include "Garrison_Medium_Building", action="talk Lilian Voss##87996", building="Inn"
 turnin Soulcarver Voss##37232
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 step
-#include "A_Garrison_Medium_Building", action="talk Leonid Barthalomew the Revered##87997", building="Inn"
+#include "Garrison_Medium_Building", action="talk Leonid Barthalomew the Revered##87997", building="Inn"
 turnin Vessel of Virtue##37233
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 step
-#include "A_Garrison_Medium_Building", action "talk Johnny Awesome##88022", building="Inn"
+#include "Garrison_Medium_Building", action "talk Johnny Awesome##88022", building="Inn"
 turnin Go Fetch##37146
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 next "queuemenu"
@@ -92,15 +92,15 @@ step
 kill Gug'rokk##74790 |q Like A Dwarf In A Mine##37229/2 |goto Bloodmaul Slag Mines/1 65.4,22.7
 |tip Gug'rokk is the final boss of the dungeon.
 step
-#include "A_Garrison_Medium_Building", action="talk talk 88013", building="Inn"
+#include "Garrison_Medium_Building", action="talk talk 88013", building="Inn"
 turnin Ogre Ancestry##37142
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 step
-#include "A_Garrison_Medium_Building", action="talk Cro Threadstrong##87991", building="Inn"
+#include "Garrison_Medium_Building", action="talk Cro Threadstrong##87991", building="Inn"
 turnin A Fruitful Proposition##37228
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 step
-#include "A_Garrison_Medium_Building", action="talk Olaf##87992", building="Inn"
+#include "Garrison_Medium_Building", action="talk Olaf##87992", building="Inn"
 turnin Like A Dwarf In A Mine##37229
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 next "queuemenu"
@@ -127,15 +127,15 @@ step
 kill Yalnu##83846 |q Put a Bird on It##37227/2 |goto The Everbloom/2 47.0,67.0
 |tip Yalnu is the final boss of the dungeon.
 step
-#include "A_Garrison_Medium_Building", action="talk Lorewalker Cho##88005", building="Inn"
+#include "Garrison_Medium_Building", action="talk Lorewalker Cho##88005", building="Inn"
 turnin Lessons of the Past##37241
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 step
-#include "A_Garrison_Medium_Building", action="talk Zen'kiki##88004", building="Inn"
+#include "Garrison_Medium_Building", action="talk Zen'kiki##88004", building="Inn"
 turnin The Leaf-Reader##37240
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 step
-#include "A_Garrison_Medium_Building", action="talk Mylune##88025", building="Inn"
+#include "Garrison_Medium_Building", action="talk Mylune##88025", building="Inn"
 turnin Put a Bird on It##37227
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 next "queuemenu"
@@ -162,15 +162,15 @@ step
 kill Skylord Tovra##80005 |q Cold Steel Part II##37209/2 |goto Grimrail Depot/4 15.3,51.7
 |tip Skylord Tovra is the final boss of the dungeon.
 step
-#include "A_Garrison_Medium_Building", action="talk Lonika Stillblade##88006", building="Inn"
+#include "Garrison_Medium_Building", action="talk Lonika Stillblade##88006", building="Inn"
 turnin Learning Is Painful##37242
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 step
-#include "A_Garrison_Medium_Building", action="talk Gamon##88007", building="Inn"
+#include "Garrison_Medium_Building", action="talk Gamon##88007", building="Inn"
 turnin An Axe to Grind##37243
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 step
-#include "A_Garrison_Medium_Building", action="talk John J. Keeshan##88026", building="Inn"
+#include "Garrison_Medium_Building", action="talk John J. Keeshan##88026", building="Inn"
 turnin Cold Steel Part II##37209
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 next "queuemenu"
@@ -197,15 +197,15 @@ step
 kill Skulloc##83612 |q Budd's Gambit##37145/2 |goto Iron Docks/1 68.4,43.6
 |tip Skulloc is the final boss of the dungeon.
 step
-#include "A_Garrison_Medium_Building", action="talk Fleet Master Seahorn##87995", building="Inn"
+#include "Garrison_Medium_Building", action="talk Fleet Master Seahorn##87995", building="Inn"
 turnin The Search Continues##37231
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 step
-#include "A_Garrison_Medium_Building", action="talk Moroes##87994", building="Inn"
+#include "Garrison_Medium_Building", action="talk Moroes##87994", building="Inn"
 turnin Bloody Expensive##37230
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 step
-#include "A_Garrison_Medium_Building", action="talk Budd##88017", building="Inn"
+#include "Garrison_Medium_Building", action="talk Budd##88017", building="Inn"
 turnin Budd's Gambit##37145
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 next "queuemenu"
@@ -233,15 +233,15 @@ step
 kill Ner'zhul##76407 |q Fate of the Fallen##37239/2 |goto Shadowmoon Burial Grounds/3 48.1,47.1
 |tip Ner'zhul is the final boss of the dungeon.
 step
-#include "A_Garrison_Medium_Building", action="talk Highlord Darion Mograine##88002", building="Inn"
+#include "Garrison_Medium_Building", action="talk Highlord Darion Mograine##88002", building="Inn"
 turnin Secrets of Soulbinding##37238
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 step
-#include "A_Garrison_Medium_Building", action="talk Impsy##88027", building="Inn"
+#include "Garrison_Medium_Building", action="talk Impsy##88027", building="Inn"
 turnin Whispers in the Darkness##37245
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 step
-#include "A_Garrison_Medium_Building", action="talk Cowled Ranger##88003", building="Inn"
+#include "Garrison_Medium_Building", action="talk Cowled Ranger##88003", building="Inn"
 turnin Fate of the Fallen##37239
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 next "queuemenu"
@@ -261,11 +261,11 @@ step
 kill High Sage Viryx##76266 |q The Dark Within##37234/2 |goto Skyreach/2 48.8,33.3
 |tip High Sage Viryx is the final boss of the dungeon.
 step
-#include "A_Garrison_Medium_Building", action="talk Skylord Omnuron##87999", building="Inn"
+#include "Garrison_Medium_Building", action="talk Skylord Omnuron##87999", building="Inn"
 turnin A Plea to the Sky##37235
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 step
-#include "A_Garrison_Medium_Building", action="talk Sunwalker Dezco##87998", building="Inn"
+#include "Garrison_Medium_Building", action="talk Sunwalker Dezco##87998", building="Inn"
 turnin The Dark Within##37234
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 next "queuemenu"
@@ -292,20 +292,20 @@ step
 kill Warlord Zaela##77120 |q A Hero's Quest is Never Complete##37237/2 |goto Upper Blackrock Spire 2/3 14.1,47.7
 |tip Warlord Zaela is the final boss of the dungeon.
 step
-#include "A_Garrison_Medium_Building", action="talk Oralius##88024", building="Inn"
+#include "Garrison_Medium_Building", action="talk Oralius##88024", building="Inn"
 turnin Flamefly Trap##37244
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 step
-#include "A_Garrison_Medium_Building", action="talk Finkle Einhorn##88000", building="Inn"
+#include "Garrison_Medium_Building", action="talk Finkle Einhorn##88000", building="Inn"
 turnin Like Father, Like Son##37236
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 step
-#include "A_Garrison_Medium_Building", action="talk Maximillian of Northshire##88001", building="Inn"
+#include "Garrison_Medium_Building", action="talk Maximillian of Northshire##88001", building="Inn"
 turnin A Hero's Quest is Never Complete##37237
 |tip Turn in NPCs can sometimes be found behind the inn or downstairs.
 next "queuemenu"
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Dailies Guides\\Warlords of Draenor\\Fishing Dailies",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Dailies Guides\\Warlords of Draenor Dailies\\Fishing Dailies",{
 description="This guide will take you through the Fishing dailies.",
 },[[
 step
@@ -426,7 +426,7 @@ label "end"
 You've completed the daily for today
 Click to restart the dailies run |confirm |next "start"
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Dailies Guides\\Warlords of Draenor\\Battle Pets Dailies",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Dailies Guides\\Warlords of Draenor Dailies\\Battle Pets Dailies",{
 description="This guide will take you through the Battle Pets dailies.",
 },[[
 step
@@ -563,7 +563,7 @@ talk Erris the Collector##91014
 turnin Critters of Draenor##38299 |goto Lunarfall/0 31.1,39.6
 next "start"
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Dailies Guides\\Warlords of Draenor\\Harrison Jones Treasure Contracts",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Dailies Guides\\Warlords of Draenor Dailies\\Harrison Jones Treasure Contracts",{
 description="This guide will walk you through completing the Master Relic Hunter quests offered by Harrison Jones in your garrison.",
 endlevel=100
 },[[
@@ -579,7 +579,7 @@ You currently have a level 1 Town Hall. Harrison Jones will only appear in a lev
 You currently have a level 2 Town Hall. Harrison Jones will only appear in a level 3 garrison |only if garrisonlvl(2)
 To access Harrison Jones, you will need to join another player's level 3 garrison
 |tip To join a player's garrison, they will need to be group leader. You can right-click your player frame and select "View Leader's Garrison".
-#include "A_Garrison_Harrison"
+#include "Garrison_Harrison"
 Accept the daily quest Harrison Jones offers |condition havequest(37848) or havequest(37849) or havequest(37850) or havequest(37851) or havequest(37852) or havequest(37973) or havequest(37976) or havequest(37977) or havequest(37978) or havequest(37979) or havequest(37881) or havequest(37882) or havequest(37883) or havequest(37884) or havequest(37885) or havequest(37914) or havequest(37916) or havequest(37917) or havequest(37918) or havequest(37919) or havequest(37788) or havequest(37797) or havequest(37798) or havequest(37799) or havequest(37811) or havequest(37941) or havequest(37942) or havequest(37943) or havequest(37944) or havequest(37945) |repeatable |next "Quests"
 accept Treasure Contract: Amulet of Rukhmar##37848 |repeatable |only if garrisonlvl(4)
 accept Treasure Contract: The Artificer##37973 |repeatable |only if garrisonlvl(4)
@@ -593,7 +593,7 @@ If he is not available in your garrison, you may join a friend's garrison who ha
 stickystart "NPC2"
 step
 label "Dailies"
-#include "A_Garrison_Harrison"
+#include "Garrison_Harrison"
 Accept the daily quest Harrison Jones offers |condition havequest(37848) or havequest(37849) or havequest(37850) or havequest(37851) or havequest(37852) or havequest(37973) or havequest(37976) or havequest(37977) or havequest(37978) or havequest(37979) or havequest(37881) or havequest(37882) or havequest(37883) or havequest(37884) or havequest(37885) or havequest(37914) or havequest(37916) or havequest(37917) or havequest(37918) or havequest(37919) or havequest(37788) or havequest(37797) or havequest(37798) or havequest(37799) or havequest(37811) or havequest(37941) or havequest(37942) or havequest(37943) or havequest(37944) or havequest(37945) |repeatable |next "Quests"
 accept Treasure Contract: Amulet of Rukhmar##37848 |repeatable |only if garrisonlvl(4)
 accept Treasure Contract: The Artificer##37973 |repeatable |only if garrisonlvl(4)
@@ -906,7 +906,7 @@ collect Silent Skull##122150 |q The Silent Skull: Taking from the Taker##37945/3
 next "Turnin"
 step
 label "Turnin"
-#include "A_Garrison_BGrey"
+#include "Garrison_BGrey"
 turnin Amulet of Rukhmar: The Apexis Device##37852 |only if havequest(37852) |or
 |tip You can safely delete the "Compiled Research" item in your inventory. |only if havequest(37852)
 turnin Dream of Argus: The Crystal Reborn##37979 |only if havequest(37979) |or
@@ -923,7 +923,7 @@ step
 You have finished today's daily Treasure Contract! Check back tomorrow
 Click here to return to the menu |confirm |next "Start"
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Dailies Guides\\Warlords of Draenor\\Muradin Bronzebeard Dailies",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Dailies Guides\\Warlords of Draenor Dailies\\Muradin Bronzebeard Dailies",{
 description="This guide will walk you through completing the daily heroic dungeon quests from Muradin Bronzebeard in your garrison.",
 endlevel=100
 },[[
@@ -935,7 +935,7 @@ Proceeding to alternate |only if garrisonlvl(1) or garrisonlvl(2) |next "Alterna
 stickystart "NPC1"
 step
 label "Alternate"
-#include "A_Garrison_Muradin"
+#include "Garrison_Muradin"
 You currently have a level 1 Garrison. Muradin Bronzebeard will only appear in a level 3 Garrison |only if garrisonlvl(1)
 You currently have a level 2 Garrison. Muradin Bronzebeard will only appear in a level 3 Garrison |only if garrisonlvl(2)
 To access Muradin Bronzebeard, you will need to join another player's level 3 garrison
@@ -963,7 +963,7 @@ Muradin Bronzebeard is one of 4 random NPCs that can spawn in a garrison
 stickystart "NPC2"
 step
 label "Dailies"
-#include "A_Garrison_Muradin"
+#include "Garrison_Muradin"
 Accept the daily quest Murdadin Bronzebeard offers |condition havequest(37796) or havequest(37795) or havequest(37792) or havequest(37791) or havequest(37790) or havequest(37789) or havequest(37794) or havequest(37793) |repeatable |next "Quests"
 _Optional_: Accept the weekly raid quest
 accept Auchindoun##37796 |repeatable |only if garrisonlvl(4)
@@ -1045,7 +1045,7 @@ Defeat Skulloc in Heroic Iron Docks |q Iron Docks##37793/1 |goto Iron Docks/1 68
 |tip If you have our dungeon guide, load it when prompted after entering the instance.
 step
 label "Turnin_1_2"
-#include "A_Garrison_BGrey"
+#include "Garrison_BGrey"
 turnin Auchindoun##37796 |only if havequest(37796)
 turnin Bloodmaul Slag Mines##37795 |only if havequest(37795)
 turnin Shadowmoon Burial Grounds##37792 |only if havequest(37792)
@@ -1057,7 +1057,7 @@ turnin Iron Docks##37793 |only if havequest(37793)
 next "RaidCheck"
 step
 label "Turnin_3"
-#include "A_Garrison_BGrey"
+#include "Garrison_BGrey"
 turnin Auchindoun##37796 |only if havequest(37796)
 turnin Bloodmaul Slag Mines##37795 |only if havequest(37795)
 turnin Shadowmoon Burial Grounds##37792 |only if havequest(37792)
@@ -1188,7 +1188,7 @@ _Healer_:
 Defeat Brackenspore in Highmaul: Walled City |q Walled City: Brackenspore##37766/1 |goto Highmaul/0 50.8,16.4 |next "Turnin2"
 step
 label "Turnin2"
-#include "A_Garrison_BGrey"
+#include "Garrison_BGrey"
 turnin Arcane Sanctum: Ko'ragh##37767 |only if havequest(37767)
 turnin Blackhand's Crucible: Blackhand##37772 |only if havequest(37772)
 turnin Imperator's Rise: Imperator Mar'gok##37768 |only if havequest(37768)
@@ -1201,7 +1201,7 @@ label "End"
 You have completed today's daily quest, check back tomorrow!
 Click _here_ to return |confirm |next "Start"
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Dailies Guides\\Warlords of Draenor\\Renzik Daily Quests",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Dailies Guides\\Warlords of Draenor Dailies\\Renzik Daily Quests",{
 description="This guide will walk you through completing the Group 3 daily kill quests offered by Renzik 'The Shiv' in your garrison.",
 endlevel=100
 },[[
@@ -1217,7 +1217,7 @@ You currently have a level 1 Town Hall. Harrison Jones will only appear in a lev
 You currently have a level 2 Town Hall. Harrison Jones will only appear in a level 3 garrison |only if garrisonlvl(2)
 To access Renzik "The Shiv", you will need to join another player's level 3 garrison
 |tip To join a player's garrison, they will need to be group leader. You can right-click your player frame and select "View Leader's Garrison".
-#include "A_Garrison_Shiv"
+#include "Garrison_Shiv"
 Accept the daily quest Renzik "The Shiv" offers |condition havequest(37773) or havequest(37774) or havequest(37777) or havequest(37776) or havequest(37778) or havequest(37775) or havequest(37948) |repeatable |next "Quests"
 accept Death to Amethon!##37773 |repeatable |only if garrisonlvl(4)
 accept Death to Gor'thul!##37774 |repeatable |only if garrisonlvl(4)
@@ -1232,7 +1232,7 @@ If he is not available in your garrison, you may join a friend's garrison who ha
 stickystart "NPC2"
 step
 label "Dailies"
-#include "A_Garrison_Shiv"
+#include "Garrison_Shiv"
 Accept the daily quest Renzik "The Shiv" offers |condition havequest(37773) or havequest(37774) or havequest(37777) or havequest(37776) or havequest(37778) or havequest(37775) or havequest(37948) |repeatable |next "Quests"
 accept Death to Amethon!##37773 |repeatable |only if garrisonlvl(4)
 accept Death to Gor'thul!##37774 |repeatable |only if garrisonlvl(4)
@@ -1315,7 +1315,7 @@ Win the Exhibition Match |q Death to Nullifier Darkoor!##37948/1 |goto Nagrand D
 next "Turnin"
 step
 label "Turnin"
-#include "A_Garrison_BGrey"
+#include "Garrison_BGrey"
 turnin Death to Amethon!##37773 |only if havequest(37773)
 turnin Death to Gor'thul!##37774 |only if havequest(37774)
 turnin Death to Tremor!##37777 |only if havequest(37777)
@@ -1327,12 +1327,12 @@ step
 You have finished today's daily group quest. Check back tomorrow
 Click here to return to the menu |confirm |next "Start"
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Dailies Guides\\Warlords of Draenor\\Garrison Assault Daily Quests",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Dailies Guides\\Warlords of Draenor Dailies\\Garrison Assault Daily Quests",{
 description="This guide will walk you through the Garrison Assault daily quests.",
 },[[
 step
 label "assault_dailies_start"
-#include "A_Garrison_Warplans"
+#include "Garrison_Warplans"
 accept Assault on the Everbloom Wilds##36676 |or |next "assault_quest_start"
 accept Assault on the Pit##36686 |or |next "assault_quest_start"
 accept Assault on the Iron Siegeworks##36674 |or |next "assault_quest_start"
@@ -1353,7 +1353,7 @@ Click to complete Scouting Missives instead |confirm |next "scouting_missives" |
 |tip You can purchase Scouting Missives from your Garrison Quartermaster for Garrison Resources. This is useful if you're trying to complete certain quests that you need for the Securing Draenor achievement. The only quest there is no Scouting Missive for is "Assault on the Pit". You will have to wait to accept that quest normally.
 step
 label "scouting_missives"
-#include "A_Garrison_Crowler"
+#include "Garrison_Crowler"
 buy Scouting Missive: The Pit##133878 |or |next "the_pit"
 buy Scouting Missive: The Heart of Shattrath##133883 |next "heart_shatt"
 buy Scouting Missive: Shattrath Harbor##122410 |or |next "shattrath_harbor"
@@ -1569,7 +1569,7 @@ Assault the Pit |q Assault on the Pit##36686/1 |goto Gorgrond/0 46.23,24.35
 |tip Use the Group Finder to find a custom group. In the Group Finder, go to Premade Groups -> Custom, then search for "The Pit".
 step
 label "Turnin"
-#include "A_Garrison_ScoutValdez"
+#include "Garrison_ScoutValdez"
 turnin Assault on the Everbloom Wilds##36676 |only if havequest(36676) or completedq(36676)
 turnin Assault on the Pit##36686 |only if havequest(36686) or completedq(36686)
 turnin Assault on the Iron Siegeworks##36674 |only if havequest(36674) or completedq(36674)
@@ -1602,7 +1602,7 @@ You've completed the dailies for today
 Click to restart the dailies run |confirm |next "assault_dailies_start"
 |tip You can also click to restart if you want to do more Scouting Missives.
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Dailies Guides\\Warlords of Draenor\\Garrison Building Dailies",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Dailies Guides\\Warlords of Draenor Dailies\\Garrison Building Dailies",{
 description="This guide will walk you through the garrison daily quests offered from various garrison buildings.",
 },[[
 step
@@ -1624,7 +1624,7 @@ _ |only if garrisonlvl(1) or garrisonlvl(2)
 You must upgrade your garrison to level 3 before you have access to the Menagerie |only if garrisonlvl(1) or garrisonlvl(2)
 step
 label "Alchemy"
-#include "A_Garrison_Small_Building", action="Speak to the follower assigned to your Alchemy Lab", building="Alchemy"
+#include "Garrison_Small_Building", action="Speak to the follower assigned to your Alchemy Lab", building="Alchemy"
 Choose the potion you would like to receive
 accept Alchemy Experiment##37270 |repeatable
 step
@@ -1632,25 +1632,25 @@ You have completed your daily Alchemy Experiement
 Click here to return to the menu |confirm |next "Menu"
 step
 label "Bunker"
-#include "A_Garrison_Large_Building", action="talk Kristen Stoneforge##77377", building="Armory"
+#include "Garrison_Large_Building", action="talk Kristen Stoneforge##77377", building="Armory"
 |tip She is located inside your Dwarven Bunker.
 accept Scraps of Iron##37092
 step
 collect 5 Iron Horde Scraps##113681 |q Scraps of Iron##37092/1 |goto Talador 68.4,4.6
 |tip These can be looted from dungeons and Grom'kar mobs in northern Talador.
 step
-#include "A_Garrison_Large_Building", action="talk Kristen Stoneforge##77377", building="Armory"
+#include "Garrison_Large_Building", action="talk Kristen Stoneforge##77377", building="Armory"
 |tip She is located inside your Dwarven Bunker.
 turnin Scraps of Iron##37092
 step
-#include "A_Garrison_Large_Building", action="talk Kristen Stoneforge##77377", building="Armory"
+#include "Garrison_Large_Building", action="talk Kristen Stoneforge##77377", building="Armory"
 |tip She is located inside your Dwarven Bunker.
 accept Scrap Meltdown##38175 |repeatable
 step
 collect 25 Iron Horde Scraps##113681 |q Scraps of Iron##38175/1 |goto Talador 68.4,4.6
 |tip These can be looted from dungeons and Grom'kar mobs in northern Talador.
 step
-#include "A_Garrison_Large_Building", action="talk Kristen Stoneforge##77377", building="Armory"
+#include "Garrison_Large_Building", action="talk Kristen Stoneforge##77377", building="Armory"
 |tip She is located inside your Dwarven Bunker.
 turnin Scrap Meltdown##38175
 step
@@ -1658,7 +1658,7 @@ You have completed your daily Iron Horde Scraps quest
 Click here to return to the menu |confirm |next "Menu"
 step
 label "Fish"
-#include "A_Garrison_RAshton"
+#include "Garrison_RAshton"
 Accept the daily quest offered by Ron Ashton |condition havequest(36517) or havequest(36515) or havequest(36514) or havequest(36513) or havequest(36510) or havequest(36511)
 accept Abyssal Gulper Eel##36517 |repeatable |only if garrisonlvl(5)
 accept Blackwater Whiptail##36515 |repeatable |only if garrisonlvl(5)
@@ -1691,7 +1691,7 @@ use Enormous Abyssal Gulper Eel##111671 |only if itemcount(111664) > 4
 collect 10 Abyssal Gulper Eel Egg##112627 |q Abyssal Gulper Eel##36517/1 |goto Spires of Arak/0 60.9,17.8 |next "FishTurnin"
 step
 label "Gulper2"
-#include "A_Garrison_Pagle"
+#include "Garrison_Pagle"
 Ask him: "_Any regular fish bait?_" and then select "_Abyssal Gulper Eel_" |havebuff Interface\Icons\inv_fishing_lure_frogfish
 Fish in the water here |cast Fishing##131474
 use Small Abyssal Gulper Eel##111659 |only if itemcount(111659) > 4
@@ -1709,7 +1709,7 @@ use Enormous Blackwater Whiptail##111670 |only if itemcount(111670) > 4
 collect 10 Blackwater Whiptail Egg##112626 |q Blackwater Whiptail##36515/1 |goto Talador 63.0,34.65 |next "FishTurnin"
 step
 label "Whiptail2"
-#include "A_Garrison_Pagle"
+#include "Garrison_Pagle"
 Ask him: "_Any regular fish bait?_" and then select "_Blackwater Whiptail_" |havebuff Interface\Icons\inv_fishing_lure_clam
 Fish in the water here |cast Fishing##131474
 use Small Blackwater Whiptail##111662 |only if itemcount(111662) > 4
@@ -1727,7 +1727,7 @@ use Enormous Blind Lake Sturgeon##111674 |only if itemcount(111674) > 4
 collect 10 Blind Lake Sturgeon Egg##112629 |q Blind Lake Sturgeon##36514/1 |goto Shadowmoon Valley D 48.5,34.15 |next "FishTurnin"
 step
 label "Sturgeon2"
-#include "A_Garrison_Pagle"
+#include "Garrison_Pagle"
 Ask him: "_Any regular fish bait?_" and then select "_Blind Lake Sturgeon_" |havebuff Interface\Icons\inv_fishing_lure_sandcrab
 Fish in the water here |cast Fishing##131474
 use Small Blind Lake Sturgeon##111652 |only if itemcount(111652) > 4
@@ -1745,7 +1745,7 @@ use Enormous Fat Sleeper##111675 |only if itemcount(111675) > 4
 collect 10 Fat Sleeper Egg##112631 |q Fat Sleeper##36513/1 |goto Nagrand D 72.5,26.5 |next "FishTurnin"
 step
 label "Sleeper2"
-#include "A_Garrison_Pagle"
+#include "Garrison_Pagle"
 Ask him: "_Any regular fish bait?_" and then select "_Fat Sleeper_" |havebuff Interface\Icons\inv_fishing_lure_donut
 Fish in the water here |cast Fishing##131474
 use Small Fat Sleeper##111651 |only if itemcount(111651) > 4
@@ -1763,7 +1763,7 @@ use Enormous Fire Ammonite##111673 |only if itemcount(111673) > 4
 collect 10 Fire Ammonite Eg##112628 |q Fire Ammonite##36510/1 |goto Frostfire Ridge/0 51.6,59.05 |next "FishTurnin"
 step
 label "Fire2"
-#include "A_Garrison_Pagle"
+#include "Garrison_Pagle"
 Ask him: "_Any regular fish bait?_" and then select "_Fire Ammonite_" |havebuff Interface\Icons\inv_fishing_lure_jalapeno
 Fish in the water here |cast Fishing##131474
 use Small Fire Ammonite##111656 |only if itemcount(111656) > 4
@@ -1781,7 +1781,7 @@ use Enormous Jawless Skulker##111676 |only if itemcount(111676) > 4
 collect 10 Jawless Skulker Egg##112630 |q Jawless Skulker##36511/1 |goto Gorgrond 43.5,81.0 |next "FishTurnin"
 step
 label "Skulker2"
-#include "A_Garrison_Pagle"
+#include "Garrison_Pagle"
 Ask him: "_Any regular fish bait?_" and then select "_Jawless Skulker_" |havebuff Interface\Icons\inv_fishing_lure_kelp
 Fish in the water here |cast Fishing##131474
 use Small Jawless Skulker##111650 |only if itemcount(111650) > 4
@@ -1791,7 +1791,7 @@ collect 10 Jawless Skulker Egg##112630 |q Jawless Skulker##36511/1 |goto Lunarfa
 next "FishTurnin"
 step
 label "FishTurnin"
-#include "A_Garrison_RAshton"
+#include "Garrison_RAshton"
 turnin Abyssal Gulper Eel##36517 |only if havequest(36517)
 turnin Blackwater Whiptail##36515 |only if havequest(36515)
 turnin Blind Lake Sturgeon##36514 |only if havequest(36514)
@@ -1803,7 +1803,7 @@ You have completed today's Fishing Shack daily
 Click here to return to the main menu |confirm |next "Menu"
 step
 label "Gem"
-#include "A_Garrison_Small_Building", action="Speak to the follower assigned to your Gem Boutique", building="Jewelcrafting"
+#include "Garrison_Small_Building", action="Speak to the follower assigned to your Gem Boutique", building="Jewelcrafting"
 Accept the daily quest your follower offers |condition havequest(37320) or havequest(37321) or havequest(37323) or havequest(37324) or havequest(37325)
 accept Jewelcrafting Special Order: A Fine Choker##37320 |repeatable |only if garrisonlvl(5)
 accept Jewelcrafting Special Order: A Yellow Brighter Than Gold##37321 |repeatable |only if garrisonlvl(5)
@@ -1836,7 +1836,7 @@ label "StockTIO"
 collect 20 True Iron Ore##109119 |q Out of Stock: True Iron Ore##37325/1 |next "GemTurnin"
 step
 label "GemTurnin"
-#include "A_Garrison_Small_Building", action="Speak to the follower assigned to your Gem Boutique", building="Jewelcrafting"
+#include "Garrison_Small_Building", action="Speak to the follower assigned to your Gem Boutique", building="Jewelcrafting"
 turnin Jewelcrafting Special Order: A Fine Choker##37320 |only if havequest(37320)
 turnin Jewelcrafting Special Order: A Yellow Brighter Than Gold##37321 |only if havequest(37321)
 turnin Jewelcrafting Special Order: Blue the Shade of Sky and Sea##37323 |only if havequest(37323)
@@ -1852,23 +1852,23 @@ Proceeding |next "Menagerie12" |only if hasbuilding(42) or hasbuilding(167)
 Proceeding |next "Menagerie3" |only if hasbuilding(168)
 step
 label "Menagerie12"
-#include "A_Garrison_Lioness"
+#include "Garrison_Lioness"
 accept Battle Pet Roundup##36483 |repeatable
 step
 Click the Challenge Post
 Obtain the Mark of Pet Mastery by defeating the challenge team |q Battle Pet Roundup##36483/1 |goto Lunarfall/0 28.8,42.9
 step
-#include "A_Garrison_Lioness"
+#include "Garrison_Lioness"
 turnin Battle Pet Roundup##36483 |next "PetFinish"
 step
 label "Menagerie3"
-#include "A_Garrison_Lioness"
+#include "Garrison_Lioness"
 accept Mastering the Menagerie##37644 |repeatable
 step
 Challenge the daily pet and defeat it
 Obtain the Mark of Pet Mastery |q Mastering the Menagerie##37644/1 |goto Lunarfall/0 29.0,42.7
 step
-#include "A_Garrison_Lioness"
+#include "Garrison_Lioness"
 turnin Mastering the Menagerie##37644 |next "PetFinish"
 step
 label "PetFinish"
@@ -1876,24 +1876,24 @@ use Big Bag of Pet Supplies##118697 |only if itemcount(118697) > 0
 You have completed today's Menagerie daily quest
 Click here to return to the Main Menu |confirm |next "Menu"
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Dailies Guides\\Warlords of Draenor\\Tanaan Jungle (100)\\Hand of the Prophet Dailies",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Dailies Guides\\Warlords of Draenor Dailies\\Tanaan Jungle (100)\\Hand of the Prophet Dailies",{
 sugGroup="ACHIEVEMENTS\\Draenor Pathfinder",
 description="This guide will walk you through the daily quests for the Hand of the Prophet faction.",
 },[[
 step
 #include "A_Hand_of_Prophet_Dailies"
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Dailies Guides\\Warlords of Draenor\\Tanaan Jungle (100)\\Order of the Awakened Dailies",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Dailies Guides\\Warlords of Draenor Dailies\\Tanaan Jungle (100)\\Order of the Awakened Dailies",{
 sugGroup="ACHIEVEMENTS\\Draenor Pathfinder",
 description="This guide will walk you through the daily quests for the Order of the Awakened faction.",
 },[[
 step
-#include "A_Order_of_Awakened_Dailies"
+#include "OotA_Dailies"
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Dailies Guides\\Warlords of Draenor\\Tanaan Jungle (100)\\The Saberstalkers",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Dailies Guides\\Warlords of Draenor Dailies\\Tanaan Jungle (100)\\The Saberstalkers",{
 sugGroup="ACHIEVEMENTS\\Draenor Pathfinder",
 description="This guide will walk you through the daily quests for the The Saberstalkers faction.",
 },[[
 step
-#include "A_Saberstalkers_Dailies"
+#include "SStalkers_Dailies"
 ]])

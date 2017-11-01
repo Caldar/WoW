@@ -72,7 +72,20 @@ Guide.Sides = {
 	}
 
 function Guide:DoCond(which,...)
-	if which=="valid" and not self.condition_valid then
+	if which and self['condition_'..which] then
+		ZGV.Parser.ConditionEnv:_SetLocal(self,nil,nil)
+		local isOK,ret = pcall(self['condition_'..which],self,...)
+		if isOK then
+			return ret,ret and "" or self['condition_'..which..'_msg']
+		else
+			ZGV:Print("ERROR parsing condition for guide:\n"..self.title.."\n"..self['condition_'..which.."_raw"].."\nError: "..ret)
+			return false,"ERROR: "..(self['condition_'..which..'_msg'] or "")
+		end
+	end
+
+	-- no condition to check? improvise from attributes...
+
+	if which=="valid" then
 		-- Check class/spec compatiblity
 		if self.class then
 			local lclass,kclass=UnitClass("player")
@@ -81,7 +94,6 @@ function Guide:DoCond(which,...)
 				FillLocalizedClassList(classeslocalized,UnitSex("player")==3)
 				return false,classeslocalized[self.class].." class is required." -- TODO localize
 			elseif self.spec then
-				if ZGV.db.profile.beta then else
 				if not self.spec[GetSpecialization()] then
 					local specnames="",multiple
 					for k,v in pairs(self.spec) do
@@ -91,7 +103,6 @@ function Guide:DoCond(which,...)
 					end
 					return false,"Only the following spec"..(multiple and "s are" or " is").." eligible: "..specnames
 				end
-				end
 			end
 		end
 
@@ -100,50 +111,48 @@ function Guide:DoCond(which,...)
 		end
 		-- If above is ok
 		return true
-	end
-
-	if which=="suggested" and not self.condition_suggested and self.startlevel and self.type=="LEVELING" then local level=ZGV:GetPlayerPreciseLevel()  return level>=self.startlevel and level<(self.endlevel or 999) end
-	if which=="end" and not self.condition_end and self.endlevel then return ZGV:GetPlayerPreciseLevel()>=self.endlevel,"Level "..ZGV.FormatLevel(self.endlevel).." reached." end
-	if which and self['condition_'..which] then
-		local isOK,err = pcall(self['condition_'..which],self,...)
-		if isOK then
-			return err,self['condition_'..which..'_msg']
-		else
-			ZGV:Print("ERROR parsing condition for guide:\n"..self.title.."\n"..self['condition_'..which.."_raw"].."\nError: "..err)
-			return false,"ERROR: "..(self['condition_'..which..'_msg'] or "")
-		end
+	elseif which=="suggested" and self.startlevel and self.type=="LEVELING" then
+		local level=ZGV:GetPlayerPreciseLevel()
+		return level>=self.startlevel and level<(self.endlevel or 999)
+	elseif which=="outleveled" and self.endlevel then 
+		return ZGV:GetPlayerPreciseLevel()>=self.endlevel,"Level "..ZGV.FormatLevel(self.endlevel).." passed."
+	elseif which=="end" and self.endlevel then 
+		return ZGV:GetPlayerPreciseLevel()>=self.endlevel,"Level "..ZGV.FormatLevel(self.endlevel).." reached."
 	end
 end
 
-function Guide:GetStatus()
-	local ret,msg
+function Guide:GetStatus(detailed)
+	local pass,msg
 
-	ret,msg = self:DoCond("invalid")
-	if ret then return "INVALID",msg end
+	pass,msg = self:DoCond("valid")
+	if not pass then return "INVALID",msg end
 
-	ret,msg = self:DoCond("valid")
-	if ret then
-		ret,msg = self:DoCond("end")
-		if ret then return "COMPLETE",msg end
-		msg="" -- TODO it's a bug, we ask the end condition and we're reusing its value even if the guide isnt complete
+	if detailed and self:GetCompletion()==1 then return "COMPLETE" end
 
-		if self.condition_suggested_raw or self.type=="LEVELING" then
-			ret,msg = self:DoCond("suggested")
-			if ret then return "SUGGESTED" end
-		end
+	pass,msg = self:DoCond("outleveled")
+	if pass then return "OUTLEVELED",msg end
 
-		return "VALID",msg
-	else
-		return "INVALID",msg
+	pass,msg = self:DoCond("end")
+	if pass then return "COMPLETE",msg end
+
+	msg="" -- TODO it's a bug, we ask the end condition and we're reusing its value even if the guide isnt complete
+
+	if self.condition_suggested_raw or self.type=="LEVELING" then
+		pass,msg = self:DoCond("suggested")
+		if pass then return "SUGGESTED" end
 	end
+
+	return "VALID",msg
 end
 
-function Guide:GetCompletion()
+function Guide:GetCompletion(mode)
 	self.completionmode = self.completionmode
 		or (self.type=="LOREMASTER" and "quests")
-		or (self.type=="LEVELING" and "level")
+		or (self.type=="LEVELING" and "quests")
+		or (self.type=="ACHIEVEMENTS" and self.achieved and "achievement")
+		or (type(self.condition_end)=="function" and "function_end")
 		or "steps"
-	local mode = self.completionmode
+	local mode = mode or self.completionmode
 
 	if mode=="macro" then
 		local acc=self.macro:MacroExists("account")
@@ -169,11 +178,19 @@ function Guide:GetCompletion()
 		if self.startlevel==self.endlevel then return ZGV:GetPlayerPreciseLevel() > self.startlevel and 1 or 0 end
 		return min(1,max(0,(ZGV:GetPlayerPreciseLevel()-self.startlevel)/(self.endlevel-self.startlevel)))
 	elseif mode=="quests" then
-		local quests = self:GetQuests()
+		local quests,orquests = self:GetQuests()
 		local count,comp = 0,0
+
+		-- mark |or quest groups as completed
+		for qid,step in pairs(orquests) do
+			if IsQuestFlaggedCompleted(qid) then 
+				for i,v in pairs(orquests) do if v==step then orquests[i]=true end end
+			end
+		end
+
 		for qid,step in pairs(quests) do
 			count=count+1
-			if ZGV.completedQuests[qid] then comp=comp+1 end
+			if IsQuestFlaggedCompleted(qid) or orquests[qid]==true then comp=comp+1 end
 		end
 		return count>0 and comp/count or 0, comp,count
 	elseif mode=="steps" then
@@ -190,7 +207,7 @@ function Guide:GetCompletion()
 		return skill.level/(self.completionparams[2] or 525), skill.level, self.completionparams[2] or 525
 	elseif mode=="script" then
 		if not self.completionfunc then
-			local raw = self.completionraw:match("script,%s*(.*)")
+			local raw = self.completionraw[2]
 			if not raw then ZGV:Print("ERROR parsing guide "..self.title..": bad 'completion' script.") self.completionfunc=function() return 0 end return end
 			local func,err = loadstring("return ("..raw..")")
 			if err then ZGV:Print("ERROR parsing guide "..self.title..": bad 'completion' script.") self.completionfunc=function() return 0 end return end
@@ -199,35 +216,60 @@ function Guide:GetCompletion()
 		local ret = self.completionfunc()
 		if type(ret)=="boolean" then ret=ret and 1 or 0 end
 		return ret,0,1
+	elseif mode=="function_end" then
+		local ret = self.condition_end()
+		if type(ret)=="boolean" then ret=ret and 1 or 0 end
+		return ret,0,1
+	elseif mode=="achievement" then
+		local _,achieveid = next(self.achieved)
+		local numCriteria = GetAchievementNumCriteria(achieveid) or 0 --safety check.
+		local crit_completed,crit_needed=0,0
+		if numCriteria==0 then
+			local _, _, _, completed = GetAchievementInfo(achieveid)
+			crit_completed = completed and 1 or 0
+			crit_needed = 1
+		else
+			local comp=0
+			for criteria=1,numCriteria do
+				local _, _, completed, current,needed = GetAchievementCriteriaInfo(achieveid, criteria)
+				crit_completed = crit_completed + current
+				crit_needed = crit_needed + needed
+			end
+		end
+		return crit_completed/crit_needed,crit_completed,crit_needed
+	elseif mode=="inventory" then
+		return 0
 	end
 	-- other completions might not need a full parse.
 	return "error","we don't know if this guide completes or not"
 end
 
-function Guide:GetCompletionText()
-	local comp,a,b,c,d = self:GetCompletion()
+function Guide:GetCompletionText(mode)
+	local mode = mode or self.completionmode
+	local comp,a,b,c,d = self:GetCompletion(mode)
 	assert(comp) -- Sanity!
 	if comp=="loading" then return "...","(loading)" end
 	if comp=="error" or type(comp)~="number" then return "?",("(an error occurred: %s)"):format(a or "black magic") end
 
-	if self.completionmode=="none" then
+
+	if mode=="none" then
 		return "-", "This guide does not complete."
-	elseif self.completionmode=="skill" then
+	elseif mode=="skill" then
 		local skill = ZGV:GetSkill(self.completionparams[1])
 		--return ("%d/%d"):format(a,b), ("%s skill: %d/%d"):format(ZGV.LocaleSkills[self.completionparams[1]],a,b)
-		return math.floor(comp*100).."%", ("%s skill: %d/%d"):format(ZGV.LocaleSkills[self.completionparams[1]],a,b)
-	elseif self.completionmode=="quests" then
+		return math.floor(comp*100).."%", ("%s skill: %d/%d"):format(ZGV.Professions.LocaleSkills[self.completionparams[1]],a,b)
+	elseif mode=="quests" then
 		return math.floor(comp*100).."%", ("Quests completed: %d/%d"):format(a,b)
-	elseif self.completionmode=="level" then
+	elseif mode=="level" then
 		-- Changed the rounding to try to get more accurate results.
 		-- http://www.zygorguides.com/forum/showthread.php?16059-Experience-Bar-Is-Off&p=93935#post93935
 		-- Old equation: (self.endlevel-math.floor(self.endlevel))*20
 		-- New equation: floor((self.endlevel-math.floor(self.endlevel))*20+0.05)
 		-- ~~ Jeremiah
 		return math.floor(comp*100).."%", ("Level %3d (+%d bars) reached: %d%%"):format(self.endlevel,floor((self.endlevel-math.floor(self.endlevel))*20+0.05),math.floor(comp*100)) --- 2015-03-29
-	elseif self.completionmode=="steps" then
+	elseif mode=="steps" then
 		return math.floor(comp*100).."%", ("Steps completed: %d/%d"):format(a,b)
-	elseif self.completionmode=="macro" then
+	elseif mode=="macro" then
 		return comp~=0 and "+" or "—",comp~=0 and L["macro_status_yes"]:format((a and b) and L["macro_both"] or (a and L["macro_acc"] or L["macro_char"])) or L["macro_status_no"]
 	else
 		return math.floor(comp*100).."%", ""
@@ -287,7 +329,7 @@ function Guide:Parse(fully)
 
 				-- cap it with a finisher step
 				if (self.steps[#self.steps].condition_valid or self.steps[#self.steps].requirement) then
-					local completetion_step = ZGV.StepProto:New {
+					local completion_step = ZGV.StepProto:New {
 						num=#self.steps+1,
 						parentGuide=self,
 						finish=true,
@@ -301,8 +343,8 @@ function Guide:Parse(fully)
 						parentStep=completetion_step
 					}
 					
-					tinsert(completetion_step.goals,completion_goal)
-					tinsert(self.steps,completetion_step)
+					tinsert(completion_step.goals,completion_goal)
+					tinsert(self.steps,completion_step)
 				end
 
 				-- gather all step labels, round'em up and brand'em
@@ -343,24 +385,31 @@ function Guide:Parse(fully)
 	end
 end
 
+local orquests={}
 function Guide:GetQuests()
 	self:Parse(true)
 	if not self.parsed then return end
 	local tab={}
+	table.wipe(orquests)
 	for si,step in ipairs(self.steps) do
-		for gi,goal in ipairs(step.goals) do
-			if goal.questid then tab[goal.questid]=si end
+		if not step.condition_visible or step.condition_visible() then
+			for gi,goal in ipairs(step.goals) do
+				if goal:IsVisible() and goal.questid then
+					if goal.orlogic then orquests[goal.questid]=si end
+					tab[goal.questid]=si 
+				end
+			end
 		end
 	end
-	return tab
+	return tab,orquests
 end
 
 function Guide:HasProfession() --Real quick and dirty check to see if this profession guide works for us.
 	if not self.type == "PROFESSIONS" then return end
 	if not self.completionparams then return end
-	if not ZGV.skills then return end
+	if not ZGV.Professions.skills then return end
 
-	if ZGV.skills[self.completionparams[1]] then return true end
+	if ZGV.Professions.skills[self.completionparams[1]] then return true end
 end
 
 ------- hello popup
@@ -384,7 +433,7 @@ StaticPopupDialogs['ZYGORGUIDESVIEWER_BADGUIDE'] = {
 	timeout = 0,
 	whileDead = 1,
 	OnAccept = function(self)  ZGV.db.char.goodbadguides[self.guide.title]=true  ZGV:SetGuide(self.guide,self.step)  end,
-	OnCancel = function(self)  ZGV.Menu:Show(self.guide)  end,
+	OnCancel = function(self)  ZGV.GuideMenu:OpenGuide(self.guide)  end,
 }
 
 function Guide:AdvertiseWithPopup(nodelay)
@@ -418,7 +467,7 @@ function Guide:AdvertiseWithPopup(nodelay)
 		-- text,title,tooltipText,priority,poptime,removetime,quiet = returnMinimizeSettings()
 
 		dialog.returnMinimizeSettings = function(self)
-			local notifcationText = L['notifcenter_nextguide_text']:format(ZGV.Menu:GetStatusColor(self.guide:GetStatus()).hex,self.guide.title_short)
+			local notifcationText = L['notifcenter_nextguide_text']:format(ZGV.GuideMenu.STATUS_COLORS[self.guide:GetStatus()].hex,self.guide.title_short)
 			local tooltipText = L['notifcenter_gen_popup_tooltip']
 
 			local priority = 10 --this seems important.
@@ -535,6 +584,13 @@ function Guide:tostring()
 	return self.title_short
 end
 
+function Guide:GetParentFolder()
+	local path,guide = self.title:match("^(.+)\\(.-)$")
+	local _,parent = path:match("^(.+)\\(.-)$")
+
+	return parent,path
+end
+
 function GuideFuncs:AskReload() --reload after a panda has choosen a faction.
 	if not self.ReloadPopup then
 		self.ReloadPopup = ZGV.PopupHandler:NewPopup("ZygorReloadPopup","default")
@@ -577,6 +633,12 @@ function GuideFuncs:SuggestDungeonGuide(dungeonguide)
 		self.DungPopup = ZGV.PopupHandler:NewPopup("ZygorDungeonPopup","dungeon")
 
 		self.DungPopup.OnAccept = function(self)
+			if ZGV.CurrentGuide.type~="DUNGEON" then -- to avoid guides overwriters when player chains dungeons without leaving them (lfg/lfr spam)
+				ZGV.db.profile.previousguide.title = ZGV.CurrentGuide.title
+				ZGV.db.profile.previousguide.title_short = ZGV.CurrentGuide.title_short
+				ZGV.db.profile.previousguide.type = ZGV.CurrentGuide.type
+				ZGV.db.profile.previousguide.step = ZGV.CurrentStepNum
+			end
 			ZGV:SetGuide(self.guide)
 		end
 
@@ -591,7 +653,7 @@ function GuideFuncs:SuggestDungeonGuide(dungeonguide)
 			:HookScript("OnLeave",function(self) GameTooltip:Hide() end)
 
 		self.DungPopup.returnMinimizeSettings = function(self)
-			local notifcationText = L['notifcenter_dungeon_text']:format(ZGV.Menu:GetStatusColor(self.guide:GetStatus()).hex,self.guide.title_short)
+			local notifcationText = L['notifcenter_dungeon_text']:format(ZGV.GuideMenu.STATUS_COLORS[self.guide:GetStatus()].hex,self.guide.title_short)
 			local tooltipText = L['notifcenter_gen_popup_tooltip']
 
 			return notifcationText,L['notifcenter_dungeon_title'],tooltipText,nil,nil,nil,nil,OnOpen,{guide=self.guide}
@@ -612,8 +674,57 @@ function GuideFuncs:SuggestDungeonGuide(dungeonguide)
 	self.DungPopup:Show()
 end
 
+function GuideFuncs:SuggestPreviousGuide(prevguide)
+	if not ( ZGV.db.profile.n_popup_guides and ZGV.db.profile.n_popup_dungeon and ZGV.Frame:IsVisible()) then return end
+
+	if not ZGV.db.profile.previousguide.title then return end
+
+	ZGV:Debug("Suggesting previous guide after dungeon")
+
+	if not self.DungPrevPopup then
+		self.DungPrevPopup = ZGV.PopupHandler:NewPopup("ZygorDungeonPopup","dungeon")
+
+		self.DungPrevPopup.OnAccept = function(self)
+			ZGV:SetGuide(ZGV.db.profile.previousguide.title,ZGV.db.profile.previousguide.type)
+			table.wipe(ZGV.db.profile.previousguide)
+		end
+
+		self.DungPrevPopup.OnDecline = function(self) table.wipe(ZGV.db.profile.previousguide) end
+
+		CHAIN(self.DungPrevPopup.declinebutton)
+			:HookScript("OnEnter",function(self) CHAIN(GameTooltip):SetOwner(GuideFuncs.DungPrevPopup,"ANCHOR_BOTTOM") :SetText(L['guide_dungpop_tip']) :Show() end)
+			:HookScript("OnLeave",function(self) GameTooltip:Hide() end)
+
+		self.DungPrevPopup.returnMinimizeSettings = function(self)
+			local notifcationText = L['notifcenter_previous_text']:format(ZGV.GuideMenu.STATUS_COLORS[self.guide:GetStatus()].hex,self.guide.title_short)
+			local tooltipText = L['notifcenter_gen_popup_tooltip']
+
+			return notifcationText,L['notifcenter_previous_title'],tooltipText,nil,nil,nil,nil,OnOpen,{guide=self.guide}
+		end
+	end
+
+	for i,guide in ipairs(ZGV.registeredguides) do
+		if guide.title == ZGV.db.profile.previousguide.title then
+			prevguide = guide
+			break
+		end
+	end
+
+	self.DungPrevPopup:SetText(L['notifcenter_previous_text']:format(prevguide.title_short))
+	self.DungPrevPopup.guide=prevguide
+
+	self.DungPrevPopup:Show()
+end
+
 function GuideFuncs:IsDungeon()
 	if not ZGV.guidesloaded then ZGV:ScheduleTimer(function() GuideFuncs:IsDungeon() end,10.0) return end -- Wait for guides to load before we scan them.
+
+	local inInstance, instanceType = IsInInstance()
+
+	if not inInstance or (instanceType~="party" and instanceType~="raid") then
+		GuideFuncs:SuggestPreviousGuide()
+		return 
+	end		
 
 	local map = ZGV.CurrentMapID or GetCurrentMapAreaID()
 	local dung = ZGV.db.profile.suggestiondungeonnum[map]
@@ -671,7 +782,7 @@ function GuideFuncs:MonkQuest(level)
 		-- text,title,tooltipText,priority,poptime,removetime,quiet = returnMinimizeSettings()
 
 		self.MonkPopup.returnMinimizeSettings = function(self)
-			local notifcationText = L['notifcenter_monk_text']:format(ZGV.Menu:GetStatusColor(self.guide:GetStatus()).hex,self.guide.title_short)
+			local notifcationText = L['notifcenter_monk_text']:format(ZGV.GuideMenu.STATUS_COLORS[self.guide:GetStatus()].hex,self.guide.title_short)
 			local tooltipText = L['notifcenter_gen_popup_tooltip']
 
 			return notifcationText,L['notifcenter_monk_title'],tooltipText,nil,nil,nil,nil,OnOpen,{guide=self.guide}
@@ -688,7 +799,7 @@ end
 function GuideFuncs:LearnMountGuideSuggestion()
 	if not (ZGV.db.profile.n_popup_guides and ZGV.Frame:IsVisible()) then return end
 
-	local mountGuide = ZGV:GetGuideByTitle("Zygor's Alliance Pets & Mounts Guide\\Mount Training") --mmmm nice and hard coded.
+	local mountGuide = ZGV:GetGuideByTitle("Zygor's Pets & Mounts Guide\\Mount Training") --mmmm nice and hard coded.
 
 	if not mountGuide then ZGV:Debug("No mount guide?!?") return end
 
@@ -755,8 +866,7 @@ end
 
 function GuideFuncs:IsGuideBanned(title)
 	do return false end  -- temporarily remove guide disabling; sinus 2014-01-13 
-	if ZGV.db.profile.load_betaguides then return false end
-	
+
 	if title:match("^PROFESSION") then return true end
 	
 	if title:match("^DAILIES") then return true end

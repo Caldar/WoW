@@ -5,7 +5,6 @@ local _,L = ...
 local rematch = Rematch
 local settings
 local queue -- the actual leveling queue (settings.LevelingQueue)
-local levelingSlots -- indexed 1,2,3; true if the slot should be under queue control (settings.LevelingSlots)
 
 local levelingPets = {} -- indexed by petID, lookup table of leveling pets (created in ProcessQueue)
 
@@ -15,7 +14,6 @@ rematch.skippedPicks = {} -- list of petIDs skipped due to preferences (for queu
 rematch:InitModule(function()
 	settings = RematchSettings
 	queue = settings.LevelingQueue
-	levelingSlots = settings.LevelingSlots
 end)
 
 -- returns true (and the precise level) of a petID if it can level
@@ -123,10 +121,10 @@ function rematch:ProcessQueue()
 
 	-- if we can swap pets, swap if any needed
 	if not (InCombatLockdown() or C_PetBattles.IsInBattle() or C_PetBattles.GetPVPMatchmakingInfo()) then
-		-- load the top picks into the levelingSlots
+		-- load the top picks into the slots specially marked for leveling
 		local pickIndex = 1
 		for i=1,3 do
-			if levelingSlots[i] then
+         if rematch:GetSpecialSlot(i)==0 then
 				local petID = C_PetJournal.GetPetLoadOutInfo(i)
 				if petID then -- going to not attempt to slot empty slots
 					local pickID = rematch.topPicks[pickIndex]
@@ -320,6 +318,23 @@ function rematch.SortQueueTable(e1,e2)
 		-- if petType1 == petType2, continue to sort by level
 	end
 
+	if settings.QueueActiveSort then
+		if settings.QueueSortFavoritesFirst then
+			local fav1 = C_PetJournal.PetIsFavorite(e1)
+			local fav2 = C_PetJournal.PetIsFavorite(e2)
+			if fav1~=fav2 then
+				return fav1
+			end
+		end
+		if settings.QueueSortRaresFirst and e1 and e2 then
+			local _,_,_,_,rarity1 = C_PetJournal.GetPetStats(e1)
+			local _,_,_,_,rarity2 = C_PetJournal.GetPetStats(e2)
+			if (rarity1==4 or rarity2==4) and rarity1~=rarity2 then
+				return rarity1==4
+			end
+		end
+	end
+
 	local level1 = levelingPets[e1]
 	local level2 = levelingPets[e2]
 	if order==3 then -- for median sort, levels are distance from 10.5
@@ -345,38 +360,57 @@ function rematch.SortQueueTable(e1,e2)
 	end
 end
 
+-- for one-time sorts of the queue that are not actively sorted (user has it manually sorted maybe)
+-- sortType is either "favorites" or "rares"
+function rematch:StableSortQueue(sortType)
+	local oldQueue = CopyTable(queue) -- copy leveling queue to oldQueue
+	wipe(queue) -- empty live queue
+	-- now copy queue over that fits criteria
+	for i=#oldQueue,1,-1 do
+		local petID = oldQueue[i]
+		if (sortType=="favorites" and C_PetJournal.PetIsFavorite(petID)) or (sortType=="rares" and select(5,C_PetJournal.GetPetStats(petID))==4) then
+			tinsert(queue,1,petID)
+			tremove(oldQueue,i)
+		end
+	end
+	-- now copy rest of old queue over (it didn't fit criteria)
+	for i=1,#oldQueue do
+		tinsert(queue,oldQueue[i])
+	end
+	wipe(oldQueue)
+	rematch:UpdateQueue()
+end
+
 function rematch:FillQueue(countOnly,fillMore)
-	local species = rematch.info -- lookup table to see if we added this species already
+	local speciesInQueue = rematch.info -- lookup table to see if we added this species already
 	local roster = rematch.Roster
 	local petTable = {} -- petIDs for InsertManyPetsToTable
 	local count = 0
-	wipe(species)
-	local speciesAt25 = rematch:GetTempTable("SpeciesAt25")
+	wipe(speciesInQueue)
 
-	-- if fillMore is false, we don't want species that have a 25 version or are already in the queue.
-	-- flag those species as already encountered
-	if not fillMore then
-		for _,petID in ipairs(roster.petList) do
-			if type(petID)=="string" then
-				local speciesID = C_PetJournal.GetPetInfoByPetID(petID)
-				if rematch:IsPetLeveling(petID) or speciesAt25[speciesID] then
-					species[speciesID] = true
-				end
-			end
-		end
-	end
+   -- if fillMore not enabled, then note species already in the queue
+   if not fillMore then
+      for _,petID in ipairs(queue) do
+         local speciesID = C_PetJournal.GetPetInfoByPetID(petID)
+         if speciesID then
+            speciesInQueue[speciesID] = true
+         end
+      end
+   end
 
 	-- now add each un-encountered species from roster.petList (filtered list)
 	for _,petID in ipairs(roster.petList) do
 		if type(petID)=="string" then
 			local speciesID = C_PetJournal.GetPetInfoByPetID(petID)
-			-- if pet not already in queue, and not an encountered species, and it can level
-			if not rematch:IsPetLeveling(petID) and not species[speciesID] and rematch:PetCanLevel(petID) then
+			-- if pet's species is not in the queue (for fillMore this is whether this fill added the species
+         -- already), and the pet is not already leveling, and the pet can level, and either fillMore is
+         -- enabled or there is no version of this pet at level 25, add it to the table to add to queue
+			if (not speciesInQueue[speciesID] and not rematch:IsPetLeveling(petID) and rematch:PetCanLevel(petID)) and (fillMore or not rematch.speciesAt25[speciesID]) then
 				if not countOnly then
 					tinsert(petTable,petID)
 				end
 				count = count + 1
-				species[speciesID] = true
+				speciesInQueue[speciesID] = true
 			end
 		end
 	end
@@ -402,53 +436,4 @@ function rematch:ToastNextLevelingPet(petID)
 		rematch.LevelingToastSystem = AlertFrame:AddQueuedAlertFrameSubSystem("RematchLevelingToastTemplate", toastSetup, 2, 0)
 	end
 	rematch.LevelingToastSystem:AddAlert(petID)
-end
-
---[[
-	Marking a loadout slot as a leveling slot is done by:
-	- The right-click menu of the slot: "Put Leveling Pet Here"
-	- Loading a team that has leveling slots saved.
-	- If the option "Allow Manually Slotted Pets" is unchecked (default), dragging any pet
-		in the queue to the desired loadout slot.
-
-	Revoking the queue's control of a slot is done by:
-	- The right-click menu of the slot: "Stop Leveling This Slot"
-	- Loading a team that does not have a leveling pet in the slot.
-	- Unloading the currently loaded team.
-	- If the option "Allow Manually Slotted Pets" is checked, dragging any pet in the queue
-		to desired loadout slot.
-
-	Additionally:
-	- It will now be possible to mark leveling slots if no pets are in the queue.
-	- In the above situation, or if there are not enough pets in the queue to fill all leveling slots,
-		the gold border will turn grey/silver for slots without a leveling pet.
-]]
-
--- to be called after a team is loaded or unloaded or the start of a session;
--- marks each of the three slots true if they should be controlled by the queue
-function rematch:AssignLevelingSlots()
-	local settings = RematchSettings
-	if not levelingSlots then -- if this is called during InitSavedVars
-		levelingSlots = settings.LevelingSlots
-	end
-	wipe(levelingSlots)
-	local loadedTeam = settings.loadedTeam
-	local team = loadedTeam and RematchSaved[loadedTeam]
-	if team then
-		for i=1,3 do
-			if team[i][1]==0 then
-				rematch:SetLevelingSlot(i,true)
-			end
-		end
-	end
-end
-
--- use this to set whether a slot will be controlled by the queue
-function rematch:SetLevelingSlot(slot,state)
-	levelingSlots[slot] = state and true or nil
-end
-
--- returns whether the give slot is under queue control
-function rematch:IsSlotQueueControlled(slot)
-	return levelingSlots[slot]
 end

@@ -1,12 +1,6 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local S = E:GetModule('Skins')
 
---Cache global variables
---Lua functions
-local _G = _G
-local ipairs, unpack = ipairs, unpack
---WoW API / Variables
-
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: CUSTOM_CLASS_COLORS, RAID_CLASS_COLORS, OrderHallCommandBar, OrderHallMissionFrame
 -- GLOBALS: OrderHallMissionFrameMissions, OrderHallMissionFrameMissionsListScrollFrame
@@ -35,6 +29,7 @@ local function LoadSkin()
 	OrderHallMissionFrame:CreateBackdrop("Transparent")
 	OrderHallMissionFrame.backdrop:SetOutside(OrderHallMissionFrame.BorderFrame)
 	S:HandleCloseButton(OrderHallMissionFrame.CloseButton)
+	S:HandleCloseButton(OrderHallMissionTutorialFrame.GlowBox.CloseButton)
 
 	for i = 1, 3 do
 		S:HandleTab(_G["OrderHallMissionFrameTab" .. i])

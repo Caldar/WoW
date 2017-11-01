@@ -10,6 +10,7 @@ P.sle.Armory.Inspect = {
 	
 	NoticeMissing = true,
 	MissingIcon = true,
+	InspectMessage = true,
 	
 	Backdrop = {
 		SelectedBG = 'Space',
@@ -18,7 +19,8 @@ P.sle.Armory.Inspect = {
 	
 	Gradation = {
 		Display = true,
-		Color = { .41, .83, 1 }
+		Color = { .41, .83, 1 },
+		CurrentClassColor = false
 	},
 	
 	Level = {

@@ -130,7 +130,8 @@ function AutoEquip:ScanBagsForUpgrades(verbose,noreport,noblock)
 
 	for bag=0, NUM_BAG_SLOTS do for bagslot=1, GetContainerNumSlots(bag) do repeat
 		local itemid = GetContainerItemID(bag,bagslot)
-		if not itemid then break end
+		if not itemid then break end --continue
+		if itemid==82800 then break end --continue   -- caged pet, we will never equip it anyway
 
 		if self:TestForBadUpgrade(itemid) then
 			if self.verbose then verboseDebug("%s %s removed because it is in BadUpgrades.",itemlink,itemlink:match("item[:%d%-]+")) end
@@ -140,19 +141,19 @@ function AutoEquip:ScanBagsForUpgrades(verbose,noreport,noblock)
 		local itemlink = GetContainerItemLink(bag,bagslot)
 		local for_quest = GetContainerItemQuestInfo(bag,bagslot)
 		local name, link, quality, iLevel, reqLevel, class, subclass, maxStack, equipslot, texture, vendorPrice = ZGV:GetItemInfo(itemlink)
-		if not name then return end --Don't suggest anything until this info is available.
+		if not name then break end --continue   -- Don't suggest anything until this info is available.
  
 		if not (equipslot and ItemScore:IsGoodEquipSlot(equipslot)) then
 			--Only care about items with equipslots we can use.
-			break
+			break --continue
 		elseif not (quality and (quality > 0 or ItemScore.playerlevel <=10)) then
 			-- Don't want grey items unless under level 10.
 			verboseDebug("%s %s removed because it is grey.",itemlink,itemlink:match("item[:%d%-]+"))
-			break
+			break --continue
 		elseif not IsUsableItem(itemlink) then
 			-- Item is not for our class.
 			verboseDebug("%s %s removed because it is not usable. Wrong class?",itemlink,itemlink:match("item[:%d%-]+"))
-			break
+			break --continue
 		end
 
 		if for_quest and   -- We have a questitem that we can equip.
@@ -181,7 +182,7 @@ function AutoEquip:ScanBagsForUpgrades(verbose,noreport,noblock)
 				-- error! Oh well. Skip that item, but continue doing work.
 				if ( code == SC_NOTYET or code == SC_NORULES )then
 					self:Debug("%s %s Removed because %s-%s",itemlink,itemlink:match("item[:%d%-]+"),code,(info or "?"))
-					break
+					break --continue
 				else
 					ScoreCache[itemlink] = code.."-"..(info or "?")
 				end
@@ -191,7 +192,7 @@ function AutoEquip:ScanBagsForUpgrades(verbose,noreport,noblock)
 		end
 		Scoring = Scoring + (debugprofilestop() - startScoring)
 
-		if score <= 0 then self:Debug("%s %s Removed because score <= 0. Reason in cache (%s).",itemlink,itemlink:match("item[:%d%-]+"),ScoreCache[itemlink]) break end
+		if score <= 0 then self:Debug("%s %s Removed because score <= 0. Reason in cache (%s).",itemlink,itemlink:match("item[:%d%-]+"),ScoreCache[itemlink]) break--[[continue--]] end
 
 		local item = {
 			itemid = itemid,
@@ -260,6 +261,8 @@ function AutoEquip:IsItemUpgrade(item)
 	local cur = self.CurrentGear
 	local poss = self.PossibleUpgrades
 
+	item.change=nil
+
 	self:Debug(("Testing %s for |cffffd700%s|r scored: %.2f, cur: %.2f"):format(item.link,item.slot1,item.score,(cur[item.slot1] and cur[item.slot1].score or 0)))
 
 	-- We don't care what is equipped at the moment if we are already planning on replacing it.
@@ -271,46 +274,59 @@ function AutoEquip:IsItemUpgrade(item)
 
 	if ItemScore:IsFishingPole(curBest1 and curBest1.itemid) then return nil end	-- TODO remove this once notification center hits the trunk
 
+	local slot1ok,slot1rep = AutoEquip:CanUseUniqueItem(item.itemid, curBest1 and curBest1.itemid)
+	local slot2ok,slot2rep
+	if item.slot2 then
+		slot2ok,slot2rep = AutoEquip:CanUseUniqueItem(item.itemid, curBest2 and curBest2.itemid)
+	else 
+		slot2ok,slot2rep = false,false
+	end
+
 	-- Time to check if the item is actually better
 	if not item.slot2 then
 		-- Only have to worry about one slot Wooo.
-
-		if not curBest1 then
-			-- nothing there yet.
-			if self.verbose then verboseDebug("%s %s added to possible upgrades in %s.",item.link,item.link:match("item[:%d%-]*"),item.slot1) end
-			myslot = item.slot1
-			poss[item.slot1] = item
-		elseif scoreOfNewItem > curBest1.score then
-			-- There is an item / upgrade. But this one is better. Replace it.
-			if self.verbose then verboseDebug("%s %s replacing %s %s to possible upgrades in %s.",item.link,item.link:match("item[:%d%-]*"),curBest1.link,curBest1.link:match("item[:%d%-]*"),item.slot1) end
-			myslot = item.slot1
-			poss[item.slot1] = item
+		if slot1ok then
+			if not curBest1 then
+				-- nothing there yet.
+				if self.verbose then verboseDebug("%s %s added to possible upgrades in %s.",item.link,item.link:match("item[:%d%-]*"),item.slot1) end
+				myslot = item.slot1
+				poss[item.slot1] = item
+				item.change = 100
+			elseif scoreOfNewItem > curBest1.score then
+				-- There is an item / upgrade. But this one is better. Replace it.
+				if self.verbose then verboseDebug("%s %s replacing %s %s to possible upgrades in %s.",item.link,item.link:match("item[:%d%-]*"),curBest1.link,curBest1.link:match("item[:%d%-]*"),item.slot1) end
+				myslot = item.slot1
+				poss[item.slot1] = item
+				item.change = (scoreOfNewItem*100/curBest1.score)-100
+			else
+				if self.verbose then verboseDebug("%s %s |cffff0000rejected|r. Not better than %s %s",item.link,item.link:match("item[:%d%-]*"),curBest1.link,curBest1.link:match("item[:%d%-]*")) end
+			end
 		else
-			if self.verbose then verboseDebug("%s %s |cffff0000rejected|r. Not better than %s %s",item.link,item.link:match("item[:%d%-]*"),curBest1.link,curBest1.link:match("item[:%d%-]*")) end
+			if self.verbose then verboseDebug("%s %s |cffff0000rejected|r. Can't equip more from that family.",item.link,item.link:match("item[:%d%-]*")) end
 		end
 	else
-		local slot1Ok = ItemScore:CanUseUniqueItem(item.itemid, curBest2 and curBest2.itemid)
-		local slot2Ok = ItemScore:CanUseUniqueItem(item.itemid, curBest1 and curBest1.itemid)
-
 		if not (curBest1 or curBest2) then
 			-- neither slot is occupied.
 			if self.verbose then verboseDebug("%s added to possible upgrades in %s. - has slot2 - Both Clear",item.link,item.slot1) end
 			myslot = item.slot1
 			poss[item.slot1] = item -- Put it in the first slot since it fits in either.
+			item.change = 100
 		elseif not curBest1 and curBest2 then
 			-- Nothing in slot1, but slot2 has something.
 
-			if slot1Ok then
+			if slot1ok then
 				-- curBest2 does not conflict!
 				verboseDebug("%s added to possible upgrades in %s. - has slot2 - Slot 1 Clear",item.link,item.slot1)
 				myslot = item.slot1
 				poss[item.slot1] = item
-			else
+				item.change = 100
+			elseif slot1rep then
 				-- curBest2 does conflict :( Try to replace it instead.
 				if scoreOfNewItem > curBest2.score then
 					if self.verbose then verboseDebug("%s replacing %s in possible upgrades in %s. - has slot2 - Slot 2 conflict.",item.link,curBest2.link,item.slot2) end
 					myslot = item.slot2
 					poss[item.slot2] = item
+					item.change = (scoreOfNewItem*100/curBest2.score)-100
 				else
 					-- curBest2 is better, can't put it in slot1. Can't use this item.
 					-- TODO possible corner case is that item in 2nd slot gets replaced by a later item in the bags and then this item could be equipped. Super rare and even if it happened this item would get suggested next check.
@@ -320,17 +336,19 @@ function AutoEquip:IsItemUpgrade(item)
 		elseif curBest1 and not curBest2 then
 			-- Something in slot1, but nothing in slot2.
 
-			if slot2Ok then
+			if slot2ok then
 				-- curBest1 does not conflict!
 				if self.verbose then verboseDebug("%s added to possible upgrades in %s. - has slot2 - Slot 2 Clear",item.link,item.slot2) end
 				myslot = item.slot2
 				poss[item.slot2] = item
-			else
+				item.change = 100
+			elseif slot2rep then
 				-- curBest1 does conflict :( Try to replace it instead.
 				if scoreOfNewItem > curBest1.score then
 					if self.verbose then verboseDebug("%s replacing %s to possible upgrades in %s. - has slot2 - Slot 1 conflict.",item.link,curBest1.link,item.slot1) end
 					myslot = item.slot1
 					poss[item.slot1] = item
+					item.change = (scoreOfNewItem*100/curBest1.score)-100
 				else
 					-- curBest1 is better, can't put it in slot1. Can't use this item.
 					if self.verbose then verboseDebug("%s |cffff0000rejected|r. %s is unique, and is better.",item.link,curBest1.link) end
@@ -340,15 +358,17 @@ function AutoEquip:IsItemUpgrade(item)
 			-- Item can go in either slot. See which slot is a bigger upgrade.
 			local diff1, diff2 = scoreOfNewItem - curBest1.score, scoreOfNewItem - curBest2.score
 
-			if diff1 > 0 and diff1 >= diff2 and slot1Ok then
+			if diff1 > 0 and diff1 >= diff2 and slot1ok then
 				-- better score and can fit.
 				if self.verbose then verboseDebug("%s replacing %s to possible upgrades in %s. - has slot2 - Slot 1 >= upgrade.",item.link,curBest1.link,item.slot1) end
 				myslot = item.slot1
 				poss[item.slot1] = item
-			elseif diff2 > 0 and diff2 > diff1 and slot2Ok then
+				item.change = (scoreOfNewItem*100/curBest1.score)-100
+			elseif diff2 > 0 and diff2 > diff1 and slot2ok then
 				if self.verbose then verboseDebug("%s replacing %s to possible upgrades in %s. - has slot2 - Slot 2 > upgrade.",item.link,curBest2.link,item.slot2) end
 				myslot = item.slot2
 				poss[item.slot2] = item
+				item.change = (scoreOfNewItem*100/curBest2.score)-100
 			else
 				-- Item isn't an upgrade in either slot.
 				if self.verbose then verboseDebug("%s |cffff0000rejected|r. Not better than %s or %s or has a uniqueness conflict",item.link,curBest1.link,curBest2.link) end
@@ -407,7 +427,7 @@ function AutoEquip:NoEquipCheck(bypass,verbose)
 	return true
 end
 
-
+AutoEquip.UniqueEquipped={}
 function AutoEquip:ScoreCurrentEquippedItems(bypass,verbose)
 	--if not (ZGV.db.profile.autogear and self.ready) and not bypass then return end
 	if self.LastGearCheck and debugprofilestop()-self.LastGearCheck < 100 and not verbose then return
@@ -419,6 +439,8 @@ function AutoEquip:ScoreCurrentEquippedItems(bypass,verbose)
 
 	self:Debug("Finding current equipped items and attempting to score them.")
 
+	table.wipe(AutoEquip.UniqueEquipped)
+
 	for num,slot in ipairs(self.slots) do while(1) do
 		local slotid = GetInventorySlotInfo(slot)
 
@@ -428,6 +450,9 @@ function AutoEquip:ScoreCurrentEquippedItems(bypass,verbose)
 
 		local itemlink_core = itemlink:match("item[%d%-%:]*")
 		local score, code, info
+
+		local family = AutoEquip:GetItemUniqueness(itemid)
+		if family and family>0 then AutoEquip.UniqueEquipped[family]=(AutoEquip.UniqueEquipped[family] or 0)+1 end
 
 		if ScoreCache[itemlink] and not self.verbose then
 			score = getCachedScore(itemlink)
@@ -660,9 +685,20 @@ end
 function AutoEquip:QueuePop()
 	if not self.ItemQueue then return end
 	if #self.ItemQueue == 0 then self:Debug("Queue is empty") return end -- It would do this automatically but why not make sure
-	self:Debug("Popping "..self.ItemQueue[1].link)
+
+	local best,bestpos=0,nil
+	for i,v in pairs(self.ItemQueue) do
+		if v.change>best then
+			bestpos=i
+			best=v.change
+		end
+	end
+
+	if not bestpos then self:Debug("Queue has nothing worthy") return end 
+
+	self:Debug("Popping "..self.ItemQueue[bestpos].link)
 	self.ItemQueueLen = self.ItemQueueLen - 1
-	return tremove(self.ItemQueue,1) --returns the item popped and removes it.
+	return tremove(self.ItemQueue,bestpos) --returns the item popped and removes it.
 end
 
 --[[
@@ -849,7 +885,7 @@ function AutoEquip:ShowGearReport(verbose,minimal,hideDump)
 
 	if not hideDump then ZGV:ShowDump(s,"Zygor Gear Bug Report") end
 
-	if Spoo and ZGV.DEV then Spoo(nil,nil,F) end
+	if Spoo and ZGV.db.profile.debug_display then Spoo(nil,nil,F) end
 
 	return s
 end
@@ -1256,6 +1292,59 @@ function AutoEquip:ToggleButton()
 	end
 end
 
+
+-- items that are group unique, but do not have family defined
+local unique_equip_families = {
+	[10001] = {[124636]=1,[124635]=1,[124638]=1,[124634]=1,[124637]=1}, -- wod rings
+	[357] = {[132369]=2,[132378]=2,[132410]=2,[132449]=2,[132452]=2,[132460]=2,[133973]=2,[133974]=2,[137037]=2,[137038]=2,[137039]=2,[137040]=2,[137041]=2,[137042]=2,[137043]=2,[137044]=2,[137045]=2,[137046]=2,[137047]=2,[137048]=2,[137049]=2,[137050]=2,[137051]=2,[137052]=2,[137054]=2,[137055]=2,[137220]=2,[137223]=2,[137276]=2,[137382]=2,[138854]=2,[144249]=2, [144258]=2, [144259]=2, [150936]=2,[151636]=2,[151639]=2,[151640]=2,[151641]=2,[151642]=2,[151643]=2,[151644]=2,[151646]=2,[151647]=2,[151649]=2,[151650]=2,[152626]=2}, -- Legion legendary rings and trinkets
+	}
+
+function AutoEquip:GetItemUniqueness(id)
+	for family,fitems in pairs(unique_equip_families) do
+		if fitems[id] then 
+			return family,fitems[id]
+		end
+	end
+	local fam,max = GetItemUniqueness(id)
+	return fam,max
+end
+
+--[[
+  Tests whether the item is unique and if it is then tests to see if the 2nd item is of the same uniqueness
+
+	Parameters:
+		test_itemid - itemid or itemlink that you are questioning the uniqueness of
+		my_itemid - itemid or itemlink that is already in use, so could reject the testid
+	Return
+		T/F based on if the item can be equipped or not.
+		T/F if other item can be replaced with that one
+--]]
+function AutoEquip:CanUseUniqueItem(test_itemid, current_itemid)
+	if not test_itemid then return false,false end
+
+	local uniqueness_fam,maxEquip = AutoEquip:GetItemUniqueness(test_itemid)
+	if not uniqueness_fam then 
+		-- we have nothing, allow
+		return true,true,"no family"
+	elseif uniqueness_fam<0 then
+		-- item with family -1, unique to itself, only one can be equipped
+		for slot,item in pairs(self.CurrentGear) do
+			if item.itemid == test_itemid then 
+				-- same id found, we can only replace it
+				return test_itemid==current_itemid,false,"unique self, replace"
+			end
+		end
+		-- no such item equipped anywhere, we can use it in any valid slot
+		return true,true,"unique self, valid"
+	elseif uniqueness_fam then
+		-- more than one allowed, count all and see
+		return (AutoEquip.UniqueEquipped[uniqueness_fam] or 0)<maxEquip,false,"has family "..uniqueness_fam
+	else
+		return true,true,"not unique"
+	end
+end
+
+
 function AutoEquip:Startup()
 	self:ToggleButton()
 	self.BadUpgrades = ZGV.db.profile.badupgrade
@@ -1268,3 +1357,4 @@ end
 tinsert(ZGV.startups,{"Item-AutoEquip startup",function(self)
 	AutoEquip:Startup()
 end})
+

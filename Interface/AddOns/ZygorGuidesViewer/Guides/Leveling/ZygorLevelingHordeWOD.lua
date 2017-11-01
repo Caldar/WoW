@@ -3,8 +3,8 @@ if not ZygorGuidesViewer then return end
 if UnitFactionGroup("player")~="Horde" then return end
 if ZGV:DoMutex("LevelingHWOD") then return end
 ZygorGuidesViewer.GuideMenuTier = "WOD"
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Tanaan Jungle (90-90)",{
-next="Zygor's Horde Leveling Guides\\Draenor (90-100)\\Frostfire Ridge (90-92)",
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Tanaan Jungle (90-90)",{
+next="Zygor's Leveling Guides\\Draenor (90-100)\\Frostfire Ridge (90-92)",
 image=ZGV.DIR.."\\Guides\\Images\\TanaanJungle",
 startlevel=90,
 },[[
@@ -324,10 +324,10 @@ Get to the docks |q The Home Stretch##34446/1 |goto 44.4,80.5
 step
 talk Archmage Khadgar##78563
 turnin The Home Stretch##34446 |goto 44.4,80.7
-accept The Home of the Frostwolves##33868 |next Zygor's Horde Leveling Guides\\Draenor (90-100)\\Frostfire Ridge (90-92)
+accept The Home of the Frostwolves##33868 |next Zygor's Leveling Guides\\Draenor (90-100)\\Frostfire Ridge (90-92)
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Frostfire Ridge (90-92)",{
-next="Zygor's Horde Leveling Guides\\Draenor (90-100)\\Gorgrond (92-94)",
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Frostfire Ridge (90-92)",{
+next="Zygor's Leveling Guides\\Draenor (90-100)\\Gorgrond (92-94)",
 image=ZGV.DIR.."\\Guides\\Images\\FrostfireRidge",
 startlevel=90.5,
 },[[
@@ -420,8 +420,8 @@ click Drudgeboat Salvage##230880
 collect 10 Drudgeboat Salvage##111907 |q What We Need##34822/1 |goto Frostfire Ridge 42.7,62.2
 step
 _Enter_ the cave |goto Frostfire Ridge 40.2,60.1 < 20 |walk
-_Go down_ the path |goto Frostfire Ridge 40.4,58.8 < 10 |walk
-kill Groog##80167 |q The Ogron Live?##34823/1 |goto 41.9,59.0
+_Go down_ the path |goto Frostfire Ridge 40.4,58.8 < 10 |walk |indoors Raider's Hideout
+kill Groog##80167 |q The Ogron Live?##34823/1 |goto 41.9,59.0 |indoors Raider's Hideout
 step
 talk Rokhan##78487
 turnin The Ogron Live?##34823 |goto Frostwall 51.3,51.3
@@ -1733,10 +1733,10 @@ _Run up_ the path |goto Frostfire Ridge/0 83.3,75.6 < 20 |only if walking
 kill General Vul'gath##77104 |q Vul'gaths End##34075/1 |goto Frostfire Ridge/0 83.9,74.9
 step
 talk Scout Ruk'Gan##77210
-turnin Vul'gaths End##34075 |goto Frostfire Ridge/0 82.8,76.3 |next Zygor's Horde Leveling Guides\\Draenor (90-100)\\Gorgrond (92-94)
+turnin Vul'gaths End##34075 |goto Frostfire Ridge/0 82.8,76.3 |next Zygor's Leveling Guides\\Draenor (90-100)\\Gorgrond (92-94)
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Gorgrond (92-94)",{
-next="Zygor's Horde Leveling Guides\\Draenor (90-100)\\Talador (94-96)",
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Gorgrond (92-94)",{
+next="Zygor's Leveling Guides\\Draenor (90-100)\\Talador (94-96)",
 image=ZGV.DIR.."\\Guides\\Images\\Gorgrond",
 startlevel=92,
 },[[
@@ -2424,7 +2424,7 @@ Tell him _"Take me to my base in Talador."_
 Fly to Vol'jin's Pride, Talador |goto Talador/0 72.0,28.3 |noway |c |q 34681
 step
 talk Foreman Grobash##79176
-turnin It's a Matter of Strategy##34681 |goto Talador/0 71.1,29.8 |next Zygor's Horde Leveling Guides\\Draenor (90-100)\\Talador (94-96)
+turnin It's a Matter of Strategy##34681 |goto Talador/0 71.1,29.8 |next Zygor's Leveling Guides\\Draenor (90-100)\\Talador (94-96)
 step
 label "lowlands_lumber_yard"
 fpath Beastwatch |goto Gorgrond/0 46.0,69.2
@@ -2948,10 +2948,10 @@ talk Bron Skyhorn##79407 |goto Frostwall/0 45.8,50.9 < 5
 Tell him _"Take me to my base in Talador."_ |goto Talador/0 72.0,28.3 < 20 |noway |c |q 34681
 step
 talk Foreman Grobash##79176
-turnin It's a Matter of Strategy##34681 |goto Talador/0 71.1,29.8 |next Zygor's Horde Leveling Guides\\Draenor (90-100)\\Talador (94-96)
+turnin It's a Matter of Strategy##34681 |goto Talador/0 71.1,29.8 |next Zygor's Leveling Guides\\Draenor (90-100)\\Talador (94-96)
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Talador (94-96)",{
-next="Zygor's Horde Leveling Guides\\Draenor (90-100)\\Spires of Arak (96-98)",
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Talador (94-96)",{
+next="Zygor's Leveling Guides\\Draenor (90-100)\\Spires of Arak (96-98)",
 image=ZGV.DIR.."\\Guides\\Images\\Talador",
 condition_suggested_exclusive=true,
 startlevel=94,
@@ -3319,13 +3319,13 @@ step
 _Exit_ through the gates |goto Talador/0 71.8,29.1 < 10 |only if walking
 _Run through_ the grass and trees |goto Talador/0 74.9,33.3 < 20 |only if walking
 _Enter_ the cave |goto Talador/0 78.3,35.5 < 20 |walk
-_Follow_ the path down |goto Talador/0 80.4,34.9 < 20 |walk
-_Cross_ the bridge |goto 81.6,37.6 < 20 |walk
+_Follow_ the path down |goto Talador/0 80.4,34.9 < 20 |walk |indoors Aruuna Crystal Mine
+_Cross_ the bridge |goto 81.6,37.6 < 20 |walk |indoors Aruuna Crystal Mine
 click Ancient Prism##7378
-Examine the Ancient Prism |q What the Draenei Found##33579/1 |goto 82.70,37.87
+Examine the Ancient Prism |q What the Draenei Found##33579/1 |goto 82.70,37.87 |indoors Aruuna Crystal Mine
 step
 talk Raksi##75469
-turnin What the Draenei Found##33579 |goto 82.64,37.78
+turnin What the Draenei Found##33579 |goto 82.64,37.78 |indoors Aruuna Crystal Mine
 step
 talk Skytalon Inuz##81354
 fpath Terokkar Refuge |goto 70.3,57.1
@@ -3588,17 +3588,17 @@ step
 _Cross_ the bridge |goto 59.3,77.6 < 20 |only if walking
 _Follow the path_ back |goto Talador/0 60.4,82.1 < 20 |only if walking
 _Enter_ the cave |goto 61.3,84.2 |walk
-kill Xanatos the Defiler##75294 |q Into the Hollow##33970/1 |goto Talador/0 65.6,86.8
+kill Xanatos the Defiler##75294 |q Into the Hollow##33970/1 |goto Talador/0 65.6,86.8 |indoors Deathweb Hollow
 step
 click Sha'tari##229596
 |tip It's the floating pink crystal with a shield around it.
-collect Sha'tari##110683 |q Into the Hollow##33970/2 |goto 65.75,86.87
+collect Sha'tari##110683 |q Into the Hollow##33970/2 |goto 65.75,86.87 |indoors Deathweb Hollow
 step "ST13_AS"
 click Defiling Crystal##228051
 |tip It looks like a floating gold colored crystal.
 Destroy the Defiling Crystal |q Vile Defilers##33972/1 |goto 64.03,85.56
 step "ST14_AS"
-from Deathweb Crawler##75273, Deathweb Egg Tender##76947
+kill Deathweb Crawler##75273, Deathweb Egg Tender##76947
 collect 9 Deathweb Fang##109744 |q Antivenin##33971/1 |goto 59.37,79.02
 step
 _Cross_ the bridge |goto Talador/0 59.3,77.3 < 20 |only if walking
@@ -3867,54 +3867,54 @@ turnin Frenzied Manafeeders##34400 |goto 49.89,56.16
 step
 _Enter_ the mine |goto 51.2,51.6 < 20 |walk
 talk Vindicator Doruu##78538
-turnin Trouble In The Mine##34399 |goto 51.61,50.47
+turnin Trouble In The Mine##34399 |goto 51.61,50.47 |indoors Jorune Mine
 step
 talk Manduil Skycaller##78515
-accept Arcane Essence##34401 |goto 51.64,50.51
-accept Crystals of Unusual Power##34404 |goto 51.64,50.51
+accept Arcane Essence##34401 |goto 51.64,50.51 |indoors Jorune Mine
+accept Crystals of Unusual Power##34404 |goto 51.64,50.51 |indoors Jorune Mine
 stickystart "jorune_crystals_AS"
 step
 from Arcane Wraith##78326+, Crystal Rager##78452+
-collect 6 Arcane Essence##110390 |q Arcane Essence##34401/1 |goto Talador/0 52.2,49.7
+collect 6 Arcane Essence##110390 |q Arcane Essence##34401/1 |goto Talador/0 52.2,49.7 |indoors Jorune Mine
 step "jorune_crystals_AS"
 click Jorune Crystals##229160, Arcane Crystals##3365
 |tip They look like pink crystals in mine carts, in small buckets, or on piles on the ground all around inside this cave.
-collect 10 Unrefined Power Crystals##110391 |q Crystals of Unusual Power##34404/1 |goto Talador/0 52.2,49.7
+collect 10 Unrefined Power Crystals##110391 |q Crystals of Unusual Power##34404/1 |goto Talador/0 52.2,49.7 |indoors Jorune Mine
 step
-_Head up_ the ramp |goto Talador 52.7,50.7 < 20 |walk
+_Head up_ the ramp |goto Talador 52.7,50.7 < 20 |walk |indoors Jorune Mine
 talk Manduil Skycaller##78515
-turnin Arcane Essence##34401 |goto 51.64,50.51
-turnin Crystals of Unusual Power##34404 |goto 51.64,50.51
-accept An'dure The Giant##34414 |goto 51.64,50.51
+turnin Arcane Essence##34401 |goto 51.64,50.51 |indoors Jorune Mine
+turnin Crystals of Unusual Power##34404 |goto 51.64,50.51 |indoors Jorune Mine
+accept An'dure The Giant##34414 |goto 51.64,50.51 |indoors Jorune Mine
 step
-from An'dure the Awakened##78372
-collect Crystal Giant Heart##110418 |q An'dure The Giant##34414/1 |goto Talador/0 54.1,50.0
+kill An'dure the Awakened##78372
+collect Crystal Giant Heart##110418 |q An'dure The Giant##34414/1 |goto Talador/0 54.1,50.0 |indoors Jorune Mine
 step
-_Head up_ the ramp |goto Talador 52.7,50.7 < 20 |walk
+_Head up_ the ramp |goto Talador 52.7,50.7 < 20 |walk |indoors Jorune Mine
 talk Manduil Skycaller##78515
-turnin An'dure The Giant##34414 |goto 51.64,50.51
-accept Kaelynara Sunchaser##34447 |goto 51.64,50.51
+turnin An'dure The Giant##34414 |goto 51.64,50.51 |indoors Jorune Mine
+accept Kaelynara Sunchaser##34447 |goto 51.64,50.51 |indoors Jorune Mine
 step
 talk Manduil Skycaller##78515
 Tell him "_I am ready to confront Kaelynara._"
-Speak With Manduil |q Kaelynara Sunchaser##34447/1 |goto 51.65,50.51
+Speak With Manduil |q Kaelynara Sunchaser##34447/1 |goto 51.65,50.51 |indoors Jorune Mine
 step
-kill Kaelynara Sunchaser##78501 |q Kaelynara Sunchaser##34447/2 |goto 52.08,47.54
+kill Kaelynara Sunchaser##78501 |q Kaelynara Sunchaser##34447/2 |goto 52.08,47.54 |indoors Jorune Mine
 |tip You will be teleported to her.
 step
-talk Manduil Skycaller##78515 |goto Talador 52.1,47.7
+talk Manduil Skycaller##78515 |goto Talador 52.1,47.7 |indoors Jorune Mine
 Tell him "_I am ready to return to the Jorune Mine._"
-Teleport back into Jorune Mine |goto Talador 51.6,50.5 < 20 |noway |c |q 34447
+Teleport back into Jorune Mine |goto Talador 51.6,50.5 < 20 |noway |c |q 34447 |indoors Jorune Mine
 only if havequest(34447)
 step
 talk Vindicator Doruu##78538
-turnin Kaelynara Sunchaser##34447 |goto 51.62,50.48
+turnin Kaelynara Sunchaser##34447 |goto 51.62,50.48 |indoors Jorune Mine
 step
 talk Knight-Lord Dranarus##79612
 turnin Come Together##34706 |goto 71.84,29.74
 step
 talk Shadow Hunter Kajassa##79627
-accept News from Spires of Arak##35537 |goto Talador/0 71.24,29.95 |next Zygor's Horde Leveling Guides\\Draenor (90-100)\\Spires of Arak (96-98)
+accept News from Spires of Arak##35537 |goto Talador/0 71.24,29.95 |next Zygor's Leveling Guides\\Draenor (90-100)\\Spires of Arak (96-98)
 step
 label "voljins_arsenal"
 talk Morketh Bladehowl##79210
@@ -3934,20 +3934,20 @@ step
 _Go through_ the gate |goto Talador/0 71.8,29.2 < 20 |only if walking
 _Cross_ the bridge |goto 73.2,26.7 < 20 |only if walking
 _Enter_ the mine |goto Talador/0 75.2,22.4 < 20 |walk
-_Follow_ the path |goto Talador/0 76.1,19.6 < 20 |walk
+_Follow_ the path |goto Talador/0 76.1,19.6 < 20 |walk |indoors Kuuro's Claim
 kill Glowgullet Shardshedder##80013+, Glowgullet Devourer##79190+
 use Goren Gas Extractor##111910
 |tip Use the Goren Gas Extractor on their corpses.
-Obtain #6# Goren Gas Samples |q Gas Guzzlers##34579/1 |goto Talador/0 77.6,17.7
+Obtain #6# Goren Gas Samples |q Gas Guzzlers##34579/1 |goto Talador/0 77.6,17.7 |indoors Kuuro's Claim
 step "iridium_dustVA"
 kill Iridium Geode##80072+
-collect 8 Iridium Dust##110898 |q Iridium Recovery##34576/1 |goto 76.73,18.88
+collect 8 Iridium Dust##110898 |q Iridium Recovery##34576/1 |goto 76.73,18.88 |indoors Kuuro's Claim
 step "jovite_oreVA"
 click Jovite Ore##10861+
 |tip They look like green crystals in the walls all around inside this cave.
-collect 12 Jovite Ore##111906 |q Out of Jovite##34577/1 |goto 78.01,17.90
+collect 12 Jovite Ore##111906 |q Out of Jovite##34577/1 |goto 78.01,17.90 |indoors Kuuro's Claim
 step
-_Follow_ the path |goto Talador/0 76.3,19.5 < 20 |walk
+_Follow_ the path |goto Talador/0 76.3,19.5 < 20 |walk |indoors Kuuro's Claim
 _Leave_ the cave |goto 75.2,22.4 < 20 |walk
 _Cross_ the bridge |goto Talador/0 73.0,25.9 < 20 |only if walking
 _Enter_ the camp |goto 71.8,29.2 < 20 |only if walking
@@ -4144,7 +4144,7 @@ talk Archmage Khadgar##75805
 turnin Khadgar's Plan##34962 |goto 54.18,36.43
 accept The Battle for Shattrath##33731 |goto 54.19,36.43
 step
-Go to _The Battle for Shattrath_ |goto Talador/0 50.4,35.0 < 40 |only if walking |c |only if havequest(33731)
+Go to _The Battle for Shattrath_ |goto Talador/0 50.4,35.0 < 40 |c |only if walking and havequest(33731)
 talk Gazlowe##77191
 Tell him _"Thanks. I'll meet them at the docks."_
 Speak with Gazlowe |scenariogoal 1/25835 |goto Talador/0 50.5,35.0
@@ -4272,14 +4272,14 @@ kill Adherent Wing-Guard##75283+, Adherent Squallbringer##75290+, Adherent Sun-C
 Slay #12# Adherent Invaders |q Burning Sky##33740/1 |goto Talador/0 77.0,42.0
 step
 _Enter_ the mine |goto Talador 78.3,35.5 < 20 |walk
-_Follow_ the path in the mine |goto Talador 80.3,34.7 < 10 |walk
-_Cross_ the plank bridge |goto 81.4,37.6 < 10 |walk
+_Follow_ the path in the mine |goto Talador 80.3,34.7 < 10 |walk |indoors Aruuna Crystal Mine
+_Cross_ the plank bridge |goto 81.4,37.6 < 10 |walk |indoors Aruuna Crystal Mine
 click Ancient Prism##7378
 |tip It's a big floating crystal that changes colors.
-Examine the Ancient Prism |q What the Draenei Found##33579/1 |goto 82.70,37.89
+Examine the Ancient Prism |q What the Draenei Found##33579/1 |goto 82.70,37.89 |indoors Aruuna Crystal Mine
 step
 talk Raksi##75469
-turnin What the Draenei Found##33579 |goto Talador 82.6,37.8
+turnin What the Draenei Found##33579 |goto Talador 82.6,37.8 |indoors Aruuna Crystal Mine
 step
 talk Shadow-Sage Iskar##75288
 accept The Purge of Veil Shadar##33580 |goto 70.48,56.83
@@ -4333,7 +4333,7 @@ turnin Cure of Aruunem##33873 |goto Talador 65.4,50.7
 accept Aruumel's Rest##33874 |goto Talador 65.4,50.7
 step
 use Elixir of Memories##108749
-Enter the Spirit Realm |havebuff Interface\Icons\ability_warlock_soulswap |q Aruumel's Rest##33874 |c |goto Talador/0 65.4,50.7
+Enter the Spirit Realm |havebuff 460857 |q Aruumel's Rest##33874 |c |goto Talador/0 65.4,50.7
 |only if havequest(33874)
 step
 kill Aruumel##76824 |q Aruumel's Rest##33874/1 |goto Talador 68.9,55.0
@@ -4557,29 +4557,29 @@ step
 _Cross_ the bridge |goto 59.3,77.6 < 20 |only if walking
 _Follow the path_ back |goto Talador/0 60.4,82.1 < 20 |only if walking
 _Enter_ the cave |goto 61.3,84.2 |walk |only if walking
-_Follow_ the path in the cave |goto Talador/0 62.4,83.9 < 20
-kill Xanatos the Defiler##75294 |q Into the Hollow##33970/1 |goto Talador/0 65.6,86.8
+_Follow_ the path in the cave |goto Talador/0 62.4,83.9 < 20 |indoors Deathweb Hollow
+kill Xanatos the Defiler##75294 |q Into the Hollow##33970/1 |goto Talador/0 65.6,86.8 |indoors Deathweb Hollow
 stickystop "deathweb_fangsVA"
 step
 click Sha'tari##229596
 |tip It looks like a pink crystal with a shield around it floating next to the eggs.
-collect Sha'tari##110683 |q Into the Hollow##33970/2 |goto 65.79,86.87
+collect Sha'tari##110683 |q Into the Hollow##33970/2 |goto 65.79,86.87 |indoors Deathweb Hollow
 step
 click Defiling Crystal##228051
 |tip It looks like a floating gold colored crystal.
-Destroy the Defiling Crystal |q Vile Defilers##33972/1 |count 1 |goto Talador 64.8,86.9
+Destroy the Defiling Crystal |q Vile Defilers##33972/1 |count 1 |goto Talador 64.8,86.9 |indoors Deathweb Hollow
 step
 click Defiling Crystal##228051
 |tip It looks like a floating gold colored crystal.
-Destroy the Defiling Crystal |q Vile Defilers##33972/1 |count 2 |goto 65.3,85.4
+Destroy the Defiling Crystal |q Vile Defilers##33972/1 |count 2 |goto 65.3,85.4 |indoors Deathweb Hollow
 step
 click Defiling Crystal##228051
 |tip It looks like a floating gold colored crystal.
-Destroy the Defiling Crystal |q Vile Defilers##33972/1 |count 3 |goto 64.0,85.6
+Destroy the Defiling Crystal |q Vile Defilers##33972/1 |count 3 |goto 64.0,85.6 |indoors Deathweb Hollow
 stickystart "deathweb_fangsVA"
 step
-_Enter_ the hallway |goto Talador/0 63.3,84.4 < 10 |walk
-_Follow_ the path |goto Talador/0 62.3,84.0 < 10 |walk
+_Enter_ the hallway |goto Talador/0 63.3,84.4 < 10 |walk |indoors Deathweb Hollow
+_Follow_ the path |goto Talador/0 62.3,84.0 < 10 |walk |indoors Deathweb Hollow
 _Leave_ the cave |goto Talador/0 61.1,84.0 < 10 |walk
 click Defiling Crystal##228051
 |tip It looks like a floating gold colored crystal.
@@ -4594,7 +4594,7 @@ collect 9 Deathweb Fang##109744 |q Antivenin##33971/1 |goto 59.37,79.02
 step
 _Cross_ the bridge |goto Talador/0 59.3,77.3 < 20 |only if walking
 talk Mehlar Dawnblade##75249
-turnin Vile Defilers##33972 |goto 60.52,72.40 |only if walking |only if walking
+turnin Vile Defilers##33972 |goto 60.52,72.40 |only if walking
 step
 talk Soulbinder Tuulani##78028
 turnin Antivenin##33971 |goto 60.91,72.54
@@ -4863,57 +4863,57 @@ turnin Frenzied Manafeeders##34400 |goto 49.89,56.16
 step
 _Enter_ the mine |goto 51.2,51.6 < 20 |walk
 talk Vindicator Doruu##78538
-turnin Trouble In The Mine##34399 |goto 51.61,50.47
+turnin Trouble In The Mine##34399 |goto 51.61,50.47 |indoors Jorune Mine
 step
 talk Manduil Skycaller##78515
-accept Arcane Essence##34401 |goto 51.64,50.51
-accept Crystals of Unusual Power##34404 |goto 51.64,50.51
+accept Arcane Essence##34401 |goto 51.64,50.51 |indoors Jorune Mine
+accept Crystals of Unusual Power##34404 |goto 51.64,50.51 |indoors Jorune Mine
 stickystart "jorune_crystalsVA"
 step
 kill Arcane Wraith##78326+, Crystal Rager##78452+
-collect 6 Arcane Essence##110390 |q Arcane Essence##34401/1
+collect 6 Arcane Essence##110390 |q Arcane Essence##34401/1 |indoors Jorune Mine
 step "jorune_crystalsVA"
 click Jorune Crystals##229160+
 |tip They look like pink crystals in mine carts, in small buckets, or on piles on the ground all around inside this cave.
-collect 10 Unrefined Power Crystals##110391 |q Crystals of Unusual Power##34404/1 |goto Talador/0 52.2,49.7
+collect 10 Unrefined Power Crystals##110391 |q Crystals of Unusual Power##34404/1 |goto Talador/0 52.2,49.7 |indoors Jorune Mine
 step
-_Head up_ the ramp |goto Talador 52.7,50.7 < 10 |walk
+_Head up_ the ramp |goto Talador 52.7,50.7 < 10 |walk |indoors Jorune Mine
 talk Manduil Skycaller##78515
-turnin Arcane Essence##34401 |goto 51.64,50.51
-turnin Crystals of Unusual Power##34404 |goto 51.64,50.51
-accept An'dure The Giant##34414 |goto 51.64,50.51
+turnin Arcane Essence##34401 |goto 51.64,50.51 |indoors Jorune Mine
+turnin Crystals of Unusual Power##34404 |goto 51.64,50.51 |indoors Jorune Mine
+accept An'dure The Giant##34414 |goto 51.64,50.51 |indoors Jorune Mine
 step
 kill An'dure the Awakened##78372
-collect Crystal Giant Heart##110418 |q An'dure The Giant##34414/1 |goto Talador/0 54.1,50.0
+collect Crystal Giant Heart##110418 |q An'dure The Giant##34414/1 |goto Talador/0 54.1,50.0 |indoors Jorune Mine
 step
-_Head up_ the ramp |goto Talador 52.7,50.7 < 10 |only if walking
+_Head up_ the ramp |goto Talador 52.7,50.7 < 10 |indoors Jorune Mine
 talk Manduil Skycaller##78515
-turnin An'dure The Giant##34414 |goto 51.64,50.51
-accept Kaelynara Sunchaser##34447 |goto 51.64,50.51
+turnin An'dure The Giant##34414 |goto 51.64,50.51 |indoors Jorune Mine
+accept Kaelynara Sunchaser##34447 |goto 51.64,50.51 |indoors Jorune Mine
 step
 talk Manduil Skycaller##78515
 Tell him "_I am ready to confront Kaelynara._"
-Speak With Manduil |q Kaelynara Sunchaser##34447/1 |goto 51.65,50.51
+Speak With Manduil |q Kaelynara Sunchaser##34447/1 |goto 51.65,50.51 |indoors Jorune Mine
 step
 Wait to be teleported:
-kill Kaelynara Sunchaser##78501 |q Kaelynara Sunchaser##34447/2 |goto 52.08,47.54
+kill Kaelynara Sunchaser##78501 |q Kaelynara Sunchaser##34447/2 |goto 52.08,47.54 |indoors Jorune Mine
 step
-talk Manduil Skycaller##78515 |goto Talador 52.1,47.7
+talk Manduil Skycaller##78515 |goto Talador 52.1,47.7 |indoors Jorune Mine
 Tell him "_I am ready to return to the Jorune Mine._"
-Teleport back into Jorune Mine |goto Talador 51.6,50.5 < 10 |noway |c |q 34447
+Teleport back into Jorune Mine |goto Talador 51.6,50.5 < 10 |noway |c |q 34447 |indoors Jorune Mine
 |only if havequest(34447)
 step
 talk Vindicator Doruu##78538
-turnin Kaelynara Sunchaser##34447 |goto 51.62,50.48
+turnin Kaelynara Sunchaser##34447 |goto 51.62,50.48 |indoors Jorune Mine
 step
 talk Knight-Lord Dranarus##79612
 turnin Come Together##34706 |goto 71.84,29.74
 step
 talk Shadow Hunter Kajassa##79627
-accept News from Spires of Arak##35537 |goto Talador/0 71.24,29.95 |next Zygor's Horde Leveling Guides\\Draenor (90-100)\\Spires of Arak (96-98)
+accept News from Spires of Arak##35537 |goto Talador/0 71.24,29.95 |next Zygor's Leveling Guides\\Draenor (90-100)\\Spires of Arak (96-98)
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Spires of Arak (96-98)",{
-next="Zygor's Horde Leveling Guides\\Draenor (90-100)\\Nagrand (98-100)",
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Spires of Arak (96-98)",{
+next="Zygor's Leveling Guides\\Draenor (90-100)\\Nagrand (98-100)",
 image=ZGV.DIR.."\\Guides\\Images\\SpiresOfArak",
 startlevel=96,
 },[[
@@ -5216,7 +5216,7 @@ stickystart "iron grenades"
 step
 accept Bonus Objective: Bladefist Hold##36792
 _Enter_ the cave |goto Spires of Arak/0 30.0,31.6 < 10 |walk
-kill Brood Mother Xylax##86455 |q Bonus Objective: Bladefist Hold##36792/4 |goto Spires of Arak/0 30.7,29.7
+kill Brood Mother Xylax##86455 |q Bonus Objective: Bladefist Hold##36792/4 |goto Spires of Arak/0 30.7,29.7 |indoors The Thorn Pits
 |tip She's Elite so you may need a group.
 step "bonusbladefist1"
 accept Bonus Objective: Bladefist Hold##36792
@@ -5568,15 +5568,15 @@ kill Sol-Shaper Krashyx##81934 |q Sol Sisters##35259/2 |goto 32.13,25.67
 step
 _Jump down_ here |goto Spires of Arak 33.9,27.7 < 10 |only if walking
 _Enter_ the cave |goto Spires of Arak 34.0,28.3 < 10 |walk
-_Follow_ the path in the cave |goto Spires of Arak 33.1,27.4 < 10 |walk
-kill Sol-Shaper Veoryx##81933 |q Sol Sisters##35259/1 |goto Spires of Arak 32.8,28.8
+_Follow_ the path in the cave |goto Spires of Arak 33.1,27.4 < 10 |walk |indoors Apexis Chamber
+kill Sol-Shaper Veoryx##81933 |q Sol Sisters##35259/1 |goto Spires of Arak 32.8,28.8 |indoors Apexis Chamber
 step
 talk Inactive Apexis Destroyer##82123
-turnin Sol Sisters##35259 |goto Spires of Arak/0 32.6,29.0
-accept Shot-Caller##35261 |goto Spires of Arak/0 32.6,29.0
+turnin Sol Sisters##35259 |goto Spires of Arak/0 32.6,29.0 |indoors Apexis Chamber
+accept Shot-Caller##35261 |goto Spires of Arak/0 32.6,29.0 |indoors Apexis Chamber
 step
-_Follow_ the path in the cave |goto Spires of Arak 33.1,27.4 < 20 |walk
-_Leave_ the cave |goto Spires of Arak 34.0,28.3 < 10 |walk
+_Follow_ the path in the cave |goto Spires of Arak 33.1,27.4 < 20 |walk |indoors Apexis Chamber
+_Leave_ the cave |goto Spires of Arak 34.0,28.3 < 10 |walk |indoors Apexis Chamber
 _Follow_ the path up |goto Spires of Arak 33.4,25.7 < 10 |only if walking
 _Follow_ the path |goto Spires of Arak 33.4,27.0 < 10 |only if walking
 kill Overseer Akrath##82145
@@ -6171,9 +6171,9 @@ talk Talonpriest Ishaal##83959
 accept Talonpriest Ishaal##37141 |goto 46.52,46.81
 step
 talk Shadow-Sage Iskar##80153
-accept News from Nagrand##36602 |goto 46.58,46.55 |next Zygor's Horde Leveling Guides\\Draenor (90-100)\\Nagrand (98-100)
+accept News from Nagrand##36602 |goto 46.58,46.55 |next Zygor's Leveling Guides\\Draenor (90-100)\\Nagrand (98-100)
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Nagrand (98-100)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Nagrand (98-100)",{
 image=ZGV.DIR.."\\Guides\\Images\\NagrandDraenor",
 startlevel=98,
 endlevel=100,
@@ -6491,16 +6491,18 @@ clicknpc Living Flame##80421+
 |tip They look like miniature Fire Spirits wandering around this area.
 kill Volatile Fire Spirit##80380+
 collect 4 Living Flame##112082 |q Earth, Wind and Fire...and Water##34881/3 |goto Nagrand D/0 67.1,10.8
+stickystart "Ember Blossom"
 step
-_Enter_ the cave |goto Nagrand D/0 68.9,10.2 < 20 |walk
+_Enter_ the cave |goto Nagrand D/0 69.00,10.07 < 20 |walk
 kill Magmire##80586
 collect A Molten Core##113080 |n
 use A Molten Core##113080
-accept A Wrong of Earth and Fire##33928 |goto Nagrand D/0 70.3,9.8
+accept A Wrong of Earth and Fire##33928 |goto Nagrand D/0 70.3,9.8 |indoors Magma Cave
 step
+label "Ember Blossom"
 click Ember Blossom##10256
 |tip It looks like some flowers sticking out of a pool of lava.
-collect Ember Blossom##112089 |q A Rare Bloom##34894/1 |goto Nagrand D 70.7,10.0
+collect Ember Blossom##112089 |q A Rare Bloom##34894/1 |goto Nagrand D 70.7,10.0 |indoors Magma Cave
 stickystart "LWind"
 step
 _Leave_ the cave |goto Nagrand D/0 68.8,10.4 < 20 |walk
@@ -7333,7 +7335,7 @@ step
 talk Durotan##81415
 turnin And Justice for Thrall##35171 |goto 66.89,33.70
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Tanaan Jungle (100)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Tanaan Jungle (100)",{
 description="This guide will walk you through completing the main questline for the level 100 Tanaan Jungle zone.",
 },[[
 step
@@ -7651,7 +7653,7 @@ turnin A Message of Terrible Import##38578 |goto Tanaan Jungle/0 47.3,70.5
 step
 Congratulations, you've completed the Tanaan Jungle Main Questline!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Draenor (90-100)\\Draenor Loremaster",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\The Loremaster\\Loremaster of Draenor",{
 condition_end="achieved(9923)",
 sugGroup="ACHIEVEMENTS\\Draenor Pathfinder",
 description="Complete the Draenor quest achievements.",
@@ -7661,11 +7663,11 @@ Use these Draenor Leveling Guides to complete Loremaster:
 |tip The Leveling guides cover all required questlines for Loremaster.
 |tip Click one of the lines below to load the Leveling guide for that zone.
 condition achieved(9923) |next
-Frostfire Ridge |condition achieved(9923,1) |confirm always |next "Zygor's Horde Leveling Guides\\Draenor (90-100)\\Frostfire Ridge (90-92)"
-Gorgrond |condition achieved(9923,2) |confirm always |next "Zygor's Horde Leveling Guides\\Draenor (90-100)\\Gorgrond (92-94)"
-Talador |condition achieved(9923,3) |confirm always |next "Zygor's Horde Leveling Guides\\Draenor (90-100)\\Talador (94-96)"
-Spires of Arak |condition achieved(9923,4) |confirm always |next "Zygor's Horde Leveling Guides\\Draenor (90-100)\\Spires of Arak (96-98)"
-Nagrand |condition achieved(9923,5) |confirm always |next "Zygor's Horde Leveling Guides\\Draenor (90-100)\\Nagrand (98-100)"
+Frostfire Ridge |condition achieved(9923,4) |confirm always |next "Zygor's Leveling Guides\\Draenor (90-100)\\Frostfire Ridge (90-92)"
+Gorgrond |condition achieved(9923,5) |confirm always |next "Zygor's Leveling Guides\\Draenor (90-100)\\Gorgrond (92-94)"
+Talador |condition achieved(9923,1) |confirm always |next "Zygor's Leveling Guides\\Draenor (90-100)\\Talador (94-96)"
+Spires of Arak |condition achieved(9923,2) |confirm always |next "Zygor's Leveling Guides\\Draenor (90-100)\\Spires of Arak (96-98)"
+Nagrand |condition achieved(9923,3) |confirm always |next "Zygor's Leveling Guides\\Draenor (90-100)\\Nagrand (98-100)"
 step
 Congratulations, you earned the _Loremaster of Draenor_ Achievement!
 ]])

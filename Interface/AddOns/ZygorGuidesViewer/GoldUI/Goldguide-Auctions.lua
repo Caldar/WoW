@@ -74,8 +74,9 @@ function Auctions:CalculateDetails(refresh)
 
 	local id = self.id
 	local auctions = ZGV.db.realm.gold_scan_data[1][id]
-	local trends = ZGV.Gold.servertrends.items[id]
+	local trends = ZGV.Gold.servertrends and ZGV.Gold.servertrends.items[id]
 	local tooltip = self.tooltip
+	table.wipe(tooltip)
 
 	local _,class,subclass  = GetItemInfoInstant(id)
 
@@ -270,11 +271,14 @@ function Auctions:GetDisplayInfo(refresh)
 
 	local status="●"
 	local statusid = math.min(self.status,10)
+	--[[
 	if self.not_scored then
 		status = Goldguide.ITEM_AUCTION_STATUS.unscored[1]..status
 	else
 		status = Goldguide.ITEM_AUCTION_STATUS[statusid][1]..status
 	end
+	--]]
+	status = Goldguide.ITEM_AUCTION_STATUS[statusid][1]..status -- show unscored as red
 	
 	if self.cached_display then 
 		table.wipe(self.cached_display)
@@ -312,7 +316,7 @@ function Auctions:IsValidChore()
 end
 
 function Auctions.dynamic_sort(a,b)
-	return Goldguide.dynamic_sort("auctions",a,b, ZGV.db.profile.goldsort['auctions'][1],ZGV.db.profile.goldsort['auctions'][2], "profit","asc", "perc","desc")
+	return Goldguide.dynamic_sort("auctions",a,b, ZGV.db.profile.goldsort['auctions'][1],ZGV.db.profile.goldsort['auctions'][2], "profit","asc", "perc","desc", "name","asc")
 end
 
 

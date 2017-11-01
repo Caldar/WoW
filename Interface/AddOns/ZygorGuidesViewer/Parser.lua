@@ -30,14 +30,14 @@ end
 --]]
 
 -- Spec to Talent Tree # lookup table
-local classtalents=
+local classspecs=
 {
 	["WARRIOR"]		= { "Arms","Fury","Protection" },
 	["DEATHKNIGHT"]		= { "Blood","Frost","Unholy" },
 	["MONK"]		= { "Brewmaster","Mistweaver","Windwalker" },
 	["PALADIN"]		= { "Holy","Protection","Retribution" },
 	["HUNTER"]		= { "Beast Mastery","Marksmanship","Survival" },
-	["ROGUE"]		= { "Assassination","Combat","Subtlety" },
+	["ROGUE"]		= { "Assassination","Outlaw","Subtlety" },
 	["PRIEST"]		= { "Discipline","Holy","Shadow" },
 	["MAGE"]		= { "Arcane","Fire","Frost" },
 	["WARLOCK"]		= { "Affliction","Demonology","Destruction" },
@@ -45,6 +45,7 @@ local classtalents=
 	["DRUID"]		= { "Balance","Feral","Guardian","Restoration" },
 	["DEMONHUNTER"]		= { "Havoc","Vengeance" },
 }
+Parser.classspecs = classspecs
 
 ZGV.QuestRewardData= {
 	[491] = "WARRIOR_Arms",
@@ -98,17 +99,17 @@ ZGV.QuestRewardData= {
 
 local questrewarddata=ZGV.QuestRewardData
 
-ZGV.SpecByNumber = classtalents
-local rclasstalents = {}
+ZGV.SpecByNumber = classspecs
+local rclassspecs = {}
 -- Reversing the table
-for k,v in pairs(classtalents) do
+for k,v in pairs(classspecs) do
 	local reverse={}
 	for i,j in ipairs(v) do
 		reverse[j]=i
 	end
-	rclasstalents[k]=reverse
+	rclassspecs[k]=reverse
 end
-ZGV.SpecToNumber=rclasstalents
+ZGV.SpecToNumber=rclassspecs
 
 ZGV.ClassToNumber = {}
 for i=1,GetNumClasses() do
@@ -333,27 +334,52 @@ local ConditionEnv = {
 	step=nil,
 	goal=nil,
 
-	_Update = function()
-		Parser.ConditionEnv.level = ZGV:GetPlayerPreciseLevel()
-		Parser.ConditionEnv.intlevel = floor(Parser.ConditionEnv.level)
-		if ZGV.db.char.fakelevel and ZGV.db.char.fakelevel>0 then Parser.ConditionEnv.level=ZGV.db.char.fakelevel end
+	_Setup = function(self)
+		-- Store reputation constants
+		for standing,num in pairs(ZGV.StandingNamesEngRev) do self[standing]=num end
+		for standing,num in pairs(ZGV.FriendshipNamesEngRev) do self[standing]=num end
+		
+		-- Store class constants
+		 local pcl = select(2,UnitClass("player")):lower()
+		 for i=1,GetNumClasses() do  local _,cl=GetClassInfo(i)  cl=cl:lower()  self[cl] = (pcl==cl)  end
+		-- Store race constants
+		 local pra = select(2,UnitRace("player")):lower()
+		 for i,ra in ipairs{"nightelf","dwarf","human","gnome","draenei","worgen", "orc","troll","scourge","tauren","bloodelf","goblin", "pandaren"} do  self[ra] = (pra==ra)  end
+		 self['undead']=self['scourge']
+		-- Store faction constants
+		 local pfa = UnitFactionGroup("player"):lower()
+		 for i,fa in ipairs{"alliance","horde","neutral"} do  self[fa] = (pfa==fa)  end
 	end,
 
-	_Setup = function()
-		-- reputation 'constants'
-		for standing,num in pairs(ZGV.StandingNamesEngRev) do Parser.ConditionEnv[standing]=num end
-		for standing,num in pairs(ZGV.FriendshipNamesEngRev) do Parser.ConditionEnv[standing]=num end
+	_SetLocal = function(self,guide,step,goal)
+		self.guide=guide
+		self.step=step
+		self.goal=goal
+		self.sticky = step and step:IsCurrentlySticky()
+		self:_Update()
 	end,
 
-	_SetLocal = function(guide,step,goal)
-		Parser.ConditionEnv.guide=guide
-		Parser.ConditionEnv.step=step
-		Parser.ConditionEnv.goal=goal
-		Parser.ConditionEnv.sticky = step:IsCurrentlySticky()
+	_Update = function(self)
+		self.level = ZGV:GetPlayerPreciseLevel()
+		if ZGV.db.char.fakelevel and ZGV.db.char.fakelevel>0 then self.level=ZGV.db.char.fakelevel end
+		self.intlevel = floor(self.level)
+		self.walking = self.iswalking()
+		for si,sp in ipairs(classspecs[select(2,UnitClass("player"))]) do
+			self[sp] = (GetSpecialization()==si)
+		end
+	end,
+
+	_SelfUpdate = function()
+		local env = getfenv()
+		if env._Update then env:_Update() end
 	end,
 
 	-- independent data feeds
 	rep = function(faction)
+		if not faction then 
+			ZGV:Debug("&parser reputation missing")
+			return "Error, no faction given" 
+		end
 		if ZGV:GetReputation(faction).friendship then --dummy proof this.
 			return ZGV:GetReputation(faction).friendship
 		end
@@ -395,6 +421,10 @@ local ConditionEnv = {
 		if not q.goals or not q.goals[obj] then return false end
 		return q.goals[obj].complete
 	end,
+	readyq = function(id)
+		local q=ZGV.questsbyid[id]
+		return (q and q.complete)
+	end,
 	havequest = function(id)
 		local q=ZGV.questsbyid[id]
 		return q and q.inlog
@@ -417,10 +447,10 @@ local ConditionEnv = {
 		return math.floor(select(2,ZGV:GetThunderStage())*100)
 	end,
 	hasmount = function(mountspell)
-		local id,name,spell
-		for i=1,GetNumCompanions("MOUNT") do
-			 id,name,spell = GetCompanionInfo("MOUNT",i)
-			 if spell==mountspell then return true end
+		local mountIDs = C_MountJournal.GetMountIDs()
+		for i, mountID in ipairs(mountIDs) do
+			local name, spell, _, _, _, _, _, _, _, _, isCollected = C_MountJournal.GetMountInfoByID(mountID)
+			if spell==mountspell and isCollected then return true end
 		end
 	end,
 	itemcount = function(...)
@@ -481,7 +511,8 @@ local ConditionEnv = {
 	end,
 
 	grouprole = function(role)
-		return UnitGroupRolesAssigned("Player")==role
+		if role=="DPS" then role="DAMAGER" end
+		return ZGV.db.profile.showallroles or UnitGroupRolesAssigned("Player")=="NONE" or UnitGroupRolesAssigned("Player")==role
 	end,
 	raiddiff = function(diffname)
 		local _,_,diff = GetInstanceInfo()
@@ -495,7 +526,7 @@ local ConditionEnv = {
 
 		return false
 	end,
-	walking = function()
+	iswalking = function()
 		return not IsFlying()
 	end,
 	selected = function(itemname)
@@ -511,24 +542,65 @@ local ConditionEnv = {
 	end,
 	flying = IsFlying,
 	knowstaxi = function(name)
-		return ZGV.db.char.taxis[name]	
-	end
+		return ZGV.db.char.taxis[name]
+	end,
+	exists = function()
+		local goal = Parser.ConditionEnv.goal
+		local quid = goal.questid
+		if not quid then return false end
+		local q = ZGV.Localizers:GetQuestData(quid)
+		return q
+	end,
+	intutorial = function()
+		return IsBoostTutorialScenario()
+	end,
+	inscenario = function()
+		return C_Scenario.IsInScenario()
+	end,
+	scenariostage = function(stage)
+		if not C_Scenario.IsInScenario() then return false end
+		local _,s = C_Scenario.GetInfo()
+		return s==stage
+	end,
 }
+setmetatable(ConditionEnv,{__index=function(t,k) return k and rawget(t,k:lower()) end})
+
 Parser.ConditionEnv=ConditionEnv  --DEBUG
 
 local function MakeCondition(cond,forcebool)
 	local s
-	if type(ConditionEnv[cond])=="function" then cond=cond.."()" end  -- shorthand enabling "|only if function" to be used, without having to be "|only if function()"
+	if type(rawget(ConditionEnv,cond))=="function" then cond=cond.."()" end  -- shorthand enabling "|only if function" to be used, without having to be "|only if function()"
+	
+	-- replace "Race Class" with "(Race and Class)"
+	local races={"NightElf","Dwarf","Human","Gnome","Draenei","Worgen", "Orc","Troll","Scourge","Tauren","BloodElf","Goblin", "Pandaren", "Undead"}
+	local classes={}
+	for i=1,GetNumClasses() do  local _,cl=GetClassInfo(i)  tinsert(classes,cl:sub(1,1):upper()..cl:sub(2):lower())  end
+	-- don't try to optimize too much. Race-spec-class and race-class checks must all run before spec-class checks are attempted.
+	for i,ra in ipairs(races) do
+		for j,cl in ipairs(classes) do
+			for k,sp in ipairs(classspecs[cl:upper()]) do
+				cond = cond:gsub("("..ra..") ("..sp..") ("..cl..")","(%1 and %2 and %3)")
+			end
+			cond = cond:gsub("("..ra..") ("..cl..")","(%1 and %2)")
+		end
+	end
+	for j,cl in ipairs(classes) do
+		for k,sp in ipairs(classspecs[cl:upper()]) do
+			cond = cond:gsub("("..sp..") ("..cl..")","(%1 and %2)")
+		end
+	end
+	local cond_procd = cond
+
 	if cond:find("return") then
 		-- leave it be
 	elseif forcebool then
-		cond = ("_Update()  return not not (%s)"):format(cond)
+		cond = ("_SelfUpdate()  return not not (%s)"):format(cond)
 	else
-		cond = ("_Update()  return (%s)"):format(cond)
+		cond = ("_SelfUpdate()  return (%s)"):format(cond)
 	end
 	local fun,err = loadstring(cond)
 	if fun then setfenv(fun,ConditionEnv) end
-	return fun,err
+	return fun,err,cond_procd
 end
 Parser.MakeCondition=MakeCondition
 --local yield=coroutine.yield
@@ -655,6 +727,8 @@ function Parser:ParseEntry(guide,fully_parse,lastparsed)
 		return a
 	end
 
+	local betasection = false
+
 	--[[
 	STICKY MECHANICS: 2013-04-18 ~sinus
 
@@ -678,17 +752,18 @@ function Parser:ParseEntry(guide,fully_parse,lastparsed)
 
 	--]]
 
-	while (index<#text) do
+	while (index<#text) do  repeat
 		local st,en,line=strfind(text,"%s*(.-)%s*\n",index)
 		--if debug then print(line) end
-		if not en then break end
+		if not en then  index=#text  break  end  -- really break
 		index = en + 1
 
 		linecount=linecount+1
 		if linecount>100000 then
 			return nil,linecount,"More than 100000 lines!?"
 		end
-		--if linecount%50==0 then yield() end
+		
+		if linecount%500==0 and coroutine.running() then coroutine.yield("parsing "..(guide.title or "??")) end
 
 		--line = line:gsub("^%s+","")
 		--line = line:gsub("%s+$","") --done in the find
@@ -705,8 +780,10 @@ function Parser:ParseEntry(guide,fully_parse,lastparsed)
 		lastparsed.linenum=linecount
 		lastparsed.linedata=line
 
-		line = line:gsub("%s*%-%-.*","",1) :gsub("%s*//.*","",1)
+		if line:find("--@@BETASTART") then  betasection=true  break  end
+		if line:find("--@@BETAEND") then  betasection=false  break  end
 
+		line = line:gsub("%s*%-%-.*","",1) :gsub("%s*//.*","",1)  -- remove comments
 
 		-- Process the line!
 		-- it's supposedly left- and right-trimmed by the find above.
@@ -772,11 +849,11 @@ function Parser:ParseEntry(guide,fully_parse,lastparsed)
 
 				if cmd=="leechsteps" then
 					-- works anywhere
-					local fromguide,from,to = params:match("^\"(.+)\"%s-,%s-(.-)%s-,%s-(.-)$")
+					local fromguide,from,to = params:match("^\"(.+)\"%s*(%d+)%s*%-%s*(%d+)$")
 
 					local leechsteps_guide = ZGV:SanitizeGuideTitle(fromguide or params:match("^\"(.+)\"$") or params) :gsub("\\+","\\")
 					local leechsteps_from = tonumber(from) or 1
-					local leechsteps_to = tonumber(to) or 999
+					local leechsteps_to = tonumber(to) or 9999
 
 					if fully_parse then
 
@@ -882,15 +959,15 @@ function Parser:ParseEntry(guide,fully_parse,lastparsed)
 
 						-- THIS SUCKS. Find the last ding to find the last level.
 						while st do
-							local lev
-							st,en,lev = text:find("[ \t\r\n]ding ([0-9]+)[ \t\r\n]",en+1)
-							if lev then prevlevel = tonumber(lev) end
+							local lev,cmd
+							st,en,cmd,lev = text:find("[ \t\r\n]([dinglev]+) ([0-9]+)[ \t\r\n]",en+1)
+							if (cmd=="ding" or cmd=="level") and lev then prevlevel = tonumber(lev) end
 						end
 						breakout=true
 						break
 					end
 
-					step = { goals = {}, map = prevmap, floor=prevfloor, level = prevlevel, num = #guide.steps+1, parentGuide=guide, title=prevtitle }
+					step = { goals = {}, map = prevmap, floor=prevfloor, level = prevlevel, num = #guide.steps+1, parentGuide=guide, title=prevtitle, beta=betasection }
 					setmetatable(step,ZGV.StepProto_mt)
 
 					tinsert(guide.steps,step)
@@ -917,6 +994,8 @@ function Parser:ParseEntry(guide,fully_parse,lastparsed)
 							end
 						end
 					end
+
+					wipe(prevpathvars)
 
 
 					cmd_parsed=true
@@ -1018,6 +1097,8 @@ function Parser:ParseEntry(guide,fully_parse,lastparsed)
 							goal={}
 						end
 
+						if type(GOALTYPES[cmd])=="string" then cmd=GOALTYPES[cmd] end
+
 						if cmd=="goto" or cmd=="at" or cmd=="fly" then
 
 							if do_debug then ZGV:Debug(":== "..cmd..": ["..params.."]") end
@@ -1051,6 +1132,8 @@ function Parser:ParseEntry(guide,fully_parse,lastparsed)
 						elseif cmd=="indoors" then
 							goal.waypoint_minizone = params -- if nil, then it's ignored.
 							goal.waypoint_indoors = 1 -- if nil, then it's ignored.
+						elseif cmd=="notravel" then
+							goal.waypoint_notravel = true
 
 						elseif cmd=="path" then
 
@@ -1066,7 +1149,7 @@ function Parser:ParseEntry(guide,fully_parse,lastparsed)
 								local map,flr,x,y,dist,err = ParseMapXYDist(coord)
 								if x then
 									if err then return parseerror(err) end  -- might happen, if the coords look good but map is bogus.
-									local point = {map=map or step.map or prevmap,floor=flr or step.floor or prevfloor,x=x,y=y,dist=dist or step.waypath.dist}
+									local point = {map=map or prevmap or step.map,floor=flr or prevfloor or step.floor,x=x,y=y,dist=dist or step.waypath.dist}
 									tinsert(step.waypath.coords,point)
 									prevmap,prevfloor = point.map,point.floor
 								else
@@ -1082,7 +1165,23 @@ function Parser:ParseEntry(guide,fully_parse,lastparsed)
 										step.waypath[var] = tonumber(val) or val
 										prevpathvars[var] = tonumber(val) or val
 									end
+									if step.waypath.radius then step.waypath.dist=step.waypath.radius end  -- radius=dist
 								end
+							end
+
+							if step.waypath['use']=="goto" then
+								-- physically convert gotos to path!
+								local i=1
+								while i<=#step.goals do
+									local goal=step.goals[i]
+									if goal.action=="goto" then
+										tinsert(step.waypath.coords,goal)
+										tremove(step.goals,i)
+										i=i-1
+									end
+									i=i+1
+								end
+								step.waypath['loop']=false
 							end
 
 						elseif cmd=="from" or cmd=="avoid" then
@@ -1106,9 +1205,9 @@ function Parser:ParseEntry(guide,fully_parse,lastparsed)
 
 						elseif cmd=="condition" then	-- new in 3.1: supersede the "startlevel" eventually.
 							goal.action = goal.action or cmd
-							local fun,err = MakeCondition(params,false)
+							local fun,err,cond_procd = MakeCondition(params,false)
 							if not fun then return parseerror(err) end
-							goal.condition_complete_raw=params
+							goal.condition_complete_raw = cond_procd
 							goal.condition_complete = fun
 
 
@@ -1121,6 +1220,9 @@ function Parser:ParseEntry(guide,fully_parse,lastparsed)
 						elseif cmd=="buttonicon" then
 							goal.buttonicon = tonumber(params) or 1
 
+						elseif cmd=="countexpr" then
+							goal.countexpr = params
+							
 						elseif cmd=="modelnpc" then
 							goal.modelname,goal.modelnpc = ParseID(params)
 
@@ -1135,8 +1237,8 @@ function Parser:ParseEntry(guide,fully_parse,lastparsed)
 								-- condition match
 								local subject = goal  if chunkcount==1 then subject=step end
 
-								subject.condition_visible_raw=cond
-								local fun,err = MakeCondition(cond,true)
+								local fun,err,cond_procd = MakeCondition(cond,true)
+								subject.condition_visible_raw=cond_procd
 								subject.condition_visible_err=err
 								if not fun then return parseerror(err) end
 								subject.condition_visible=fun
@@ -1153,12 +1255,30 @@ function Parser:ParseEntry(guide,fully_parse,lastparsed)
 								end
 							end
 
+						elseif cmd=="grouprole" then
+							-- |grouprole DPS
+							-- |grouprole TANK or HEALER
+							local role1,role2 = params:match("([A-Z]*)\s+[oO][rR]\s+([A-Z]*)")
+							if role1 then
+								goal.grouprole,goal.grouprole2 = role1,role2
+							else
+								goal.grouprole = params
+							end
+
 						-- extra tags
 
 						elseif cmd=="next" then
 							params = params:gsub("^\"(.-)\"$","%1")
 							if params=="" then params="+1" end
 							goal.next=params
+
+						elseif cmd=="loadguide" then
+							params = params:gsub("^\"(.-)\"$","%1")
+							local guide,step = params:match("(.*)::(.*)")
+							if not step then guide=params end
+							guide = ZGV:SanitizeGuideTitle(guide)
+							goal.loadguide = params
+							goal.loadguidestep = tonumber(step) or step or 1
 
 						elseif cmd=="autoscript" then
 							goal.autoscript = params
@@ -1208,10 +1328,17 @@ function Parser:ParseEntry(guide,fully_parse,lastparsed)
 							--params = params:gsub("_(.-)_","|cffffee88%1|r")
 							-- or not, since it reverts to white.
 
-							goal.tooltip = LG[params]
+							local text = params
 
-						elseif cmd=="image" then
-							goal.image = params
+							-- highlight _text_
+							text = text:gsub("_(.-)_","|cffffee88%1|r")
+
+							text = LG[text]
+
+							goal.tooltip = text
+
+						--elseif cmd=="image" then
+						--	goal.image = params
 
 
 						elseif cmd=="model" then
@@ -1326,7 +1453,7 @@ function Parser:ParseEntry(guide,fully_parse,lastparsed)
 				end
 
 
-				if cmd=="ding" then
+				if cmd=="level" then
 					prevlevel = goal.level
 				end
 
@@ -1384,7 +1511,7 @@ function Parser:ParseEntry(guide,fully_parse,lastparsed)
 
 			if breakout then break end
 		end
-	end
+	until true  end
 
 	
 	if guide.type=="MACRO" then
@@ -1475,9 +1602,9 @@ function Parser:ParseHeader(guide)
 
 			local cond = "haspet("..speciesId..")"
 									
-			local fun,err = MakeCondition(cond,true)
+			local fun,err,cond_procd = MakeCondition(cond,true)
 			if not fun then return parseerror(err,cmd,params) end
-			guide['condition_end_raw']=cond
+			guide['condition_end_raw']=cond_procd
 			guide['condition_end']=fun
 		elseif cmd=="sugGroup" then
 			-- TODO this is a hack.... a little >.>
@@ -1490,6 +1617,7 @@ function Parser:ParseHeader(guide)
 			if not header then header=params end
 
 			local group = ZGV:FindOrCreateGroup(ZGV.registered_groups,"SUGGESTED\\"..(folder or header)) or ZGV.registered_groups
+			group.category=header
 			local found
 			-- Make sure no duplicates show up
 			for i,g in ipairs(group.guides) do
@@ -1521,16 +1649,17 @@ function Parser:ParseHeader(guide)
 					ZGV.CreatureDetector:RegisterMountSpell(tonumber(id),guide) -- TODO mark duplicates
 				end
 			end)
-											--Checking for achievements to get the achievement number
+			
+			--Checking for achievements to get the achievement number
 			if params:find("achieved") then
 				if not guide.headerdata.achieveid then guide.headerdata.achieveid = {} end
-				tinsert(guide.headerdata.achieveid,params:match("%d+"),1)
-				guide.achieved=guide.headerdata.achieveid
+				tinsert(guide.headerdata.achieveid,tonumber(params:match("%d+")))
+				guide.achieved={[1]=tonumber(params:match("%d+"))}
 			end
 
-			guide['condition_'..case..'_raw']=params
-			local fun,err = MakeCondition(params,true)
+			local fun,err,cond_procd = MakeCondition(params,true)
 			if not fun then return parseerror(err,cmd,params) end
+			guide['condition_'..case..'_raw']=cond_procd
 			guide['condition_'..case]=fun
 
 		-- TODO the parseerror here seems to wreak mayhem everywhere
@@ -1573,7 +1702,6 @@ function Parser:ParseHeader(guide)
 
 		elseif cmd=="model" then
 			-- guide-wide
-			--[[
 			if not ZGV.CreatureDetector.PetMirror then
 				ZGV.CreatureDetector.PetMirror=CreateFrame("PlayerModel")
 			end
@@ -1591,8 +1719,9 @@ function Parser:ParseHeader(guide)
 					params[i]=num
 					ZGV.CreatureDetector.PetMirror:SetDisplayInfo(num)
 					local model=ZGV.CreatureDetector.PetMirror:GetDisplayInfo()
+					local file=ZGV.CreatureDetector.PetMirror:GetModelFileID()
 					if model then
-						ZGV.CreatureDetector:RegisterGuideModel(model,guide)
+						ZGV.CreatureDetector:RegisterGuideModel(model,guide,file)
 					else
 						ZGV:Debug("Unknown model "..num)
 					end
@@ -1601,7 +1730,6 @@ function Parser:ParseHeader(guide)
 			guide.model = params
 
 			ZGV.CreatureDetector.PetMirror:Hide() -- and stay low
-			--]]
 		elseif cmd=="icon" then
 			guide.icon= { texname=params, coords={ 0,1,0,1 } }
 		else
@@ -1609,7 +1737,6 @@ function Parser:ParseHeader(guide)
 		end
 	end
 end
-
 
 
 local s=string local c=string.char
@@ -1641,6 +1768,16 @@ tinsert(ZGV.startups,{"Parser unit tests",function(self)
 		map,flr,x,y,dist = ParseMapXYDist("504/2",true)  assert(map==504 and flr==2,"ParseMapXYDist fail")
 		map,flr,x,y,dist = ParseMapXYDist("504 12.3,12.8")  assert(map==504 and is(x,0.123) and is(y,0.128),"ParseMapXYDist fail")
 		map,flr,x,y,dist = ParseMapXYDist("504 12.3,12.8 <5")  assert(map==504 and is(x,0.123) and is(y,0.128) and dist==5,"ParseMapXYDist fail")
+
+		local goal={}
+		ZGV.GOALTYPES['accept'].parse(goal,"Quest##123")  assert(goal.quest=="Quest","accept parse fail 1")  assert(goal.questid==123,"accept parse fail 2")  table.wipe(goal)
+		ZGV.GOALTYPES['accept'].parse(goal,"123")  assert(goal.quest==nil,"accept parse fail 3")  assert(goal.questid==123,"accept parse fail 4")  table.wipe(goal)
+		ZGV.GOALTYPES['talk'].parse(goal,"NPC##123")  assert(goal.npc=="NPC","talk parse fail 1")  assert(goal.npcid==123,"talk parse fail 2")  table.wipe(goal)
+		ZGV.GOALTYPES['talk'].parse(goal,"123")  assert(goal.npc==nil,"talk parse fail 3")  assert(goal.npcid==123,"talk parse fail 4")  table.wipe(goal)
+		ZGV.GOALTYPES['q'].parse(goal,"Quest##123")  assert(goal.quest=="Quest","q parse fail 1a")  assert(goal.questid==123,"q parse fail 1b")  table.wipe(goal)
+		ZGV.GOALTYPES['q'].parse(goal,"Quest##123/2")  assert(goal.quest=="Quest","q parse fail 2a")  assert(goal.questid==123,"q parse fail 2b")  assert(goal.objnum==2,"q parse fail 2c")  table.wipe(goal)
+		ZGV.GOALTYPES['q'].parse(goal,"123")  assert(goal.quest==nil,"q parse fail 3a")  assert(goal.questid==123,"q parse fail 3b")  table.wipe(goal)
+		ZGV.GOALTYPES['q'].parse(goal,"123/2")  assert(goal.quest==nil,"q parse fail 4a")  assert(goal.questid==123,"q parse fail 4b")  assert(goal.objnum==2,"q parse fail 4c")  table.wipe(goal)
 	end
 end})
 

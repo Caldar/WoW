@@ -11,6 +11,8 @@ local rematch = Rematch
 
 	TODO: arrange speciesIDs in the order they're fought
 
+	npcID 1 is a special npcID to note an imported team loaded with the Load button on the import dialog
+
 ]]
 
 rematch:InitModule(function()
@@ -18,8 +20,9 @@ rematch:InitModule(function()
 	rematch:CreateNpcMenus()
 end)
 
-rematch.notableNames = {} -- name of NPCs, indexed by NPC IDs
+rematch.notableNames = {[1]=L["Imported Team"]} -- name of NPCs, indexed by NPC IDs
 
+-- groups are listed in reverse order on the menu (most recent content at top)
 rematch.notableGroups = {
 	[0] = OTHER, -- Little Tommy Newcomer, Jeremy Feasel, Christoph VonFeasel
 	[1] = L["Eastern Kingdom"],
@@ -40,6 +43,12 @@ rematch.notableGroups = {
 	[16] = L["Highmountain"],
 	[17] = L["Dalaran"],
 	[18] = L["Azsuna"],
+	[19] = L["Broken Isle"],
+	[20] = L["Wailing Caverns"],
+   [21] = L["Deadmines"],
+   [22] = L["Mac'Aree"],
+   [23] = L["Krokuun"],
+   [24] = L["Antoran Wastes"],
 }
 
 rematch.notableNPCs = {
@@ -50,6 +59,7 @@ rematch.notableNPCs = {
 	{ 73626, 0, 1339 }, -- Little Tommy Newcomer
 
 	-- Eastern Kingdom
+   { 124617, 1, 2068,2067,2066 }, -- Environeer Bert
 	{ 66522, 1, 948,949,947 }, -- Lydia Accoste
 	{ 65656, 1, 887,886,888 }, -- Bill Buckler
 	{ 66478, 1, 932,931,933 }, -- David Kosse
@@ -64,6 +74,7 @@ rematch.notableNPCs = {
 	{ 63194, 1, 885,884,883 }, -- Steven Lisbane
 
 	-- Kalimdor
+	{ 115286, 2, 1983,1981,1982 }, -- Crysa
 	{ 66466, 2, 928,927,929 }, -- Stone Cold Trixxy
 	{ 66136, 2, 894,896,895 }, -- Analynn
 	{ 66422, 2, 908,909,907 }, -- Cassandra Kaboom
@@ -249,6 +260,58 @@ rematch.notableNPCs = {
 	{ 97559, 13, 1739 }, -- Wildlife Conservationist (Spring Strider) quest 42190
 	{ 104970, 13, 1847, 1846, 1848 }, -- Dealing with Satyrs (Xorvasc) quest 41860
 
+	-- Broken Isle (19)
+	{117934, 19, 2014, 2015, 2016 }, -- Sissix
+	{117950, 19, 2011, 2012, 2013 }, -- Madam Viciosa
+	{117951, 19, 2008, 2009, 2010 }, -- Nameless Mystic
+
+	-- Wailing Caverns (20)
+	{116786, 20, 1989}, -- Deviate Smallclaw
+	{116788, 20, 1988}, -- Deviate Chomper
+	{116787, 20, 1987}, -- Deviate Flapper
+	{116789, 20, 1990}, -- Son of Skum
+	{116792, 20, 1993}, -- Phyxia
+	{116791, 20, 1992}, -- Dreadcoil
+	{116790, 20, 1991}, -- Vilefang
+	{116793, 20, 1994}, -- Hiss
+	{116794, 20, 1995}, -- Growing Ectoplasm
+	{116795, 20, 1996}, -- Budding Everliving Spore
+
+   -- Deadmines (21)
+   {119409, 21, 2031}, -- Foe Reaper 50
+   {119346, 21, 2023}, -- Unfortunate Defias
+   {119342, 21, 2027}, -- Angry Geode
+   {119341, 21, 2028}, -- Mining Monkey
+   {119408, 21, 2033}, -- "Captain" Klutz
+   {119343, 21, 2026}, -- Klutz's Battle Rat
+   {119345, 21, 2024}, -- Klutz's Battle Monkey
+   {119344, 21, 2025}, -- Klutz's Battle Bird
+   {119407, 21, 2032}, -- Cookie's Leftovers
+
+   -- Mac'Aree (22)
+   {128013, 22, 2101}, -- Bucky
+   {128017, 22, 2105}, -- Corrupted Blood of Argus
+   {128015, 22, 2103}, -- Gloamwing
+   {128018, 22, 2106}, -- Mar'cuus
+   {128016, 22, 2104}, -- Shadeflicker
+   {128014, 22, 2102}, -- Snozz
+
+   -- Krokuun (23)
+   {128009, 23, 2092}, -- Baneglow
+   {128011, 23, 2099}, -- Deathscreech
+   {128008, 23, 2096}, -- Foulclaw
+   {128012, 23, 2100}, -- Gnasher
+   {128010, 23, 2098}, -- Retch
+   {128007, 23, 2095}, -- Ruinhoof
+
+   -- Antorian Wastes (24)
+   {128020, 24, 2108}, -- Bloat
+   {128021, 24, 2109}, -- Earseeker
+   {128023, 24, 2111}, -- Minixis
+   {128024, 24, 2110}, -- One-of-Many
+   {128022, 24, 2112}, -- Pilfer
+   {128019, 24, 2107}, -- Watcher
+
 }
 
 -- table of npcID's and the npcID they should actually refer to
@@ -301,13 +364,24 @@ rematch.notableRedirects = {
 	[85676] = 85627, -- Archimedes
 }
 
+-- remove 7.3 npcs if we're not on a 7.3 client
+if select(4,GetBuildInfo())<70300 then
+   for i=#rematch.notableNPCs,1,-1 do
+      local info = rematch.notableNPCs[i]
+      if info[1]==124617 or info[2]>21 then -- if Environeer Bert or from one of the Argus menus
+         tremove(rematch.notableNPCs,i) -- remove it
+      end
+   end
+   for i=22,24 do
+      rematch.notableGroups[i] = nil
+   end
+end
 
 -- returns name of an npcID from a lookup table, or a tooltip scan if it's not in the table yet
 function rematch:GetNameFromNpcID(npcID)
 	if type(npcID)~="number" then
 		return L["No Target"]
-	end
-	if rematch.notableNames[npcID] then
+	elseif rematch.notableNames[npcID] then
 		return rematch.notableNames[npcID]
 	end
 	return rematch:GetNameFromNpcTooltip(npcID)
@@ -377,18 +451,16 @@ function rematch:CacheNpcIDs()
 end
 
 
--- this returns the passed speciesIDs as a string of type icons 
+-- this returns the passed speciesIDs (or links) as a string of type icons 
 function rematch:NotablePetsAsText(...)
 	local pets = ""
 	for i=1,select("#",...) do
-		local speciesID = select(i,...)
-		if speciesID then
-			local name,icon,petType = C_PetJournal.GetPetInfoBySpeciesID(speciesID)
-			if petType then
-				local petIcon = format("\124T%s:16:16:0:0:64:64:59:5:5:59\124t",icon)
-				local typeIcon = rematch:PetTypeAsText(petType)
-				pets = pets..format("%s %s %s",petIcon,typeIcon,name).."\n"
-			end
+		local petID = select(i,...) -- can be a speciesID or link
+		local petInfo = rematch.petInfo:Fetch(petID)
+		if petInfo.speciesID and petInfo.petType then
+			local petIcon = format("\124T%s:16:16:0:0:64:64:59:5:5:59\124t",petInfo.icon)
+			local typeIcon = rematch:PetTypeAsText(petInfo.petType)
+			pets = pets..format("%s %s %s\n",petIcon,typeIcon,petInfo.name)
 		end
 	end
 	return (pets:gsub("\n$",""))

@@ -22,6 +22,10 @@ local split = function (div,text)
 	return unpack(res)
 end
 
+local function decolor(text)
+	return text:gsub("|c........",""):gsub("|r",""):gsub("|n","; "):gsub("|","||")
+end
+
 function Goal:New(data)
 	setmetatable(data,ZGV.GoalProto_mt)
 	return data
@@ -44,6 +48,32 @@ local empty_table={}
 setmetatable(GOALTYPES,{__index=function() return empty_table end})
 
 local _
+
+
+local skillspells = {	--	apprentice	journeyman	expert		artisan		master		grand master	illustrious	zen master	draenor		legion
+	Alchemy = {		[75]=2275,	[150]=2280,	[225]=3465,	[300]=11612,	[375]=28597,	[450]=51303,	[525]=80732,	[600]=105208,	[700]=156608,	[800]=201697,	},
+	Archaeology = {		[75]=95553,	[150]=95554,	[225]=95555,	[300]=95556,	[375]=95557,	[450]=95558,	[525]=89727,	[600]=110394,	[700]=158763,	[800]=201709,	},
+	Blacksmithing = {	[75]=2020,	[150]=2021,	[225]=3539,	[300]=9786,	[375]=29845,	[450]=51298,	[525]=76667,	[600]=110398,	[700]=158738,	[800]=201699,	},
+	Cooking = {		[75]=2551,	[150]=3412,	[225]=19886,	[300]=19887,	[375]=33361,	[450]=51295,	[525]=88054,	[600]=104382,	[700]=158766,	[800]=201710,	},
+	Enchanting = {		[75]=7414,	[150]=7415,	[225]=7416,	[300]=13921,	[375]=28030,	[450]=51312,	[525]=74259,	[600]=110401,	[700]=158717,	[800]=201698,	},
+	Engineering = {		[75]=4039,	[150]=4040,	[225]=4041,	[300]=12657,	[375]=30351,	[450]=51305,	[525]=82775,	[600]=110404,	[700]=158740,	[800]=201700,	},
+	['First Aid'] = {	[75]=3279,	[150]=3280,	[225]=19903,	[300]=19902,	[375]=27029,	[450]=50299,	[525]=74560,	[600]=110408,	[700]=158742,	[800]=201701,	},
+	Fishing = {		[75]=7733,	[150]=7734,	[225]=19889,	[300]=19890,	[375]=33100,	[450]=64484,	[525]=88869,	[600]=110412,	[700]=158744,	[800]=210829,	},
+	Herbalism = {		[75]=2372,	[150]=2373,	[225]=3571,	[300]=11994,	[375]=28696,	[450]=50301,	[525]=74520,	[600]=110415,	[700]=158746,	[800]=201702,	},
+	Inscription = {		[75]=45375,	[150]=45376,	[225]=45377,	[300]=45378,	[375]=45379,	[450]=45380,	[525]=86009,	[600]=110418,	[700]=158749,	[800]=201703,	},
+	Jewelcrafting = {	[75]=25245,	[150]=25246,	[225]=28896,	[300]=28899,	[375]=28901,	[450]=51310,	[525]=73319,	[600]=110421,	[700]=158753,	[800]=201704,	},
+	Leatherworking = {	[75]=2155,	[150]=2154,	[225]=3812,	[300]=10663,	[375]=32550,	[450]=51301,	[525]=81200,	[600]=110424,	[700]=158753,	[800]=201705,	},
+	Mining = {		[75]=2581,	[150]=2582,	[225]=3568,	[300]=10249,	[375]=29355,	[450]=50309,	[525]=74518,	[600]=102168,	[700]=158755,	[800]=190989,	},
+	Riding = {		[75]=33389,	[150]=33392,	[225]=34092,	[300]=34093,	[375]=90266,											},
+	Skinning = {		[75]=8615,	[150]=8619,	[225]=8620,	[300]=10769,	[375]=32679,	[450]=50307,	[525]=74523,	[600]=102220,	[700]=158757,	[800]=190990,	},
+	Tailoring = {		[75]=3911,	[150]=3912,	[225]=3913,	[300]=12181,	[375]=26791,	[450]=51308,	[525]=75157,	[600]=110427,	[700]=158759,	[800]=201708,	},
+}
+
+local dots_table = {'.','..','...','....','.....','....','...','..'}
+local function dots(num) return dots_table[(num or 0)%8+1] end
+local function Lretrydots(goal) return dots(goal.Lretries)..(ZGV.db.profile.debug and goal.Lreasons or "") end
+
+
 
 -- returns: current, needed, remaining
 local function GetQuestGoalData(questid,objnum,count)
@@ -139,15 +169,25 @@ function Goal:IsVisible()
 	--if ZGV.db.profile.showwrongsteps then return true end
 	if not self:IsFitting() then return false end
 	if self.hidden then return false end
+	if self.grouprole and self.grouprole~="EVERYONE" and not ZGV.db.profile.showallroles and UnitGroupRolesAssigned("Player")~="NONE" then
+		local role,role2 = self.grouprole,self.grouprole2
+		if role=="DPS" or role=="DAMAGE" then role="DAMAGER" end
+		if role2=="DPS" or role2=="DAMAGE" then role2="DAMAGER" end
+		if UnitGroupRolesAssigned("Player")~=role and UnitGroupRolesAssigned("Player")~=role2 then return false end
+	end
 	if self.condition_visible then
 		if self.condition_visible_raw=="default" then
 			-- oo, special case: show this only if no others are visible!
 			for i,goal in ipairs(self.parentStep.goals) do
-				if goal~=self and goal.condition_visible and goal:IsVisible() then return false end
+				if goal~=self and goal.condition_visible and goal.condition_visible_raw~="default" and goal.condition_visible_raw~="ditto" and goal:IsVisible() then return false end
 			end
 			return true
+		elseif self.condition_visible_raw=="ditto" then
+			-- another special case: show this only if the one above was visible!
+			local prevgoal = self.parentStep.goals[self.num-1] 
+			return prevgoal:IsVisible()
 		else
-			ZGV.Parser.ConditionEnv._SetLocal(self.parentStep.parentGuide,self.parentStep,self)
+			ZGV.Parser.ConditionEnv:_SetLocal(self.parentStep.parentGuide,self.parentStep,self)
 			return self.condition_visible()
 		end
 	end
@@ -155,7 +195,7 @@ function Goal:IsVisible()
 end
 
 
-local _c = { "goal","kill","get","accept","turnin","collect","buy","fpath","home","ding","havebuff","nobuff","invehicle","outvehicle","equipped","rep","condition","achieve","create","skill","skillmax","learn","learnspell","learnpet","learnmount","confirm","earn","fly","complete" }
+local _c = { "goal","kill","get","accept","turnin","collect","buy","fpath","home","level","havebuff","nobuff","invehicle","outvehicle","equipped","rep","condition","achieve","create","skill","skillmax","learn","learnspell","learnpet","learnmount","confirm","earn","fly","complete" }
 local completable = {}
 for i=1,#_c do completable[_c[i]]=true end
 
@@ -177,16 +217,18 @@ function Goal:IsCompleteable()
 	if (GOALTYPE and GOALTYPE.iscomplete and not GOALTYPE.default_not_completable) or completable[self.action] then return true end
 
 	if self.action=="goto" then
-		-- this one is tricky.
-		-- by default - completeable only if only 'goto' goals are present.
+		-- Make the last goto of a gotos-only step completable.
 		local all_gotos=true
+		local lastgoto
 		for i,goal in ipairs(self.parentStep.goals) do
-			if goal.action~="goto" then
+			if goal.action=="goto" and not goal.force_complete and not goal.force_nocomplete then  -- a goto with no extra flavours
+				lastgoto=goal
+			else
 				all_gotos=false
 				break
 			end
 		end
-		return (self.force_complete or all_gotos)
+		return (self.force_complete or (all_gotos and lastgoto==self))
 	end
 	return false
 end
@@ -208,25 +250,25 @@ function Goal:IsComplete()
 		or self.fake_complete then
 		return true,true,true
 	end
+
+	if self.countexprfun then
+		ZGV.Parser.ConditionEnv:_SetLocal(self.parentStep.parentGuide,self.parentStep,self)
+		local res,err = pcall(self.countexprfun)
+		if res then self.count=err else error("Error in step ".. self.parentStep.num .. " goal " .. self.num .. " count expression: "..err) end
+	end
 	
 	if self.force_nocomplete then return false,false, nil,"forced not completable" end ------------------------------- 
 	if not self:IsCompleteable() then return false,false, nil,"not completable" end ----------------------------------
 
-	if self.countexprfun then
-		ZGV.Parser.ConditionEnv._SetLocal(self.parentStep.parentGuide,self.parentStep,self)
-		local res,err = pcall(self.countexprfun)
-		if res then self.count=err else error("Error in step ".. self.parentStep.num .. " goal " .. self.num .. " count expression: "..err) end
-	end
-
 	if self.updatescriptfun then
-		ZGV.Parser.ConditionEnv._SetLocal(self.parentStep.parentGuide,self.parentStep,self)
+		ZGV.Parser.ConditionEnv:_SetLocal(self.parentStep.parentGuide,self.parentStep,self)
 		local res,err = pcall(self.updatescriptfun)
 		if res then self.count=err else error("Error in step ".. self.parentStep.num .. " goal " .. self.num .. " updatescript: "..err) end
 	end
 
 	local completion_by_condition
 	if self.condition_complete then
-		ZGV.Parser.ConditionEnv._SetLocal(self.parentStep.parentGuide,self.parentStep,self)
+		ZGV.Parser.ConditionEnv:_SetLocal(self.parentStep.parentGuide,self.parentStep,self)
 		local res,err = pcall(self.condition_complete)
 		if res then completion_by_condition=err  else  error("Error in step ".. self.parentStep.num .. " goal " .. self.num .. " condition: "..err) end
 		-- condition overrides.
@@ -321,11 +363,20 @@ end
 
 function Goal:OnCompleted()
 	if self.oncompletefun then self.oncompletefun() end
+	if ZGV.Pointer.DestinationWaypoint and ZGV.Pointer.DestinationWaypoint.goal == self then  -- this waypoint is "complete", in whatever manner
+		ZGV:Debug("Goal: cycling waypoint from completed goal ".. self.num)
+		ZGV.Pointer:CycleWaypointFrom(self.num,self.parentStep)
+	end
+end
+
+function Goal:OnUncompleted()
+	-- formality. May be important at some point.
 end
 
 function Goal:GetTooltip()
 	local gettooltip = GOALTYPES[self.action].gettooltip
 	if gettooltip then return gettooltip(self) end
+	if self.grouprole then return "|cff00ff00Shift-click|r to share this tip to fellow players." end
 end
 
 
@@ -454,12 +505,12 @@ GOALTYPES['talknpcs'] = {
 }
 
 GOALTYPES['_item'] = {
-	parse = function(self,params)
+	parse = function(self,params)		-- serves as generic parser for: [num] [name]##id["+"]
 		local count,objinfo,objid
 		local obj = ""
 
 		-- 4 Itemname##id
-		count,objinfo = params:match("^([0-9]*)%s*(.*)$")
+		count,objinfo = params:match("^([0-9]+)%s+(.+)$")
 		if not count then
 			objinfo = params
 		end
@@ -473,8 +524,8 @@ GOALTYPES['_item'] = {
 	
 				local tar, tarid = ParseID(str)
 
-				if plural and tar then
-					tar = ZygorGuidesViewer_L("Specials").plural(tar)
+				if plural then
+					tar = tar and ZygorGuidesViewer_L("Specials").plural(tar)
 					self.plural=true
 				end
 				
@@ -524,7 +575,8 @@ GOALTYPES['get'] = { -- combining old 'get' and 'collect' now.
 		else
 			return got>=self.count, true, progress>1 and 1 or progress
 		end
-	end
+	end,
+	-- gettext complex; still in Goal:GetText()
 }
 
 GOALTYPES['craft'] = GOALTYPES['get']	-- for correct text display
@@ -559,7 +611,8 @@ GOALTYPES['goldcollect'] = {
 			return got>=demand, true, progress
 		end
 	end,
-	gettext = function(self)
+	-- gettext complex; still in Goal:GetText()! What is this doing here!?
+	NOgettext = function(self)
 		local iscomplete,ispossible,progress = self:IsComplete()
 		local got = GetItemCount(self.targetid)
 		if got==0 then
@@ -616,7 +669,8 @@ GOALTYPES['buy'] = {
 		self.count = self.count or 1
 		return r1,r2,r3
 	end,
-	iscomplete = GOALTYPES['collect'].iscomplete
+	iscomplete = GOALTYPES['collect'].iscomplete,
+	-- gettext still in Goal:GetText
 }
 
 GOALTYPES['kill'] = {
@@ -627,7 +681,8 @@ GOALTYPES['kill'] = {
 			local count = ZGV.recentKills[self.target]
 			return count and count>=self.count, true, min(count/(self.count or 1),1)
 		end
-	end
+	end,
+	-- gettext complex; still in Goal:GetText()
 }
 
 GOALTYPES['avoid'] = {
@@ -640,12 +695,14 @@ GOALTYPES['collect'] = {
 		self.action="get"  -- obvious? not really: 'get' is aliased by 'collect'. This forces it to BE 'get'.
 		return GOALTYPES['get'].parse(self,params)
 	end,
-	iscomplete = GOALTYPES['get'].iscomplete
+	iscomplete = GOALTYPES['get'].iscomplete,
+	-- gettext complex; still in Goal:GetText()
 }
 
 GOALTYPES['goal'] = {
 	parse = GOALTYPES['_item'].parse,
 	-- let it complete as any quest objective: by default.
+	gettext = function(self,complete,complete_extra,goalcountnow,goalcountneeded,remaining,brief) return GenericText(brief,self.action,COLOR_GOAL,remaining or self.count,self.target,not self.count or self.count==1,false,(complete and "_done" or "")) end,
 }
 
 GOALTYPES['confirm'] = {
@@ -657,10 +714,11 @@ GOALTYPES['confirm'] = {
 	iscomplete = function(self)
 		return self.was_clicked,true
 	end,
-	click_to_complete = true
+	gettext = function(self) return L["stepgoal_confirm"] end,
+	click_to_complete = true,
 }
 
-local profSkillID = ZGV.skillIDs
+local profSkillID = ZGV.Professions.skillIDs
 
 GOALTYPES['learn'] = {
 	parse = function(self,params)
@@ -676,7 +734,8 @@ GOALTYPES['learn'] = {
 			end
 		end
 		return false,true -- not found
-	end
+	end,
+	gettext = function(self) return L["stepgoal_learn"]:format(COLOR_ITEM(self.recipe)) end,
 }
 
 GOALTYPES['learnmount'] = {
@@ -684,12 +743,13 @@ GOALTYPES['learnmount'] = {
 		self.spell,self.spellid = ParseID(params)
 	end,
 	iscomplete = function(self)
-		for i=1,GetNumCompanions("MOUNT") do
-			 local id,name,spell = GetCompanionInfo("MOUNT",i)
-			 if spell==self.spellid then return true,true end
+		local mountIDs = C_MountJournal.GetMountIDs();
+		for i, mountID in ipairs(mountIDs) do
+			local name, spell, _, _, _, _, _, _, _, _, isCollected = C_MountJournal.GetMountInfoByID(mountID)
+			if spell==self.spellid and isCollected then return true,true end
 		end
-		return false,true
-	end
+	end,
+	gettext = function(self) return L["stepgoal_learnmount"]:format(COLOR_ITEM(GetSpellInfo(self.spellid))) end,
 }
 
 GOALTYPES['learnpet'] = {
@@ -702,7 +762,8 @@ GOALTYPES['learnpet'] = {
 
 		local numCollected, limit = C_PetJournal.GetNumCollectedInfo(species)
 		return ((numCollected or 0) > 0),true
-	end
+	end,
+	gettext = function(self) return L["stepgoal_learnpet"]:format(COLOR_ITEM(ZGV.Localizers:GetTranslatedNPC(self.petid))) end,
 }
 
 GOALTYPES['petspecies'] = {
@@ -718,7 +779,8 @@ GOALTYPES['learnspell'] = {
 	end,
 	iscomplete = function(self)
 		return IsSpellKnown(self.spellid), true
-	end
+	end,
+	gettext = function(self) return L["stepgoal_learnspell"]:format(COLOR_ITEM(GetSpellInfo(self.spellid))) end,
 }
 
 GOALTYPES['accept'] = {
@@ -755,7 +817,8 @@ GOALTYPES['accept'] = {
 		    -- or (not ZGV.CurrentGuide.daily and ZGV.db.char.permaCompletedDailies[self.questid])  -- deprecating this, let's see if this works.
 
 		return complete, complete or ZGV:IsQuestPossible(self.questid)     --[[or ZGV.recentlyAcceptedQuests[id] --]]
-	end
+	end,
+	gettext = function(self,complete,complete_extra,goalcountnow,goalcountneeded,remaining,brief) return (brief and "%s" or L["stepgoal_accept"..(complete and "_done" or "")]):format(COLOR_QUEST((self.questpart and L['questtitle_part'] or L['questtitle']):format(self.quest and self.quest.title or Lretrydots(self),self.questpart))) end,
 }
 
 GOALTYPES['turnin'] = {
@@ -780,7 +843,8 @@ GOALTYPES['turnin'] = {
 			-- or (not ZGV.CurrentGuide.daily and ZGV.db.char.permaCompletedDailies[self.questid])
 
 		return turned, turned or (quest and quest.inlog and (quest.complete or #quest.goals==0)), 0, not turned and quest and quest.inlog and not quest.complete and #quest.goals>0
-	end
+	end,
+	gettext = function(self,complete,complete_extra,goalcountnow,goalcountneeded,remaining,brief) return (brief and "%s" or L["stepgoal_turn in"..(complete and "_done" or "")]):format(COLOR_QUEST((self.questpart and L['questtitle_part'] or L['questtitle']):format(self.quest and self.quest.title or Lretrydots(self),self.questpart))) end,
 }
 
 GOALTYPES['q'] = {
@@ -878,12 +942,12 @@ GOALTYPES['noquest'] = {
 		if ZGV.GetTargetId()==self.npcid then
 			if GossipFrame:IsShown() then
 				local noquests=true
-				local DATA_IN_GOSSIP=6  -- 5.2: name, level, isTrivial, isDaily, isRepeatable, isLegendary
+				local DATA_IN_GOSSIP=7  -- 7.2.5: title, level, isTrivial, frequency, isRepeatable, isLegendary, isIgnored
 				for qnum=1,GetNumGossipAvailableQuests() do
-					local name,level,isTrivial,isDaily,isRepeatable,isLegendary = select((qnum-1)*DATA_IN_GOSSIP+1,GetGossipAvailableQuests())
-					if isDaily then noquests=nil break end  -- one daily breaks it
+					local name,level,isTrivial,frequency,isRepeatable,isLegendary = select((qnum-1)*DATA_IN_GOSSIP+1,GetGossipAvailableQuests())
+					if frequency==LE_QUEST_FREQUENCY_DAILY then noquests=nil break end  -- one daily breaks it
 				end
-				local DATA_IN_GOSSIP=5  -- 5.2: name, level, isTrivial, isComplete, isLegendary
+				local DATA_IN_GOSSIP=6  -- 7.2.5: title, level, isLowLevel, isComplete, isLegendary, isIgnored
 				for qnum=1,GetNumGossipActiveQuests() do
 					local name,level,isTrivial,isComplete,isLegendary = select((qnum-1)*DATA_IN_GOSSIP+1,GetGossipActiveQuests())
 					if isComplete then noquests=nil break end  -- one complete breaks it
@@ -926,9 +990,7 @@ GOALTYPES['scenariostart'] = {
 			return name, true
 		end
 	end,
-	gettext = function(self	)
-		return "Begin "..((self.scenario_name and "_"..self.scenario_name.."_ ") or "the ").."scenario"
-	end,
+	gettext = function(self) return self.scenario_name and L['stepgoal_scenariostart']:format(COLOR_BOLD(self.scenario_name)) or L['stepgoal_scenariostart_unknown'] end,
 }
 
 GOALTYPES['scenarioend'] = {
@@ -941,9 +1003,12 @@ GOALTYPES['scenarioend'] = {
 
 GOALTYPES['scenariostage'] = {
 	parse = function(self,params)
-		self.scenario_stagenum = tonumber(params)
+		self.scanarioname,self.scenario_stagenum = ParseID(params)
+		--self.scenario_stagenum = tonumber(params)
 	end,
 	iscomplete = function(self)
+		if not C_Scenario.IsInScenario() then return false,false, nil, nil, "bad" end
+
 		local name, currentStage, numStages,_,_,_,completed = C_Scenario.GetInfo();
 		return completed or (currentStage>self.scenario_stagenum), currentStage>0, nil, nil, (not completed and currentStage==0) and "bad"
 	end,
@@ -962,12 +1027,11 @@ GOALTYPES['scenariostage'] = {
 
 GOALTYPES['scenariogoal'] = {
 	parse = function(self,params)
-		local stagenum,rest = params:match("(%d+)%s*/%s*(.*)")
-		if stagenum then self.scenario_stagenum=tonumber(stagenum) params=rest end
-		local id,num = params:match("(%d+)%s+(%d+)")
-		if num then num,id=tonumber(num),tonumber(id) else id=tonumber(params) end
-		self.scenario_criteriaid = id
-		self.count = self.count or num
+		if tonumber(params) then
+			self.scenario_criteriaid = tonumber(params)
+		else
+			self.goalname,self.scenario_stagenum,self.scenario_criteriaid = ParseID(params)
+		end
 	end,
 	iscomplete = function(self)
 		if self.scenario_stagenum then
@@ -1037,13 +1101,17 @@ GOALTYPES['use'] = {
 		self.itemuse=true
 		if not self.item and not self.itemid then return "no parameter" end
 	end,
+	gettext = function(self) return L["stepgoal_use"]:format(COLOR_ITEM(self.item or "item #"..self.itemid)) end,
 }
 
 GOALTYPES['talk'] = {
 	parse = function(self,params)
-		self.npc,self.npcid = ParseID(params)
+		GOALTYPES['_item'].parse(self,params)
+		self.npc,self.npcid = self.target,self.targetid
+		self.target,self.targetid = nil,nil
 		if not self.npc and not self.npcid then return "no npc" end
 	end,
+	gettext = function(self,complete,complete_extra,goalcountnow,goalcountneeded,remaining,brief) return (brief and "%s" or L["stepgoal_talk to"..(complete and "_done" or "")]):format(COLOR_NPC(plural(ZGV.Localizers:GetTranslatedNPC(self.npcid),self.plural))) end,
 }
 
 GOALTYPES['skill'] = {
@@ -1055,20 +1123,29 @@ GOALTYPES['skill'] = {
 	iscomplete = function(self)
 		local skill = ZGV:GetSkill(self.skill)
 		return skill.level>=self.skilllevel,skill.max>=self.skilllevel
-	end
+	end,
+	gettext = function(self) return L["stepgoal_skill"]:format(COLOR_ITEM(ZGV.Professions.LocaleSkills[self.skill]),self.skilllevel) end,
 }
 
 GOALTYPES['skillmax'] = {
 	parse = function(self,params)
 		local err = GOALTYPES['skill'].parse(self,params)
 		if err then return err end
-		local validlevels={[75]=1,[150]=1,[225]=1,[300]=1,[375]=1,[450]=1,[525]=1,[600]=1,[700]=1}
+		local validlevels={[75]=1,[150]=1,[225]=1,[300]=1,[375]=1,[450]=1,[525]=1,[600]=1,[700]=1,[800]=1}
 		if not validlevels[self.skilllevel] then return "skillmax: you can't raise a skill max level to ".. self.skilllevel.."!" end
 	end,
 	iscomplete = function(self)
 		local skill = ZGV:GetSkill(self.skill)
 		return skill and skill.max>=self.skilllevel,skill
-	end
+	end,
+	gettext = function(self)
+		local spell = skillspells[self.skill] and skillspells[self.skill][self.skilllevel]
+		if spell and spell>0 then
+			return L["stepgoal_skillmax2"]:format(COLOR_ITEM(GetSpellInfo(spell)))
+		else
+			return L["stepgoal_skillmax"]:format(COLOR_ITEM(ZGV.Professions.LocaleSkills[self.skill]),self.skilllevel)
+		end
+	end,
 }
 
 GOALTYPES['create'] = {
@@ -1082,10 +1159,10 @@ GOALTYPES['create'] = {
 			local castskill
 			if skill=="Mining" or skill=="Smelting" then
 				self.skill = "Mining"
-				castskill = GetSpellInfo(ZGV.skillSpells["Smelting"])
+				castskill = GetSpellInfo(ZGV.Professions.skillSpells["Smelting"])
 			else
 				self.skill = skill
-				castskill = GetSpellInfo(ZGV.skillSpells[skill]) or ""
+				castskill = GetSpellInfo(ZGV.Professions.skillSpells[skill]) or ""
 			end
 
 			local total = level:match("(%d+) total")
@@ -1113,12 +1190,13 @@ GOALTYPES['create'] = {
 		elseif self.count and self.recipedata then
 			return GetItemCount(self.recipedata.itemid or 0)>=self.count,true
 		end
-	end
+	end,
+	-- gettext complex; still in Goal:GetText()
 }
 
 GOALTYPES['condition'] = {
 	iscomplete = function(self)
-		ZGV.Parser.ConditionEnv._SetLocal(self.parentStep.parentGuide,self.parentStep,self)
+		ZGV.Parser.ConditionEnv:_SetLocal(self.parentStep.parentGuide,self.parentStep,self)
 		return self.condition_complete and self:condition_complete(),true
 	end
 }
@@ -1151,81 +1229,220 @@ GOALTYPES['equipped'] = {
 			end
 		end
 		return false,true  -- in bags, not equipped
-	end
+	end,
+	gettext = function(self) return L["stepgoal_equipped"]:format(self.target) end,
 }
 
 GOALTYPES['rep'] = {
 	parse = function(self,params)
-		self.faction,self.rep,self.repexp = params:match("^(.-)%s*,%s*(.-),([0-9]-)$")
-		if type(self.rep)=="string" then self.rep=ZGV.StandingNamesEngRev[self.rep] end
+		self.params=params
+		self.faction,self.rep,self.repexp = params:match("^(.-)%s*,(.*)$")
+
+		if not ZGV.StandingNamesEngRev[self.rep] then
+			error("Unknown rep standing "..self.rep)
+		end
+
+		self.rep=ZGV.StandingNamesEngRev[self.rep] 
+		
 		if ZGV.BFL[self.faction] then self.faction=ZGV.BFL[self.faction] end
 	end,
 	iscomplete = function(self)
-		local rep = ZGV:GetReputation(self.faction)
-		if rep then
-			return rep.standing>=self.rep, true, 1-(rep:CalcTo(self.rep)/(rep.max-rep.min)) or 0
+		local faction = ZGV:GetReputation(self.faction)
+		if faction then
+			return faction.standing>=self.rep, true, 1-(faction:CalcTo(self.rep)/(faction.max-faction.min)) or 0
 		else
 			return nil,nil,nil
 		end
-	end
+	end,
+	gettext = function(self)
+		local text = L["stepgoal_rep"]:format(ZGV.StandingNames[self.rep],self.faction)
+		local progtext = L["completion_rep"]:format(ZGV:GetReputation(self.faction):Going())
+		return text,nil,progtext
+	end,
+	help = "rep <faction>,<standing>  -- completes when user has reached standing (string) with faction (string). "
 }
 
 GOALTYPES['invehicle'] = {
 	parse = function(self,params) end,
 	iscomplete = function(self)
 		return UnitInVehicle("player"),true
-	end
+	end,
+	gettext = function(self) return L["stepgoal_invehicle"] end,
 }
 
 GOALTYPES['outvehicle'] = {
 	parse = function(self,params) end,
 	iscomplete = function(self)
 		return not UnitInVehicle("player"),true
-	end
+	end,
+	gettext = function(self) return L["stepgoal_outvehicle"] end,
+}
+
+local buff_textures = {
+	['interface\icons\ability_creature_cursed_02']=132094,
+	['interface\icons\ability_druid_ferociousbite']=132127,
+	['interface\icons\ability_hunter_pet_crab']=132186,
+	['interface\icons\ability_hunter_pet_dragonhawk']=132188,
+	['interface\icons\ability_hunter_pet_gorilla']=132189,
+	['interface\icons\ability_hunter_pet_silithid']=236195,
+	['interface\icons\ability_hunter_pet_tallstrider']=132198,
+	['interface\icons\ability_mage_invisibility']=132220,
+	['interface\icons\ability_mount_blackbattlestrider']=298587,
+	['interface\icons\ability_mount_kodo_03']=132245,
+	['interface\icons\ability_mount_ridinghorse']=132261,
+	['interface\icons\ability_priest_angelicfeather']=642580,
+	['interface\icons\ability_rogue_bloodyeye']=132284,
+	['interface\icons\ability_rogue_disguise']=132288,
+	['interface\icons\ability_vanish']=132331,
+	['interface\icons\ability_vehicle_electrocharge']=252174,
+	['interface\icons\ability_vehicle_playerloaded']=252180,
+	['interface\icons\ability_warlock_soulswap']=460857,
+	['interface\icons\ability_warrior_cleave']=132338,
+	['interface\icons\ability_warrior_intensifyrage']=236310,
+	['interface\icons\ability_whirlwind']=132369,
+	['interface\icons\achievement_boss_ladyvashj']=236422,
+	['interface\icons\achievement_character_orc_female']=236451,
+	['interface\icons\achievement_character_orc_male']=236452,
+	['interface\icons\achievement_character_troll_female']=236455,
+	['interface\icons\achievement_character_troll_male']=236456,
+	['interface\icons\achievement_dungeon_bastion of twilight_twilightascendantcouncil']=429378,
+	['interface\icons\achievement_halloween_ghost_01']=236548,
+	['interface\icons\achievement_reputation_ogre']=236695,
+	['interface\icons\inv_chest_leather_08']=132723,
+	['interface\icons\inv_chest_wolf']=132760,
+	['interface\icons\inv_drink_05']=132792,
+	['interface\icons\inv_fishing_lure_clam']=970845,
+	['interface\icons\inv_fishing_lure_donut']=970846,
+	['interface\icons\inv_fishing_lure_frogfish']=970847,
+	['interface\icons\inv_fishing_lure_jalapeno']=970848,
+	['interface\icons\inv_fishing_lure_kelp']=970849,
+	['interface\icons\inv_fishing_lure_sandcrab']=970850,
+	['interface\icons\inv_gauntlets_02']=132936,
+	['interface\icons\inv_gizmo_rocketboot_01']=133029,
+	['interface\icons\inv_hammer_32']=537060,
+	['interface\icons\inv_helm_mask_fittedalpha_b_01_nightborne_02']=1354190,
+	['interface\icons\inv_helm_plate_twilighthammer_c_01']=391130,
+	['interface\icons\inv_helmet_152']=340019,
+	['interface\icons\inv_helmet_29']=133131,
+	['interface\icons\inv_helmet_31']=133133,
+	['interface\icons\inv_helmet_47']=133149,
+	['interface\icons\inv_helmet_66']=133168,
+	['interface\icons\inv_jewelry_necklace_16']=133303,
+	['interface\icons\inv_jewelry_ring_03']=133345,
+	['interface\icons\inv_mask_01']=133564,
+	['interface\icons\inv_mask_02']=133565,
+	['interface\icons\inv_misc_bag_10_blue']=133641,
+	['interface\icons\inv_misc_bandana_01']=133693,
+	['interface\icons\inv_misc_birdbeck_01']=133707,
+	['interface\icons\inv_misc_book_17']=354719,
+	['interface\icons\inv_misc_cauldron_nature']=133781,
+	['interface\icons\inv_misc_drum_01']=133841,
+	['interface\icons\inv_misc_enggizmos_20']=133878,
+	['interface\icons\inv_misc_fish_04']=133890,
+	['interface\icons\inv_misc_food_54']=134010,
+	['interface\icons\inv_misc_head_quillboar_01']=134172,
+	['interface\icons\inv_misc_herb_05']=134185,
+	['interface\icons\inv_misc_herb_nightmarevine']=134218,
+	['interface\icons\inv_misc_leatherscrap_13']=134262,
+	['interface\icons\inv_misc_monsterscales_12']=134314,
+	['interface\icons\inv_misc_ogrepinata']=306868,
+	['interface\icons\inv_misc_organ_03']=134340,
+	['interface\icons\inv_misc_plant_03']=237426,
+	['interface\icons\inv_offhand_dalaran_d_01']=237433,
+	['interface\icons\inv_potion_101']=134723,
+	['interface\icons\inv_shoulder_leather_firelandsdruid_d_01']=514340,
+	['interface\icons\inv_weapon_rifle_05']=135614,
+	['interface\icons\spell_arcane_rune']=252267,
+	['interface\icons\spell_deathknight_pathoffrost']=237528,
+	['interface\icons\spell_fire_burnout']=135789,
+	['interface\icons\spell_fire_elementaldevastation']=135791,
+	['interface\icons\spell_frost_summonwaterelemental_2']=135862,
+	['interface\icons\spell_holiday_tow_spicecloud']=135867,
+	['interface\icons\spell_holy_spiritualguidence']=135977,
+	['interface\icons\spell_lightning_lightningbolt01']=135990,
+	['interface\icons\spell_mage_altertime']=609811,
+	['interface\icons\spell_magic_featherfall']=135992,
+	['interface\icons\spell_magic_lesserinvisibilty']=135994,
+	['interface\icons\spell_nature_elementalabsorption']=136027,
+	['interface\icons\spell_nature_elementalshields']=136030,
+	['interface\icons\spell_nature_protectionformnature']=136074,
+	['interface\icons\spell_shadow_detectinvisibility']=136152,
+	['interface\icons\spell_shadow_evileye']=136155,
+	['interface\icons\spell_shadow_impphaseshift']=136164,
+	['interface\icons\spell_shadow_nethercloak']=136177,
+	['interface\icons\spell_shadow_possession']=136183,
+	['interface\icons\spell_shadow_twilight']=136223,
+	['ability_rogue_masterofsubtlety']=132299,
+	['ability_seal']=132311,
+	['inv_crate_03']=132763,
+	['inv_misc_head_murloc_01']=134169,
+	['inv_misc_head_troll_01']=134177,
+	['spell_nature_sleep']=136090,
+	['spell_shadow_unholyfrenzy']=136224,
 }
 
 GOALTYPES['havebuff'] = {
 	parse = function(self,params)
-		self.buff = params
+		local count,objinfo = params:match("^([0-9]+)%s+(.+)$")
+		if not count then 
+			objinfo = params 
+		else
+			self.count = tonumber(count)
+		end
+		local name,id = ParseID(objinfo)
+		self.buff = tonumber(id) or (name and buff_textures[name]) or name or "unknown"
 	end,
 	iscomplete = function(self)
 		for i=1,30 do
-			local name,_,tex = UnitBuff("player",i)
-			if name and (tex:find(self.buff) or name:find(self.buff)) then return true,true end
-			local name,_,tex = UnitDebuff("player",i)
-			if name and (tex:find(self.buff) or name:find(self.buff)) then return true,true end
+			local name,_,fileid,count = UnitBuff("player",i)
+			if name and (self.buff==fileid or name:find(self.buff)) and (not self.count or count>=self.count) then return true,true end
+			local name,_,fileid,count = UnitDebuff("player",i)
+			if name and (self.buff==fileid or name:find(self.buff)) and (not self.count or count>=self.count) then return true,true end
 		end
 		return false,true
-	end
+	end,
+	gettext = function(self) return L["stepgoal_havebuff"]:format(COLOR_ITEM(self.buff)) end,
+	help = "havebuff name##id  -- completes when user has buff with texture id. "
+	--[[
+	legacy syntax:
+	havebuff id,
+	havebuff name
+	--]]
 }
 
 GOALTYPES['nobuff'] = {
 	parse = GOALTYPES['havebuff'].parse,
 	iscomplete = function(self)
-		for i=1,30 do
-			local name,_,tex = UnitBuff("player",i)
-			if name and (tex:find(self.buff) or name:find(self.buff)) then return false,true end
-			local name,_,tex = UnitDebuff("player",i)
-			if name and (tex:find(self.buff) or name:find(self.buff)) then return false,true end
-		end
-		return true,true
-	end
+		return not GOALTYPES['havebuff'].iscomplete(self),true
+	end,
+	gettext = function(self) return L["stepgoal_nobuff"]:format(COLOR_ITEM(self.buff)) end,
+	help = "nobuff name##id  -- completes when user does not have buff with texture id. "
+	--[[
+	legacy syntax:
+	nobuff id,
+	nobuff name
+	--]]
 }
 
 GOALTYPES['click'] = {
 	parse = GOALTYPES['_item'].parse,
+	gettext = function(self,complete,complete_extra,goalcountnow,goalcountneeded,remaining,brief) return GenericText(brief,self.action,COLOR_ITEM,remaining or self.count,self.target,true,self.plural,complete and "_done" or "") end,
 }
 
 GOALTYPES['clicknpc'] = {
 	parse = function(self,params)
-		self.npc,self.npcid = ParseID(params)
+		GOALTYPES['_item'].parse(self,params)
+		self.npc,self.npcid = self.target,self.targetid
+		self.target,self.targetid = nil,nil
 	end,
+	gettext = function(self,complete,complete_extra,goalcountnow,goalcountneeded,remaining,brief) return GenericText(brief,self.action,COLOR_ITEM,remaining or self.count,ZGV.Localizers:GetTranslatedNPC(self.npcid),true,self.plural,complete and "_done" or "") end,
 }
 
 GOALTYPES['info'] = {
 	parse = function(self,params)
 		self.info = params
 	end,
+	gettext = function(self) return "|cffeeeecc"..(self.infoL or self.info).."|r" end,
 }
 
 --[[
@@ -1251,6 +1468,7 @@ GOALTYPES['cast'] = {
 		self.castspell,self.castspellid = ParseID(params)
 		if not self.castspell and not self.castspellid then return "no parameter" end
 	end,
+	gettext = function(self) return L["stepgoal_cast"]:format(COLOR_ITEM(self.castspell or "spell #"..self.castspellid)) end,
 }
 
 GOALTYPES['petaction'] = {
@@ -1259,6 +1477,7 @@ GOALTYPES['petaction'] = {
 		if not self.petaction then self.petaction = params end
 		if not self.petaction then return "petaction needs an action number" end
 	end,
+	gettext = function(self) return L["stepgoal_petaction"]:format(self.petaction) end,
 }
 
 GOALTYPES['home'] = {
@@ -1269,7 +1488,8 @@ GOALTYPES['home'] = {
 	iscomplete = function(self)
 		--return GetBindLocation("player")==self.home, true  -- didn't work well
 		return ZGV.recentlyHomeChanged, true
-	end
+	end,
+	gettext = function(self) return L["stepgoal_home"]:format(COLOR_LOC(self.param)) end,
 }
 
 GOALTYPES['hearth'] = {
@@ -1282,7 +1502,8 @@ GOALTYPES['hearth'] = {
 	end,
 	iscomplete = function(self)
 		return GetZoneText()==self.param or GetMinimapZoneText()==self.param or GetSubZoneText()==self.param, true
-	end
+	end,
+	gettext = function(self) return L["stepgoal_hearth to"]:format(COLOR_LOC(self.param)) end,
 }
 
 GOALTYPES['earn'] = {
@@ -1298,7 +1519,8 @@ GOALTYPES['earn'] = {
 		if not name then return end
 		local progress = got/self.count
 		return got>=self.count, true, progress>1 and 1 or progress
-	end
+	end,
+	-- gettext complex; still in Goal:GetText()
 }
 
 GOALTYPES['achieve'] = {
@@ -1338,11 +1560,35 @@ GOALTYPES['achieve'] = {
 		end
 	end,
 	gettext = function(self)
+		local name = select(2,GetAchievementInfo(self.achieveid or 0))
+		local text,progtext
 		if self.achievesub then
-			return (L["stepgoal_achievesub"]):format(COLOR_BOLD(select(1,GetAchievementCriteriaInfo(self.achieveid or 0,self.achievesub))),COLOR_BOLD(select(2,GetAchievementInfo(self.achieveid or 0))))
+			local desc = GetAchievementCriteriaInfo(self.achieveid or 0,self.achievesub)
+			text = (L["stepgoal_achievesub"]):format(COLOR_BOLD(desc),COLOR_BOLD(name))
+
+			-- partial achievement
+			local desc,ctype,completed,quantity,required = GetAchievementCriteriaInfo(self.achieveid,self.achievesub)
+			progtext = L["completion_goal"]:format(quantity,required)
 		else
-			return (L["stepgoal_achieve"]):format(COLOR_QUEST(select(2,GetAchievementInfo(self.achieveid or 0))))
+			text = (L["stepgoal_achieve"]):format(COLOR_QUEST(name))
+
+			-- full achievement
+			local id, name, points, completed = GetAchievementInfo(self.achieveid)
+			local numcrit = GetAchievementNumCriteria(self.achieveid)
+			local completenum = 0
+			for i=1,numcrit do
+				local desc,ctype,completed,quantity,required = GetAchievementCriteriaInfo(self.achieveid,i)
+				if completed then completenum=completenum+1 end
+			end
+			progtext = L["completion_goal"]:format(completenum,numcrit)
 		end
+
+		return text,nil,progtext
+	end,
+	onclick = function(self)
+		if not AchievementFrame then  AchievementFrame_LoadUI()  end
+		if not AchievementFrame:IsShown() then  AchievementFrame_ToggleAchievementFrame()  end
+		AchievementFrame_SelectAchievement(self.achieveid)
 	end,
 }
 
@@ -1360,17 +1606,28 @@ GOALTYPES['achievetext'] = {
 	end,
 }
 
-GOALTYPES['ding'] = {
+GOALTYPES['ding'] = "level";
+
+GOALTYPES['level'] = {
 	parse = function(self,params)
 		self.level = tonumber(params)
-		if not self.level then return "'ding': invalid level value" end
+		if not self.level then return "'level': invalid level value" end
 	end,
 	iscomplete = function(self)
 		local level = ZGV:GetPlayerPreciseLevel()
 		local percent = (level<self.level-1) and 0 or (level>=self.level) and 1.0 or UnitXP("player")/UnitXPMax("player")
 
 		return level>=tonumber(self.level), level<tonumber(self.level), percent
-	end
+	end,
+	gettext = function(self,complete,complete_extra,goalcountnow,goalcountneeded,remaining,brief)
+		local text = (brief and L["stepgoal_level_brief"] or L["stepgoal_level"]):format(COLOR_NPC(self.level))
+
+		local level = ZGV:GetPlayerPreciseLevel()
+		local percent = (level<self.level-1) and 0 or (level>=self.level) and 100 or floor(UnitXP("player")/UnitXPMax("player") * 100)
+		local progtext = L["completion_level"]:format(percent)
+
+		return text,nil,progtext
+	end,
 }
 
 GOALTYPES['questchoice'] = {
@@ -1443,9 +1700,13 @@ GOALTYPES['goto'] = {
 		end
 		if ZGV.recentlyVisitedCoords[self] then return true, true end
 
-		if self.x then
+		-- don't complete anything while we are flying, to avoid completing a point we flew over
+		if UnitOnTaxi("Player") then return false,true end
+
+		if self.x and not ZGV.LibRover.data.DungeonMaps[gm] then
 			local cx,cy,cm,cf=HBD:GetPlayerZonePosition(true)
 			local gx,gy,dist = self.x,self.y,self.dist or 30
+			if not cx then return false,true end
 			local realdist=HBD:GetZoneDistance(cm,cf,cx,cy,gm,gf,gx,gy)
 			if gm2 and not realdist then realdist=HBD:GetZoneDistance(cm,cf,cx,cy,gm2,gf,gx,gy) end
 			if gm3 and not realdist then realdist=HBD:GetZoneDistance(cm,cf,cx,cy,gm3,gf,gx,gy) end
@@ -1467,6 +1728,7 @@ GOALTYPES['goto'] = {
 			return not self.dist or self.dist>0,true
 		end
 	end,
+	-- gettext complex; still in Goal:GetText()
 	default_not_completable=true
 }
 GOALTYPES['at'] = GOALTYPES['goto']
@@ -1510,7 +1772,8 @@ GOALTYPES['fly'] = {  -- obsolete, JFTR
 		
 		return GOALTYPES['goto'].iscomplete(self)
 	end,
-	default_not_completable=true
+	gettext = function(self,complete,complete_extra,goalcountnow,goalcountneeded,remaining,brief) return (brief and "%s" or L[UnitOnTaxi("player") and "stepgoal_arrive" or "stepgoal_fly"]):format(COLOR_LOC(self.map==ZGV.CurrentMapID and self.landing or self.landing..", "..(ZGV.Pointer.GetMapNameByID2(self.map) or "World")) ) end,
+	default_not_completable=true,
 }
 
 GOALTYPES['fpath'] = {
@@ -1536,7 +1799,8 @@ GOALTYPES['fpath'] = {
 		return (   ZGV.db.char.taxis[ZGV.LibTaxi.TaxiNames_English[self.fpath]] 
 			or ZGV.db.char.taxis[ZGV.LibTaxi.TaxiNames_English[self.param2]]
 			or ZGV.db.char.taxis[ZGV.LibTaxi.TaxiNames_English[self.param3]]), true
-	end
+	end,
+	gettext = function(self) return L["stepgoal_fpath"]:format(COLOR_LOC(self.fpath or self.displayname)) end,
 }
 
 GOALTYPES['follower'] = {
@@ -1550,7 +1814,11 @@ GOALTYPES['follower'] = {
 
 GOALTYPES['count'] = {
 	parse = function(self,params)
-		self.count = tonumber(params)
+		if tonumber(params) then
+			self.count = tonumber(params)
+		else
+			self.countexpr = params
+		end
 	end,
 }
 
@@ -1687,9 +1955,13 @@ GOALTYPES['poicurrency'] = {
 			elseif currency == "AA" then name,_,icon = GetCurrencyInfo(829) --arakkoa archaeo
 			elseif currency == "OIL" then name,_,icon = GetCurrencyInfo(1101)
 			elseif currency == "PC" then name,icon = "Pet Charms","Interface\\Icons\\achievement_guildperk_honorablemention"
+			elseif currency == "OR" then name,_,icon = GetCurrencyInfo(1220)
+			elseif currency == "AM" then name,_,icon = GetCurrencyInfo(1155)
+			elseif currency == "VA" then name,_,icon = GetCurrencyInfo(1508)
+			elseif currency == "CC" then name,_,icon = GetCurrencyInfo(1275)
 			 end
-
-			if name then table.insert(step.poicurrencydata,{value=value, type=name, icon=icon:gsub("\ ","\\")}) end
+			 
+			if name and name~="" then table.insert(step.poicurrencydata,{value=value, type=name, icon=icon}) end
 		end
 
 
@@ -1755,6 +2027,8 @@ GOALTYPES['poiname'] = {
 			return "Pet: "..self.parentStep.poiname 
 		elseif self.parentStep.poitype == "achivement" then
 			return "Achivement: "..self.parentStep.poiname 
+		elseif self.parentStep.poitype == "questobjective" then
+			return "Quest: "..self.parentStep.poiname 
 		else 
 			return "POI: "..self.parentStep.poiname 
 		end
@@ -1799,12 +2073,65 @@ GOALTYPES['poivendor'] = {
 	end,
 }
 
+GOALTYPES['poicomment'] = {
+	parse = function(self,params,step)
+		step.poicomment = params
+		self.poicomment = params
+	end,
+	gettext = function(self)
+		if ZGV.db.profile.debug_poi then return "poicomment "..self.poicomment else return "" end
+	end,
+}
 
-GOALTYPES['poi_rare'] = GOALTYPES['poiname']
-GOALTYPES['poi_treasure'] = GOALTYPES['poiname']
-GOALTYPES['poi_battlepet'] = GOALTYPES['poiname']
-GOALTYPES['poi_achievement'] = GOALTYPES['poiname']
+GOALTYPES['poi_rare'] = {
+	parse = function(self,params,step)
+		step.poiname = params
+		self.poiname = params
+		step.poitype = "rare"
+	end,
+	gettext = GOALTYPES['poiname'].gettext,
+	onclick = GOALTYPES['poiname'].onclick,
+}
 
+GOALTYPES['poi_treasure'] = {
+	parse = function(self,params,step)
+		step.poiname = params
+		self.poiname = params
+		step.poitype = "treasure"
+	end,
+	gettext = GOALTYPES['poiname'].gettext,
+	onclick = GOALTYPES['poiname'].onclick,
+}
+
+GOALTYPES['poi_battlepet'] = {
+	parse = function(self,params,step)
+		step.poiname = params
+		self.poiname = params
+		step.poitype = "battlepet"
+	end,
+	gettext = GOALTYPES['poiname'].gettext,
+	onclick = GOALTYPES['poiname'].onclick,
+}
+
+GOALTYPES['poi_achievement'] = {
+	parse = function(self,params,step)
+		step.poiname = params
+		self.poiname = params
+		step.poitype = "achievement"
+	end,
+	gettext = GOALTYPES['poiname'].gettext,
+	onclick = GOALTYPES['poiname'].onclick,
+}
+
+GOALTYPES['poi_questobjective'] = {
+	parse = function(self,params,step)
+		step.poiname = params
+		self.poiname = params
+		step.poitype = "questobjective"
+	end,
+	gettext = GOALTYPES['poiname'].gettext,
+	onclick = GOALTYPES['poiname'].onclick,
+}
 
 local states={none=0,building=1,ready=2,active=3}
 
@@ -1846,6 +2173,204 @@ GOALTYPES['havebuilding'] = {
 	end
 }
 
+local dungeons={['return to karazhan']=1651}
+local bosses={}
+
+--[[
+-- Return to Karazhan
+1=Maiden
+2=Opera
+4=Mana Devourer
+8=Attumen
+16=Moroes
+32=Curator
+64=Vizadoom
+128=Nightbane (bonus)
+256=Shade of Medivh
+--]]
+
+--- Kill a boss in a saved instance.
+GOALTYPES['killboss'] = {
+	parse = function(self,params,step)
+		self.dungeon,self.bossbit = strsplit("/",params)
+		if not tonumber(self.dungeon) then self.dungeon=dungeons[(self.dungeon or ""):lower()] end
+		if not tonumber(self.bossbit) then self.bossbit=bosses[(self.bossbit or ""):lower()] end
+		self.dungeon=tonumber(self.dungeon)
+		self.bossbit=tonumber(self.bossbit)
+		if not self.dungeon or not self.bossbit then return false,"killboss needs a dungeon and bossbit." end
+	end,
+	iscomplete = function(self)
+		return ZGV.IsSavedBossDead(self.dungeon,self.bossbit), true
+	end,
+	gettext = function(self)
+		return "** kill boss bit "..self.bossbit.." in instance "..self.dungeon
+	end
+}
+
+local itemset_slots = { -- slot name to slot location
+	head=2,
+	shoulders=4,
+	chest=6,
+	legs=8,
+	waist=7,
+	feet=9,
+	wrist=10,
+	hands=11,
+	back=17,
+	}
+
+GOALTYPES['itemset'] = {
+	parse = function(self,params)
+		self.setid,self.slotname = params:match("([0-9]*)/(.*)")
+		self.complete = ""
+		if not self.setid then self.setid=params end -- only one param, full set goal
+		if not tonumber(self.setid) then 
+			ZGV:Debug("itemset - Missing or invalid id "..self.setid or "")
+			return
+		end
+
+		local setinfo = C_TransmogSets.GetSetInfo(self.setid)
+		if not setinfo then 
+			ZGV:Debug("itemset - Unknown set "..self.setid)
+			return
+		end
+		self.setname = setinfo.name 
+		self.setdescription = setinfo.description 
+
+		if self.slotname then
+			if not itemset_slots[self.slotname] then
+				ZGV:Debug("itemset - Unknown slot "..self.slotname)
+				self.slotname=nil
+			else
+				for appid in pairs(C_TransmogSets.GetSetSources(self.setid)) do -- find item that matches slot in param
+					local iteminfo = C_TransmogCollection.GetSourceInfo(appid)
+					if iteminfo.invType==itemset_slots[self.slotname] then
+						self.itemappid = appid
+						self.itemname = iteminfo.name
+						break
+					end
+				end
+			end
+		end
+	end,
+	iscomplete = function(self)
+		if not tonumber(self.setid) then return false,false end
+
+		if self.compelete then -- already marked as completed, don't check it anymore
+			return true,true
+		elseif not self.itemappid then -- full itemset check
+			local info = C_TransmogSets.GetSetInfo(self.setid)
+			if info.collected then self.complete = "_done" end
+			return info.collected, true
+		else -- single itemset
+			if not self.itemname then -- if no name recorded yet, try to get it
+				local iteminfo = C_TransmogCollection.GetSourceInfo(self.itemappid)
+				self.itemname = iteminfo.name
+			end
+			local sources = C_TransmogSets.GetSetSources(self.setid)
+			if sources[self.itemappid] then self.complete = "_done" end
+			return sources[self.itemappid], true
+		end
+	end,
+	gettext = function(self)
+		if self.itemappid then -- single item
+			return L['stepgoal_itemset_item'..self.complete]:format(self.itemname or "unknown")
+		else -- full set
+			return L['stepgoal_itemset'..self.complete]:format(self.setdescription or "unknown",self.setname or "unknown")
+		end
+	end, 
+}
+
+
+GOALTYPES['image'] = {
+	parse = function(self,params,step)
+		self.image,self.full_w,self.full_h,self.inline,self.inline_w,self.inline_h = strsplit(",",params)
+		if not self.image then return false,"image name missing." end
+		self.image = ZGV.DIR.."\\Guides\\Images\\"..self.image
+
+		if self.inline then
+			self.inline_w = math.min(self.inline_w or 260,260)
+			self.inline_h = self.inline_h or (self.full_h*260/self.full_w)
+			self.strict_text=true 
+		end
+	end,
+	gettext = function(self)
+		if self.inline then
+			return ("|T%s:%s:%s:0:0:1024:1024:0:%d:0:%d|t"):format(self.image,self.inline_h,self.inline_w,self.full_w,self.full_h)
+		else
+			return "Click to show image"
+		end
+	end,
+	onclick = function(self)
+		if not self.inline then
+			ZGV.GoalPopupImage(self.image,self.full_w,self.full_h)
+		end
+	end,
+}
+
+local function GoalPopupImage_DragStopHandler() 
+	ZGV.GoalPopupImageFrame:StopMovingOrSizing()
+	ZGV.db.profile.goalpopup_frame_anchor = {ZGV.GoalPopupImageFrame:GetPoint()} 
+end
+
+function ZGV.GoalPopupImage(image,w,h)
+	if not ZGV.GoalPopupImageFrame then
+		local CHAIN=ZGV.ChainCall
+		local ui = ZGV.UI
+		local SkinData = ui.SkinData
+
+		ZGV.GoalPopupImageFrame = CHAIN(ui:Create("Frame",UIParent,"ZGV_GoalPopupImageFrame"))
+			:SetFrameStrata("HIGH")
+			:SetToplevel(enable)
+			:SetBackdropColor(ZGV.HTMLColor("#222222ff"))
+			:SetPoint("TOPLEFT",UIParent,50,50)
+			:CanDrag(true)
+			:SetScript("OnDragStop",GoalPopupImage_DragStopHandler)
+		.__END
+		local MF=ZGV.GoalPopupImageFrame
+		tinsert(UISpecialFrames, "ZGV_GoalPopupImageFrame") -- allows the frame to be closable with ESC keypress
+
+		MF.HeaderFrame = CHAIN(ui:Create("Frame",MF,nil))
+			:SetPoint("TOPLEFT",1,-1)
+			:SetPoint("TOPRIGHT",-1,-1)
+			:SetHeight(27)
+			:SetFrameStrata("HIGH")
+			:SetFrameLevel(MF:GetFrameLevel()+2)
+			:SetBackdropColor(0,0,0,1)
+			:SetBackdropBorderColor(0,0,0,0)
+			:SetToplevel(enable)
+			.__END
+
+			MF.HeaderFrame.Logo = CHAIN(MF.HeaderFrame:CreateTexture())
+				:SetPoint("TOP",MF.HeaderFrame,"TOP",0,-3) 
+				:SetSize(100,25)
+				:SetTexture(SkinData("TitleLogo"))
+			.__END
+
+			MF.HeaderFrame.close = CHAIN(CreateFrame("Button",nil,MF.HeaderFrame))
+				:SetPoint("TOPRIGHT",-5,-5)
+				:SetSize(17,17)
+				:SetScript("OnClick", function() ZGV.GoalPopupImageFrame:Hide() end)
+				.__END
+			ZGV.AssignButtonTexture(MF.HeaderFrame.close,(SkinData("TitleButtons")),6,32)
+		MF.ImageTexture = CHAIN(MF:CreateTexture())
+				:SetPoint("TOPLEFT",MF.HeaderFrame,"BOTTOMLEFT",1,-1) 
+				:SetPoint("BOTTOMRIGHT",MF,"BOTTOMRIGHT",-1,1) 
+		.__END
+	end
+
+	if ZGV.db.profile.goalpopup_frame_anchor then
+		ZGV.db.profile.goalpopup_frame_anchor[2]=UIParent
+		ZGV.GoalPopupImageFrame:ClearAllPoints()
+		ZGV.GoalPopupImageFrame:SetPoint(unpack(ZGV.db.profile.goalpopup_frame_anchor))
+	end
+
+	ZGV.GoalPopupImageFrame:SetSize(w+2,h+29)
+	ZGV.GoalPopupImageFrame:SetScale(ZGV.db.profile.framescale)
+	ZGV.GoalPopupImageFrame:Show()
+	ZGV.GoalPopupImageFrame.ImageTexture:SetTexture(image)
+	ZGV.GoalPopupImageFrame.ImageTexture:SetTexCoord(0,w/1024,0,h/1024)
+end
 
 GOALTYPES['debugvar'] = { -- use for debugging step/goal completion. 
 	parse = function(self,params,step)
@@ -1872,7 +2397,7 @@ function ZGV.FindPetActionInfo(action)
 	if type(action)=="number" then return action,GetPetActionInfo(action) end
 	for i=1,12 do
 		local name,x,tex = GetPetActionInfo(i)
-		if name and (name:find(action) or tex:find(action)) then return i,name,x,tex end
+		if name and (name:find(action) or tex==action) then return i,name,x,tex end
 	end
 end
 
@@ -2056,25 +2581,6 @@ local unknownquest = {
 }
 
 
-local skillspells = {	--	apprentice	journeyman	expert		artisan		master		grand master	illustrious	zen master	draenor
-	Alchemy = {		[75]=2275,	[150]=2280,	[225]=3465,	[300]=11612,	[375]=28597,	[450]=51303,	[525]=80732,	[600]=105208,	[700]=156608,	},
-	Archaeology = {		[75]=95553,	[150]=95554,	[225]=95555,	[300]=95556,	[375]=95557,	[450]=95558,	[525]=89727,	[600]=110394,	[700]=158763,	},
-	Blacksmithing = {	[75]=2020,	[150]=2021,	[225]=3539,	[300]=9786,	[375]=29845,	[450]=51298,	[525]=76667,	[600]=110398,	[700]=158738,	},
-	Cooking = {		[75]=2551,	[150]=3412,	[225]=19886,	[300]=19887,	[375]=33361,	[450]=51295,	[525]=88054,	[600]=104382,	[700]=158766,	},
-	Enchanting = {		[75]=7414,	[150]=7415,	[225]=7416,	[300]=13921,	[375]=28030,	[450]=51312,	[525]=74259,	[600]=110401,	[700]=158717,	},
-	Engineering = {		[75]=4039,	[150]=4040,	[225]=4041,	[300]=12657,	[375]=30351,	[450]=51305,	[525]=82775,	[600]=110404,	[700]=158740,	},
-	['First Aid'] = {	[75]=3279,	[150]=3280,	[225]=19903,	[300]=19902,	[375]=27029,	[450]=50299,	[525]=74560,	[600]=110408,	[700]=158742,	},
-	Fishing = {		[75]=7733,	[150]=7734,	[225]=19889,	[300]=19890,	[375]=33100,	[450]=64484,	[525]=88869,	[600]=110412,	[700]=158744,	},
-	Herbalism = {		[75]=2372,	[150]=2373,	[225]=3571,	[300]=11994,	[375]=28696,	[450]=50301,	[525]=74520,	[600]=110415,	[700]=158746,	},
-	Inscription = {		[75]=45375,	[150]=45376,	[225]=45377,	[300]=45378,	[375]=45379,	[450]=45380,	[525]=86009,	[600]=110418,	[700]=158749,	},
-	Jewelcrafting = {	[75]=25245,	[150]=25246,	[225]=28896,	[300]=28899,	[375]=28901,	[450]=51310,	[525]=73319,	[600]=110421,	[700]=158753,	},
-	Leatherworking = {	[75]=2155,	[150]=2154,	[225]=3812,	[300]=10663,	[375]=32550,	[450]=51301,	[525]=81200,	[600]=110424,	[700]=158753,	},
-	Mining = {		[75]=2581,	[150]=2582,	[225]=3568,	[300]=10249,	[375]=29355,	[450]=50309,	[525]=74518,	[600]=102168,	[700]=158755,	},
-	Riding = {		[75]=33389,	[150]=33392,	[225]=34092,	[300]=34093,	[375]=90266,									},
-	Skinning = {		[75]=8615,	[150]=8619,	[225]=8620,	[300]=10769,	[375]=32679,	[450]=50307,	[525]=74523,	[600]=102220,	[700]=158757,	},
-	Tailoring = {		[75]=3911,	[150]=3912,	[225]=3913,	[300]=12181,	[375]=26791,	[450]=51308,	[525]=75157,	[600]=110427,	[700]=158759,	},
-}
-
 local function picktext(goal,goaltext)
 	if ZGV.db.profile.usegenericgoals then
 		goal.text = goaltext or goal.text or "?"
@@ -2086,17 +2592,13 @@ end
 
 local function get_recipe(skill,spellid)
 	if not skill or not spellid then return nil,"no_data" end
-	local skillid = ZGV.skillIDs[skill]
+	local skillid = ZGV.Professions.skillIDs[skill]
 	if not ZGV.db.char.RecipesKnown[skillid] then return nil,"no_prof" end
 	local recipe = ZGV.db.char.RecipesKnown[skillid][spellid]
 	if not recipe then return nil,"unknown" end
 	if not recipe.difficulty or not recipe.numAvailable then return nil,"unknown" end
 	return {avail=recipe.numAvailable,type=recipe.difficulty,numup=recipe.numSkillUps and recipe.numSkillUps>0 and recipe.numSkillUps or 1, lastskill=skill, itemid=recipe.productid}
 end
-
-local dots_table = {'.','..','...','....','.....','....','...','..'}
-local function dots(num) return dots_table[(num or 0)%8+1] end
-local function Lretrydots(goal) return dots(goal.Lretries)..(ZGV.db.profile.debug and goal.Lreasons or "") end
 
 
 
@@ -2178,7 +2680,7 @@ Goal.CraftingErrorMsgs = {
 
 setmetatable(Goal.CraftingErrorMsgs,{__index=function(t,index) return "Unknown status: "..index end}) 
 
-function Goal:GetText(showcompleteness,brief,showtotals)
+function Goal:GetText(showcompleteness,brief,showtotals,nocolor)
 	if not self.prepared then self:Prepare() end
 	--if type(goal)=="number" then goal=self.CurrentStep.goals[goal] end
 
@@ -2208,8 +2710,6 @@ function Goal:GetText(showcompleteness,brief,showtotals)
 	end
 
 
-	local _done = complete and "_done" or ""
-
 	local text="?"
 	local progtext
 	local extramsg
@@ -2236,22 +2736,12 @@ function Goal:GetText(showcompleteness,brief,showtotals)
 
 	elseif GOALTYPE and GOALTYPE.gettext then
 		local gettext,fallback
-		gettext,fallback,progtext = GOALTYPE.gettext(self,complete,complete_extra,goalcountnow,goalcountneeded,remaining)
+		gettext,fallback,progtext = GOALTYPE.gettext(self,complete,complete_extra,goalcountnow,goalcountneeded,remaining,brief)
 		text = gettext or fallback
 		if not showcompleteness then progtext=nil end
 
-
-	elseif self.action=='accept' then
-		text = (brief and "%s" or L["stepgoal_accept".._done]):format(COLOR_QUEST((self.questpart and L['questtitle_part'] or L['questtitle']):format(self.quest and self.quest.title or Lretrydots(self),self.questpart)))
-
-	elseif self.action=='turnin' then
-		text = (brief and "%s" or L["stepgoal_turn in".._done]):format(COLOR_QUEST((self.questpart and L['questtitle_part'] or L['questtitle']):format(self.quest and self.quest.title or Lretrydots(self),self.questpart)))
-
-	elseif self.action=='talk' then
-		text = (brief and "%s" or L["stepgoal_talk to".._done]):format(COLOR_NPC(ZGV.Localizers:GetTranslatedNPC(self.npcid)))
-
 	elseif self.action=='kill' then
-		text = GenericText(brief,self.action,COLOR_MONSTER,remaining or self.count,self.target,not self.count or self.count==1,self.plural,_done)
+		text = GenericText(brief,self.action,COLOR_MONSTER,remaining or self.count,self.target,not self.count or self.count==1,self.plural,(complete and "_done" or ""))
 		if self.usekillcount then goalcountnow=ZGV.recentKills[self.targetid] end
 
 	elseif self.action=='get' or self.action=='craft' or self.action=='farm' then
@@ -2259,7 +2749,7 @@ function Goal:GetText(showcompleteness,brief,showtotals)
 		goalcountneeded = goalcountneeded or self.count or 1
 		remaining = remaining or goalcountneeded-goalcountnow
 		if remaining<1 then remaining=goalcountneeded end
-		text = GenericText(brief,self.action,COLOR_ITEM,remaining or self.count,self.target,not self.count or self.count==1,self.plural or remaining~=1,_done)
+		text = GenericText(brief,self.action,COLOR_ITEM,remaining or self.count,self.target,not self.count or self.count==1,self.plural or remaining~=1,(complete and "_done" or ""))
 
 	elseif self.action=='goldcollect' then
 		-- Two different types of goldcollect goals. If there is a max demand, then don't want to collect more because that would flood the market.
@@ -2271,15 +2761,10 @@ function Goal:GetText(showcompleteness,brief,showtotals)
 			remaining = remaining or goalcountneeded-goalcountnow
 			if remaining<1 then remaining=goalcountneeded end
 
-			text = GenericText(brief,self.action,COLOR_ITEM, remaining or self.demand , self.target, self.demand==1, self.demand~=1, "_done")
+			text = GenericText(brief,self.action,COLOR_ITEM, remaining or self.demand , self.target, self.demand==1, self.demand~=1, goalcountneeded-goalcountnow>0 and "_done" or "")
 
-			if goalcountneeded-goalcountnow > 0 then
-				-- TODO clean this up? Doesn't localize well this way and is kind of a hack way of adjusting the text.
-				-- This kind of ruins the # _ done part. But using _done to seperate demand vs no demand
-				text = text:gsub("Collected", "Collect")
-			end
 		else
-			-- if we have 0 then just display "Collect item" If we have some of the item display "Collected # item"
+			-- if we have 0 demand then just display "Collect item" If we have some of the item display "Collected # item"
 			text = GenericText(brief,self.action,COLOR_ITEM,goalcountnow,self.target,goalcountnow==0,not self.count or self.count==1, "")
 		end
 
@@ -2288,16 +2773,13 @@ function Goal:GetText(showcompleteness,brief,showtotals)
 		goalcountneeded = goalcountneeded or self.count or 1
 		remaining = remaining or goalcountneeded-goalcountnow
 		if remaining<1 then remaining=goalcountneeded end
-		text = GenericText(brief,self.action,COLOR_ITEM,remaining or self.count,self.target,self.count==0,self.count~=1,_done)
-
-	elseif self.action=='goal' then
-		text = GenericText(brief,self.action,COLOR_GOAL,remaining or self.count,self.target,not self.count or self.count==1,false,_done)
+		text = GenericText(brief,self.action,COLOR_ITEM,remaining or self.count,self.target,self.count==0,self.count~=1,(complete and "_done" or ""))
 
 	elseif self.action=='earn' then
 		local name,count = GetCurrencyInfo(self.targetid or 0)
 		goalcount = goalcount or count
 		remaining = remaining or max(self.count-goalcount,0)
-		text = GenericText(brief,self.action,COLOR_ITEM,(remaining>0 and remaining) or self.count,name,false,self.count and self.count>1,_done)
+		text = GenericText(brief,self.action,COLOR_ITEM,(remaining>0 and remaining) or self.count,name,false,self.count and self.count>1,(complete and "_done" or ""))
 		goalmaxcount = (self.exact and self.count) or goalmaxcount or self.count
 
 	elseif self.action=='from' or self.action=='avoid' then
@@ -2341,32 +2823,6 @@ function Goal:GetText(showcompleteness,brief,showtotals)
 			text = L['stepgoal_avoid']:format(text)
 		end
 
-	elseif self.action=='ding' then
-		text = (brief and L["stepgoal_ding_brief"] or L["stepgoal_ding"]):format(COLOR_NPC(self.level))
-		if showcompleteness then
-			local percent
-			local level = ZGV:GetPlayerPreciseLevel()
-			percent = (level<self.level-1) and 0 or (level>=self.level) and 100 or floor(UnitXP("player")/UnitXPMax("player") * 100)
-			progtext = L["completion_ding"]:format(percent)
-		end
-
-	elseif self.action=='fpath' then text = L["stepgoal_fpath"]:format(COLOR_LOC(self.fpath or self.displayname))
-	elseif self.action=='home' then text = L["stepgoal_home"]:format(COLOR_LOC(self.param))
-	elseif self.action=='use' then text = L["stepgoal_use"]:format(COLOR_ITEM(self.item or "item #"..self.itemid))
-	elseif self.action=='item' then text = L["stepgoal_item"]:format("|c"..select(4,GetItemQualityColor(select(3,ZGV:GetItemInfo(self.itemid)) or 2)).. (self.item or "item #"..self.itemid))
-	elseif self.action=='cast' then text = L["stepgoal_cast"]:format(COLOR_ITEM(self.castspell or "spell #"..self.castspellid))
-	elseif self.action=='petaction' then text = L["stepgoal_petaction"]:format(self.petaction)
-	elseif self.action=='havebuff' then text = L["stepgoal_havebuff"]:format(COLOR_ITEM(self.buff))
-	elseif self.action=='nobuff' then text = L["stepgoal_nobuff"]:format(COLOR_ITEM(self.buff))
-	elseif self.action=='invehicle' then text = L["stepgoal_invehicle"]
-	elseif self.action=='outvehicle' then text = L["stepgoal_outvehicle"]
-	elseif self.action=='equipped' then text = L["stepgoal_equipped"]:format(self.target)
-	elseif self.action=='hearth' then text = L["stepgoal_hearth to"]:format(COLOR_LOC(self.param))
-	elseif self.action=='rep' then
-		text = L["stepgoal_rep"]:format(ZGV.StandingNames[self.rep],self.faction)
-		if showcompleteness then
-			progtext = L["completion_rep"]:format(ZGV:GetReputation(self.faction):Going())
-		end
 	elseif self.action=='goto' --[[or (self.action=='fly' and self.map==ZGV.CurrentMapID)]] then
 		--if self.CurrentGuide.steps[self.CurrentStepNum-1] and self.CurrentGuide.steps[self.CurrentStepNum-1].map~=goal.map then
 		local form="stepgoal_go to"
@@ -2414,63 +2870,12 @@ function Goal:GetText(showcompleteness,brief,showtotals)
 
 	elseif self.action=='gotonpc' then text = L["stepgoal_gotonpc"]:format(self.npcname)
 		
-	elseif (self.action=='fly') then
-		-- just the map
-		text = (brief and "%s" or L[UnitOnTaxi("player") and "stepgoal_arrive" or "stepgoal_fly"]):format(
-			COLOR_LOC(self.map==ZGV.CurrentMapID and self.landing or self.landing..", "..(ZGV.Pointer.GetMapNameByID2(self.map) or "World")) )
-
-	elseif self.action=='achieve' then
-		local id, name, points, completed = GetAchievementInfo(self.achieveid)
-		if self.achievesub then
-			local desc,ctype,completed,quantity,required = GetAchievementCriteriaInfo(self.achieveid,self.achievesub)
-			text = L["stepgoal_achievesub"]:format(COLOR_QUEST(desc),COLOR_ITEM(name))
-		else
-			text = L["stepgoal_achieve"]:format(COLOR_ITEM(name))
-		end
-		if showcompleteness then
-			if self.achievesub then
-				-- partial achievement
-				local desc,ctype,completed,quantity,required = GetAchievementCriteriaInfo(self.achieveid,self.achievesub)
-				progtext = L["completion_goal"]:format(quantity,required)
-			else
-				-- full achievement
-				local id, name, points, completed = GetAchievementInfo(self.achieveid)
-				local numcrit = GetAchievementNumCriteria(self.achieveid)
-				local completenum = 0
-				for i=1,numcrit do
-					local desc,ctype,completed,quantity,required = GetAchievementCriteriaInfo(self.achieveid,i)
-					if completed then completenum=completenum+1 end
-				end
-				progtext = L["completion_goal"]:format(completenum,numcrit)
-			end
-		end
-	elseif self.action=='skill' then
-		text = L["stepgoal_skill"]:format(COLOR_ITEM(ZGV.LocaleSkills[self.skill]),self.skilllevel)
-	elseif self.action=='skillmax' then
-		local spell = skillspells[self.skill] and skillspells[self.skill][self.skilllevel]
-		if spell and spell>0 then
-			text = L["stepgoal_skillmax2"]:format(COLOR_ITEM(GetSpellInfo(spell)))
-		else
-			text = L["stepgoal_skillmax"]:format(COLOR_ITEM(ZGV.LocaleSkills[self.skill]),self.skilllevel)
-		end
-	elseif self.action=='learn' then
-		text = L["stepgoal_learn"]:format(COLOR_ITEM(self.recipe))
-
-	elseif self.action=='learnspell' then
-		text = L["stepgoal_learnspell"]:format(COLOR_ITEM(GetSpellInfo(self.spellid)))
-
-	elseif self.action=='learnpet' then
-		text = L["stepgoal_learnpet"]:format(COLOR_ITEM(ZGV.Localizers:GetTranslatedNPC(self.petid)))
-
-	elseif self.action=='learnmount' then
-		text = L["stepgoal_learnmount"]:format(COLOR_ITEM(GetSpellInfo(self.spellid)))
-
 	elseif self.action=='create' then
 		if self.skill then
 			-- new syntax
 
 			local skill = ZGV:GetSkill(self.skill)
-			local skill_loc = ZGV.LocaleSkills[self.skill]
+			local skill_loc = ZGV.Professions.LocaleSkills[self.skill]
 			local skill_create_text = L['stepgoal_perform_'..(self.skill:lower())]
 
 			if self:IsComplete() then
@@ -2594,7 +2999,7 @@ function Goal:GetText(showcompleteness,brief,showtotals)
 
 		else
 			-- old create syntax
-			text = GenericText(brief,"create",COLOR_ITEM,self.count,ZGV:GetItemInfo(self.itemid),not self.count or self.count==1,self.count and self.count>1,_done)
+			text = GenericText(brief,"create",COLOR_ITEM,self.count,ZGV:GetItemInfo(self.itemid),not self.count or self.count==1,self.count and self.count>1,(complete and "_done" or ""))
 		end
 		--]]
 
@@ -2624,17 +3029,6 @@ function Goal:GetText(showcompleteness,brief,showtotals)
 		end
 		text = L["stepgoal_complete"]:format(COLOR_GOAL(txt))
 
-	elseif self.action=='confirm' then
-		text = L["stepgoal_confirm"]
-
-	elseif self.action=='click' then
-		text = GenericText(brief,self.action,COLOR_ITEM,remaining or self.count,self.target,true,self.plural,_done)
-
-	elseif self.action=='clicknpc' then
-		text = GenericText(brief,self.action,COLOR_ITEM,remaining or self.count,self.npc,true,self.plural,_done)
-
-	elseif self.action=='info' then
-		text = "|cffeeeecc"..(self.infoL or self.info).."|r"
 	end
 
 
@@ -2656,15 +3050,21 @@ function Goal:GetText(showcompleteness,brief,showtotals)
 
 	if type(showtotals)~="boolean" then showtotals=ZGV.db.profile.goaltotals end
 	if showtotals then
-		if goalcountnow and goalcountneeded and goalcountneeded>0 then progtext=L["completion_goal"]:format(goalcountnow,goalcountneeded)
-		elseif goalcountneeded and goalcountneeded==0 then progtext=L["completion_count"]:format(goalcountnow)
-		end
+		if not progtext then
+			if goalcountnow and goalcountneeded and goalcountneeded>0 then progtext=L["completion_goal"]:format(goalcountnow,goalcountneeded)
+			elseif goalcountneeded and goalcountneeded==0 then progtext=L["completion_count"]:format(goalcountnow)
+			end
 
+			if self.action=='skill' then
+				local currentskill = ZGV:GetSkill(self.skill).level
+				progtext=L["completion_goal"]:format(currentskill,self.skilllevel)
+			end
 
-		if zgv_gold_achieves[self.achieveid] then
-			local goldowned = ZGV.GetMoneyString(math.floor(goalcountnow or 0))
-			local goldneeded = ZGV.GetMoneyString(math.floor(goalcountneeded or 0))
-			progtext=L["completion_goal"]:format(goldowned,goldneeded)
+			if zgv_gold_achieves[self.achieveid] then
+				local goldowned = ZGV.GetMoneyString(math.floor(goalcountnow or 0))
+				local goldneeded = ZGV.GetMoneyString(math.floor(goalcountneeded or 0))
+				progtext=L["completion_goal"]:format(goldowned,goldneeded)
+			end
 		end
 
 		if progtext then
@@ -2678,7 +3078,11 @@ function Goal:GetText(showcompleteness,brief,showtotals)
 		end
 	end
 	
-	return text .. (extramsg and "\n "..extramsg or "")
+	text = text .. (extramsg and "\n "..extramsg or "")
+
+	if nocolor then text=decolor(text) end
+
+	return text
 end
 
 function Goal:GetString()
@@ -2768,7 +3172,7 @@ function Goal:IsObsolete()
 	do return false end --obsoletion is by section now
 end
 
-local _n = {"ding","kill","rep","achieve","skill","skillmax","create","learn","learnspell","learnpet","learnmount","buy"}
+local _n = {"level","kill","rep","achieve","skill","skillmax","create","learn","learnspell","learnpet","learnmount","buy"}
 local nonaux = {}  for i=1,#_n do nonaux[_n[i]]=true end
 
 function Goal:IsAuxiliary()
@@ -2813,7 +3217,7 @@ function Goal:OnEnter()
 
 	if self.autoscriptfun and (not ZGV.LastSkip or ZGV.LastSkip>=0) and not self.parentStep.needsreload then
 		ZGV:Debug("calling autoscript ".. self.autoscript)
-		ZGV.Parser.ConditionEnv._SetLocal(self.parentStep.parentGuide,self.parentStep,self)
+		ZGV.Parser.ConditionEnv:_SetLocal(self.parentStep.parentGuide,self.parentStep,self)
 		self:autoscriptfun()
 		ZGV:Debug("called autoscript.")
 	end
@@ -3044,6 +3448,14 @@ function Goal:OnClick(button)
 		end
 		--]]
 	end
+
+	if self.loadguide then
+		ZGV:SetGuide(self.loadguide,self.loadguidestep)
+	end
+
+	if IsShiftKeyDown() then
+		self:ShareToChat(ZGV.db.profile.share_target or "SAY","brand","withtips")
+	end
 	
 	--[[
 	-- This cost me 2h of sleep. Thanks to whoever wrote that. >:[  ~~sinus
@@ -3116,4 +3528,42 @@ function Goal:GetDebugDump()
 		end
 	end
 	return ret
+end
+
+function Goal:GetTextForSharing(withtip)
+	local text = self:GetText(false and "showcomplete",false and "brief",true or "totals",true or "stripcolor")
+	if text=="?" then text="" end
+	if self.tooltip and withtip then
+		if #text>0 then text=text.."\n" end
+		text=text .. decolor(self.tooltip)
+	end
+	return text
+end
+
+function Goal:GetTextForSharingWithAllTips()
+	local begin_num = self.num
+	if not self.text then
+		while begin_num>1 do  begin_num=begin_num-1  if self.parentStep.goals[begin_num].action == "text" then break end  end
+		if begin_num<1 then begin_num=1 end
+	end
+	local end_num = self.num
+	while end_num<#self.parentStep.goals do  end_num=end_num+1  if self.parentStep.goals[end_num].action or not self.parentStep.goals[end_num].tooltip then end_num=end_num-1 break end  end
+	if end_num>#self.parentStep.goals then end_num=#self.parentStep.goals end
+	
+	local lines={}
+	for i=begin_num,end_num do
+		local goal=self.parentStep.goals[i]
+		if goal:IsVisible() then
+			tinsert(lines,self.parentStep.goals[i]:GetTextForSharing("withtip"))
+		end
+	end
+
+	return lines
+end
+
+function Goal:ShareToChat(target,brand,withtips)
+	if target=="PARTY" and not IsInGroup() then ZGV:Error(ERR_NOT_IN_GROUP) return end
+	if target=="RAID" and not IsInRaid() then ZGV:Error(ERR_NOT_IN_RAID) return end
+	if brand and not ZGV.step_share_onceflag then  ZGV.step_share_onceflag=true  SendChatMessage(L['goalshare_brand']:format(self.parentStep.parentGuide.title_short,self.parentStep.num),target) end
+	for i,line in ipairs(self:GetTextForSharingWithAllTips()) do  SendChatMessage(line,target)  end
 end

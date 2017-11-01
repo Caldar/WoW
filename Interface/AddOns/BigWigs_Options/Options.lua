@@ -3,11 +3,6 @@ local BigWigs = BigWigs
 local options = BigWigs:NewModule("Options")
 options:SetEnabledState(true)
 
--- Embed callback handler
-options.RegisterMessage = BigWigs.RegisterMessage
-options.UnregisterMessage = BigWigs.UnregisterMessage
-options.SendMessage = BigWigs.SendMessage
-
 local colorize = nil
 do
 	local r, g, b
@@ -22,7 +17,7 @@ end
 
 local C = BigWigs.C
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
+local L = BigWigsAPI:GetLocale("BigWigs")
 
 local icon = LibStub("LibDBIcon-1.0", true)
 local acr = LibStub("AceConfigRegistry-3.0")
@@ -30,12 +25,12 @@ local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 
 local loader = BigWigsLoader
-local GetAreaMapInfo = loader.GetAreaMapInfo
-local fakeWorldZones = loader.fakeWorldZones
+local API = BigWigsAPI
+options.SendMessage = loader.SendMessage
 
 local colorModule
 local soundModule
-local translateZoneID
+local isOpen
 
 local showToggleOptions, getAdvancedToggleOption = nil, nil
 
@@ -63,7 +58,7 @@ local acOptions = {
 					desc = L.minimapToggle,
 					order = 13,
 					get = function() return not BigWigs3IconDB.hide end,
-					set = function(info, v)
+					set = function(_, v)
 						if v then
 							BigWigs3IconDB.hide = nil
 							icon:Show("BigWigs")
@@ -180,7 +175,7 @@ local acOptions = {
 				},
 				gitHubTitle = {
 					type = "description",
-					name = "\n\n|cFFFED000".. L.gitHubTitle ..":|r  |cFF74BBFBgithub.com/BigWigsMods|r",
+					name = "\n\n|cFFFED000GitHub:|r  |cFF74BBFBgithub.com/BigWigsMods|r  |cFFFED000Discord:|r  |cFF74BBFBdiscord.gg/jGveg85|r",
 					fontSize = "large",
 					order = 51,
 					width = "full",
@@ -196,17 +191,6 @@ local acOptions = {
 		},
 	},
 }
-
-function translateZoneID(id)
-	if not id or type(id) ~= "number" then return end
-	local name
-	if id < 10 then
-		name = select(id * 2, GetMapContinents())
-	else
-		name = GetMapNameByID(id)
-	end
-	return name
-end
 
 do
 	local addonName = ...
@@ -235,8 +219,8 @@ do
 end
 
 function options:OnEnable()
-	self:RegisterMessage("BigWigs_BossModuleRegistered", "Register")
-	self:RegisterMessage("BigWigs_PluginRegistered", "Register")
+	loader.RegisterMessage(self, "BigWigs_BossModuleRegistered", "Register")
+	loader.RegisterMessage(self, "BigWigs_PluginRegistered", "Register")
 
 	for name, module in BigWigs:IterateBossModules() do
 		self:Register("BigWigs_BossModuleRegistered", name, module)
@@ -245,14 +229,22 @@ function options:OnEnable()
 		self:Register("BigWigs_PluginRegistered", name, module)
 	end
 
-	self:RegisterMessage("BigWigs_StartConfigureMode")
-	self:RegisterMessage("BigWigs_StopConfigureMode")
+	loader.RegisterMessage(self, "BigWigs_StartConfigureMode")
+	loader.RegisterMessage(self, "BigWigs_StopConfigureMode")
 
 	self.OnEnable = nil
 end
 
 function options:Open()
-	options:OpenConfig()
+	if isOpen then
+		isOpen:Hide()
+	else
+		options:OpenConfig()
+	end
+end
+
+function options:IsOpen()
+	return isOpen
 end
 
 -------------------------------------------------------------------------------
@@ -262,7 +254,7 @@ end
 do
 	local configMode = nil
 	function options:InConfigureMode() return configMode end
-	function options:BigWigs_StartConfigureMode(event, hideFrame)
+	function options:BigWigs_StartConfigureMode()
 		configMode = true
 	end
 	function options:BigWigs_StopConfigureMode()
@@ -305,7 +297,7 @@ local function masterOptionToggled(self, event, value)
 	local key = self:GetUserData("key")
 	local module = self:GetUserData("module")
 	if type(key) == "string" and key:find("custom_", nil, true) then
-		module.db.profile[key] = value
+		module.db.profile[key] = value or false
 	else
 		if value then
 			module.db.profile[key] = module.toggleDefaults[key]
@@ -388,6 +380,11 @@ local function advancedToggles(dbKey, module, check)
 				flashGroup:AddChild(pulse)
 
 				advancedOptions[#advancedOptions + 1] = flashGroup
+			elseif key == "VOICE" then
+				if API:HasVoicePack() then
+					local name, desc = BigWigs:GetOptionDetails(key)
+					advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check)
+				end
 			else
 				local name, desc = BigWigs:GetOptionDetails(key)
 				advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check)
@@ -455,7 +452,7 @@ local advancedTabs = {
 }
 
 function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
-	local dbKey, name, desc = BigWigs:GetBossOptionDetails(module, bossOption)
+	local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, bossOption)
 	local back = AceGUI:Create("Button")
 	back:SetText(L.back)
 	back:SetFullWidth(true)
@@ -464,6 +461,7 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	end)
 	local check = AceGUI:Create("CheckBox")
 	check:SetLabel(colorize[name])
+	if icon then check:SetImage(icon, 0.07, 0.93, 0.07, 0.93) end
 	check:SetTriState(true)
 
 	check:SetFullWidth(true)
@@ -777,14 +775,12 @@ function showToggleOptions(widget, event, group)
 	populateToggleOptions(widget, module)
 end
 
-local function onZoneShow(treeWidget, zoneId)
-	local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
-
+local function onZoneShow(treeWidget, id)
 	-- Make sure all the bosses for this zone are loaded.
-	loader:LoadZone(instanceId)
+	loader:LoadZone(id)
 
 	-- Grab the module list from this zone
-	local moduleList = loader:GetZoneMenus()[zoneId]
+	local moduleList = loader:GetZoneMenus()[id]
 	if type(moduleList) ~= "table" then return end -- No modules registered
 
 	local zoneList, zoneSort = {}, {}
@@ -804,7 +800,7 @@ local function onZoneShow(treeWidget, zoneId)
 	innerContainer:SetTitle(L.selectEncounter)
 	innerContainer:SetLayout("Flow")
 	innerContainer:SetCallback("OnGroupSelected", showToggleOptions)
-	innerContainer:SetUserData("zone", zoneId)
+	innerContainer:SetUserData("zone", id)
 	innerContainer:SetGroupList(zoneList, zoneSort)
 
 	-- scroll is where we actually put stuff in case things
@@ -868,7 +864,7 @@ do
 
 	local function onTreeGroupSelected(widget, event, value)
 		widget:ReleaseChildren()
-		local zoneId = value:match("\001(%d+)$")
+		local zoneId = value:match("\001(-?%d+)$")
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
 		elseif value:match("^BigWigs_") and value ~= "BigWigs_Legion" and GetAddOnEnableState(playerName, value) == 0 then
@@ -933,26 +929,30 @@ do
 			end
 
 			do
-				local tmp, tmpZone = {}, {}
+				local zoneToId, alphabeticalZoneList = {}, {}
 				for k in next, loader:GetZoneMenus() do
-					local zone = translateZoneID(k)
+					local zone = k < 0 and GetMapNameByID(-k) or GetRealZoneText(k)
 					if zone then
-						tmp[zone] = k
-						tmpZone[#tmpZone+1] = zone
+						if zoneToId[zone] then
+							zone = zone .. "1" -- When instances exist more than once (Karazhan)
+						end
+						zoneToId[zone] = k
+						alphabeticalZoneList[#alphabeticalZoneList+1] = zone
 					end
 				end
-				sort(tmpZone)
-				for i = 1, #tmpZone do
-					local zone = tmpZone[i]
-					local zoneId = tmp[zone]
-					local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
-					local parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]] -- Get expansion number for this zone
+
+				sort(alphabeticalZoneList) -- Make alphabetical
+				for i = 1, #alphabeticalZoneList do
+					local zoneName = alphabeticalZoneList[i]
+					local id = zoneToId[zoneName]
+
+					local parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]] -- Get expansion number for this zone
 					local treeParent = treeTbl[parent] -- Grab appropriate expansion name
 					if treeParent and treeParent.enabled then -- third-party plugins can add empty zones if you don't have the expansion addon enabled
 						if not treeParent.children then treeParent.children = {} end -- Create sub menu table
 						tinsert(treeParent.children, { -- Add new instance/zone sub menu
-							value = zoneId,
-							text = zone,
+							value = id,
+							text = zoneName,
 						})
 					end
 				end
@@ -967,21 +967,25 @@ do
 			tree:SetCallback("OnGroupSelected", onTreeGroupSelected)
 
 			-- Do we have content for the zone we're in? Then open straight to that zone.
-			local mapId, parent
+			local id, parent
 			if not IsInInstance() then
-				local id = -(loader.GetPlayerMapAreaID("player") or 0)
-				mapId = loader.zoneTblWorld[id]
-				parent = loader.zoneTbl[mapId] and addonNameToHeader[loader.zoneTbl[mapId]]
+				local mapId = GetPlayerMapAreaID("player")
+				if mapId then
+					id = loader.zoneTblWorld[-mapId]
+				else
+					local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
+					id = instanceId
+				end
+				parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]]
 			else
 				local _, _, _, _, _, _, _, instanceId = loader.GetInstanceInfo()
-				loader.SetMapToCurrentZone()
-				mapId = loader.GetCurrentMapAreaID()
+				id = instanceId
 				parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]]
 			end
 			if parent then
-				local moduleList = mapId and loader:GetZoneMenus()[mapId]
+				local moduleList = id and loader:GetZoneMenus()[id]
 				local value = treeTbl[parent].value
-				tree:SelectByValue(moduleList and ("%s\001%d"):format(value, mapId) or value)
+				tree:SelectByValue(moduleList and ("%s\001%d"):format(value, id) or value)
 			else
 				tree:SelectByValue(defaultHeader)
 			end
@@ -994,8 +998,9 @@ do
 		playerName = UnitName("player")
 
 		local bw = AceGUI:Create("Frame")
+		isOpen = bw
 		bw:SetTitle("BigWigs")
-		bw:SetStatusText(" "..BigWigsLoader:GetReleaseString())
+		bw:SetStatusText(" "..loader:GetReleaseString())
 		bw:SetWidth(858)
 		bw:SetHeight(660)
 		bw:EnableResize(false)
@@ -1003,6 +1008,7 @@ do
 		bw:SetCallback("OnClose", function(widget)
 			AceGUI:Release(widget)
 			wipe(statusTable)
+			isOpen = nil
 		end)
 
 		local introduction = AceGUI:Create("Label")
@@ -1048,7 +1054,7 @@ end
 
 do
 	local registered, subPanelRegistry, pluginRegistry = {}, {}, {}
-	function options:Register(message, moduleName, module)
+	function options:Register(_, _, module)
 		if registered[module.name] then return end
 		registered[module.name] = true
 		if module.pluginOptions then

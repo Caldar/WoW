@@ -1,12 +1,10 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames');
-local LSM = LibStub("LibSharedMedia-3.0");
 
 --Cache global variables
 --Lua functions
 local unpack, tonumber = unpack, tonumber
-local floor, abs, min = math.floor, abs, math.min
-local sub, utf8sub, utf8len = string.sub, string.utf8sub, string.utf8len
+local abs, min = abs, math.min
 --WoW API / Variables
 local CreateFrame = CreateFrame
 local UnitSpellHaste = UnitSpellHaste
@@ -34,9 +32,9 @@ local INVERT_ANCHORPOINT = {
 
 local ticks = {}
 
-function UF:Construct_Castbar(frame, direction, moverName)
+function UF:Construct_Castbar(frame, moverName)
 	local castbar = CreateFrame("StatusBar", nil, frame)
-	castbar:SetFrameStrata("MEDIUM")
+	castbar:SetFrameLevel(frame.RaisedElementParent:GetFrameLevel() + 30) --Make it appear above everything else
 	self['statusbars'][castbar] = true
 	castbar.CustomDelayText = self.CustomCastDelayText
 	castbar.CustomTimeText = self.CustomTimeText
@@ -48,7 +46,7 @@ function UF:Construct_Castbar(frame, direction, moverName)
 	castbar.PostCastInterruptible = self.PostCastInterruptible
 	castbar.PostCastNotInterruptible = self.PostCastNotInterruptible
 	castbar:SetClampedToScreen(true)
-	castbar:CreateBackdrop('Default', nil, nil, self.thinBorders)
+	castbar:CreateBackdrop('Default', nil, nil, self.thinBorders, true)
 
 	castbar.Time = castbar:CreateFontString(nil, 'OVERLAY')
 	self:Configure_FontString(castbar.Time)
@@ -77,7 +75,7 @@ function UF:Construct_Castbar(frame, direction, moverName)
 
 	local button = CreateFrame("Frame", nil, castbar)
 	local holder = CreateFrame('Frame', nil, castbar)
-	button:SetTemplate("Default", nil, nil, self.thinBorders)
+	button:SetTemplate("Default", nil, nil, self.thinBorders, true)
 
 	castbar.Holder = holder
 	--these are placeholder so the mover can be created.. it will be changed.
@@ -167,8 +165,6 @@ function UF:Configure_Castbar(frame)
 		if(castbar.Holder.mover) then
 			E:DisableMover(castbar.Holder.mover:GetName())
 		end
-
-		castbar:SetFrameStrata("HIGH")
 	else
 		local isMoved = E:HasMoverBeenMoved(frame:GetName()..'CastbarMover') or not castbar.Holder.mover
 		if not isMoved then
@@ -191,8 +187,6 @@ function UF:Configure_Castbar(frame)
 		if(castbar.Holder.mover) then
 			E:EnableMover(castbar.Holder.mover:GetName())
 		end
-
-		castbar:SetFrameStrata("MEDIUM")
 	end
 
 	if not db.castbar.iconAttached and db.castbar.icon then
@@ -200,7 +194,6 @@ function UF:Configure_Castbar(frame)
 		local anchorPoint = db.castbar.iconPosition
 		castbar.Icon.bg:ClearAllPoints()
 		castbar.Icon.bg:Point(INVERT_ANCHORPOINT[anchorPoint], attachPoint, anchorPoint, db.castbar.iconXOffset, db.castbar.iconYOffset)
-		castbar.Icon.bg:SetFrameStrata("MEDIUM")
 	elseif(db.castbar.icon) then
 		castbar.Icon.bg:ClearAllPoints()
 		if frame.ORIENTATION == "RIGHT" then
@@ -208,11 +201,21 @@ function UF:Configure_Castbar(frame)
 		else
 			castbar.Icon.bg:Point("RIGHT", castbar, "LEFT", -frame.SPACING*3, 0)
 		end
-		castbar.Icon.bg:SetFrameStrata(castbar:GetFrameStrata())
 	end
 
 	--Adjust tick heights
 	castbar.tickHeight = castbar:GetHeight()
+	
+	if db.castbar.ticks then --Only player unitframe has this
+		--Set tick width and color
+		castbar.tickWidth = db.castbar.tickWidth
+		castbar.tickColor = db.castbar.tickColor
+		
+		for i = 1, #ticks do
+			ticks[i]:SetVertexColor(castbar.tickColor.r, castbar.tickColor.g, castbar.tickColor.b, castbar.tickColor.a)
+			ticks[i]:Width(castbar.tickWidth)
+		end
+	end
 
 	if db.castbar.enable and not frame:IsElementEnabled('Castbar') then
 		frame:EnableElement('Castbar')
@@ -290,8 +293,8 @@ function UF:SetCastTicks(frame, numTicks, extraTickRatio)
 			ticks[i] = frame:CreateTexture(nil, 'OVERLAY')
 			ticks[i]:SetTexture(E["media"].normTex)
 			E:RegisterStatusBar(ticks[i])
-			ticks[i]:SetVertexColor(0, 0, 0, 0.8)
-			ticks[i]:Width(1)
+			ticks[i]:SetVertexColor(frame.tickColor.r, frame.tickColor.g, frame.tickColor.b, frame.tickColor.a)
+			ticks[i]:Width(frame.tickWidth)
 		end
 
 		ticks[i]:Height(frame.tickHeight)
@@ -314,7 +317,7 @@ end
 local MageSpellName = GetSpellInfo(5143) --Arcane Missiles
 local MageBuffName = GetSpellInfo(166872) --4p T17 bonus proc for arcane
 
-function UF:PostCastStart(unit, name, rank, castid)
+function UF:PostCastStart(unit, name)
 	local db = self:GetParent().db
 	if not db or not db.castbar then return; end
 
@@ -416,7 +419,7 @@ function UF:PostCastStart(unit, name, rank, castid)
 		r, g, b = t[1], t[2], t[3]
 	end
 
-	if  self.interrupt and unit ~= "player" and UnitCanAttack("player", unit) then
+	if  self.notInterruptible and unit ~= "player" and UnitCanAttack("player", unit) then
 		r, g, b = colors.castNoInterrupt[1], colors.castNoInterrupt[2], colors.castNoInterrupt[3]
 	end
 
@@ -430,7 +433,7 @@ function UF:PostCastStart(unit, name, rank, castid)
 	end
 end
 
-function UF:PostCastStop(unit, name, castid)
+function UF:PostCastStop()
 	self.chainChannel = nil
 	self.prevSpellCast = nil
 end
@@ -516,7 +519,7 @@ function UF:PostCastInterruptible(unit)
 		r, g, b = t[1], t[2], t[3]
 	end
 
-	if self.interrupt and UnitCanAttack("player", unit) then
+	if self.notInterruptible and UnitCanAttack("player", unit) then
 		r, g, b = colors.castNoInterrupt[1], colors.castNoInterrupt[2], colors.castNoInterrupt[3]
 	end
 
@@ -531,7 +534,7 @@ function UF:PostCastInterruptible(unit)
 	end
 end
 
-function UF:PostCastNotInterruptible(unit)
+function UF:PostCastNotInterruptible()
 	local colors = ElvUF.colors
 	self:SetStatusBarColor(colors.castNoInterrupt[1], colors.castNoInterrupt[2], colors.castNoInterrupt[3])
 end

@@ -12,6 +12,7 @@ V['general'] = {
 	['chatBubbles'] = 'backdrop',
 	['chatBubbleFont'] = "PT Sans Narrow",
 	['chatBubbleFontSize'] = 14,
+	['chatBubbleFontOutline'] = "NONE",
 	['pixelPerfect'] = true,
 	['replaceBlizzFonts'] = true,
 	['minimap'] = {
@@ -20,6 +21,7 @@ V['general'] = {
 		['hideCalendar'] = true,
 	},
 	["classColorMentionsSpeech"] = true,
+	["raidUtility"] = true,
 }
 
 V['bags'] = {
@@ -85,6 +87,7 @@ V['skins'] = {
 		["greeting"] = true,
 		["worldmap"] = true,
 		["taxi"] = true,
+		["tooltip"] = true,
 		["quest"] = true,
 		["questChoice"] = false,
 		["petition"] = true,
@@ -116,6 +119,8 @@ V['skins'] = {
 		["talkinghead"] = true,
 		["AdventureMap"] = true,
 		["Obliterum"] = true,
+		["Contribution"] = true,
+		["BlizzardOptions"] = true,
 	},
 }
 

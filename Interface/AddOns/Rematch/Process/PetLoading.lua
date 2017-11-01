@@ -44,12 +44,18 @@ function rematch:LoadTeam(key)
 
 	-- fill loadin from the team
 	local pickIndex = 1
+   local numRandomSlots = 0
 	for i=1,3 do
 		local petID = team[i][1]
 		local levelingPick = rematch.topPicks[pickIndex]
 		if petID==0 and levelingPick then
 			loadin[i][1] = rematch.topPicks[pickIndex]
 			pickIndex = pickIndex + 1
+      elseif petID=="ignored" then
+         loadin[i][1] = C_PetJournal.GetPetLoadOutInfo(i) -- keep loaded pet here if ignored
+      elseif rematch:GetSpecialPetIDType(petID)=="random" then
+         loadin[i][1] = petID -- will come back to this pet later
+         numRandomSlots = numRandomSlots + 1
 		elseif petID and petID~=0 then
 			local idType = rematch:GetIDType(petID)
 			if idType=="species" then
@@ -61,7 +67,7 @@ function rematch:LoadTeam(key)
 				petID = rematch:FindTemporaryPetID(team[i][5],team[1][1],team[2][1],team[3][1])
 				missing[i] = petID or true
 			end
-			if petID and not C_PetJournal.PetIsRevoked(petID) then
+			if petID and idType=="pet" and not C_PetJournal.PetIsRevoked(petID) then
 				loadin[i][1] = petID
 				local speciesAbilities = rematch:GetAbilities(team[i][5])
 				for j=1,3 do
@@ -77,14 +83,82 @@ function rematch:LoadTeam(key)
 		end
 	end
 
-	if rematch:LoadLoadIn() then
+   -- replace random petIDs with a random pet after loadin filled, to prevent later slot's
+   -- pet being chosen as a random pet for an earlier slot
+   for slot=1,3 do
+      if rematch:GetSpecialPetIDType(loadin[slot][1])=="random" then
+         -- make sure random pet isn't one that's going to be loaded in another slot
+         local next1 = slot%3+1
+         local noPetID1 = loadin[next1][1] -- it's ok if these are nil
+         local next2 = next1%3+1
+         local noPetID2 = loadin[next2][1]
+         -- then pick a random pet from the random petID (that's not already loaded)
+         -- if 3 slots are random, pass true for evenInTeams flag to pick pets in teams too
+         local petID = rematch:PickRandomPet(loadin[slot][1],team[1][1],team[2][1],team[3][1],numRandomSlots==3)
+         loadin[slot][1] = petID
+         if petID and settings.RandomAbilitiesToo then
+            local petInfo = rematch.petInfo:Fetch(petID)
+            for i=1,3 do
+               loadin[slot][i+1] = petInfo.abilityList[i+(random(100)>50 and 3 or 0)]
+            end
+         elseif not petID then
+            missing[slot] = true
+         end
+      end
+   end
+
+	-- if "Load Healthiest Pet" enabled, go through loadin to look for injured/dead pets and replace
+	if settings.LoadHealthiest then
+		rematch:FindHealthiestLoadIn()
+	end
+
+	-- start loading pets
+	if rematch:LoadLoadIn() then -- if first pass finished, we're done!
 		rematch:LoadingDone()
-	else
+	else -- if not, come back in 0.2 seconds to load more
 		loadTimeout = 0
 		rematch:StartTimer("ReloadLoadIn",0.2,rematch.ReloadLoadIn)
 	end
 
 	rematch:HideNotes()
+end
+
+-- this will go through loadin and find the healthiest version of pets
+function rematch:FindHealthiestLoadIn()
+	for i=1,3 do
+		local petID = loadin[i][1] -- the petID we intend to load
+		-- if pet is not missing/substituted and it's not a leveling pet
+		if petID and not missing[i] and not rematch:IsPetLeveling(petID) then
+			local health,maxHealth,power,speed = rematch:GetPetStats(petID)
+			if health and health<maxHealth then
+				local speciesID,_,level = C_PetJournal.GetPetInfoByPetID(petID)
+				if C_PetJournal.GetNumCollectedInfo(speciesID)>1 then -- if player has more than one
+					local healthiestPetID = petID
+					for cPetID in rematch.Roster:AllOwnedPets() do
+						local cSpeciesID,_,cLevel = C_PetJournal.GetPetInfoByPetID(cPetID)
+						if cSpeciesID==speciesID and cLevel==level then
+							local cHealth,cMaxHealth,cPower,cSpeed = rematch:GetPetStats(cPetID)
+							if cHealth>health and cMaxHealth==maxHealth and cPower==power and cSpeed==speed then
+								local isTeammate -- prevent substituting a version that's going to another slot
+								for j=1,3 do
+									if i~=j and loadin[j][1]==cPetID then
+										isTeammate = true
+									end
+								end
+								if not isTeammate then
+									healthiestPetID = cPetID
+								end
+							end
+						end
+					end
+					-- found a healthier version of the pet, replace it in the loadin
+					if healthiestPetID and healthiestPetID~=petID then
+						loadin[i][1] = healthiestPetID
+					end
+				end
+			end
+		end
+	end
 end
 
 -- actually load the pets in the loadin table filled in LoadTeam
@@ -161,7 +235,7 @@ function rematch:LoadingDone(unsuccessful)
 	if rematch.LoadedTeamPanel:IsVisible() then
 		rematch.LoadedTeamPanel.Bling:Show()
 	end
-	rematch:AssignLevelingSlots()
+	rematch:AssignSpecialSlots()
 	rematch:UpdateQueue() -- team change may mean leveling pet preferences changed; this also does an UpdateUI
 
 	-- ShowOnInjured to summon window if any loaded pets are injured
@@ -225,5 +299,5 @@ end
 -- use this to wipe loadedTeam instead of setting it directly
 function rematch:UnloadTeam()
 	settings.loadedTeam = nil
-	rematch:AssignLevelingSlots() -- will clear leveling slots
+	rematch:AssignSpecialSlots() -- will clear leveling slots
 end

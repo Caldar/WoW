@@ -52,6 +52,8 @@ function Events:OnEvent(event,arg1,arg2,...)
 		AutoEquip:ScanBagsForUpgrades()
 		ItemScore:CheckOutleveledHeirlooms()
 		GearFinder:HideAndClean()
+		ItemScore:InitGearFinderOptions()
+		ZGV:RefreshOptions()
 	elseif event == "BAG_UPDATE_DELAYED" then
 		--if AutoEquip.newitemfound then
 			--ae.newitemfound=nil

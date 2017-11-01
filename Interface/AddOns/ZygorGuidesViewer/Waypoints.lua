@@ -547,7 +547,9 @@ ZGV.WaypointFunctions['internal'] = {
 
 
 		-- save this, because we WANT it to survive a total armegeddon of waypoints.
-		local saved_arrow_waypoint = ZGV.Pointer.ArrowFrame.waypoint
+
+		local saved_arrow_waypoint = ZGV.Pointer.DestinationWaypoint
+		--[[
 		local saved_arrow_survived = false
 		local function try_to_save_waypoint(goal)
 			if saved_arrow_waypoint
@@ -557,6 +559,7 @@ ZGV.WaypointFunctions['internal'] = {
 			and goal.map==saved_arrow_waypoint.m
 			then saved_arrow_survived=true end
 		end
+		--]]
 
 
 		self.Pointer:ClearWaypoints("way")
@@ -574,74 +577,6 @@ ZGV.WaypointFunctions['internal'] = {
 		local step = ZGV.GetFocusedStep and ZGV:GetFocusedStep() or ZGV.CurrentStep		if not step then ZGV:Debug("&waypoints No step.") break end
 
 
-		--[[ -- cleanup of old code
-			local goal,step
-			if goalnumORx then
-				ZGV:Debug("&waypoints &_PUSH ShowWaypoints starts: %s %s title=%s only_type=%s",goalnumORx or -1,tostring(y or -1),title or "nil",only_type or "nil")
-				if goalnumORx=="goal" then
-					goal = y
-				elseif goalnumORx=="sticky" then
-					step = y
-				end
-			else
-				ZGV:Debug("&waypoints &_PUSH ShowWaypoints starts: showing all step waypoints.")
-			end
-
-			-- Clear stuff out
-			
-			if goalnumORx~="sticky" then 
-				ZGV:Debug("&waypoints Not sticky, clear out way+route:")
-				self.Pointer:ClearWaypoints("way")
-				self.Pointer:ClearWaypoints("poigoto")
-				self.Pointer:ClearSet("route")
-
-				if ZGV.Pointer.pointsets['farm'] then
-					ZGV:Debug("&waypoints Clearing farm path.")
-					ZGV.Pointer:ClearSet("farm")
-				end
-				if ZGV.Pointer.pointsets['path'] then
-					ZGV:Debug("&waypoints Clearing path path.")
-					ZGV.Pointer:ClearSet("path")
-				end
-			end
-			--self.Pointer:ClearWaypoints("manual")
-			--self.Pointer:ClearWaypoints("path")
-			--self.Pointer:ClearSet("route")
-
-			--self:Debug("&waypoints clearset route done")
-
-
-			--LibRover:Abort()
-			--ZGV.Pointer.DestinationWaypoint = nil
-
-			if goalnumORx=="goal" -- goal given: show just that goal, remove manuals
-			or (self.Pointer.nummanual>0 and self.Pointer.DestinationWaypoint and self.Pointer.DestinationWaypoint.type~="manual") -- there's a manual, but abandoned
-			then
-				ZGV:Debug("&waypoints showing goal or abandoned manual, clear manuals.")
-				self.Pointer:ClearWaypoints("manual")
-			end
-
-
-			-- Coordinates given: SHOW ONE WAYPOINT (and let waypointer path to it if it wants to)
-			if type(goalnumORx)=="number" and type(y)=="number" then
-				ZGV:Debug("&waypoints ShowWaypoints to coords: %.2f %.2f",goalnumORx,y)
-				-- coords, plain as day
-				wipe(setwaypoint_data)
-				setwaypoint_data.persistent=true
-				setwaypoint_data.overworld=true
-				setwaypoint_data.title=title
-				setwaypoint_data.type="way"
-				setwaypoint_data.is_destination=true
-				setwaypoint_data.find_path=true
-				local way = self.Pointer:SetWaypoint (nil,nil,goalnumORx,y,setwaypoint_data)
-				break ------------------------------------------------------------------------------------------------
-			end
-
-
-			local step = step or ZGV.CurrentStep
-			if not step then ZGV:Debug("&waypoints No step to point to.") break end
-		--]]
-
 		---------------- NORMAL FUNCTION -------------
 
 		--if goal then  ZGV:Debug("&waypoints Pointing to goal %d",goal.num)  end
@@ -657,7 +592,7 @@ ZGV.WaypointFunctions['internal'] = {
 		local waypath = step and step.waypath
 		
 		local goals_converted_to_path=false
-		--[[  -- DISABLED temporarily. TODO!!!
+		--[[  -- DISABLED temporarily. TODO!!!  Or not; one can now "use goto" in paths to import gotos.
 		if not waypath then  -- improvise waypath from gotos. If this succeeds, DON'T show goto waypoints separately.
 			waypath = {coords={},loop=false,ants="straight",follow="strict" }  --,markers="none",follow="none",inline_travel=true
 			for gi,goal in ipairs(step.goals) do
@@ -832,8 +767,8 @@ ZGV.WaypointFunctions['internal'] = {
 				if waypath then
 					if waypath.loop then
 						-- EXPERIMENTAL: travel to path's general area.
-						local _,_,currentmapid=HBD:GetPlayerZonePosition(true)
-						if currentmapid ~= waypath.coords[1].map then
+						local _,_,currentmapid,currentmapfloor=HBD:GetPlayerZonePosition(true)
+						if currentmapid ~= waypath.coords[1].map or currentmapid ~= waypath.coords[1].floor then
 							self:Debug("&waypoints Pointing to a looped path! We're not in the farm path's zone, let's travel.")
 							ZGV.Pointer:FindTravelPath("farm")
 						else
@@ -909,7 +844,7 @@ ZGV.WaypointFunctions['internal'] = {
 				ZGV.Pointer.PathFoundHandler("failure")
 			end
 		else
-			self.Pointer:ShowArrow (arrowpoint)
+			self.Pointer:FindTravelPath (arrowpoint)
 		end
 
 

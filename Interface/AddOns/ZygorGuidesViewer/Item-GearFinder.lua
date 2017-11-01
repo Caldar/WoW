@@ -73,7 +73,7 @@ function GearFinder:GetGearFinderItemScore(itemlink,invslot,verbose)
 
 	-- get true can equip status - ItemScore.SC_NOTYET,ItemScore.SC_BADPARAM,ItemScore.SC_LEVELREQ,ItemScore.SC_BADITEM
 	local cei_isvalid, cei_code, cei_desc, cei_restricted, cei_restrictInfo = ItemScore:CanEquipItem(itemlink)
-	if not cei_isvalid and cei_code~=ItemScore.SC_LEVELREQ then
+	if cei_isvalid=="REJECT" and cei_code~=ItemScore.SC_LEVELREQ then
 		-- if we cannot equip for reason other then level, abort
 		return -1,cei_code,cei_desc
 	end
@@ -82,17 +82,20 @@ function GearFinder:GetGearFinderItemScore(itemlink,invslot,verbose)
 	local gis_score, gis_code, gis_desc = ZGV.ItemScore:GetItemScore(itemlink,invslot,true,verbose)
 
 	if not ivd_isvalid then
+		-- item is not valid due to dungeon restrictions
 		if cei_restricted=="level" and cei_restrictInfo>ivd_restrictInfo then
+			-- item has lvl requirement, so use them
 			return gis_score, ivd_code, ivd_desc, cei_restricted, cei_restrictInfo
 		else
+			-- use dungeon lvl reqs
 			return gis_score, ivd_code, ivd_desc, ivd_restricted, ivd_restrictInfo
 		end
-	elseif not cei_isvalid then
+	elseif cei_isvalid=="REJECT" then
+		-- item failed for reason other than lvl reqs
 		return gis_score, cei_code, cei_desc, cei_restricted, cei_restrictInfo
-	else
-		return gis_score, gis_code, gis_desc
 	end
-	return score,code,desc,restricted,restrictInfo
+	-- item seems to be good/r
+	return gis_score, gis_code, gis_desc
 end
 
 
@@ -131,6 +134,13 @@ function GearFinder:IsValidDungeonItem(itemlink)
 			return false, ItemScore.SC_NOTFORU,"|cffff88ff holiday dungeons not supported"
 		elseif dungeondata.expansionLevel>GetExpansionLevel() then
 			return false, ItemScore.SC_NOTFORU, "don't have expansion"
+		elseif dungeondata.attunement_achieve then
+			local _,_,_,complete = GetAchievementInfo(dungeondata.attunement_achieve)
+			if not complete then return false, ItemScore.SC_NOTFORU, "attunement needed" end
+		elseif dungeondata.attunement_quest and not IsQuestFlaggedCompleted(dungeondata.attunement_quest) then
+			return false, ItemScore.SC_NOTFORU, "attunement needed"
+		elseif dungeondata.attunement_queston and not (IsQuestFlaggedCompleted(dungeondata.attunement_queston) or ZGV.Parser.ConditionEnv.havequest(dungeondata.attunement_queston))  then
+			return false, ItemScore.SC_NOTFORU, "attunement needed"
 		else
 			return true
 		end
@@ -293,10 +303,10 @@ function GearFinder:FindBestFromResults(slot,result)
 
 	-- check good results
 	for index,itemdata in pairs(result.results) do
-		if (itemdata.score>score1 and itemdata.score>foundscore) and ItemScore:CanUseUniqueItem(itemdata.itemlink,itemlink2) then
+		if (itemdata.score>score1 and itemdata.score>foundscore) and ItemScore.AutoEquip:CanUseUniqueItem(itemdata.itemlink,itemlink2) then
 			foundscore = itemdata.score
 			foundindex = index
-		elseif (score2>0 and itemdata.score>score2 and itemdata.score>foundscore) and ItemScore:CanUseUniqueItem(itemdata.itemlink,itemlink1) then
+		elseif (score2>0 and itemdata.score>score2 and itemdata.score>foundscore) and ItemScore.AutoEquip:CanUseUniqueItem(itemdata.itemlink,itemlink1) then
 			foundscore = itemdata.score
 			foundindex = index
 		end
@@ -320,10 +330,10 @@ function GearFinder:FindBestFromResults(slot,result)
 	for index,itemdata in pairs(result.badresults) do
 		if itemdata.restinfo>current_rest_level and foundindex then break end
 
-		if (itemdata.score>score1 and itemdata.score>foundscore) and ItemScore:CanUseUniqueItem(itemdata.itemlink,itemlink2) then
+		if (itemdata.score>score1 and itemdata.score>foundscore) and ItemScore.AutoEquip:CanUseUniqueItem(itemdata.itemlink,itemlink2) then
 			foundscore = itemdata.score
 			foundindex = index
-		elseif (score2>0 and itemdata.score>score2 and itemdata.score>foundscore) and ItemScore:CanUseUniqueItem(itemdata.itemlink,itemlink1) then
+		elseif (score2>0 and itemdata.score>score2 and itemdata.score>foundscore) and ItemScore.AutoEquip:CanUseUniqueItem(itemdata.itemlink,itemlink1) then
 			foundscore = itemdata.score
 			foundindex = index
 		end
@@ -493,7 +503,7 @@ local function getItemButton(name,parent)
 		:SetScript("OnClick",function(self)
 			if ( IsModifiedClick("DRESSUP") and self.itemlink) then
 				DressUpItemLink(self.itemlink)
-				PlaySound("gsTitleOptionOK")
+				PlaySound(SOUNDKIT.GS_TITLE_OPTION_OK)
 				return true
 			end
 		end)
@@ -571,7 +581,7 @@ local function getItemButton(name,parent)
 				local dmap = p.dungeonData and p.dungeonData.map
 				local dlfg = p.dungeonData and p.dungeonData.id
 				if dmap or dlfg then
-					if dmap then
+					if dmap and not type(lfgid)=="string" then
 						for g,guide in ipairs(ZGV.registeredguides) do -- check by lfg codes first, for winded instances
 							if tonumber(guide.lfgid)==tonumber(dlfg) then ZGV:SetGuide(guide) return end
 						end
@@ -586,7 +596,7 @@ local function getItemButton(name,parent)
 				end
 			end)
 		.__END
-		ZGV.AssignButtonTexture(but.Dungeon,ZGV.SkinDir.."titlebuttons",11,32)
+		ZGV.F.AssignButtonTexture(but.Dungeon,ZGV.SkinDir.."titlebuttons",11,32)
 
 	-- Item Label
 		but.Label = CHAIN(CreateFrame("Frame",name.."Label",but))
@@ -736,7 +746,7 @@ local function SetUp_ZygorGearFinderFrame()
 			:SetSize(15,15)
 			:SetScript("OnClick",function() ZGV:OpenOptions("gear") end)
 		.__END
-		ZGV.AssignButtonTexture(gearFrame.overlaySettingsButton ,(SkinData("TitleButtons")),5,32)
+		ZGV.F.AssignButtonTexture(gearFrame.overlaySettingsButton ,(SkinData("TitleButtons")),5,32)
 		gearFrame.overlayIcon = CHAIN(CreateFrame("Button", nil , gearFrame.overlay))
 			:SetSize(64,64)
 			:SetPoint("CENTER")
@@ -779,7 +789,7 @@ local function SetUp_ZygorGearFinderFrame()
 		:SetSize(15,15)
 		:SetScript("OnClick",function() ZGV:OpenOptions("gear") end)
 	.__END
-	ZGV.AssignButtonTexture(gearFrame.SettingsButton ,(SkinData("TitleButtons")),5,32)
+	ZGV.F.AssignButtonTexture(gearFrame.SettingsButton ,(SkinData("TitleButtons")),5,32)
 
 	local bestdungbutton = getItemButton("ZygorGearFinderFrame_BestDungeon",gearFrame.ScrollChild)
 	bestdungbutton:SetPoint("TOPLEFT",gearFrame.ScrollChild,"TOPLEFT",0,-gearFrame.Header:GetHeight()-5)
@@ -809,7 +819,7 @@ local function SetUp_ZygorGearFinderFrame()
 
 		itembutton.slot = slot
 
-		if ZGV.db.profile.debug then
+		if ZGV.DEV then
 			local testbutton = CHAIN(CreateFrame("BUTTON","ZygorGearFinderFrame_Test"..i, itembutton, "UIPanelButtonTemplate"))
 				:SetSize(10,10)
 				:SetPoint("BOTTOMRIGHT")
@@ -831,8 +841,10 @@ local function SetUp_ZygorGearFinderFrame()
 					tip:SetText("Click to test\nShift-click to sort by ID")
 					tip:Show()
 				end)
-
+				:Hide()
 			.__END
+			if ZGV.db.profile.debug_display then testbutton:Show() end
+			itembutton.testbutton=testbutton
 		end
 
 		gearFrame.Items[i] = itembutton
@@ -911,10 +923,13 @@ end
 
 	self.Items has served its purpose after this. It is no longer needed because we have self.items_in_guides
 
+	Done on startup. Threadable.
+
 	Parameters:
 		nil
 	Return:
 		nil
+
 --]]
 
 function GearFinder:ParseItemDatabase()
@@ -925,6 +940,7 @@ function GearFinder:ParseItemDatabase()
 	local is_alliance = UnitFactionGroup("player")=="Alliance" and "A"
 	local player_class = (select(2,UnitClass("player")))
 
+	t1=debugprofilestop()
 	for dungeon,data in pairs(ItemScore.Items) do
 		for i,dataset in ipairs(data) do
 		for class,itemset in pairs(dataset) do
@@ -976,8 +992,11 @@ function GearFinder:ParseItemDatabase()
 						special = itemset.special,
 						diff = data.diff,
 						encounterId = itemset.encounterId,
-						instanceId = data.instanceId
+						instanceId = data.instanceId,
+						attunemode = data.attunemode,
+						attuneid = data.attuneid
 					}
+
 
 					-- hack to update dungeons
 					if lfgid and data.dungeonmap then
@@ -990,6 +1009,7 @@ function GearFinder:ParseItemDatabase()
 			end -- class check
 		end
 		end
+		if debugprofilestop()-t1>20 and coroutine.running() then coroutine.yield() t1=debugprofilestop() end
 	end
 
 	-- Data is no longer needed.  GOODBYE
@@ -1005,8 +1025,11 @@ end
 		nil
 --]]
 
+-- on startup
 function GearFinder:PrepareCache()
+	self:Debug("Preparing cache...")
 	self:ParseItemDatabase()
+	self:Debug("Parsed item database.")
 
 	self.cache_queue = {}
 	self.retry_queue = {}

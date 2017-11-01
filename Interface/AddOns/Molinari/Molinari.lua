@@ -5,7 +5,12 @@ Molinari:SetScript('OnHide', AutoCastShine_AutoCastStop)
 Molinari:HookScript('OnLeave', AutoCastShine_AutoCastStop)
 Molinari:Hide()
 
-RegisterStateDriver(Molinari, 'visible', '[nomod:alt] hide; show')
+local modifiers = {
+	ALT = {'[mod:alt]', 'alt'},
+	CTRL = {'[mod:alt, mod:ctrl]', 'alt-ctrl'},
+	SHIFT = {'[mod:alt, mod:shift]', 'alt-shift'},
+}
+
 Molinari:SetAttribute('_onleave', 'self:ClearAllPoints() self:Hide()')
 Molinari:SetAttribute('_onstate-visible', [[
 	if(newstate == 'hide' and self:IsShown()) then
@@ -36,20 +41,19 @@ Molinari:HookScript('OnClick', function(self, button, down)
 	end
 end)
 
-Molinari:HookScript('OnLeave', GameTooltip_Hide)
-Molinari:HookScript('OnEnter', function(self)
-	local point, anchor, relative, x, y = GameTooltip:GetPoint()
-	GameTooltip:SetOwner(self, 'ANCHOR_NONE')
-
-	if(anchor == select(2, self:GetPoint())) then
-		GameTooltip:SetPoint(point, self, relative, x, y)
+local function OnEnter(self)
+	if(self:GetRight() >= (GetScreenWidth() / 2)) then
+		GameTooltip:SetOwner(self, 'ANCHOR_LEFT')
 	else
-		GameTooltip:SetPoint('BOTTOMRIGHT', self, 'TOPLEFT')
+		GameTooltip:SetOwner(self, 'ANCHOR_RIGHT')
 	end
 
-	GameTooltip:SetBagItem(self:GetAttribute('target-bag'), self:GetAttribute('target-slot'))
-	GameTooltip:Show()
-end)
+	if(self.itemLink) then
+		GameTooltip:SetHyperlink(self.itemLink)
+	else
+		GameTooltip:SetBagItem(self:GetAttribute('target-bag'), self:GetAttribute('target-slot'))
+	end
+end
 
 function Molinari:Apply(itemLink, spell, r, g, b, isItem)
 	local parent = GetMouseFocus()
@@ -57,22 +61,26 @@ function Molinari:Apply(itemLink, spell, r, g, b, isItem)
 	local bag = parent:GetParent():GetID()
 	if(not bag or bag < 0) then return end
 
+	local modifier = modifiers[MolinariDB.modifier][2]
 	if(GetTradeTargetItemLink(7) == itemLink) then
 		if(isItem) then
 			return
 		else
-			self:SetAttribute('alt-type1', 'macro')
-			self:SetAttribute('macrotext', string.format('/cast %s\n/run ClickTargetTradeButton(7)', spell))
+			self:SetAttribute(modifier .. '-type1', 'macro')
+			self:SetAttribute('macrotext', string.format('/cast %s\n/run ClickTargetTradeButton(7)', (GetSpellInfo(spell))))
 		end
+
+		self.itemLink = itemLink
 	elseif(GetContainerItemLink(bag, slot) == itemLink) then
 		if(isItem) then
-			self:SetAttribute('alt-type1', 'item')
+			self:SetAttribute(modifier .. '-type1', 'item')
 			self:SetAttribute('item', 'item:' .. spell)
 		else
-			self:SetAttribute('alt-type1', 'spell')
+			self:SetAttribute(modifier .. '-type1', 'spell')
 			self:SetAttribute('spell', spell)
 		end
 
+		self.itemLink = nil
 		self:SetAttribute('target-bag', bag)
 		self:SetAttribute('target-slot', slot)
 	else
@@ -86,19 +94,25 @@ function Molinari:Apply(itemLink, spell, r, g, b, isItem)
 	AutoCastShine_AutoCastStart(self, r, g, b)
 end
 
+function Molinari:UpdateModifier()
+	RegisterStateDriver(self, 'visible', modifiers[MolinariDB.modifier][1] .. ' show; hide')
+end
+
 local LibProcessable = LibStub('LibProcessable')
 GameTooltip:HookScript('OnTooltipSetItem', function(self)
 	if(self:GetOwner() == Molinari) then return end
 	local _, itemLink = self:GetItem()
 	if(not itemLink) then return end
-	if(not IsAltKeyDown()) then return end
 	if(InCombatLockdown()) then return end
+	if(not IsAltKeyDown()) then return end
+	if(MolinariDB.modifier == 'CTRL' and not IsControlKeyDown()) then return end
+	if(MolinariDB.modifier == 'SHIFT' and not IsShiftKeyDown()) then return end
 	if(UnitHasVehicleUI('player')) then return end
 	if(EquipmentFlyoutFrame:IsVisible()) then return end
 	if(AuctionFrame and AuctionFrame:IsVisible()) then return end
 
-	local itemID = tonumber(string.match(itemLink, 'item:(%d+):'))
-	if(MolinariBlacklistDB.items[itemID]) then
+	local itemID = GetItemInfoFromHyperlink(itemLink)
+	if(not itemID or MolinariBlacklistDB.items[itemID]) then
 		return
 	end
 
@@ -107,16 +121,14 @@ GameTooltip:HookScript('OnTooltipSetItem', function(self)
 		Molinari:Apply(itemLink, mortarItem or 51005, 1/2, 1, 1/2, not not mortarItem)
 	elseif(LibProcessable:IsProspectable(itemID) and GetItemCount(itemID) >= 5) then
 		Molinari:Apply(itemLink, 31252, 1, 1/3, 1/3)
-	elseif(LibProcessable:IsDisenchantable(itemID, true)) then
+	elseif(LibProcessable:IsDisenchantable(itemLink, true)) then
 		Molinari:Apply(itemLink, 13262, 1/2, 1/2, 1)
+	elseif(LibProcessable:IsOpenable(itemID)) then
+		Molinari:Apply(itemLink, 1804, 0, 1, 1)
 	else
-		local isOpenable, _, _, keyItem = LibProcessable:IsOpenable(itemID)
-		if(isOpenable) then
-			if(keyItem and GetItemCount(keyItem) > 0) then
-				Molinari:Apply(itemLink, keyItem, 0, 1, 1, true)
-			elseif(not keyItem) then
-				Molinari:Apply(itemLink, 1804, 0, 1, 1)
-			end
+		local isOpenable, _, professionData = LibProcessable:IsOpenableProfession(itemID)
+		if(isOpenable and GetItemCount(professionData.itemID) > 0) then
+			Molinari:Apply(itemLink, keyItem, 0, 1, 1, true)
 		end
 	end
 end)
@@ -126,9 +138,21 @@ for _, sparkle in next, Molinari.sparkles do
 	sparkle:SetWidth(sparkle:GetWidth() * 3)
 end
 
+Molinari:HookScript('OnEnter', OnEnter)
+Molinari:HookScript('OnLeave', GameTooltip_Hide)
+Molinari:RegisterEvent('PLAYER_LOGIN')
 Molinari:RegisterEvent('BAG_UPDATE_DELAYED')
-Molinari:SetScript('OnEvent', function(self, ...)
-	if(self:IsShown() and not InCombatLockdown()) then
-		self:Hide()
+Molinari:RegisterEvent('MODIFIER_STATE_CHANGED')
+Molinari:SetScript('OnEvent', function(self, event)
+	if(event == 'PLAYER_LOGIN') then
+		self:UpdateModifier()
+	else
+		if(self:IsShown()) then
+			if(event == 'BAG_UPDATE_DELAYED' and not InCombatLockdown()) then
+				self:Hide()
+			elseif(event == 'MODIFIER_STATE_CHANGED') then
+				OnEnter(self)
+			end
+		end
 	end
 end)

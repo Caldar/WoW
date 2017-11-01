@@ -8,7 +8,7 @@ local unpack = unpack
 
 local function LoadSkin()
 	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.tradeskill ~= true then return end
-	
+
 	-- MainFrame
 	TradeSkillFramePortrait:Kill()
 	TradeSkillFrame:StripTextures(true)
@@ -17,6 +17,7 @@ local function LoadSkin()
 	TradeSkillFrame.RankFrame:StripTextures()
 	TradeSkillFrame.RankFrame:CreateBackdrop("Default")
 	TradeSkillFrame.RankFrame:SetStatusBarTexture(E["media"].normTex)
+	TradeSkillFrame.RankFrame.RankText:FontTemplate()
 	E:RegisterStatusBar(TradeSkillFrame.RankFrame)
 	TradeSkillFrame.FilterButton:StripTextures(true)
 	TradeSkillFrame.FilterButton:CreateBackdrop('Default', true)
@@ -63,13 +64,14 @@ local function LoadSkin()
 			ResultIcon:GetNormalTexture():SetInside()
 		end
 		ResultIcon:SetTemplate("Default")
-		ResultIcon.Background:SetTexture(nil)
+		ResultIcon.IconBorder:SetTexture(nil)
+		ResultIcon.ResultBorder:SetTexture(nil)
 
 		for i = 1, #TradeSkillFrame.DetailsFrame.Contents.Reagents do
 			local Button = TradeSkillFrame.DetailsFrame.Contents.Reagents[i]
 			local Icon = Button.Icon
 			local Count = Button.Count
-			
+
 			Icon:SetTexCoord(unpack(E.TexCoords))
 			Icon:SetDrawLayer("OVERLAY")
 			if not Icon.backdrop then
@@ -78,11 +80,11 @@ local function LoadSkin()
 				Icon.backdrop:SetTemplate("Default")
 				Icon.backdrop:SetOutside(Icon)
 			end
-			
+
 			Icon:SetParent(Icon.backdrop)
 			Count:SetParent(Icon.backdrop)
 			Count:SetDrawLayer("OVERLAY")
-			
+
 			Button.NameFrame:Kill()
 		end
 	end)

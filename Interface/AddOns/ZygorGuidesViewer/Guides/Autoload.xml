@@ -10,38 +10,43 @@
 	
 	<!-- INCLUDES -->
 		<!-- NEUTRAL -->
-		<Script file="Z_Includes\N_General_Includes.lua"/>
+		<Script file="Includes\Achievements\N_Achievements_Includes.lua"/>
+		<Script file="Includes\Dailies\N_Dailies_Includes.lua"/>
+		<Script file="Includes\Dailies\N_Events_Includes.lua"/>
+		<Script file="Includes\General\N_General_Includes.lua"/>
+		<Script file="Includes\General\N_Quest_Includes.lua"/>
+		<Script file="Includes\Leveling\N_Garrisons_Includes.lua"/>
+		<Script file="Includes\PetsMounts\N_Mounts_Includes.lua"/>
+		<Script file="Includes\PetsMounts\N_Pets_Includes.lua"/>
+		<Script file="Includes\Professions\N_Professions_Includes.lua"/>
+		<Script file="Includes\Reputations\N_Reputation_Includes.lua"/>
+		<Script file="Includes\Titles\N_Titles_Includes.lua"/>
 
 		<!-- ALLIANCE -->
-		<Script file="Achievements\A_Achievements_Includes.lua"/>
-		<Script file="Dailies\A_Dailies_Includes.lua"/>
-		<Script file="Dungeons\A_Dungeons_Includes.lua"/>
-		<Script file="Dailies\A_Events_Includes.lua"/>
-		<Script file="Leveling\A_Garrisons_Includes.lua"/>
-		<Script file="Z_Includes\A_General_Includes.lua"/>
-		<Script file="PetsMounts\A_Mounts_Includes.lua"/>
-		<Script file="PetsMounts\A_Pets_Includes.lua"/>
-		<Script file="Professions\A_Professions_Includes.lua"/>
-		<Script file="Z_Includes\A_Quest_Includes.lua"/>
-		<Script file="Reputations\A_Reputation_Includes.lua"/>
-		<Script file="Titles\A_Titles_Includes.lua"/>
+		<Script file="Includes\Achievements\A_Achievements_Includes.lua"/>
+		<Script file="Includes\Dailies\A_Dailies_Includes.lua"/>
+		<Script file="Includes\Dailies\A_Events_Includes.lua"/>
+		<Script file="Includes\General\A_General_Includes.lua"/>
+		<Script file="Includes\General\A_Quest_Includes.lua"/>
+		<Script file="Includes\Leveling\A_Garrisons_Includes.lua"/>
+		<Script file="Includes\PetsMounts\A_Mounts_Includes.lua"/>
+		<Script file="Includes\PetsMounts\A_Pets_Includes.lua"/>
+		<Script file="Includes\Professions\A_Professions_Includes.lua"/>
+		<Script file="Includes\Reputations\A_Reputation_Includes.lua"/>
+		<Script file="Includes\Titles\A_Titles_Includes.lua"/>
 
 		<!-- HORDE -->
-		<Script file="Achievements\H_Achievements_Includes.lua"/>
-		<Script file="Dailies\H_Dailies_Includes.lua"/>
-		<Script file="Dungeons\H_Dungeons_Includes.lua"/>
-		<Script file="Dailies\H_Events_Includes.lua"/>
-		<Script file="Leveling\H_Garrisons_Includes.lua"/>
-		<Script file="Z_Includes\H_General_Includes.lua"/>
-		<Script file="PetsMounts\H_Mounts_Includes.lua"/>
-		<Script file="PetsMounts\H_Pets_Includes.lua"/>
-		<Script file="Professions\H_Professions_Includes.lua"/>
-		<Script file="Z_Includes\H_Quest_Includes.lua"/>
-		<Script file="Reputations\H_Reputation_Includes.lua"/>
-		<Script file="Titles\H_Titles_Includes.lua"/>
-		
-		<!-- COMMON -->
-		<Script file="Z_Includes\ZygorCommon.lua"/>
+		<Script file="Includes\Achievements\H_Achievements_Includes.lua"/>
+		<Script file="Includes\Dailies\H_Dailies_Includes.lua"/>
+		<Script file="Includes\Dailies\H_Events_Includes.lua"/>
+		<Script file="Includes\General\H_General_Includes.lua"/>
+		<Script file="Includes\General\H_Quest_Includes.lua"/>
+		<Script file="Includes\Leveling\H_Garrisons_Includes.lua"/>
+		<Script file="Includes\PetsMounts\H_Mounts_Includes.lua"/>
+		<Script file="Includes\PetsMounts\H_Pets_Includes.lua"/>
+		<Script file="Includes\Professions\H_Professions_Includes.lua"/>
+		<Script file="Includes\Reputations\H_Reputation_Includes.lua"/>
+		<Script file="Includes\Titles\H_Titles_Includes.lua"/>
 
 	<!-- LEVELING -->
 		<!-- CATA -->
@@ -129,6 +134,10 @@
 		<Script file="Dailies\ZygorDailiesHordeLEGION.lua"/>
 		<Script file="Dailies\ZygorDailiesHordeLEGIONTrial.lua"/>
 
+		<Script file="Dailies\ZygorDailiesBothLEGION_MASTER.lua"/>
+		<Script file="Dailies\ZygorDailiesBothLEGION.lua"/>
+		<Script file="Dailies\ZygorDailiesBothLEGIONTrial.lua"/>
+
 	<!-- DUNGEONS -->
 		<!-- MOP -->
 		<Script file="Dungeons\ZygorDungeonAllianceMOP_MASTER.lua"/>
@@ -162,9 +171,22 @@
 		<Script file="Dungeons\ZygorDungeonAllianceLEGION.lua"/>
 		<Script file="Dungeons\ZygorDungeonAllianceLEGIONTrial.lua"/>
 
+		<Script file="Dungeons\ZygorDungeonScenariosAllianceLEGION_MASTER.lua"/>
+		<Script file="Dungeons\ZygorDungeonScenariosAllianceLEGION.lua"/>
+		<Script file="Dungeons\ZygorDungeonScenariosAllianceLEGIONTrial.lua"/>
+
 		<Script file="Dungeons\ZygorDungeonHordeLEGION_MASTER.lua"/>
 		<Script file="Dungeons\ZygorDungeonHordeLEGION.lua"/>
 		<Script file="Dungeons\ZygorDungeonHordeLEGIONTrial.lua"/>
+		
+		<Script file="Dungeons\ZygorDungeonScenariosAllianceLEGION_MASTER.lua"/>
+		<Script file="Dungeons\ZygorDungeonScenariosAllianceLEGION.lua"/>
+		<Script file="Dungeons\ZygorDungeonScenariosHordeLEGION_MASTER.lua"/>
+		<Script file="Dungeons\ZygorDungeonScenariosHordeLEGION.lua"/>
+
+		<Script file="Dungeons\ZygorDungeonScenariosHordeLEGION_MASTER.lua"/>
+		<Script file="Dungeons\ZygorDungeonScenariosHordeLEGION.lua"/>
+		<Script file="Dungeons\ZygorDungeonScenariosHordeLEGIONTrial.lua"/>
 
 	<!-- GEAR -->
 		<Script file="Dungeons\ZygorGearHorde_MASTER.lua"/>
@@ -262,6 +284,19 @@
 	
 	<!-- PETS AND MOUNTS -->
 		<!-- All Pets  Order for these matters-->
+		<!--LEGION PETS-->
+		<Script file="PetsMounts\ZygorPetsAllianceLEGION_MASTER.lua"/>
+		<Script file="PetsMounts\ZygorPetsAllianceLEGION.lua"/>
+		<Script file="PetsMounts\ZygorPetsAllianceLEGIONTrial.lua"/>
+
+		<Script file="PetsMounts\ZygorPetsHordeLEGION_MASTER.lua"/>
+		<Script file="PetsMounts\ZygorPetsHordeLEGION.lua"/>
+		<Script file="PetsMounts\ZygorPetsHordeLEGIONTrial.lua"/>
+
+		<Script file="PetsMounts\ZygorPetsCommonLEGION_MASTER.lua"/>
+		<Script file="PetsMounts\ZygorPetsCommonLEGION.lua"/>
+		<Script file="PetsMounts\ZygorPetsCommonLEGIONTrial.lua"/>
+
 		<!--WOD PETS-->
 		<Script file="PetsMounts\ZygorPetsAllianceWOD_MASTER.lua"/>
 		<Script file="PetsMounts\ZygorPetsAllianceWOD.lua"/>
@@ -367,6 +402,31 @@
 		<Script file="PetsMounts\ZygorBattlePetQuestsAllianceWOD_MASTER.lua"/>
 		<Script file="PetsMounts\ZygorBattlePetQuestsAllianceWOD.lua"/>
 		<Script file="PetsMounts\ZygorBattlePetQuestsAllianceWODTrial.lua"/>
+
+		<!-- LEGION -->
+		<Script file="PetsMounts\ZygorHunterPetHordeLEGION_MASTER.lua"/>
+		<Script file="PetsMounts\ZygorHunterPetHordeLEGION.lua"/>
+		<Script file="PetsMounts\ZygorHunterPetHordeLEGIONTrial.lua"/>
+
+		<Script file="PetsMounts\ZygorHunterPetAllianceLEGION_MASTER.lua"/>
+		<Script file="PetsMounts\ZygorHunterPetAllianceLEGION.lua"/>
+		<Script file="PetsMounts\ZygorHunterPetAllianceLEGIONTrial.lua"/>
+		
+		<Script file="PetsMounts\ZygorMountsHordeLEGION_MASTER.lua"/>
+		<Script file="PetsMounts\ZygorMountsHordeLEGION.lua"/>
+		<Script file="PetsMounts\ZygorMountsHordeLEGIONTrial.lua"/>
+
+		<Script file="PetsMounts\ZygorMountsAllianceLEGION_MASTER.lua"/>
+		<Script file="PetsMounts\ZygorMountsAllianceLEGION.lua"/>
+		<Script file="PetsMounts\ZygorMountsAllianceLEGIONTrial.lua"/>
+
+		<Script file="PetsMounts\ZygorBattlePetQuestsHordeLEGION_MASTER.lua"/>
+		<Script file="PetsMounts\ZygorBattlePetQuestsHordeLEGION.lua"/>
+		<Script file="PetsMounts\ZygorBattlePetQuestsHordeLEGIONTrial.lua"/>
+
+		<Script file="PetsMounts\ZygorBattlePetQuestsAllianceLEGION_MASTER.lua"/>
+		<Script file="PetsMounts\ZygorBattlePetQuestsAllianceLEGION.lua"/>
+		<Script file="PetsMounts\ZygorBattlePetQuestsAllianceLEGIONTrial.lua"/>
 	
 	<!-- TITLES -->
 		<!-- CATA -->
@@ -395,6 +455,15 @@
 		<Script file="Titles\ZygorTitlesAllianceWOD_MASTER.lua"/>
 		<Script file="Titles\ZygorTitlesAllianceWOD.lua"/>
 		<Script file="Titles\ZygorTitlesAllianceWODTrial.lua"/>
+
+		<!-- LEGION -->
+		<Script file="Titles\ZygorTitlesHordeLEGION_MASTER.lua"/>
+		<Script file="Titles\ZygorTitlesHordeLEGION.lua"/>
+		<Script file="Titles\ZygorTitlesHordeLEGIONTrial.lua"/>
+		
+		<Script file="Titles\ZygorTitlesAllianceLEGION_MASTER.lua"/>
+		<Script file="Titles\ZygorTitlesAllianceLEGION.lua"/>
+		<Script file="Titles\ZygorTitlesAllianceLEGIONTrial.lua"/>
 
 	<!-- REPUTATIONS -->
 		<!-- CATA -->	
@@ -433,14 +502,9 @@
 		<Script file="Reputations\ZygorReputationsHordeLEGION.lua"/>
 		<Script file="Reputations\ZygorReputationsHordeLEGIONTrial.lua"/>
 
-	<!-- GOLD -->
-
-		<Script file="Gold\CraftingTablesRecs.lua" />
-		<Script file="Gold\CraftingTablesRecsTrial.lua" />
+		<!-- GOLD -->
 		<Script file="Gold\CraftingTablesScrolls.lua" />
-		<Script file="Gold\CraftingTablesSources.lua" />
-		<Script file="Gold\CraftingTablesItems.lua" />
-
+		<Script file="Gold\CraftingTablesLevels.lua" />
 		<Script file="Gold\AHItemStatus.lua" />
 
 		<!-- LEGION -->
@@ -470,6 +534,10 @@
 	<Script file="WOD_H_Rares.lua" />
 	<Script file="WOD_A_Treasures.lua" />
 	<Script file="WOD_H_Treasures.lua" />
+	<Script file="LEG_A_Rares.lua" />
+	<Script file="LEG_H_Rares.lua" />
+	<Script file="LEG_A_Treasures.lua" />
+	<Script file="LEG_H_Treasures.lua" />
 
 	<Include file="Autoload-dev.xml" />
 

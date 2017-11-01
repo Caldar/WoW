@@ -8,7 +8,7 @@ ElvCharacterDB = {
 		"/lick", -- [5]
 	},
 	["ChatLog"] = {
-		["1474690736.415"] = {
+		["1474690401.916"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -19,7 +19,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2931, -- [11]
+			2900, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -30,7 +30,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690347.842"] = {
+		["1474688994.635"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -41,7 +41,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2894, -- [11]
+			2738, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -96,7 +96,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690302.178"] = {
+		["1474690294.654"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -107,7 +107,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2883, -- [11]
+			2880, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -140,7 +140,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474689979.882"] = {
+		["1474690933.628"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -151,7 +151,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2832, -- [11]
+			2948, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -162,7 +162,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690249.156"] = {
+		["1474690347.842"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -173,7 +173,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2868, -- [11]
+			2894, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -184,7 +184,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474691074.079"] = {
+		["1474690302.178"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -195,7 +195,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2978, -- [11]
+			2883, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -228,7 +228,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690101.262"] = {
+		["1474690059.779"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -239,7 +239,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2855, -- [11]
+			2847, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -250,7 +250,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690670.533"] = {
+		["1474690734.102"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -261,7 +261,29 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2920, -- [11]
+			2928, -- [11]
+			false, -- [12]
+			0, -- [13]
+			false, -- [14]
+			false, -- [15]
+			false, -- [16]
+			true, -- [17]
+			nil, -- [18]
+			nil, -- [19]
+			"CHAT_MSG_CHANNEL", -- [20]
+		},
+		["1474690155.233"] = {
+			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
+			"", -- [2]
+			"", -- [3]
+			"3. LocalDefense - Stormheim", -- [4]
+			"", -- [5]
+			"", -- [6]
+			22, -- [7]
+			3, -- [8]
+			"LocalDefense - Stormheim", -- [9]
+			0, -- [10]
+			2859, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -294,28 +316,6 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690037.98"] = {
-			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
-			"", -- [2]
-			"", -- [3]
-			"3. LocalDefense - Stormheim", -- [4]
-			"", -- [5]
-			"", -- [6]
-			22, -- [7]
-			3, -- [8]
-			"LocalDefense - Stormheim", -- [9]
-			0, -- [10]
-			2844, -- [11]
-			false, -- [12]
-			0, -- [13]
-			false, -- [14]
-			false, -- [15]
-			false, -- [16]
-			true, -- [17]
-			nil, -- [18]
-			nil, -- [19]
-			"CHAT_MSG_CHANNEL", -- [20]
-		},
 		["1474689467.821"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
@@ -338,7 +338,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474689658.263"] = {
+		["1474689981.85"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -349,7 +349,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2774, -- [11]
+			2833, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -514,7 +514,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690253.13"] = {
+		["1474690099.596"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -525,7 +525,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2869, -- [11]
+			2854, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -602,7 +602,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474689959.673"] = {
+		["1474690005.681"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -613,7 +613,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2827, -- [11]
+			2842, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -646,7 +646,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474691105.418"] = {
+		["1474691018.603"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -657,7 +657,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2981, -- [11]
+			2969, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -690,7 +690,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474689844.371"] = {
+		["1474689946.738"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -701,7 +701,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2801, -- [11]
+			2825, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -756,7 +756,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_GUILD_ACHIEVEMENT", -- [20]
 		},
-		["1474690767.86"] = {
+		["1474689949.441"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -767,51 +767,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2936, -- [11]
-			false, -- [12]
-			0, -- [13]
-			false, -- [14]
-			false, -- [15]
-			false, -- [16]
-			true, -- [17]
-			nil, -- [18]
-			nil, -- [19]
-			"CHAT_MSG_CHANNEL", -- [20]
-		},
-		["1474926032.076"] = {
-			"%s has earned the achievement |cffffff00|Hachievement:10994:Player-118-0054E41E:1:9:26:16:4294967295:4294967295:4294967295:4294967295|h[A Glorious Campaign]|h|r!", -- [1]
-			"Calanthea-Feathermoon", -- [2]
-			"", -- [3]
-			"", -- [4]
-			"Calanthea", -- [5]
-			"", -- [6]
-			0, -- [7]
-			0, -- [8]
-			"", -- [9]
-			0, -- [10]
-			45, -- [11]
-			"Player-118-0054E41E", -- [12]
-			0, -- [13]
-			false, -- [14]
-			false, -- [15]
-			false, -- [16]
-			false, -- [17]
-			nil, -- [18]
-			nil, -- [19]
-			"CHAT_MSG_GUILD_ACHIEVEMENT", -- [20]
-		},
-		["1474690671.146"] = {
-			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
-			"", -- [2]
-			"", -- [3]
-			"3. LocalDefense - Stormheim", -- [4]
-			"", -- [5]
-			"", -- [6]
-			22, -- [7]
-			3, -- [8]
-			"LocalDefense - Stormheim", -- [9]
-			0, -- [10]
-			2921, -- [11]
+			2826, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -844,7 +800,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690539.734"] = {
+		["1474690671.146"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -855,7 +811,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2910, -- [11]
+			2921, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -866,7 +822,29 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690805.872"] = {
+		["1474690221.685"] = {
+			"|cffffff00Stormheim is under attack!|r", -- [1]
+			"", -- [2]
+			"", -- [3]
+			"3. LocalDefense - Stormheim", -- [4]
+			"", -- [5]
+			"", -- [6]
+			22, -- [7]
+			3, -- [8]
+			"LocalDefense - Stormheim", -- [9]
+			0, -- [10]
+			2863, -- [11]
+			false, -- [12]
+			0, -- [13]
+			false, -- [14]
+			false, -- [15]
+			false, -- [16]
+			true, -- [17]
+			nil, -- [18]
+			nil, -- [19]
+			"CHAT_MSG_CHANNEL", -- [20]
+		},
+		["1474690238.262"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -877,7 +855,29 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2941, -- [11]
+			2866, -- [11]
+			false, -- [12]
+			0, -- [13]
+			false, -- [14]
+			false, -- [15]
+			false, -- [16]
+			true, -- [17]
+			nil, -- [18]
+			nil, -- [19]
+			"CHAT_MSG_CHANNEL", -- [20]
+		},
+		["1474691045.903"] = {
+			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
+			"", -- [2]
+			"", -- [3]
+			"3. LocalDefense - Stormheim", -- [4]
+			"", -- [5]
+			"", -- [6]
+			22, -- [7]
+			3, -- [8]
+			"LocalDefense - Stormheim", -- [9]
+			0, -- [10]
+			2975, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -932,7 +932,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474689946.738"] = {
+		["1474690767.86"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -943,7 +943,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2825, -- [11]
+			2936, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -954,7 +954,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474689935.446"] = {
+		["1474690777.371"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -965,7 +965,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2822, -- [11]
+			2938, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -998,7 +998,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474688926.148"] = {
+		["1474690101.262"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -1009,7 +1009,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2735, -- [11]
+			2855, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -1020,7 +1020,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690238.262"] = {
+		["1474690805.872"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -1031,7 +1031,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2866, -- [11]
+			2941, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -1086,7 +1086,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474689429.52"] = {
+		["1474689979.882"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -1097,7 +1097,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2759, -- [11]
+			2832, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -1130,7 +1130,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690155.233"] = {
+		["1474689838.884"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -1141,7 +1141,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2859, -- [11]
+			2797, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -1174,24 +1174,24 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690301.027"] = {
-			"<Harvest> is recruiting! A vast community of social and active players(620+ Members).  Free repairs and vent. Currently seeking heals and Rdps for our 10m raid team! Mythic dngeons completed/farming. Current raiding hours are 7pm server time on Weekends.", -- [1]
-			"Noxxfurion-ScarletCrusade", -- [2]
+		["1474690037.98"] = {
+			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
+			"", -- [2]
 			"", -- [3]
-			"4. LookingForGroup", -- [4]
-			"Noxxfurion-ScarletCrusade", -- [5]
+			"3. LocalDefense - Stormheim", -- [4]
+			"", -- [5]
 			"", -- [6]
-			26, -- [7]
-			4, -- [8]
-			"LookingForGroup", -- [9]
+			22, -- [7]
+			3, -- [8]
+			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2882, -- [11]
-			"Player-118-07BFB84F", -- [12]
+			2844, -- [11]
+			false, -- [12]
 			0, -- [13]
 			false, -- [14]
 			false, -- [15]
 			false, -- [16]
-			false, -- [17]
+			true, -- [17]
 			nil, -- [18]
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
@@ -1218,27 +1218,27 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474827975.029"] = {
-			"got a  |cffa335ee|Hitem:138019::::::::110:254:4587520:::1466:2:1:::|h[Mythic Keystone]|h|r (DH+2) if anyone's interested today", -- [1]
-			"Teteoinnan-Feathermoon", -- [2]
+		["1474689803.07"] = {
+			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
+			"", -- [2]
 			"", -- [3]
-			"", -- [4]
-			"Teteoinnan", -- [5]
+			"3. LocalDefense - Stormheim", -- [4]
+			"", -- [5]
 			"", -- [6]
-			0, -- [7]
-			0, -- [8]
-			"", -- [9]
+			22, -- [7]
+			3, -- [8]
+			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			1546, -- [11]
-			"Player-118-0431EA94", -- [12]
+			2790, -- [11]
+			false, -- [12]
 			0, -- [13]
 			false, -- [14]
 			false, -- [15]
 			false, -- [16]
-			false, -- [17]
+			true, -- [17]
 			nil, -- [18]
 			nil, -- [19]
-			"CHAT_MSG_GUILD", -- [20]
+			"CHAT_MSG_CHANNEL", -- [20]
 		},
 		["1474689575.821"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
@@ -1262,24 +1262,24 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474691045.903"] = {
-			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
-			"", -- [2]
+		["1474690301.027"] = {
+			"<Harvest> is recruiting! A vast community of social and active players(620+ Members).  Free repairs and vent. Currently seeking heals and Rdps for our 10m raid team! Mythic dngeons completed/farming. Current raiding hours are 7pm server time on Weekends.", -- [1]
+			"Noxxfurion-ScarletCrusade", -- [2]
 			"", -- [3]
-			"3. LocalDefense - Stormheim", -- [4]
-			"", -- [5]
+			"4. LookingForGroup", -- [4]
+			"Noxxfurion-ScarletCrusade", -- [5]
 			"", -- [6]
-			22, -- [7]
-			3, -- [8]
-			"LocalDefense - Stormheim", -- [9]
+			26, -- [7]
+			4, -- [8]
+			"LookingForGroup", -- [9]
 			0, -- [10]
-			2975, -- [11]
-			false, -- [12]
+			2882, -- [11]
+			"Player-118-07BFB84F", -- [12]
 			0, -- [13]
 			false, -- [14]
 			false, -- [15]
 			false, -- [16]
-			true, -- [17]
+			false, -- [17]
 			nil, -- [18]
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
@@ -1306,7 +1306,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474689415.021"] = {
+		["1474689935.446"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -1317,7 +1317,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2758, -- [11]
+			2822, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -1482,7 +1482,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690933.628"] = {
+		["1474690505.837"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -1493,7 +1493,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2948, -- [11]
+			2905, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -1592,27 +1592,27 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690562.69"] = {
-			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
-			"", -- [2]
+		["1474827975.029"] = {
+			"got a  |cffa335ee|Hitem:138019::::::::110:254:4587520:::1466:2:1:::|h[Mythic Keystone]|h|r (DH+2) if anyone's interested today", -- [1]
+			"Teteoinnan-Feathermoon", -- [2]
 			"", -- [3]
-			"3. LocalDefense - Stormheim", -- [4]
-			"", -- [5]
+			"", -- [4]
+			"Teteoinnan", -- [5]
 			"", -- [6]
-			22, -- [7]
-			3, -- [8]
-			"LocalDefense - Stormheim", -- [9]
+			0, -- [7]
+			0, -- [8]
+			"", -- [9]
 			0, -- [10]
-			2911, -- [11]
-			false, -- [12]
+			1546, -- [11]
+			"Player-118-0431EA94", -- [12]
 			0, -- [13]
 			false, -- [14]
 			false, -- [15]
 			false, -- [16]
-			true, -- [17]
+			false, -- [17]
 			nil, -- [18]
 			nil, -- [19]
-			"CHAT_MSG_CHANNEL", -- [20]
+			"CHAT_MSG_GUILD", -- [20]
 		},
 		["1474690328.109"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
@@ -1680,7 +1680,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474689949.441"] = {
+		["1474690829.493"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -1691,7 +1691,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2826, -- [11]
+			2943, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -1702,7 +1702,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474689061.748"] = {
+		["1474689995.047"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -1713,7 +1713,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2744, -- [11]
+			2840, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -1746,7 +1746,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690099.596"] = {
+		["1474689429.52"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -1757,7 +1757,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2854, -- [11]
+			2759, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -1900,7 +1900,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690096.578"] = {
+		["1474690539.734"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -1911,7 +1911,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2853, -- [11]
+			2910, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -1944,7 +1944,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_GUILD_ACHIEVEMENT", -- [20]
 		},
-		["1474690771.858"] = {
+		["1474690253.13"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -1955,7 +1955,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2937, -- [11]
+			2869, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -1966,7 +1966,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474689917.536"] = {
+		["1474690228.47"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -1977,7 +1977,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2820, -- [11]
+			2864, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -2076,7 +2076,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474689757.887"] = {
+		["1474689917.536"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -2087,7 +2087,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2784, -- [11]
+			2820, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -2097,6 +2097,50 @@ ElvCharacterDB = {
 			nil, -- [18]
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
+		},
+		["1474690318.329"] = {
+			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
+			"", -- [2]
+			"", -- [3]
+			"3. LocalDefense - Stormheim", -- [4]
+			"", -- [5]
+			"", -- [6]
+			22, -- [7]
+			3, -- [8]
+			"LocalDefense - Stormheim", -- [9]
+			0, -- [10]
+			2887, -- [11]
+			false, -- [12]
+			0, -- [13]
+			false, -- [14]
+			false, -- [15]
+			false, -- [16]
+			true, -- [17]
+			nil, -- [18]
+			nil, -- [19]
+			"CHAT_MSG_CHANNEL", -- [20]
+		},
+		["1474926032.076"] = {
+			"%s has earned the achievement |cffffff00|Hachievement:10994:Player-118-0054E41E:1:9:26:16:4294967295:4294967295:4294967295:4294967295|h[A Glorious Campaign]|h|r!", -- [1]
+			"Calanthea-Feathermoon", -- [2]
+			"", -- [3]
+			"", -- [4]
+			"Calanthea", -- [5]
+			"", -- [6]
+			0, -- [7]
+			0, -- [8]
+			"", -- [9]
+			0, -- [10]
+			45, -- [11]
+			"Player-118-0054E41E", -- [12]
+			0, -- [13]
+			false, -- [14]
+			false, -- [15]
+			false, -- [16]
+			false, -- [17]
+			nil, -- [18]
+			nil, -- [19]
+			"CHAT_MSG_GUILD_ACHIEVEMENT", -- [20]
 		},
 		["1474690688.922"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
@@ -2142,50 +2186,6 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690318.329"] = {
-			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
-			"", -- [2]
-			"", -- [3]
-			"3. LocalDefense - Stormheim", -- [4]
-			"", -- [5]
-			"", -- [6]
-			22, -- [7]
-			3, -- [8]
-			"LocalDefense - Stormheim", -- [9]
-			0, -- [10]
-			2887, -- [11]
-			false, -- [12]
-			0, -- [13]
-			false, -- [14]
-			false, -- [15]
-			false, -- [16]
-			true, -- [17]
-			nil, -- [18]
-			nil, -- [19]
-			"CHAT_MSG_CHANNEL", -- [20]
-		},
-		["1474690401.916"] = {
-			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
-			"", -- [2]
-			"", -- [3]
-			"3. LocalDefense - Stormheim", -- [4]
-			"", -- [5]
-			"", -- [6]
-			22, -- [7]
-			3, -- [8]
-			"LocalDefense - Stormheim", -- [9]
-			0, -- [10]
-			2900, -- [11]
-			false, -- [12]
-			0, -- [13]
-			false, -- [14]
-			false, -- [15]
-			false, -- [16]
-			true, -- [17]
-			nil, -- [18]
-			nil, -- [19]
-			"CHAT_MSG_CHANNEL", -- [20]
-		},
 		["1474690607.678"] = {
 			"gratz", -- [1]
 			"Furlisa-Feathermoon", -- [2]
@@ -2208,7 +2208,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_GUILD", -- [20]
 		},
-		["1474688994.635"] = {
+		["1474689632.554"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -2219,7 +2219,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2738, -- [11]
+			2770, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -2230,7 +2230,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690294.654"] = {
+		["1474690771.858"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -2241,7 +2241,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2880, -- [11]
+			2937, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -2274,7 +2274,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474689995.047"] = {
+		["1474689061.748"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -2285,7 +2285,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2840, -- [11]
+			2744, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -2296,7 +2296,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690059.779"] = {
+		["1474690670.533"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -2307,7 +2307,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2847, -- [11]
+			2920, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -2318,7 +2318,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474691018.603"] = {
+		["1474689757.887"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -2329,7 +2329,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2969, -- [11]
+			2784, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -2362,8 +2362,8 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_GUILD_ACHIEVEMENT", -- [20]
 		},
-		["1474690221.685"] = {
-			"|cffffff00Stormheim is under attack!|r", -- [1]
+		["1474689959.673"] = {
+			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
 			"3. LocalDefense - Stormheim", -- [4]
@@ -2373,7 +2373,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2863, -- [11]
+			2827, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -2406,7 +2406,29 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690777.371"] = {
+		["1508115474.194"] = {
+			"grats", -- [1]
+			"Haleh-Feathermoon", -- [2]
+			"", -- [3]
+			"", -- [4]
+			"Haleh", -- [5]
+			"", -- [6]
+			0, -- [7]
+			0, -- [8]
+			"", -- [9]
+			0, -- [10]
+			192, -- [11]
+			"Player-118-051115D4", -- [12]
+			0, -- [13]
+			false, -- [14]
+			false, -- [15]
+			false, -- [16]
+			false, -- [17]
+			nil, -- [18]
+			nil, -- [19]
+			"CHAT_MSG_GUILD", -- [20]
+		},
+		["1474690096.578"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -2417,7 +2439,29 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2938, -- [11]
+			2853, -- [11]
+			false, -- [12]
+			0, -- [13]
+			false, -- [14]
+			false, -- [15]
+			false, -- [16]
+			true, -- [17]
+			nil, -- [18]
+			nil, -- [19]
+			"CHAT_MSG_CHANNEL", -- [20]
+		},
+		["1474690562.69"] = {
+			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
+			"", -- [2]
+			"", -- [3]
+			"3. LocalDefense - Stormheim", -- [4]
+			"", -- [5]
+			"", -- [6]
+			22, -- [7]
+			3, -- [8]
+			"LocalDefense - Stormheim", -- [9]
+			0, -- [10]
+			2911, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -2450,7 +2494,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474689981.85"] = {
+		["1474689415.021"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -2461,29 +2505,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2833, -- [11]
-			false, -- [12]
-			0, -- [13]
-			false, -- [14]
-			false, -- [15]
-			false, -- [16]
-			true, -- [17]
-			nil, -- [18]
-			nil, -- [19]
-			"CHAT_MSG_CHANNEL", -- [20]
-		},
-		["1474690734.102"] = {
-			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
-			"", -- [2]
-			"", -- [3]
-			"3. LocalDefense - Stormheim", -- [4]
-			"", -- [5]
-			"", -- [6]
-			22, -- [7]
-			3, -- [8]
-			"LocalDefense - Stormheim", -- [9]
-			0, -- [10]
-			2928, -- [11]
+			2758, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -2538,28 +2560,6 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474689803.07"] = {
-			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
-			"", -- [2]
-			"", -- [3]
-			"3. LocalDefense - Stormheim", -- [4]
-			"", -- [5]
-			"", -- [6]
-			22, -- [7]
-			3, -- [8]
-			"LocalDefense - Stormheim", -- [9]
-			0, -- [10]
-			2790, -- [11]
-			false, -- [12]
-			0, -- [13]
-			false, -- [14]
-			false, -- [15]
-			false, -- [16]
-			true, -- [17]
-			nil, -- [18]
-			nil, -- [19]
-			"CHAT_MSG_CHANNEL", -- [20]
-		},
 		["1474689891.861"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
@@ -2582,7 +2582,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690505.837"] = {
+		["1474689844.371"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -2593,7 +2593,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2905, -- [11]
+			2801, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -2604,7 +2604,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690829.493"] = {
+		["1474691105.418"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -2615,7 +2615,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2943, -- [11]
+			2981, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -2648,7 +2648,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690228.47"] = {
+		["1474689658.263"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -2659,7 +2659,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2864, -- [11]
+			2774, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -2692,7 +2692,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474689632.554"] = {
+		["1474690047.537"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -2703,7 +2703,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2770, -- [11]
+			2846, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -2736,7 +2736,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_GUILD_ACHIEVEMENT", -- [20]
 		},
-		["1474690005.681"] = {
+		["1474691074.079"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -2747,7 +2747,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2842, -- [11]
+			2978, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -2758,7 +2758,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474690047.537"] = {
+		["1474690249.156"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -2769,7 +2769,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2846, -- [11]
+			2868, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]
@@ -2780,7 +2780,7 @@ ElvCharacterDB = {
 			nil, -- [19]
 			"CHAT_MSG_CHANNEL", -- [20]
 		},
-		["1474689838.884"] = {
+		["1474690736.415"] = {
 			"|cffffff00Blackhawk's Bulwark is under attack!|r", -- [1]
 			"", -- [2]
 			"", -- [3]
@@ -2791,7 +2791,7 @@ ElvCharacterDB = {
 			3, -- [8]
 			"LocalDefense - Stormheim", -- [9]
 			0, -- [10]
-			2797, -- [11]
+			2931, -- [11]
 			false, -- [12]
 			0, -- [13]
 			false, -- [14]

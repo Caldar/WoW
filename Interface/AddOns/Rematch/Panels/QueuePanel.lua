@@ -10,7 +10,7 @@ panel.sortInfo = {
 	{ "Interface\\Icons\\misc_arrowlup", L["Ascending Level"] }, -- 1=ascending
 	{ "Interface\\Icons\\misc_arrowdown", L["Descending Level"] }, -- 2=descending
 	{ "Interface\\Icons\\Ability_Hunter_FocusedAim", L["Median Level"] }, -- 3=median
-	{ "Interface\\Icons\\Icon_UpgradeStone_Beast_Uncommon", L["Type"] }, -- 4=type
+--	{ "Interface\\Icons\\Icon_UpgradeStone_Beast_Uncommon", L["Type"] }, -- 4=type
 }
 
 rematch:InitModule(function()
@@ -20,6 +20,7 @@ rematch:InitModule(function()
 	queue = settings.LevelingQueue
 
 	panel.Top.QueueButton:SetText(L["Queue"])
+   panel.Top.LevelingSlot.Label:SetText(L["Current Leveling Pet"])
 
 	-- setup list scrollframe
 	local scrollFrame = panel.List.ScrollFrame
@@ -47,7 +48,10 @@ rematch:InitModule(function()
 		{ text=panel.sortInfo[1][2], icon=panel.sortInfo[1][1], radio=panel.GetActiveSort, index=1, value=panel.IsQueueSort, func=panel.SetQueueSort, tooltipBody=L["Sort all pets in the queue from level 1 to level 24."] },
 		{ text=panel.sortInfo[3][2], icon=panel.sortInfo[3][1], radio=panel.GetActiveSort, index=3, value=panel.IsQueueSort, func=panel.SetQueueSort, tooltipBody=L["Sort all pets in the queue for levels closest to 10.5."] },
 		{ text=panel.sortInfo[2][2], icon=panel.sortInfo[2][1], radio=panel.GetActiveSort, index=2, value=panel.IsQueueSort, func=panel.SetQueueSort, tooltipBody=L["Sort all pets in the queue from level 24 to level 1."] },
-		{ text=panel.sortInfo[4][2], icon=panel.sortInfo[4][1], radio=panel.GetActiveSort, index=4, value=panel.IsQueueSort, func=panel.SetQueueSort, tooltipBody=L["Sort all pets in the queue by their types."] },
+--		{ text=panel.sortInfo[4][2], icon=panel.sortInfo[4][1], radio=panel.GetActiveSort, index=4, value=panel.IsQueueSort, func=panel.SetQueueSort, tooltipBody=L["Sort all pets in the queue by their types."] },
+		{ spacer=true },
+		{ text=L["Favorites First"], icon="Interface\\Icons\\Achievement_GuildPerk_MrPopularity", check=panel.GetActiveSort, value=function() return settings.QueueSortFavoritesFirst end, func=panel.SetFavoritesFirst, tooltipBody=L["Group favorites to the top of the queue."] },
+		{ text=L["Rares First"], icon="Interface\\Icons\\Icon_UpgradeStone_Rare", check=panel.GetActiveSort, value=function(self) return settings.QueueSortRaresFirst end, func=panel.SetRaresFirst, tooltipBody=L["Group rares to the top of the leveling queue."] },
 		{ spacer=true },
 		{ text=L["Active Sort"], check=true, value=panel.GetActiveSort, func=panel.SetActiveSort, tooltipBody=L["The queue will stay sorted in the order chosen. The order of pets may automatically change as they gain xp or get added/removed from the queue.\n\nYou cannot manually change the order of pets while the queue is actively sorted."] },
 		{ text=L["Pause Preferences"], check=true, value=panel.GetQueueNoPreferences, func=panel.SetQueueNoPreferences, tooltipBody=L["Suspend all preferred loading of pets from the queue, except for pets that can't load."] },
@@ -138,7 +142,7 @@ function panel:LevelingSlotReceiveDrag(index)
 		if rematch:PetCanLevel(petID) then
 			if rematch:IsPetLeveling(petID) and settings.QueueActiveSort then
 				local dialog = rematch:ShowDialog("CancelActiveSort",300,196,L["Turn Off Active Sort?"],nil,YES,function(self) settings.QueueActiveSort=nil panel:LevelingSlotReceiveDrag(index) end,NO)
-				dialog:ShowText("This pet is already in the queue and Active Sort is enabled.\n\nWhile enabled, the queue has complete control over the order of pets in the queue.\n\nDo you want to turn off Active Sort to move this pet in the queue?",260,122,"TOP",0,-32)
+				dialog:ShowText(L["This pet is already in the queue and Active Sort is enabled.\n\nWhile enabled, the queue has complete control over the order of pets in the queue.\n\nDo you want to turn off Active Sort to move this pet in the queue?"],260,122,"TOP",0,-32)
 			else
 				rematch:InsertPetToQueue(index,petID)
 				ClearCursor()
@@ -239,6 +243,20 @@ end
 function panel:EmptyQueue() wipe(queue) rematch:UpdateQueue() end
 function panel:GetQueueNoPreferences() return settings.QueueNoPreferences end
 function panel:SetQueueNoPreferences(_,checked) settings.QueueNoPreferences = not checked end
+function panel:SetFavoritesFirst(_,checked)
+	if settings.QueueActiveSort then
+		settings.QueueSortFavoritesFirst = not checked
+	else
+		rematch:StableSortQueue("favorites")
+	end
+end
+function panel:SetRaresFirst(_,checked)
+	if settings.QueueActiveSort then
+		settings.QueueSortRaresFirst = not checked
+	else
+		rematch:StableSortQueue("rares")
+	end
+end
 
 -- for the queue list, when pets are skipped they're dimmed by desaturating/darkening textures and fonts
 function rematch:DimQueueListButton(button,dim)
@@ -294,6 +312,7 @@ function rematch:ShowQueue(petID)
 			rematch.Frame:ConfigureFrame()
 		elseif rematch.Journal:IsVisible() then
 			settings.JournalPanel = 2
+			rematch:SelectPanelTab(rematch.Journal.PanelTabs,2)
 			rematch.Journal:ConfigureJournal()
 		else
 			return -- neither frame or journal on screen

@@ -171,7 +171,7 @@
 			<OnClick>
 				if ( IsModifiedClick("DRESSUP") and self.item) then
 					DressUpItemLink("item:"..self.item)
-					PlaySound("gsTitleOptionOK")
+					PlaySound(SOUNDKIT.GS_TITLE_OPTION_OK)
 					return true
 				end
 			</OnClick>

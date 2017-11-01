@@ -1,3 +1,48 @@
+### Changes in 70300.50-Release:
+
+- Added: Argus material support
+- Added: Legion enchanting questline item disenchanting support
+- Changed: Update LibProcessable embed
+
+### Changes in 70300.49-Release:
+
+- Changed: Update Interface version
+- Fixed: Lockpicking in trade window
+
+### Changes in 70200.48-Release:
+
+- Fixed: Items not showing up in the blacklist on first load
+
+### Changes in 70200.47-Release:
+
+- Changed: Updated embedded libraries
+
+### Changes in 70200.46-Release:
+
+- Changed: Updated embedded libraries
+
+### Changes in 70200.45-Release:
+
+- Added: Support for an additional modifier
+
+### Changes in 70200.44-Release:
+
+- Changed: Update Interface version
+- Changed: Update LibProcessable embed
+
+### Changes in 70100.43-Release:
+
+- Fixed: Not accounting for effective item level when disenchanting
+- Fixed: Errors encountered while at a vendor
+
+### Changes in 70100.42-Release:
+
+- Fixed: Libraries path
+
+### Changes in 70100.41-Release:
+
+- Changed: Tooltip now anchors depending on screen corners
+
 ### Changes in 70000.40-Release:
 
 - Added: Support for artifact relics

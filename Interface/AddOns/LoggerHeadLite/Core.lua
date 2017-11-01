@@ -25,13 +25,16 @@ local function ShowPrompt(zone, diff)
 			text = L["You have entered |cffd9d919%s|r. Enable logging for this zone?"],
 			button1 = ENABLE,
 			button2 = DISABLE,
-			sound = "levelup2",
+			sound = SOUNDKIT.READY_CHECK,
 			OnAccept = function() addon:CheckInstance(nil, true) end,
 			OnCancel = function() addon:CheckInstance(nil, false) end,
 			preferredIndex = STATICPOPUP_NUMDIALOGS,
 		}
 	end
 	StaticPopup_Show("LoggerHeadLiteLogConfirm", ("%s %s"):format(diff, zone))
+	if diff == 8 then -- catch the m+ start event
+		LoggingCombat(true)
+	end
 end
 
 function addon:OnInitialize()

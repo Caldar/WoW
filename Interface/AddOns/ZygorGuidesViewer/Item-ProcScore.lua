@@ -43,6 +43,11 @@ ProcScore.KeywordsMerged={}
 for i,v in pairs(ProcScore.Keywords) do ProcScore.KeywordsMerged[i]=v end
 for i,v in pairs(ProcScore.KeywordsDynamic) do ProcScore.KeywordsMerged[i]=v end
 
+ProcScore.Patterns = {}
+ProcScore.PatternsDetails = {}
+ProcScore.Fallback = {}
+ProcScore.FallbackDetails = {}
+
 function ProcScore:Sanitize(data)
 	data = data:lower()
 	data = data:gsub("  "," ")
@@ -55,10 +60,10 @@ function ProcScore:Sanitize(data)
 end
 
 function ProcScore:PreparePatterns()
-	ProcScore.Patterns = {}
-	ProcScore.PatternsDetails = {}
-	ProcScore.Fallback = {}
-	ProcScore.FallbackDetails = {}
+	table.wipe(ProcScore.Patterns)
+	table.wipe(ProcScore.PatternsDetails)
+	table.wipe(ProcScore.Fallback)
+	table.wipe(ProcScore.FallbackDetails)
 	local function replace_placeholders(pattern)
 		pattern = pattern:gsub("%(", "%%(")
 		pattern = pattern:gsub("%)", "%%)")
@@ -100,10 +105,10 @@ function ProcScore:ParseEffect(data)
 
 	local variables = {}
 	local matchFound = false
-	for i=1,ProcScore.DefinedPatterns do 
-		local pattern = ProcScore.Patterns[i].pattern
-		local keywords = ProcScore.Patterns[i].keywords
-		local defaults = ProcScore.Patterns[i].defaults or {}
+	for _,patterndata in ipairs(ProcScore.Patterns) do 
+		local pattern = patterndata.pattern
+		local keywords = patterndata.keywords
+		local defaults = patterndata.defaults or {}
 		local results = {data:match(pattern)}
 		if results[1] then
 			for j=1,#keywords do
@@ -146,13 +151,15 @@ function ProcScore:ParseEffect(data)
 	end
 	
 	if matchFound then
-		for i=1,ProcScore.DefinedPatternsDetails do 
-			local pattern = ProcScore.PatternsDetails[i].pattern
-			local keywords = ProcScore.PatternsDetails[i].keywords
-			local results = {data:match(pattern)}
-			if results[1] then
-				for j=1,#keywords do
-					variables[keywords[j]]=results[j]
+		for _,patternsdetailsdata in ipairs(ProcScore.PatternsDetails) do 
+			local pattern = patternsdetailsdata.pattern
+			local keywords = patternsdetailsdata.keywords
+			if pattern and keywords then
+				local results = {data:match(pattern)}
+				if results[1] then
+					for j=1,#keywords do
+						variables[keywords[j]]=results[j]
+					end
 				end
 			end
 		end
@@ -173,8 +180,8 @@ function ProcScore:ParseEffect(data)
 		end
 
 		variables.orgstat = variables.stat
-		if ProcScore.Keywords[variables.stat] then
-			variables.stat = ProcScore.Keywords[variables.stat] -- no conversion needed, just fix name
+		if ProcScore.KeywordsMerged[variables.stat] then
+			variables.stat = ProcScore.KeywordsMerged[variables.stat] -- no conversion needed, just fix name
 			if variables.amount and variables.amount:match("%%") then -- if percentage, then grab proper stat and calculate value
 				if ProcScore.PlayerStats[variables.stat] then
 					variables.amount = tonumber((variables.amount:gsub("%%","")))/100 * ProcScore.PlayerStats[variables.stat]
@@ -222,7 +229,12 @@ function ProcScore:ParseEffect(data)
 		end
 		variables = ProcScore:ProcessEffect(effectmode,variables)
 
-		return true,variables
+		if type(variables.amount)~="number" then
+			-- fallback rules failed to grab anything that made sense, don't score this effect
+			return false,variables
+		else
+			return true,variables
+		end
 	end
 
 	return false,variables

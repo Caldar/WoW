@@ -107,8 +107,16 @@ function AS:ParchmentRemover(event, addon)
 			end
 
 			hooksecurefunc('QuestInfoItem_OnClick', function(self)
-				QuestInfoItemHighlight:ClearAllPoints()
-				QuestInfoItemHighlight:SetAllPoints(self)
+				QuestInfoItemHighlight:SetOutside(self.Icon)
+
+				self.Name:SetTextColor(1, 1, 0)
+				local parent = self:GetParent()
+				for i=1, #parent.RewardButtons do
+					local questItem = QuestInfoRewardsFrame.RewardButtons[i]
+					if(questItem ~= self) then
+						questItem.Name:SetTextColor(1, 1, 1)
+					end
+				end
 			end)
 
 			hooksecurefunc('QuestFrameProgressItems_Update', function()
@@ -142,18 +150,18 @@ function AS:ParchmentRemover(event, addon)
 
 			if (QuestInfoRewardsFrame.spellHeaderPool) then
 				for _, pool in pairs({"followerRewardPool", "spellRewardPool"}) do
-					QuestInfoRewardsFrame[pool]._acquire = QuestInfoRewardsFrame[pool].Acquire;
+					QuestInfoRewardsFrame[pool]._acquire = QuestInfoRewardsFrame[pool].Acquire
 					QuestInfoRewardsFrame[pool].Acquire = function(self)
-						local frame = QuestInfoRewardsFrame[pool]:_acquire();
-						frame.Name:SetTextColor(1, 1, 1);
-						return frame;
+						local frame = QuestInfoRewardsFrame[pool]:_acquire()
+						frame.Name:SetTextColor(1, 1, 1)
+						return frame
 					end
 				end
-				QuestInfoRewardsFrame.spellHeaderPool._acquire = QuestInfoRewardsFrame.spellHeaderPool.Acquire;
+				QuestInfoRewardsFrame.spellHeaderPool._acquire = QuestInfoRewardsFrame.spellHeaderPool.Acquire
 				QuestInfoRewardsFrame.spellHeaderPool.Acquire = function(self)
-					local frame = self:_acquire();
-					frame:SetTextColor(1, 1, 1);
-					return frame;
+					local frame = self:_acquire()
+					frame:SetTextColor(1, 1, 1)
+					return frame
 				end
 			end
 
@@ -166,13 +174,13 @@ function AS:ParchmentRemover(event, addon)
 				QuestInfoObjectivesText:SetTextColor(1, 1, 1)
 				QuestInfoGroupSize:SetTextColor(1, 1, 1)
 				QuestInfoRewardText:SetTextColor(1, 1, 1)
-				QuestInfoRewardsFrame.ItemChooseText:SetTextColor(1, 1, 1);
-				QuestInfoRewardsFrame.ItemReceiveText:SetTextColor(1, 1, 1);
+				QuestInfoRewardsFrame.ItemChooseText:SetTextColor(1, 1, 1)
+				QuestInfoRewardsFrame.ItemReceiveText:SetTextColor(1, 1, 1)
 				if (QuestInfoRewardsFrame.SpellLearnText) then
-					QuestInfoRewardsFrame.SpellLearnText:SetTextColor(1, 1, 1);
+					QuestInfoRewardsFrame.SpellLearnText:SetTextColor(1, 1, 1)
 				end
-				QuestInfoRewardsFrame.PlayerTitleText:SetTextColor(1, 1, 1);
-				QuestInfoRewardsFrame.XPFrame.ReceiveText:SetTextColor(1, 1, 1);
+				QuestInfoRewardsFrame.PlayerTitleText:SetTextColor(1, 1, 1)
+				QuestInfoRewardsFrame.XPFrame.ReceiveText:SetTextColor(1, 1, 1)
 				local numObjectives = GetNumQuestLeaderBoards()
 				local numVisibleObjectives = 0
 				for i = 1, numObjectives do

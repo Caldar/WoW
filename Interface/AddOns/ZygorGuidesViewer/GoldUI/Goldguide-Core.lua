@@ -69,7 +69,8 @@ function Goldguide:Initialise()
 
 	if ZGV.db.global.gold_info_pages then Goldguide.ShowInfoPage=true end
 
-	ZGV:AddMessage("GOLD_SCANNED",Goldguide.EventHandler)
+	ZGV:AddMessage("GOLD_SCANNED",Goldguide.MainFrame_EventHandler)
+	ZGV:AddEvent("MODIFIER_STATE_CHANGED",Goldguide.MainFrame_EventHandler)
 
 	Goldguide:ShowWindow()
 end
@@ -202,19 +203,29 @@ function Goldguide:Update()
 				resultstatus = L["gold_gathering_no_results"]
 			else
 				local type = Goldguide.Gathering_Frame.TypeDropdown:GetCurrentSelectedItem():GetText()
-				local level = ZGV:GetSkill(type).level
-				if level==0 then
-					local profstrings = "" 
-					local gatheringprofs={herbalism="Herbalism",mining="Mining",skinning="Skinning",fishing="Fishing",enchanting="Enchanting"}
-					for k,prof in pairs(gatheringprofs) do
-						local skill=ZGV:GetSkill(prof).level
-						if skill>0 then 
-							profstrings = profstrings .. "\n" .. L["gold_gathering_error_prof"]:format(prof,skill)
-						end
+				local profstrings = "" 
+				local gatheringprofs={herbalism="Herbalism",mining="Mining",skinning="Skinning",fishing="Fishing",enchanting="Enchanting"}
+
+				for k,prof in pairs(gatheringprofs) do
+					local skill=ZGV:GetSkill(prof).level
+					if skill>0 then 
+						profstrings = profstrings .. "\n" .. L["gold_gathering_error_prof"]:format(prof,skill)
 					end
-					resultstatus = L["gold_gathering_error_one_noskillin"]:format(type)..profstrings
+				end
+
+				if type~="All" then
+					local level = ZGV:GetSkill(type).level
+					if level==0 then
+						resultstatus = L["gold_gathering_error_one_noskillin"]:format(type,profstrings)
+					else
+						resultstatus = L["gold_gathering_error_one_noresults"]:format(type)
+					end
 				else
-					resultstatus = L["gold_gathering_error_one_noresults"]:format(type)
+					if profstrings~="" then
+						resultstatus = L["gold_gathering_error_one_nothing"]:format(profstrings)
+					else
+						resultstatus = L["gold_gathering_error_all_noprofessions"]
+					end
 				end
 			end
 		end
@@ -312,7 +323,6 @@ function Goldguide:Update()
 		end
 	end
 
-
 	if tab=="Auctions" then 
 		if results==0 then
 			if #Goldguide.Chores.Auctions==0 then
@@ -347,6 +357,9 @@ function Goldguide:Update()
 
 					row.chore = chore
 
+					row.loadbutton:SetEnabledIf(not ZGVG.Appraiser:IsInCurrentDeals(chore.id))
+						
+
 					row.backalpha = rownum%2==0 and 0.0 or 0.06
 					row.back:SetAlpha(row.backalpha)
 
@@ -377,42 +390,86 @@ function Goldguide:Update()
 	Goldguide:UpdateTimeStamp()
 end
 
+-- called from Auctions,Farming,Crafting,Gathering frames, with sorting param pairs: "fieldname","asc"|"desc", ...
 function Goldguide.dynamic_sort(tab,a,b, ...)
 	local field,order
 	local varargn=1
 
-	local a_field,b_field
+	local a_val,b_val
+	local a_val_num,b_val_num
 
 	repeat
 		field=select(varargn,...)
 		order=select(varargn+1,...)
 		varargn=varargn+2
-		if not field then return nil end
+		if not field then return nil end  -- this means the sorting has failed and may return random order!
 
-		a_field = tonumber(a[field]) or -999999999
-		b_field = tonumber(b[field]) or -999999999
+		a_val = a[field]
+		b_val = b[field]
+		a_val_num = tonumber(a_val)
+		b_val_num = tonumber(a_val)
 
-		if order=="zerolast" then  a_field=(a_field>0) and 1 or 0   b_field=(b_field>0) and 1 or 0  order="desc"  end
+		if order=="zerolast" then
+			a_val=(a_val_num>0) and 1 or 0
+			b_val=(b_val_num>0) and 1 or 0
+			order="desc"
+		end  -- just force zeroes to the bottom
+		if order=="pos-zero-nil" then
+			a_val=(a_val_num and a_val_num>0 and 1) or a_val_num or -1
+			b_val=(b_val_num and b_val_num>0 and 1) or b_val_num or -1
+			order="desc"
+		end
+	until a_val~=b_val
 
-		if order=="pos-zero-nil" then  a_field=(a_field>0 and 1) or (a_field<0 and -1) or 0   b_field=(b_field>0 and 1) or (b_field<0 and -1) or 0  order="desc"  end
-	until a_field~=b_field
-
+	if type(a_val)~=type(b_val) then
+		a_val=tostring(a_val)
+		b_val=tostring(b_val)
+	end
 	if order == "asc" then
-		return a_field<b_field
+		return a_val<b_val
 	else
-		return a_field>b_field
+		return a_val>b_val
 	end
 end
 
 
-function Goldguide.EventHandler(self, event, ...)
-	if event=="GOLD_SCANNED" then
+function Goldguide.MainFrame_EventHandler(self, event, ...)
+	if event=="GOLD_SCANNED" and Goldguide.MainFrame:IsShown() then
 		Goldguide:CalculateAllChores(true)
 		Goldguide:Update()
+	elseif event=="MODIFIER_STATE_CHANGED" and (...=="LSHIFT" or ...=="RSHIFT") and Goldguide.MainFrame:IsShown() then
+		for k,row in pairs(Goldguide.Farming_Frame.Entries.rows) do
+			if row:IsVisible() and row:IsMouseOver() then
+				Goldguide.FarmingTooltip:Hide()
+				row:GetScript("OnEnter")(row)
+				break
+			end
+		end
+		for k,row in pairs(Goldguide.Gathering_Frame.Entries.rows) do
+			if row:IsVisible() and row:IsMouseOver() then
+				Goldguide.GatheringTooltip:Hide()
+				row:GetScript("OnEnter")(row)
+				break
+			end
+		end
+		for k,row in pairs(Goldguide.Crafting_Frame.Entries.rows) do
+			if row:IsVisible() and row:IsMouseOver() then
+				Goldguide.CraftingTooltip:Hide()
+				row:GetScript("OnEnter")(row)
+				break
+			end
+		end
+		for k,row in pairs(Goldguide.Auctions_Frame.Entries.rows) do
+			if row:IsVisible() and row:IsMouseOver() then
+				Goldguide.AuctionTooltip:Hide()
+				row:GetScript("OnEnter")(row)
+				break
+			end
+		end
 	end
 end
 
-function Goldguide.UpdateHandler(self, event)
+function Goldguide.MainFrame_UpdateHandler(self, event)
 	if Goldguide.needToUpdate then
 		Goldguide:Update()
 	end
@@ -464,7 +521,7 @@ tinsert(ZGV.startups,{"Goldguide core",function(self)
 	end
 end } )
 
-function Goldguide:UpdateSorting(col)
+function Goldguide.UpdateSorting(widget,col)  -- NOT called with a colon; called from a ScrollTable widget.
 	local dbfield = string.lower(Goldguide.ActiveTab)
 	local col = string.lower(col)
 
@@ -573,7 +630,7 @@ function Goldguide.Common:AreRequirementsMet(ignore_skill,ignore_level)
 			if type(self.meta.levelreq)=="table" and level<self.meta.levelreq[1] then return false,"level" end
 		end
 		if self.meta.skillreq and not ignore_skill then
-			for skill,skillid in pairs(ZGV.skillIDs) do
+			for skill,skillid in pairs(ZGV.Professions.skillIDs) do
 				local req = self.meta.skillreq[string.lower(skill)]
 				if req and (ZGV:GetSkill(skill).level<req) then return false,"skill" end
 			end
@@ -638,7 +695,7 @@ function Goldguide.Common:GetSmartProfitPerHour()
 end
 
 function Goldguide.Common:CalculateDetails(refresh)
-	if self.calculated_details and not refresh then return self.calculated_details end
+	if self.calculated_details and not refresh and not self.needsRecalc then return self.calculated_details end
 	self.needsRecalc = false
 
 	local dyna_title = {}
@@ -767,13 +824,15 @@ function Goldguide.Common:CalculateDetails(refresh)
 
 		end
 
-		GOODITEMS=good_items
-		sort(good_items,function(a,b)
+		local function sort_by_profit(a,b)
 			if a.is_lively and b.is_lively then return a.profit>b.profit
 			elseif a.is_lively~=b.is_lively then return a.is_lively
-			else return a.profit>b.profit
-			end
-		end)
+			elseif a.profit~=b.profit then return a.profit>b.profit
+			else return a[1] and b[1] and a[1]>b[1] end  -- last: by id
+		end
+
+		GOODITEMS=good_items
+		sort(good_items,sort_by_profit)
 		for i,it in ipairs(good_items) do
 			tinsert(itemstrings,it[2])
 			if it.is_lively then tinsert(dyna_title,it[1]) end
@@ -781,12 +840,7 @@ function Goldguide.Common:CalculateDetails(refresh)
 
 		if #bad_items>0 then
 			tinsert(itemstrings,"---------")
-			sort(bad_items,function(a,b)
-				if a.is_lively and b.is_lively then return a.profit>b.profit
-				elseif a.is_lively~=b.is_lively then return a.is_lively
-				else return a.profit>b.profit
-				end
-			end)
+			sort(bad_items,sort_by_profit)
 			for i,it in ipairs(bad_items) do
 				tinsert(itemstrings,it[2])
 			end
@@ -886,7 +940,7 @@ function Goldguide.Common:GetTooltipData(refresh)
 				price=ZGV.GetMoneyString(item.price)..price_desc, 
 				drops=item.count..drops_desc, 
 				profit=ZGV.GetMoneyString(scaled_profit), 
-				demand=demand, 
+				demand=demand,
 				status=comment
 			})
 		end
@@ -915,7 +969,7 @@ function Goldguide.Common:GetTooltipData(refresh)
 					price=ZGV.GetMoneyString(item.price)..price_desc, 
 					drops=item.count..drops_desc, 
 					profit=ZGV.GetMoneyString(scaled_profit), 
-					demand=demand, 
+					demand=item.itemdata.demand or 0,
 					status=comment
 				})
 			end

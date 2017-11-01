@@ -6,13 +6,10 @@ if not ZGV then return end
 local Foglight = {}
 ZGV.Foglight = Foglight
 
---local ver = select(4,GetBuildInfo())
---if ver>=40000 then return end --TODO: disabled in cata, needs rework or just a working db...
-
 Foglight.Debug = ZGV.Debug
 
 
--- /run ZGV.Foglight:DumpMapOverlayInfos()  to get these.
+-- Use ZGV.Testing.Foglight to get these.
 Foglight.data = {
  -- Kalimdor
   ['Ashenvale']={
@@ -51,7 +48,6 @@ Foglight.data = {
     {'Interface\\WorldMap\\Aszhara\\TheShatteredStrand',206,329,316,168},
     {'Interface\\WorldMap\\Aszhara\\BitterReaches',321,247,477,0},
     {'Interface\\WorldMap\\Aszhara\\TowerofEldara',306,337,684,22},
-    {'',0,0,0,0},
     {'Interface\\WorldMap\\Aszhara\\RuinsofEldarath',218,237,228,229},
     {'Interface\\WorldMap\\Aszhara\\RavencrestMonument',295,267,476,401},
     {'Interface\\WorldMap\\Aszhara\\LakeMennar',210,232,245,377},
@@ -1386,6 +1382,7 @@ Foglight.data = {
     {'Interface\\WorldMap\\BoreanTundra\\ValianceKeep',259,302,457,264},
     {'Interface\\WorldMap\\BoreanTundra\\TheGeyserFields',375,342,480,0},
     {'Interface\\WorldMap\\BoreanTundra\\TheDensOfDying',203,209,662,11},
+    {'Interface\\WorldMap\\BoreanTundra\\TorpsFarm',186,276,272,237},
     {'',0,0,0,0},
     {'',0,0,0,0},
     {'',0,0,0,0},
@@ -1818,6 +1815,7 @@ Foglight.data = {
   },
   ['IsleoftheThunderKing']={
     {'Interface\\WorldMap\\IsleoftheThunderKing\\HORDE',278,325,183,95},
+    {'Interface\\WorldMap\\IsleoftheThunderKing\\ALLIANCE',490,290,256,378},
   },
 -- Draenor
   ['FrostfireRidge']={
@@ -1838,6 +1836,7 @@ Foglight.data = {
 	{'Interface\\WorldMap\\FrostfireRidge\\IRONSIEGEWORKS',329,294,673,156},
 	{'Interface\\WorldMap\\FrostfireRidge\\STONEFANGOUTPOST',251,191,306,281},
 	{'Interface\\WorldMap\\FrostfireRidge\\GROMGAR',282,341,505,323},
+	{'Interface\\WorldMap\\FrostfireRidge\\SHIPYARD',267,257,336,327},
   },
   ['Gorgrond']={
 	{'Interface\\WorldMap\\Gorgrond\\EASTERNRUIN',210,193,525,260},
@@ -1955,6 +1954,8 @@ Foglight.data = {
     {'Interface\\WorldMap\\Highmountain\\THUNDERTOTEM',244,199,332,302},
     {'Interface\\WorldMap\\Highmountain\\TRUESHOTLODGE',172,204,249,236},
     {'Interface\\WorldMap\\Highmountain\\CAVEA',110,98,445,190},
+    {'Interface\\WorldMap\\Highmountain\\IRONHORNENCLAVE',288,258,452,410},
+    {'Interface\\WorldMap\\Highmountain\\NIGHTWATCHERSPERCH',344,295,0,244},
   },
   ['Stormheim']={
     {'Interface\\WorldMap\\Stormheim\\AGGRAMMARSVAULT',199,185,361,210},
@@ -1976,6 +1977,7 @@ Foglight.data = {
     {'Interface\\WorldMap\\Stormheim\\WEEPINGBLUFFS',386,314,56,185},
     {'Interface\\WorldMap\\Stormheim\\STORMSREACH',180,160,510,118},
     {'Interface\\WorldMap\\Stormheim\\QATCHMANSROCK',135,162,623,81},
+    {'Interface\\WorldMap\\Stormheim\\MAWOFNASHAL',509,251,17,0},
   },
   ['Suramar']={
     {'Interface\\WorldMap\\Suramar\\AMBERVALE',222,311,132,179},
@@ -2006,56 +2008,135 @@ Foglight.data = {
     {'Interface\\WorldMap\\Valsharah\\GLOAMINGREEF',239,301,136,274},
   },
   ['BrokenShore']={
-    {'Interface\\WorldMap\\BrokenShore\\THELOSTTEMPLE',337,289,613,126},
-    {'Interface\\WorldMap\\BrokenShore\\TOMBOFSARGERAS',414,281,373,0},
-    {'Interface\\WorldMap\\BrokenShore\\THEBLACKCITY',478,328,257,95},
-    {'Interface\\WorldMap\\BrokenShore\\BROKENSHORESOUTH',500,350,223,275}, -- guesstimate
+    {'Interface\\WorldMap\\BrokenShore\\THELOSTTEMPLE',308,244,632,169},
+    {'Interface\\WorldMap\\BrokenShore\\FELRAGESTRAND',332,276,596,100},
+    {'Interface\\WorldMap\\BrokenShore\\TOMBOFSARGERAS',312,301,500,0},
+    {'Interface\\WorldMap\\BrokenShore\\THEWEEPINGTERRACE',276,213,350,13},
+    {'Interface\\WorldMap\\BrokenShore\\BROKENVALLEY',338,322,254,84},
+    {'Interface\\WorldMap\\BrokenShore\\SOULRUIN',338,270,389,180},
+    {'Interface\\WorldMap\\BrokenShore\\DEADWOODLANDING',182,245,220,260},
+    {'Interface\\WorldMap\\BrokenShore\\DELIVERANCEPOINT',387,314,312,302},
   },
 
 }
 
+
 function Foglight:Startup()
+	Foglight.texture_bank = {}
+	Foglight.blizz_overlays = {}
+	Foglight.overlayFrame = CreateFrame("frame", "ZGVFoglightOverlay", WorldMapDetailFrame)
+	Foglight.overlayFrame:SetAllPoints()
+	Foglight.overlayFrame:SetFrameLevel(WorldMapDetailFrame:GetFrameLevel()+1)
+	hooksecurefunc('WorldMapFrame_Update', Foglight.ShowOverlay)	
+end
+
+function Foglight:ShowOverlay()
 	if not ZGV.db.profile.foglight then return end
-	self:PlaceHooks()
-	if WorldMapFrame:IsShown() then WorldMapFrame_Update() end
-end
 
-function Foglight:TurnOff()
-	if WorldMapFrame:IsShown() then WorldMapFrame_Update() end
-end
+	local texture_bank = Foglight.texture_bank
+	local blizz_overlays = Foglight.blizz_overlays
+	local overlayFrame = Foglight.overlayFrame
 
-function Foglight:PlaceHooks()
+	-- localise to avoid tainting globals
+	local texturePixelHeight,texturePixelWidth,textureFileHeight,textureFileWidth
+	
+	-- check if map has been changed
+	local currentArea = GetCurrentMapAreaID()
+	local currentMap, _, _, isMicroDungeon = GetMapInfo()
 
-	local PreZygor_GetNumMapOverlays = GetNumMapOverlays
-	function GetNumMapOverlays()
-		if not ZGV.db or not ZGV.db.profile.foglight then return PreZygor_GetNumMapOverlays() end
-		local mapfile,x,y,isMicro,microName = GetMapInfo()
-		if not mapfile then return PreZygor_GetNumMapOverlays() end
-		if microName then mapfile=microName end
-		if not ZGV.Foglight.data[mapfile] then return PreZygor_GetNumMapOverlays() end
-		return #ZGV.TableKeys(ZGV.Foglight.data[mapfile])
-	end
+	if Foglight.currentArea == currentArea and Foglight.currentIsDungeon == isMicroDungeon then return end
+	Foglight.currentArea = currentArea
+	Foglight.currentIsDungeon = isMicroDungeon
+		
+	local our_overlays = ZGV.Foglight.data[currentMap]
 
+	-- whatever is visible, hide it
+	for i,v in pairs(texture_bank) do v:Hide() end
 
-	local PreZygor_GetMapOverlayInfo = GetMapOverlayInfo
-	function GetMapOverlayInfo(i)
-		if not ZGV.db or not ZGV.db.profile.foglight then return PreZygor_GetMapOverlayInfo(i) end
+	-- we do not need to reveal dungeon/city maps
+	if isMicroDungeon then return end
 
-		local mapfile = GetMapInfo()
-		if not mapfile then return PreZygor_GetMapOverlayInfo(i) end
-		local mapdata = ZGV.Foglight.data[mapfile]   if not mapdata then return PreZygor_GetMapOverlayInfo(i) end
-		local data = mapdata[i]   if not data then return PreZygor_GetMapOverlayInfo(i) end   -- nil,0,0,0,0,nil,nil 
-		return unpack(data)
-	end
+	-- if we do not have overlays for that map, bail out
+	if not our_overlays then return end
 
-end
-
-function Foglight:DebugMap()
-	print(("Debugging foglighting of map: %s"):format(GetMapInfo()))
-	print(("WoW reports %d zones known, Foglight says %d%s."):format(PreZygor_GetNumMapOverlays(),GetNumMapOverlays(),ZGV.db.profile.foglight and "" or " too as it's turned off."))
+	-- record which overlays were shown by blizzard
+	table.wipe(blizz_overlays)
 	for i=1,GetNumMapOverlays() do
-		local t,w,h,x,y,a,b,z = GetMapOverlayInfo(i)
-		t = t:gsub(".*\\","")
-		print(("%s = %d,%d,%d,%d (%s)"):format(t,w,h,x,y,z and "Foglight" or "WoW"))
+		local name = GetMapOverlayInfo(i)
+		blizz_overlays[name] = true
+	end
+
+	-- remove them from our data, since they are already visible
+	for i,overlay in pairs(our_overlays) do
+		if overlay[1] and blizz_overlays[overlay[1]] then
+			table.remove(our_overlays,i)
+		end
+	end
+
+	local d=#texture_bank
+
+	local bank_index = 1
+	for i,texture in pairs(our_overlays) do
+		local numTexturesWide,numTexturesTall = ceil(texture[2]/256),ceil(texture[3]/256)
+		-- blizzard code starts
+		for j=1,numTexturesTall do
+			if j < numTexturesTall then
+				texturePixelHeight = 256
+				textureFileHeight = 256
+			else
+				texturePixelHeight = mod(texture[3], 256)
+				if texturePixelHeight == 0 then
+					texturePixelHeight = 256
+				end
+				textureFileHeight = 16
+				while(textureFileHeight < texturePixelHeight) do
+					textureFileHeight = textureFileHeight * 2
+				end
+			end
+			for k=1,numTexturesWide do
+				if k < numTexturesWide then
+					texturePixelWidth = 256
+					textureFileWidth = 256
+				else
+					texturePixelWidth = mod(texture[2], 256)
+					if texturePixelWidth == 0 then
+						texturePixelWidth = 256
+					end
+					textureFileWidth = 16
+					while textureFileWidth < texturePixelWidth do
+						textureFileWidth = textureFileWidth * 2
+					end
+				end
+				-- blizzard code ends, injection starts
+				if not texture_bank[bank_index] then 
+					local temp = overlayFrame:CreateTexture(nil, 'ARTWORK', nil, -1)
+					--temp:SetVertexColor(1,1,1,1)
+					texture_bank[bank_index] = temp
+				end
+				local cached_texture=texture_bank[bank_index]
+				bank_index=bank_index+1
+
+				cached_texture:SetSize(texturePixelWidth,texturePixelHeight)
+				cached_texture:SetTexCoord(0, texturePixelWidth/textureFileWidth, 0, texturePixelHeight/textureFileHeight)
+				cached_texture:SetPoint("TOPLEFT", overlayFrame, 'TOPLEFT', texture[4] + (256 * (k-1)), -(texture[5] + 256 * (j - 1)))
+				cached_texture:SetTexture(texture[1]..(((j - 1) * numTexturesWide) + k))
+				cached_texture:Show()
+				-- injection ends
+			end --numTexturesWide
+		end --numTexturesTall
+	end --our_overlays
+end
+
+function Foglight:HideOverlay()
+	local texture_bank = Foglight.texture_bank
+	for i,v in pairs(texture_bank) do v:Hide() end
+end
+
+function Foglight:ToggleOverlay()
+	Foglight.currentArea=nil
+	if ZGV.db.profile.foglight then 
+		Foglight:ShowOverlay()
+	else
+		Foglight:HideOverlay()
 	end
 end

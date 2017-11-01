@@ -11,14 +11,14 @@
 		</Scripts>
 	</Button>
 
-	<Button name="RematchFrame" parent="UIParent" frameStrata="HIGH" enableMouse="true" movable="true" clampedToScreen="true" hidden="true">
+	<Button name="RematchFrame" parent="UIParent" frameStrata="MEDIUM" topLevel="true" enableMouse="true" movable="true" clampedToScreen="true" hidden="true">
 		<Size x="570" y="604"/>
 		<Anchors>
 			<Anchor point="CENTER"/>
 		</Anchors>
 		<Frames>
 			<!-- TitleBar is a separate frame across top that can be hidden -->
-			<Frame parentKey="TitleBar" useParentLevel="true" inherits="RematchFadeTemplate">
+			<Frame parentKey="TitleBar" useParentLevel="true">
 				<Size x="0" y="33"/>
 				<Anchors>
 					<Anchor point="TOPLEFT"/>

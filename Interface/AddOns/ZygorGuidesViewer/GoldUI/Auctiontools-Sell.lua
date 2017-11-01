@@ -62,6 +62,7 @@ function Appraiser:GetInventoryItems(refresh)
 	end
 
 	table.wipe(Appraiser.InventoryItems)
+	--ZGV:Debug("AHT-Sell GetInventoryItems from "..debugstack(2,1,0))
 	for bag=0, NUM_BAG_SLOTS do
 		for slot=1, GetContainerNumSlots(bag) do
 			self:AddItemToInventory(bag,slot)
@@ -102,159 +103,163 @@ function Appraiser:AddItemToInventory(bag,slot)
 
 	local itemlink = cached_GetContainerItemLink(bag, slot) 
 
-	if itemid then
-		if not itemlink then -- we did not get the link for this item yet, abort and retry
-			Appraiser.needToUpdate = true
-			return false
-		end
+	if not itemid then return end
 
-		local isbop = false
-		local isboa = false
-		local isbound = false
-		local price = 0
+	if not itemlink then -- we did not get the link for this item yet, abort and retry
+		Appraiser.needToUpdate = true
+		return false
+	end
 
-		if BagSlot_BindCache[bag][slot] then
-			local bs = BagSlot_BindCache[bag][slot]
-			isbop,isboa,isbound = bs.isbop,bs.isboa,bs.isbound
+	local isbop = false
+	local isboa = false
+	local isbound = false
+	local price = 0
+
+	if BagSlot_BindCache[bag][slot] then
+		local bs = BagSlot_BindCache[bag][slot]
+		isbop,isboa,isbound = bs.isbop,bs.isboa,bs.isbound
+	else
+		if itemid == 82800 then -- Caged pet, if you can cage it, you can sell it
+			isbop=false
+			isboa=false
+			isbound=false
 		else
-			if itemid == 82800 then -- Caged pet, if you can cage it, you can sell it
-				isbop=false
-				isboa=false
-				isbound=false
-			else
-				Gratuity:SetBagItem(bag,slot)
-				local n = Gratuity:NumLines()
-				if strfind(tostring(Gratuity:GetLine(1)),RETRIEVING_ITEM_INFO) then return false end  -- maybe retry later...
+			Gratuity:SetBagItem(bag,slot)
+			local n = Gratuity:NumLines()
+			if strfind(tostring(Gratuity:GetLine(1)),RETRIEVING_ITEM_INFO) then return false end  -- maybe retry later...
 
-				for i=1,n do
-					local line=Gratuity:GetLine(i)
-					if line then
-						isbop = isbop or strfind(line, ITEM_BIND_ON_PICKUP)
-						isboa = isboa or strfind(line, ITEM_BIND_TO_BNETACCOUNT)
-						isboa = isboa or strfind(line, ITEM_BNETACCOUNTBOUND)
-						isbound = isbound or strfind(line, ITEM_SOULBOUND)
-						isbound = isbound or strfind(line, ITEM_BIND_QUEST)
-						isbound = isbound or strfind(line, ITEM_CONJURED)
-						
-						-- if we found use clause, we are past possible points of binding, stop looking
-						if strfind(line, USE_COLON) then break end 
-					end
+			for i=1,n do
+				local line=Gratuity:GetLine(i)
+				if line then
+					isbop = isbop or strfind(line, ITEM_BIND_ON_PICKUP)
+					isboa = isboa or strfind(line, ITEM_BIND_TO_BNETACCOUNT)
+					isboa = isboa or strfind(line, ITEM_BNETACCOUNTBOUND)
+					isbound = isbound or strfind(line, ITEM_SOULBOUND)
+					isbound = isbound or strfind(line, ITEM_BIND_QUEST)
+					isbound = isbound or strfind(line, ITEM_CONJURED)
+					
+					-- if we found use clause, we are past possible points of binding, stop looking
+					if strfind(line, USE_COLON) then break end 
 				end
 			end
-			BagSlot_BindCache[bag][slot] = {isbop=isbop,isboa=isboa,isbound=isbound}
 		end
+		BagSlot_BindCache[bag][slot] = {isbop=isbop,isboa=isboa,isbound=isbound}
+	end
 
-		if isbop or isboa or isbound then return false end
+	if isbop or isboa or isbound then return false end
 
-		local name, link, quality, iLevel, reqLevel, class, subclass, maxStack, equipSlot, texture, vendorPrice, classID, subclassID = ZGV:GetItemInfo(itemlink)
-		local texture, itemCount, locked, quality, readable = GetContainerItemInfo(bag, slot)
-		local displayName = nil
+	local name, link, quality, iLevel, reqLevel, class, subclass, maxStack, equipSlot, texture, vendorPrice, classID, subclassID = ZGV:GetItemInfo(itemlink)
+	local texture, itemCount, locked, quality, readable = GetContainerItemInfo(bag, slot)
+	local displayName = nil
 
-		local petItem_id = nil
-		local petItemFallback_id = nil
+	local petItem_id = nil
+	local petItemFallback_id = nil
 
-		local BattlePetId,BattlePetName = nil,nil
+	local BattlePetId,BattlePetName = nil,nil
 
-		if itemid == 82800 then -- Caged pet
-			local _,_,_,BattlePetId,BattlePetLevel,BattlePetRarity,BattlePetHP,BattlePetAtt,BattlePetSpeed,_,BattlePetName = string.find(itemlink,"(.*)battlepet:(%d+):(%d+):(%d+):(%d+):(%d+):(%d+):(.*)%[(.*)%]")
+	if itemid == 82800 then -- Caged pet
+		local _,_,_,BattlePetId,BattlePetLevel,BattlePetRarity,BattlePetHP,BattlePetAtt,BattlePetSpeed,_,BattlePetName = string.find(itemlink,"(.*)battlepet:(%d+):(%d+):(%d+):(%d+):(%d+):(%d+):(.*)%[(.*)%]")
 
-			local result
-			petItem_id, result = ZGV.PetBattle:GetPetFakeIdByLink(itemlink)
-			if result~="OK" then return end
+		local result
+		petItem_id, result = ZGV.PetBattle:GetPetFakeIdByLink(itemlink)
+		if result~="OK" then return end
 
-			breedid,breedname = ZGV.PetBattle:GetPetBreedBySlot(bag,slot)
+		breedid,breedname = ZGV.PetBattle:GetPetBreedBySlot(bag,slot)
 
-			name = BattlePetName
-			displayName = BattlePetName.." (lvl "..BattlePetLevel.." "..breedname..")"
+		name = BattlePetName
+		displayName = BattlePetName.." (lvl "..BattlePetLevel.." "..breedname..")"
 
-		end
+	end
 
-		local single_locked = false
-		if itemid == 82800 or classID==2 or classID==4 then
-			-- lock pets and equipment to 1 per posting, to prevent blizzard ah posting random items
-			single_locked=true
-			maxStack=1
-		end
-			
+	local single_locked = false
+	if itemid == 82800 or classID==2 or classID==4 then
+		-- lock pets and equipment to 1 per posting, to prevent blizzard ah posting random items
+		single_locked=true
+		maxStack=1
+	end
+		
 
-		if not name or not texture then return false end
+	if not name or not texture then return false end
 
-		local statusIcon, statusText, statusId, statusText,statusIcon,isStagnant,statusColor
+	local statusIcon, statusText, statusId, statusText,statusIcon,isStagnant,statusColor
 
-		local price,unit_price,empty = ZGVG:GetSellPrice(petItem_id or itemid,itemCount)
+	local price,unit_price,empty = ZGVG:GetSellPrice(petItem_id or itemid,itemCount)
 
-		local priceStatus = ZGVG:GetPriceStatus(petItem_id or itemid,empty and 0 or unit_price,1,false,true) -- not using faked, include deals
-		statusId = priceStatus.statusId
-		statusText = priceStatus.name.."\n"..(priceStatus.stagnant and "Market stagnant." or priceStatus.sellsuggestion)
-		statusIcon = priceStatus.sellicon or priceStatus.icon -- coords
-		isStagnant = priceStatus.stagnant
-		statusColor = isStagnant and priceStatus.stagcolor or priceStatus.sellcolor
+	local priceStatus = ZGVG:GetPriceStatus(petItem_id or itemid,empty and 0 or unit_price,1,false,true) -- not using faked, include deals
+	statusId = priceStatus.statusId
+	statusText = priceStatus.name.."\n"..(priceStatus.stagnant and "Market stagnant." or priceStatus.sellsuggestion)
+	statusIcon = priceStatus.sellicon or priceStatus.icon -- coords
+	isStagnant = priceStatus.stagnant
+	statusColor = isStagnant and priceStatus.stagcolor or priceStatus.sellcolor
 
-		if not (petItem_id or itemid) or not name or not price then
-			ZGV:Print("Unable to add item",itemid,"to auctiontools.")
-			return
-		end
+	if not (petItem_id or itemid) or not name or not price then
+		ZGV:Print("Unable to add item",itemid,"to auctiontools.")
+		return
+	end
 
-		local active = false
-		if Appraiser.ActiveSellingItem and Appraiser.ActiveSellingItem.itemid == (petItem_id or itemid) then active = true end
+	local active = false
+	if Appraiser.ActiveSellingItem and Appraiser.ActiveSellingItem.itemid == (petItem_id or itemid) then active = true end
 
-		local exists = false
-		local stripped_link = itemlink
-		if not petItem_id then -- strip extra data, including uniqueID
-			stripped_link = ZGV.ItemLink.StripBlizzExtras(itemlink)
-		end
-		for i,v in pairs(self.InventoryItems) do
-			--if (petItem_id and v.itemid==petItem_id) or (not petItem_id and v.itemid == itemid) and not exists then
-			if v.link==stripped_link and not exists then
-				exists = exists or true
-				self.InventoryItems[i].count = self.InventoryItems[i].count + itemCount
-				self.InventoryItems[i].price = self.InventoryItems[i].price + price
-			end
-		end
-		if not exists then
-			local cache_id = petItem_id or itemid
-			local stored_stack_count,stored_stack_size
-			if not inventory_cache[stripped_link] then 
-				inventory_cache[stripped_link] = {}
-			else
-				stored_stack_count = inventory_cache[stripped_link].stackcount
-				stored_stack_size = inventory_cache[stripped_link].stacksize
-				customprice_unit_bid = inventory_cache[stripped_link].customprice_unit_bid
-				customprice_unit_buy = inventory_cache[stripped_link].customprice_unit_buy
-				customprice = inventory_cache[stripped_link].customprice
-				auction = inventory_cache[stripped_link].auction
-				table.wipe(inventory_cache[stripped_link])
-			end
-
-			inventory_cache[stripped_link].itemid=cache_id
-			inventory_cache[stripped_link].name=name
-			inventory_cache[stripped_link].displayName=displayName
-			inventory_cache[stripped_link].link=stripped_link
-			inventory_cache[stripped_link].icon=texture
-			inventory_cache[stripped_link].count=itemCount
-			inventory_cache[stripped_link].price=price
-			inventory_cache[stripped_link].bag=bag
-			inventory_cache[stripped_link].slot=slot
-			inventory_cache[stripped_link].statusText=statusText
-			inventory_cache[stripped_link].statusIcon=statusIcon
-			inventory_cache[stripped_link].statusId=statusId
-			inventory_cache[stripped_link].statusColor=statusColor
-			inventory_cache[stripped_link].isStagnant=isStagnant
-			inventory_cache[stripped_link].quality=quality
-			inventory_cache[stripped_link].active=active
-			inventory_cache[stripped_link].maxStack=maxStack
-			inventory_cache[stripped_link].single_locked=single_locked
-
-			inventory_cache[stripped_link].stackcount=stored_stack_count
-			inventory_cache[stripped_link].stacksize=stored_stack_size
-			inventory_cache[stripped_link].customprice_unit_bid=customprice_unit_bid
-			inventory_cache[stripped_link].customprice_unit_buy=customprice_unit_buy
-			inventory_cache[stripped_link].customprice=customprice
-			inventory_cache[stripped_link].auction=auction
-
-			table.insert(self.InventoryItems,inventory_cache[stripped_link])
+	local exists = false
+	local stripped_link = itemlink
+	if not petItem_id then -- strip extra data, including uniqueID
+		stripped_link = ZGV.ItemLink.StripBlizzExtras(itemlink)
+	end
+	for i,v in pairs(self.InventoryItems) do
+		--if (petItem_id and v.itemid==petItem_id) or (not petItem_id and v.itemid == itemid) and not exists then
+		if v.link==stripped_link and not exists then
+			exists = exists or true
+			self.InventoryItems[i].count = self.InventoryItems[i].count + itemCount
+			self.InventoryItems[i].price = self.InventoryItems[i].price + price
 		end
 	end
+	if not exists then
+		local cache_id = petItem_id or itemid
+		local stored_stack_count,stored_stack_size
+
+		local invcached = inventory_cache[stripped_link]
+		if not invcached then
+			invcached = {}
+			inventory_cache[stripped_link] = invcached
+		else
+			stored_stack_count = invcached.stackcount
+			stored_stack_size = invcached.stacksize
+			customprice_unit_bid = invcached.customprice_unit_bid
+			customprice_unit_buy = invcached.customprice_unit_buy
+			customprice = invcached.customprice
+			auction = invcached.auction
+			table.wipe(invcached)
+		end
+
+		invcached.itemid=cache_id
+		invcached.name=name
+		invcached.displayName=displayName
+		invcached.link=stripped_link
+		invcached.icon=texture
+		invcached.count=itemCount
+		invcached.price=price
+		invcached.bag=bag
+		invcached.slot=slot
+		invcached.statusText=statusText
+		invcached.statusIcon=statusIcon
+		invcached.statusId=statusId
+		invcached.statusColor=statusColor
+		invcached.isStagnant=isStagnant
+		invcached.quality=quality
+		invcached.active=active
+		invcached.maxStack=maxStack
+		invcached.single_locked=single_locked
+
+		invcached.stackcount=stored_stack_count
+		invcached.stacksize=stored_stack_size
+		invcached.customprice_unit_bid=customprice_unit_bid
+		invcached.customprice_unit_buy=customprice_unit_buy
+		invcached.customprice=customprice
+		invcached.auction=auction
+
+		table.insert(self.InventoryItems,invcached)
+	end
+
 end
 
 function Appraiser:UpdateItemInInventory(item)
@@ -289,7 +294,7 @@ function Appraiser:RefreshSellingItem()
 	local found = false
 
 	for ii,item in ipairs(self.InventoryItems) do 
-		if item.link == Appraiser.LastSoldItem then
+		if item.link == self.LastSellingItem then
 			item.active = true
 			local truecount = GetItemCount(item.link)
 			if item.itemid > 1000000000 then -- battle pet, need spoonfeeding since GetItemCount(link) does not work for pets
@@ -306,16 +311,17 @@ function Appraiser:RefreshSellingItem()
 			if Appraiser.ActiveSellingItem and truecount ~= Appraiser.ActiveSellingItem.count then
 				item.count = truecount
 				Appraiser.ActiveSellingItem.count = truecount
-				Appraiser:SetSellData()
-				Appraiser:SetSellHistoricalData()
+				Appraiser:SetSellFields()
+				Appraiser:SetSellHistoricalLabels()
 			end
 			found = true
 			break
 		end
 	end
+	--ZGV:Debug("&gold RefreshSellingItem LastSelling %s? %s found",self.LastSellingItem,found and "YES" or "NOT")
 	if not found and not Appraiser.SellManualUnselect then
 		Appraiser.ActiveSellingItem = nil
-		Appraiser:SelectShoppingRow()
+		Appraiser:SelectNextSellingItem()
 	end
 end
 
@@ -368,88 +374,95 @@ function Appraiser:AddItemToInventoryAuctions(data)
 	end
 end
 
+local lastitem,lasttime
 function Appraiser:ActivateSellItem(item,automatic)
+	if lastitem==item and lasttime==GetTime() then return end
+	lastitem,lasttime=item,GetTime()
+
+	ZGV:Debug("&gold Activating sell item: %s (%s) because %s",item and item.name, item and item.link, debugstack(2,1,0))
+
 	if not automatic then
 		-- do not switch items while any scan is running
-		if ZGV.Gold.Scan.state~="SS_IDLE" then return end
+		if ZGV.Gold.Scan.state~="SS_IDLE" then ZGV:Debug("Not activating: not idle") return end
 
-		Appraiser.SellingInProgress = false
-		if Appraiser.ActiveSearch then return end
-		if Appraiser.ActiveSearchName then return end
-		if Appraiser.GoToFirstPage then return end
+		self.SellingInProgress = false
+		if self.ActiveSearch then ZGV:Debug("Not activating: activesearch") return end
+		if self.ActiveSearchName then ZGV:Debug("Not activating: activesearchname") return end
+		if self.GoToFirstPage then ZGV:Debug("Not activating: gotofirstpage") return end
 	end
+
+	self:WipeSellHistoricalLabels()
+	self:WipeSellPricingLabels()
 	if not item then 
-		Appraiser.ActiveSellingItem = nil
-		Appraiser:WipeSellHistoricalData()
-		Appraiser:WipeSellPricingData()
-		Appraiser:ToggleStackSettings(true)
+		self.ActiveSellingItem = nil
+		self:ShowStackPanel(true)
+		ZGV:Debug("Not activating: no item") 
 		return 
 	end
 
-	Appraiser:WipeSellHistoricalData()
-	Appraiser:WipeSellPricingData()
-	Appraiser.InventoryAuctions = {}
-	Appraiser.Inventory_Frame.aucpostfee:SetText("Deposit: "..ZGV.GetMoneyString(0))
+	self.InventoryAuctions = {}
+	self.Inventory_Frame.aucpostfee:SetText("Deposit: "..ZGV.GetMoneyString(0))
 
 	currentIndex = 0
-	for i,v in pairs(Appraiser.InventoryItems) do 
+	for i,v in pairs(self.InventoryItems) do 
 		if v==item then currentIndex=i end
 		v.active = false 
 	end
 
-	if item and not item.single_locked then
-		Appraiser:ToggleStackSettings(true)
-	else
-		Appraiser:ToggleStackSettings(false)
-	end	
+	self:ShowStackPanel(item and not item.single_locked)
 
-	if automatic or (not Appraiser.ActiveSellingItem or item.itemid ~= Appraiser.ActiveSellingItem.itemid) then
-		Appraiser.SellManualUnselect = false
+	--[[
+	if automatic then -- or (not self.ActiveSellingItem or item.itemid ~= self.ActiveSellingItem.itemid) then
+	--]]
+		self.SellManualUnselect = false
 
 		PickupContainerItem(item.bag, item.slot)
 		ClickAuctionSellItemButton()
 		ClearCursor()
 
-		Appraiser.ActiveSearch = item.itemid
-		Appraiser.ActiveSearchName = item.name
-		Appraiser.ActiveSellingItem = item
+		self.ActiveSearch = item.itemid
+		self.ActiveSearchName = item.name
+		self.ActiveSellingItem = item
 
-		Appraiser.LastSoldItem = item.link
-		Appraiser.NextSellingItem = nil
-		if Appraiser.InventoryItems[currentIndex+1] then
-			Appraiser.NextSellingItem = Appraiser.InventoryItems[currentIndex+1].link
-		elseif Appraiser.InventoryItems[1] then
-			Appraiser.NextSellingItem = Appraiser.InventoryItems[1].link
+		self.LastSellingItem = item.link
+		self.NextSellingItemID = nil
+		if self.InventoryItems[currentIndex+1] then
+			self.NextSellingItemID = self.InventoryItems[currentIndex+1].itemid
+		elseif self.InventoryItems[1] then
+			self.NextSellingItemID = self.InventoryItems[1].itemid
 		end
+		ZGV:Debug("ACTIVATED %s, NEXT %s",self.LastSellingItem,self.NextSellingItemID)
 
-		Appraiser.Inventory_Frame.activeIcon:SetTexture(item.icon)
-		Appraiser.Inventory_Frame.activeName:SetText(item.name)
-		Appraiser.Inventory_Frame.activeIcon:SetWidth(20)
-		Appraiser.Inventory_Frame.activeName:SetWidth(220)
-		Appraiser.Inventory_Frame.activeName:SetPoint("TOPLEFT",Appraiser.Inventory_Frame.activeIcon,"TOPRIGHT",8,-2)
+		self.Inventory_Frame.activeIcon:SetTexture(item.icon)
+		self.Inventory_Frame.activeName:SetText(item.name)
+		self.Inventory_Frame.activeIcon:SetWidth(20)
+		self.Inventory_Frame.activeName:SetWidth(220)
+		self.Inventory_Frame.activeName:SetPoint("TOPLEFT",self.Inventory_Frame.activeIcon,"TOPRIGHT",8,-2)
 
-		Appraiser.Inventory_Frame.auctionslabel:SetText("Auctions for: "..item.name)
-		Appraiser.Inventory_Frame.undercutlabel:Show()
+		self.Inventory_Frame.auctionslabel:SetText("Auctions for: "..item.name)
+		self.Inventory_Frame.undercutlabel:Show()
 
 		item.active = true
-		Appraiser:SetSellHistoricalData()
-		Appraiser:SetSellData()
-		Appraiser:SearchForItem(item)
+		self:SetSellHistoricalLabels()
+		self:SetSellFields()
+		self:SearchForItem(item)
+	--[[
 	else
 		ClickAuctionSellItemButton()
 		ClearCursor()
-		Appraiser.LastSoldItem = nil
-		Appraiser.LastSoldItemData = nil
+		self.LastSellingItem = nil
+		self.LastSoldItemData = nil
 
-		Appraiser.ActiveSellingItem = nil
-		Appraiser.SellManualUnselect = true
+		self.ActiveSellingItem = nil
+		self.SellManualUnselect = true
 
 		item.active = false
 	end
-	Appraiser:Update()
+	--]]
+	self:Update()
 end
 
-function Appraiser:ToggleStackSettings(enable)
+function Appraiser:ShowStackPanel(enable)
 	local inv=Appraiser.Inventory_Frame
 	local edit_alpha,button_alpha,text_alpha,text_color
 	if enable then
@@ -483,119 +496,152 @@ function Appraiser:ToggleStackSettings(enable)
 	inv.stackcountbutton:SetTextColor(text_color,text_color,text_color,text_alpha)
 end
 
-function Appraiser:SellPriceManual()
-	if Appraiser.ActiveSellingItem then 
-		Appraiser.ActiveSellingItem.customprice = true 
-		local countForSellCalc = 1
-		if ZGV.db.profile.aucmode == "stack" then
-			countForSellCalc = tonumber(Appraiser.Inventory_Frame.stacksize:GetText())
-		end
-		local g = tonumber(Appraiser.Inventory_Frame.bidgold:GetText()) or 0
-		local s = tonumber(Appraiser.Inventory_Frame.bidsilver:GetText()) or 0
-		local c = tonumber(Appraiser.Inventory_Frame.bidcopper:GetText()) or 0
-		Appraiser.ActiveSellingItem.customprice_unit_bid = (c+s*100+g*100*100)/countForSellCalc
+function Appraiser:SetManualSellPrice()
+	if not Appraiser.ActiveSellingItem then return end
 
-		local g = tonumber(Appraiser.Inventory_Frame.buyoutgold:GetText()) or 0
-		local s = tonumber(Appraiser.Inventory_Frame.buyoutsilver:GetText()) or 0
-		local c = tonumber(Appraiser.Inventory_Frame.buyoutcopper:GetText()) or 0
-		Appraiser.ActiveSellingItem.customprice_unit_buy = (c+s*100+g*100*100)/countForSellCalc
-	end 
+	Appraiser.ActiveSellingItem.customprice = true 
+	local countForSellCalc = 1
+	if ZGV.db.profile.aucmode == "stack" then
+		countForSellCalc = Appraiser.ActiveSellingItem.stacksize
+	end
+	local g = tonumber(Appraiser.Inventory_Frame.bidgold:GetText()) or 0
+	local s = tonumber(Appraiser.Inventory_Frame.bidsilver:GetText()) or 0
+	local c = tonumber(Appraiser.Inventory_Frame.bidcopper:GetText()) or 0
+	Appraiser.ActiveSellingItem.customprice_unit_bid = (c+s*100+g*100*100)/countForSellCalc
+
+	local g = tonumber(Appraiser.Inventory_Frame.buyoutgold:GetText()) or 0
+	local s = tonumber(Appraiser.Inventory_Frame.buyoutsilver:GetText()) or 0
+	local c = tonumber(Appraiser.Inventory_Frame.buyoutcopper:GetText()) or 0
+	Appraiser.ActiveSellingItem.customprice_unit_buy = (c+s*100+g*100*100)/countForSellCalc
+
+	if Appraiser.ActiveSellingItem.customprice_unit_bid>Appraiser.ActiveSellingItem.customprice_unit_buy then
+		Appraiser.ActiveSellingItem.customprice_unit_buy = Appraiser.ActiveSellingItem.customprice_unit_bid
+	end
+
+	Appraiser:UpdateSellPriceFields()
 end
 
 function Appraiser:SetUndercutToAuction(row)
 	if not row.item then return end
 	Appraiser.ActiveSellingItem.auction = row.item
 	Appraiser.ActiveSellingItem.customprice = nil
-	Appraiser:UpdateSellPrice()
+	Appraiser:UpdateSellPriceFields()
 	for i,v in pairs(Appraiser.Inventory_Frame.InventoryAuctionList.rows) do if v.item then v.item.active = false end end
 	row.item.active = true
 	Appraiser:Update()
 end
 
-function Appraiser:UpdateStackSize() 
-	if Appraiser.Inventory_Frame.stacksize:HasFocus() and Appraiser.Inventory_Frame.stacksize:GetText()=="" then return end
-	local old_stacksize = Appraiser.ActiveSellingItem.stacksize
-	local old_stackcount = Appraiser.ActiveSellingItem.stackcount
-	local new_stacksize = tonumber(Appraiser.Inventory_Frame.stacksize:GetText())
-	local _,_,count = Appraiser:GetSellStack(Appraiser.ActiveSellingItem)
-	if not new_stacksize or new_stacksize == 0 then 
-		Appraiser.Inventory_Frame.stacksize:SetText(old_stacksize) 
-	else
-		if Appraiser.ActiveSellingItem.maxStack then new_stacksize = math.min(new_stacksize,Appraiser.ActiveSellingItem.maxStack) end
-		if new_stacksize*old_stackcount>count then -- make sure they are not trying to sell more than they own
-			new_stacksize = math.floor(count/old_stackcount)
-			Appraiser.Inventory_Frame.stacksize:SetText(new_stacksize) 
-		end
-		Appraiser.ActiveSellingItem.stacksize = new_stacksize
-	end
-
-	Appraiser:UpdateAuctionCost()
-	Appraiser:UpdateSellPrice()
+function Appraiser:UpdateStackFields()
+	self.Inventory_Frame.stacksize:SetText(self.ActiveSellingItem.stacksize)
+	self.Inventory_Frame.stackcount:SetText(self.ActiveSellingItem.stackcount)
+	self.needToRetooltip=true
 end
 
-function Appraiser:UpdateStackCount() 
-	if Appraiser.Inventory_Frame.stackcount:HasFocus() and Appraiser.Inventory_Frame.stackcount:GetText()=="" then return end
-	local old_stacksize = Appraiser.ActiveSellingItem.stacksize
-	local old_stackcount = Appraiser.ActiveSellingItem.stackcount
-	local new_stackcount = tonumber(Appraiser.Inventory_Frame.stackcount:GetText())
-	local _,_,count = Appraiser:GetSellStack(Appraiser.ActiveSellingItem)
-	if not new_stackcount or new_stackcount == 0 then 
-		Appraiser.Inventory_Frame.stackcount:SetText(old_stackcount) 
+function Appraiser:UpdateStackCountsFromFields()
+	Appraiser.ActiveSellingItem.stacksize = tonumber(Appraiser.Inventory_Frame.stacksize:GetText()) or 1
+	Appraiser.ActiveSellingItem.stackcount = tonumber(Appraiser.Inventory_Frame.stackcount:GetText()) or 1
+	self.needToRetooltip=true
+	Appraiser:UpdateSellPriceFields()
+end
+
+function Appraiser:UpdateStackSize__()
+	if Appraiser.Inventory_Frame.stacksize:HasFocus() and Appraiser.Inventory_Frame.stacksize:GetText()=="" then return end
+	local _,_,maxcount = Appraiser:GetMaxSellStack(Appraiser.ActiveSellingItem)
+	local old_stacksize = min(Appraiser.ActiveSellingItem.stacksize,maxcount)
+	local old_stackcount = min(Appraiser.ActiveSellingItem.stackcount,maxcount)
+	local new_stacksize = max(1,size or tonumber(Appraiser.Inventory_Frame.stacksize:GetText()) or 1)
+	local new_stacksize_orig = new_stacksize
+	while old_stacksize*old_stackcount>maxcount and old_stackcount>0 do
+		old_stackcount=old_stackcount-1
+		Appraiser.ActiveSellingItem.stackcount=old_stackcount
+		self.Inventory_Frame.stackcount:SetText(self.ActiveSellingItem.stackcount)
+	end  -- reduce count if it's already too high
+
+	new_stacksize = math.min(new_stacksize,Appraiser.ActiveSellingItem.maxStack or 9999,math.floor(maxcount/old_stackcount)) -- make sure they are not trying to sell more than they own
+	Appraiser.ActiveSellingItem.stacksize = new_stacksize
+
+	if new_stacksize_orig==new_stacksize then
+		ZGV:Debug("&gold UpdateStackSize: %d x |cffffddff%d|r x %s.",old_stackcount,new_stacksize,Appraiser.ActiveSellingItem.name)
 	else
-		if old_stacksize*new_stackcount>count then -- make sure they are not trying to sell more than they own
-			new_stackcount = math.floor(count/old_stacksize)
-			Appraiser.Inventory_Frame.stackcount:SetText(new_stackcount) 
-		end
-		Appraiser.ActiveSellingItem.stackcount = new_stackcount
+		ZGV:Debug("&gold UpdateStackSize: %d x |cffffddff%d|r x %s? max is %d x |cffffddff%d|r (only %d in bags)", old_stackcount,new_stacksize_orig,Appraiser.ActiveSellingItem.name, old_stackcount,new_stacksize,maxcount)
 	end
-	Appraiser:UpdateAuctionCost()
-	Appraiser:UpdateSellPrice()
+
+	self:UpdateStackFields()
+	self:UpdateAuctionCost()
+	self:UpdateSellPriceFields()
+end
+
+function Appraiser:UpdateStackCount__(count)
+	if Appraiser.Inventory_Frame.stackcount:HasFocus() and Appraiser.Inventory_Frame.stackcount:GetText()=="" and not count then return end
+	local _,_,maxcount = Appraiser:GetMaxSellStack(Appraiser.ActiveSellingItem)
+	local old_stacksize = min(Appraiser.ActiveSellingItem.stacksize,maxcount)
+	local old_stackcount = min(Appraiser.ActiveSellingItem.stackcount,maxcount)
+	local new_stackcount = max(1,count or tonumber(Appraiser.Inventory_Frame.stackcount:GetText()) or 1)
+	local new_stackcount_orig = new_stackcount
+	while old_stacksize*old_stackcount>maxcount and old_stacksize>0 do old_stacksize=old_stacksize-1 end  -- reduce size if it's already too high
+
+	new_stackcount = math.min(new_stackcount,Appraiser.ActiveSellingItem.maxStack or 9999,math.floor(maxcount/old_stacksize)) -- make sure they are not trying to sell more than they own
+	Appraiser.ActiveSellingItem.stackcount = new_stackcount
+
+	if new_stackcount_orig==new_stackcount then
+		ZGV:Debug("&gold UpdateStackCount: |cffffddff%d|r x %d x %s.",new_stackcount,old_stacksize,Appraiser.ActiveSellingItem.name)
+	else
+		ZGV:Debug("&gold UpdateStackCount: |cffffddff%d|r x %d x %s? max is |cffffddff%d|r x %d (only %d in bags)",new_stackcount_orig,old_stacksize,Appraiser.ActiveSellingItem.name, new_stackcount,old_stacksize, maxcount)
+	end
+
+	self:UpdateStackFields()
+	self:UpdateAuctionCost()
+	self:UpdateSellPriceFields()
 end
 
 function Appraiser:SetMaxStackSize()
-	local _,_,count = Appraiser:GetSellStack(Appraiser.ActiveSellingItem)
-	local old_stackcount = tonumber(Appraiser.Inventory_Frame.stackcount:GetText())
-	if not old_stackcount then 
-		old_stackcount = Appraiser.ActiveSellingItem.stackcount
-		Appraiser.Inventory_Frame.stackcount:SetText(old_stackcount)
+	local item = Appraiser.ActiveSellingItem
+	if not item then return end
+	local _,_,maxstack = Appraiser:GetMaxSellStack(item)
+	local invcount = GetItemCount(item.itemid)
+	if IsShiftKeyDown() then
+		if item.stacksize==maxstack then
+			item.stacksize=invcount
+		else
+			item.stacksize=maxstack
+		end
+		item.stackcount=1
+	else
+		item.stacksize=max(1,min(maxstack,floor(invcount/item.stackcount)))
 	end
-	new_stacksize = math.floor(count/old_stackcount)
-	local new_stacksize = math.min(new_stacksize,Appraiser.ActiveSellingItem.maxStack)
-	Appraiser.Inventory_Frame.stacksize:SetText(new_stacksize) 
-	Appraiser:UpdateAuctionCost()
-	Appraiser:UpdateSellPrice()
+	self:UpdateStackFields()
+	self:UpdateSellPriceFields()
+	self:UpdateNow()
 end
 
 function Appraiser:SetMaxStackCount()
-	local _,_,count = Appraiser:GetSellStack(Appraiser.ActiveSellingItem)
-	local old_stacksize = tonumber(Appraiser.Inventory_Frame.stacksize:GetText())
-	if not old_stacksize then 
-		old_stacksize = Appraiser.ActiveSellingItem.stacksize
-		Appraiser.Inventory_Frame.stacksize:SetText(old_stacksize)
-	end
-	new_stackcount = math.floor(count/old_stacksize)
-	Appraiser.Inventory_Frame.stackcount:SetText(new_stackcount) 
-	Appraiser:UpdateAuctionCost()
-	Appraiser:UpdateSellPrice()
+	local item = Appraiser.ActiveSellingItem
+	if not item then return end
+	local invcount = GetItemCount(item.itemid)
+	item.stackcount=max(1,floor(invcount/item.stacksize))
+	if item.stackcount==1 and item.stacksize>invcount then self:SetMaxStackSize() end
+	self:UpdateStackFields()
+	self:UpdateSellPriceFields()
+	self:UpdateNow()
 end
 
-function Appraiser:SetSellAucMode() 
-	ZGV.db.profile.aucmode = Appraiser.Inventory_Frame.aucmodelgroup:GetValue()
-	Appraiser.Inventory_Frame.bidlabel:SetText("Bid / "..ZGV.db.profile.aucmode)
-	Appraiser.Inventory_Frame.buyoutlabel:SetText("Buyout / "..ZGV.db.profile.aucmode)
+function Appraiser:SetSellAucMode()
+	ZGV.db.profile.aucmode = self.Inventory_Frame.aucmodelgroup:GetValue()
+	self.Inventory_Frame.bidlabel:SetText("Bid / "..ZGV.db.profile.aucmode)
+	self.Inventory_Frame.buyoutlabel:SetText("Buyout / "..ZGV.db.profile.aucmode)
 	if ZGV.db.profile.aucmode=="unit" then
-		Appraiser.Inventory_Frame.InventoryAuctionList.col_uprice:SetTextColor(1,1,1,1)
-		Appraiser.Inventory_Frame.InventoryAuctionList.col_sprice:SetTextColor(0.5,0.5,0.5,1)
+		self.Inventory_Frame.InventoryAuctionList.col_uprice:SetTextColor(1,1,1,1)
+		self.Inventory_Frame.InventoryAuctionList.col_sprice:SetTextColor(0.5,0.5,0.5,1)
 	else
-		Appraiser.Inventory_Frame.InventoryAuctionList.col_uprice:SetTextColor(0.5,0.5,0.5,1)
-		Appraiser.Inventory_Frame.InventoryAuctionList.col_sprice:SetTextColor(1,1,1,1)
+		self.Inventory_Frame.InventoryAuctionList.col_uprice:SetTextColor(0.5,0.5,0.5,1)
+		self.Inventory_Frame.InventoryAuctionList.col_sprice:SetTextColor(1,1,1,1)
 	end
-	Appraiser:UpdateSellPrice()
-	Appraiser:SetSellHistoricalData()
-	Appraiser.needToUpdate = true
+	self:UpdateSellPriceFields()
+	self:SetSellHistoricalLabels()
+	self.needToUpdate = true
 end
 
-function Appraiser:GetSellStack(item)
+function Appraiser:GetMaxSellStack(item)
 	if not item.maxStack then
 		local _, _, _, _, _, class, subclass, maxStack, _, _, _ = ZGV:GetItemInfo(item.itemid)
 		item.maxStack = maxStack
@@ -603,13 +649,9 @@ function Appraiser:GetSellStack(item)
 
 	local itemCountTotal = item.count
 
-	if (item.maxStack or 0)>4 then
-		stacksize = math.min(item.maxStack/4,itemCountTotal)
-		stackcount = math.max(math.floor(itemCountTotal/stacksize),1)
-	else
-		stacksize = 1
-		stackcount = math.max(itemCountTotal,1)
-	end
+	-- post in quarter-maxstacks
+	stacksize = max(1,min(ceil((item.maxStack or 1)/4),itemCountTotal))
+	stackcount = max(1,floor(itemCountTotal/stacksize))
 
 	if item.single_locked then
 		-- lock pets and equipment to 1 per posting, to prevent blizzard ah posting random items
@@ -619,16 +661,24 @@ function Appraiser:GetSellStack(item)
 		item.maxStack=1
 	end
 
+	--ZGV:Debug("&gold GetSellStack: %dx%d of %d",stackcount,stacksize,itemCountTotal)
+
 	return stacksize, stackcount, itemCountTotal
 end
 
+function Appraiser:GetUserSellStack(item)
+	local size,count = item.stacksize,item.stackcount
+	if not size then size,count = self:GetMaxSellStack(item) end
+	return size,count
+end
 
-function Appraiser:WipeSellHistoricalData()
-	Appraiser.Inventory_Frame.demand:SetText("n\\a")
-	Appraiser.Inventory_Frame.estval:SetText("n\\a")
-	Appraiser.Inventory_Frame.histhigh:SetText("n\\a")
-	Appraiser.Inventory_Frame.histlow:SetText("n\\a")
-	Appraiser.Inventory_Frame.histmed:SetText("n\\a")
+
+function Appraiser:WipeSellHistoricalLabels()
+	Appraiser.Inventory_Frame.demand:SetText("n/a")
+	Appraiser.Inventory_Frame.estval:SetText("n/a")
+	Appraiser.Inventory_Frame.histhigh:SetText("n/a")
+	Appraiser.Inventory_Frame.histlow:SetText("n/a")
+	Appraiser.Inventory_Frame.histmed:SetText("n/a")
 
 	Appraiser.Inventory_Frame.activeStatus:SetText("")
 	Appraiser.Inventory_Frame.auctionslabel:SetText("")
@@ -638,14 +688,14 @@ function Appraiser:WipeSellHistoricalData()
 	for i,v in pairs(Appraiser.Inventory_Frame.InventoryAuctionList.rows) do if v.item then v.item.active = false end end
 end
 
-function Appraiser:SetSellHistoricalData()
+function Appraiser:SetSellHistoricalLabels()
 	if not Appraiser.ActiveSellingItem then return end
 	local itemid = Appraiser.ActiveSellingItem.itemid
 	local countForSellCalc = 1
 	if ZGV.db.profile.aucmode == "stack" then
-		countForSellCalc = tonumber(Appraiser.Inventory_Frame.stacksize:GetText())
+		countForSellCalc = Appraiser.ActiveSellingItem.stacksize or 1
 		if countForSellCalc == 0 then
-			countForSellCalc = Appraiser:GetSellStack(Appraiser.ActiveSellingItem)
+			countForSellCalc = Appraiser:GetMaxSellStack(Appraiser.ActiveSellingItem) or 1
 		end
 	end
 
@@ -660,9 +710,10 @@ function Appraiser:SetSellHistoricalData()
 	end
 	Appraiser.Inventory_Frame.activeStatus:SetText(statusColor..statusText)
 
-	
-	if ZGV.Gold.servertrends and ZGV.Gold.servertrends.items[itemid] then
-		trend = ZGV.Gold.servertrends.items[itemid]
+	local trend,histlow,histmed,histhigh,demand,estval,p_lo,p_md,p_hi,sell
+
+	trend = ZGV.Gold.servertrends and ZGV.Gold.servertrends.items[itemid]
+	if trend then
 		histlow = ZGV.GetMoneyString(trend.p_lo*countForSellCalc,3) or "unknown"
 		histmed = ZGV.GetMoneyString(trend.p_md*countForSellCalc,3) or "unknown"
 		histhigh = ZGV.GetMoneyString(trend.p_hi*countForSellCalc,3) or "unknown"
@@ -679,7 +730,7 @@ function Appraiser:SetSellHistoricalData()
 	Appraiser.Inventory_Frame.histmed:SetText(histmed)
 end
 
-function Appraiser:WipeSellPricingData()
+function Appraiser:WipeSellPricingLabels()
 	Appraiser.Inventory_Frame.bidgold:SetText(0)
 	Appraiser.Inventory_Frame.bidsilver:SetText(0)
 	Appraiser.Inventory_Frame.bidcopper:SetText(0)
@@ -699,30 +750,30 @@ function Appraiser:WipeSellPricingData()
 end
 
 
-function Appraiser:SetSellData()
+function Appraiser:SetSellFields()
 	if not Appraiser.ActiveSellingItem then return end
 
 	local itemid = self.ActiveSellingItem.itemid
 	local stacksize, stackcount 
 
-	stacksize, stackcount = Appraiser:GetSellStack(Appraiser.ActiveSellingItem)
+	stacksize, stackcount = Appraiser:GetUserSellStack(Appraiser.ActiveSellingItem)
 	Appraiser.Inventory_Frame.stacksize:SetText(stacksize)
 	Appraiser.Inventory_Frame.stackcount:SetText(stackcount)
 	Appraiser.ActiveSellingItem.stacksize = stacksize
 	Appraiser.ActiveSellingItem.stackcount = stackcount
 
-	Appraiser:UpdateSellPrice()
+	Appraiser:UpdateSellPriceFields()
 	Appraiser:UpdateAuctionCost(stacksize,stackcount)
 end
 
-function Appraiser:ResetSellData()
+function Appraiser:ResetSellFields()
 	Appraiser.ActiveSellingItem.customprice=nil 
 	Appraiser.ActiveSellingItem.auction=nil
-	Appraiser:SetSellData()
+	Appraiser:SetSellFields()
 end
 
 
-function Appraiser:UpdateSellPrice()
+function Appraiser:UpdateSellPriceFields()
 	if not Appraiser.ActiveSellingItem then return end
 
 	local bid_price_gold,bid_price_silver,bid_price_copper,selling_price_bid
@@ -731,40 +782,39 @@ function Appraiser:UpdateSellPrice()
 	
 	selling_price_buy,selling_price_bid = Appraiser:GetSellPriceForStacksize(ZGV.db.profile.aucmode)
 
-	bid_price_gold =   selling_price_bid:sub(0, -5)
-	bid_price_silver = selling_price_bid:sub(-4, -3)
-	bid_price_copper = selling_price_bid:sub(-2, -1)
+	bid_price_gold =   ("%d"):format(tostring(selling_price_bid):sub(0, -5) or 0)
+	bid_price_silver = ("%d"):format(tostring(selling_price_bid):sub(-4, -3) or 0)
+	bid_price_copper = ("%d"):format(tostring(selling_price_bid):sub(-2, -1) or 0)
 
-	buy_price_gold =   selling_price_buy:sub(0, -5)
-	buy_price_silver = selling_price_buy:sub(-4, -3)
-	buy_price_copper = selling_price_buy:sub(-2, -1)
+	buy_price_gold =   ("%d"):format(tostring(selling_price_buy):sub(0, -5) or 0)
+	buy_price_silver = ("%d"):format(tostring(selling_price_buy):sub(-4, -3) or 0)
+	buy_price_copper = ("%d"):format(tostring(selling_price_buy):sub(-2, -1) or 0)
 
-	Appraiser.Inventory_Frame.bidgold:SetText(bid_price_gold or 0)
-	Appraiser.Inventory_Frame.bidsilver:SetText(bid_price_silver or 0)
-	Appraiser.Inventory_Frame.bidcopper:SetText(bid_price_copper or 0)
+	Appraiser.Inventory_Frame.bidgold:SetText(bid_price_gold)
+	Appraiser.Inventory_Frame.bidsilver:SetText(bid_price_silver)
+	Appraiser.Inventory_Frame.bidcopper:SetText(bid_price_copper)
 
-	Appraiser.Inventory_Frame.buyoutgold:SetText(buy_price_gold or 0)
-	Appraiser.Inventory_Frame.buyoutsilver:SetText(buy_price_silver or 0)
-	Appraiser.Inventory_Frame.buyoutcopper:SetText(buy_price_copper or 0)
+	Appraiser.Inventory_Frame.buyoutgold:SetText(buy_price_gold)
+	Appraiser.Inventory_Frame.buyoutsilver:SetText(buy_price_silver)
+	Appraiser.Inventory_Frame.buyoutcopper:SetText(buy_price_copper)
 end
 
 function Appraiser:GetSellPriceForStacksize(mode)
-	local stacksize, countForSellCalc, selling_price, auction_price, selling_price_buy, selling_price_bid
-	local stacksize = tonumber(Appraiser.Inventory_Frame.stacksize:GetText())
+	local item = Appraiser.ActiveSellingItem
 
-	if mode == "stack" then
-		countForSellCalc = stacksize
-	else
-		countForSellCalc = 1
-	end
+	local countForSellCalc, selling_price, auction_price, selling_price_buy, selling_price_bid
+	local stacksize, _ = Appraiser:GetUserSellStack(Appraiser.ActiveSellingItem)
 
-	if Appraiser.ActiveSellingItem.customprice then
-		selling_price_bid = Appraiser.ActiveSellingItem.customprice_unit_bid
-		selling_price_buy = Appraiser.ActiveSellingItem.customprice_unit_buy
-	elseif Appraiser.ActiveSellingItem.auction then
-		auction_price = Appraiser.ActiveSellingItem.auction.unit_price
 
-		if Appraiser.ActiveSellingItem.auction.own_auction==1 then -- don't undercut own auctions
+	countForSellCalc = (mode=="stack") and stacksize or 1
+
+	if item.customprice then
+		selling_price_bid = item.customprice_unit_bid
+		selling_price_buy = item.customprice_unit_buy
+	elseif item.auction then
+		auction_price = item.auction.unit_price
+
+		if item.auction.own_auction==1 then -- don't undercut own auctions
 			selling_price_buy = auction_price
 			selling_price_bid = auction_price
 		else
@@ -779,12 +829,12 @@ function Appraiser:GetSellPriceForStacksize(mode)
 			selling_price_bid = selling_price_buy
 		end
 	else
-		selling_price_buy = math.floor(ZGVG:GetSellPrice(Appraiser.ActiveSellingItem.itemid,1))
+		selling_price_buy = math.floor(ZGVG:GetSellPrice(item.itemid,1))
 		selling_price_bid = selling_price_buy
 	end
 
-	selling_price_buy = tostring(math.floor(selling_price_buy)*countForSellCalc)
-	selling_price_bid = tostring(math.floor(selling_price_bid)*countForSellCalc)
+	selling_price_buy = math.floor(selling_price_buy)*countForSellCalc
+	selling_price_bid = math.floor(selling_price_bid)*countForSellCalc
 
 	return selling_price_buy,selling_price_bid
 end
@@ -794,15 +844,15 @@ function Appraiser:StartAuction()
 	if ZGV.Gold.Scan.state~="SS_IDLE" then return end
 
 	if not Appraiser.ActiveSellingItem then return end
+
+	local stack_size, stack_count = Appraiser:GetUserSellStack(Appraiser.ActiveSellingItem)
+	if stack_size*stack_count>GetItemCount(Appraiser.ActiveSellingItem.itemid) then  ZGV:Print(("You don't have %d of %s in your bags."):format(stack_size*stack_count,Appraiser.ActiveSellingItem.name))  return  end  -- this should never be reached, actually.
 	Appraiser.SellingInProgress = true
 
 	local selling_price_buy,selling_price_bid = Appraiser:GetSellPriceForStacksize("stack")
-	local stack_size = tonumber(Appraiser.Inventory_Frame.stacksize:GetText())
-	local stack_count = tonumber(Appraiser.Inventory_Frame.stackcount:GetText())
 	local auction_time = Appraiser.Inventory_Frame.durationdropdown:GetCurrentSelectedItemValue()
 
-	ZGV.db.char.CurrentDeals[Appraiser.ActiveSellingItem.itemid] = nil
-
+	ZGV:Print("Auction Posting: "..stack_count.." x "..stack_size.." x "..Appraiser.ActiveSellingItem.name.." for "..ZGV.GetMoneyString(selling_price_buy).." per stack.")
 	StartAuction(selling_price_bid, selling_price_buy, auction_time, stack_size, stack_count)
 
 	ZGV.Gold.Appraiser.RawDataTable[Appraiser.ActiveSellingItem.itemid] = ZGV.Gold.Appraiser.RawDataTable[Appraiser.ActiveSellingItem.itemid] or {}
@@ -818,8 +868,8 @@ function Appraiser:InventoryRowMenu(row)
 
 	Appraiser.ActiveSearch = row.item.itemid
 
-	if not Appraiser.Inventory_Frame.InventoryMenu then Appraiser.Inventory_Frame.InventoryMenu = CreateFrame("FRAME","AT_Inventory_Menu",Appraiser.Inventory_Frame,"UIDropDownMenuTemplate") end
-	UIDropDownMenu_SetAnchor(Appraiser.Inventory_Frame.InventoryMenu, 0, 0, "TOP", row, "BOTTOM")
+	if not Appraiser.Inventory_Frame.InventoryMenu then Appraiser.Inventory_Frame.InventoryMenu = CreateFrame("FRAME","AT_Inventory_Menu",Appraiser.Inventory_Frame,"UIDropDownForkTemplate") end
+	UIDropDownFork_SetAnchor(Appraiser.Inventory_Frame.InventoryMenu, 0, 0, "TOP", row, "BOTTOM")
 	local menu = {}
 
 	tinsert(menu,{
@@ -833,8 +883,8 @@ function Appraiser:InventoryRowMenu(row)
 			notCheckable=0,
 		})
 	
-	EasyMenu(menu,Appraiser.Inventory_Frame.InventoryMenu,nil,0,0,"MENU",false)
-	UIDropDownMenu_SetWidth(Appraiser.Inventory_Frame.InventoryMenu, 300)
+	EasyFork(menu,Appraiser.Inventory_Frame.InventoryMenu,nil,0,0,"MENU",false)
+	UIDropDownFork_SetWidth(Appraiser.Inventory_Frame.InventoryMenu, 300)
 end
 
 function Appraiser:UpdateAuctionCost(stacksize,stackcount)
@@ -846,24 +896,27 @@ function Appraiser:UpdateAuctionCost(stacksize,stackcount)
 
 	AuctionsStackSizeEntry:SetText(stacksize or 0)
 	AuctionsNumStacksEntry:SetText(stackcount or 0)
-	local deposit = CalculateAuctionDeposit(auction_time)
 
+	local deposit = CalculateAuctionDeposit(auction_time)
 	Appraiser.Inventory_Frame.aucpostfee:SetText("Deposit: "..ZGV.GetMoneyString(deposit or 0))
 
 	Appraiser.LastAuctionTime = auction_time
 end
 
-function Appraiser:SelectShoppingRow()
+function Appraiser:SelectNextSellingItem()
+	if not ZGVG.Scan:CanScanByName() then return false end
 	local index,nextindex,previndex = nil,nil,nil
 	local refresh = false -- click new row only when we are switching to new item
 
-	if not Appraiser.LastSoldItem then
+	ZGV:Debug("SelectNextSellingItem, lastselling=%s, called by %s",self.LastSellingItem, debugstack(2,1,0))
+
+	if not self.LastSellingItem then
 		index = 1
 		refresh = true
 	else
 		for i,item in pairs(Appraiser.InventoryItems) do 
-			if item.link == Appraiser.LastSoldItem and item.count>0 then index = i end
-			if Appraiser.NextSellingItem and item.link == Appraiser.NextSellingItem then nextindex = i end
+			if item.link == self.LastSellingItem and item.count>0 then index = i end
+			if Appraiser.NextSellingItemID and item.itemid == Appraiser.NextSellingItemID then nextindex = i end
 		end
 
 		if not index then
@@ -885,7 +938,7 @@ function Appraiser:SelectShoppingRow()
 			for bag=0, NUM_BAG_SLOTS do
 				for slot=1, GetContainerNumSlots(bag) do
 					local itemlink = cached_GetContainerItemLink(bag, slot) 
-					if itemlink and itemlink==Appraiser.LastSoldItem then
+					if itemlink and itemlink==self.LastSellingItem then
 						Appraiser.InventoryItems[index].bag=bag
 						Appraiser.InventoryItems[index].slot=slot
 						break
@@ -903,4 +956,7 @@ function Appraiser:SelectShoppingRow()
 		Appraiser.SellingInProgress = false
 		Appraiser:ActivateSellItem(Appraiser.InventoryItems[index],true)
 	end
+	Appraiser:SetSellFields()
+	self.needToSelectNextSellingItem = nil
 end
+

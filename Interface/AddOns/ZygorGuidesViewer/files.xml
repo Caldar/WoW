@@ -53,6 +53,7 @@
 	<Script file="PetBattle.lua"/>
 
 	<Script file="Config.lua"/>
+	<!--<Script file="ConfigNew.lua"/>-->
 	<Script file="Tutorial.lua"/>
 	
 	<Script file="Achievement.lua"/>
@@ -62,6 +63,7 @@
 	<Script file="NotificationCenter.lua"/>
 
 	<Script file="Pointer.lua"/>
+	<Script file="PointerMap.lua"/>
 	<Include file="PointerMarkerTemplates.xml" />
 	<Include file="Arrows\Arrows.xml" />
 
@@ -84,7 +86,10 @@
 	<!-- <Script file="ZygorGuidesViewerOptions.lua"/> -->
 	<Include file="ZygorMapIcon.xml" />
 	<!-- <Include file="ZygorGuidesViewerMiniFrame.xml"/> -->
-	<Include file="GuideMenu.lua" />
+	<!-- <Include file="GuideMenu.lua" /> -->	
+	<Include file="GuideMenuNew.lua" />
+	<Include file="GuideMenuNew-View.lua" />
+	<Include file="GuideMenuNew-Home.lua" />
 
 	<Include file="Templates.xml" />
 		
@@ -134,6 +139,8 @@
 	<Script file="Poi.lua"/>
 
 	<Script file="Libs/HBDragons.lua"/>
+
+	<Script file="Data/Gold/HourlyScan.lua" />
 	
 	<Script>
 	ZGV.loading_time_total = (debugprofilestop()-___ZGV_LOAD_TIME)

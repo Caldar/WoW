@@ -1,80 +1,44 @@
 local _,L = ...
 local rematch = Rematch
 
+
 -- this updates the icon/level/rarity of a RematchPetSlotTemplate button
 -- petID can be a speciesID (icon will be greyed out and level hidden)
-function rematch:FillPetSlot(button,petID,enemy)
+function rematch:FillPetSlot(button,petID)
 	button.petID = petID
-	local desaturate = false
-	local showLevel = false
-	local showDead = false
-	local showInjured = false
-	local showFavorite = false
-	local rarity
+	local petInfo = rematch.petInfo:Fetch(petID)
 
-	local idType = rematch:GetIDType(petID)
-	if idType=="leveling" then
-		button.Icon:SetTexture(rematch.levelingIcon)
-	elseif idType=="pet" then
-		local _,_,level,_,_,_,isFavorite,_,icon,_,_,_,_,_,canBattle = C_PetJournal.GetPetInfoByPetID(petID)
-		if level then
-			button.Icon:SetTexture(icon)
-			if canBattle and button.Level then
-				button.Level.Text:SetText(level)
-				if level<25 or not RematchSettings.HideLevelBubbles then
-					showLevel = true
-				end
-			end
-			local health, maxHealth, _
-			health,maxHealth,_,_,rarity = C_PetJournal.GetPetStats(petID)
-			if health then
-				if health<maxHealth then
-					showInjured = true
-					if health<=0 then
-						showDead = true
-					end
-				end
-			end
-			showFavorite = isFavorite and true
-			-- tint pets that can't be summoned (revoked, wrong faction, etc) red
-			if C_PetJournal.PetIsSummonable(petID) or (health and health<1) then
-				button.Icon:SetVertexColor(1,1,1)
-			else
-				button.Icon:SetVertexColor(1,0,0)
-			end
-		else -- this pet has a petID but is not known (missing pet), show it as a species from sanctuary
-			petID = RematchSettings.Sanctuary[petID] and RematchSettings.Sanctuary[petID][3] or nil
-			if petID then
-				idType = "species"
-				button.petID = petID
-			else -- pet isn't in sanctuary, no idea what it is!
-				idType = nil
-				button.petID = nil
-			end
-		end
+	-- if petID isn't valid but exists in the sacntuary, switch to the pet's speciesID
+	if not petInfo.valid and RematchSettings.Sanctuary[petID] then
+		petID = RematchSettings.Sanctuary[petID][3]
+		petInfo = rematch.petInfo:Fetch(petID)
 	end
-	if idType=="species" then
-		button.Icon:SetTexture((select(2,C_PetJournal.GetPetInfoBySpeciesID(petID))))
+	-- set the pet's icon
+	button.Icon:SetTexture(petInfo.needsFanfare and "Interface\\Icons\\Item_Shop_GiftBox01" or petInfo.icon)
+	-- tint icon red for owned pets that can't be summoned (revoked, wrong faction, etc)
+	if petInfo.isSummonable or (petInfo.health and petInfo.health<1) or petInfo.idType~="pet" then
 		button.Icon:SetVertexColor(1,1,1)
-		desaturate = not enemy and true
-	elseif idType~="pet" and idType~="leveling" then -- unknown stuff gets a red ? (empty slot legacy likely)
-		button.Icon:SetTexture("Interface\\PaperDoll\\UI-Backpack-EmptySlot")
+	else
+		button.Icon:SetVertexColor(1,0,0)
 	end
-	button.Icon:SetDesaturated(desaturate)
+	-- if this is an obtainable pet (can list in journal), and is either invalid or only a speciesID, grey it out
+	button.Icon:SetDesaturated(petInfo.isObtainable and (not petInfo.valid or petInfo.idType=="species"))
+
+	-- if button has extra textures (favorite, rarity borders, level, etc)
 	if button.Level then
-		button.Level:SetShown(not button.hideLevel and showLevel)
-		button.Favorite:SetShown(not button.hideFavorite and showFavorite)
-		button.Blood:SetShown(showInjured)
-		button.Blood:SetTexCoord(0.63671875,0.78515625,0.6171875,0.9140625)
-		button.Blood:SetAlpha(0.4)
-		button.IsDead:SetShown(showDead)
-		if rarity and not RematchSettings.HideRarityBorders then
+		button.Level.Text:SetText(petInfo.level)
+		button.Level:SetShown(not button.hideLevel and petInfo.canBattle and petInfo.level and (petInfo.level<25 or not RematchSettings.HideLevelBubbles))
+		button.IsDead:SetShown(petInfo.isDead)
+		button.Favorite:SetShown(not button.hideFavorite and petInfo.isFavorite)
+		button.Blood:SetShown(petInfo.canBattle and petInfo.health and petInfo.health<petInfo.maxHealth)
+		if petInfo.rarity and not RematchSettings.HideRarityBorders then
 			button.IconBorder:SetTexture("Interface\\AddOns\\Rematch\\Textures\\rarityborder")
-			button.IconBorder:SetVertexColor(ITEM_QUALITY_COLORS[rarity-1].r, ITEM_QUALITY_COLORS[rarity-1].g, ITEM_QUALITY_COLORS[rarity-1].b)
+			button.IconBorder:SetVertexColor(ITEM_QUALITY_COLORS[petInfo.rarity-1].r, ITEM_QUALITY_COLORS[petInfo.rarity-1].g, ITEM_QUALITY_COLORS[petInfo.rarity-1].b)
 		else
 			button.IconBorder:SetTexture("Interface\\Buttons\\UI-QuickSlot2")
 			button.IconBorder:SetVertexColor(1,1,1)
 		end
+
 	end
 end
 
@@ -113,6 +77,9 @@ function rematch:FillPetListButton(button,petID,forLoadout)
 			button.Leveling:SetPoint("TOPRIGHT",button,"TOPRIGHT",xoff,yoff)
 		end
 		desaturate = false
+		if C_PetJournal.PetNeedsFanfare(petID) then
+			customName = format("%s%s",rematch.hexBlue,L["A New Pet!"])
+		end
 	elseif idType=="species" then -- speciesID for unowned pets
 		name,_,petType = C_PetJournal.GetPetInfoBySpeciesID(petID)
 		if RematchSettings.PetNotes[petID] then
@@ -185,6 +152,12 @@ function rematch:FillSlimPetListButton(button)
 	if idType=="pet" then
 		speciesID, customName, level, _, _, _, isFavorite, name, icon, petType, _, _, _, _, canBattle = C_PetJournal.GetPetInfoByPetID(petID)
 		button.Name:SetTextColor(1,0.82,0)
+
+		if C_PetJournal.PetNeedsFanfare(petID) then
+			customName = format("%s%s",rematch.hexBlue,L["A New Pet!"])
+			icon = "Interface\\Icons\\Item_Shop_GiftBox01"
+		end
+
 		button.Pet.Icon:SetTexture(icon)
 		button.Pet.Icon:SetDesaturated(false)
 		button.Type:SetDesaturated(false)
@@ -290,8 +263,8 @@ end
 -- this is a click of the main area of the list button
 function rematch:PetListButtonOnClick(button)
 
-	if rematch:HandlePetRightClick(self.petID,button) then return end
-	if rematch:HandlePetShiftClick(self.petID) then return end
+	if rematch.HandlePetRightClick(self,self.petID,button) then return end
+	if rematch.HandlePetShiftClick(self,self.petID) then return end
 
 	local anchorTo = self.Pet
 	-- self.Pet.Pet = main loadout button
@@ -309,8 +282,8 @@ end
 function rematch:PetListButtonPetOnClick(button)
 	-- check if pet being linked here
 	if self.noPickup then return end -- this pet is for display purposes, don't allow pickup or right-click
-	if rematch:HandlePetRightClick(self.petID,button) then return end
-	if rematch:HandlePetShiftClick(self.petID) then return end
+	if rematch.HandlePetRightClick(self,self.petID,button) then return end
+	if rematch.HandlePetShiftClick(self,self.petID) then return end
 	rematch.PetListButtonOnDragStart(self,button)
 end
 
@@ -326,7 +299,14 @@ end
 function rematch:HandlePetRightClick(petID,button)
 	if button=="RightButton" and petID then
 		rematch:SetMenuSubject(petID)
-		rematch:ShowMenu("PetMenu","cursor")
+		if rematch:GetIDType(petID)=="pet" and C_PetJournal.PetNeedsFanfare(petID) then
+			rematch:ShowMenu("UnwrapMenu","cursor")
+		elseif self.isLoadoutSlot and petID then
+         rematch:SetMenuSubject(self:GetID())
+         rematch:ShowMenu("LoadoutMenu","cursor")
+      elseif petID then
+			rematch:ShowMenu("PetMenu","cursor")
+		end
 		return true
 	end
 end
@@ -335,6 +315,8 @@ function rematch:PetListButtonOnDoubleClick()
 	if rematch:GetIDType(self.petID)=="pet" then
 		if RematchSettings.QueueDoubleClick and self.forQueuePanel and self.petID and RematchSettings.LevelingQueue[1]~=self.petID then
 			rematch:MovePetInQueue(self.petID,-2) -- -2 is "Move To Top" direction
+		elseif RematchSettings.NoSummonOnDblClick then
+			return -- do nothing if "No Summon On Double Click" is checked
 		else
 			C_PetJournal.SummonPetByGUID(self.petID)
 		end

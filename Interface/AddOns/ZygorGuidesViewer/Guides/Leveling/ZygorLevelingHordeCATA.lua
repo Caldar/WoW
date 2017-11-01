@@ -3,69 +3,78 @@ if not ZygorGuidesViewer then return end
 if UnitFactionGroup("player")~="Horde" then return end
 if ZGV:DoMutex("LevelingHCATA") then return end
 ZygorGuidesViewer.GuideMenuTier = "CAT"
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Starter Guides\\Blood Elf (1-5)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Starter Guides\\Blood Elf (1-5)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Eversong 1-5",
 condition_suggested="raceclass('BloodElf') and level<=5.39",
 condition_suggested_exclusive=true,
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Eversong Woods (1-12)\\Eversong Woods (5-12)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Eversong Woods (1-12)\\Eversong Woods (5-12)",
 startlevel=1.00,
 },[[
 step
 next "bestart" |only BloodElf
-next "nonbestart" |only !BloodElf
+next "nonbestart" |only if not BloodElf
 step
 label "bestart"
 talk Magistrix Erona##15278
-accept Reclaiming Sunstrider Isle##8325 |goto Sunstrider Isle 61.0,45.1
+accept Reclaiming Sunstrider Isle##8325 |goto Sunstrider Isle/0 61.0,45.1
 step
-kill 8 Mana Wyrm##15274 |q 8325/1 |goto 60.3,51.8
+kill 6 Mana Wyrm##15274 |q 8325/1 |goto 60.3,51.8
 step
 talk Magistrix Erona##15278
 turnin Reclaiming Sunstrider Isle##8325 |goto 61.0,45.1
 accept Unfortunate Measures##8326 |goto 61.0,45.1
 step
-kill Springpaw Lynx##15372+, Springpaw Cub##15366+
+Kill Springpaw enemies around this area
 collect 8 Lynx Collar##20797 |q 8326/1 |goto 54.6,51.7
 step
 talk Magistrix Erona##15278
 turnin Unfortunate Measures##8326 |goto 61.0,45.1
 accept Report to Lanthan Perilon##8327 |goto 61.0,45.1
 step
+Enter the building |goto 62.70,45.10 < 10 |walk
+Run up the ramp |goto 65.29,45.77 < 10 |walk
 talk Well Watcher Solanian##15295
-accept Solanian's Belongings##37443 |goto 64.0,42.9
+|tip Upstairs inside the building.
 accept The Shrine of Dath'Remar##37442 |goto 64.0,42.9
+accept Solanian's Belongings##37443 |goto 64.0,42.9
 step
+Jump down here |goto 63.36,41.08 < 10 |only if walking
 talk Arcanist Ithanas##15296
 accept A Fistful of Slivers##37440 |goto 61.8,39.3
 step
 talk Arcanist Helion##15297
 accept Thirst Unending##37439 |goto 58.5,38.8
 step
-Use _Arcane Torrent_ on a Mana Wyrm
+Use your _Arcane Torrent_ ability on a Mana Wyrm
 |tip Make sure to be within 8 yards of the Wyrm when casting the spell.
 Unleash the Arcane Torrent |q 37439/1 |goto 54.8,39.7
-modelnpc Mana Wyrm##15274
 step
+kill Mana Wyrm##15274+
+collect 6 Arcane Sliver##20482 |q 37440/1 |goto 50.95,41.95
+step
+Follow the path |goto 41.80,44.07 < 30 |only if walking
 click Shrine of Dath'Remar##3011
-Read the Shrine of Dath'Remar |q 37442/1 |goto 35.3,40.3
+Read the Shrine of Dath'Remar |q 37442/1 |goto 35.25,40.22
 step
 click Scroll of Scourge Magic##220
 collect Scroll of Scourge Magic##20471 |q 37443/2 |goto 40.4,50.5
 step
+Follow the path up |goto 51.49,70.28 < 15 |only if walking
 click Solanian's Scrying Orb##6476
 collect Solanian's Scrying Orb##20470 |q 37443/1 |goto 52.2,69.5
 step
 click Solanian's Journal##6477
-collect Solanian's test Journal##20472 |q 37443/3 |goto 60.0,57.1
+collect Solanian's Journal##20472 |q 37443/3 |goto 60.0,57.1
 step
-kill Mana Wyrm##15274+
-collect 6 Arcane Sliver##20482 |q 37440/1 |goto 59.4,56.2
-step
+Enter the building |goto 62.70,45.10 < 10 |walk
+Run up the ramp |goto 65.29,45.77 < 10 |walk
 talk Well Watcher Solanian##15295
-turnin Solanian's Belongings##37443 |goto 64.0,42.8
+|tip Upstairs inside the building.
 turnin The Shrine of Dath'Remar##37442 |goto 64.0,42.8
+turnin Solanian's Belongings##37443 |goto 64.0,42.8
 step
+Jump down here |goto 63.36,41.08 < 10 |only if walking
 talk Arcanist Ithanas##15296
 turnin A Fistful of Slivers##37440 |only BloodElf |goto 61.8,39.3
 step
@@ -75,26 +84,47 @@ step
 talk Lanthan Perilon##15281
 turnin Report to Lanthan Perilon##8327 |goto 52.9,49.7
 accept Aggression##8334 |goto 52.9,49.7
+stickystart "Feral_Tenders"
 step
 kill 7 Tender##15271 |q 8334/1 |goto 41.9,46.6
+step
+label "Feral_Tenders"
 kill 7 Feral Tender##15294 |q 8334/2 |goto 41.9,46.6
 step
 talk Lanthan Perilon##15281
 turnin Aggression##8334 |goto 52.9,49.7
 accept Felendren the Banished##8335 |goto 52.9,49.7
-stickystart "tainted"
+stickystart "Tainted_Arcane_Sliver"
+stickystart "Arcane_Wraiths"
+stickystart "Tainted_Arcane_Wraiths"
 step
-collect 1 Tainted Arcane Sliver##20483 |n
+Run up the ramp |goto 44.39,59.05 < 15 |only if walking
+Cross the bridge |goto 41.84,63.41 < 15 |only if walking
+Follow the ramp up |goto 43.19,66.93 < 15 |only if walking
+Continue up the ramp |goto 43.70,70.53 < 15 |only if walking
+Run up the ramp |goto 41.05,72.60 < 15 |only if walking
+Continue up the ramp |goto 38.70,74.06 < 15 |only if walking
+Cross the bridge |goto 37.95,68.28 < 15 |only if walking
+Run up the ramp |goto 38.75,61.71 < 15 |only if walking
+Continue up the ramp |goto 36.34,63.20 < 15 |only if walking
+Follow the path |goto 38.12,66.00 < 15 |only if walking
+kill Felendren the Banished##15367
+collect Felendren's Head##20799 |q 8335/3 |goto 38.9,64.0
+step
+label "Tainted_Arcane_Sliver"
+Kill Arcane enemies around this area
+collect Tainted Arcane Sliver##20483 |n
 use Tainted Arcane Sliver##20483
 accept Tainted Arcane Sliver##8338 |goto 40.1,63.3
 step
-Follow the ramps all the way to the top:
-kill Felendren the Banished##15367
-collect Felendren's Head##20799 |q 8335/3 |goto 38.9,64.0
-step "tainted"
+label "Arcane_Wraiths"
 kill 8 Arcane Wraith##15273 |q 8335/1 |goto 40.1,63.3
+step
+label "Tainted_Arcane_Wraiths"
 kill 2 Tainted Arcane Wraith##15298 |q 8335/2 |goto 40.1,63.3
 step
+Jump down onto the big red dome |goto 40.27,62.96 < 15 |only if walking
+Jump down onto the bridge |goto 42.82,60.60 < 15 |only if walking
 talk Lanthan Perilon##15281
 turnin Felendren the Banished##8335 |goto 52.9,49.7
 accept Aiding the Outrunners##8347 |goto 52.9,49.7
@@ -104,16 +134,18 @@ turnin Tainted Arcane Sliver##8338 |goto 58.5,38.8
 step
 label	"nonbestart"
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Eversong Woods (1-12)\\Eversong Woods (5-12)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Eversong Woods (1-12)\\Eversong Woods (5-12)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Eversong 5-12",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Silverpine Forest (11-20)\\Silverpine Forest (11-20)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Silverpine Forest (11-20)\\Silverpine Forest (11-20)",
 startlevel=5.30,
 },[[
 step
+Follow the road |goto Sunstrider Isle/0 53.11,60.72 < 20 |only if walking
+Cross the bridge |goto Sunstrider Isle/0 63.27,73.46 < 20 |only if walking
 talk Outrunner Alarion##15301
-turnin Aiding the Outrunners##8347 |goto Eversong Woods 40.4,32.2 |only if havequest(8347)
-accept Slain by the Wretched##9704 |goto Eversong Woods 40.4,32.2
+turnin Aiding the Outrunners##8347 |goto Eversong Woods/0 40.4,32.2 |only if havequest(8347)
+accept Slain by the Wretched##9704 |goto Eversong Woods/0 40.4,32.2
 step
 clicknpc Slain Outrunner##17849
 turnin Slain by the Wretched##9704 |goto 42.0,35.7
@@ -535,10 +567,10 @@ step
 talk Runewarden Deryan##16362
 turnin Powering our Defenses##8490 |goto 44.2,85.5
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Ghostlands (12-20)\\Ghostlands (12-20)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Ghostlands (12-20)\\Ghostlands (12-20)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Ghostlands 12-20",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Hillsbrad Foothills (20-26)\\Hillsbrad Foothills (20-26)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Hillsbrad Foothills (20-26)\\Hillsbrad Foothills (20-26)",
 startlevel=12.85,
 },[[
 step
@@ -1017,174 +1049,227 @@ step
 talk Captain Helios##16220
 turnin Bring Me Kel'gash's Head!##9215 |goto 72.4,29.7
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Starter Guides\\Death Knight (55-58)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Starter Guides\\Death Knight (55-58)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Death Knight 55-58",
-condition_invalid="not raceclass('DeathKnight') ",
-condition_invalid_msg="Death Knight only.",
+condition_valid="raceclass('DeathKnight')",
+condition_valid_msg="Death Knight only.",
 condition_suggested="raceclass('DeathKnight') and not completedq(13189)",
 condition_suggested_exclusive=true,
 condition_end="completedq(13189)",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Blasted Lands (57-60)\\Blasted Lands (57-60)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Blasted Lands (57-60)\\Blasted Lands (57-60)",
 startlevel=55,
 dynamic=true,
 },[[
 step
 talk The Lich King##25462
-accept In Service Of The Lich King##12593 |goto Plaguelands: The Scarlet Enclave 51.3,35.2
+accept In Service Of The Lich King##12593 |goto Plaguelands: The Scarlet Enclave/0 51.34,35.18
 step
 talk Instructor Razuvious##28357
+|tip He walks around this area.
 turnin In Service Of The Lich King##12593 |goto 48,28.5
 accept The Emblazoned Runeblade##12619 |goto 48,28.5
 step
 click Battle-worn Sword##7961
-collect Battle-worn Sword##38607 |n
-use Battle-worn Sword##38607
-|tip The Runforges look like skull furnaces with blue fire.
-collect Runebladed Sword##38631 |q 12619/1 |goto 47.4,31
+collect Battle-worn Sword##38607 |c |goto 47.4,31 |q 12619
+step
+Use the Battle-worn Sword next to the Runeforge |use Battle-worn Sword##38607
+collect Runebladed Sword##38631 |q 12619/1 |goto 47.39,31.24
 step
 talk Instructor Razuvious##28357
+|tip He walks around this area.
 turnin The Emblazoned Runeblade##12619 |goto 48,28.5
 accept Runeforging: Preparation For Battle##12842 |goto 48,28.5
 step
-Use your Runeforging ability while standing near the Runeforge |cast Runeforging
-|tip The Runforges look like skull furnaces with blue fire.
-Engrave Your Sword with a Rune |q 12842/1 |goto 47.4,31
+Use the Runeforging ability near the Runeforge |cast Runeforging##53428
+|tip Open your character's equipment window and engrave your weapon with a rune.
+Emblazon Your Weapon |q 12842/1 |goto 47.39,31.24
 step
 talk Instructor Razuvious##28357
+|tip He walks around this area.
 turnin Runeforging: Preparation For Battle##12842 |goto 48,28.5
 accept The Endless Hunger##12848 |goto 48,28.5
 step
-use Runed Soulblade##38707 |equipped Runed Soulblade##38707
 click Acherus Soul Prison##8115
-|tip It looks like a horned skull on the wall, chaining the prisoners.
-kill Unworthy Initiate##29565, Unworthy Initiate##29565, Unworthy Initiate##29567, Unworthy Initiate##29566
-Dominate an Unworthy Initiate |q 12848/1 |goto 48.9,28.7
+|tip They look like horned skulls on the wall, chaining the prisoners around this area.
+Watch the dialogue
+kill Unworthy Initiate##29565
+Dominate an Unworthy Initiate |q 12848/1 |goto 48.50,28.98
 step
 talk Instructor Razuvious##28357
+|tip He walks around this area.
 turnin The Endless Hunger##12848 |goto 48,28.5
 accept The Eye Of Acherus##12636 |goto 48,28.5
 step
+Follow the path |goto 49.81,31.94 < 20 |walk
 talk The Lich King##25462
-turnin The Eye Of Acherus##12636 |goto 51.3,35.2
-accept Death Comes From On High##12641 |goto 51.3,35.2
+turnin The Eye Of Acherus##12636 |goto 51.34,35.18
+accept Death Comes From On High##12641 |goto 51.34,35.18
 step
-click Eye of Acherus Control Mechanism##8123 |goto Plaguelands: The Scarlet Enclave 51.0,36.3
-Take Control Over the Eye of Acherus |havebuff Spell_Shadow_UnholyFrenzy |q 12641
+click Eye of Acherus Control Mechanism##8123
+Take Control of the Eye of Acherus |havebuff 136224 |goto 52.13,35.21 |q 12641
 step
-Your World Map will NOT show your current position anymore!
-If you stay floating high enough the soldiers will not attack you
-Once the Eye stops moving, go immediately northeast to the blacksmith building
-Use your Siphon of Acherus ability near the floating red arrow |petaction 1
-Analyze the New Avalon Forge |q 12641/1 |goto 52.1,35.2
+_Go Northeast:_
+|tip If you stay floating high enough, the soldiers will not attack you.
+|tip Go to the blacksmith building with a floating red arrow above it.
+Use the Siphon of Acherus ability |petaction 1
+|tip Get near the floating red arrow.
+Analyze the New Avalon Forge |q 12641/1
 step
-Go south to the big fort
-Use your Siphon of Acherus ability near the floating red arrow |petaction 1
-Analyze Scarlet Hold |q 12641/3
+_Go South:_
+|tip If you stay floating high enough, the soldiers will not attack you.
+|tip Go to the big fort building with a floating red arrow above it.
+Use the Siphon of Acherus ability |petaction 1
+|tip Get near the floating red arrow.
+Analyze the Scarlet Hold |q 12641/3
 step
-Go west to the town hall building with a clock tower
-|tip It has a red roof and looks like an inn.
-Use your Siphon of Acherus ability near the floating red arrow |petaction 1
+_Go West:_
+|tip If you stay floating high enough, the soldiers will not attack you.
+|tip Go to the town hall building with a clock tower, with a floating red arrow above it.
+Use the Siphon of Acherus ability |petaction 1
+|tip Get near the floating red arrow.
 Analyze the New Avalon Town Hall |q 12641/2
 step
-Go south to the small church
-Use your Siphon of Acherus ability near the floating red arrow |petaction 1
+_Go South:_
+|tip If you stay floating high enough, the soldiers will not attack you.
+|tip Go to the small church building with a floating red arrow above it.
+Use the Siphon of Acherus ability |petaction 1
+|tip Get near the floating red arrow.
 Analyze the Chapel of the Crimson Flame |q 12641/4
 step
-Use your _Recall Eye of Acherus_ ability
-Return to Ebon Hold |nobuff Spell_Shadow_UnholyFrenzy |petaction 5
+Use the Recall Eye of Acherus ability |petaction 5
+Click Here After You Return to Ebon Hold |confirm |c |q 12641
 step
 talk The Lich King##25462
-turnin Death Comes From On High##12641 |goto 51.3,35.2
-accept The Might Of The Scourge##12657 |goto 51.3,35.2
+turnin Death Comes From On High##12641 |goto 51.34,35.18
+accept The Might Of The Scourge##12657 |goto 51.34,35.18
 step
-_Stand on_ the purple circle to teleport upstairs |goto Plaguelands: The Scarlet Enclave 50.5,33.3 < 5 |walk
+Walk onto the teleport pad |goto 50.49,33.37 |n
+Teleport Upstairs |goto 50.13,32.49 < 10 |noway |c |q 12657
+step
 talk Highlord Darion Mograine##28444
-turnin The Might Of The Scourge##12657 |goto 48.9,29.7
-accept Report To Scourge Commander Thalanor##12850 |goto 48.9,29.7
+turnin The Might Of The Scourge##12657 |goto 48.88,29.76
+accept Report To Scourge Commander Thalanor##12850 |goto 48.88,29.76
 step
 talk Lord Thorval##28472
-accept The Power Of Blood, Frost And Unholy##12849 |goto 47.5,26.5 |instant
+accept The Power Of Blood, Frost And Unholy##12849 |goto 47.48,26.56 |instant
 step
 talk Scourge Commander Thalanor##28510
-turnin Report To Scourge Commander Thalanor##12850 |goto 51.6,34.5
-accept The Scarlet Harvest##12670 |goto 51.6,34.5
+|tip He walks around this area.
+turnin Report To Scourge Commander Thalanor##12850 |goto 50.70,35.09
+accept The Scarlet Harvest##12670 |goto 50.70,35.09
 step
-clicknpc Scourge Gryphon##29488 |goto Plaguelands: The Scarlet Enclave 52.1,35.0 < 5
+clicknpc Scourge Gryphon##29488 |goto 50.96,36.15 |n
+Arrive at Death's Breach |goto 53.2,31.1 < 20 |noway |c |q 12670
+step
 talk Prince Valanar##28377
-turnin The Scarlet Harvest##12670 |goto 52.3,34
-accept If Chaos Drives, Let Suffering Hold The Reins##12678 |goto 52.3,34
+turnin The Scarlet Harvest##12670 |goto 52.28,33.96
+accept If Chaos Drives, Let Suffering Hold The Reins##12678 |goto 52.28,33.96
 step
 talk Salanar the Horseman##28653
+|tip He walks back and forth along this path.
 accept Grand Theft Palomino##12680 |goto 52.5,34.6
 step
 talk Olrun the Battlecaller##29047
-accept Death's Challenge##12733 |goto 54.6,34.2
+|tip She flies around this small area.
+accept Death's Challenge##12733 |goto 54.63,33.95
 step
-talk Death Knight Initiate##28406+
+talk Death Knight Initiate##28406
+|tip They are all around this area.
 Tell them _"I challenge you, death knight!"_
-Defeat #5# Death Knights in a Duel |q 12733/1 |goto 51.7,35.1
+kill Death Knight Initiate##28392+
+Defeat #5# Death Knights in a Duel |q 12733/1 |goto 53.48,33.15
 step
 talk Olrun the Battlecaller##29047
-turnin Death's Challenge##12733 |goto 54.6,34.2
+|tip She flies around this small area.
+turnin Death's Challenge##12733 |goto 54.63,33.95
 step
 talk Orithos the Sky Darkener##28647
+|tip He paces around this area.
 accept Tonight We Dine In Havenshire##12679 |goto 53.2,36.9
+stickystart "Slay_Scarlet_Crusaders"
+stickystart "Citizens_Of_Havenshire"
 step
-kill Scarlet Captain##28611+, Scarlet Infantryman##28609+, Scarlet Medic##28608+, Scarlet Peasant##28557+
-Kill #10# Scarlet Crusaders |q 12678/1 |goto 52.2,45.9
-step
+Follow the path down |goto 50.66,38.32 < 20 |only if walking
+Follow the path down |goto 52.21,43.78 < 15 |only if walking
 click Abandoned Mail##4851
-|tip It's a roll of parchment on top of the mailbox, avoid clicking the mailbox itself.
-accept Abandoned Mail##12711 |goto 55.2,46.2 |instant
-stickystart "citizen"
+|tip It looks like a roll of parchment on top of the mailbox.
+accept Abandoned Mail##12711 |goto 55.26,46.15 |instant
 step
-click Saronite Arrow##8094+
-|tip Usually more than one spawn on top of each other, so you can click more than once.
-collect 15 Saronite Arrow##39160 |q 12679/1 |goto 56.2,49.4
-step "citizen"
+label "Slay_Scarlet_Crusaders"
+Kill Scarlet enemies around this area
+Slay #10# Scarlet Crusaders |q 12678/1 |goto 52.2,45.9
+stickystart "Saronite_Arrows"
+step
+label "Citizens_Of_Havenshire"
 kill 10 Citizen of Havenshire##28660 |q 12678/2 |goto 56.4,45
 step
-clicknpc Havenshire Colt##28607 |goto 55.6,43.2 < 15
-|tip Watch out for the Stable Master, he's elite and will pull you off the horse.
-_Go up_ the hill |goto Plaguelands: The Scarlet Enclave 56.8,31.0 < 10
-Use your _Deliver Stolen Horse_ ability on your bar when standing next to Salanar the Horseman |petaction Deliver Stolen Horse
-Deliver the Horse |q 12680/1 |goto 52.8,34.1
+label "Saronite_Arrows"
+click Saronite Arrow##8094+
+|tip They look like yellow and green arrows stuck in the ground around this area.
+collect 15 Saronite Arrow##39160 |q 12679/1 |goto 56.2,49.4
+step
+click Havenshire Horse
+|tip They are all around this area.
+|tip Watch out for Stable Master Kitrik, he's elite and will pull you off the horse.
+Ride the Havenshire Horse |invehicle |goto 55.74,43.39 |c |q 12680
+step
+Follow the path up |goto 53.05,43.28 < 20 |only if walking
+Continue up the path |goto 50.61,40.72 < 20 |only if walking
+Follow the path |goto 50.92,36.79 < 20 |only if walking
+Use the Deliver Stolen Horse ability next to Salanar the Horseman
+|tip He walks back and forth along this path.
+Successfully Steal the Horse |goto 52.8,34.1 |q 12680/1
 step
 talk Salanar the Horseman##28653
+|tip He walks back and forth along this path.
 turnin Grand Theft Palomino##12680 |goto 52.5,34.6
 accept Into the Realm of Shadows##12687 |goto 52.5,34.6
 step
+Follow the path down |goto 50.66,38.32 < 20 |only if walking
+Follow the path down |goto 52.21,43.78 < 30 |only if walking
 kill Dark Rider of Acherus##28768
-clicknpc Acherus Deathcharger##28302 |goto 55.6,43.2 < 5
-|tip They walk around on horses.
-_Go up_ the hill |goto Plaguelands: The Scarlet Enclave 56.8,31.0 < 10
-Use your _Horseman's Call_ ability on your bar when standing next to Salanar the Horseman |petaction Horseman's Call
-Complete the Horseman's Challenge |q 12687/1 |goto Plaguelands: The Scarlet Enclave 52.6,34.4
+|tip They ride around on horses around this area.
+clicknpc Acherus Deathcharger##28302
+|tip It's the horse they were riding on before you killed them.
+Click Here After You Steal an Acherus Deathcharger |confirm |c |goto 55.6,43.2 |q 12687
 step
+Follow the path up |goto 53.05,43.28 < 20 |only if walking
+Use the Horseman's Call ability
+Watch the dialogue
+Complete the Horseman's Challenge |q 12687/1 |goto 50.88,41.74
+step
+Follow the path up |goto 50.61,40.72 < 20 |only if walking
+Follow the path |goto 50.92,36.79 < 20 |only if walking
 talk Salanar the Horseman##28653
+|tip He walks back and forth along this path.
 turnin Into the Realm of Shadows##12687 |goto 52.5,34.6
 step
 talk Prince Valanar##28377
 turnin If Chaos Drives, Let Suffering Hold The Reins##12678 |goto 52.3,34
 step
 talk Orithos the Sky Darkener##28647
+|tip He paces around this area.
 turnin Tonight We Dine In Havenshire##12679 |goto 53.2,36.9
 step
 talk Prince Valanar##28377
 accept Gothik the Harvester##12697 |goto 52.3,34
 step
 talk Gothik the Harvester##28658
-turnin Gothik the Harvester##12697 |goto 54.1,35
-accept The Gift That Keeps On Giving##12698 |goto 54.1,35
+turnin Gothik the Harvester##12697 |goto 54.07,35.03
+accept The Gift That Keeps On Giving##12698 |goto 54.07,35.03
 step
-use Gift of the Harvester##39253
-|tip Use the Gift of the Harvester on Scarlet Miners inside this mine.
+Follow the path down |goto 54.94,31.35 < 20 |only if walking
+Use the Gift of the Harvester on Scarlet Miners |use Gift of the Harvester##39253
+|tip They appear at the entrance of the mine.
+|tip Some will turn into Scarlet Ghosts and attack you.
 |tip It has a pretty low success rate, just keep trying.
-Create 5 Scarlet Ghouls |goto 58.2,31
-confirm |q 12698
+Click Here When 5 Scarlet Ghouls Are Following You |confirm |c |goto 58.18,31.01 |q 12698
+|tip The ghouls that count for the quest are more brown in color and have yellow circles around their feet.
 step
-Return #5# Scarlet Ghouls |q 12698/1 |goto 54.1,35
+Follow the path up |goto 57.03,31.24 < 20 |only if walking
+Follow the path |goto 54.69,31.79 < 20 |only if walking
+Return #5# Scarlet Ghouls |q 12698/1 |goto 54.07,35.03
 step
 talk Gothik the Harvester##28658
 turnin The Gift That Keeps On Giving##12698 |goto 54.1,35
@@ -1194,129 +1279,207 @@ talk Prince Valanar##28377
 turnin An Attack Of Opportunity##12700 |goto 52.3,34
 accept Massacre At Light's Point##12701 |goto 52.3,34
 step
-click Inconspicuous Mine Car##7997 |goto 58.5,33 < 5
-|tip It's a little mine car sitting next to an outhouse.
-click Scarlet Cannon##245
-|tip On the side of the ship.
-Shoot the soldiers on the beach with the cannon
-kill 100 Scarlet Fleet Defender##28834 |q 12701/1 |goto Plaguelands: The Scarlet Enclave 67.6,46.1
+Follow the path down |goto 54.94,31.35 < 20 |only if walking |n
+Follow the path |goto 57.13,31.39 < 20 |only if walking |n
+Follow the path |goto 58.05,33.31 < 15 |only if walking |n
+Find the Inconspicuous Mine Cart |goto 58.50,33.03 < 15 |c |q 12701
 step
-Use your _Skeletal Gryphon Escape_ ability
-Escape to Death's Breach |goto 52.6,34.5 < 5 |q 12701
+click Inconspicuous Mine Car##7997
+Ride in the Inconspicuous Mine Cart |goto 58.50,33.03 > 30 |c |q 12701
+step
+Ride to the Scarlet Fleet Ship |goto 67.94,46.09 < 20 |c |q 12701
+step
+click Scarlet Cannon##245
+kill Scarlet Fleet Defender##28834+
+|tip Use the abilities on your action bar to shoot the soldiers on the beach.
+Slay #100# Scarlet Defenders |q 12701/1 |goto 67.56,46.07
+step
+Use the Skeletal Gryphon Escape ability
+Escape to Death's Breach |goto 52.6,34.5 < 20 |noway |c |q 12701
 step
 talk Prince Valanar##28377
 turnin Massacre At Light's Point##12701 |goto 52.3,34
 accept Victory At Death's Breach!##12706 |goto 52.3,34
 step
-clicknpc Scourge Gryphon##29501 |goto Plaguelands: The Scarlet Enclave 53.1,32.4 < 5
+clicknpc Scourge Gryphon##29501 |goto 53.1,32.5 |n
+Fly Up to Archerus |goto 51.1,34.7 < 20 |noway |c |q 12706
+step
 talk Highlord Darion Mograine##28444
-turnin Victory At Death's Breach!##12706 |goto 48.9,29.7
-accept The Will Of The Lich King##12714 |goto 48.9,29.7
+turnin Victory At Death's Breach!##12706 |goto 48.87,29.76
+accept The Will Of The Lich King##12714 |goto 48.87,29.76
 step
-click Scourge Gryphon##29488 |goto Plaguelands: The Scarlet Enclave 52.1,35.0 < 5
+clicknpc Scourge Gryphon##29488 |goto 52.1,35 |n
+Arrive at Death's Breach |goto 53.2,31.1 < 20 |noway |c |q 12714
+step
 talk Prince Valanar##28907
-turnin The Will Of The Lich King##12714 |goto Plaguelands: The Scarlet Enclave 53.5,36.6
-accept The Crypt of Remembrance##12715 |goto Plaguelands: The Scarlet Enclave 53.5,36.6
+turnin The Will Of The Lich King##12714 |goto 53.47,36.55
+accept The Crypt of Remembrance##12715 |goto 53.47,36.55
 step
+Follow the path down |goto 50.75,38.22 < 20 |only if walking
+Continue down the path |goto 50.62,40.87 < 20 |only if walking
+Follow the path |goto 52.83,45.08 < 20 |only if walking
 talk Noth the Plaguebringer##28919
 accept The Plaguebringer's Request##12716 |goto 55.9,52.4
 step
-_Enter_ the crypt |goto 54.3,58.1 < 5 |walk
+Enter the crypt |goto 54.3,58.1 < 10 |walk
+Run down the stairs |goto 53.60,58.05 < 7 |walk
+Continue down the stairs |goto 53.69,57.41 < 7 |walk
 talk Prince Keleseth##28911
-turnin The Crypt of Remembrance##12715 |goto 54.3,57.3
-accept Nowhere To Run And Nowhere To Hide##12719 |goto 54.3,57.3
+|tip Downstairs inside the crypt.
+turnin The Crypt of Remembrance##12715 |goto 54.30,57.31
+accept Nowhere To Run And Nowhere To Hide##12719 |goto 54.30,57.31
 step
 talk Baron Rivendare##28910
-accept Lambs To The Slaughter##12722 |goto 54.7,57.4
-stickystart "getskull"
-stickystart "crusaderskull"
-stickystart "citizenofavalon"
+|tip Downstairs inside the crypt.
+accept Lambs To The Slaughter##12722 |goto 54.66,57.43
+stickystart "Slay_Scarlet_Crusade_Soldiers"
+stickystart "Crusader_Skulls"
+stickystart "Citizens_Of_New_Avalaon"
 step
-_Enter_ the inn |goto 57.7,64.5 < 5 |walk
+Run up the stairs |goto 53.96,57.42 < 7 |walk
+Continue up the stairs |goto 53.60,57.57 < 7 |walk
+Continue up the stairs |goto 53.71,58.15 < 7 |walk
+Leave the crypt |goto 54.36,58.15 < 10 |walk
+Follow the path up |goto 55.96,59.90 < 20 |only if walking
+Enter the building |goto 57.67,64.41 < 10 |walk
 click Empty Cauldron##7199
-|tip In the basement of the building that looks like an inn.
+|tip Downstairs inside the building.
 collect Empty Cauldron##39324 |q 12716/1 |goto 57.8,61.8
 step
+Leave the building |goto 57.67,64.41 < 10 |walk
+Follow the path |goto 58.48,64.68 < 15 |only if walking
 click Iron Chain##8040
-|tip It's inside the Forge.
-collect Iron Chain##39326 |q 12716/2 |goto 62,60.2
+|tip Inside the building.
+collect Iron Chain##39326 |q 12716/2 |goto 62.05,60.24
 step
-kill Mayor Quimby##28945 |q 12719/1 |goto 52.2,71.2
+Follow the path |goto 59.66,61.13 < 20 |only if walking
+Follow the path |goto 58.24,65.68 < 20 |only if walking
+Run up the stairs |goto 54.23,70.21 < 15 |only if walking
+kill Mayor Quimby##28945 |q 12719/1 |goto 52.24,71.17
+|tip Inside the building.
 step
 click New Avalon Registry##928
-collect New Avalon Registry##39362 |q 12719/2 |goto 52.5,71
-step "getskull"
-kill Scarlet Commander##28936+, Scarlet Crusader##28940+, Scarlet Marksman##28610+, Scarlet Preacher##28939+
-Kill #10# Scarlet Crusade Soldiers |q 12722/1 |goto 52.5,71
-step "crusaderskull"
-kill Scarlet Commander##28936+, Scarlet Crusader##28940+, Scarlet Marksman##28610+, Scarlet Preacher##28939+
-collect 10 Crusader Skull##39328 |q 12716/3 |goto 52.5,71
-step "citizenofavalon"
-kill Scarlet Commander##28936+, Scarlet Crusader##28940+, Scarlet Marksman##28610+, Scarlet Preacher##28939+
-kill 15 Citizen of New Avalon##28941 |q 12722/2 |goto 53.4,69.9
+collect New Avalon Registry##39362 |q 12719/2 |goto 52.45,71.00
 step
-_Go into_ the crypt |goto 54.3,58.1 < 5 |walk
+label "Slay_Scarlet_Crusade_Soldiers"
+Kill Scarlet enemies around this area
+Slay #10# Scarlet Crusade Soldiers |q 12722/1 |goto 54.27,70.15
+step
+label "Crusader_Skulls"
+Kill Scarlet enemies around this area
+kill Citizen of New Avalon##28942+
+|tip Usually inside the buildings around this area.
+collect 10 Crusader Skull##39328 |q 12716/3 |goto 54.27,70.15
+step
+label "Citizens_Of_New_Avalaon"
+kill 15 Citizen of New Avalon##28942 |q 12722/2 |goto 54.27,70.15
+|tip Usually inside the buildings around this area.
+step
+Follow the path down |goto 56.04,61.53 < 20 |only if walking
+Enter the crypt |goto 54.3,58.1 < 10 |walk
+Run down the stairs |goto 53.60,58.05 < 7 |walk
+Continue down the stairs |goto 53.69,57.41 < 7 |walk
 talk Prince Keleseth##28911
-turnin Nowhere To Run And Nowhere To Hide##12719 |goto 54.3,57.3
-accept How To Win Friends And Influence Enemies##12720 |goto 54.3,57.3
+|tip Downstairs inside the crypt.
+turnin Nowhere To Run And Nowhere To Hide##12719 |goto 54.30,57.31
+accept How To Win Friends And Influence Enemies##12720 |goto 54.30,57.31
 step
 talk Baron Rivendare##28910
-turnin Lambs To The Slaughter##12722 |goto 54.7,57.4
+|tip Downstairs inside the crypt.
+turnin Lambs To The Slaughter##12722 |goto 54.66,57.43
 step
+Run up the stairs |goto 53.96,57.42 < 7 |walk
+Continue up the stairs |goto 53.60,57.57 < 7 |walk
+Continue up the stairs |goto 53.71,58.15 < 7 |walk
+Leave the crypt |goto 54.36,58.15 < 10 |walk
 talk Noth the Plaguebringer##28919
 turnin The Plaguebringer's Request##12716 |goto 55.9,52.4
 accept Noth's Special Brew##12717 |goto 55.9,52.4
 step
 click Plague Cauldron##4271
-turnin Noth's Special Brew##12717 |goto 56.1,52.1
+turnin Noth's Special Brew##12717 |goto 56.15,51.98
 step
-use Ornate Jeweled Box##39418
-use Keleseth's Persuader##39371 |equipped Keleseth's Persuader##39371
-kill Scarlet Marksman##28610+, Scarlet Preacher##28939+, Scarlet Crusader##28940+
-Reveal the Crimson Dawn |q 12720/1 |goto 55.9,60.5
-|tip Attack Scarlet soldiers and stop hitting them when they start talking, so you don't kill them too fast. Repeat until a soldier gives you information.
+Use the Ornate Jeweled Box |use Ornate Jeweled Box##39418
+|tip Equip Keleseth's Persuader.
+Click Here After You Equip Keleseth's Persuader |confirm |c |q 12720
 step
-_Go into_ the crypt |goto 54.3,58.1 < 5 |walk
+Follow the path up |goto 55.96,59.90 < 20 |only if walking
+Kill Scarlet enemies around this area
+|tip Try not to kill them too fast, and stop attacking them when they start talking.
+|tip Eventually one of the enemies will give you information.
+Reveal the "Crimson Dawn" |q 12720/1 |goto 55.8,65.8
+step
+Equip Your Normal Weapon
+Click Here After Equipping Your Normal Weapon |confirm |c |q 12720
+step
+Follow the path down |goto 56.04,61.53 < 20 |only if walking
+Enter the crypt |goto 54.3,58.1 < 10 |walk
+Run down the stairs |goto 53.60,58.05 < 7 |walk
+Continue down the stairs |goto 53.69,57.41 < 7 |walk
 talk Prince Keleseth##28911
-turnin How To Win Friends And Influence Enemies##12720 |goto 54.3,57.3
-accept Behind Scarlet Lines##12723 |goto 54.3,57.3
+|tip Downstairs inside the crypt.
+turnin How To Win Friends And Influence Enemies##12720 |goto 54.30,57.31
+accept Behind Scarlet Lines##12723 |goto 54.30,57.31
 step
-_Enter_ the tavern |goto 56.1,80.0 < 5 |walk
-_Go upstairs_ |goto 56.5,79.6 < 5 |walk
+Run up the stairs |goto 53.96,57.42 < 7 |walk
+Continue up the stairs |goto 53.60,57.57 < 7 |walk
+Continue up the stairs |goto 53.71,58.15 < 7 |walk
+Leave the crypt |goto 54.36,58.15 < 10 |walk
+Follow the path up |goto 55.96,59.90 < 20 |only if walking
+Continue following the path |goto 56.29,68.44 < 20 |only if walking
+Follow the path |goto 57.12,75.46 < 20 |only if walking
 talk Orbaz Bloodbane##28914
-|tip They are on the second floor.
-turnin Behind Scarlet Lines##12723 |goto 56.3,79.8
-accept The Path Of The Righteous Crusader##12724 |goto 56.3,79.8
+|tip Upstairs inside the building.
+turnin Behind Scarlet Lines##12723 |goto 56.26,79.84
+accept The Path Of The Righteous Crusader##12724 |goto 56.26,79.84
 step
 talk Thassarian##28913
-accept Brothers In Death##12725 |goto 56.3,80.2
+|tip Upstairs inside the building.
+accept Brothers In Death##12725 |goto 56.27,80.15
 step
-_Enter_ Scarlet Hold |goto 61.9,68.2 < 5 |walk
-_Go downstairs_ |goto 62.7,68.6 < 5 |walk
+Follow the path |goto 57.00,77.83 < 20 |only if walking
+Enter the building |goto 61.10,68.06 < 15 |walk
+Follow the path |goto 62.22,68.69 < 10 |walk
+Follow the path |goto 62.40,69.32 < 10 |walk
+Run down the stairs |goto 62.77,68.63 < 7 |walk
 talk Koltira Deathweaver##28912
-|tip They are in the basement.
-turnin Brothers In Death##12725 |goto 63.0,67.8
-accept Bloody Breakout##12727 |goto 63.0,67.8
+|tip Downstairs in the building.
+turnin Brothers In Death##12725 |goto 62.96,67.85
+accept Bloody Breakout##12727 |goto 62.96,67.85
 step
-Koltira Deathweaver forms a bubble and you have to fight the mobs as they come in waves
-|tip Stay inside the bubble, it reduces spell damage done to you.
+Kill the enemies that attack in waves
 kill High Inquisitor Valroth##29001
+|tip Stay inside the bubble Koltira Deathweaver forms.
+|tip It reduces spell damage done to you, so you'll live.
 click High Inquisitor Valroth's Remains##2951
-collect Valroth's Head##39510 |q 12727/1 |goto 63.0,67.8
+|tip It will be wherever you ended up killing High Inquisitor Valroth.
+collect Valroth's Head |q 12727/1 |goto 62.91,68.10
 step
 click New Avalon Patrol Schedule##8051
-|tip It's on the second floor.
-collect New Avalon Patrol Schedule##39504 |q 12724/1 |goto 63.0,68.3
+|tip It looks like a thick book sitting on a long table upstairs in a big open room in the fort.
+collect New Avalon Patrol Schedule|q 12724/1 |goto 63.0,68.3
 step
+Leave the building |goto 61.08,68.08 < 15 |walk
+Follow the path up |goto 58.70,71.30 < 20 |only if walking
 talk Orbaz Bloodbane##28914
-turnin The Path Of The Righteous Crusader##12724 |goto 56.3,79.8
+|tip Upstairs inside the building.
+turnin The Path Of The Righteous Crusader##12724 |goto 56.26,79.84
 step
 talk Thassarian##28913
-turnin Bloody Breakout##12727 |goto 56.3,80.2
-accept A Cry For Vengeance!##12738 |goto 56.3,80.2
+|tip Upstairs inside the building.
+turnin Bloody Breakout##12727 |goto 56.27,80.15
+accept A Cry For Vengeance!##12738 |goto 56.27,80.15
 step
+Follow the path |goto 52.66,80.93 < 15 |only if walking
 talk Knight Commander Plaguefist##29053
+|tip He walks around this area.
 turnin A Cry For Vengeance!##12738 |goto 52.9,81.5
+accept A Special Surprise##12742 |goto 52.9,81.5 |only Human
+accept A Special Surprise##12743 |goto 52.9,81.5 |only NightElf
+accept A Special Surprise##12744 |goto 52.9,81.5 |only Dwarf
+accept A Special Surprise##12745 |goto 52.9,81.5 |only Gnome
+accept A Special Surprise##12746 |goto 52.9,81.5 |only Draenei
+accept A Special Surprise##28649 |goto 52.9,81.5 |only Worgen
 accept A Special Surprise##12739 |goto 52.9,81.5 |only Tauren
 accept A Special Surprise##12747 |goto 52.9,81.5 |only BloodElf
 accept A Special Surprise##12748 |goto 52.9,81.5 |only Orc
@@ -1324,25 +1487,74 @@ accept A Special Surprise##12749 |goto 52.9,81.5 |only Troll
 accept A Special Surprise##12750 |goto 52.9,81.5 |only Scourge
 accept A Special Surprise##28650 |goto 52.9,81.5 |only Goblin
 step
-kill Malar Bravehorn##29032 |q 12739/1 |goto 54.5,83.9
-only Tauren
+Watch the dialogue
+kill Valok the Righteous##29070 |q 12746/1 |goto 54.5,83.4
+|tip Inside the building.
+|only Draenei
 step
-kill Iggy Darktusk##29073 |q 12749/1 |goto 53.8,83.8
-only Troll
+Watch the dialogue
+kill Yazmina Oakenthorn##29065 |q 12743/1 |goto 54.2,83.9
+|tip Inside the building.
+|only NightElf
 step
-kill Antoine Brack##29071 |q 12750/1 |goto 53.5,83.3
-only Scourge
+Watch the dialogue
+kill Goby Blastenheimer##29068 |q 12745/1 |goto 53.9,83.8
+|tip Inside the building.
+|only Gnome
 step
-kill Kug Ironjaw##29072 |q 12748/1 |goto 53.8,83.3
-only Orc
+Watch the dialogue
+kill Ellen Stanbridge##29061 |q 12742/1 |goto 53.5,83.8
+|tip Inside the building.
+|only Human
 step
-kill Lady Eonys##29074 |q 12747/1 |goto 54.3,83.3
-only BloodElf
+Watch the dialogue
+kill Donovan Pulfrost##29067 |q 12744/1 |goto 54,83.3
+|tip Inside the building.
+|only Dwarf
 step
-kill Gally Lumpstain |q 28650/1 |goto 54.1,83.8
-only Goblin
+Watch the dialogue
+kill Lord Harford##49355 |q 28649/1 |goto 54.14,83.29
+|tip Inside the building.
+|only Worgen
+step
+Watch the dialogue
+kill Malar Bravehorn##29032 |q 12739/1 |goto 54.50,83.85
+|tip Inside the building.
+|only Tauren
+step
+Watch the dialogue
+kill Lady Eonys##29074 |q 12747/1 |goto 54.28,83.31
+|tip Inside the building.
+|only BloodElf
+step
+Watch the dialogue
+kill Kug Ironjaw##29072 |q 12748/1 |goto 53.77,83.27
+|tip Inside the building.
+|only Orc
+step
+Watch the dialogue
+kill Iggy Darktusk##29073 |q 12749/1 |goto 53.80,83.75
+|tip Inside the building.
+|only Troll
+step
+Watch the dialogue
+kill Antoine Brack##29071 |q 12750/1 |goto 53.54,83.30
+|tip Inside the building.
+|only Scourge
+step
+Watch the dialogue
+kill Gally Lumpstain##49356 |q 28650/1 |goto 54.11,83.77
+|tip Inside the building.
+|only Goblin
 step
 talk Knight Commander Plaguefist##29053
+|tip He walks around this area.
+turnin A Special Surprise##12742 |goto 52.9,81.5 |only Human
+turnin A Special Surprise##12743 |goto 52.9,81.5 |only NightElf
+turnin A Special Surprise##12744 |goto 52.9,81.5 |only Dwarf
+turnin A Special Surprise##12745 |goto 52.9,81.5 |only Gnome
+turnin A Special Surprise##12746 |goto 52.9,81.5 |only Draenei
+turnin A Special Surprise##28649 |goto 52.9,81.5 |only Worgen
 turnin A Special Surprise##12739 |goto 52.9,81.5 |only Tauren
 turnin A Special Surprise##12747 |goto 52.9,81.5 |only BloodElf
 turnin A Special Surprise##12748 |goto 52.9,81.5 |only Orc
@@ -1351,121 +1563,183 @@ turnin A Special Surprise##12750 |goto 52.9,81.5 |only Scourge
 turnin A Special Surprise##28650 |goto 52.9,81.5 |only Goblin
 accept A Sort Of Homecoming##12751 |goto 52.9,81.5
 step
-_Go upstairs_ in the building |goto 56.5,79.7 < 5
+Follow the path |goto 52.72,80.46 < 15 |only if walking
 talk Thassarian##28913
-turnin A Sort Of Homecoming##12751 |goto 56.3,80.2
+|tip Upstairs inside the building.
+turnin A Sort Of Homecoming##12751 |goto 56.27,80.15
 step
 talk Orbaz Bloodbane##28914
-accept Ambush At The Overlook##12754 |goto 56.3,79.8
+|tip Upstairs inside the building.
+accept Ambush At The Overlook##12754 |goto 56.26,79.84
 step
-use Makeshift Cover##39645
-|tip Use your Makeshift Cover while standing on the edge of the hill.
+Use the Makeshift Cover |use Makeshift Cover##39645
 kill Scarlet Courier##29076
-collect Scarlet Courier's Belongings##39646 |q 12754/1 |goto 60,78.5
-collect Scarlet Courier's Message##39647 |q 12754/2 |goto 60,78.5
+collect Scarlet Courier's Belongings##39646 |q 12754/1 |goto 59.97,78.57
+collect Scarlet Courier's Message##39647 |q 12754/2 |goto 59.97,78.57
 step
 talk Orbaz Bloodbane##28914
-turnin Ambush At The Overlook##12754 |goto 56.3,79.8
-accept A Meeting With Fate##12755 |goto 56.3,79.8
+|tip Upstairs inside the building.
+turnin Ambush At The Overlook##12754 |goto 56.26,79.84
+accept A Meeting With Fate##12755 |goto 56.26,79.84
 step
+Follow the path down |goto 60.13,76.98 < 15 |only if walking
+Follow the path down |goto 60.47,80.43 < 20 |only if walking
+Follow the path |goto 62.90,85.29 < 20 |only if walking
 talk High General Abbendis##29077
-turnin A Meeting With Fate##12755 |goto 65.6,83.8
-accept The Scarlet Onslaught Emerges##12756 |goto 65.6,83.8
+turnin A Meeting With Fate##12755 |goto 65.65,83.82
+accept The Scarlet Onslaught Emerges##12756 |goto 65.65,83.82
 step
+Follow the path up |goto 63.40,85.39 < 20 |only if walking
+Continue up the path |goto 61.76,83.29 < 20 |only if walking
+Continue up the path |goto 60.55,79.94 < 20 |only if walking
+Follow the path up |goto 60.30,77.04 < 15 |only if walking
 talk Orbaz Bloodbane##28914
-turnin The Scarlet Onslaught Emerges##12756 |goto 56.3,79.8
-accept Scarlet Armies Approach...##12757 |goto 56.3,79.8
+|tip Upstairs inside the building.
+turnin The Scarlet Onslaught Emerges##12756 |goto 56.26,79.84
+accept Scarlet Armies Approach...##12757 |goto 56.26,79.84
 step
-clicknpc Scourge Gryphon##29488 |goto Plaguelands: The Scarlet Enclave 53.1,32.5 < 5
+click Portal to Acherus##8046 |goto 56.18,80.04 |n
+Teleport to Acherus |goto 50.2,32.6 < 20 |noway |c |q 12757
+step
 talk Highlord Darion Mograine##28444
-turnin Scarlet Armies Approach...##12757 |goto 48.9,29.7
-accept The Scarlet Apocalypse##12778 |goto 48.9,29.7
+turnin Scarlet Armies Approach...##12757 |goto 48.89,29.77
+accept The Scarlet Apocalypse##12778 |goto 48.89,29.77
 step
-clicknpc Scourge Gryphon##29488 |goto 52.1,35 < 5
+clicknpc Scourge Gryphon##29488 |goto 52.08,35.03 |n
+Arrive at Death's Breach |goto 53.2,31.1 < 20 |noway |c |q 12778
+step
+Run up the ramp |goto 53.31,36.37 < 10 |only if walking
 talk The Lich King##29110
-turnin The Scarlet Apocalypse##12778 |goto 53.6,36.9
-accept An End To All Things...##12779 |goto 53.6,36.9
+turnin The Scarlet Apocalypse##12778 |goto 53.57,36.85
+accept An End To All Things...##12779 |goto 53.57,36.85
 step
-use Horn of the Frostbrood##39700
-|tip This will summon a dragon for you to ride.
-Fly and and use your dragon abilities to do the following:
+Use the Horn of the Frostbrood |use Horn of the Frostbrood##39700
+Summon a Dragon to Ride |invehicle |c |q 12779
+stickystart "Destroy_Scarlet_Ballistas"
+step
 kill 150 Scarlet Soldier##4286 |q 12779/1 |goto 55.8,61
+|tip Use the abilities on your action bar.
+step
+label "Destroy_Scarlet_Ballistas"
 Destroy #10# Scarlet Ballistas |q 12779/2 |goto 55.8,61
-There will be more around [58.3,71.1]
+|tip They look like big wooden crossbow machines around this area.
+|tip Use the abilities on your action bar.
 step
-Fly back to Death's Breach and click the red arrow on your hot bar to jump off the dragon |goto 52.8,37.3 < 10 |outvehicle |q 12779
+Return to Death's Breach |goto 52.47,37.18 < 20 |c |q 12779
+|tip Don't click the red arrow to stop controlling the Frostbrood Vanquisher yet.
 step
+Stop Controlling the Frostbrood Vanquisher |outvehicle |c |goto 52.53,37.39 |q 12779
+|tip Click the red arrow on your action bar.
+step
+Run up the ramp |goto 53.31,36.37 < 10 |only if walking
 talk The Lich King##29110
-turnin An End To All Things...##12779 |goto 53.6,36.9
-accept The Lich King's Command##12800 |goto 53.6,36.9
+turnin An End To All Things...##12779 |goto 53.57,36.85
+accept The Lich King's Command##12800 |goto 53.57,36.85
 step
-_Go through_ the tunnel |goto 49.5,29.5 < 10
+Follow the path |goto 50.16,31.36 < 20 |only if walking
+Enter the tunnel |goto 49.13,28.43 < 15 |only if walking
+Leave the tunnel |goto 47.35,24.82 < 15 |only if walking
+Follow the path |goto 46.77,22.04 < 15 |only if walking
+Follow the path down |goto 40.02,19.25 < 15 |only if walking
+Follow the path |goto 36.04,24.04 < 20 |only if walking
 talk Scourge Commander Thalanor##31082
-turnin The Lich King's Command##12800 |goto 33.9,30.4
-accept The Light of Dawn##12801 |goto 33.9,30.4
-step
-talk Highlord Darion Mograine##29173 |goto 34.4,31.1 < 5
-|tip If he is not here then the battle has already started an you might be able to join the battle at the chapel to save some time.
-Tell him _"I am ready, Highlord. Let the siege of Light's Hope begin!"_
-|tip You may be unable to do this if someone else already has.
-Wait 5 minutes for the battle to start
-Uncover The Light of Dawn |q 12801/1 |goto 38.9,38.2
+|tip He paces back and forth.
+turnin The Lich King's Command##12800 |goto 33.99,30.36
+accept The Light of Dawn##12801 |goto 33.99,30.36
 step
 talk Highlord Darion Mograine##29173
-turnin The Light of Dawn##12801 |goto 39.1,39
-accept Taking Back Acherus##13165 |goto 39.1,39
+|tip If he's not here, then the battle has already started.
+|tip You may be able to join the battle.  Skip to the next step, try to do it, and see if it works.
+|tip If you're unable to join the battle, skip back to this step and wait for Highlord Darion Mograine to respawn.
+Tell him _"I am ready, Highlord.  Let the siege of Light's Hope begin!"_
+|tip If he's here, but you can't choose this dialogue, that just means someone else already did it.
+|tip Now you just need to wait for the battle to start.
+|tip The battle starts 5 minutes after someone initiates this dialogue with him.
+Click Here When the Battle Begins |confirm |c |goto 34.44,31.10 |q 12801
 step
-Use your _Death Gate_ spell and click the purple portal to go to Ebon Hold |goto Eastern Plaguelands 83.7,50.0 < 5 |cast Death Gate |q 13165
+Kill enemies around this area
+|tip Follow your allies into battle.
+Watch the dialogue
+Uncover The Light of Dawn |q 12801/1 |goto 38.79,38.34
 step
 talk Highlord Darion Mograine##29173
-turnin Taking Back Acherus##13165 |goto 83.4,49.4
-accept The Battle For The Ebon Hold##13166 |goto 83.4,49.4
-stickystart "scourgekills"
+turnin The Light of Dawn##12801 |goto 39.11,39.16
+accept Taking Back Acherus##13165 |goto 39.11,39.16
 step
-_Stand on_ the purple circle to teleport upstairs |goto 83.2,48.9 < 5
-kill Patchwerk##31099 |q 13166/1 |goto 82.5,47.3
-step "scourgekills"
-kill Scourge Necromancer##31096+, Terrifying Abomination##31098+, Val'kyr Battle-maiden##31095+
-Kill #10# Scourge |q 13166/2 |goto 82.5,47.3
+Use your Death Gate spell
+|tip Click the purple Death Gate portal that appears nearby.
+Travel to Ebon Hold |goto Eastern Plaguelands/0 83.7,50.0 < 20 |noway |c |q 13165
 step
-_Stand on_ the purple circle to teleport downstairs |goto 83.3,49.1 < 5
+talk Highlord Darion Mograine##29173
+turnin Taking Back Acherus##13165 |goto 83.44,49.46
+accept The Battle For The Ebon Hold##13166 |goto 83.44,49.46
+step
+Walk onto the teleport pad |goto 83.19,48.90 |n
+Teleport Downstairs |goto 82.68,47.79 < 10 |noway |c |q 13166
+step
+Kill enemies around this area
+Slay #10# Scourge |q 13166/2 |goto 81.99,46.37
+step
+kill Patchwerk##31099 |q 13166/1 |goto 81.99,46.37
+step
+Walk onto the teleport pad |goto 83.28,49.12 |n
+Teleport Upstairs |goto 83.28,49.12 < 5 |noway |c |q 13166
+step
 talk Highlord Darion Mograine##31084
-turnin The Battle For The Ebon Hold##13166 |goto 83.4,49.4
-accept Warchief's Blessing##13189 |goto 83.4,49.4
+turnin The Battle For The Ebon Hold##13166 |goto 83.44,49.46
+accept Where Kings Walk##13188 |goto 83.44,49.46 |only Alliance
+accept Saurfang's Blessing##13189 |goto 83.44,49.46 |only Horde
 step
-Click the portal |goto 84.5,50.4 < 5 |n
-Arrive in Orgrimmar |goto Durotar 45.6,13.5 < 10 |noway |q 13189
+click Portal to Orgrimmar |goto 84.55,50.46 |n
+Teleport to Orgrimmar |goto Durotar/0 45.6,13.5 < 20 |noway |c |q 13189
+|only Horde
 step
-talk Vol'jin##86832
-turnin Warchief's Blessing##13189 |goto Orgrimmar 48.1,70.5
+Enter the building |goto Orgrimmar/1 49.90,75.62 < 10 |walk
+talk High Overlord Saurfang##14720
+|tip Inside the building.
+turnin Saurfang's Blessing##13189 |goto Orgrimmar/1 48.27,70.97
+|only Horde
+step
+click Portal to Stormwind |goto 83.65,51.34 |n
+Teleport to Stormwind City |goto Elwynn Forest/0 33.4,52 < 20 |noway |c |q 13188
+|only Alliance
+step
+Enter the building |goto Stormwind City/0 80.60,37.89 < 15 |walk
+talk Anduin Wrynn##107574
+|tip Inside the building.
+turnin Where Kings Walk##13188 |goto Stormwind City/0 85.8,31.7
+|only Alliance
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Starter Guides\\Undead (1-11)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Starter Guides\\Undead (1-11)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Tirisfal 1-11",
 condition_suggested="raceclass('Scourge') and level<=11",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Silverpine Forest (11-20)\\Silverpine Forest (11-20)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Silverpine Forest (11-20)\\Silverpine Forest (11-20)",
 startlevel=1,
 dynamic=true,
 },[[
 step
 talk Agatha##49044
-accept Fresh out of the Grave##24959 |goto Deathknell 40.7,78.5
+accept Fresh out of the Grave##24959 |goto Deathknell/0 40.50,78.52
 only Scourge
 step
 talk Undertaker Mordo##1568
-turnin Fresh out of the Grave##24959 |goto Deathknell 43.4,79.9
-accept The Shadow Grave##28608 |goto Deathknell 43.4,79.9
+turnin Fresh out of the Grave##24959 |goto 43.4,79.9
+accept The Shadow Grave##28608 |goto 43.4,79.9
 only Scourge
 step
-_Enter_ the crypt |goto Deathknell 44.6,83.0 < 5 |walk
-|tip Darnell will spawn and greet you. Lead him into the crypt.
+Run down the stairs |goto Tirisfal Glades/0 30.33,72.85 < 10 |walk |indoors Shadow Grave
+Run down the stairs |goto Tirisfal Glades/0 29.98,72.84 < 10 |walk |indoors Shadow Grave
 click Thick Embalming Fluid##8544
+|tip It looks like a green globe sitting on the table.
 collect Thick Embalming Fluid##64582 |q 28608/1 |goto Tirisfal Glades/0 29.7,72.0 |indoors Shadow Grave
 step
 click Corpse-Stitching Twine##9943
-collect Corpse-Stitching Twine##64581 |q 28608/2 |goto Tirisfal Glades/0 29.7,72.0 |indoors Shadow Grave
+|tip It looks like a red spool of thread sitting on the table.
+collect Corpse-Stitching Twine##64581 |q 28608/2 |goto 29.66,72.02 |indoors Shadow Grave
 only Scourge
 step
+Run up the stairs |goto 29.99,72.45 < 10 |walk |indoors Shadow Grave
 talk Undertaker Mordo##1568
 turnin The Shadow Grave##28608 |goto Deathknell/0 43.4,79.9
 accept Those That Couldn't Be Saved##26799 |goto Deathknell/0 43.4,79.9
@@ -1474,7 +1748,7 @@ step
 talk Caretaker Caice##2307
 accept The Wakening##24960 |goto 45.9,80.5
 only Scourge
-stickystart "mindless"
+stickystart "Mindless_Zombies"
 step
 talk Valdred Moray##49231
 Tell him _"Don't you remember? You died."_
@@ -1490,7 +1764,8 @@ talk Marshal Redpath##49230
 Tell him _"I'm not here to fight. I've only been asked to speak with you."_
 Speak with Marshal Redpath |q 24960/2 |goto  46.5,71.2
 only Scourge
-step "mindless"
+step
+label "Mindless_Zombies"
 kill 6 Mindless Zombie##1501 |q 26799/1 |goto 44.0,73.7
 only Scourge
 step
@@ -1503,51 +1778,64 @@ turnin The Wakening##24960 |goto 45.9,80.5
 accept Beyond the Graves##25089 |goto 45.9,80.5
 only Scourge
 step
+Follow the path |goto 50.56,68.10 < 20 |only if walking
 talk Deathguard Saltain##1740
-turnin Beyond the Graves##25089 |goto 49.7,56.5
-accept Recruitment##26800 |goto 49.7,56.5
+|tip He paces back and forth.
+turnin Beyond the Graves##25089 |goto 49.96,56.17
+accept Recruitment##26800 |goto 49.96,56.17
 only Scourge
 step
 talk Shadow Priest Sarvis##1569
+|tip Inside the building.
 accept Scourge on our Perimeter##26801 |goto 46.7,58.8
-stickystart "scarletcorpses"
+stickystart "Gather_Scarlet_Corpses"
 step
-kill Rattlecage Skeleton##1890+, Wretched Ghoul##1502+
-Kill #8# Deathknell Scourge |q 26801/1 |goto 52.3,44.3
-step "scarletcorpses"
+Kill enemies around this area
+Slay #8# Deathknell Scourge |q 26801/1 |goto 50.54,47.39
+step "Gather_Scarlet_Corpses"
 clicknpc Scarlet Corpse##49340+
-Gather #6# Scarlet Corpses |q 26800/1 |goto 52.3,44.3
+|tip They look like dead humans in red outfits laying on the ground around this area.
+Gather #6# Scarlet Corpses |q 26800/1 |goto 50.54,47.39
 step
 talk Deathguard Saltain##1740
-turnin Recruitment##26800 |goto 49.7,56.5
+|tip He paces back and forth.
+turnin Recruitment##26800 |goto 49.96,56.17
 only Scourge
 step
 talk Shadow Priest Sarvis##1569
+|tip Inside the building.
 turnin Scourge on our Perimeter##26801 |goto 46.7,58.8
 accept Novice Elreth##28651 |goto 46.7,58.8
 step
 talk Novice Elreth##1661
+|tip Inside the building.
 turnin Novice Elreth##28651 |goto 46.8,58.3
 accept The Truth of the Grave##24961 |goto 46.8,58.3
 step
+Enter the building |goto 52.34,56.45 < 10 |walk
 talk Lilian Voss##38910
-Tell her _"You're not hideous."_
-|tip She can also be found on the upper level of the building at the same coordinate.
-Show Lilian Her reflection |q 24961/1 |goto 54.3,57.2
+|tip Inside the building.
+Tell her _"You're not hideous, Lillian... you're one of us.  Here, look in this mirror, see for yourself."_
+|tip If she's not on the ground floor, she can also be found on the upper level of the building at the same location.
+Show Lilian Her Reflection |q 24961/1 |goto 54.35,56.97
 step
 talk Novice Elreth##1661
+|tip Inside the building.
 turnin The Truth of the Grave##24961 |goto 46.7,58.2
 accept The Executor In the Field##28672 |goto 46.7,58.2
 step
+Follow the road |goto 51.35,52.74 < 20 |only if walking
+Continue following the road |goto 52.64,41.79 < 20 |only if walking
 talk Executor Arren##1570
 turnin The Executor In the Field##28672 |goto 55.5,37.7
 accept The Damned##26802 |goto 55.5,37.7
-stickystart "duskbatwings"
+stickystart "Duskbat_Wings"
 step
-kill Young Scavenger##1508+, Ragged Scavenger##1509+
+Kill Scavenger enemies around this area
 collect 4 Scavenger Paw##3265 |q 26802/1 |goto 59.7,30.2
-step "duskbatwings"
-kill Duskbat##1512+, Mangy Duskbat##1513+
+step
+label "Duskbat_Wings"
+Kill Duskbat enemies around this area
 collect 4 Duskbat Wing##3264 |q 26802/2 |goto 59.7,30.2
 step
 talk Executor Arren##1570
@@ -1562,89 +1850,117 @@ talk Executor Arren##1570
 turnin Night Web's Hollow##24973 |goto Deathknell/0 55.5,37.7
 accept No Better Than the Zombies##24970 |goto Deathknell/0 55.5,37.7
 step
+Follow the road |goto 60.68,36.12 < 20 |only if walking
 talk Darnell##49425
-turnin No Better Than the Zombies##24970 |goto 67.2,42.0
-accept Assault on the Rotbrain Encampment##24971 |goto 67.2,42.0
-stickystart "rotbrain"
+turnin No Better Than the Zombies##24970 |goto 67.03,42.37
+accept Assault on the Rotbrain Encampment##24971 |goto 67.03,42.37
+stickystart "Slay_Rotbrain_Undead"
 step
 kill Marshal Redpath##49424 |q 24971/1 |goto 70.0,69.7
-step "rotbrain"
-kill Rotbrain Magus##49423+, Rotbrain Berserker##49422+
-Kill #8# Rotbrain Undead |q 24971/2 |goto 74.4,65.5
+step "Slay_Rotbrain_Undead"
+Kill enemies around this area
+Slay #8# Rotbrain Undead |q 24971/2 |goto 74.4,65.5
 step
+Follow the path |goto 64.89,63.88 < 30 |only if walking
+Follow the path |goto 53.23,62.39 < 15 |only if walking
 talk Shadow Priest Sarvis##1569
+|tip Inside the building.
 turnin Assault on the Rotbrain Encampment##24971 |goto 46.7,58.8
 accept Vital Intelligence##24972 |goto 46.7,58.8
 step
+Follow the road |goto 51.34,52.94 < 20 |only if walking
+Continue following the road |goto 54.05,38.24 < 30 |only if walking
+Follow the road |goto 77.12,18.56 < 20 |only if walking
+Follow the road |goto Tirisfal Glades/0 40.60,54.61 < 30 |only if walking
 talk Deathguard Simmer##1519
-turnin Vital Intelligence##24972 |goto Tirisfal Glades 44.8,53.7
-accept Reaping the Reapers##24978 |goto Tirisfal Glades 44.8,53.7
+|tip Inside the building.
+turnin Vital Intelligence##24972 |goto Tirisfal Glades/0 44.75,53.68
+accept Reaping the Reapers##24978 |goto Tirisfal Glades/0 44.75,53.68
 step
 talk Apothecary Johaan##1518
 accept Fields of Grief##24975 |goto 44.6,53.8
 step
 talk Sedrick Calston##38925
 |tip Upstairs sitting on a bed.
-accept Ever So Lonely##24974 |goto 44.8,53.7
-stickystart "tirisfalpunkins"
+accept Ever So Lonely##24974 |goto 44.75,53.65
+stickystart "Tirisfal_Pumpkins"
 step
-kill Tirisfal Farmer##1934+, Tirisfal Farmhand##1935+
-Kill #10# Tirisfal Farmers |q 24978/1 |goto 37.3,50.5
-step "tirisfalpunkins"
+Kill enemies around this area
+Slay #10# Tirisfal Farmers |q 24978/1 |goto 37.3,50.5
+step "Tirisfal_Pumpkins"
 click Tirisfal Pumpkin##60+
+|tip They look like large orange pumpkins on the ground around this area.
 collect 10 Tirisfal Pumpkin##2846 |q 24975/1 |goto 37.3,50.5
-There will be more Pumpkins and farmers around the following location |goto 35.4,51.4
 step
+Follow the path down |goto 35.90,47.20 < 20 |only if walking
 Fight a Vile Fin murloc
-use Murloc Leash##52059
-|tip Use your Murloc Leash on the Vile Fin murloc when it is weak.
-|tip You will see a message in your chat box letting you know when the Vile Fin murloc is ready to be captured. Make sure you capture it before you kill it.
+|tip Don't kill it, just weaken it.
+Use the Murloc Leash on the Vile Fin murloc |use Murloc Leash##52059
+|tip Use it when it is weak.
+|tip You will see a message in your chat box letting you know when the Vile Fin murloc is ready to be captured.
 Capture a Vile Fin |q 24974/1 |goto 36.2,44.2
 step
+Follow the path up |goto 37.26,45.22 < 30 |only if walking
+Follow the road |goto 39.73,49.21 < 30 |only if walking
 talk Deathguard Simmer##1519
-turnin Reaping the Reapers##24978 |goto 44.8,53.7
-accept The Scarlet Palisade##24980 |goto 44.8,53.7
+|tip Inside the building.
+turnin Reaping the Reapers##24978 |goto 44.75,53.67
+accept The Scarlet Palisade##24980 |goto 44.75,53.67
 step
 talk Apothecary Johaan##1518
 turnin Fields of Grief##24975 |goto 44.6,53.8
 accept Variety is the Spice of Death##24976 |goto 44.6,53.8
 step
-Stand on the bed
-Return the Vile Fine |q 24974/2 |goto 44.8,53.7
-|tip The murloc has to get close to the bed in order for you to return it to Sedrick Calston.
+Return the Vile Fine |q 24974/2 |goto 44.75,53.65
+|tip Upstairs inside the building, stand on the bed.
+|tip The murloc has to get close to the bed.
 step
 talk Sedrick Calston##38925
-turnin Ever So Lonely##24974 |goto 44.8,53.7
+|tip Upstairs inside the building.
+turnin Ever So Lonely##24974 |goto 44.75,53.65
 step
+Follow the path |goto 44.94,51.93 < 20 |only if walking
 click Marrowpetal Stalk##7865+
-|tip They're underwater.
-collect 4 Marrowpetal##52067 |q 24976/1 |goto 49.2,55.0
+|tip They look like red plants underwater around this area.
+collect 4 Marrowpetal##52067 |q 24976/1 |goto 48.90,53.73
 step
+Follow the path |goto 48.20,52.04 < 30 |only if walking
+Follow the path |goto 44.42,46.60 < 30 |only if walking
 click Xavren's Thorn##6807+
+|tip They look like small yellow plants on the hills around this area.
 collect 4 Xavren's Thorn##52066 |q 24976/2 |goto 40.0,38.7
 step
+Drop down here |goto 37.43,39.60 < 20 |only if walking
 clicknpc Briny Sea Cucumber##38933+
-|tip They're crawling around on the sea floor.
+|tip They look like small pink and yellow grubs underwater around this area.
 collect 8 Briny Sea Creature##52068 |q 24976/3 |goto 35.3,41.6
-stickystart "scarwar"
+stickystart "Scarlet_Warriors"
 step
+Follow the path up |goto 35.79,44.33 < 30 |only if walking
+Follow the path |goto 35.85,46.79 < 20 |only if walking
+Follow the path |goto 34.34,48.14 < 20 |only if walking
 kill Scarlet Warrior##1535+
-collect 1 A Scarlet Letter##52079 |n
-use A Scarlet Letter##52079
+collect A Scarlet Letter##52079 |n
+Use the Scarlet Letter |use A Scarlet Letter##52079
 accept A Scarlet Letter##24979 |goto 32.5,47.4
 step
 talk Lilian Voss##38999
-|tip Shes at the very top of the tower.
+|tip She's at the very top of the tower.
 Tell her _"I'm here to rescue you."_
-Find the Scarlet Prisoner |q 24979/1 |goto 31.7,46.3
-step "scarwar"
+Watch the dialogue
+Find the Scarlet Prisoner |q 24979/1 |goto 31.75,46.25
+step "Scarlet_Warriors"
 kill 10 Scarlet Warrior##1535 |q 24980/1 |goto 32.5,47.4
 step
+Follow the road |goto 34.22,48.06 < 30 |only if walking
+Continue following the road |goto 39.38,48.92 < 30 |only if walking
 talk Deathguard Simmer##1519
-turnin The Scarlet Palisade##24980 |goto 44.8,53.7
-turnin A Scarlet Letter##24979 |goto 44.8,53.7
+|tip Inside the building.
+turnin The Scarlet Palisade##24980 |goto 44.75,53.67
+turnin A Scarlet Letter##24979 |goto 44.75,53.67
 step
 talk Apothecary Johaan##1518
+|tip Inside the building.
 turnin Variety is the Spice of Death##24976 |goto 44.6,53.8
 accept Johaan's Experiment##24977 |goto 44.6,53.8
 step
@@ -1654,140 +1970,169 @@ step
 talk Gordo##10666 |tip He walks around the camp.
 accept Gordo's Task##25038 |goto 44.1,53.9
 step
+Follow the path |goto 44.73,55.15 < 30 |only if walking
 clicknpc Gloom Weed##175566+
-|tip They look like wilted green and purple plants.
-|tip Gather them as you follow the road east.
-collect 3 Gloom Weed##12737 |q 25038/1 |goto 47.1,56.5
-More can be found at [46.1,60.6]
+|tip They look like wilted green and purple plants underwater around this area.
+collect 3 Gloom Weed##12737 |q 25038/1 |goto 48.89,54.86
 step
 talk Deathguard Dillinger##1496
-accept A Putrid Task##25090 |goto 52.5,54.8
-accept The New Forsaken##24982 |goto 52.5,54.8
+accept A Putrid Task##25090 |goto 52.55,54.81
+accept The New Forsaken##24982 |goto 52.55,54.81
 step
-kill Ravaged Corpse##1526+, Rotting Dead##1525+
+Kill enemies around this area
 collect 7 Putrid Claw##2855 |q 25090/1 |goto 52.8,57.7
 step
 talk Deathguard Dillinger##1496
-turnin A Putrid Task##25090 |goto 52.5,54.8
+turnin A Putrid Task##25090 |goto 52.54,54.82
+step
+Cross the bridge |goto 52.54,54.41 < 15 |only if walking
+Follow the road |goto 55.39,52.36 < 20 |only if walking
+Follow the path |goto 57.86,51.79 < 20 |only if walking
+talk Deathguard Morris##1745
+accept Supplying Brill##6321 |goto 60.13,52.40
 step
 talk Junior Apothecary Holland##10665
+|tip He walks around inside the building, on both floors.
 turnin Gordo's Task##25038 |goto 60.1,52.7
 accept Darkhound Pounding##24990 |goto 60.1,52.7
 step
 talk Executor Zygand##1515
-accept A Thorn in our Side##24981 |goto 60.5,51.9
+accept A Thorn in our Side##24981 |goto 60.54,51.86
 step
 talk Innkeeper Renee##5688
-home Brill |goto 60.9,51.5 |q 24981
+|tip Inside the building.
+home Brill |goto 60.87,51.50 |q 24981
 step
+Run up the stairs |goto 61.11,51.21 < 10 |walk
+Continue up the stairs |goto 61.30,51.04 < 10 |walk
 talk Magistrate Sevren##1499
-|tip He can be found inside this building up the stairs.
+|tip He walks around in this small room upstairs inside the building.
 turnin The New Forsaken##24982 |goto 61.0,50.4
 accept Forsaken Duties##24983 |goto 61.0,50.4
-stickystart "darkhoundblood"
+stickystart "Darkhound_Blood"
 step
+Follow the path |goto 60.56,53.17 < 20 |only if walking
 kill Cursed Darkhound##1548+
 |tip A Worgen will appear and give you a quest when you kill a Cursed Darkhound.
+|tip Be careful not to kill the Cursed Darkhounds too fast.
 accept Escaped From Gilneas##24992 |goto 58.8,60.2
-More hounds can be found around [53.9,66.7]
-step "darkhoundblood"
+step
+label "Darkhound_Blood"
 kill Cursed Darkhound##1548+
 collect 5 Darkhound Blood##2858 |q 24990/1 |goto 58.8,60.2
-More hounds can be found around [53.9,66.7]
+stickystart "Scarlet_Missionaries"
+stickystart "Urgent_Scarlet_Memorandum"
 step
 kill 3 Scarlet Zealot##1537 |q 24981/1 |goto 53.0,66.1
+step
+label "Scarlet_Missionaries"
 kill 3 Scarlet Missionary##1536 |q 24981/2 |goto 53.0,66.1
+step
+label "Urgent_Scarlet_Memorandum"
+Kill enemies around this area
 collect Urgent Scarlet Memorandum##52077 |q 24981/3 |goto 53.0,66.1
 step
 talk Executor Zygand##1515
-turnin A Thorn in our Side##24981 |goto 60.5,51.9
-turnin Escaped From Gilneas##24992 |goto 60.5,51.9
-accept Annihilate the Worgen##24993 |goto 60.5,51.9
+turnin A Thorn in our Side##24981 |goto 60.54,51.87
+turnin Escaped From Gilneas##24992 |goto 60.54,51.87
+accept Annihilate the Worgen##24993 |goto 60.54,51.87
 step
 talk Junior Apothecary Holland##10665
-|tip He sometimes runs around this building. You may find him upstairs.
+|tip He walks around inside the building, on both floors.
 turnin Darkhound Pounding##24990 |goto 60.1,52.7
 accept Holland's Experiment##24996 |goto 60.1,52.7
 step
 talk Captured Mountaineer##2211
-|tip He is upstairs.
-turnin Holland's Experiment##24996 |goto 60.0,52.9
+|tip Upstairs inside the building.
+turnin Holland's Experiment##24996 |goto 60.04,52.87
 step
 talk Junior Apothecary Holland##10665
-|tip He sometimes runs around this building. You may find him upstairs.
-accept Garren's Haunt##24991 |goto 59.8,53.2
-step
-talk Deathguard Morris##1745
-accept Supplying Brill##6321 |goto 60.1,52.4
-only Scourge
+|tip He walks around inside the building, on both floors.
+accept Garren's Haunt##24991 |goto 60.1,52.7
 step
 talk Anette Williams##43124
-turnin Supplying Brill##6321 |goto 58.8,51.9
-accept Ride to the Undercity##6323 |goto 58.8,51.9
+turnin Supplying Brill##6321 |goto 58.84,51.94
+accept Ride to the Undercity##6323 |goto 58.84,51.94
 only Scourge
 step
 talk Gordon Wendham##4556
-turnin Ride to the Undercity##6323 |goto Undercity 61.5,41.8
-accept Michael Garrett##6322 |goto Undercity 61.5,41.8
+turnin Ride to the Undercity##6323 |goto Undercity/0 61.5,41.8
+accept Michael Garrett##6322 |goto Undercity/0 61.5,41.8
 only Scourge
 step
 talk Michael Garrett##4551
-turnin Michael Garrett##6322 |goto Undercity 63.3,48.5
-accept Return to Morris##6324 |goto Undercity 63.3,48.5
+turnin Michael Garrett##6322 |goto 63.3,48.5
+accept Return to Morris##6324 |goto 63.3,48.5
 only Scourge
 step
 talk Deathguard Morris##1745
-turnin Return to Morris##6324 |goto Tirisfal Glades 60.1,52.4
+turnin Return to Morris##6324 |goto Tirisfal Glades/0 60.13,52.40
 only Scourge
 step
 kill 5 Worgen Infiltrator##38949 |q 24993/1 |goto 60.3,52.0
-|tip They walk stealthed around this area. Look for little puffs of dust moving along the ground to spot them easily.
+|tip They walk around stealthed around this area.
+|tip Look for little puffs of dust moving along the ground to spot them easily.
 step
 talk Executor Zygand##1515
-turnin Annihilate the Worgen##24993 |goto 60.5,51.9
+turnin Annihilate the Worgen##24993 |goto 60.54,51.87
 step
+Follow the road |goto 61.94,54.81 < 20 |only if walking
 talk Deathguard Linnea##1495
-turnin Forsaken Duties##24983 |goto 65.5,60.3
+turnin Forsaken Duties##24983 |goto 65.49,60.26
 step
 talk Gretchen Dedmar##1521
-accept The Chill of Death##24988 |goto 65.2,60.4
+accept The Chill of Death##24988 |goto 65.25,60.42
 step
-kill Greater Duskbat##1553+, Vampiric Duskbat##1554+
+Kill Duskbat enemies around this area
 collect 5 Duskbat Pelt##2876 |q 24988/1 |goto 66.9,54.9
 step
 talk Gretchen Dedmar##1521
-turnin The Chill of Death##24988 |goto 65.2,60.4
+turnin The Chill of Death##24988 |goto 65.25,60.42
 step
 talk Deathguard Linnea##1495
-accept Return to the Magistrate##24989 |goto 65.5,60.2
+accept Return to the Magistrate##24989 |goto 65.49,60.26
 step
+Follow the path |goto 64.62,58.76 < 20 |only if walking
+Follow the road |goto 63.08,55.72 < 20 |only if walking
+Follow the road |goto 61.96,54.90 < 20 |only if walking
+Enter the building |goto 60.81,51.91 < 10 |walk
+Run up the stairs |goto 61.11,51.21 < 10 |walk
+Continue up the stairs |goto 61.30,51.04 < 10 |walk
 talk Magistrate Sevren##1499
-|tip He's upstairs in the back room.
+|tip He walks around in this small room upstairs inside the building.
 turnin Return to the Magistrate##24989 |goto 61.0,50.4
 step
+Leave the building |goto 60.81,51.96 < 10 |walk
+Follow the path |goto 61.40,52.23 < 20 |only if walking
+Follow the road |goto 62.04,50.81 < 20 |only if walking
+Continue following the road |goto 59.23,41.66 < 20 |only if walking
 talk Apothecary Jerrod##38977
-turnin Garren's Haunt##24991 |goto 61.7,34.6
-accept Doom Weed##24994 |goto 61.7,34.6
+turnin Garren's Haunt##24991 |goto 61.65,34.55
+accept Doom Weed##24994 |goto 61.65,34.55
 step
 talk Apprentice Crispin##38978
 accept Graverobbers##24997 |goto 61.6,34.4
-stickystart "doomweed"
+stickystart "Doom_Weed"
+stickystart "Embalming_Ichor"
+stickystart "Rot_Hide_Mongrels"
 step
 kill 8 Rot Hide Graverobber##1941 |q 24997/1 |goto 55.6,42.4
-step "doomweed"
-click Doom Weed##176753+
-collect 10 Doom Weed##13702 |q 24994/1 |goto 55.6,42.4
-stickystart "embalmingichor"
 step
-kill 5 Rot Hide Mongrel |q 24997/2 |goto 59.0,36.7
-More Mongrels can be found at [Tirisfal Glades,59.0,31.2]
-step "embalmingichor"
-kill Rot Hide Gnoll##1674+
+label "Doom_Weed"
+click Doom Weed##176753+
+|tip They look like small green and purple plants on the ground around this area.
+collect 10 Doom Weed##13702 |q 24994/1 |goto 55.6,42.4
+step
+label "Rot_Hide_Mongrels"
+kill 5 Rot Hide Mongrel##1675 |q 24997/2 |goto 59.0,36.7
+step
+label "Embalming_Ichor"
+Kill Rot Hide enemies around this area
 collect 6 Embalming Ichor##2834 |q 24997/3 |goto 59.0,36.7
 step
 talk Apothecary Jerrod##38977
-turnin Doom Weed##24994 |goto 61.7,34.6
-accept Off the Scales##24995 |goto 61.7,34.6
+turnin Doom Weed##24994 |goto 61.65,34.55
+accept Off the Scales##24995 |goto 61.65,34.55
 step
 talk Apprentice Crispin##38978
 turnin Graverobbers##24997 |goto 61.6,34.4
@@ -1795,147 +2140,179 @@ accept Maggot Eye##24998 |goto 61.6,34.4
 accept Planting the Seed of Fear##24999 |goto 61.6,34.4
 step
 kill Maggot Eye##1753
-collect Maggot Eye's Paw##3635 |q 24998/1 |goto 58.7,30.7
-stickystart "frightentadpoles"
+|tip Inside the house.
+collect Maggot Eye's Paw##3635 |q 24998/1 |goto 58.66,30.74
+stickystart "Vile_Fin_Scales"
 step
-kill Vile Fin Puddlejumper##1543+, Vile Fin Minor Oracle##1544+
-collect 5 Vile Fin Scale##2859 |q 24995/1 |goto 59.8,27.7
-step "frightentadpoles"
-Run next to Vile Fin Tadpoles
 Frighten #12# Vile Fin Tadpoles |q 24999/1 |goto 59.8,27.7
-|tip You can mark them with shift+v to make them easier to spot (use v to mark enemies again).
-There are more to frighten around [65.1,28.7]
+|tip Run next to Vile Fin Tadpoles to frighten them.
+|tip Keep chasing them when they run away.
+You can find more around [65.1,28.7]
+step
+label "Vile_Fin_Scales"
+Kill Vile Fin enemies around this area
+collect 5 Vile Fin Scale##2859 |q 24995/1 |goto 59.8,27.7
 step
 talk Apprentice Crispin##38978
 turnin Maggot Eye##24998 |goto 61.6,34.4
 turnin Planting the Seed of Fear##24999 |goto 61.6,34.4
 step
 talk Apothecary Jerrod##38977
-turnin Off the Scales##24995 |goto 61.7,34.6
-accept Head for the Mills##25031 |goto 61.7,34.6
+turnin Off the Scales##24995 |goto 61.65,34.56
+accept Head for the Mills##25031 |goto 61.65,34.56
 step
-_Go through_ the mountains |goto Tirisfal Glades 57.4,29.3 < 10
+Follow the road |goto 60.78,32.15 < 30 |only if walking
+Continue following the road |goto 58.36,30.94 < 20 |only if walking
+Follow the road up |goto 56.23,27.53 < 20 |only if walking
 talk Coleman Farthing##1500
 turnin Head for the Mills##25031 |goto 54.6,29.9
 accept The Family Crypt##25003 |goto 54.6,29.9
+stickystart "Rotting_Ancestors"
 step
 kill 8 Wailing Ancestor##1534 |q 25003/1 |goto 52.1,29.8
+step
+label "Rotting_Ancestors"
 kill 8 Rotting Ancestor##1530 |q 25003/2 |goto 52.1,29.8
-More of both of these can be found inside the crypt at [52.2,27.2]
 step
 talk Coleman Farthing##1500
 turnin The Family Crypt##25003 |goto 54.6,29.9
 accept The Mills Overrun##25004 |goto 54.6,29.9
 accept Deaths in the Family##25029 |goto 54.6,29.9
-stickystart "crackskull"
-stickystart "blackenedskull"
+stickystart "Notched_Ribs"
+stickystart "Blackened_Skulls"
 step
+Follow the path |goto 52.47,30.67 < 30 |only if walking
+Cross the bridge |goto 50.32,29.61 < 20 |only if walking
 kill Thurman Agamand##1656
 collect Thurman's Remains##2830 |q 25029/3 |goto 46.0,30.3
 step
 kill Gregor Agamand##1654
 collect Gregor's Remains##2829 |q 25029/2 |goto 45.6,29.6
 step
-kill Nissa Agamand##1655
-|tip She walks around upstairs.
-collect Nissa's Remains##2828 |q 25029/1 |goto 49.6,36.2
-step
 kill Devlin Agamand##1657
-collect Devlin's Remains##2831 |q 25029/4 |goto 48.9,34.0
-step "crackskull"
+collect Devlin's Remains##2831 |q 25029/4 |goto 48.95,33.91
+step
+kill Nissa Agamand##1655
+|tip She can either be upstairs or downstairs inside the building.
+collect Nissa's Remains##2828 |q 25029/1 |goto 49.67,36.15
+step
+label "Notched_Ribs"
 kill Cracked Skull Soldier##1523+
 collect 5 Notched Rib##3162 |q 25004/1 |goto 47.6,32.4
-step "blackenedskull"
+step
+label "Blackened_Skulls"
 kill Darkeye Bonecaster##1522+
 collect 3 Blackened Skull##3163 |q 25004/2 |goto 47.6,32.4
 step
+Follow the path |goto 49.34,34.96 < 30 |only if walking
+Follow the path |goto 50.78,32.43 < 30 |only if walking
+Follow the road |goto 51.61,30.65 < 20 |only if walking
 talk Coleman Farthing##1500
 turnin The Mills Overrun##25004 |goto 54.6,29.9
 turnin Deaths in the Family##25029 |goto 54.6,29.9
 accept Speak with Sevren##25005 |goto 54.6,29.9
 step
-_Enter_ the inn |goto Tirisfal Glades/0 60.8,52.0 < 8 |walk
+Run up the stairs |goto 61.11,51.21 < 10 |walk
+Continue up the stairs |goto 61.30,51.04 < 10 |walk
 talk Magistrate Sevren##1499
+|tip He walks around in this small room upstairs inside the building.
 turnin Speak with Sevren##25005 |goto 61.0,50.4
 accept The Grasp Weakens##25006 |goto 61.0,50.4
 step
 talk Executor Zygand##1515
-accept Warchief's Command: Silverpine Forest!##26964 |goto 60.5,51.9
+accept Warchief's Command: Silverpine Forest!##26964 |goto 60.53,51.87
 step
 talk Shadow Priestess Malia##39117
+|tip Inside the building.
 Tell her _"I am ready."_
-Follow her upstairs
+|tip Follow her upstairs.
 kill Spirit of Devlin Agamand##38980
-Complete the Procedure |q 25006/1 |goto 62.0,53.0
+Complete the Procedure |q 25006/1 |goto 62.03,52.95
 step
-_Enter_ the inn |goto Tirisfal Glades/0 60.8,51.9 < 8 |walk
+Enter the building |goto 60.8,51.9 < 10 |walk
+Run up the stairs |goto 61.11,51.21 < 10 |walk
+Continue up the stairs |goto 61.30,51.04 < 10 |walk
 talk Magistrate Sevren##1499
+|tip He walks around in this small room upstairs inside the building.
 turnin The Grasp Weakens##25006 |goto 61.0,50.4
 accept East... Always to the East##25007 |goto 61.0,50.4
 step
 talk Apothecary Dithers##11057
-accept Grisly Grizzlies##25056 |goto 83.3,69.2
+accept Grisly Grizzlies##25056 |goto 83.28,69.23
 step
 talk High Executor Derrington##10837
-turnin East... Always to the East##25007 |goto 83.3,69.0
-accept At War With The Scarlet Crusade##25009 |goto 83.3,69.0
+turnin East... Always to the East##25007 |goto 83.26,68.99
+accept At War With The Scarlet Crusade##25009 |goto 83.26,68.99
 step
 talk Provisioner Elda##46271
 home The Bulwark |goto 83.1,72.0 |q 25009
 step
 kill Plagued Bruin##39049+
 collect 5 Plagued Bruin Hide##52270 |q 25056/1 |goto 79.9,67.7
-You can find more Plagued Bruins at [76.0,70.7]
+stickystart "Scarlet_Friars"
 step
+Follow the path |goto 79.34,59.98 < 30 |only if walking
+Follow the path up |goto 79.66,57.73 < 30 |only if walking
 kill 3 Scarlet Zealot##1537 |q 25009/1 |goto 79.7,56.6
+step
+label "Scarlet_Friars"
 kill 4 Scarlet Friar##1538 |q 25009/2 |goto 79.7,56.6
 step
+Follow the path down |goto 79.85,56.73 < 20 |only if walking
+Follow the path |goto 80.15,62.47 < 20 |only if walking
+Follow the path |goto 83.21,67.86 < 20 |only if walking
 talk High Executor Derrington##10837
-turnin At War With The Scarlet Crusade##25009 |goto 83.3,69.0
-accept A Deadly New Ally##25010 |goto 83.3,69.0
+turnin At War With The Scarlet Crusade##25009 |goto 83.27,68.98
+accept A Deadly New Ally##25010 |goto 83.27,68.98
 step
 talk Apothecary Dithers##11057
 turnin Grisly Grizzlies##25056 |goto 83.3,69.2
 accept A Little Oomph##25013 |goto 83.3,69.2
 step
-_Go through_ the mountains |goto Tirisfal Glades 81.5,57.8 < 15 |only if walking
+Follow the path |goto 83.19,67.78 < 15 |only if walking
+Follow the path |goto 80.39,62.95 < 30 |only if walking
+Follow the path |goto 81.5,57.8 < 15 |only if walking
 kill Vicious Night Web Spider##1555+
 collect 4 Vicious Night Web Spider Venom##2872 |q 25013/1 |goto 84.4,52.1
 step
 talk Lieutenant Sanders##13158
+|tip He's hanging upside down from a chain.
 turnin A Deadly New Ally##25010 |goto 87.5,43.3
 accept A Daughter's Embrace##25046 |goto 87.5,43.3
 step
-_Go to_ the road |goto Tirisfal Glades 81.5,43.0 < 15 |only if walking
-_Follow_ the path |goto Tirisfal Glades 79.5,39.2 < 15 |only if walking
-|tip Watch Lillian Voss kill her father in the tower.
-Accomplish Lillian's Mission |q 25046/1 |goto 79.5,25.8
+Follow the road |goto 81.5,43.0 < 20 |only if walking
+Follow the path |goto 81.19,40.58 < 20 |only if walking
+Follow the road |goto 78.74,38.02 < 20 |only if walking
+Continue following the road |goto 79.29,30.76 < 20 |only if walking
+Watch the dialogue
+|tip Inside of the tower.
+Accomplish Lillian's Mission |q 25046/1 |goto 79.49,25.35
 step
 talk Apothecary Dithers##11057
-turnin A Little Oomph##25013 |goto 83.3,69.2
+turnin A Little Oomph##25013 |goto 83.28,69.23
 step
 talk High Executor Derrington##10837
-turnin A Daughter's Embrace##25046 |goto 83.3,69.0
-accept To Bigger and Better Things##25011 |goto 83.3,69.0
+turnin A Daughter's Embrace##25046 |goto 83.27,68.98
+accept To Bigger and Better Things##25011 |goto 83.27,68.98
 step
 talk Timothy Cunningham##37915
-turnin To Bigger and Better Things##25011 |goto 83.6,69.9
-accept Take to the Skies##25012 |goto 83.6,69.9
+turnin To Bigger and Better Things##25011 |goto 83.58,69.94
+accept Take to the Skies##25012 |goto 83.58,69.94
 step
 talk Timothy Cunningham##37915
-fpath The Bulwark |goto 83.6,69.9
+fpath The Bulwark |goto 83.58,69.94
 step
-talk Timothy Cunningham##37915
-Tell him _"I'll take that flight to Brill now."_ |goto 83.6,69.9 < 5
-Take a Flight to Brill |goto Tirisfal Glades 58.9,51.9 < 10 |noway |q 25012
+talk Timothy Cunningham##37915 |goto 83.58,69.94 |n
+Tell him _"I'll take that flight to Brill now."_
+Take a Flight to Brill |goto 58.9,51.9 < 30 |noway |c |q 25012
 step
 talk Executor Zygand##1515
-turnin Take to the Skies##25012 |goto 60.5,51.9
+turnin Take to the Skies##25012 |goto 60.53,51.87
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Silverpine Forest (11-20)\\Silverpine Forest (11-20)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Silverpine Forest (11-20)\\Silverpine Forest (11-20)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Silverpine 11-20",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Hillsbrad Foothills (20-26)\\Hillsbrad Foothills (20-26)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Hillsbrad Foothills (20-26)\\Hillsbrad Foothills (20-26)",
 startlevel=11.30,
 dynamic=true,
 },[[
@@ -2041,7 +2418,7 @@ talk Apothecary Wormcrud##44912
 turnin It's Only Poisonous if You Ingest It##27088 |goto 44.8,20.9
 step
 talk Admiral Hatchet##44916
-Tell her _"I seem to have misplaced my Sea Pup."_ |havebuff Interface\Icons\Achievement_Character_Orc_Male |q 27069 |goto 44.0,21.4
+Tell her _"I seem to have misplaced my Sea Pup."_ |havebuff 236452 |q 27069 |goto 44.0,21.4
 stickystart "seadogcrates"
 step
 kill 10 Bloodfang Scavenger##44549 |q 27073/1 |goto 40.0,26.9
@@ -2351,7 +2728,7 @@ accept Transdimensional Warfare: Chapter II##27513 |goto 58.1,69.9
 step
 clicknpc Ambermill Dimensional Portal##45752
 Select "_<Use the Ambermill Dimensional Portal.>_"
-Enter the Transdimensional Shift |havebuff INTERFACE\ICONS\spell_arcane_rune |q 27513 |goto 58.1,69.9
+Enter the Transdimensional Shift |havebuff 252267 |q 27513 |goto 58.1,69.9
 step
 kill Ambermill Watcher##1888+, Ambermill Magister##1914+, Ambermill Warder##1913+, Ambermill Miner##3578+, Ambermill Brewmaster##3577+, Ambermill Witchalok##1889+
 Kill #20# Ambermill Mages |q 27513/1 |goto 62.5,64.1
@@ -2456,10 +2833,10 @@ step
 talk High Executor Darthalia##2215
 turnin Empire of Dirt##27746 |goto Hillsbrad Foothills 29.2,63.4
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Hillsbrad Foothills (20-26)\\Hillsbrad Foothills (20-26)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Hillsbrad Foothills (20-26)\\Hillsbrad Foothills (20-26)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Hillsbrad 20-26",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Arathi Highlands (26-30)\\Arathi Highlands (26-29)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Arathi Highlands (26-30)\\Arathi Highlands (26-29)",
 startlevel=20.70,
 dynamic=true,
 },[[
@@ -2985,10 +3362,10 @@ step
 talk Nils Beerot##49201
 turnin Extinction##28634 |goto 60.0,63.7
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Northern Stranglethorn (26-31)\\Northern Stranglethorn (26-31)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Northern Stranglethorn (26-31)\\Northern Stranglethorn (26-31)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\N STV 26-31",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\The Cape of Stranglethorn (31-36)\\The Cape of Stranglethorn (31-36)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\The Cape of Stranglethorn (31-36)\\The Cape of Stranglethorn (31-36)",
 startlevel=26.94,
 dynamic=true,
 },[[
@@ -3390,7 +3767,7 @@ step
 Stay away from the trolls as you walk, or you will have to start over
 clicknpc Gurubashi Soldier##42871
 |tip It's sleeping on the ground, inside the tent.
-Steal Raptor Food |havebuff Interface\Icons\INV_Misc_Bag_10_Blue |q 26362 |goto 86.9,50.0
+Steal Raptor Food |havebuff 133641 |q 26362 |goto 86.9,50.0
 step
 Stay away from the trolls as you walk, or you will have to start over
 talk Tenjiyu##42882
@@ -3481,10 +3858,10 @@ step
 talk Sassy Hardwrench##43095
 turnin Above My Pay Grade##26404 |goto The Cape of Stranglethorn 34.7,29.5
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\The Cape of Stranglethorn (31-36)\\The Cape of Stranglethorn (31-36)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\The Cape of Stranglethorn (31-36)\\The Cape of Stranglethorn (31-36)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Cape STV 31-36",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Western Plaguelands (34-39)\\Western Plaguelands (34-39)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Western Plaguelands (34-39)\\Western Plaguelands (34-39)",
 startlevel=31.95,
 dynamic=true,
 },[[
@@ -4069,10 +4446,10 @@ step
 talk Baron Revilgaz##2496
 turnin Bloodsail's End##26703 |goto 41.2,73.1
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Arathi Highlands (26-30)\\Arathi Highlands (26-29)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Arathi Highlands (26-30)\\Arathi Highlands (26-29)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Arathi 26-29",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Arathi Highlands (26-30)\\Arathi Highlands (29-30)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Arathi Highlands (26-30)\\Arathi Highlands (29-30)",
 startlevel=26.85,
 dynamic=true,
 },[[
@@ -4245,10 +4622,10 @@ step
 kill Kenata Dabyrie##4480
 collect Kenata's Head##5830 |q 26428/1 |goto 50.9,37.0
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Arathi Highlands (26-30)\\Arathi Highlands (29-30)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Arathi Highlands (26-30)\\Arathi Highlands (29-30)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Arathi 29-30",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\The Hinterlands (30-34)\\The Hinterlands (30-32)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\The Hinterlands (30-34)\\The Hinterlands (30-32)",
 startlevel=29.70,
 dynamic=true,
 },[[
@@ -4342,10 +4719,10 @@ talk Urda##2851 |goto 68.2,33.4 < 5
 Tell her _"Take me to Revantusk Village."_ |goto The Hinterlands 81.7,81.8 < 5 |q 26430
 only if havequest(26430)
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\The Hinterlands (30-34)\\The Hinterlands (30-32)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\The Hinterlands (30-34)\\The Hinterlands (30-32)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Hinterlands 30-32",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\The Hinterlands (30-34)\\The Hinterlands (32-34)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\The Hinterlands (30-34)\\The Hinterlands (32-34)",
 startlevel=30.90,
 dynamic=true,
 },[[
@@ -4468,10 +4845,10 @@ step
 talk Malcom Fendelson##42612
 turnin Prime Slime##26283 |goto 78.0,78.1
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\The Hinterlands (30-34)\\The Hinterlands (32-34)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\The Hinterlands (30-34)\\The Hinterlands (32-34)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Hinterlands 32-34",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Western Plaguelands (34-39)\\Western Plaguelands (34-39)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Western Plaguelands (34-39)\\Western Plaguelands (34-39)",
 startlevel=32.25,
 dynamic=true,
 },[[
@@ -4684,10 +5061,10 @@ step
 talk Koltira Deathweaver##44452
 turnin The Battle for Andorhal##28508 |goto Western Plaguelands 47.8,65.2
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Western Plaguelands (34-39)\\Western Plaguelands (34-39)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Western Plaguelands (34-39)\\Western Plaguelands (34-39)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\WPL 34-39",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Eastern Plaguelands (39-44)\\Eastern Plaguelands (39-44)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Eastern Plaguelands (39-44)\\Eastern Plaguelands (39-44)",
 startlevel=34.93,
 dynamic=true,
 },[[
@@ -5043,9 +5420,8 @@ Click the _Quest Complete_ Box:
 turnin The Good People of Hearthglen##27153
 accept Bagging Bisp##27154
 step
-_Enter_ the tower |goto Western Plaguelands/0 45.5,18.3 < 5 |walk
-_Go to the top_ of the tower |goto 45.9,18.8 < 5 |indoors Hearthglen |only if walking
 talk Magus Bisp##45152
+|tip He is located at the top of the tower.
 Tell him _"I was just wondering what you knew about the gnolls to the south..."_
 kill Magus Bisp##45152
 "Speak with" Magus Bisp |q 27154/1 |goto 45.8,18.4
@@ -5182,10 +5558,10 @@ step
 talk Adrine Towhide##44456
 turnin Zen'Kiki and the Cultists##26955 |goto 48.9,54.8
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Eastern Plaguelands (39-44)\\Eastern Plaguelands (39-44)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Eastern Plaguelands (39-44)\\Eastern Plaguelands (39-44)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\EPL 39-44",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Badlands (44-47)\\Badlands (44-47)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Badlands (44-47)\\Badlands (44-47)",
 startlevel=39.80,
 dynamic=true,
 },[[
@@ -5242,9 +5618,9 @@ step
 clicknpc Fiona's Caravan##45400 |goto 8.8,66.6
 Choose 1 of the 3 buffs you can choose from
 |tip All of the buffs only work while you're in Eastern Plaguelands. Fiona's Lucky Charm gives you a chance to loot extra gold or items from enemies. Gidwin's Weapon Oil gives you a chance to do extra Holy damage on melee and ranged attacks. Tarenar's Talisman gives you a chance to do extra Holy damage on successful spell attacks.
-Choose a Buff |havebuff INTERFACE\ICONS\inv_gauntlets_02 |or
-'| havebuff Interface\Icons\INV_Potion_101 |or
-'| havebuff Interface\Icons\INV_Jewelry_Necklace_16 |or
+Choose a Buff |havebuff 132936 |or
+'| havebuff 134723 |or
+'| havebuff 133303 |or
 step
 clicknpc Fiona's Caravan##45400
 Select "_Ride Fiona's Caravan to its next destination._"
@@ -5432,7 +5808,7 @@ step
 clicknpc Fiona's Caravan##45400
 Choose the _Argus' Journal_ quest
 |tip This will give you a 2% experience bonus while in Eastern Plaguelands, so will allow you to level faster.
-Get the XP Buff |havebuff INTERFACE\ICONS\inv_misc_book_17 |goto 53.0,53.1
+Get the XP Buff |havebuff 354719 |goto 53.0,53.1
 step
 talk Betina Bigglezink##11035
 accept To Kill With Purpose##27451 |goto 53.2,54.6
@@ -5496,7 +5872,7 @@ turnin Catalysm##27453
 accept Just a Drop in the Bucket##27454
 step
 use Death Cultist Disguise##61283
-Wear Your Death Cultist Disguise |havebuff INTERFACE\ICONS\inv_helmet_152 |q 27454 |goto 61.7,75.5
+Wear Your Death Cultist Disguise |havebuff 340019 |q 27454 |goto 61.7,75.5
 step
 click Mereldar Plague Cauldron##4331
 Select "_Throw in an entire flask._"
@@ -5915,10 +6291,10 @@ step
 talk Fiona##45417
 turnin Journey's End##27527 |goto 73.7,52.1
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Badlands (44-47)\\Badlands (44-47)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Badlands (44-47)\\Badlands (44-47)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Badlands",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Searing Gorge (47-49)\\Searing Gorge (47-49)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Searing Gorge (47-49)\\Searing Gorge (47-49)",
 startlevel=44.90,
 dynamic=true,
 },[[
@@ -6334,10 +6710,10 @@ step
 talk Gorn##1068
 turnin Half-Ton Holdouts##27880 |goto 17.7,44.0
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Searing Gorge (47-49)\\Searing Gorge (47-49)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Searing Gorge (47-49)\\Searing Gorge (47-49)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Searing Gorge",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Burning Steppes (49-52)\\Burning Steppes (49-52)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Burning Steppes (49-52)\\Burning Steppes (49-52)",
 startlevel=47.30,
 dynamic=true,
 },[[
@@ -6702,10 +7078,10 @@ talk Overseer Oilfist##14625
 turnin Welcome to the Brotherhood##28064 |goto 38.1,27.0
 accept Mouton Flamestar##28515 |goto 38.1,27.0
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Burning Steppes (49-52)\\Burning Steppes (49-52)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Burning Steppes (49-52)\\Burning Steppes (49-52)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Burning Steppes",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Swamp of Sorrows (52-54)\\Swamp of Sorrows (52-54)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Swamp of Sorrows (52-54)\\Swamp of Sorrows (52-54)",
 startlevel=49.70,
 dynamic=true,
 },[[
@@ -7081,8 +7457,8 @@ step
 Use your Blackrock Disguise |use Blackrock Disguise##63357
 confirm |q 28450
 step
-_Enter_ the cave |goto 70.7,38.3 < 10 |walk
-_Follow the left_ path |goto Burning Steppes/0 70.2,41.4 < 8 |walk |indoors The Skull Warren
+Enter the cave |goto 70.7,38.3 < 10 |walk
+Follow the left path |goto Burning Steppes/0 70.2,41.4 < 8 |walk |indoors The Skull Warren
 talk Dragon-Lord Neeralak##48314
 turnin A Delivery for Neeralak##28451 |goto 70.2,47.3 |indoors The Skull Warren
 step
@@ -7134,24 +7510,30 @@ step
 click Crate of Left Over Supplies##31
 turnin The Spoils of War##28456 |goto 54.8,24.4
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Swamp of Sorrows (52-54)\\Swamp of Sorrows (52-54)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Swamp of Sorrows (52-54)\\Swamp of Sorrows (52-54)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Swamp of Sorrows",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Winterspring (54-58)\\Winterspring (54-58)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Winterspring (54-58)\\Winterspring (54-58)",
 startlevel=52.70,
 dynamic=true,
 },[[
 step
 talk Kibler##10260
-turnin Not Fireflies, Flameflies##28491 |goto Burning Steppes 54.9,22.5
-accept The Bogpaddle Bullet##28570 |goto Burning Steppes 54.9,22.5
+accept The Bogpaddle Bullet##28570 |goto Burning Steppes 54.9,22.5 |or
 step
-talk Sharon Boomgetter##48948 |goto 78.3,58.8
-Tell her _"Alright! Let's head down to the Swamp of Sorrows!"_
-Ride the Rocket to Swamp of Sorrows |goto Swamp of Sorrows 75.3,13.3 < 10 |noway |q 28570
+click Warchief'c Command Board
+accept Warchief's Command: Swamp of Sorrows!##28677 |goto Undercity/0 65.95,49.81 |or
+step
+talk Sharon Boomgetter##48948
+Tell her let's head down to the Swamp of Sorrows |goto Burning Steppes 78.3,58.8
+Ride the rocket to Swamp of Sorrows |goto Swamp of Sorrows,75.3,13.3 < 5
+confirm
 step
 talk Trade Baron Silversnap##45786
-turnin The Bogpaddle Bullet##28570 |goto Swamp of Sorrows 73.2,14.9
+turnin The Bogpaddle Bullet##28570 |goto Swamp of Sorrows 73.2,14.9 |or
+turnin Warchief's Command: Swamp of Sorrows!##28677 |goto Swamp of Sorrows 73.2,14.9 |or
+step
+talk Trade Baron Silversnap##45786
 accept Maliciously Delicious##27587 |goto Swamp of Sorrows 73.2,14.9
 collect Silversnap Swim Tonic##62795 |q 27587
 step
@@ -7422,17 +7804,17 @@ step
 talk Dispatch Commander Ruag##7623
 turnin Ruag's Report##27916 |goto 49.4,55.3
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Blasted Lands (57-60)\\Blasted Lands (57-60)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Blasted Lands (57-60)\\Blasted Lands (57-60)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Blasted Lands",
-next="Zygor's Horde Leveling Guides\\The Burning Crusade (60-70)\\Hellfire Peninsula (60-62)",
+next="Zygor's Leveling Guides\\The Burning Crusade (60-70)\\Hellfire Peninsula (60-62)",
 startlevel=57.95,
 dynamic=true,
 },[[
 step
 talk Zidormi##88206
 |tip In order to complete the Blasted Lands questline for Loremaster of Eastern Kingdoms you will need to speak with Zidormi to change the zone back to normal.
-Tell her _"Show me the Blasted Lands before the invasion."_ |havebuff Interface\Icons\spell_mage_altertime |goto Blasted Lands/0 48.1,7.3
+Tell her _"Show me the Blasted Lands before the invasion."_ |havebuff 609811 |goto Blasted Lands/0 48.1,7.3
 only if havequest(34398) or completedq(34398)
 step
 talk Preda##43121
@@ -7674,10 +8056,10 @@ stickystart "bloodwashkills"
 step
 _Enter_ the cave |goto 61.4,62.9 < 10 |walk
 click Azsh'ir Idol##4853+
-Destroy 8 Azsh'ir Idols |q 25705/1 |goto 61.4,59.9
+Destroy 8 Azsh'ir Idols |q 25705/1 |goto 61.4,59.9 |indoors Bloodwash Cavern
 step "bloodwashkills"
-kill 8 Bloodwash Zealot##41422 |q 25706/1 |goto 61.4,59.9
-kill 8 Bloodwash Acolyte##41423 |q 25706/2 |goto 61.4,59.9
+kill 8 Bloodwash Zealot##41422 |q 25706/1 |goto 61.4,59.9 |indoors Bloodwash Cavern
+kill 8 Bloodwash Acolyte##41423 |q 25706/2 |goto 61.4,59.9 |indoors Bloodwash Cavern
 step
 _Leave_ the cave |goto 61.4,62.9 < 10 |walk
 clicknpc Abandoned Bloodwash Crate##41402
@@ -7798,29 +8180,30 @@ _Follow the path_ up |goto 44.7,72.5 < 10 |only if walking
 talk Rohan Sunveil##42344
 turnin The Downfall of Marl Wormthorn##25720 |goto 49.8,71.4
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Starter Guides\\Orc (1-5)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Starter Guides\\Orc (1-5)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Durotar Orc 1-5",
 condition_suggested="raceclass('Orc') and level<=5",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Durotar (1-11)\\Durotar (5-8)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Durotar (1-11)\\Durotar (5-8)",
 startlevel=1,
 dynamic=true,
 },[[
 step
 talk Kaltunk##10176
-accept Your Place In The World##25152 |goto Valley of Trials 45.2,68.41
+accept Your Place In The World##25152 |goto Valley of Trials/0 45.2,68.41
 step
 talk Gornek##3143
 turnin Your Place In The World##25152 |goto 44.9,66.41
 accept Cutting Teeth##25126 |goto 44.9,66.41
 step
-kill 6 Mottled Boar##3098 |q 25126/1 |goto 47.7,48.11
+kill 6 Mottled Boar##3098 |q 25126/1 |goto 50.95,54.67
 step
 talk Gornek##3143
 turnin Cutting Teeth##25126 |goto 44.9,66.41
 accept Invaders in Our Home##25172 |goto 44.9,66.41
 step
-kill 7 Northwatch Scout##39317 |q 25172/1 |goto 45.8,85.41
+kill 7 Northwatch Scout##39317 |q 25172/1 |goto 47.86,75.23
+|tip They are stealthed around this area.
 step
 talk Gornek##3143
 turnin Invaders in Our Home##25172 |goto 44.9,66.41
@@ -7830,19 +8213,25 @@ talk Galgar##9796
 accept Galgar's Cactus Apple Surprise##25136 |goto 42.9,62.41
 stickystart "cactusapples"
 step
+Follow the path |goto 46.14,63.29 < 15 |only if walking
+Follow the path |goto 49.48,53.39 < 20 |only if walking
 kill Scorpid Worker##3124+
-collect 8 Scorpid Worker Tail##4862 |q 25127/1 |goto 31.1,45.7
+collect 8 Scorpid Worker Tail##4862 |q 25127/1 |goto 49.42,44.59
 step "cactusapples"
 click Cactus Apple##3451+
-collect 6 Cactus Apple##11583 |q 25136/1 |goto 31.1,45.7
-More of these can be found at [Valley of Trials,47.8,44.1]
+|tip They look like smaller cacti with red balls on them around this area.
+collect 6 Cactus Apple##11583 |q 25136/1 |goto 49.42,44.59
 step
+Follow the path |goto 47.41,43.40 < 20 |only if walking
 talk Hana'zua##3287
 accept Sarkoth##25129 |goto 34.6,44.31
 step
+Follow the path up |goto 35.07,53.97 < 15 |only if walking
 kill Sarkoth##3281
+|tip It's a bigger, darker scorpion that walks around this area.
 collect Sarkoth's Mangled Claw##4905 |q 25129/1 |goto 34.1,62.81
 step
+Follow the path down |goto 34.48,58.37 < 20 |only if walking
 talk Hana'zua##3287
 turnin Sarkoth##25129 |goto 34.6,44.31
 accept Back to the Den##25130 |goto 34.6,44.31
@@ -7858,65 +8247,79 @@ talk Galgar##9796
 turnin Galgar's Cactus Apple Surprise##25136 |goto 43.0,62.4
 step
 talk Zureetha Fargaze##3145
-accept Vile Familiars##25131 |goto 45.8,63.4
+accept Vile Familiars##25131 |goto 45.82,63.44
 step
 talk Foreman Thazz'ril##11378
-accept Lazy Peons##37446 |goto 46.2,63.11
+accept Lazy Peons##37446 |goto 46.16,63.26
 step
-use Foreman's Blackjack##16114
-|tip Use your Foreman's Blackjack on Lazy Peons along this mountainside.
-|tip You may have to stand next to them and wait for them to go to sleep, if they are all chopping trees.
+Follow the path |goto 54.14,62.46 < 20 |only if walking
+Use the Foreman's Blackjack on Lazy Peons |use Foreman's Blackjack##16114
+|tip You can find them all around this area, and along this mountainside.
+|tip You may have to stand next to them and wait for them to go to sleep, if they are all chopping trees, but it doesn't take too long.
 Waken #4# Peons |q 37446/1 |goto 54.5,57.0
 step
 kill 8 Vile Familiar##3101 |q 25131/1 |goto 53.8,24.8
 step
+Follow the path |goto 50.26,32.08 < 30 |only if walking
 talk Hana'zua##3287
 turnin Hana'zua##25128 |goto 34.6,44.1
 step
+Follow the path up |goto 35.05,54.08 < 15 |only if walking
+Follow the path up |goto 35.96,58.97 < 20 |only if walking
+Jump down here |goto 40.48,62.14 < 15 |only if walking
 talk Foreman Thazz'ril##11378
-turnin Lazy Peons##37446 |goto 46.2,63.1
+turnin Lazy Peons##37446 |goto 46.14,63.28
 step
 talk Zureetha Fargaze##3145
-turnin Vile Familiars##25131 |goto 45.8,63.3
-accept Burning Blade Medallion##25132 |goto 45.8,63.3
+turnin Vile Familiars##25131 |goto 45.82,63.44
+accept Burning Blade Medallion##25132 |goto 45.82,63.44
 step
 talk Foreman Thazz'ril##11378
-accept Thazz'ril's Pick##25135 |goto 46.2,63.1
+accept Thazz'ril's Pick##25135 |goto 46.14,63.28
+stickystart "Kill_Felstalkers"
 step
+Follow the path |goto 48.56,56.33 < 20 |only if walking
+Follow the path |goto 49.08,41.46 < 20 |only if walking
+Follow the path |goto Durotar/8 72.33,78.27 < 15 |walk
+Follow the path down |goto Durotar/8 54.40,68.40 < 15 |walk
 click Thazz'ril's Pick##4992
-collect Thazz'ril's Pick |q 25135/1 |goto Durotar/8 40.7,52.6
+collect Thazz'ril's Pick##16332 |q 25135/1 |goto Durotar/8 40.7,52.6
 step
+Follow the path |goto 44.02,69.81 < 15 |walk
+Follow the path down |goto 39.36,87.07 < 15 |walk
+Continue following the path down |goto 23.27,76.02 < 15 |walk
 kill Yarrog Baneshadow##3183
-collect Burning Blade Medallion |q 25132/2 |goto Durotar/8 14.9,46.8
+collect Burning Blade Medallion##4859 |q 25132/2 |goto 14.9,46.8
 step
-kill 7 Felstalker##3102 |q 25132/1 |goto Durotar/8 47.2,58.4
+label "Kill_Felstalkers"
+kill 5 Felstalker##3102 |q 25132/1 |goto 45.30,60.62
 step
 talk Foreman Thazz'ril##11378
-turnin Thazz'ril's Pick##25135 |goto Valley of Trials 46.2,63.1
+turnin Thazz'ril's Pick##25135 |goto Valley of Trials/0 46.16,63.29
 step
 talk Zureetha Fargaze##3145
-turnin Burning Blade Medallion##25132 |goto 45.8,63.3
-accept Report to Sen'jin Village##25133 |goto 45.8,63.3
+turnin Burning Blade Medallion##25132 |goto 45.82,63.44
+accept Report to Sen'jin Village##25133 |goto 45.82,63.44
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Starter Guides\\Troll (1-5)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Starter Guides\\Troll (1-5)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Durotar Troll 1-5",
 condition_suggested="raceclass('Troll') and level<=5",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Durotar (1-11)\\Durotar (5-8)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Durotar (1-11)\\Durotar (5-8)",
 startlevel=1,
 dynamic=true,
 },[[
 step
 talk Jin'thala##37951
-accept The Rise of the Darkspear##31159 |goto Echo Isles 42.8,53.41 |only Troll Monk
-accept The Rise of the Darkspear##24776 |goto Echo Isles 42.8,53.41 |only Troll Hunter
-accept The Rise of the Darkspear##24607 |goto Echo Isles 42.8,53.41 |only Troll Warrior
-accept The Rise of the Darkspear##24770 |goto Echo Isles 42.8,53.41 |only Troll Rogue
-accept The Rise of the Darkspear##24782 |goto Echo Isles 42.8,53.41 |only Troll Priest
-accept The Rise of the Darkspear##24764 |goto Echo Isles 42.8,53.41 |only Troll Druid
-accept The Rise of the Darkspear##26272 |goto Echo Isles 42.8,53.41 |only Troll Warlock
-accept The Rise of the Darkspear##24750 |goto Echo Isles 42.8,53.41 |only Troll Mage
-accept The Rise of the Darkspear##24758 |goto Echo Isles 42.8,53.41 |only Troll Shaman
+accept The Rise of the Darkspear##31159 |goto Echo Isles/0 42.8,53.41 |only Troll Monk
+accept The Rise of the Darkspear##24776 |goto Echo Isles/0 42.8,53.41 |only Troll Hunter
+accept The Rise of the Darkspear##24607 |goto Echo Isles/0 42.8,53.41 |only Troll Warrior
+accept The Rise of the Darkspear##24770 |goto Echo Isles/0 42.8,53.41 |only Troll Rogue
+accept The Rise of the Darkspear##24782 |goto Echo Isles/0 42.8,53.41 |only Troll Priest
+accept The Rise of the Darkspear##24764 |goto Echo Isles/0 42.8,53.41 |only Troll Druid
+accept The Rise of the Darkspear##26272 |goto Echo Isles/0 42.8,53.41 |only Troll Warlock
+accept The Rise of the Darkspear##24750 |goto Echo Isles/0 42.8,53.41 |only Troll Mage
+accept The Rise of the Darkspear##24758 |goto Echo Isles/0 42.8,53.41 |only Troll Shaman
 step
 talk Nekali##38242
 turnin The Rise of the Darkspear##24758 |goto 49.9,52.71
@@ -7949,8 +8352,8 @@ accept The Basics: Hitting Things##24771 |goto 52.9,49.91
 only Troll Rogue
 step
 talk Ortezza##38247
-turnin The Rise of the Darkspear##24776 |goto 56.4,50.21
-accept The Basics: Hitting Things##24777 |goto 56.4,50.21
+turnin The Rise of the Darkspear##24776 |goto 56.36,50.08
+accept The Basics: Hitting Things##24777 |goto 56.36,50.08
 only Troll Hunter
 step
 talk Nortet##38037
@@ -7963,31 +8366,31 @@ turnin The Rise of the Darkspear##31159 |goto 52.6,51.8
 accept The Basics: Hitting Things##31158 |goto 52.6,51.8
 only Troll Monk
 step
-kill 6 Tiki Target##38038+ |q 24759/1 |goto 52.9,53.21
+kill 6 Tiki Target##38038 |q 24759/1 |goto 52.9,53.21
 only Troll Shaman
 step
-kill 6 Tiki Target##38038+ |q 24771/1 |goto 52.9,53.21
+kill 6 Tiki Target##38038 |q 24771/1 |goto 52.9,53.21
 only Troll Rogue
 step
-kill 6 Tiki Target##38038+ |q 24639/1 |goto 52.9,53.21
+kill 6 Tiki Target##38038 |q 24639/1 |goto 52.9,53.21
 only Troll Warrior
 step
-kill 6 Tiki Target##38038+ |q 26273/1 |goto 52.9,53.21
+kill 6 Tiki Target##38038 |q 26273/1 |goto 52.9,53.21
 only Troll Warlock
 step
-kill 6 Tiki Target##38038+ |q 24751/1 |goto 56.4,50.11
+kill 6 Tiki Target##38038 |q 24751/1 |goto 56.4,50.11
 only Troll Mage
 step
-kill 6 Tiki Target##38038+ |q 24777/1 |goto 56.4,50.11
+kill 6 Tiki Target##38038 |q 24777/1 |goto 56.4,50.11
 only Troll Hunter
 step
-kill 6 Tiki Target##38038+ |q 24765/1 |goto 58.8,54.1
+kill 6 Tiki Target##38038 |q 24765/1 |goto 58.8,54.1
 only Troll Druid
 step
-kill 6 Tiki Target##38038+ |q 24783/1 |goto 56.4,50.11
+kill 6 Tiki Target##38038 |q 24783/1 |goto 56.4,50.11
 only Troll Priest
 step
-kill 6 Tiki Target##38038+ |q 31158/1 |goto 52.7,51.2
+kill 6 Tiki Target##38038 |q 31158/1 |goto 52.7,51.2
 only Troll Monk
 step
 talk Nekali##38242
@@ -8117,48 +8520,66 @@ accept Proving Pit##31161 |goto 52.6,51.8
 only Troll Monk
 step
 talk Darkspear Jailor##39062
-Tell him you are ready to face your challenge |q 24754/1 |goto 57.6,52.71
-kill Captive Spitescale Scout##38142+ |q 24754/2 |goto 57.6,52.71
+Tell him _"I am ready to face my challenge."_ |q 24754/1 |goto 57.49,52.66
+only Troll Mage
+step
+kill Captive Spitescale Scout##38142+ |q 24754/2 |goto 57.21,51.93
 only Troll Mage
 step
 talk Darkspear Jailor##39062
-Tell him you are ready to face your challenge |q 24768/1 |goto 57.6,52.71
-kill Captive Spitescale Scout##38142+ |q 24768/2 |goto 57.6,52.71
+Tell him _"I am ready to face my challenge."_ |q 24768/1 |goto 57.49,52.66
+only Troll Druid
+step
+kill Captive Spitescale Scout##38142+ |q 24768/2 |goto 57.21,51.93
 only Troll Druid
 step
 talk Darkspear Jailor##39062
-Tell him you are ready to face your challenge |q 24786/1 |goto 57.6,52.71
-kill Captive Spitescale Scout##38142+ |q 24786/2 |goto 57.6,52.71
+Tell him _"I am ready to face my challenge."_ |q 24786/1 |goto 57.49,52.66
+only Troll Priest
+step
+kill Captive Spitescale Scout##38142+ |q 24786/2 |goto 57.21,51.93
 only Troll Priest
 step
 talk Darkspear Jailor##39062
-Tell him you are ready to face your challenge |q 24780/1 |goto 57.6,52.71
-kill Captive Spitescale Scout##38142+ |q 24780/2 |goto 57.6,52.71
+Tell him _"I am ready to face my challenge."_ |q 24780/1 |goto 57.49,52.66
+only Troll Hunter
+step
+kill Captive Spitescale Scout##38142+ |q 24780/2 |goto 57.21,51.93
 only Troll Hunter
 step
 talk Darkspear Jailor##39062
-Tell him you are ready to face your challenge |q 24774/1 |goto 57.6,52.71
-kill Captive Spitescale Scout##38142+ |q 24774/2 |goto 57.6,52.71
+Tell him _"I am ready to face my challenge."_ |q 24774/1 |goto 57.49,52.66
+only Troll Rogue
+step
+kill Captive Spitescale Scout##38142+ |q 24774/2 |goto 57.21,51.93
 only Troll Rogue
 step
 talk Darkspear Jailor##39062
-Tell him you are ready to face your challenge |q 24642/1 |goto 57.6,52.71
-kill Captive Spitescale Scout##38142+ |q 24642/2 |goto 57.6,52.71
+Tell him _"I am ready to face my challenge."_ |q 24642/1 |goto 57.49,52.66
+only Troll Warrior
+step
+kill Captive Spitescale Scout##38142+ |q 24642/2 |goto 57.21,51.93
 only Troll Warrior
 step
 talk Darkspear Jailor##39062
-Tell him you are ready to face your challenge |q 26276/1 |goto 57.6,52.71
-kill Captive Spitescale Scout##38142+ |q 26276/2 |goto 57.6,52.71
+Tell him _"I am ready to face my challenge."_ |q 26276/1 |goto 57.49,52.66
+only Troll Warlock
+step
+kill Captive Spitescale Scout##38142+ |q 26276/2 |goto 57.21,51.93
 only Troll Warlock
 step
 talk Darkspear Jailor##39062
-Tell him you are ready to face your challenge |q 24762/1 |goto 51.9,51.3
-kill Captive Spitescale Scout##38142+ |q 24762/2 |goto 51.9,51.3
+Tell him _"I am ready to face my challenge."_ |q 24762/1 |goto 57.49,52.66
+only Troll Shaman
+step
+kill Captive Spitescale Scout##38142+ |q 24762/2 |goto 57.21,51.93
 only Troll Shaman
 step
 talk Darkspear Jailor##39062
-Tell him you are ready to face your challenge |q 31161/1 |goto 57.6,52.71
-kill Captive Spitescale Scout##38142+ |q 31161/2 |goto 57.6,52.71
+Tell him _"I am ready to face my challenge."_ |q 31161/1 |goto 57.49,52.66
+only Troll Monk
+step
+kill Captive Spitescale Scout##38142+ |q 31161/2 |goto 57.21,51.93
 only Troll Monk
 step
 talk Nekali##38242
@@ -8178,7 +8599,7 @@ turnin Proving Pit##24768 |goto 58.1,54.11
 only Troll Druid
 step
 talk Tunari##38245
-turnin Proving Pit##24786 |goto 46.8,58.3
+turnin Proving Pit##24786 |goto 58.1,49.11
 only Troll Priest
 step
 talk Legati##38244
@@ -8197,28 +8618,29 @@ talk Zabrax##63310
 turnin Proving Pit##31161 |goto 52.0,52.0
 only Troll Monk
 step
-next "normalstart" |only Hunter,Warrior,Rogue,Priest,Druid,Warlock,Mage,Shaman,Monk
-next "pallydkstart" |only Paladin,DeathKnight
-step
-label	"normalstart"
 talk Vol'jin##38966
-turnin More Than Expected##24781 |goto 61.5,65.91 |only Troll Hunter
-turnin More Than Expected##24643 |goto 61.5,65.91 |only Troll Warrior
-turnin More Than Expected##24775 |goto 61.5,65.91 |only Troll Rogue
-turnin More Than Expected##24787 |goto 61.5,65.91 |only Troll Priest
-turnin More Than Expected##24769 |goto 61.5,65.91 |only Troll Druid
-turnin More Than Expected##26277 |goto 61.5,65.91 |only Troll Warlock
-turnin More Than Expected##24755 |goto 61.5,65.91 |only Troll Mage
-turnin More Than Expected##24763 |goto 61.5,65.91 |only Troll Shaman
-turnin More Than Expected##31163 |goto 61.5,65.91 |only Troll Monk
-accept Moraya##25064 |goto 61.5,65.91
+|tip Inside the building.
+turnin More Than Expected##24781 |goto 61.55,65.85 |only Troll Hunter
+turnin More Than Expected##24643 |goto 61.55,65.85 |only Troll Warrior
+turnin More Than Expected##24775 |goto 61.55,65.85 |only Troll Rogue
+turnin More Than Expected##24787 |goto 61.55,65.85 |only Troll Priest
+turnin More Than Expected##24769 |goto 61.55,65.85 |only Troll Druid
+turnin More Than Expected##26277 |goto 61.55,65.85 |only Troll Warlock
+turnin More Than Expected##24755 |goto 61.55,65.85 |only Troll Mage
+turnin More Than Expected##24763 |goto 61.55,65.85 |only Troll Shaman
+turnin More Than Expected##31163 |goto 61.55,65.85 |only Troll Monk
+accept Moraya##25064 |goto 61.55,65.85
 step
 talk Tora'jin##39007
 accept Crab Fishin'##25037 |goto 60.5,62.91
 step
+Follow the path down |goto 62.40,60.10 < 15 |only if walking
+Follow the path down |goto 64.20,56.39 < 20 |only if walking
 kill Pygmy Surf Crawler##39004+
 collect 5 Fresh Crawler Meat##52080 |q 25037/1 |goto 66.0,55.81
 step
+Follow the path up |goto 65.03,55.75 < 20 |only if walking
+Follow the path up |goto 62.56,59.57 < 15 |only if walking
 talk Tora'jin##39007
 turnin Crab Fishin'##25037 |goto 60.5,62.91
 step
@@ -8226,78 +8648,112 @@ talk Moraya##38005
 turnin Moraya##25064 |goto 56.8,63.71
 accept A Troll's Truest Companion##24622 |goto 56.8,63.71
 step
+Follow the path |goto 56.38,65.18 < 20 |only if walking
+Cross the bridge |goto 50.01,67.05 < 20 |only if walking
 talk Kijara##37969
-turnin A Troll's Truest Companion##24622 |goto 45.5,85.21
-accept Saving the Young##24623 |goto 45.5,85.21
+|tip She walks around.
+turnin A Troll's Truest Companion##24622 |goto 45.57,85.10
+accept Saving the Young##24623 |goto 45.57,85.10
 step
 talk Tegashi##37987
-accept Mercy for the Lost##24624 |goto 45.7,84.91
-accept Consort of the Sea Witch##24625 |goto 45.7,84.91
+accept Mercy for the Lost##24624 |goto 45.70,85.02
+accept Consort of the Sea Witch##24625 |goto 45.70,85.02
+stickystart "Corrupted_Bloodtalons"
+stickystart "Rescue_Bloodtalon_Hatchlings"
 step
+Follow the path |goto 40.72,73.39 < 20 |only if walking
+Follow the path up |goto 38.46,67.75 < 15 |only if walking
 kill Naj'tess##39072
 collect Naj'tess' Orb of Corruption##50018 |q 24625/1 |goto 36.8,69.01
+step
+label "Corrupted_Bloodtalons"
 kill 8 Corrupted Bloodtalon##37961+ |q 24624/1 |goto 36.8,69.01
-Use your Bloodtalon Whistle near Lost Bloodtalon Hatchlings |use Bloodtalon Whistle##52283 |tip They look like tiny red raptors around this area.
-|tip Use control+v to make them easier to find.
-|tip (Press v again to mark enemies.)
-Rescue 12 Bloodtalon Hatchlings |q 24623/1 |goto 36.8,69.01
+step
+label "Rescue_Bloodtalon_Hatchlings"
+Use the Bloodtalon Whistle near Lost Bloodtalon Hatchlings |use Bloodtalon Whistle##52283
+|tip They look like tiny red raptors around this area.
+Rescue #12# Bloodtalon Hatchlings |q 24623/1 |goto 36.8,69.01
 step
 talk Kijara##37969
-turnin Saving the Young##24623 |goto 45.5,85.21
+|tip She walks around.
+turnin Saving the Young##24623 |goto 45.57,85.10
 step
 talk Tegashi##37987
-turnin Mercy for the Lost##24624 |goto 45.7,84.91
-turnin Consort of the Sea Witch##24625 |goto 45.7,84.91
+turnin Mercy for the Lost##24624 |goto 45.70,85.00
+turnin Consort of the Sea Witch##24625 |goto 45.70,85.00
 step
 talk Kijara##37969
-accept Young and Vicious##24626 |goto 45.5,85.21
+|tip She walks around.
+accept Young and Vicious##24626 |goto 45.57,85.10
 step
 Use your Bloodtalon Lasso on Swiftclaw |use Bloodtalon Lasso##50053 |tip Swiftclaw is a dark colored raptor that runs really fast around this area, so you may need to search for him.
 Capture Swiftclaw |q 24626/1 |goto 42.9,84.61
 step
-Run to this spot while riding Swiftclaw
+_While Riding Swiftclaw:_
+Cross the bridge |goto 45.57,80.16 < 20 |only if walking
+Follow the path |goto 49.97,67.11 < 20 |only if walking
 Return Swiftclaw to the Raptor Pens |q 24626/2 |goto 52.9,65.31
 step
+Follow the path up |goto 56.45,65.02 < 15 |only if walking
 talk Moraya##38005
 turnin Young and Vicious##24626 |goto 56.8,63.71
 step
 talk Tortunga##38440
-accept Breaking the Line##25035 |goto 59.0,66.7
+accept Breaking the Line##25035 |goto 58.95,66.82
 step
-talk Jornun##38989goto |goto 59.0,66.81
-Ask him if he has a raptor that can take you there |goto 59.0,23.1 |noway |c |q 25035
+talk Jornun##38989 |goto 59.06,66.91 |n
+Tell him _"Yes.  Do you have a raptor that can take me there?"_
+Secure a Ride to Spitescale Cove |goto 59.06,66.91 > 30 |noway |c |q 25035
 step
-talk Morakki##38442
-turnin Breaking the Line##25035 |goto 59.0,23.11
-accept No More Mercy##24812 |goto 59.0,23.11
-accept Territorial Fetish##24813 |goto 59.0,23.11
-step
-kill Spitescale Wavethrasher##38300+, Spitescale Siren##38301+ |q 24812/1 |goto Echo Isles/9 66.3,60.5
-Use your Territorial Fetish next to Spitescale Flags |use Territorial Fetish##52065 |tip They look like red penant flags on blue-ish tridents stuck in the ground all around inside this cave.
-Place 8 Territorial Fetishes |q 24813/1 |goto Echo Isles/9 66.3,60.5
+Ride the Raptor to Spitescale Cove |goto 59.0,23.1 < 20 |c |q 25035
 step
 talk Morakki##38442
-turnin No More Mercy##24812 |goto Echo Isles 59.0,23.11
-turnin Territorial Fetish##24813 |goto Echo Isles 59.0,23.11
-accept An Ancient Enemy##24814 |goto Echo Isles 59.0,23.11
+turnin Breaking the Line##25035 |goto 58.90,23.09
+accept No More Mercy##24812 |goto 58.90,23.09
+accept Territorial Fetish##24813 |goto 58.90,23.09
+stickystart "Place_Territorial_Fetishes"
+step
+Kill Spitescale enemies around this area
+|tip They are all around inside this cave.
+|tip Stay near the entrance of the cave, if you can.
+Slay #12# Spitescale Naga |q 24812/1 |goto Echo Isles/9 66.3,60.5
+step
+label "Place_Territorial_Fetishes"
+Use your Territorial Fetish next to Spitescale Flags |use Territorial Fetish##52065
+|tip They look like red penant flags on blue-ish tridents stuck in the ground all around inside this cave.
+|tip Stay near the entrance of the cave, if you can.
+Place #8# Territorial Fetishes |q 24813/1 |goto 66.3,60.5
+step
+talk Morakki##38442
+turnin No More Mercy##24812 |goto Echo Isles/0 58.91,23.06
+turnin Territorial Fetish##24813 |goto Echo Isles/0 58.91,23.06
+accept An Ancient Enemy##24814 |goto Echo Isles/0 58.91,23.06
+step
+Follow the path |goto 59.30,25.08 < 20 |only if walking
+Follow the path up |goto 62.05,23.91 < 20 |only if walking
+talk Vol'jin##10540
+Speak with Vol'jin at Spitescale Cove |q 24814/1 |goto 62.23,18.01
 step
 talk Vol'jin##10540
-|tip Follow the path around the island to find him, don't go inside the cave.
-Tell him you are ready |q 24814/1 |goto 62.2,18.01
-Help Vol'jin fight Zat'jira and click the 3 braziers behind Zar'jira when the message displays on the screen telling you to stamp them out.
-kill Zar'jira##38306 |q 24814/2 |goto 62.2,18.01
+Tell him _"I am ready, Vol'jin."_
+|tip Follow your allies into battle.
+kill Zar'jira##38306 |q 24814/2 |goto 62.23,18.01
+|tip Click the 3 braziers behind Zar'jira when the message displays on the screen telling you to stamp them out.
 step
-talk Vanira##39027 |goto 60.2,15.81
-Ask her to take you back to Darkspear Hold |goto 59.5,63.2 |noway |c
+Watch the dialogue
+talk Vanira##39027 |goto 60.26,15.80 |n
+Tell her _"Take me back to Darkspear Hold if you would, Vanira."_
+Return to Darkspear Hold |goto 59.5,63.2 < 30 |noway |c |q 24814
 step
 talk Vol'jin##10540
-turnin An Ancient Enemy##24814 |goto 61.6,65.91
-accept Sen'jin Village##25073 |goto 61.6,65.91
+|tip Inside the building.
+turnin An Ancient Enemy##24814 |goto 61.55,65.85
+accept Sen'jin Village##25073 |goto 61.55,65.85
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Durotar (1-11)\\Durotar (5-8)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Durotar (1-11)\\Durotar (5-8)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Durotar 5-8",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Durotar (1-11)\\Durotar (8-11)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Durotar (1-11)\\Durotar (8-11)",
 startlevel=5.1,
 dynamic=true,
 },[[
@@ -8421,10 +8877,10 @@ talk Gar'Thok##3139
 turnin Storming the Beaches##25177 |goto 51.9,43.5
 turnin Loss Reduction##25179 |goto 51.9,43.5
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Durotar (1-11)\\Durotar (8-11)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Durotar (1-11)\\Durotar (8-11)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Durotar 8-11",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Northern Barrens (10-20)\\Northern Barrens (10-13)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Northern Barrens (10-20)\\Northern Barrens (10-13)",
 startlevel=8.10,
 dynamic=true,
 },[[
@@ -8556,7 +9012,7 @@ talk Shin Stonepillar##39380
 accept The Wolf and The Kodo##25205 |goto Durotar 44.9,14.8
 step
 talk Shin Stonepillar##39380
-Ask him _"Can you tell me your fable, Shin?"_ |havebuff Interface\Icons\Ability_Mount_Kodo_03 |q 25205 |goto Durotar 44.9,14.8
+Ask him _"Can you tell me your fable, Shin?"_ |havebuff 132245 |q 25205 |goto Durotar 44.9,14.8
 step
 As the wolf, run to this spot
 |tip If you don't see 2 kodos fighting, look around this area to find some, then go stand next to them.
@@ -8635,30 +9091,30 @@ talk Neeru Fireblade##3216
 turnin Neeru Fireblade##25263 |goto Orgrimmar/2 58.2,54.5
 accept Ak'Zeloth##25264 |goto Orgrimmar/2 58.2,54.5
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Mulgore (1-10)\\Tauren (1-4)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Mulgore (1-10)\\Tauren (1-4)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Mulgore 1-4",
 condition_suggested="raceclass('Tauren') and level<=4",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Mulgore (1-10)\\Mulgore (4-10)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Mulgore (1-10)\\Mulgore (4-10)",
 startlevel=1,
 dynamic=true,
 },[[
 step
 talk Chief Hawkwind##2981
-accept The First Step##14449 |goto Camp Narache 27.7,28.31
+accept The First Step##14449 |goto Camp Narache/0 27.7,28.31
 step
 talk Grull Hawkwind##2980
 turnin The First Step##14449 |goto 39.5,37.31
 accept Rite of Strength##14452 |goto 39.5,37.31
 step
-kill Bristleback Invader##36943+
-Kill #6# Bristleback Invaders |q 14452/1 |goto 48.1,42.01
+kill 6 Bristleback Invader##36943 |q 14452/1 |goto 48.1,42.01
 step
 talk Grull Hawkwind##2980
 turnin Rite of Strength##14452 |goto 39.5,37.31
 accept Our Tribe, Imprisoned##24852 |goto 39.5,37.31
 step
 click Quilboar Cage##1787+
+|tip They look like yellow wooden cages around this area.
 Free #4# Braves |q 24852/1 |goto 48.9,33.61
 step
 talk Grull Hawkwind##2980
@@ -8669,10 +9125,10 @@ talk Adana Thunderhorn##36694
 turnin Go to Adana##14458 |goto 30.9,50.61
 accept Rite of Courage##14456 |goto 30.9,50.61
 accept Stop the Thorncallers##14455 |goto 30.9,50.61
-stickystart "bristlebackguns"
+stickystart "Stolen_Rifles"
 step
 kill 7 Bristleback Thorncaller##36697 |q 14455/1 |goto 35.9,68.01
-step "bristlebackguns"
+step "Stolen_Rifles"
 kill Bristleback Gun Thief##36708+
 collect 7 Stolen Rifle##49535 |q 14456/1 |goto 35.9,68.01
 step
@@ -8681,56 +9137,57 @@ turnin Rite of Courage##14456 |goto 30.9,50.61
 turnin Stop the Thorncallers##14455 |goto 30.9,50.61
 accept The Battleboars##14459 |goto 30.9,50.61
 accept Feed of Evil##14461 |goto 30.9,50.61
-stickystart "armorboar"
+stickystart "Armored_Battleboars"
 step
-use Adana's Torch##49539
-|tip Use Adana's Torch next to the tub of meat.
-|tip It looks like a wooden tub full of pink meat.
+Use Adana's Torch next to the Trough |use Adana's Torch##49539
+|tip It looks like a wooden bathtub full of pink meat.
 Burn the First Trough |q 14461/1 |goto 26.4,66.4
 step
-use Adana's Torch##49539
-|tip Use Adana's Torch next to the tub of meat.
-|tip It looks like a wooden tub full of pink meat.
+Use Adana's Torch next to the Trough |use Adana's Torch##49539
+|tip It looks like a wooden bathtub full of pink meat.
 Burn the Second Trough |q 14461/2 |goto 25.2,69.2
 step
-use Adana's Torch##49539
-|tip Use Adana's Torch next to the tub of meat.
-|tip It looks like a wooden tub full of pink meat.
+Use Adana's Torch next to the Trough |use Adana's Torch##49539
+|tip It looks like a wooden bathtub full of pink meat.
 Burn the Third Trough |q 14461/3 |goto 28.2,70.4
-step "armorboar"
+step "Armored_Battleboars"
 kill 10 Armored Battleboar##36696 |q 14459/1 |goto 28.2,70.4
 step
 talk Adana Thunderhorn##36694
-turnin The Battleboars##14459 |goto Camp Narache 30.9,50.61
-turnin Feed of Evil##14461 |goto Camp Narache 30.9,50.61
-accept Rite of Honor##14460 |goto Camp Narache 30.9,50.61
+turnin The Battleboars##14459 |goto 30.9,50.61
+turnin Feed of Evil##14461 |goto 30.9,50.61
+accept Rite of Honor##14460 |goto 30.9,50.61
 step
 kill Chief Squealer Thornmantle##36712
-collect Mane of Thornmantle##50473 |q 14460/1 |goto Camp Narache 15.5,46.8
+collect Mane of Thornmantle##50473 |q 14460/1 |goto 15.19,46.70
 step
 talk Chief Hawkwind##2981
-turnin Rite of Honor##14460 |goto 27.7,28.21
-accept Last Rites, First Rites##24861 |goto 27.7,28.21
+turnin Rite of Honor##14460 |goto 27.73,28.29
+accept Last Rites, First Rites##24861 |goto 27.73,28.29
 step
-use Water Pitcher##50465
+Use the Water Pitcher |use Water Pitcher##50465
 Place the Offering |q 24861/1 |goto 27.5,27.71
 step
 talk Chief Hawkwind##2981
-turnin Last Rites, First Rites##24861 |goto 27.7,28.21
-accept Rites of the Earthmother##23733 |goto 27.7,28.21
+turnin Last Rites, First Rites##24861 |goto 27.73,28.29
+accept Rites of the Earthmother##23733 |goto 27.73,28.29
 step
-_Follow_ the path up |goto 19.2,33.61 < 10 |only if walking
+Follow the path up |goto 20.67,34.26 < 20 |only if walking
+Continue up the path |goto 16.04,28.03 < 15 |only if walking
+Continue up the path |goto 11.75,28.10 < 15 |only if walking
 talk Dyami Windsoar##36803
 turnin Rites of the Earthmother##23733 |goto 15.6,30.31
 accept Rite of the Winds##24215 |goto 15.6,30.31
 step
-use Water of Vision##49652 |goto Camp Narache 15.6,30.3 < 5
-Fly to Bloodhoof Village |goto Mulgore,47.8,59.9 < 10 |noway |q 24215
+Use the Water of Vision |use Water of Vision##49652 |goto 15.6,30.3 |n
+Drink the Water of Vision |goto 15.6,30.3 > 30 |noway |c |q 24215
+step
+Fly to Bloodhoof Village |goto Mulgore/0 47.8,59.9 < 20 |c |q 24215
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Mulgore (1-10)\\Mulgore (4-10)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Mulgore (1-10)\\Mulgore (4-10)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Mulgore 4-10",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Northern Barrens (10-20)\\Northern Barrens (10-13)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Northern Barrens (10-20)\\Northern Barrens (10-13)",
 startlevel=4.77,
 dynamic=true,
 },[[
@@ -9000,20 +9457,21 @@ only Tauren
 step
 _Take the elevator_ down |goto Orgrimmar 50.9,62.6 < 10 |only if walking
 _Enter_ the building |goto Orgrimmar/1 50.0,75.8 < 8 |walk
-talk Vol'jin##86832
+talk High Overlord Saurfang##14720
 |tip He is in the big center building
 turnin Walk With The Earth Mother##26397 |goto Orgrimmar 48.1,70.5
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Northern Barrens (10-20)\\Northern Barrens (10-13)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Northern Barrens (10-20)\\Northern Barrens (10-13)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Northern Barrens 10-13",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Northern Barrens (10-20)\\Northern Barrens (13-17)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Northern Barrens (10-20)\\Northern Barrens (13-17)",
 startlevel=10.90,
 dynamic=true,
 },[[
 step
 talk Kargal Battlescar##3337
-accept In Defense of Far Watch##871 |goto Northern Barrens 67.7,39.4
+turnin Preserving the Barrens##26642 |goto Northern Barrens/0 67.7,39.4 |only if havequest(26642) or completedq(26642)
+accept In Defense of Far Watch##871 |goto Northern Barrens/0 67.7,39.4
 step
 talk Halga Bloodeye##34258
 accept Plainstrider Menace##844 |goto 67.5,38.7
@@ -9090,7 +9548,7 @@ use Grol'dom Net##46722
 |tip Use your Grol'dom Net on a Razormane Pillager.
 talk Razormane Pillager##34503
 Select _<Pound this chump.>_
-Drag a Razormane |havebuff Interface\Icons\INV_Misc_Head_Quillboar_01 |c |q 13961 |goto 56.1,43.4
+Drag a Razormane |havebuff 134172 |c |q 13961 |goto 56.1,43.4
 step
 Deliver the Razormane Prisoner |q 13961/1 |goto 56.6,40.3
 step
@@ -9162,10 +9620,10 @@ step
 talk Thork##3429
 turnin Crossroads Caravan Delivery##13975 |goto 48.7,59.6
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Northern Barrens (10-20)\\Northern Barrens (13-17)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Northern Barrens (10-20)\\Northern Barrens (13-17)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Northern Barrens 13-17",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Northern Barrens (10-20)\\Northern Barrens (17-20)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Northern Barrens (10-20)\\Northern Barrens (17-20)",
 startlevel=13.54,
 dynamic=true,
 },[[
@@ -9504,10 +9962,10 @@ step
 talk Nozzlepot##34698
 turnin Raging River Ride##26769 |goto 62.5,16.7
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Northern Barrens (10-20)\\Northern Barrens (17-20)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Northern Barrens (10-20)\\Northern Barrens (17-20)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Northern Barrens 17-20",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Ashenvale (20-26)\\Ashenvale (20-23)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Ashenvale (20-26)\\Ashenvale (20-23)",
 startlevel=17.80,
 dynamic=true,
 },[[
@@ -9772,10 +10230,10 @@ step
 Use the Abilities on your action bar to fight off the Burning Blade enemies
 Defend the Mor'shan Caravan Ride |q 29111/2 |goto Northern Barrens 42.9,15.0
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Azshara (10-22)\\Azshara (10-12)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Azshara (10-22)\\Azshara (10-12)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Azshara 10-12",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Azshara (10-22)\\Azshara (12-21)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Azshara (10-22)\\Azshara (12-21)",
 startlevel=10.90,
 dynamic=true,
 },[[
@@ -9853,10 +10311,10 @@ turnin The Eyes of Ashenvale##14117 |goto 26.8,76.9
 turnin Return of the Highborne?##14127 |goto 26.8,76.9
 accept Return of the Highborne?##14128 |goto 26.8,76.9
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Azshara (10-22)\\Azshara (12-21)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Azshara (10-22)\\Azshara (12-21)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Azshara 12-21",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Azshara (10-22)\\Azshara (21-22)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Azshara (10-22)\\Azshara (21-22)",
 startlevel=12.16,
 dynamic=true,
 },[[
@@ -9882,7 +10340,7 @@ collect 20 Mountainfoot Iron##48128 |q 14197/1 |goto 26.7,70.1
 step
 clicknpc Mountainfoot Miner##35257
 |tip You only need one. They look like darker goblins standing in place around this area. Not all of them are clickable, so just search around until you find one you can click.
-Carry the Mountainfoot Miner |havebuff Interface\Icons\Ability_Warrior_IntensifyRage |q 14165 |goto 26.7,70.1
+Carry the Mountainfoot Miner |havebuff 236310 |q 14165 |goto 26.7,70.1
 step
 _Follow the path_ up and out |goto Azshara 25.8,68.6 < 10 |only if walking
 Deliver the Stonified Miner |q 14165/1 |goto 29.1,66.2
@@ -10034,7 +10492,7 @@ accept Need More Science##14424 |goto 29.6,66.9
 step
 talk Spirit of Kalytha##35567
 Select "_<Merge with the spirit.>_"
-Explore the Memories of Kalytha |havebuff Interface\Icons\Spell_Shadow_Twilight |q 14215 |goto Azshara 36.4,72.4
+Explore the Memories of Kalytha |havebuff 136223 |q 14215 |goto Azshara 36.4,72.4
 step
 talk Archmage Selwyn##35595
 Tell her _"Yes Archmage. I will hide the stone."_
@@ -10218,7 +10676,7 @@ accept Azsharite Experiment Number Two##14388 |goto Azshara 50.4,74.3
 step
 talk Assistant Greely##39199
 Tell her "_I'm ready. Shrink me!"_
-Become Mouse-sized! |havebuff Interface\Icons\Spell_Fire_ElementalDevastation |q 14388 |goto Azshara 50.4,74.3
+Become Mouse-sized! |havebuff 135791 |q 14388 |goto Azshara 50.4,74.3
 step
 clicknpc Rocketway Rat##36437
 Ride a Rat |invehicle |q 14388 |goto Azshara 50.3,74.4
@@ -10462,7 +10920,7 @@ accept Diplomacy by Another Means##14433 |goto 42.4,23.6
 step
 use Dingy Wizard Hat##49201
 equipped Dingy Wizard Hat##49201
-Convey the Appearance of Quite a Convincing Mage |havebuff INTERFACE\ICONS\inv_helmet_29 |q 14340 |goto 47.7,18.6
+Convey the Appearance of Quite a Convincing Mage |havebuff 133131 |q 14340 |goto 47.7,18.6
 step
 Approach Archmage Xylem While Wearing Your Wizard Hat |q 14340/1 |goto Azshara 47.2,20.9
 step
@@ -10763,10 +11221,10 @@ step
 talk Gurlorn##37142
 accept Airborne Again##24497 |goto Azshara 53.0,49.8
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Azshara (10-22)\\Azshara (21-22)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Azshara (10-22)\\Azshara (21-22)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Azshara 21-22",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Ashenvale (20-26)\\Ashenvale (20-23)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Ashenvale (20-26)\\Ashenvale (20-23)",
 startlevel=21.32,
 dynamic=true,
 },[[
@@ -10886,10 +11344,10 @@ step
 talk Kulg Gorespatter##34195
 Ask him "_Send me to the Mor'shan Ramparts."_ |goto Ashenvale 94.4,46.8 < 10 |q 13866
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Ashenvale (20-26)\\Ashenvale (20-23)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Ashenvale (20-26)\\Ashenvale (20-23)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Ashenvale 20-23",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Ashenvale (20-26)\\Ashenvale (23-26)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Ashenvale (20-26)\\Ashenvale (23-26)",
 startlevel=20.00,
 dynamic=true,
 },[[
@@ -11164,10 +11622,10 @@ talk Vhulgra##12616
 Tell her _"I am on a task from Kadrak."_ |goto 73.2,61.6 < 8 |walk
 Fly to the Zoram Strand |goto 11.2,34.4 < 15 |noway |q 13848 |walk
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Ashenvale (20-26)\\Ashenvale (23-26)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Ashenvale (20-26)\\Ashenvale (23-26)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Ashenvale 23-26",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Stonetalon Mountains (26-31)\\Stonetalon Mountains (26-31)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Stonetalon Mountains (26-31)\\Stonetalon Mountains (26-31)",
 startlevel=23.15,
 dynamic=true,
 },[[
@@ -11276,12 +11734,12 @@ step
 _Follow this path_ north |goto 31.3,46.1 < 10 |only if walking
 _Follow the path_ up |goto 37.1,32.9 < 10 |only if walking
 _Enter_ the cave |goto 38.3,30.6 < 10 |walk
-click Troll Chests##2450
+click Troll Chests##2450 |indoors Thistlefur Hold
 |tip They look like small wooden chests on the ground inside the cave.
-collect 8 Troll Charm##16602 |q 6462/1 |goto Ashenvale 40.0,32.4
+collect 8 Troll Charm##16602 |q 6462/1 |goto 40.0,32.4 |indoors Thistlefur Hold
 step
-talk Ruul Snowhoof##12818
-accept Freedom to Ruul##6482 |goto Ashenvale/0 41.5,34.5
+talk Ruul Snowhoof##12818 |indoors Thistlefur Hold
+accept Freedom to Ruul##6482 |goto Ashenvale/0 41.5,34.5 |indoors Thistlefur Hold
 step
 Escort Ruul From the Thistlefurs |q 6482/1 |goto Ashenvale/0 38.6,37.7
 |tip Protect him as he leaves the cave.
@@ -11479,10 +11937,10 @@ step
 talk Vol'jin##86832
 turnin All Apologies##13841 |goto Orgrimmar 48.2,70.6
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Stonetalon Mountains (26-31)\\Stonetalon Mountains (26-31)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Stonetalon Mountains (26-31)\\Stonetalon Mountains (26-31)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Stonetalon 26-31",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Southern Barrens (31-35)\\Southern Barrens (31-34)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Southern Barrens (31-35)\\Southern Barrens (31-34)",
 startlevel=26.46,
 },[[
 step
@@ -11834,10 +12292,10 @@ _Follow_ the main road south |goto 47.9,33.6 < 10 |only if walking
 talk Tharm##4312
 fpath Sun Rock Retreat |goto Stonetalon Mountains/0 48.5,62.0
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Desolace (31-36)\\Desolace (31-33)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Desolace (31-36)\\Desolace (31-33)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Desolace 31-33",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Desolace (31-36)\\Desolace (33-36)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Desolace (31-36)\\Desolace (33-36)",
 startlevel=31.10,
 dynamic=true,
 },[[
@@ -12125,10 +12583,10 @@ talk Cenarion Researcher Korrah##35773
 turnin Return and Report##14301 |goto 38.8,27.0
 accept Official Assessment##14302 |goto 38.8,27.0
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Desolace (31-36)\\Desolace (33-36)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Desolace (31-36)\\Desolace (33-36)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Desolace 33-36",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Feralas (36-40)\\Feralas (36-40)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Feralas (36-40)\\Feralas (36-40)",
 startlevel=33.80,
 dynamic=true,
 },[[
@@ -12418,10 +12876,10 @@ turnin Death to Agogridon##14394 |goto 82.4,80.9
 step
 Click the red button on your hotbar |outvehicle
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Desolace (31-36)\\Shadowprey Village Quests (33-34)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Desolace (31-36)\\Shadowprey Village Quests (33-34)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Shadowprey",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Desolace (31-36)\\Desolace (33-36)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Desolace (31-36)\\Desolace (33-36)",
 startlevel=33.80,
 dynamic=true,
 },[[
@@ -12459,10 +12917,10 @@ step
 talk Taiga Wisemane##11624
 turnin Chipping In##14335 |goto Desolace 25.8,68.2
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Feralas (36-40)\\Feralas (36-40)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Feralas (36-40)\\Feralas (36-40)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Feralas 36-40",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Thousand Needles (39-44)\\Thousand Needles (39-44)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Thousand Needles (39-44)\\Thousand Needles (39-44)",
 startlevel=36.50,
 dynamic=true,
 },[[
@@ -12838,10 +13296,10 @@ talk Shyn##39898
 Tell her _"I need to get to Westreach Summit!"_
 Fly on the Windrider |q 25356/1 |goto 75.4,44.4
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Southern Barrens (31-35)\\Southern Barrens (31-34)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Southern Barrens (31-35)\\Southern Barrens (31-34)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Southern Barrens 31-34",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Southern Barrens (31-35)\\Southern Barrens (34-35)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Southern Barrens (31-35)\\Southern Barrens (34-35)",
 startlevel=31.15,
 dynamic=true,
 },[[
@@ -13216,10 +13674,10 @@ step
 talk Calder Gray##37908
 turnin Smarts-is-Smarts##24621 |goto Southern Barrens 42.6,70.2
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Southern Barrens (31-35)\\Southern Barrens (34-35)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Southern Barrens (31-35)\\Southern Barrens (34-35)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Southern Barrens 34-35",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Dustwallow Marsh (35-39)\\Dustwallow Marsh (35-39)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Dustwallow Marsh (35-39)\\Dustwallow Marsh (35-39)",
 startlevel=34.74,
 dynamic=true,
 },[[
@@ -13313,10 +13771,10 @@ step
 talk Nato Raintree##39697
 accept Next of Kin##25292 |goto Southern Barrens 49.2,82.1
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Dustwallow Marsh (35-39)\\Dustwallow Marsh (35-39)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Dustwallow Marsh (35-39)\\Dustwallow Marsh (35-39)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Dustwallow 35-39",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Thousand Needles (39-44)\\Thousand Needles (39-44)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Thousand Needles (39-44)\\Thousand Needles (39-44)",
 startlevel=35.85,
 dynamic=true,
 },[[
@@ -13730,10 +14188,10 @@ step
 talk Krog##4926
 turnin Justice Dispensed##27297 |goto 36.4,31.9
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Thousand Needles (39-44)\\Thousand Needles (39-44)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Thousand Needles (39-44)\\Thousand Needles (39-44)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\1k 39-44",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Tanaris (44-47)\\Tanaris (44-47)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Tanaris (44-47)\\Tanaris (44-47)",
 startlevel=39.97,
 dynamic=true,
 },[[
@@ -13843,7 +14301,7 @@ talk Griznak##40727
 accept Special Delivery for Brivelthwerp##28042 |goto 78.3,73.6
 step
 Jump into the water and use your River Boat |use River Boat##55121
-Ride Your Boat |havebuff Interface\Icons\INV_Helmet_66 |q 28042
+Ride Your Boat |havebuff 133168 |q 28042
 step
 talk Brivelthwerp##47383
 turnin Special Delivery for Brivelthwerp##28042 |goto 69.9,85.2
@@ -13893,7 +14351,7 @@ turnin Freezing the Pipes##28047 |goto 69.9,85.2
 turnin That Smart One's Gotta Go##28048 |goto 69.9,85.2
 step
 Jump into the water and use your River Boat |use River Boat##55121
-Ride Your Boat |havebuff Interface\Icons\INV_Helmet_66 |q 25596
+Ride Your Boat |havebuff 133168 |q 25596
 step
 _Follow_ the path up |goto 89.3,72.8 < 10 |only if walking
 talk Synge##40888
@@ -13909,7 +14367,7 @@ clicknpc Holdfast Cannon##40869+
 Destroy #8# Holdfast Cannons |q 25586/1 |goto 90.8,77.9
 step
 Jump into the water and use your River Boat |use River Boat##55121
-Ride Your Boat |havebuff Interface\Icons\INV_Helmet_66 |q 25589
+Ride Your Boat |havebuff 133168 |q 25589
 step
 talk Rugfizzle##40595
 turnin A Little Payback##25589 |goto 78.2,73.6
@@ -13932,7 +14390,6 @@ use Fake Treasure##55158
 kill Tony Two-Tusk##40958
 |tip Follow the path to the left in the cave to get to him. He will jump inside a treasure chest and scramble around. Just keep attacking him when he reopens his chest.
 collect Rusted Cage Key##55160 |q 25628/1 |goto 95.2,79.5 |indoors The Admiral's Den
-modelnpc Den Whomper##40959
 step
 talk Synge##40888
 turnin Two-Tusk Takedown##25628 |goto 91.7,79.3
@@ -14074,7 +14531,7 @@ turnin Deliver the Goods##25826 |goto 75.9,74.7
 accept Free Freewind Post##25836 |goto 75.9,74.7
 step
 Jump into the water and use your River Boat |use River Boat##55121
-Ride Your Boat |havebuff Interface\Icons\INV_Helmet_66 |q 25836
+Ride Your Boat |havebuff 133168 |q 25836
 step
 talk Thalia Amberhide##41446
 turnin Free Freewind Post##25836 |goto 46.4,57.8
@@ -14189,7 +14646,7 @@ turnin Invoking the Serpent##27330 |goto 39.1,25.7
 accept Trouble at Highperch##28085 |goto 39.1,25.7
 step
 Jump into the water and use your River Boat |use River Boat##55121
-Ride Your Boat |havebuff Interface\Icons\INV_Helmet_66 |q 28085
+Ride Your Boat |havebuff 133168 |q 28085
 step
 _Follow_ the path |goto 13.8,33.8 < 10 |only if walking
 talk Pao'ka Swiftmountain##47471
@@ -14251,7 +14708,7 @@ accept Codemaster's Code##28139 |goto 30.5,49.3
 accept Behind You!##28136 |goto 30.5,49.3
 step
 Use your Bulwark Disguise |use Bulwark Disguise##63071
-Wear the Bulwark Disguise |havebuff INTERFACE\ICONS\inv_helm_plate_twilighthammer_c_01 |q 28136
+Wear the Bulwark Disguise |havebuff 391130 |q 28136
 step
 talk Commander Fastfuse##47620
 |tip He's at the top of the tower.
@@ -14276,7 +14733,7 @@ turnin Behind You!##28136 |goto 30.5,49.3
 accept The Elder Crone##28140 |goto 30.5,49.3
 step
 Use your Bulwark Disguise |use Bulwark Disguise##63071
-Wear the Bulwark Disguise |havebuff INTERFACE\ICONS\inv_helm_plate_twilighthammer_c_01 |q 28140
+Wear the Bulwark Disguise |havebuff 391130 |q 28140
 step
 click Magatha's Bonds Controller##9849
 Disable the Controller |q 28140/1 |goto 35.9,60.6
@@ -14328,10 +14785,10 @@ talk Pozzik##40028
 turnin Spread the Word##28161 |goto 75.9,74.7
 accept Tanaris is Calling##27447 |goto 75.9,74.7
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Tanaris (44-47)\\Tanaris (44-47)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Tanaris (44-47)\\Tanaris (44-47)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Tanaris 44-47",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Felwood (47-51)\\Felwood (47-48)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Felwood (47-51)\\Felwood (47-48)",
 startlevel=44.45,
 dynamic=true,
 },[[
@@ -14550,7 +15007,7 @@ accept A Great Idea##24951 |goto 55.6,60.9
 step
 use Bootlegger Bug Bait##52031
 |tip Use your Bootlegger Bug Bait on a Hazzali Swarmer.
-Take control of a Hazzali Swarmer |havebuff Interface\Icons\Ability_Hunter_Pet_Silithid |q 24951 |goto 53.4,62.7
+Take control of a Hazzali Swarmer |havebuff 236195 |q 24951 |goto 53.4,62.7
 modelnpc Hazzali Swarmer##5451
 step
 Stand next to Zeke Bootscuff
@@ -14578,7 +15035,7 @@ turnin Returning a Favor##24905 |goto 44.6,52.7
 accept Un-Chartered##24955 |goto 44.6,52.7
 step
 use Refurbished Ogre Suit##52038
-Become an Ogre |havebuff Interface\Icons\achievement_reputation_ogre |q 24955 |goto 43.7,52.9
+Become an Ogre |havebuff 236695 |q 24955 |goto 43.7,52.9
 step
 talk Dunemaul Enforcer##5472
 Tell them _"You sign charter! Is good!"_
@@ -14672,10 +15129,10 @@ step
 talk Dr. Dealwell##39034
 turnin The Thunderdrome!##26896 |goto 51.8,28.1
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Felwood (47-51)\\Felwood (47-48)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Felwood (47-51)\\Felwood (47-48)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Felwood 47-48",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Felwood (47-51)\\Felwood (48-51)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Felwood (47-51)\\Felwood (48-51)",
 startlevel=47.55,
 dynamic=true,
 },[[
@@ -14759,7 +15216,7 @@ step
 Stand on the Mark of Tichondrius
 |tip It's a green glowing symbol on the ground.
 use Phaseblood Potion##62920
-Shift Into the Nether |havebuff Interface\Icons\Spell_Shadow_ImpPhaseShift |q 28044 |goto 40.95,75.75
+Shift Into the Nether |havebuff 136164 |q 28044 |goto 40.95,75.75
 step
 kill Vorlus##47398
 collect Claw of Tichondrius##62919 |q 28044/1 |goto 42.3,79.9
@@ -14894,10 +15351,10 @@ step
 talk Farlus Wildheart##47617
 accept The Fate of Bloodvenom Post##28305 |goto 44.1,61.8
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Felwood (47-51)\\Felwood (48-51)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Felwood (47-51)\\Felwood (48-51)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Felwood 48-51",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Winterspring (51-55)\\Winterspring (51-52)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Winterspring (51-55)\\Winterspring (51-52)",
 startlevel=48.90,
 dynamic=true,
 },[[
@@ -15104,7 +15561,7 @@ accept Deceivers In Our Midst##28261 |goto 45.6,20.1
 step
 _Follow the path_ up |goto 47.9,18.1 < 10 |only if walking
 use Sindweller Blindfold##63419
-Wear the Sindweller Blindfold |havebuff INTERFACE\ICONS\inv_misc_bandana_01 |q 28261 |goto 46.2,16.4
+Wear the Sindweller Blindfold |havebuff 133693 |q 28261 |goto 46.2,16.4
 step
 kill 12 Jadefire Shifter##48154 |q 28261/1 |goto 43.8,16.2
 step
@@ -15252,10 +15709,10 @@ _Enter_ the cave |goto 64.4,10.0 < 10 |walk
 talk Kernda##11558
 turnin Deadwood Ritual Totem##8470 |goto 64.6,4.5 |indoors Timbermaw Hold
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Winterspring (51-55)\\Winterspring (51-52)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Winterspring (51-55)\\Winterspring (51-52)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Winterspring 51-52",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Winterspring (51-55)\\Winterspring (52-55)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Winterspring (51-55)\\Winterspring (52-55)",
 startlevel=51.65,
 dynamic=true,
 },[[
@@ -15329,10 +15786,10 @@ turnin High Chief Winterfall##28470 |goto 25.1,58.5
 turnin The Final Piece##28471 |goto 25.1,58.5
 accept Words of the High Chief##28472 |goto 25.1,58.5
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Winterspring (51-55)\\Winterspring (52-55)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Winterspring (51-55)\\Winterspring (52-55)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Winterspring 52-55",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Un'Goro Crater (55-57)\\Un'Goro Crater (55-57)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Un'Goro Crater (55-57)\\Un'Goro Crater (55-57)",
 startlevel=52.40,
 dynamic=true,
 },[[
@@ -15691,10 +16148,10 @@ talk Haleh##10929
 turnin The Arcane Storm Within##28841 |goto 58.0,63.8
 turnin Umbranse's Deliverance##28842 |goto 58.0,63.8
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Winterspring (54-58)\\Winterspring (54-58)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Winterspring (54-58)\\Winterspring (54-58)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Winterspring 54-58",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Blasted Lands (57-60)\\Blasted Lands (57-60)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Blasted Lands (57-60)\\Blasted Lands (57-60)",
 startlevel=54.80,
 dynamic=true,
 },[[
@@ -16117,10 +16574,10 @@ step
 talk Innkeeper Vizzie##11118
 accept Blasted Lands: The Other Side of the World##28858 |goto 59.9,51.2
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Silithus (55-57)\\Silithus (55-57)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Silithus (55-57)\\Silithus (55-57)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Silithus 55-57",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Un'Goro Crater (55-57)\\Un'Goro Crater (55-57)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Un'Goro Crater (55-57)\\Un'Goro Crater (55-57)",
 startlevel=55.58,
 dynamic=true,
 },[[
@@ -16230,22 +16687,6 @@ Location 2 |goto 34.8,40.7
 step
 talk General Kirika##17079
 turnin Report to General Kirika##9416 |goto 54.5,62.9
-accept Scouring the Desert##9422 |goto 54.5,62.9
-step
-click Silithyst Geyser##6862
-|tip They look like small pink rocks with holes in the top of them. They have smoke floating out of their tops, and they blow up a stream of orange steam occasionally. You can find them all around Silithus.
-Surround yourself in Silithyst Dust |havebuff Interface\Icons\Spell_Holiday_ToW_SpiceCloud |q 9422 |goto 50.0,49.9
-They spawn in various locations, you find more at:
-Location 1 |goto 53.2,41.6
-Location 2 |goto 57.1,47.2
-Location 3 |goto 60.0,41.1
-step
-Stand inside the big red-glowing metal machine
-|tip You can't mount or use any speed boosts while carrying the Silithyst.
-Deliver Silithyst |q 9422/1 |goto 54.9,63.4
-step
-talk General Kirika##17079
-turnin Scouring the Desert##9422 |goto 54.5,62.9
 stickystart "rockstalkerfang"
 step
 kill Stonelash Flayer##11737+
@@ -16354,10 +16795,10 @@ step
 talk Geologist Larksbane##15183
 turnin Unraveling the Mystery##8314 |goto 53.6,35.3
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Un'Goro Crater (55-57)\\Un'Goro Crater (55-57)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Un'Goro Crater (55-57)\\Un'Goro Crater (55-57)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Ungoro 55-57",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Blasted Lands (57-60)\\Blasted Lands (57-60)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Blasted Lands (57-60)\\Blasted Lands (57-60)",
 startlevel=55.58,
 dynamic=true,
 },[[
@@ -16653,7 +17094,7 @@ accept Serving A-Me 01##24926 |goto 63.8,19.7
 stickystart "gorillastomp"
 step
 _Enter_ the cave |goto 64.0,16.4 < 10 |walk
-accept The Mighty U'cha##24718 |goto 65.0,16.8
+accept The Mighty U'cha##24718 |goto 65.0,16.8 |indoors Fungal Rock
 step
 kill U'cha##9622
 collect U'cha's Pelt##11476 |q 24718/1 |goto 68.1,15.9 |indoors Fungal Rock
@@ -16796,21 +17237,21 @@ turnin The Shaper's Terrace##24694 |goto Un'Goro Crater 83.5,46.0
 accept Ever Watching From Above##24695 |goto Un'Goro Crater 83.5,46.0
 step
 click Bloodpetal Observation Lever##295
-Become a Bloodpetal |havebuff Interface\Icons\INV_Misc_Herb_Nightmarevine |q 24695 |goto Un'Goro Crater 83.5,45.3
+Become a Bloodpetal |havebuff 134218 |q 24695 |goto Un'Goro Crater 83.5,45.3
 step
 Use the abilities on your hotbar
 kill Bloodpetal Flayer##6510+
 Complete the Bloodpetal Observation |q 24695/1 |goto Un'Goro Crater 66.8,30.6
 step
 click Pterrordax Observation Lever##295
-Become a Pterrordax |havebuff Interface\Icons\INV_Misc_LeatherScrap_13 |q 24695 |goto Un'Goro Crater 84.0,45.6
+Become a Pterrordax |havebuff 134262 |q 24695 |goto Un'Goro Crater 84.0,45.6
 step
 Use the Pterrordash ability on your hotbar
 Fly upward
 Complete the Pterrordax Observation |q 24695/4 |goto Un'Goro Crater 37.8,33.5
 step
 click Gorilla Observation Lever##295
-Become a Gorilla |havebuff Interface\Icons\Ability_Hunter_Pet_Gorilla |q 24695 |goto Un'Goro Crater 84.0,46.4
+Become a Gorilla |havebuff 132189 |q 24695 |goto Un'Goro Crater 84.0,46.4
 step
 talk Un'Goro Stomper##6513, Un'Goro Gorilla##6514, Un'Goro Thunderer##6516
 |tip They can only be found inside the cave.
@@ -16818,7 +17259,7 @@ Ask them, _"What can you teach me?"_
 Complete the Gorilla Observation |q 24695/3 |goto Un'Goro Crater 63.2,17.0
 step
 click Diemetradon Observation Lever##295
-Become a Diemetradon |havebuff Interface\Icons\INV_Misc_MonsterScales_12 |q 24695 |goto Un'Goro Crater 83.5,46.7
+Become a Diemetradon |havebuff 134314 |q 24695 |goto Un'Goro Crater 83.5,46.7
 step
 Use your Bite ability on your hotbar on any Humanoid in the Marshal's Stand camp
 Bite 5 Humanoids
@@ -16834,10 +17275,10 @@ step
 talk Innkeeper Vizzie##11118
 accept Blasted Lands: The Other Side of the World##28858 |goto Winterspring 59.9,51.2
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\The Burning Crusade (60-70)\\Hellfire Peninsula (60-62)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\The Burning Crusade (60-70)\\Hellfire Peninsula (60-62)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Hellfire",
-next="Zygor's Horde Leveling Guides\\The Burning Crusade (60-70)\\Zangarmarsh (62-64)",
+next="Zygor's Leveling Guides\\The Burning Crusade (60-70)\\Zangarmarsh (62-64)",
 startlevel=60.00,
 endlevel=62.90,
 dynamic=true,
@@ -16929,7 +17370,7 @@ talk Forward Commander To'arch##19273
 turnin Mission: The Abyssal Shelf##10162 |goto 65.9,43.6
 step
 talk Martik Tor'seldori##16577
-accept Falcon Watch##9498 |goto 55.2,39.1 |only !BloodElf
+accept Falcon Watch##9498 |goto 55.2,39.1 |only if not BloodElf
 accept Falcon Watch##9499 |goto 55.2,39.1 |only BloodElf
 step
 talk Nazgrel##3230
@@ -16940,8 +17381,9 @@ stickystart "ganargservant"
 step
 kill Razorsaw##20798
 collect Head of Forgefiend Razorsaw##29586 |q 10390/2 |goto 64.4,31.9
-collect the Burning Legion Missive##29590 |n
-use Burning Legion Missive##29590
+collect the Burning Legion Missive##29590 |n |goto 64.4,31.9
+step
+Use the Burning Legion Missive |use Burning Legion Missive##29590
 accept Vile Plans##10393 |goto 64.4,31.9
 step "ganargservant"
 kill 10 Gan'arg Servant##16947 |q 10390/1 |goto 64.4,31.9
@@ -17028,7 +17470,8 @@ kill 12 Unyielding Footman##16904 |q 10220/1 |goto 58,79
 kill 8 Unyielding Knight##16906 |q 10220/2 |goto 58,79
 kill 6 Unyielding Sorcerer##16905 |q 10220/3 |goto 58,79
 collect A Mysterious Tome##28552 |n
-use A Mysterious Tome##28552
+step
+Use A Mysterious Tome |use A Mysterious Tome##28552
 accept Decipher the Tome##10229
 step
 talk Grelag##16858
@@ -17089,7 +17532,7 @@ clicknpc Eye of Grillok##19440+
 use Zezzak's Shard##31463
 |tip Use Zezzak's Shard on an Eye of Grillok.
 |tip It has to channel for 3 seconds and turn your character green. They look like a floating green eye
-Absorb an Eye of Grillok |havebuff Interface\Icons\Spell_Nature_ElementalShields |q 10813 |goto 66.4,74
+Absorb an Eye of Grillok |havebuff 136030 |q 10813 |goto 66.4,74
 step
 Return the Eye of Grillok |q 10813/1 |goto 61.7,81.9
 step
@@ -17175,7 +17618,7 @@ step
 kill Crust Burster##16844+
 |tip They are under the jumping piles of rocks, they come up to fight when you get close.
 collect Eroded Leather Case##23338 |n
-use Eroded Leather Case##23338
+Use the Eroded Leather Case |use Eroded Leather Case##23338
 accept Missing Missive##9373 |goto 47.8,65.8
 step
 talk Legassi##19344
@@ -17260,7 +17703,6 @@ accept Shizz Work##10629 |goto 51.4,30.6
 step
 use Felhound Whistle##30803 |goto 51.4,30.6
 |tip Use the Felhound Whistle while standing next to Forman Razelcraz.
-modelnpc Foreman Razelcraz##16915
 confirm |q 10629
 step
 kill Deranged Helboar##16863+
@@ -17315,12 +17757,12 @@ step
 talk Innalia##18942
 fpath Falcon Watch |goto 27.8,60
 step
-clicknpc Wanted Poster##181638
+click Wanted Poster##181638
 accept Wanted: Blacktalon the Savage##9466 |goto 28.0,60.3
 step
 click Orb of Translocation##7161
 talk Ranger Captain Venn'ren##16789
-turnin Falcon Watch##9498 |only !BloodElf |goto 28.5,60.2
+turnin Falcon Watch##9498 |only if not BloodElf |goto 28.5,60.2
 turnin Falcon Watch##9499 |only BloodElf |goto 28.5,60.2
 accept The Great Fissure##9340 |goto 28.5,60.2
 accept Report to Zurai##10103 |goto 28.5,60.2
@@ -17344,10 +17786,11 @@ step
 kill 8 Stonescythe Whelp##16927 |q 9340/1 |goto 35.5,57.4
 kill 3 Stonescythe Alpha##16929 |q 9340/2 |goto 35.5,57.4
 step
-_Enter_ the cave |goto 34.1,63.1 < 10 |walk
+Enter the cave |goto 34.1,63.1 < 10 |walk
 kill Blacktalon the Savage##17057
 collect Blacktalon's Claws##23687 |q 9466/1 |goto 33.1,65.1
 step
+Leave the cave |goto 34.1,63.1 < 10 |walk
 click Orb of Translocation##7161
 talk Ranger Captain Venn'ren##16789
 turnin Wanted: Blacktalon the Savage##9466 |goto 28.5,60.2
@@ -17559,8 +18002,6 @@ use Ancestral Spirit Wolf Totem##23669 |goto 33.6,43.5 < 10 |walk
 |tip It's a corpse laying halfway up the hill.
 Follow the Ancestral Spirit Wolf |goto 32,27.8 < 10 |q 9410
 |tip Stay close to the wolf and follow it until it stops, or you will not be able to turn in the quest.
-modelnpc Fel Orc Corpse##17062
-modelnpc Ancestral Spirit Wolf##17077
 step
 talk Gorkan Bloodfist##16845
 turnin A Spirit Guide##9410 |goto 32,27.8
@@ -17582,7 +18023,8 @@ accept The Foot of the Citadel##10876 |goto Hellfire Peninsula 55.0,36.0
 step
 kill Arazzius the Cruel##19191 |q 10136/1 |goto 43.9,31.6
 step
-kill Force-Commander Gorax##19264 |tip He walks back and forth in this small area
+kill Force-Commander Gorax##19264
+|tip He walks back and forth in this small area
 Use your Challenge from the Horde on Force-Commander Gorax's corpse |use Challenge from the Horde##31702
 kill Hand of Kargath##22374
 collect The Head of the Hand of Kargath |q 10876/1 |goto 47.3,49.6
@@ -17608,17 +18050,18 @@ talk Earthbinder Galandria Nightbreeze##19294
 turnin The Earthbinder##10349 |goto 16.0,51.6
 accept Natural Remedies##10351 |goto 16.0,51.6
 step
-Use your Seed of Revitalization while standing on the Earthbinder's Circle |use Seed of Revitalization##29478 |tip It's a bright green symbol on the ground
+Use your Seed of Revitalization while standing on the Earthbinder's Circle |use Seed of Revitalization##29478
+|tip It's a bright green symbol on the ground
 kill Goliathon##19305
 Revitalize Fallen Sky Ridge |q 10351/1 |goto 13.6,39.1
 step
 talk Earthbinder Galandria Nightbreeze##19294
 turnin Natural Remedies##10351 |goto 16.0,51.6
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\The Burning Crusade (60-70)\\Zangarmarsh (62-64)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\The Burning Crusade (60-70)\\Zangarmarsh (62-64)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Zangarmarsh",
-next="Zygor's Horde Leveling Guides\\The Burning Crusade (60-70)\\Terokkar Forest (64-66)",
+next="Zygor's Leveling Guides\\The Burning Crusade (60-70)\\Terokkar Forest (64-66)",
 startlevel=62.90,
 endlevel=64.79,
 dynamic=true,
@@ -17915,8 +18358,9 @@ click Mature Spore Sac##6911
 |tip They look like small pink balloon things on the ground.
 collect 10 Mature Spore Sac##24290 |q 9739 |goto 14.5,61.6
 step "investigateglen"
-kill Starving Fungal Giant##18125+, Starving Bog Lord##19519+ |only if rep ('Sporeggar') <= Unfriendly
-collect 6 Bog Lord Tendril##24291 |only if rep ('Sporeggar') <= Unfriendly
+kill Starving Fungal Giant##18125+, Starving Bog Lord##19519+
+collect 6 Bog Lord Tendril##24291
+|only if rep ('Sporeggar') <= Unfriendly
 step
 Investigate the Spawning Glen |q 9701/1 |goto 13.6,59.8
 step
@@ -18125,10 +18569,10 @@ talk Warden Hamoot##17858
 turnin Leader of the Darkcrest##9730 |goto 79.1,65.3
 turnin Leader of the Bloodscale##9817 |goto 79.1,65.3
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\The Burning Crusade (60-70)\\Terokkar Forest (64-66)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\The Burning Crusade (60-70)\\Terokkar Forest (64-66)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Terokkar",
-next="Zygor's Horde Leveling Guides\\The Burning Crusade (60-70)\\Nagrand (66-67)",
+next="Zygor's Leveling Guides\\The Burning Crusade (60-70)\\Nagrand (66-67)",
 startlevel=64.79,
 endlevel=66.46,
 dynamic=true,
@@ -18588,7 +19032,7 @@ accept Who Are They?##10041 |goto 39,43.7
 step
 talk Scout Neftis##18714
 Tell her _"Scout Neftis, I need another disguise."_
-Let Scout Neftis put an Orc disguise on you |havebuff Interface\Icons\Spell_Shadow_NetherCloak |q 10041 |goto 39,43.7
+Let Scout Neftis put an Orc disguise on you |havebuff 136177 |q 10041 |goto 39,43.7
 step
 _Careful!_ Mounting will cause the disguise to come off
 talk Shadowy Advisor##18719
@@ -18784,8 +19228,8 @@ kill Torgos##18707
 collect Tail Feather of Torgos |q 10036/1 |goto 26.9,55.6
 step
 _Enter_ the crypt |goto 31.2,52.7  < 10 |walk
-talk Akuno##22377
-accept Escaping the Tomb##10887 |goto 30.6,49.1
+talk Akuno##22377 |indoors Shadow Tomb
+accept Escaping the Tomb##10887 |goto 30.6,49.1 |indoors Shadow Tomb
 step
 Protect Akuno as he escapes the Tomb
 Help Akuno find his way to the Refugee Caravan |q 10887/1 |goto 33.8,51.6
@@ -18947,10 +19391,10 @@ step
 talk Sal'salabim##18584
 turnin Crackin' Some Skulls##10009 |goto Shattrath City,77.3,34.9
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\The Burning Crusade (60-70)\\Nagrand (66-67)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\The Burning Crusade (60-70)\\Nagrand (66-67)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Nagrand",
-next="Zygor's Horde Leveling Guides\\The Burning Crusade (60-70)\\Blade's Edge Mountains (67-68)",
+next="Zygor's Leveling Guides\\The Burning Crusade (60-70)\\Blade's Edge Mountains (67-68)",
 startlevel=66.46,
 endlevel=67.68,
 dynamic=true,
@@ -19491,7 +19935,7 @@ step
 _Enter_ the cave |goto 27.6,11.3 < 10 |walk
 Follow the path up inside the cave
 kill Cho'war the Pillager##18423
-collect Head of Cho'war |q 9946/1 |goto 25.9,13.7
+collect Head of Cho'war |q 9946/1 |goto 25.9,13.7 |indoors Warmaul Hill
 step
 _Leave_ the cave |goto 27.6,11.3 < 10 |walk
 talk Elder Yorley##18414
@@ -19827,10 +20271,12 @@ accept Auchindoun...##10167 |goto Shattrath City 54.1,44.7
 step
 _Follow_ the path |goto Terokkar Forest,37.2,65.6 |only if walking
 kill Exarch Maladaar##18373 |q 10167/1 |goto Auchenai Crypts/2 74.2,49.9
+step
 talk D'ore##19412
 |tip It's a big white floating alien being that appears after you kill Exarch Maladaar.
 turnin Auchindoun...##10167 |goto Auchenai Crypts/2 74.2,49.9
 accept What the Soul Sees##10168 |goto Auchenai Crypts/2 74.2,49.9
+step
 click a Soul Mirror
 |tip They look like big pink floating crystals near the walls inside the Auchenai Crypts dungeon.
 collect Soul Mirror |q 10168/2 |goto Auchenai Crypts/2 74.2,49.9
@@ -19884,10 +20330,10 @@ talk Chief Researcher Amereldine##18816
 accept Oshu'gun Crystal Powder##10074 |goto 41.2,44.3
 turnin Oshu'gun Crystal Powder##10074 |goto 41.2,44.3
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\The Burning Crusade (60-70)\\Blade's Edge Mountains (67-68)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\The Burning Crusade (60-70)\\Blade's Edge Mountains (67-68)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\BladesEdge",
-next="Zygor's Horde Leveling Guides\\The Burning Crusade (60-70)\\Netherstorm (68-70)",
+next="Zygor's Leveling Guides\\The Burning Crusade (60-70)\\Netherstorm (68-70)",
 startlevel=67.68,
 endlevel=68.97,
 dynamic=true,
@@ -20311,7 +20757,7 @@ confirm |q 10819
 step
 use Felsworn Gas Mask##31366
 |tip Use your Felsworn Gas Mask to equip it.
-Wear the Felsworn Gas Mask |havebuff Interface\Icons\INV_Helmet_31 |q 10894
+Wear the Felsworn Gas Mask |havebuff 133133 |q 10894
 click Legion Communicator##7091
 |tip It is between 2 big green floating crystals. You must be wearing the Felsworn Gas Mask to use the Legion Communicator.
 turnin Felsworn Gas Mask##10819 |goto 73.3,40.1
@@ -20321,7 +20767,7 @@ kill 4 Doomforge Attendant##19961 |q 10820/1 |goto 74.9,39.9
 kill 4 Doomforge Engineer##19960 |q 10820/2 |goto 74.9,39.9
 step
 Use your Felsworn Gas Mask to equip it |use Felsworn Gas Mask##31366
-Wear the Felsworn Gas Mask |havebuff Interface\Icons\INV_Helmet_31 |q 10894
+Wear the Felsworn Gas Mask |havebuff 133133 |q 10894
 click Legion Communicator##7091
 turnin Deceive thy Enemy##10820 |goto 73.3,40.1
 |tip Between 2 big green floating crystals. Click the Legion Communicator. You must be wearing the Felsworn Gas Mask to use the Legion Communicator.
@@ -20370,7 +20816,7 @@ kill 10 Bloodmaul Mauler##19993 |q 10784/1 |goto 56.2,26.7
 kill 5 Bloodmaul Warlock##19994 |q 10784/2 |goto 56.2,26.7
 step
 use Kodohide Drum##31141 |goto 56.4,29.2
-Coax a Marmot |havebuff Interface\Icons\INV_Misc_Drum_01 |q 10720
+Coax a Marmot |havebuff 133841 |q 10720
 step
 Use the _Poison Keg_ ability on your action bar
 Poison the Keg of Ripe Moonshine |q 10720/2 |goto 55.4,28.2
@@ -20425,7 +20871,7 @@ accept Meeting at the Blackwing Coven##10722 |goto 50.2,36.1
 step
 _Go northwest_ through the tunnel |goto Blade's Edge Mountains 43.1,29.9 < 10 |only if walking
 kill Grishna Harbinger##19989+, Grishna Falconwing##19988+ |goto 40.9,20.4
-Get the Understanding Ravenspeech Buff |havebuff Interface\Icons\Ability_Hunter_Pet_DragonHawk |q 10607
+Get the Understanding Ravenspeech Buff |havebuff 132188 |q 10607
 |tip You must deliver the killing blow (not your pet) to receive the buff. |only if Hunter
 |tip The buff lasts for 2 minutes. Anytime the buff wears off, kill arakkoas again to get it back.
 step
@@ -20463,7 +20909,7 @@ kill Wyrmcult Scout##21637+, Wyrmcult Acolyte##21383+, Wyrmcult Zealot##21382+
 collect 5 Costume Scraps##31121 |q 10722 |goto 32.3,34.9
 step
 use Costume Scraps##31121
-Put on the Overseer Disguise |havebuff Interface\Icons\INV_Chest_Wolf |q 10722 |goto 31.9,37.4 |use Overseer Disguise##31122
+Put on the Overseer Disguise |havebuff 132760 |q 10722 |goto 31.9,37.4 |use Overseer Disguise##31122
 step
 talk Kolphis Darkscale##22019
 Tell him _"I'm fine, thank you. You asked for me?"_
@@ -20519,17 +20965,17 @@ kill Koi-Koi Spirit##22226+
 |tip Use Exorcism Feathers on the Raven's Wood Leafbeards.
 |tip Kill the Koi Koi spirits that spawn to free the trees.
 Free #5# Raven's Wood Leafbeards |q 10830/1 |goto 33.8,29.4
-modelnpc Koi-Koi Spirit##22226
 step
 talk Treebole##22215
 turnin Exorcising the Trees##10830 |goto 36.6,23.1
 step
-_Enter_ the cave |goto Blade's Edge Mountains 32.1,34.1 < 10 |walk
-_Follow_ the right path |goto Blade's Edge Mountains/0 32.1,35.4 < 10 |walk
-_Continue_ around |goto 32.8,35.4 < 10 |walk
-kill 1 Maxnar the Ashmaw##21389 |q 10748/1 |goto 33.9,35.4
+Enter the cave |goto Blade's Edge Mountains 32.1,34.1 < 10 |walk
+Follow the right path |goto Blade's Edge Mountains/0 32.1,35.4 < 10 |walk
+Continue around |goto 32.8,35.4 < 10 |walk
+kill Maxnar the Ashmaw##21389 |q 10748/1 |goto 33.9,35.4
 |tip Follow the cave path until it dead ends into him.
 step
+Leave the cave |goto Blade's Edge Mountains 32.1,34.1 < 10 |walk
 talk Tree Warden Chawn##22007
 turnin Maxnar Must Die!##10748 |goto 62,39.5
 step
@@ -20568,7 +21014,7 @@ Ask him if he has another Felsworn Gas Mask
 collect Felsworn Gas Mask##31366 |future |q 10821 |goto 62.2,40.1
 step
 Use your Felsworn Gas Mask to equip it |use Felsworn Gas Mask##31366
-Wear the Felsworn Gas Mask |havebuff Interface\Icons\INV_Helmet_31 |c |future |q 10821 |goto 73.3,40.1
+Wear the Felsworn Gas Mask |havebuff 133133 |c |future |q 10821 |goto 73.3,40.1
 step
 click the Legion Communicator
 |tip It looks like a metal altar sitting on the ground.
@@ -20662,7 +21108,7 @@ talk Mog'dorg the Wizened##22941
 turnin Even Gronn Have Standards##10997 |goto Blade's Edge Mountains 55.5,44.9
 accept Grim(oire) Business##10998 |goto Blade's Edge Mountains 55.5,44.9
 step
-_Stand_ in this ring of fire on the ground
+Stand in this ring of fire on the ground
 kill Vim'gol the Vile##22911
 click Vim'gol's Vile Grimoire##255
 |tip It's a red book that spawns on Vim'gol the Vile's stomach after you kill him.
@@ -20727,7 +21173,9 @@ click Apexis Relic##7378
 |tip It looks like a smaller floating crystal hovering over a white orb on the ground.
 Insert an Apexis Shard, and begin!
 Repeat the color patterns that are shown
-|tip Ignore the floating crystal now, focus on the crystals on the ground.  You will be shown a color sequence.  Once the sequence is done, you have to click the stones on the ground in the same order.  It's random every time, and you'll have to repeat 8 sequences.  It helps to stand directly under the floating crystal and move your camera up so you are looking down at the top of your head.
+|tip Ignore the floating crystal now, focus on the crystals on the ground.
+|tip You will be shown a color sequence.  Once the sequence is done, you have to click the stones on the ground in the same order.
+|tip It's random every time, and you'll have to repeat 8 sequences.  It helps to stand directly under the floating crystal and move your camera up so you are looking down at the top of your head.
 Attain the Apexis Vibrations |q 11080/1 |goto 31.5,63.4
 If you fail, get another Apexis Shard around [Blade's Edge Mountains,29.2,65.2]
 step
@@ -20755,13 +21203,13 @@ talk Sky Commander Keller##23334
 turnin The Skyguard Outpost##11062 |goto 27.4,52.7
 step
 talk Sky Sergeant Vanderlip##23120
-accept Bombing Run##11010 |only !Druid |goto 27.6,52.9
+accept Bombing Run##11010 |only if not Druid |goto 27.6,52.9
 accept Bombing Run##11102 |only Druid |goto 27.6,52.9
 step
 Use your Skyguard Bombs on Fel Cannonballs Stacks |use Skyguard Bombs##32456
 |tip They look like piles of gray stones on the ground around this area.
 Destroy 15 Fel Cannonball Stacks |q 11010/1 |goto 33.3,44.0
-only !Druid
+only if not Druid
 step
 Use your Skyguard Bombs on Fel Cannonballs Stacks |use Skyguard Bombs##32456
 |tip They look like piles of gray stones on the ground around this area.
@@ -20769,7 +21217,7 @@ Destroy 15 Fel Cannonball Stacks |q 11102/1 |goto 33.3,44.0
 only Druid
 step
 talk Sky Sergeant Vanderlip##23120
-turnin Bombing Run##11010 |only !Druid |goto 27.6,52.9
+turnin Bombing Run##11010 |only if not Druid |goto 27.6,52.9
 turnin Bombing Run##11102 |only Druid |goto 27.6,52.9
 step
 talk Sky Commander Keller##23334
@@ -20783,7 +21231,8 @@ accept Wrangle Some Aether Rays!##11065 |goto 28.0,51.5
 step
 kill Aether Ray##22181+
 Use your Wrangling Rope on Aether Rays when they are ready to be wrangled |use Wrangling Rope##32698
-|tip You will see a message in your chat window.  It may help to take off some of your gear if you are high level.
+|tip You will see a message in your chat window.
+|tip It may help to take off some of your gear if you are high level.
 Wrangle 5 Aether Rays |q 11065/1 |goto 31.6,56.4
 You can find more Aether Rays around [Blade's Edge Mountains,29.3,50.3]
 step
@@ -20807,7 +21256,8 @@ step
 click the Apexis Monument
 |tip It's a huge floating crystal that changes colors.
 Insert 35 Apexis Shards, and begin!
-click any of the 4 big colored buttons on the ground |tip You will get hit for 7,000 damage, but if you are high level, it shouldn't be a big deal.  This will make the quest mob spawn faster.
+click any of the 4 big colored buttons on the ground
+|tip You will get hit for 7,000 damage, but if you are high level, it shouldn't be a big deal.  This will make the quest mob spawn faster.
 kill Apexis Guardian##22275
 collect Apexis Guardian's Head |q 11059/1 |goto 31.8,63.8
 step
@@ -20870,10 +21320,10 @@ step
 talk Jho'nass##23428
 turnin A Special Thank You##11091 |goto 28.1,58.7
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\The Burning Crusade (60-70)\\Netherstorm (68-70)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\The Burning Crusade (60-70)\\Netherstorm (68-70)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Netherstorm",
-next="Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\Borean Tundra (70-72)",
+next="Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\Borean Tundra (70-72)",
 startlevel=68.97,
 dynamic=true,
 },[[
@@ -21151,6 +21601,7 @@ kill Sunfury Technician##20218+
 Shut Down Manaforge B'naar |q 10299/1 |goto 23.2,68.1 |indoors Manaforge B'naar
 only if rep ('The Aldor') >= Neutral
 step
+Leave Manaforge B'naar |goto 24.88,67.69 < 5 |walk |indoors Manaforge B'naar
 talk Anchorite Karja##19467
 turnin Shutting Down Manaforge B'naar##10299 |goto 32.1,64.2
 accept Shutting Down Manaforge Coruu##10321 |goto 32.1,64.2
@@ -21160,6 +21611,7 @@ talk Exarch Orelis##19466
 accept Attack on Manaforge Coruu##10246 |goto 32.1,64.2
 only if rep ('The Aldor') >= Neutral
 step
+Leave Manaforge B'naar |goto 24.88,67.69 < 5 |walk |indoors Manaforge B'naar
 talk Spymaster Thalodien##19468
 turnin Shutting Down Manaforge B'naar##10329 |goto 32,64
 accept Stealth Flight##10194 |goto 32,64
@@ -21202,7 +21654,7 @@ turnin A Convincing Disguise##10197 |goto 48.2,86.6
 accept Information Gathering##10198 |goto 48.2,86.6
 only if rep ('The Scryers') >= Neutral
 step
-use Sunfury Disguise##28607 |havebuff Sunfury Disguise
+use Sunfury Disguise##28607 |havebuff 133564
 only if rep ('The Scryers') >= Neutral
 step
 _Enter_ the manaforge |goto 47.1,80.8 < 10 |walk
@@ -21212,6 +21664,7 @@ Gather the Information |q 10198/1 |goto 48.2,84.1
 modelnpc Arcane Annihilator##18856
 only if rep ('The Scryers') >= Neutral
 step
+Leave the Manaforge |goto 47.31,80.98 < 10 |walk |indoors Manaforge Coruu
 talk Caledis Brightdawn##19840
 turnin Information Gathering##10198 |goto 48.2,86.6
 accept Shutting Down Manaforge Coruu##10330 |goto 48.2,86.6
@@ -21229,6 +21682,7 @@ kill Sunfury Technician##20218+
 Shut Down Manaforge Coruu |q 10330/1
 only if rep ('The Scryers') >= Neutral
 step
+Leave the Manaforge |goto 47.31,80.98 < 10 |walk |indoors Manaforge Coruu
 talk Caledis Brightdawn##19840
 turnin Shutting Down Manaforge Coruu##10330 |goto 48.2,86.6
 accept Return to Thalodien##10200 |goto 48.2,86.6
@@ -21589,7 +22043,7 @@ click Box of Surveying Equipment##6881+
 |tip They look like white boxes scattered throughout this area.
 collect 10 Box of Surveying Equipment##28913 |q 10267/1 |goto 57.6,63.9
 step
-_Enter_ the manaforge |goto 58.7,64.0 < 10 |walk
+Enter the manaforge |goto 58.7,64.0 < 10 |walk
 kill 4 Sunfury Centurion##20140 |q 10341/3 |goto 59.4,66.2
 only if rep ('The Scryers') >= Neutral
 step
@@ -21613,6 +22067,7 @@ kill Sunfury Technician##20218+
 Shut Down Manaforge Duro |q 10338/1 |goto 59.1,66.8
 only if rep ('The Scryers') >= Neutral
 step
+Leave the manaforge |goto 58.7,64.0 < 10 |walk
 talk Shauly Pore##20921
 accept The Dynamic Duo##10434 |goto 46.5,56.0
 step
@@ -21700,7 +22155,7 @@ step "daughterdest"
 kill 3 Daughter of Destiny##18860 |q 10380/2 |goto 30.8,40.8
 only if rep ('The Aldor') >= Neutral
 step
-_Enter_ the Trelleum Mine |goto 26.4,44 < 10 |walk
+Enter the Trelleum Mine |goto 26.4,44 < 10 |walk
 talk Foreman Sundown##20393
 |tip He is inside the mine.
 turnin Dealing with the Foreman##10317 |goto 26.4,42.3
@@ -21709,11 +22164,13 @@ stickystart "ganargkills"
 step
 kill Overmaster Grindgarr##20803 |q 10318/1 |goto 26.8,36.0
 |tip He's found in the back of the cave.
-step "ganargkills"
+step
+label "ganargkills"
 kill 6 Gan'arg Warp-Tinker##20285 |q 10380/1 |goto 26.4,42.3
 kill 6 Mo'arg Warp-Master##20326 |q 10380/2 |goto 26.4,42.3
 only if rep ('The Aldor') >= Neutral
 step
+Leave the Trelleum Mine |goto 26.4,44 < 10 |walk
 talk Nether-Stalker Oazul##20341
 turnin Neutralizing the Nethermancers##10315 |goto Netherstorm 34.5,37.8
 step
@@ -21912,7 +22369,7 @@ kill Warden Icoshock##20770+
 collect The Warden's Key##29742 |goto 54.4,40.1 |q 10422
 step
 use Navuud's Concoction##29737
-Gain the Electro-Shock Therapy buff |havebuff Interface\Icons\Spell_Lightning_LightningBolt01 |q 10411
+Gain the Electro-Shock Therapy buff |havebuff 135990 |q 10411
 |tip This buff lasts for 60 minutes. High levels will need to use melee since the effect only works by random chance.
 kill Void Waste##20778+
 kill 30 Void Waste Globule##20805 |q 10411/2 |goto 55.2,42.8
@@ -21930,7 +22387,7 @@ step
 kill Ethereum Shocktrooper##20453+, Ethereum Assassin##20452+
 collect Ethereum Essence##29482 |n
 use Ethereum Essence##29482
-Gain the Brain Damage buff |havebuff Interface\Icons\INV_Misc_Organ_03 |q 10385
+Gain the Brain Damage buff |havebuff 134340 |q 10385
 |tip If the buff wears off, kill more Ethereum mobs to get another Ethereum Essence.
 kill Ethereum Relay##20619+
 collect 15 Ethereum Relay Data##29459 |q 10385/1 |goto 56.5,38.6
@@ -21976,7 +22433,7 @@ kill Voidshrieker##18870+, Unstable Voidwraith##18869+
 collect 8 Fragment of Dimensius##29822 |q 10437/1 |goto 62.5,34.7
 step
 use Navuud's Concoction##29737
-Gain the Electro-Shock Therapy buff |havebuff Interface\Icons\Spell_Lightning_LightningBolt01 |q 10411
+Gain the Electro-Shock Therapy buff |havebuff 135990 |q 10411
 |tip This buff lasts for 60 minutes. High levels will need to use melee since the effect only works by random chance.
 kill Seeping Sludge##20501+
 kill 30 Seeping Sludge Globule##20806 |q 10411/1 |goto 59.5,39.9
@@ -22163,20 +22620,20 @@ step
 talk Papa Wheeler##19645
 turnin Wanted: Annihilator Servo!##10261 |goto 33.0,64.7
 step
-Go inside the Manaforge Ara to this spot
+Go inside Manaforge Ara |goto 28.06,39.54 < 5 |walk
 kill Overseer Azarad##20685
 |tip He walks around inside Manaforge Ara and stops in at this small side room.
 collect Ara Access Crystal##29411 |q 10323/2 |goto 26.7,36.8
-only if rep ('The Aldor') >= Neutral
+|only if rep ('The Aldor') >= Neutral
 step
 click Ara Control Console##7076
 click "<Begin emergency shutdown>"
 Kill the technicians as they come to try to save the Manaforge
-|Only takes 2 minutes
+|tip It only takes 2 minutes
 Shut Down Manaforge Duro |q 10323/1 |goto 26.0,38.8
 only if rep ('The Aldor') >= Neutral
 step
-Go inside the Manaforge Ara to this spot
+Go inside Manaforge Ara |goto 28.06,39.54 < 5 |walk
 kill Overseer Azarad##20685
 |tip He walks around inside Manaforge Ara and stops in at this small side room.
 collect Ara Access Crystal##29411 |q 10365/2 |goto 26.7,36.8
@@ -22204,6 +22661,7 @@ turnin Socrethar's Shadow##10407 |goto 32.0,64.2
 accept Ishanah's Help##10410 |goto 32.0,64.2
 only if rep ('The Aldor') >= Neutral
 step
+Leave Manaforge Ara |goto 28.06,39.54 < 5 |walk
 talk Zuben Elgenubi##20067
 accept In Search of Farahlite##10290 |goto 44.0,36.0
 step
@@ -22272,10 +22730,10 @@ step
 talk A'dal##18481
 turnin Special Delivery to Shattrath City##10280 |goto Shattrath City 54.1,44.9
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\The Burning Crusade (60-70)\\Shadowmoon Valley (68-70)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\The Burning Crusade (60-70)\\Shadowmoon Valley (68-70)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Shadowmoon",
-next="Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\Borean Tundra (70-72)",
+next="Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\Borean Tundra (70-72)",
 startlevel=68.97,
 dynamic=true,
 },[[
@@ -22708,6 +23166,10 @@ talk Anchorite Ceyla##21402
 accept Tablets of Baa'ri##10568 |goto 62.6,28.4
 only if rep ('The Aldor') >= Neutral
 step
+talk Maddix##19581
+fpath Altar of Sha'tar |goto Shadowmoon Valley 63.3,30.4
+|only if rep ('The Aldor') >= Neutral
+step
 talk Tobias the Filth Gorger##21411
 turnin Of Thistleheads and Eggs...##10547 |goto Shattrath City 64.0,70.0
 accept The Bundle of Bloodthistle##10550 |goto Shattrath City 64.0,70.0
@@ -22863,7 +23325,7 @@ turnin The Shadowmoon Shuffle##10576 |goto 47.6,57.2
 accept What Illidan Wants, Illidan Gets...##10577 |goto 47.6,57.2
 step
 use Blood Elf Disguise##30639
-Gain the Blood Elf Disguise |havebuff Interface\Icons\INV_Mask_01 |goto 45.3,68.2 |q 10577
+Gain the Blood Elf Disguise |havebuff 133564 |goto 45.3,68.2 |q 10577
 step
 talk Grand Commander Ruusk##20563
 Tell him _"I bring word from Lord Illidan."_
@@ -23245,10 +23707,10 @@ step
 talk Yarzill the Merc##23141
 accept Your Friend on the Inside##11019 |instant |goto 66.0,86.5
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\Borean Tundra (70-72)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\Borean Tundra (70-72)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Borean",
-next="Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\Dragonblight (71-74)",
+next="Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\Dragonblight (71-74)",
 startlevel=70.00,
 dynamic=true,
 },[[
@@ -23998,7 +24460,7 @@ use Raelorasz's Spear##35506
 |tip Use your Raelorasz's Spear on a Nexus Drake Hatchling.
 |tip They are flying above you in the sky.
 Do not kill it, let it hit you until it becomes friendly
-Gain the Drake Hatchling Buff |havebuff Drake Hatchling Subdued |goto 24.6,27.1 |q 11919
+Gain the Drake Hatchling Buff |havebuff 134155 |goto 24.6,27.1 |q 11919
 step
 Capture the Nexus Drake |q 11919/1 |goto 33.3,34.5
 step
@@ -24282,7 +24744,7 @@ talk Chieftain Wintergale##24703
 turnin The Bad Earth##11630 |goto 75.9,37.2
 accept Blending In##11633 |goto 75.9,37.2
 step
-Equip the Imbued Scourge Shroud in your bags |havebuff Shroud of the Scourge |use Imbued Scourge Shroud##34782 |goto 84.1,31.1,1 |q 11633
+Equip the Imbued Scourge Shroud in your bags |havebuff 135894 |use Imbued Scourge Shroud##34782 |goto 84.1,31.1,1 |q 11633
 step
 Scout the Spire of Pain |q 11633/3 |goto 88.9,28.6
 |tip Go up the staircase into this room to Scout the Spire of Pain.
@@ -24528,7 +24990,7 @@ talk King Mrgl-Mrgl##25197
 turnin The Spare Suit##11565 |goto 43.5,14
 accept Surrender... Not!##11566 |goto 43.5,14
 step
-Use King Mrgl-Mrgl's Spare Suit |havebuff INV_Misc_Head_Murloc_01 |use King Mrgl-Mrgl's Spare Suit##34620 |goto 41.3,15.8 |q 11566
+Use King Mrgl-Mrgl's Spare Suit |havebuff 134169 |use King Mrgl-Mrgl's Spare Suit##34620 |goto 41.3,15.8 |q 11566
 step
 _Enter_ the cave |goto 40.2,19.7 < 10 |walk
 talk Glrglrglr##28375
@@ -24640,10 +25102,10 @@ step
 talk Spirit Talker Snarlfang##25339
 turnin Return My Remains##11638 |goto 50.3,9.7
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\Howling Fjord (70-71)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\Howling Fjord (70-71)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Howling",
-next="Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\Dragonblight (71-74)",
+next="Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\Dragonblight (71-74)",
 startlevel=70.00,
 dynamic=true,
 },[[
@@ -25723,10 +26185,10 @@ talk Tobias Sarkhoff##24155 |goto 52.0,67.4 < 5
 Fly to Dragonblight |goto Dragonblight 76.6,62.4 |q 12182
 only if not completedq(12188)
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\Dragonblight (71-74)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\Dragonblight (71-74)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\DragonBlight",
-next="Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\Grizzly Hills (74-75)",
+next="Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\Grizzly Hills (74-75)",
 startlevel=71.95,
 dynamic=true,
 },[[
@@ -25999,14 +26461,14 @@ _Go up_ the stairs |goto 73.1,73.7 < 5 |walk
 click Abbey Bell Rope##7717
 |tip It's in the attic of the cathedral building.
 Ring the Abbey Bell |q 12274/1 |goto 72.9,73.5
-Maintain the _Scarlet Raven Priest Image_ buff! Talk to to Agent Skully to get it again |havebuff Interface\Icons\Spell_Shadow_NetherCloak |q 12274
+Maintain the _Scarlet Raven Priest Image_ buff! Talk to to Agent Skully to get it again |havebuff 136177 |q 12274
 step
 talk High Abbot Landgren##27245
 |tip He is downstairs.
 Tell him _"Your eminence, may I have a word in private?"_ |goto 73.5,74.3 < 5 |walk
 _Meet High Abbot Landgren_ at the Abbey entrance |goto 72.1,73.4 < 10 |walk
 Speak with High Abbot Landgren |q 12274/2 |goto 74.0,75.9
-Maintain the _Scarlet Raven Priest Image_ buff! Talk to to Agent Skully to get it again |havebuff Interface\Icons\Spell_Shadow_NetherCloak |q 12274
+Maintain the _Scarlet Raven Priest Image_ buff! Talk to to Agent Skully to get it again |havebuff 136177 |q 12274
 step
 talk Agent Skully##27350
 turnin A Fall From Grace##12274 |goto 73.6,73.5
@@ -27005,10 +27467,10 @@ turnin Wanted: Magister Keldonus##12089 |goto 35.8,48.4
 turnin Wanted: Gigantaur##12090 |goto 35.8,48.4
 turnin Wanted: Dreadtalon##12091 |goto 35.8,48.4
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\Grizzly Hills (74-75)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\Grizzly Hills (74-75)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\GrizzlyHills",
-next="Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\Zul'Drak (75-77)",
+next="Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\Zul'Drak (75-77)",
 startlevel=74.30,
 dynamic=true,
 },[[
@@ -27121,7 +27583,7 @@ turnin Good Troll Hunting##12208 |goto 16.2,47.6
 accept Filling the Cages##11984 |goto 16.2,47.6
 step
 talk Budd##26422
-Tell him _"Come on, Budd. Time to play with the ice trolls!"_ |havebuff INV_Misc_Head_Troll_01 |q 11984 |goto 16.4,48.3
+Tell him _"Come on, Budd. Time to play with the ice trolls!"_ |havebuff 134177 |q 11984 |goto 16.4,48.3
 step
 Use Budd's pet bar skill _Tag Troll_ to have him stun a troll |petaction Tag Troll
 Use your _Bounty Hunter's Cage_ on the stunned troll |use Bounty Hunter's Cage##35736
@@ -27517,7 +27979,7 @@ step
 use Charged Drakil'jin Mallet##36834
 |tip Use your Charged Drakil'jin Mallet next to a gong. They are 3 gongs sitting close together here.
 Get killed by Warlord Jin'arrak |q 12121/1 |goto 71.5,24.7
-STAY DEAD |havebuff On the Other Side
+STAY DEAD |havebuff 132094
 step
 _Follow_ the path down |goto 71.5,23.8 < 10 |only if walking
 talk Gan'jo##26924
@@ -27731,10 +28193,10 @@ _Proceed forward_ into The Violet Hold |goto The Violet Hold 45.8,93.6 < 10
 talk Lieutenant Sinclari##30658
 turnin Discretion is Key##29829 |goto The Violet Hold 47.7,89.7
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\Zul'Drak (75-77)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\Zul'Drak (75-77)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\ZulDrak",
-next="Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\Sholazar Basin (77-78)",
+next="Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\Sholazar Basin (77-78)",
 startlevel=75.73,
 dynamic=true,
 },[[
@@ -28803,10 +29265,10 @@ step
 talk Har'koa##28401
 turnin Convocation at Zol'Heb##12730 |goto 60.1,57.7
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\Sholazar Basin (77-78)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\Sholazar Basin (77-78)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Sholazar",
-next="Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\The Storm Peaks (78-80)",
+next="Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\The Storm Peaks (78-80)",
 startlevel=77.39,
 dynamic=true,
 },[[
@@ -29488,10 +29950,10 @@ step
 talk Avatar of Freya##27801
 turnin Reclamation##12546 |goto 64.6,48.6
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\The Storm Peaks (78-80)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\The Storm Peaks (78-80)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\StormPeaks",
-next="Zygor's Horde Leveling Guides\\Cataclysm (80-85)\\Mount Hyjal (80-82)",
+next="Zygor's Leveling Guides\\Cataclysm (80-85)\\Mount Hyjal (80-82)",
 startlevel=78.72,
 dynamic=true,
 },[[
@@ -30109,16 +30571,16 @@ kill 7 Iron Sentinel##29984 |q 13005/1 |goto 57.3,46.7
 kill 20 Iron Dwarf Assailant##29978 |q 13005/2 |goto 57.3,46.7
 step
 _Enter_ building through the huge arch |goto 57.2,44.2 < 10 |walk
-use Horn of the Peaks##42840
+Use your Horn of the Peaks to summon earthen helpers |use Horn of the Peaks##42840
 kill Eisenfaust##30341 |q 13035/1 |goto 55.3,43.3
 |tip He's inside this Hall of the Shaper building in the very back of the room.
 step
-use Horn of the Peaks##42840
+Use your Horn of the Peaks to summon earthen helpers |use Horn of the Peaks##42840
 |tip Use your Horn of the Peaks to summon earthen helpers.
 kill Halefnir the Windborn##30376 |q 13035/2 |goto 48.6,45.6
 |tip Standing in the middle of this huge staircase.
 step
-use Horn of the Peaks##42840
+Use your Horn of the Peaks to summon earthen helpers |use Horn of the Peaks##42840
 |tip Use your Horn of the Peaks to summon earthen helpers.
 kill Duronn the Runewrought##30353 |q 13035/3 |goto 45,38.1
 |tip Standing at the bottom of this huge staircase. Use Earth Shock to interrupt his Reconstruction, which will restore all of his health.
@@ -30312,6 +30774,7 @@ click the Enchanted Earth##8194
 |tip They spawn along the cliff wall.
 collect 7 Enchanted Earth##41614 |q 12930/1 |goto 28.3,29.4
 step
+Enter the building |goto 30.62,36.97 |walk
 talk Bouldercrag the Rockshaper##29801
 turnin Rare Earth##12930 |goto 31.4,38.1
 accept Fighting Back##12931 |goto 31.4,38.1
@@ -30326,6 +30789,7 @@ step "stormforgedattacker"
 kill Stormforged Raiders##29377+, Stormforged Reavers##29382+
 Kill #10# Stormforged Attacker |q 12931/1 |goto 28.1,36.7
 step
+Enter the building here |goto 30.5,36.8 |walk
 talk Bouldercrag the Rockshaper##29801
 turnin Fighting Back##12931 |goto 31.4,38.1
 turnin Relief for the Fallen##12937 |goto 31.4,38.1
@@ -30469,10 +30933,10 @@ _Enter_ the building |goto 30.6,36.9 < 10 |walk
 talk Bouldercrag the Rockshaper##29801
 turnin The Iron Colossus##13007 |goto 31.4,38.1
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\Icecrown (78-80)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\Icecrown (78-80)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Icecrown",
-next="Zygor's Horde Leveling Guides\\Cataclysm (80-85)\\Mount Hyjal (80-82)",
+next="Zygor's Leveling Guides\\Cataclysm (80-85)\\Mount Hyjal (80-82)",
 startlevel=78.72,
 dynamic=true,
 },[[
@@ -30555,11 +31019,11 @@ turnin The Last Line Of Defense##13086 |goto 85.6,76.0
 step
 talk Highlord Tirion Fordring##30677
 accept Once More Unto The Breach, Hero##13105 |only DeathKnight |goto 86.0,75.8
-accept Once More Unto The Breach, Hero##13104 |only !DeathKnight |goto 86.0,75.8
+accept Once More Unto The Breach, Hero##13104 |only if not DeathKnight |goto 86.0,75.8
 step
 talk The Ebon Watcher##30596
 turnin Once More Unto The Breach, Hero##13105 |only DeathKnight |goto 83.0,72.9
-turnin Once More Unto The Breach, Hero##13104 |only !DeathKnight |goto 83.0,72.9
+turnin Once More Unto The Breach, Hero##13104 |only if not DeathKnight |goto 83.0,72.9
 accept The Purging Of Scourgeholme##13118 |goto 83.0,72.9
 accept The Scourgestone##13122 |goto 83.0,72.9
 step
@@ -31016,6 +31480,9 @@ Location 2: |goto Icecrown 68.0,52.5
 Location 3: |goto Icecrown 68.9,27.0
 Find Orgrim's Hammer flying around in the sky
 |tip On your world map it looks like a ship icon with 2 long red-ish balloons on either side of it.
+confirm
+step
+On the Skybreaker airship:
 talk Koltira Deathweaver##29795
 |tip He is in the main room on the upper level of the airship.
 turnin If He Cannot Be Turned##12897
@@ -31151,6 +31618,9 @@ Location 2: |goto Icecrown 68.0,52.5
 Location 3: |goto Icecrown 68.9,27.0
 Find Orgrim's Hammer flying around in the sky
 |tip On your world map it looks like a ship icon with 2 long red-ish balloons on either side of it.
+confirm
+step
+On the Orgrim's Hammer airship:
 talk Koltira Deathweaver##29795
 |tip He is in the main room on the upper level of the airship.
 turnin Drag and Drop##13352
@@ -31259,7 +31729,7 @@ use Dr. Terrible's "Building a Better Flesh Giant"##42772
 accept The Sum is Greater than the Parts##13043 |goto 34.0,36.3
 step
 clicknpc Nergeld##30403
-Take Control of Nergeld |havebuff Interface\Icons\Spell_Shadow_Possession |goto 33.4,33.2 < 10 |q 13043
+Take Control of Nergeld |havebuff 136183 |goto 33.4,33.2 < 10 |q 13043
 step
 Use Nergeld's abilities to kill Dr. Terrible
 |tip He's a big undead monster.
@@ -31276,7 +31746,7 @@ turnin The Sum is Greater than the Parts##13043 |goto 32.5,42.9
 accept The Art of Being a Water Terror##13091 |goto 32.5,42.9
 step
 click Lock Gate##7482
-Control a Water Terror |havebuff Interface\Icons\Spell_Frost_SummonWaterElemental_2 |goto 31.4,41.2 |q 13091
+Control a Water Terror |havebuff 135862 |goto 31.4,41.2 |q 13091
 step
 kill Jotunheim Warrior##29880+, Mjordin Water Magus##30632+, Njorndar Spear-Sister##30243+
 Slay #10# Jotunheim Vrykul |q 13091/1 |goto 32.1,41.2
@@ -31909,7 +32379,7 @@ step
 kill Cultist Acolyte##32507+
 collect 1 Cultist Acolyte's Hood##44784 |n
 use Cultist Acolyte's Hood##44784
-Become Disguised as a Cultist |havebuff Ability_Rogue_MasterOfSubtlety |q 13364 |goto 45.2,77.0
+Become Disguised as a Cultist |havebuff 132299 |q 13364 |goto 45.2,77.0
 step
 talk Highlord Tirion Fordring##32239
 Tell him _"I'm ready, Highlord."_ |goto 44.4,76.2 < 6
@@ -32169,386 +32639,7 @@ step
 talk Lord-Commander Arete##29344
 turnin The Admiral Revealed##12852 |goto 19.5,48.2
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Arathi Highlands",{
-author="support@zygorguides.com",
-condition_end="achieved(4896)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Arathi Highlands (26-30)\\Arathi Highlands (26-29)"
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Arathi Highlands (26-30)\\Arathi Highlands (29-30)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Badlands",{
-author="support@zygorguides.com",
-condition_end="achieved(4900)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Badlands (44-47)\\Badlands (44-47)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Blasted Lands",{
-author="support@zygorguides.com",
-condition_end="achieved(4909)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Blasted Lands (57-60)\\Blasted Lands (57-60)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Burning Steppes",{
-author="support@zygorguides.com",
-condition_end="achieved(4901)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Burning Steppes (49-52)\\Burning Steppes (49-52)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Cape of Stranglethorn",{
-author="support@zygorguides.com",
-condition_end="achieved(4905)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\The Cape of Stranglethorn (31-36)\\The Cape of Stranglethorn (31-36)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Eastern Plaguelands",{
-author="support@zygorguides.com",
-condition_end="achieved(4892)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Eastern Plaguelands (39-44)\\Eastern Plaguelands (39-44)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Ghostlands",{
-author="support@zygorguides.com",
-condition_end="achieved(4908)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Ghostlands (12-20)\\Ghostlands (12-20)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Hillsbrad Foothills",{
-author="support@zygorguides.com",
-condition_end="achieved(4895)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Hillsbrad Foothills (20-26)\\Hillsbrad Foothills (20-26)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Hinterlands",{
-author="support@zygorguides.com",
-condition_end="achieved(4897)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\The Hinterlands (30-34)\\The Hinterlands (30-32)"
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\The Hinterlands (30-34)\\The Hinterlands (32-34)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Northern Stranglethorn",{
-author="support@zygorguides.com",
-condition_end="achieved(4906)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Northern Stranglethorn (26-31)\\Northern Stranglethorn (26-31)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Searing Gorge",{
-author="support@zygorguides.com",
-condition_end="achieved(4910)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Searing Gorge (47-49)\\Searing Gorge (47-49)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Silverpine Forest",{
-author="support@zygorguides.com",
-condition_end="achieved(4894)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Silverpine Forest (11-20)\\Silverpine Forest (11-20)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Swamp of Sorrows",{
-author="support@zygorguides.com",
-condition_end="achieved(4904)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Swamp of Sorrows (52-54)\\Swamp of Sorrows (52-54)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Western Plaguelands",{
-author="support@zygorguides.com",
-condition_end="achieved(4893)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Western Plaguelands (34-39)\\Western Plaguelands (34-39)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Kalimdor 1-60\\Ashenvale",{
-author="support@zygorguides.com",
-condition_end="achieved(4976)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Ashenvale (20-26)\\Ashenvale (20-23)"
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Ashenvale (20-26)\\Ashenvale (23-26)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Kalimdor 1-60\\Azshara",{
-author="support@zygorguides.com",
-condition_end="achieved(4927)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Azshara (10-22)\\Azshara (10-12)"
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Azshara (10-22)\\Azshara (12-21)"
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Azshara (10-22)\\Azshara (21-22)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Kalimdor 1-60\\Desolace",{
-author="support@zygorguides.com",
-condition_end="achieved(4930)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Desolace (31-36)\\Desolace (31-33)"
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Desolace (31-36)\\Desolace (33-36)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Kalimdor 1-60\\Dustwallow Marsh",{
-author="support@zygorguides.com",
-condition_end="achieved(4978)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Dustwallow Marsh (35-39)\\Dustwallow Marsh (35-39)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Kalimdor 1-60\\Felwood",{
-author="support@zygorguides.com",
-condition_end="achieved(4931)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Felwood (47-51)\\Felwood (47-48)"
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Felwood (47-51)\\Felwood (48-51)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Kalimdor 1-60\\Feralas",{
-author="support@zygorguides.com",
-condition_end="achieved(4979)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Feralas (36-40)\\Feralas (36-40)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Kalimdor 1-60\\Northern Barrens",{
-author="support@zygorguides.com",
-condition_end="achieved(4933)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Northern Barrens (10-20)\\Northern Barrens (10-13)"
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Northern Barrens (10-20)\\Northern Barrens (13-17)"
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Northern Barrens (10-20)\\Northern Barrens (17-20)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Kalimdor 1-60\\Silithus",{
-author="support@zygorguides.com",
-condition_end="achieved(4934)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Silithus (55-57)\\Silithus (55-57)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Kalimdor 1-60\\Stonetalon Mountains",{
-author="support@zygorguides.com",
-condition_end="achieved(4980)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Stonetalon Mountains (26-31)\\Stonetalon Mountains (26-31)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Kalimdor 1-60\\Southern Barrens",{
-author="support@zygorguides.com",
-condition_end="achieved(4981)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Southern Barrens (31-35)\\Southern Barrens (31-34)"
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Southern Barrens (31-35)\\Southern Barrens (34-35)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Kalimdor 1-60\\Tanaris",{
-author="support@zygorguides.com",
-condition_end="achieved(4935)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Tanaris (44-47)\\Tanaris (44-47)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Kalimdor 1-60\\Thousand Needles",{
-author="support@zygorguides.com",
-condition_end="achieved(4938)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Thousand Needles (39-44)\\Thousand Needles (39-44)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Kalimdor 1-60\\Un'Goro Crater",{
-author="support@zygorguides.com",
-condition_end="achieved(4939)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Un'Goro Crater (55-57)\\Un'Goro Crater (55-57)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Classic (1-60)\\Kalimdor 1-60\\Winterspring",{
-author="support@zygorguides.com",
-condition_end="achieved(4940)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Winterspring (51-55)\\Winterspring (51-52)"
-next "Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Winterspring (51-55)\\Winterspring (52-55)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\The Burning Crusade (60-70)\\Hellfire Peninsula",{
-author="support@zygorguides.com",
-condition_end="achieved(1271)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\The Burning Crusade (60-70)\\Hellfire Peninsula (60-62)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\The Burning Crusade (60-70)\\Zangarmarsh",{
-author="support@zygorguides.com",
-condition_end="achieved(1190)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\The Burning Crusade (60-70)\\Zangarmarsh (62-64)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\The Burning Crusade (60-70)\\Terokkar Forest",{
-author="support@zygorguides.com",
-condition_end="achieved(1272)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\The Burning Crusade (60-70)\\Terokkar Forest (64-66)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\The Burning Crusade (60-70)\\Nagrand",{
-author="support@zygorguides.com",
-condition_end="achieved(1273)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\The Burning Crusade (60-70)\\Nagrand (66-67)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\The Burning Crusade (60-70)\\Blade's Edge Mountains",{
-author="support@zygorguides.com",
-condition_end="achieved(1193)",
-startlevel=00.00,
-dynamic=true,
-},[[
-step
-next "Zygor's Horde Leveling Guides\\The Burning Crusade (60-70)\\Blade's Edge Mountains (67-68)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\The Burning Crusade (60-70)\\Netherstorm",{
-author="support@zygorguides.com",
-condition_end="achieved(1194)",
-},[[
-step
-next "Zygor's Horde Leveling Guides\\The Burning Crusade (60-70)\\Netherstorm (68-70)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\The Burning Crusade (60-70)\\Shadowmoon Valley",{
-author="support@zygorguides.com",
-condition_end="achieved(1195)",
-},[[
-step
-next "Zygor's Horde Leveling Guides\\The Burning Crusade (60-70)\\Shadowmoon Valley (68-70)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Wrath of the Lich King (70-80)\\Borean Tundra",{
-author="support@zygorguides.com",
-condition_end="achieved(1358)",
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\Borean Tundra (70-72)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Wrath of the Lich King (70-80)\\Howling Fjord",{
-author="support@zygorguides.com",
-condition_end="achieved(1356)",
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\Howling Fjord (70-71)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Wrath of the Lich King (70-80)\\Dragonblight",{
-author="support@zygorguides.com",
-condition_end="achieved(1359)",
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\Dragonblight (71-74)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Wrath of the Lich King (70-80)\\Grizzly Hills",{
-author="support@zygorguides.com",
-condition_end="achieved(1357)",
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\Grizzly Hills (74-75)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Wrath of the Lich King (70-80)\\Zul'Drak",{
-author="support@zygorguides.com",
-condition_end="achieved(36)",
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\Zul'Drak (75-77)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Wrath of the Lich King (70-80)\\Sholazar Basin",{
-author="support@zygorguides.com",
-condition_end="achieved(39)",
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\Sholazar Basin (77-78)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Wrath of the Lich King (70-80)\\The Storm Peaks",{
-author="support@zygorguides.com",
-condition_end="achieved(38)",
-},[[
-step
-next "Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\The Storm Peaks (78-80)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Wrath of the Lich King (70-80)\\Icecrown",{
-author="support@zygorguides.com",
-condition_end="achieved(40)",
-},[[
-step
-map Icecrown
-next "Zygor's Horde Leveling Guides\\Wrath of the Lich King (70-80)\\Icecrown (78-80)"
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Starter Guides\\Goblin (1-13)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Starter Guides\\Goblin (1-12)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\BilgeWater",
 condition_suggested="raceclass('Goblin') and level <=13 and not completedq(25267) and not raceclass('DEATHKNIGHT')",
@@ -32556,58 +32647,68 @@ condition_suggested_exclusive=true,
 condition_end="completedq(25267) or raceclass('DEATHKNIGHT')",
 condition_valid="raceclass('Goblin') ",
 condition_valid_msg="Goblin only.",
-next="Zygor's Horde Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Azshara (10-22)\\Azshara (10-12)",
+next="Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Northern Barrens (10-20)\\Northern Barrens (10-13)",
 startlevel=1,
 dynamic=true,
 },[[
 step
 talk Sassy Hardwrench##34668
-accept Taking Care of Business##14138 |goto Kezan,56.4,76.9
+accept Taking Care of Business##14138 |goto Kezan/0 56.4,76.9
 step
 talk Foreman Dampwick##36471
 turnin Taking Care of Business##14138 |goto 60.2,74.6
 accept Trouble in the Mines##14075 |goto 60.2,74.6
 accept Good Help is Hard to Find##14069 |goto 60.2,74.6
 step
+Follow the path down |goto 61.75,74.72 < 20 |only if walking
 clicknpc Defiant Troll##34830+
-Adjust 8 Attitudes |q 14069/1 |goto 66.7,80.6
+|tip They look like trolls who are not working around this area.
+Adjust #8# Attitudes |q 14069/1 |goto 66.7,80.6
 step
+Follow the path |goto Kezan/7 57.76,32.55 < 15 |walk
 kill 6 Tunneling Worm##34865+ |q 14075/1 |goto Kezan/7 58.9,29.5
-You can find more Tunneling Worms at the following location |goto Kezan/5 43.5,70.5
+You can find more around [Kezan/5 43.5,70.5]
 step
 talk Foreman Dampwick##36471
-turnin Trouble in the Mines##14075 |goto Kezan 60.2,74.6
-turnin Good Help is Hard to Find##14069 |goto Kezan 60.2,74.6
-accept Kaja'Cola##25473 |goto Kezan 60.2,74.6
+turnin Trouble in the Mines##14075 |goto Kezan/0 60.2,74.6
+turnin Good Help is Hard to Find##14069 |goto Kezan/0 60.2,74.6
+accept Kaja'Cola##25473 |goto Kezan/0 60.2,74.6
 step
 talk Sassy Hardwrench##34668
+|tip Inside the building.
 turnin Kaja'Cola##25473 |goto 56.4,76.9
 accept Megs in Marketing##28349 |goto 56.4,76.9
 step
 talk Megs Dreadshredder##34874
-turnin Megs in Marketing##28349 |goto 58.2,76.5
-accept Cruising##14071 |goto 58.2,76.5
+turnin Megs in Marketing##28349 |goto 58.30,76.44
+accept Cruising##14071 |goto 58.30,76.44
 step
-Use your Keys to the Hot Rod in your bags |invehicle |c |use Keys to the Hotrod##46856
+Use the Keys to the Hot Rod |use Keys to the Hotrod##46856
+Enter your Hot Rod |invehicle |c |q 14071
 step
-Go into the big beam of white light
-Pick up Izzy |q 14071/2 |goto 58.1,86.0
-|modelnpc Izzy##38647
+Follow the path |goto 59.44,78.85 < 20 |only if walking
+Pick Up Izzy |q 14071/2 |goto 58.1,86.0
+|tip Go into the big beam of white light.
 step
-Go into the big beam of white light
-Pick up Gobber |q 14071/4 |goto 59.8,49.7
-|modelnpc Gobber##36463
+Follow the path |goto 59.45,78.66 < 20 |only if walking
+Follow the road down |goto 57.76,70.59 < 20 |only if walking
+Pick Up Gobber |q 14071/4 |goto 59.8,49.7
+|tip Go into the big beam of white light.
 step
-Go into the big beam of white light
-Pick up Ace |q 14071/3 |goto 47.9,37.5
-|modelnpc Ace##36180
+Follow the road |goto 57.76,43.75 < 20 |only if walking
+Pick Up Ace |q 14071/3 |goto 47.9,37.5
+|tip Go into the big beam of white light.
 step
+Follow the road |goto 50.59,41.96 < 20 |only if walking
+Follow the road up |goto 61.47,45.76 < 20 |only if walking
+Follow the path |goto 57.76,71.24 < 20 |only if walking
 talk Megs Dreadshredder##34874
-turnin Rolling with my Homies##14071 |goto 58.2,76.5
-accept Report for Tryouts##24567 |goto 58.2,76.5
+turnin Rolling with my Homies##14071 |goto 58.31,76.45
+accept Report for Tryouts##24567 |goto 58.31,76.45
 step
 talk Sassy Hardwrench##34668
-accept Do it Yourself##14070 |goto 56.5,76.9
+|tip Inside the building.
+accept Do it Yourself##14070 |goto 56.42,76.95
 step
 talk Candy Cane##35053
 accept Off to the Bank##26712 |goto 56.3,77.1
@@ -32617,29 +32718,36 @@ talk Chip Endale##35054
 accept Off to the Bank##26711 |goto 56.4,76.8
 only if _G['UnitSex']("player")==3
 step
-Use your Keys to the Hot Rod in your bags |invehicle |use Keys to the Hot Rod##46856
+Use the Keys to the Hot Rod |use Keys to the Hotrod##46856
+Enter your Hot Rod |invehicle |c |goto 58.63,76.64 |q 24567
 step
+Follow the road down |goto 57.76,70.54 < 20 |only if walking
+Follow the road |goto 61.23,44.87 < 20 |only if walking
+Follow the road up |goto 54.14,47.37 < 20 |only if walking
 talk Coach Crosscheck##37106
 turnin Report for Tryouts##24567 |goto 48.8,57.6
 accept The Replacements##24488 |goto 48.8,57.6
 step
 click Replacement Parts##9116+
+|tip They look like yellow and silver metal crates on the ground around this area.
 |tip You can do this while in your Hot Rod.
-collect 6 Replacement Parts |q 24488/1 |goto 49.0,60.3
+collect 6 Replacement Parts##49752 |q 24488/1 |goto 49.0,60.3
 step
 talk Coach Crosscheck##38738
 turnin The Replacements##24488 |goto 48.8,57.6
 accept Necessary Roughness##24502 |goto 48.8,57.6
 step
 clicknpc Bilgewater Buccaneer##48526
-Use your Throw Footbomb ability on your hotbar on Steamwheedle Sharks
+Use the Throw Footbomb ability on your action bar on Steamwheedle Sharks
 |tip They look like shredders walking toward you on the footbomb field.
-Footbomb 8 Steamwheedle Sharks |q 24502/2 |goto 47.7,57.8
-Click the Quest Complete box that displays on the right side of the screen under your minimap
+Footbomb #8# Steamwheedle Sharks |q 24502/2 |goto 47.7,57.8
+step
+Click the Complete Quest Box:
 turnin Necessary Roughness##24502
 accept Fourth and Goal##24503
 step
-Use your Kick Footbomb ability on your hotbar while aiming through the 2 tall gray chimney smokestacks
+Use the Kick Footbomb ability on your action bar
+|tip Aim through the 2 tall gray chimney smokestacks.
 |tip The smokestacks look like 2 tall metal chimneys on top of a building with a green roof.
 Kick a Footbomb Through the Smokestacks |q 24503/1
 step
@@ -32647,54 +32755,62 @@ talk Coach Crosscheck##38738
 turnin Fourth and Goal##24503 |goto 48.8,57.6
 accept Give Sassy the Good News##24520 |goto 48.8,57.6
 step
-Use your Keys to the Hot Rod in your bags |invehicle |use Keys to the Hot Rod##46856
-step
+Follow the road |goto 45.87,65.44 < 20 |only if walking
+Drop down here |goto 42.51,71.75 < 20 |only if walking
 kill Bruno Flameretardant##34835
-Beat down Bruno Flameretardant |q 14070/1 |goto 45.2,74.7
+Beat Down Bruno Flameretardant |q 14070/1 |goto 45.2,74.7
 step
 kill Sudsy Magee##34878
-Beat down Sudsy Magee |q 14070/4 |goto 41.6,81.9
+Beat Down Sudsy Magee |q 14070/4 |goto 41.6,81.9
 step
+Follow the path |goto 37.38,76.36 < 15 |only if walking
 kill Jack the Hammer##34877
-Beat down Jack the Hammer |q 14070/3 |goto 35.1,77.8
+Beat Down Jack the Hammer |q 14070/3 |goto 35.1,77.8
 step
 kill Frankie Gearslipper##34876
-Beat down Frankie Gearslipper |q 14070/2 |goto 36.8,70.4
+Beat Down Frankie Gearslipper |q 14070/2 |goto 36.8,70.4
 step
-Use your Keys to the Hot Rod in your bags |invehicle |use Keys to the Hot Rod##46856
-step
-talk FBoK Bank Teller##35120 |tip He is inside the bank
+Follow the path |goto 34.23,69.13 < 15 |only if walking
+Follow the road |goto 32.44,63.93 < 15 |only if walking
+Follow the path |goto 30.12,64.53 < 15 |only if walking
+talk FBoK Bank Teller##35120
+|tip Inside the building.
 turnin Off to the Bank##26712 |goto 30.1,71.9 |only if _G['UnitSex']("player")==2
 turnin Off to the Bank##26711 |goto 30.1,71.9 |only if _G['UnitSex']("player")==3
 accept The New You##14109 |goto 30.1,71.9 |or |only if _G['UnitSex']("player")==2
 accept The New You##14110 |goto 30.1,71.9 |or |only if _G['UnitSex']("player")==3
 step
-Use your Keys to the Hot Rod in your bags |invehicle |use Keys to the Hot Rod##46856
-step
+Follow the road |goto 30.47,63.73 < 20 |only if walking
+Follow the road |goto 34.57,54.69 < 20 |only if walking
 talk Szabo##35128
-Tell him you need a hip, new outfit
-collect Hip New Outfit |q 14109/2 |goto 37.7,55.5 |only if _G['UnitSex']("player")==2
-collect Hip New Outfit |q 14110/2 |goto 37.7,55.5 |only if _G['UnitSex']("player")==3
+Tell him _"Szabo, I need a hip, new outfit for the party I'm throwing!"_
+collect Hip New Outfit##47046 |q 14109/2 |goto 37.7,55.5 |only if _G['UnitSex']("player")==2
+collect Hip New Outfit##47046 |q 14110/2 |goto 37.7,55.5 |only if _G['UnitSex']("player")==3
 step
+Follow the road |goto 36.04,53.02 < 20 |only if walking
 talk Gappy Silvertooth##35126
-Tell him to set you up with the phattest, shiniest bling
-collect Shiny Bling |q 14109/1 |goto 34.8,45.7 |only if _G['UnitSex']("player")==2
-collect Shiny Bling |q 14110/1 |goto 34.8,45.7 |only if _G['UnitSex']("player")==3
+Tell him _"Set me up with the phattest, shiniest bling you got!"_
+collect Shiny Bling##47045 |q 14109/1 |goto 34.8,45.7 |only if _G['UnitSex']("player")==2
+collect Shiny Bling##47045 |q 14110/1 |goto 34.8,45.7 |only if _G['UnitSex']("player")==3
 step
+Follow the road |goto 36.67,47.37 < 15 |only if walking
 talk Missa Spekkies##35130
-Tell her you need some cool shades
-collect Cool Shades |q 14109/3 |goto 40.4,45.8 |only if _G['UnitSex']("player")==2
-collect Cool Shades |q 14110/3 |goto 40.4,45.8 |only if _G['UnitSex']("player")==3
+Tell her _"I need some cool shades.  What will two stacks of macaroons get me?"_
+collect Cool Shades##47047 |q 14109/3 |goto 40.4,45.8 |only if _G['UnitSex']("player")==2
+collect Cool Shades##47047 |q 14110/3 |goto 40.4,45.8 |only if _G['UnitSex']("player")==3
 step
 talk Sassy Hardwrench##34668
+|tip Inside the building.
 turnin Give Sassy the Good News##24520 |goto 56.4,76.9
 turnin Do It Yourself##14070 |goto 56.4,76.9
 step
 talk Candy Cane##39426
+|tip Inside the building.
 turnin The New You##14109 |goto 56.3,77.1
 only if _G['UnitSex']("player")==2
 step
 talk Chip Endale##35054
+|tip Inside the building.
 turnin The New You##14110 |goto 56.3,76.8
 only if _G['UnitSex']("player")==3
 step
@@ -32706,33 +32822,44 @@ talk Chip Endale##35054
 accept Life of the Party##14153 |goto 56.3,76.8
 only if _G['UnitSex']("player")==3
 step
-Use your Bubbly ability on goblins that are drinking |petaction Bubbly |important
-Use your Bucket ability on goblins that look dazed |petaction Bucket |important
-Use your Dance ability on goblins that are dancing |petaction Dance |important
-Use your Fireworks ability on goblins that are holding orange fireworks |petaction Fireworks |important
-Use your Hors D'oeuvres ability on goblins that are eating |petaction Hors D'oeuvres |important
+Follow the path |goto 59.24,78.81 < 20 |only if walking
+Use the Bubbly ability on your action bar
+|tip Use it next to goblins that are drinking.
+Use the Bucket ability on your action bar
+|tip Use it next to goblins that look dazed.
+Use the Dance ability on your action bar
+|tip Use it next to goblins that are dancing.
+Use the Fireworks ability on your action bar
+|tip Use it next to goblins that are holding orange fireworks.
+Use the Hors D'oeuvres ability on your action bar
+|tip Use it next to goblins that are eating.
 Entertain #10# Partygoers |q 14113/1 |goto 59.4,80.6 |only if _G['UnitSex']("player")==2
 Entertain #10# Partygoers |q 14153/1 |goto 59.4,80.6 |only if _G['UnitSex']("player")==3
 step
+Follow the path |goto 59.07,78.45 < 15 |only if walking
 talk Sassy Hardwrench##34668
+|tip Inside the building.
 turnin Life of the Party##14113 |goto 56.4,76.9 |only if _G['UnitSex']("player")==2
 turnin Life of the Party##14153 |goto 56.4,76.9 |only if _G['UnitSex']("player")==3
 accept Pirate Party Crashers##14115
 step
-kill 12 Pirate Party Crasher##35200+ |q 14115/1 |goto 59.5,79.7
+Follow the path |goto 59.24,78.81 < 20 |only if walking
+kill 12 Pirate Party Crasher##35200+ |q 14115/1 |goto 60.47,81.73
 step
+Follow the path |goto 59.07,78.45 < 15 |only if walking
 talk Sassy Hardwrench##34668
+|tip Inside the building.
 turnin Pirate Party Crashers##14115 |goto 56.4,76.9
 accept The Uninvited Guest##14116 |goto 56.4,76.9
 step
-Go upstairs
 talk Trade Prince Gallywix##39582
+|tip Upstairs inside the building.
 turnin The Uninvited Guest##14116 |goto 56.7,77.0
 accept A Bazillion Macaroons?!##14120 |goto 56.7,77.0
 step
 talk Sassy Hardwrench##34668
-turnin A Bazillion Macaroons?!##14120 |goto 59.7,77.1
-accept The Great Bank Heist##14122 |goto 59.7,77.1
+turnin A Bazillion Macaroons?!##14120 |goto 59.61,77.04
+accept The Great Bank Heist##14122 |goto 59.61,77.04
 step
 talk Slinky Sharpshiv##36729
 |tip She walks around this area, so you may need to search for her.
@@ -32744,47 +32871,60 @@ step
 talk Foreman Dampwick##36471
 accept Liberating the Kaja'mite##14124 |goto 63.0,77.8
 step
-Use your Kablooey Bombs on the green mining nodes around this area |use Kablooey Bombs##48768
+Follow the path down |goto 62.12,74.91 < 20 |only if walking
+Use your Kablooey Bombs on Kaja'mite Deposits |use Kablooey Bombs##48768
+|tip They look like green mining nodes around this area.
 click Kaja'mite Chunk##9436+
-collect 12 Kaja'mite Chunk |q 14124/1 |goto 67.2,77.6
+|tip They appear on the ground.
+collect 12 Kaja'mite Chunk##48766 |q 14124/1 |goto 67.2,77.6
 step
+Follow the path up |goto 65.39,79.45 < 20 |only if walking
+Follow the path |goto 60.39,74.89 < 15 |only if walking
 talk Foreman Dampwick##36471
 turnin Liberating the Kaja'mite##14124 |goto 63.0,77.8
 step
-Use your Keys to the Hot Rod in your bags |invehicle |use Keys to the Hot Rod##46856
-step
-Run over Hired Looters with your car all around this area
+Follow the road down |goto 57.78,70.79 < 20 |only if walking
+Follow the road |goto 61.26,44.71 < 20 |only if walking
+Follow the road |goto 41.42,41.75 < 20 |only if walking
+Follow the road |goto 40.95,47.01 < 20 |only if walking
+Run Over Hired Looters with your Hot Rod
 |tip They look like pirates throwing explosives in the streets all around this area.
-collect 12 Stolen Loot |q 14121/1 |goto 35.8,49.1
+collect 12 Stolen Loot##47530 |q 14121/1 |goto 35.8,49.1
 step
+Follow the road |goto 34.94,54.26 < 20 |only if walking
+Follow the road |goto 32.80,59.77 < 20 |only if walking
+Follow the road |goto 30.00,64.33 < 20 |only if walking
 clicknpc First Bank of Kezan Vault##35486
+|tip Inside the building.
 Access the First Bank of Kezan Vault |q 14122/1 |goto 30.2,71.3
-Use the abilities on your toolbar in the correct order when it tells you to
-|tip Just match the icons that come up on-screen with your skill icons on your hotbar.
-collect Personal Riches |q 14122/2 |goto 30.2,71.3
 step
-Use your Keys to the Hot Rod in your bags |invehicle |use Keys to the Hot Rod##46856
+Use the abilities on your action bar
+|tip Use them in the correct order when it tells you to.
+|tip Just match the icons that come up on-screen with your skill icons on your action bar.
+collect Personal Riches##46858 |q 14122/2 |goto 30.2,71.3
 step
-Your Mook disguise should activate automatically here |goto 24.4,40.9
-Wear the Mook Disguise |havebuff Interface\Icons\INV_Mask_02
-|tip Avoid the Keensnout Potbellys in this area, they will remove your Mook Disguise if you agro them.
-|modelnpc Keensnout Potbelly##35613
+Follow the road |goto 29.26,63.82 < 20 |only if walking
+Follow the road |goto 24.26,55.09 < 20 |only if walking
+Reach This Location |goto 23.71,40.18 < 20 |c |q 14123
+|tip You will become disguised automatically.
+|tip Avoid the Keensnout Potbellys in this area, they will remove your Mook Disguise.
 step
+Follow the path |goto 20.21,36.16 < 20 |only if walking
 click The Ultimate Bomb##8936
-collect The Ultimate Bomb |q 14123/3 |goto 19.9,30.6
-|tip Avoid the Keensnout Potbellys in this area, they will remove your Mook Disguise if you agro them.
-|modelnpc Keensnout Potbelly##35613
+|tip It looks like a huge red spiked bomb inside the building.
+collect The Ultimate Bomb##48941 |q 14123/3 |goto 19.9,30.6
+|tip Avoid the Keensnout Potbellys in this area, they will remove your Mook Disguise.
 step
 click The Goblin Lisa##9191
-collect The Goblin Lisa |q 14123/2 |goto 12.9,35.2
-|tip Avoid the Keensnout Potbellys in this area, they will remove your Mook Disguise if you agro them.
-|modelnpc Keensnout Potbelly##35613
+|tip It looks like a painting of a goblin inside the building.
+collect The Goblin Lisa##48939 |q 14123/2 |goto 12.9,35.2
+|tip Avoid the Keensnout Potbellys in this area, they will remove your Mook Disguise.
 step
+Follow the path |goto 16.59,37.57 < 20 |only if walking
 click Maldy's Falcon##6925
-|tip It is located on the second floor of the building.
-collect Maldy's Falcon |q 14123/1 |goto 16.7,46.3
-|tip Avoid the Keensnout Potbellys in this area, they will remove your Mook Disguise if you agro them.
-|modelnpc Keensnout Potbelly##35613
+|tip It looks like a stone bird statue upstairs inside the building.
+collect Maldy's Falcon##48937 |q 14123/1 |goto 16.7,46.3
+|tip Avoid the Keensnout Potbellys in this area, they will remove your Mook Disguise.
 step
 talk Slinky Sharpshiv##36729
 |tip She walks around this area, so you may need to search for her.
@@ -32794,772 +32934,840 @@ talk Sassy Hardwrench##34668
 turnin The Great Bank Heist##14122 |goto 59.7,77.1
 step
 talk Megs Dreadshredder##34874
-turnin Robbing Hoods##14121 |goto 60.0,78.3
+turnin Robbing Hoods##14121 |goto 60.02,78.15
 step
 talk Sassy Hardwrench##34668
 accept 447##14125 |goto 59.7,77.1
 step
 click Defective Generator##9210
-Overload the Defective Generator |q 14125/1 |goto 56.1,76.9
+|tip It looks like a huge electric coil inside the building.
+Overload the Defective Generator |q 14125/1 |goto 56.07,76.64
 step
 click Leaky Stove##348
+|tip It looks like a gray metal furnace inside the building.
 Activate the Leaky Stove |q 14125/2 |goto 56.1,74.7
 step
-click Flammable Bed##9308 |tip It is on the second floor
+click Flammable Bed##9308
+|tip It looks like a red bed upstairs inside the building.
 Drop a Cigar on the Flammable Bed |q 14125/3 |goto 56.6,75.0
 step
+Jump out of the window |goto 57.03,76.96 < 10 |walk
 click Gasbot Control Panel##356
 Set the KTC Headquarters Ablaze with Gasbot |q 14125/4 |goto 59.5,76.8
 step
 talk Claims Adjuster##37602
-turnin 447##14125 |goto 59.6,76.5
+turnin 447##14125 |goto 59.59,76.63
 step
 talk Sassy Hardwrench##34668
-accept Life Savings##14126 |goto 59.7,77.1
+accept Life Savings##14126 |goto 59.66,76.94
 step
-talk Sassy Hardwrench##34668
-Tell her you're ready to go |goto 59.7,77.1 < 10
-Ride with Sassy to Gallywix's Yacht |goto 21.4,13.2,0.5 < 10
+talk Sassy Hardwrench##34668 |goto 59.7,77.1 |n
+Tell her _"Okay, Sassy, I'm ready to go."_
+Ride with Sassy |goto 59.7,77.1 > 30 |noway |c |q 14126
+step
+Travel to Gallywix's Yacht |goto 21.4,13.2 < 20 |c |q 14126
+step
 talk Trade Prince Gallywix##39582
-turnin Life Savings##14126 |goto 21.0,13.4
+turnin Life Savings##14126 |goto 20.84,13.71
 step
 talk Doc Zapnozzle##36608
-accept Don't Go Into the Light!##14239 |goto The Lost Isles,24.6,77.9  |instant
+accept Don't Go Into the Light!##14239 |goto The Lost Isles/0 24.60,77.94  |instant
 step
 talk Geargrinder Gizmo##36600
-You will be offered one of these two quests
-accept Goblin Escape Pods##14001 |goto 24.77,77.9 |or
-accept Goblin Escape Pods##14474 |goto 24.77,77.9 |or
+|tip You will be offered one of these two quests.
+accept Goblin Escape Pods##14001 |goto 24.65,77.94 |or
+accept Goblin Escape Pods##14474 |goto 24.65,77.94 |or
 step
 click Goblin Escape Pod##9092+
-Rescue 6 Goblin Survivors |q 14001/1 |goto 26.0,80.1
+|tip They look like red barrels floating in the water around this area.
+Rescue #6# Goblin Survivors |q 14001/1 |goto 26.0,80.1
 step
 click Goblin Escape Pod##9092+
-Rescue 6 Goblin Survivors |q 14474/1 |goto 26.0,80.1
+|tip They look like red barrels floating in the water around this area.
+Rescue #6# Goblin Survivors |q 14474/1 |goto 26.0,80.1
 step
 talk Sassy Hardwrench##35650
-You will only be able to turn in one of these two quests
-turnin Goblin Escape Pods##14001 |goto 27.9,75.5
-turnin Goblin Escape Pods##14474 |goto 27.9,75.5
-accept Get Our Stuff Back!##14014 |goto 27.9,75.5
+|tip You will only be able to turn in one of these two quests.
+turnin Goblin Escape Pods##14001 |goto 27.88,75.54
+turnin Goblin Escape Pods##14474 |goto 27.88,75.54
+accept Get Our Stuff Back!##14014 |goto 27.88,75.54
+step
+talk Grimy Greasefingers##36496
+home Shipwreck Shore |goto 28.01,75.79
 step
 talk Bamm Megabomb##35758
-accept Monkey Business##14019 |goto 27.9,74.4
+accept Monkey Business##14019 |goto 27.94,74.43
 step
 talk Maxx Avalanche##35786
-accept It's Our Problem Now##14473 |goto 27.9,74.3
+accept It's Our Problem Now##14473 |goto 27.85,74.29
+stickystart "Crates_Of_Tools"
+stickystart "Teraptor_Hatchlings"
 step
-kill 6 Teraptor Hatchling##36740+ |q 14473/1 |goto 27.2,69.8
-Use your Nitro-Potassium Bananas on Bomb-Throwing Monkeys |use Nitro-Potassium Bananas##49028
-Feed 10 Bomb-Throwing Monkeys |q 14019/1 |goto 27.2,69.8
+Use the Nitro-Potassium Bananas on Bomb-Throwing Monkeys |use Nitro-Potassium Bananas##49028
+|tip They look like small gray monkeys on the ground around this area.
+Feed #10# Bomb-Throwing Monkeys |q 14019/1 |goto 27.2,69.8
+step
+label "Teraptor_Hatchlings"
+kill 6 Teraptor Hatchling##36740 |q 14473/1 |goto 27.2,69.8
+step
+label "Crates_Of_Tools"
 click Crate of Tools##9116+
-collect 8 Crate of Tools |q 14014/1 |goto 27.2,69.8
-|modelnpc Bomb-Throwing Monkey##34699
+|tip They look like small yellow and silver metal crates on the ground around this area.
+collect 8 Crate of Tools##46828 |q 14014/1 |goto 27.2,69.8
 step
 talk Maxx Avalanche##35786
-turnin It's Our Problem Now##14473 |goto 27.8,74.3
+turnin It's Our Problem Now##14473 |goto 27.85,74.29
 step
 talk Bamm Megabomb##35758
-turnin Monkey Business##14019 |goto 27.9,74.4
+turnin Monkey Business##14019 |goto 27.95,74.42
 step
 talk Sassy Hardwrench##35650
-turnin Get Our Stuff Back!##14014 |goto 27.9,75.5
-accept Help Wanted##14248 |goto 27.9,75.5
+turnin Get Our Stuff Back!##14014 |goto 27.88,75.54
+accept Help Wanted##14248 |goto 27.88,75.54
 step
+Follow the path |goto 29.95,78.59 < 20 |only if walking
 talk Foreman Dampwick##35769
-turnin Help Wanted##14248 |goto 31.3,79.3
-accept Miner Troubles##14021 |goto 31.3,79.3
-accept Capturing the Unknown##14031 |goto 31.3,79.3
+turnin Help Wanted##14248 |goto 31.27,79.26
+accept Miner Troubles##14021 |goto 31.27,79.26
+accept Capturing the Unknown##14031 |goto 31.27,79.26
+stickystart "Make_Kajamite_Ore_Success"
 step
-Escort the Frightened Miner and protect him
-Use your KTC Snapflash near the floating green camera hologram on the left wall as you enter the cave |use KTC Snapflash##49887
-Capture Cave Painting 1 |q 14031/1 |goto The Lost Isles/1 50.1,86.8
+Use the KTC Snapflash near the Camera Hologram |use KTC Snapflash##49887
+|tip It looks like a floating green camera hologram.
+Capture Cave Painting 1 |q 14031/1 |goto The Lost Isles/1 51.68,71.19
 step
-Escort the Frightened Miner and protect him
-Use your KTC Snapflash near the floating green camera hologram, it will be on the roof of the cave after take the ramp down |use KTC Snapflash##49887
-Capture Cave Painting 2 |q 14031/2 |goto 64.6,68.8
+Use the KTC Snapflash near the Camera Hologram |use KTC Snapflash##49887
+|tip It looks like a floating green camera hologram.
+Capture Cave Painting 2 |q 14031/2 |goto 61.53,72.39
 step
-Escort the Frightened Miner and protect him
-Use your KTC Snapflash near the floating green camera hologram, it will be on the right wall |use KTC Snapflash##49887
+Follow the path |goto 46.64,57.94 < 15 |walk
+Follow the path |goto 70.91,69.38 < 15 |walk
+Use the KTC Snapflash near the Camera Hologram |use KTC Snapflash##49887
+|tip It looks like a floating green camera hologram.
 Capture Cave Painting 3 |q 14031/3 |goto 86.4,44.8
 step
-Escort the Frightened Miner and protect him
-Make the Kaja'mite Ore mining a success! |q 14021/1 |goto 44.3,24.1
-Use your KTC Snapflash near the floating green camera hologram, it will be next to a big face statue with spiked teeth |use KTC Snapflash##49887
-Capture the Pygmy Altar |q 14031/4 |goto 44.3,24.1
+Follow the path |goto 66.53,39.93 < 15 |walk
+Follow the path |goto 51.86,20.05 < 15 |walk
+Use the KTC Snapflash near the Camera Hologram |use KTC Snapflash##49887
+|tip It looks like a floating green camera hologram.
+Capture the Pygmy Altar |q 14031/4 |goto 44.82,25.20
+step
+label "Make_Kajamite_Ore_Success"
+Escort the Frightened Miner
+|tip Stay close to him and protect him from enemies.
+Make the Kaja'mite Ore Mining a Success |q 14021/1 |goto 50.84,16.88
 step
 talk Dead Orc Scout##35837
-accept Orcs Can Write?##14233 |goto 41.9,24.9
+accept Orcs Can Write?##14233 |goto 41.50,25.47
 step
+Jump down here |goto 42.52,31.88 < 7 |walk
+Follow the path up |goto 47.15,61.33 < 15 |walk
+Follow the path up |goto 54.38,80.00 < 15 |walk
 talk Foreman Dampwick##35769
-turnin Miner Troubles##14021 |goto The Lost Isles/0 31.3,79.3
+turnin Miner Troubles##14021 |goto The Lost Isles/0 31.27,79.26
 step
 talk Sassy Hardwrench##35650
-turnin Capturing the Unknown##14031 |goto 27.9,75.5
-turnin Orcs Can Write?##14233 |goto 27.9,75.5
-accept The Enemy of My Enemy##14234 |goto 27.9,75.5
+turnin Capturing the Unknown##14031 |goto 27.88,75.54
+turnin Orcs Can Write?##14233 |goto 27.88,75.54
+accept The Enemy of My Enemy##14234 |goto 27.88,75.54
 step
+Follow the path |goto 29.96,78.60 < 20 |only if walking
+Follow the path up |goto 32.73,80.50 < 20 |only if walking
+Continue up the path |goto 34.44,80.72 < 20 |only if walking
+Follow the path |goto 36.77,76.45 < 20 |only if walking
 talk Aggra##35875
-turnin The Enemy of My Enemy##14234 |goto 37.6,78.0
-accept The Vicious Vale##14235 |goto 37.6,78.0
+turnin The Enemy of My Enemy##14234 |goto 37.63,78.03
+accept The Vicious Vale##14235 |goto 37.63,78.03
+step
+Follow the path down |goto 36.15,76.36 < 20 |only if walking
+talk Kilag Gorefang##35893
+turnin The Vicious Vale##14235 |goto 35.43,75.71
+accept Weed Whacker##14236 |goto 35.43,75.71
+step
+Use the Weed Whacker |use Weed Whacker##49108
+Become a Weed Whacker |havebuff 132369 |c |q 14236
+step
+Mow Down #100# Deadly Jungle Plants |q 14236/1 |goto 35.3,75.1
+|tip Spin around next to the plants all around this area.
 step
 talk Kilag Gorefang##35893
-turnin The Vicious Vale##14235 |goto 35.4,75.7
-accept Weed Whacker##14236 |goto 35.4,75.7
+turnin Weed Whacker##14236 |goto 35.44,75.70
+accept Back to Aggra##14303 |goto 35.44,75.70
 step
-Use your Weed Whacker |use Weed Whacker##49108
-Become a weed whacker |havebuff Interface\Icons\Ability_Whirlwind |c |q 14236
-step
-Spin around next to the plants all around this area
-Mow down #100# Deadly Jungle Plants |q 14236/1 |goto 35.3,75.1
-step
-talk Kilag Gorefang##35893
-turnin Weed Whacker##14236 |goto 35.4,75.7
-accept Back to Aggra##14303 |goto 35.4,75.7
-step
+Follow the path up |goto 35.80,76.31 < 20 |only if walking
+Follow the path |goto 36.78,76.44 < 20 |only if walking
 talk Aggra##35875
-turnin Back to Aggra##14303 |goto 37.6,78.0
-accept Forward Movement##14237 |goto 37.6,78.0
+turnin Back to Aggra##14303 |goto 37.63,78.04
+accept Forward Movement##14237 |goto 37.63,78.04
 step
+Follow the path down |goto 36.10,76.34 < 20 |only if walking
+Follow the path |goto 35.30,75.54 < 20 |only if walking
+Follow the path up |goto 33.00,71.16 < 20 |only if walking
+Follow the path |goto 33.38,69.51 < 20 |only if walking
 talk Kilag Gorefang##35893
-turnin Forward Movement##14237 |goto 34.6,66.8
-accept Infrared = Infradead##14238 |goto 34.6,66.8
+turnin Forward Movement##14237 |goto 34.62,66.85
+accept Infrared = Infradead##14238 |goto 34.62,66.85
 step
-Use your Infrared Heat Focals |use Infrared Heat Focals##49611
-Wear the Infrared Heat Focals |havebuff INTERFACE\ICONS\inv_helmet_47 |q 14238
-|tip They are also marked on your minimap
+Use the Infrared Heat Focals |use Infrared Heat Focals##49611
+Wear the Infrared Heat Focals |havebuff 133149 |q 14238
 step
-kill 10 SI:7 Assassin##36092+ |q 14238/1 |goto 31.2,65.6
+kill 10 SI:7 Assassin##36092 |q 14238/1 |goto 31.2,65.6
+|tip They are also marked on your minimap.
 step
 talk Kilag Gorefang##35917
-turnin Infrared = Infradead##14238 |goto 34.6,66.8
-accept To the Cliffs##14240 |goto 34.6,66.8
-You will ride Bastia to Scout Brax |invehicle |c
-|modelnpc Bastia##39152
+turnin Infrared = Infradead##14238 |goto 34.61,66.85
+accept To the Cliffs##14240 |goto 34.61,66.85
+step
+Travel to Scout Brax |goto 25.34,59.85 < 20 |c |q 14240
 step
 talk Scout Brax##36112
-turnin To the Cliffs##14240 |goto 25.3,59.8
-accept Get to the Gyrochoppa!##14241 |goto 25.3,59.8
+turnin To the Cliffs##14240 |goto 25.29,59.84
+accept Get to the Gyrochoppa!##14241 |goto 25.29,59.84
 step
+Follow the path down |goto 25.02,60.44 < 15 |only if walking
 kill SI:7 Operative##36103+
-collect Gyrochoppa Keys |q 14241/1 |goto 24.6,64.3
+collect Gyrochoppa Keys##49424 |q 14241/1 |goto 24.6,64.3
 step
 clicknpc Gyrochoppa##36127
-turnin Get to the Gyrochoppa!##14241 |goto 23.2,67.5
-accept Precious Cargo##14242 |goto 23.2,67.5
+turnin Get to the Gyrochoppa!##14241 |goto 23.23,67.52
+accept Precious Cargo##14242 |goto 23.23,67.52
 step
-Go downstairs in the ship
-talk Thrall##36161
-Locate the Precious Cargo |q 14242/1 |goto 11.8,62.7
+Fly to the Ship |goto 12.87,63.44 < 20 |c |q 14242
 step
 talk Thrall##36161
-turnin Precious Cargo##14242 |goto 11.8,62.7
-accept Meet Me Up Top##14326 |goto 11.8,62.7
+|tip Downstairs in the ship.
+Locate the Precious Cargo |q 14242/1 |goto 11.80,62.75
 step
-Go upstairs on the ship
 talk Thrall##36161
+|tip Downstairs in the ship.
+turnin Precious Cargo##14242 |goto 11.80,62.75
+accept Meet Me Up Top##14326 |goto 11.80,62.75
+step
+talk Thrall##36161
+|tip On the deck of the ship.
 turnin Meet Me Up Top##14326 |goto 12.4,63.1
 accept Warchief's Revenge##14243 |goto 12.4,63.1
 step
-Use your Lightning Strike ability on the Alliance Sailors in the tiny boats as you fly around
-kill 50 Alliance Sailor##36176+ |q 14243/1
+Use the Lightning Strike ability on the Alliance Sailors
+|tip They are in below you as you fly around in the tornado.
+kill 50 Alliance Sailor##36176 |q 14243/1
 step
 talk Thrall##36188
-turnin Warchief's Revenge##14243 |goto 35.9,66.7
-accept Farewell, For Now##14445 |goto 35.9,66.7
+turnin Warchief's Revenge##14243 |goto 35.92,66.72
+accept Farewell, For Now##14445 |goto 35.92,66.72
 step
 talk Sassy Hardwrench##36425
-turnin Farewell, For Now##14445 |goto 36.0,67.5
-accept Up, Up & Away!##14244 |goto 36.0,67.5
+turnin Farewell, For Now##14445 |goto 36.03,67.53
+accept Up, Up & Away!##14244 |goto 36.03,67.53
 step
 click Rocket Sling##9112
-Choose Up, Up & Away!
+Choose _"Up, Up & Away!"_
 Survive the Rocket Sling Trip |q 14244/1 |goto 36.3,66.6
 step
 talk Foreman Dampwick##36470
-turnin Up, Up & Away!##14244 |goto 44.5,64.4
-accept It's a Town-In-A-Box##14245 |goto 44.5,64.4
+turnin Up, Up & Away!##14244 |goto 44.54,64.36
+accept It's a Town-In-A-Box##14245 |goto 44.54,64.36
 step
 click Town-In-A-Box Plunger##9277
-|tip It is on top of the big pile of explosives
-Set Off the Town-In-A-Box |q 14245/1 |goto 45.5,65.4
+|tip On top of the big pile of explosives.
+Set Off the Town-In-A-Box |q 14245/1 |goto 45.49,65.36
 step
 talk Foreman Dampwick##36471
-turnin It's a Town-In-A-Box##14245 |goto 45.4,64.8
-accept Hobart Needs You##27139 |goto 45.4,64.8
+turnin It's a Town-In-A-Box##14245 |goto 45.36,64.74
+accept Hobart Needs You##27139 |goto 45.36,64.74
 step
 talk Hobart Grapplehammer##38120
-turnin Hobart Needs You##27139 |goto 45.3,65.2
-accept Cluster Cluck##24671 |goto 45.3,65.2
+turnin Hobart Needs You##27139 |goto 45.34,65.22
+accept Cluster Cluck##24671 |goto 45.34,65.22
 step
-clicknpc Wild Clucker##38111+ |tip They look like little robotic chickens around this area
-Capture 10 Wild Cluckers |q 24671/1 |goto 46.5,65.4
+clicknpc Wild Clucker##38111+
+|tip They look like little robotic chickens around this area.
+Capture #10# Wild Cluckers |q 24671/1 |goto 46.5,65.4
 step
 talk Hobart Grapplehammer##38120
-turnin Cluster Cluck##24671 |goto 45.3,65.2
+turnin Cluster Cluck##24671 |goto 45.34,65.22
 step
 talk Bamm Megabomb##38122
-accept Trading Up##24741 |goto 45.3,64.8
+accept Trading Up##24741 |goto 45.25,64.85
 step
-Use your Wild Clucker Eggs while standing in Raptor Traps around this area near Spiny Raptors |use Wild Clucker Eggs##50232
-|tip They look like big spiked metal traps on the ground around this area.  Don't kill the Spiny Raptors by attacking them.
+Follow the path up |goto 47.56,65.30 < 20 |only if walking
+Use the Wild Clucker Eggs near Raptor Traps |use Wild Clucker Eggs##50232
+|tip They look like big spiked metal traps on the ground around this area.
+|tip Make sure Spiny Raptors are nearby when you use it.
+|tip Don't kill the Spiny Raptors by attacking them.
 click Raptor Egg##3851+
-collect 5 Spiny Raptor Egg |q 24741/1 |goto 49.2,73.9
-|modelnpc Spiny Raptor##38187
+|tip They appear under the Raptor Traps when you catch a Spiny Raptor.
+collect 5 Spiny Raptor Egg##50239 |q 24741/1 |goto 49.74,65.92
 step
 talk Bamm Megabomb##38122
-turnin Trading Up##24741 |goto 45.3,64.9
+turnin Trading Up##24741 |goto 45.25,64.85
 step
 talk Hobart Grapplehammer##38120
-accept The Biggest Egg Ever##24744 |goto 45.3,65.2
+accept The Biggest Egg Ever##24744 |goto 45.34,65.21
 step
+Follow the path |goto 45.97,59.11 < 20 |only if walking
 kill Mechachicken##38224
-|tip You can find Mechachicken patrolling on either side of the beach within the basin.
-You can also find Mechachicken at the following locations:
-Location 1: |goto 44.1,53.9
-Location 2: |goto 43.8,56.0
+|tip It's a big robot chicken that walks around this area.
 click The Biggest Egg Ever##1411
-collect The Biggest Egg Ever |q 24744/1 |goto 45.6,56.6
+|tip It appears after you kill the Mechachicken.
+collect The Biggest Egg Ever##50261 |q 24744/1 |goto 45.6,56.6
 step
+Follow the path |goto 45.97,59.11 < 20 |only if walking
 talk Hobart Grapplehammer##38120
-turnin The Biggest Egg Ever##24744 |goto 45.3,65.2
-accept Who's Top of the Food Chain Now?##24816 |goto 45.3,65.2
+turnin The Biggest Egg Ever##24744 |goto 45.34,65.22
+accept Who's Top of the Food Chain Now?##24816 |goto 45.34,65.22
 step
 kill Ravenous Lurker##36681+
 |tip While killing Ravenous Lurkers avoid the patrolling elite 'The Hammer' in the area.
-collect 6 Shark Parts |q 24816/1 |goto 42.5,62.6
-|modelnpc The Hammer##36682
+collect 6 Shark Parts##50381 |q 24816/1 |goto 42.5,62.6
 step
 talk Assistant Greely##39199
-turnin Who's Top of the Food Chain Now?##24816 |goto 45.3,65.6
-accept A Goblin in Shark's Clothing##24817 |goto 45.3,65.6
+turnin Who's Top of the Food Chain Now?##24816 |goto 45.27,65.56
+accept A Goblin in Shark's Clothing##24817 |goto 45.27,65.56
 step
 click Mechashark X-Steam Controller##6424
-Use the Mechashark X-Steam Controller |q 24817/1 |goto 43.6,65.1
+Use the Mechashark X-Steam Controller |q 24817/1 |goto 43.63,65.09
 step
-Use the abilities on your toolbar to kill The Hammer
 kill The Hammer##36682 |q 24817/2 |goto 42.1,66.3
+|tip Use the abilities on your action bar.
 step
 talk Hobart Grapplehammer##38120
-turnin A Goblin in Shark's Clothing##24817 |goto 45.3,65.2
-accept Invasion Imminent!##24856 |goto 45.3,65.2
+turnin A Goblin in Shark's Clothing##24817 |goto 45.34,65.21
+accept Invasion Imminent!##24856 |goto 45.34,65.21
 step
-Follow the road east |goto 47.2,65.4 < 10 |only if walking
+Follow the path up |goto 47.74,65.35 < 20 |only if walking
+Follow the path |goto 49.56,66.17 < 20 |only if walking
+Continue following the path |goto 49.40,70.63 < 20 |only if walking
+Follow the path down |goto 51.20,71.56 < 20 |only if walking
 talk Megs Dreadshredder##38432
-turnin Invasion Imminent!##24856 |goto 52.2,73.1
-accept Bilgewater Cartel Represent##24858 |goto 52.2,73.1
+turnin Invasion Imminent!##24856 |goto 52.20,73.15
+accept Bilgewater Cartel Represent##24858 |goto 52.20,73.15
 step
 talk Brett "Coins" McQuid##38381
 accept Naga Hide##24859 |goto 52.2,73.2
+stickystart "Replace_Naga_Banners"
 step
-kill Vashj'elan Warrior##38359+, Vashj'elan Siren##38360+
-collect 5 Intact Naga Hide |q 24859/1 |goto 53.7,79.1
+Kill Vashj'elan enemies around this area
+collect 5 Intact Naga Hide##50437 |q 24859/1 |goto 54.15,76.93
+step
+label "Replace_Naga_Banners"
 click Naga Banner##9267+
-Replace 10 Naga Banners |q 24858/1 |goto 53.7,79.1
+|tip They look like purple flags hanging from golden rods around this area.
+Replace #10# Naga Banners |q 24858/1 |goto 54.15,76.93
 step
+Follow the path up |goto 52.96,74.57 < 20 |only if walking
 talk Brett "Coins" McQuid##38381
 turnin Naga Hide##24859 |goto 52.2,73.2
 step
 talk Megs Dreadshredder##38432
-turnin Bilgewater Cartel Represent##24858 |goto 52.2,73.2
-accept Irresistible Pool Pony##24864 |goto 52.2,73.2
+turnin Bilgewater Cartel Represent##24858 |goto 52.20,73.14
+accept Irresistible Pool Pony##24864 |goto 52.20,73.14
 step
-Use your Irresistible Pool Pony in the water |use Irresistible Pool Pony##50602
-Ride your Irresistible Pool Pony |havebuff Interface\Icons\Ability_Mount_RidingHorse |q 24864 |goto 58.1,80.3
+Follow the path |goto 54.98,76.64 < 20 |only if walking
+Use the Irresistible Pool Pony in the Water |use Irresistible Pool Pony##50602
+Ride the Irresistible Pool Pony |havebuff 132261 |q 24864 |goto 58.1,80.3
 step
 talk Naga Hatchling##44589
-Lure 12 Naga Hatchlings |q 24864/1 |goto 58.9,83.1
-|modelnpc Naga Hatchling##44580
+|tip They look like tiny naga swimming underwater around this area.
+Lure #12# Naga Hatchlings |q 24864/1 |goto 58.9,83.1
 step
+Leave the water |goto 57.55,80.34 < 20 |only if walking
+Follow the path up |goto 52.96,74.57 < 20 |only if walking
 talk Megs Dreadshredder##38432
-turnin Irresistible Pool Pony##24864 |goto 52.2,73.1
-accept Surrender or Else!##24868 |goto 52.2,73.1
+turnin Irresistible Pool Pony##24864 |goto 52.20,73.14
+accept Surrender or Else!##24868 |goto 52.20,73.14
 step
-Follow Ace as he runs with the Naga Hatchlings
+Follow the path down |goto 52.83,74.65 < 20 |only if walking
+Follow the path |goto 52.71,79.19 < 20 |only if walking
+Follow the path |goto 53.93,86.66 < 20 |only if walking
 kill Faceless of the Deep##38448
-Deal with the leader of the naga |q 24868/1 |goto 54.1,90.1
-|modelnpc Ace##36180
+|tip Follow Ace as he runs with the Naga Hatchlings.
+Deal with the Leader of the Naga |q 24868/1 |goto 54.1,90.1
 step
+Follow the path |goto 53.94,86.76 < 20 |only if walking
+Follow the path |goto 52.64,78.88 < 20 |only if walking
+Follow the path up |goto 52.88,74.72 < 20 |only if walking
 talk Megs Dreadshredder##38432
-turnin Surrender or Else!##24868 |goto 52.2,73.1
-accept Get Back to Town##24897 |goto 52.2,73.1
+turnin Surrender or Else!##24868 |goto 52.20,73.14
+accept Get Back to Town##24897 |goto 52.20,73.14
 step
 talk Sassy Hardwrench##38387
-turnin Get Back to Town##24897 |goto 45.2,64.9
-accept Town-In-A-Box: Under Attack##24901 |goto 45.2,64.9
+turnin Get Back to Town##24897 |goto 45.18,64.91
+accept Town-In-A-Box: Under Attack##24901 |goto 45.18,64.91
 step
 clicknpc B.C. Eliminator##38526
-Use the Fire Cannon ability on your toolbar to shoot at the Oomlot Warriors
-Defeat 30 Oomlot Warriors |q 24901/1 |goto 45.7,65.1
+Shoot at the Oomlot Warriors
+|tip Use the Fire Cannon ability on your action bar.
+Defeat #30# Oomlot Warriors |q 24901/1 |goto 45.69,64.94
 step
 talk Sassy Hardwrench##38869
-turnin Town-In-A-Box: Under Attack##24901 |goto 45.2,64.9
-accept Oomlot Village##24924 |goto 45.2,64.9
+turnin Town-In-A-Box: Under Attack##24901 |goto 45.18,64.91
+accept Oomlot Village##24924 |goto 45.18,64.91
 step
+Follow the path up |goto 47.54,65.38 < 20 |only if walking
+Follow the path |goto 49.11,65.74 < 20 |only if walking
+Follow the path |goto 51.31,67.80 < 20 |only if walking
+Follow the path |goto 54.80,69.97 < 20 |only if walking
 talk Izzy##38647
-turnin Oomlot Village##24924 |goto 56.6,72.0
-accept Free the Captives##24925 |goto 56.6,72.0
-accept Send a Message##24929 |goto 56.6,72.0
+turnin Oomlot Village##24924 |goto 56.57,71.96
+accept Free the Captives##24925 |goto 56.57,71.96
+accept Send a Message##24929 |goto 56.57,71.96
+stickystart "Free_Goblin_Captives"
 step
-_Follow_ the path up |goto 59.2,69.0 < 10 |only if walking
-kill Yngwie##38696 |q 24929/1 |goto 63.0,68.6
+Follow the path |goto 58.24,71.71 < 20 |only if walking
+Follow the path up |goto 59.06,70.84 < 20 |only if walking
+Follow the path up |goto 59.12,69.02 < 20 |only if walking
+Continue following the path up |goto 59.24,67.41 < 20 |only if walking
+Cross the bridge |goto 61.26,68.71 < 20 |only if walking
+Follow the path |goto 62.53,69.42 < 20 |only if walking
+kill Yngwie##38696 |q 24929/1 |goto 62.92,68.53
 step
+label "Free_Goblin_Captives"
 kill Oomlot Shaman##38644+
 |tip Only kill the Oomlot Shamans that are casting a green spell on Goblin Captives.
 Free #5# Goblin Captives |q 24925/1 |goto 58.9,71.4
-|modelnpc Goblin Captive##38643
 step
+Cross the bridge |goto 62.08,69.24 < 20 |only if walking
+Follow the path down |goto 59.91,67.81 < 20 |only if walking
+Follow the path |goto 59.17,69.43 < 20 |only if walking
+Follow the path |goto 58.22,71.76 < 20 |only if walking
 talk Izzy##38647
-turnin Free the Captives##24925 |goto 56.6,71.9
-turnin Send a Message##24929 |goto 56.6,71.9
-accept Oomlot Dealt With##24937 |goto 56.6,71.9
+turnin Free the Captives##24925 |goto 56.57,71.96
+turnin Send a Message##24929 |goto 56.57,71.96
+accept Oomlot Dealt With##24937 |goto 56.57,71.96
 step
+Follow the path |goto 55.07,70.37 < 20 |only if walking
+Follow the path down |goto 51.30,67.84 < 20 |only if walking
+Follow the path down |goto 49.15,65.79 < 20 |only if walking
 talk Sassy Hardwrench##38387
-turnin Oomlot Dealt With##24937 |goto 45.2,64.9
-accept Up the Volcano##24940 |goto 45.2,64.9
+turnin Oomlot Dealt With##24937 |goto 45.17,64.90
+accept Up the Volcano##24940 |goto 45.17,64.90
 step
+Follow the path up |goto 46.57,57.43 < 20 |only if walking
+Follow the path up |goto 47.52,54.38 < 20 |only if walking
 talk Coach Crosscheck##38738
 turnin Up the Volcano##24940 |goto 51.8,47.1
 accept Zombies vs. Super Booster Rocket Boots##24942 |goto 51.8,47.1
 step
 talk Foreman Dampwick##36471
-accept Three Little Pygmies##24945 |goto 51.9,47.2
+accept Three Little Pygmies##24945 |goto 51.86,47.20
 step
 talk Assistant Greely##39199
-accept Rockin' Powder##24946 |goto 51.7,47.4
+accept Rockin' Powder##24946 |goto 51.72,47.39
 step
-Use your Super Booster Rocket Boots |use Super Booster Rocket Boot##52013
-Wear the Super Booster Rocket Boots in your inventory |havebuff Interface\Icons\INV_Gizmo_RocketBoot_01 |q 24946
+Use the Super Booster Rocket Boots |use Super Booster Rocket Boot##52013
+Wear the Super Booster Rocket Boots |havebuff 133029 |q 24946
+stickystart "Rockin_Powder"
+stickystart "Goblin_Zombies"
 step
-As you are going through the next areas, be sure to click any Rockin' Powders you find along the way
-kill Gaahl##38808 |q 24945/1 |goto 59.6,40.2
+Follow the path |goto 52.43,46.74 < 20 |only if walking
+Follow the path |goto 54.15,46.16 < 20 |only if walking
+Follow the path |goto 57.29,44.05 < 20 |only if walking
+Follow the path up |goto 58.17,42.50 < 20 |only if walking
+kill Gaahl##38808 |q 24945/1 |goto 59.53,40.18
 step
-Use your Super Booster Rocket Boots |use Super Booster Rocket Boots##52013
-Wear the Super Booster Rocket Boots in your inventory |havebuff Interface\Icons\INV_Gizmo_RocketBoot_01 |q 24946
+Follow the path down |goto 58.88,41.11 < 20 |only if walking
+Follow the path up |goto 58.06,44.72 < 20 |only if walking
+kill Malmo##38809 |q 24945/2 |goto 58.78,47.20
 step
-kill Malmo##38809 |q 24945/2 |goto 58.8,47.1
+Follow the path |goto 59.78,47.16 < 20 |only if walking
+Follow the path up |goto 60.81,48.51 < 20 |only if walking
+Follow the path |goto 63.12,50.54 < 20 |only if walking
+kill Teloch##38810 |q 24945/3 |goto 63.62,52.74
 step
-Use your Super Booster Rocket Boots |use Super Booster Rocket Boots##52013
-Wear the Super Booster Rocket Boots in your inventory |havebuff Interface\Icons\INV_Gizmo_RocketBoot_01 |q 24946
-step
-kill Teloch##38810 |q 24945/3 |goto 63.6,52.7
+label "Rockin_Powder"
 click Rockin' Powder##49+
-collect 5 Rockin' Powder |q 24946/1 |goto 63.6,52.7
+|tip They look like brown piles of dirt on the ground around this area.
+collect 5 Rockin' Powder##52024 |q 24946/1 |goto 63.62,52.74
 step
-'Use your Super Booster Rocket Boots |use Super Booster Rocket Boots##52013
-Wear the Super Booster Rocket Boots in your inventory |havebuff Interface\Icons\INV_Gizmo_RocketBoot_01 |q 24946
+label "Goblin_Zombies"
+Use the Super Booster Rocket Boots |use Super Booster Rocket Boots##52013
+kill 50 Goblin Zombie##38816+ |q 24942/1 |goto 63.62,52.74
+|tip Get near Goblin Zombies with your Super Booster Rocket Boots active.
 step
-Use your Super Booster Rocket Boots |use Super Booster Rocket Boots##52013
-Go near Goblin Zombies with your Super Booster Rocket Boots active
-kill 50 Goblin Zombie##38816+ |q 24942/1 |goto 56.5,44.1
-step
+Follow the path down |goto 63.45,51.68 < 20 |only if walking
+Follow the path |goto 59.53,43.16 < 20 |only if walking
+Follow the path |goto 53.31,46.67 < 20 |only if walking
 talk Coach Crosscheck##38738
 turnin Zombies vs. Super Booster Rocket Boots##24942 |goto 51.8,47.1
 step
 talk Foreman Dampwick##36471
-turnin Three Little Pygmies##24945 |goto 51.9,47.2
+turnin Three Little Pygmies##24945 |goto 51.85,47.19
 step
 talk Assistant Greely##38124
-turnin Rockin' Powder##24946 |goto 51.7,47.4
+turnin Rockin' Powder##24946 |goto 51.73,47.38
 step
 talk Coach Crosscheck##38738
-accept Rocket Boot Boost##24952 |goto 51.8,47.1
+accept Rocket Boot Boost##24952 |goto 51.79,47.11
 step
-Use your Rockin' Powder Infused Rocket Boots in your bags |use Rockin' Powder Infused Rocket Boots##52032 |q 24952/1
+Use the Rockin' Powder Infused Rocket Boots |use Rockin' Powder Infused Rocket Boots##52032
+Use the Rockin' Powder Infused Rocket Boots |q 24952/1 |goto 51.80,47.10
 step
 talk Hobart Grapplehammer##38120
-turnin Rocket Boot Boost##24952 |goto 68.9,46.4
-accept Children of a Turtle God##24954 |goto 68.9,46.4
+turnin Rocket Boot Boost##24952 |goto 68.93,46.44
+accept Children of a Turtle God##24954 |goto 68.93,46.44
 step
 kill Child of Volcanoth##38845+
-collect 10 Fire Gland |q 24954/1 |goto 68.0,44.4
+collect 10 Fire Gland##52035 |q 24954/1 |goto 68.0,44.4
 step
 talk Hobart Grapplehammer##38120
-turnin Children of a Turtle God##24954 |goto 68.9,46.4
-accept Volcanoth!##24958 |goto 68.9,46.4
+turnin Children of a Turtle God##24954 |goto 68.93,46.44
+accept Volcanoth!##24958 |goto 68.93,46.44
 step
 Use your Bootzooka repeatedly on Volcanoth |use Bootzooka##52043
-|tip He's a huge turtle inside a cave.  Move to the side and take cover behind the rock on the left when Volcanoth is about to breathe fire.
-Kill Volcanoth |q 24958/1 |goto The Lost Isles/2 71.6,55.2
-|modelnpc Volcanoth##50058
+|tip He's a huge turtle inside a cave.
+kill Volcanoth##38855 |q 24958/1 |goto The Lost Isles/2 54.89,31.29
+|tip Move to the side and take cover behind the rock on the left when Volcanoth is about to cast Volcanic Breath.
 step
 talk Sassy Hardwrench##38928
-turnin Volcanoth!##24958 |goto 62.7,49.4
-accept Old Friends##25023 |goto 62.7,49.4
+turnin Volcanoth!##24958 |goto 62.70,49.84
+accept Old Friends##25023 |goto 62.70,49.84
 step
 talk Thrall##38935
-turnin Old Friends##25023 |goto The Lost Isles/0 36.8,43.1
-accept Repel the Paratroopers##25024 |goto The Lost Isles/0 36.8,43.1
+turnin Old Friends##25023 |goto The Lost Isles/0 36.79,43.13
+accept Repel the Paratroopers##25024 |goto The Lost Isles/0 36.79,43.13
 step
 talk Aggra##39065
-accept The Heads of the SI:7##25093 |goto 36.3,43.4
+accept The Heads of the SI:7##25093 |goto 36.26,43.37
 step
 talk Sassy Hardwrench##38387
-accept Mine Disposal, the Goblin Way##25058 |goto 37.4,41.9
-stickystart "detonatepara"
+accept Mine Disposal, the Goblin Way##25058 |goto 37.36,41.91
+stickystart "Alliance_Paratroopers"
+stickystart "Detonate_Land_Mines"
 step
-Use your Satchel of Grenades on the land mines |use Satchel of Grenades##52280
-|tip They are all along this beach.
+Follow the path down |goto 36.29,40.80 < 20 |only if walking
+Continue down the path |goto 34.57,38.73 < 20 |only if walking
 kill Commander Arrington##39141
-collect Commander Arrington's Head |q 25093/1 |goto 32.3,42.9
+collect Commander Arrington's Head##52346 |q 25093/1 |goto 32.3,42.9
 step
-Use your Satchel of Grenades on the land mines |use Satchel of Grenades##52280
-|tip They are all along this beach.
 kill Alexi Silenthowl##39143
-collect Alexi Silenthowl's Head |q 25093/3 |goto 30.8,33.9
+collect Alexi Silenthowl's Head##52349 |q 25093/3 |goto 30.8,33.9
 step
-Use your Satchel of Grenades on the land mines |use Satchel of Grenades##52280
-|tip They are all along this beach.
 kill Darkblade Cyn##39142
-collect Darkblade Cyn's Head |q 25093/2 |goto 33.4,27.9
-step "detonatepara"
-kill 15 Alliance Paratrooper##39069+ |q 25024/1 |goto 33.4,34.1
-Use your Satchel of Grenades on the land mines |use Satchel of Grenades##52280
-|tip They are all along this beach.
-Detonate 10 Land Mines |q 25058/1 |goto 33.4,34.1
+collect Darkblade Cyn's Head##52347 |q 25093/2 |goto 33.43,27.87
 step
-_Follow_ the path up |goto 34.1,38.7 < 10 |only if walking
-talk Sassy Hardwrench##38387
-turnin Mine Disposal, the Goblin Way##25058 |goto 37.4,41.9
+label "Alliance_Paratroopers"
+kill 15 Alliance Paratrooper##39069+ |q 25024/1 |goto 33.66,29.07
+step
+label "Detonate_Land_Mines"
+Use the Satchel of Grenades on land mines |use Satchel of Grenades##52280
+|tip They look like silver objects on the ground around this area.
+Detonate #10# Land Mines |q 25058/1 |goto 33.66,29.07
 step
 talk Thrall##38935
-turnin Repel the Paratroopers##25024 |goto 36.8,43.1
+turnin Repel the Paratroopers##25024 |goto 36.79,43.13
 step
 talk Aggra##39065
-turnin The Heads of the SI:7##25093 |goto 36.3,43.4
+turnin The Heads of the SI:7##25093 |goto 36.27,43.37
 step
 talk Sassy Hardwrench##38387
-accept The Pride of Kezan##25066 |goto 37.4,41.9
+turnin Mine Disposal, the Goblin Way##25058 |goto 37.35,41.92
+accept The Pride of Kezan##25066 |goto 37.35,41.92
 step
 talk Sassy Hardwrench##38869
-Tell her to get you up into the skies
-You will get in an airplane |invehicle |c |q 25066 |goto 37.4,41.9
+Tell her _"Get me up into the skies, Sassy!"_
+Pilot the Airplane |invehicle |c |q 25066 |goto 37.35,41.92
 step
-Use your abilities on your hotbar to Gnomeregan Stealth Fighters
-|tip They are airplanes flying around in the sky.
-Shoot down 10 Gnomeregan Stealth Fighters |q 25066/1 |goto 33.7,38.8
-|tip Controlling this vehicle is very similar to swimming.
+Kill Gnomeregan Stealth Fighters
+|tip The look like airplanes flying around in the sky around this area.
+|tip Use your abilities on your action bar.
+Shoot Down #10# Gnomeregan Stealth Fighters |q 25066/1 |goto 33.7,38.8
 step
-Click the red arrow on your hotbar to stop flying the plane |outvehicle |c |q 25066 |goto 37.4,41.9
+Land the Airplane at this Location |outvehicle |c |q 25066 |goto 37.4,41.9
+|tip Fly to this location first, and get near the ground.  You will drop out of the airplane without a parachute.
+|tip Click the red arrow on your action bar.
 step
 talk Sassy Hardwrench##38387
-turnin The Pride of Kezan##25066 |goto 37.4,41.9
-accept The Warchief Wants You##25098 |goto 37.4,41.9
+turnin The Pride of Kezan##25066 |goto 37.36,41.92
+accept The Warchief Wants You##25098 |goto 37.36,41.92
 step
 talk Thrall##38935
 turnin The Warchief Wants You##25098 |goto 36.8,43.1
 accept Borrow Bastia##25099 |goto 36.8,43.1
 step
+Follow the path down |goto 36.51,41.32 < 20 |only if walking
+Continue down the path |goto 35.28,39.06 < 20 |only if walking
 talk Kilag Gorefang##35893
 turnin Borrow Bastia##25099 |goto 33.8,38.8
 accept Let's Ride##25100 |goto 33.8,38.8
-You will ride Bastia to Slinky Sharpshiv |invehicle |c
-|modelnpc Bastia##39152
+step
+Travel to Slinky Sharpshiv |goto 53.67,34.81 < 20 |c |q 25100
 step
 talk Slinky Sharpshiv##38517
-turnin Let's Ride##25100 |goto 53.7,34.9
-accept The Gallywix Labor Mine##25109 |goto 53.7,34.9
+turnin Let's Ride##25100 |goto 53.72,34.93
+accept The Gallywix Labor Mine##25109 |goto 53.72,34.93
 step
-_Enter_ the cave |goto 54.1,36.0 < 10 |walk
-_Drop down_ into the water here |goto 54.9,34.1 < 10 |walk
+Enter the cave |goto 54.1,36.0 < 15 |walk |n
+Follow the path down |goto 54.47,35.91 < 15 |walk |n
+Follow the path down |goto 54.78,34.77 < 10 |walk |n
+Jump down here |goto 55.22,35.82 < 15 |c |q 25109
+step
+Follow the path |goto 53.54,36.98 < 15 |walk
 talk Assistant Greely##38124
-turnin The Gallywix Labor Mine##25109 |goto 53.2,36.5
-accept Kaja'Cola Gives You IDEAS! (TM)##25110 |goto 53.2,36.5
+turnin The Gallywix Labor Mine##25109 |goto 53.16,36.54
+accept Kaja'Cola Gives You IDEAS! (TM)##25110 |goto 53.16,36.54
 step
-click Kaja'Cola Zero-One##9357
-|tip It is inside the mine cart.
-collect Kaja'Cola Zero-One |q 25110/1 |goto 56.6,35.7
+Follow the path |goto 53.53,36.97 < 15 |walk
+click Kaja'Cola Zero-One##9357+
+|tip They look like soda cans around this area.
+kill Brute Overseer##39193+
+collect Kaja'Cola Zero-One##52483 |q 25110/1 |goto 54.49,36.52
 step
+Follow the path |goto 53.54,36.98 < 15 |walk
 talk Assistant Greely##38124
-turnin Kaja'Cola Gives You IDEAS! (TM)##25110 |goto 53.2,36.5
+turnin Kaja'Cola Gives You IDEAS! (TM)##25110 |goto 53.16,36.54
 step
-Next to you:
+_Next to you:_
 talk Assistant Greely##39199
 accept Morale Boost##25122
 accept Throw It On the Ground!##25123
 step
-As you go you through area collect 9 cans of Kaja'Cola
+Follow the path |goto 53.38,36.95 < 10 |walk
+click Kaja'Cola Zero-One##9357+
+|tip They look like soda cans around this area.
+kill Brute Overseer##39193+
+collect 9 Kaja'Cola Zero-One##52484 |c |q 25122	|goto 54.64,36.09
+stickystart "Free_Goblins_Minds"
+step
 kill Blastshadow the Brutemaster##39194
+|tip He walks around this area with a succubus.
 click Blastshadow's Soulstone##8552
-collect Blastshadow's Soulstone##52481 |n
-Use Blastshadow's Soulstone on Blastshadow the Brutemaster's corpse |use Blastshadow's Soulstone##52481
+|tip It's a purple floating orb that appears after you kill him.
+collect Blastshadow's Soulstone##52481 |c |goto 55.8,32.1
+step
+Use Blastshadow's Soulstone on Blastshadow the Brutemaster's Corpse |use Blastshadow's Soulstone##52481
+|tip His corpse will be wherever you ended up killing him.
 Destroy Blastshadow's Soulstone |q 25123/1 |goto 55.8,32.1
 step
-Next to you:
+_Next to you:_
 talk Assistant Greely##39199
 turnin Throw It On the Ground!##25123
 step
-click Kaja'Cola Zero-One##9357+
-|tip You will need 9 total, just get as many as you can find for now.
+Follow the path |goto 55.12,36.13 < 20 |walk
 Use a Kaja'Cola Zero-One on Izzy |use Kaja'Cola Zero-One##52484
-Free Izzy's mind |q 25122/2 |goto 57.0,35.0
-|modelnpc Izzy##36429
+Free Izzy's Mind |q 25122/2 |goto 57.01,35.03
 step
-click Kaja'Cola Zero-One##9357+
-|tip You will need 9 total, just get as many as you can find for now.
 Use a Kaja'Cola Zero-One on Ace |use Kaja'Cola Zero-One##52484
-Free Ace's mind |q 25122/1 |goto 56.9,37.2
-|modelnpc Ace##36180
+Free Ace's Mind |q 25122/1 |goto 56.99,37.15
 step
-click Kaja'Cola Zero-One##9357+
-|tip You will need 9 total, just get as many as you can find for now.
+Follow the path |goto 56.63,34.71 < 15 |walk
 Use a Kaja'Cola Zero-One on Gobber |use Kaja'Cola Zero-One##52484
-Free Gobber's mind |q 25122/3 |goto 57.0,32.1
-Use a Kaja'Cola Zero-One on Kezan Citizens and Goblin Survivors |use Kaja'Cola Zero-One##52484
-Free 6 other goblin's minds |q 25122/4 |goto 57.0,32.1
-|modelnpc Gobber##36463
-|modelnpc Kezan Citizen##38745
+Free Gobber's Mind |q 25122/3 |goto 57.04,32.15
 step
-Next to you:
+label "Free_Goblins_Minds"
+_Inside the cave:_
+Use a Kaja'Cola Zero-One on Kezan Citizens and Goblin Survivors |use Kaja'Cola Zero-One##52484
+|tip They look like goblins mining throughout the cave.
+Free #6# Other Goblin's Minds |q 25122/4
+step
+_Next to you:_
 talk Assistant Greely##39199
 turnin Morale Boost##25122
 accept Light at the End of the Tunnel##25125
 step
-_Leave_ the cave |goto 56.6,28.5 < 10 |walk
+Follow the path |goto 57.01,30.51 < 20 |walk
+Leave the cave |goto 56.58,28.43 < 15 |walk
 clicknpc Mine Cart##39341
 turnin Light at the End of the Tunnel##25125 |goto 56.3,27.3
 accept Wild Mine Cart Ride##25184 |goto 56.3,27.3
-Ride the Mine Cart |q 25184/1 |goto 56.3,27.3
+step
+Travel to Bilgewater Lumber Yard |goto 54.26,17.10 < 20 |c |q 25184
 step
 talk Assistant Greely##38124
-turnin Wild Mine Cart Ride##25184 |goto 54.4,16.9
-accept Shredder Shutdown##25200 |goto 54.4,16.9
+turnin Wild Mine Cart Ride##25184 |goto 54.39,16.94
+accept Shredder Shutdown##25200 |goto 54.39,16.94
 step
 talk Coach Crosscheck##38738
-accept The Ultimate Footbomb Uniform##25201 |goto 54.4,16.9
+accept The Ultimate Footbomb Uniform##25201 |goto 54.44,16.93
+stickystart "Spare_Shredder_Parts"
 step
-kill 10 Steamwheedle Shark##39354+ |q 25200/1 |goto 54.2,17.7
+kill 8 Steamwheedle Shark##39354 |q 25200/1 |goto 53.95,17.54
+step
+label "Spare_Shredder_Parts"
 click Spare Shredder Parts##7835
-collect 10 Spare Shredder Parts |q 25201/1 |goto 54.2,17.7
+|tip They look like inactive shredders around this area.
+collect 8 Spare Shredder Parts##52530 |q 25201/1 |goto 53.95,17.54
 step
 talk Assistant Greely##38124
-turnin Shredder Shutdown##25200 |goto 54.4,16.9
+turnin Shredder Shutdown##25200 |goto 54.39,16.94
 step
 talk Coach Crosscheck##38738
-turnin The Ultimate Footbomb Uniform##25201 |goto 54.4,16.9
+turnin The Ultimate Footbomb Uniform##25201 |goto 54.44,16.93
 step
 talk Assistant Greely##38124
-accept Release the Valves##25204 |goto 54.4,16.9
+accept Release the Valves##25204 |goto 54.39,16.94
 step
 talk Ace##38441
-accept What Kind of Name is Chip, Anyway?##25203 |goto 54.1,17.2
+accept What Kind of Name is Chip, Anyway?##25203 |goto 54.16,17.20
 only if _G['UnitSex']("player")==2
 step
 talk Izzy##38647
-accept The Fastest Way to His Heart##25202 |goto 54.0,17.0
+accept The Fastest Way to His Heart##25202 |goto 53.99,16.99
 only if _G['UnitSex']("player")==3
 step
+Jump down here |goto 52.71,16.42 < 20 |only if walking
+Run up the ramp |goto 50.90,15.99 < 20 |only if walking
 click Valve #1##353
-Release Valve #1 |q 25204/1 |goto 50.8,13.8
+|tip It looks like a red wheel with steam flowing out of it on the side of the wall.
+Release Valve #1 |q 25204/1 |goto 50.72,13.80
 step
 click Valve #3##353
-Release Valve #3 |q 25204/3 |goto 50.5,13.1
+|tip It looks like a red wheel with steam flowing out of it on the side of the wall.
+Release Valve #3 |q 25204/3 |goto 50.52,13.12
 step
+Follow the path |goto 50.94,12.52 < 15 |only if walking
 click Valve #2##353
-Release Valve #2 |q 25204/2 |goto 50.2,11.8
+|tip It looks like a red wheel with steam flowing out of it on the side of the wall.
+Release Valve #2 |q 25204/2 |goto 50.18,11.75
 step
 click Valve #4##353
-Release Valve #4 |q 25204/4 |goto 49.9,12.7
+|tip It looks like a red wheel with steam flowing out of it on the side of the wall.
+Release Valve #4 |q 25204/4 |goto 49.87,12.71
 step
-kill Chip Endale##39363 |q 25203/1 |goto 49.9,13.9
+kill Chip Endale##39363 |q 25203/1 |goto 49.86,13.89
 only if _G['UnitSex']("player")==2
 step
 kill Chip Endale##39363
-collect Still-Beating Heart |q 25202/1 |goto 49.9,13.9
+collect Still-Beating Heart |q 25202/1 |goto 49.86,13.89
 only if _G['UnitSex']("player")==3
 step
+Follow the path |goto 50.35,13.40 < 15 |only if walking
 click Platform Control Panel##356
-turnin Release the Valves##25204 |goto 51.4,13.1
-accept Good-bye, Sweet Oil##25207 |goto 51.4,13.1
+turnin Release the Valves##25204 |goto 51.41,13.11
+accept Good-bye, Sweet Oil##25207 |goto 51.41,13.11
+step
 click Big Red Button##339
-Destroy the KTC Oil Platform |q 25207/1 |goto 51.4,13.1
+Destroy the KTC Oil Platform |q 25207/1 |goto 51.41,13.11
+step
+Jump down here |goto 51.64,13.51 < 7 |only if walking
+Follow the path up |goto 53.76,15.62 < 15 |only if walking
+Follow the path |goto 54.49,16.21 < 15 |only if walking
+talk Assistant Greely##38124
+turnin Good-bye, Sweet Oil##25207 |goto 54.39,16.94
 step
 talk Ace##38441
-turnin What Kind of Name is Chip, Anyway?##25203 |goto 54.2,17.2
+turnin What Kind of Name is Chip, Anyway?##25203 |goto 54.16,17.20
 only if _G['UnitSex']("player")==2
 step
 talk Izzy##38647
-turnin The Fastest Way to His Heart##25202 |goto 54.0,17.0
+turnin The Fastest Way to His Heart##25202 |goto 54.00,16.98
 only if _G['UnitSex']("player")==3
 step
 talk Assistant Greely##38124
-turnin Good-bye, Sweet Oil##25207 |goto 54.4,16.9
-accept The Slave Pits##25213 |goto 54.4,16.9
-You will ride a Shredder to Sassy Hardwrench |invehicle |c
-|modelnpc Bilgewater Shredder##48526
+accept The Slave Pits##25213 |goto 54.39,16.94
+step
+Travel to Sassy Hardwrench |goto 43.95,25.37 < 20 |c |q 25213
 step
 talk Sassy Hardwrench##38869
 turnin The Slave Pits##25213 |goto 43.6,25.3
-accept She Loves Me, She Loves Me NOT!##25243 |goto 43.6,25.3 |only if _G['UnitSex']("player")==2
-accept What Kind of Name is Candy, Anyway?##25244 |goto 43.6,25.3 |only if _G['UnitSex']("player")==3
+accept She Loves Me, She Loves Me NOT!##25243 |goto 43.63,25.31 |only if _G['UnitSex']("player")==2
+accept What Kind of Name is Candy, Anyway?##25244 |goto 43.63,25.31 |only if _G['UnitSex']("player")==3
 step
 talk Hobart Grapplehammer##38120
-accept Escape Velocity##25214 |goto 43.9,25.3
+accept Escape Velocity##25214 |goto 43.85,25.29
+stickystart "Launch_Cages"
 step
+Follow the path down |goto 42.97,25.45 < 20 |only if walking
+Follow the path |goto 41.37,25.28 < 20 |only if walking
+Follow the path up |goto 40.59,26.63 < 20 |only if walking
+Follow the path |goto 39.71,28.47 < 20 |only if walking
 kill Candy Cane##39426
-collect Fickle Heart |q 25243/1 |goto 39.7,27.1
+collect Fickle Heart##52559 |q 25243/1 |goto 39.68,27.12
 only if _G['UnitSex']("player")==2
 step
-kill Candy Cane##39426 |q 25244/1 |goto 39.7,27.1
+Follow the path down |goto 42.97,25.45 < 20 |only if walking
+Follow the path |goto 41.37,25.28 < 20 |only if walking
+Follow the path up |goto 40.59,26.63 < 20 |only if walking
+Follow the path |goto 39.71,28.47 < 20 |only if walking
+kill Candy Cane##39426 |q 25244/1 |goto 39.68,27.12
 only if _G['UnitSex']("player")==3
 step
+label "Launch_Cages"
 clicknpc Captured Goblin##39456+
-|tip They are in wooden cages all around this area.
-Launch 8 cages |q 25214/1 |goto 40.9,25.5
+|tip They looks like wooden cages around this area.
+Launch #8# Cages |q 25214/1 |goto 39.90,28.78
 step
+Follow the path |goto 39.79,28.49 < 15 |only if walking
+Follow the path down |goto 40.40,28.12 < 20 |only if walking
+Follow the path |goto 41.46,25.23 < 20 |only if walking
+Follow the path up |goto 42.51,25.28 < 20 |only if walking
+Follow the path up |goto 43.66,25.83 < 15 |only if walking
 talk Hobart Grapplehammer##38120
-turnin Escape Velocity##25214 |goto 43.9,25.3
+turnin Escape Velocity##25214 |goto 43.85,25.29
 step
 talk Sassy Hardwrench##38869
-turnin She Loves Me, She Loves Me NOT!##25243 |goto 43.6,25.3 |only if _G['UnitSex']("player")==2
-turnin What Kind of Name is Candy, Anyway?##25244 |goto 43.6,25.3 |only if _G['UnitSex']("player")==3
-step
-talk Sassy Hardwrench##38869
+turnin She Loves Me, She Loves Me NOT!##25243 |goto 43.63,25.32 |only if _G['UnitSex']("player")==2
+turnin What Kind of Name is Candy, Anyway?##25244 |goto 43.63,25.32 |only if _G['UnitSex']("player")==3
 accept Final Confrontation##25251 |goto 43.6,25.3
 step
 clicknpc Ultimate Footbomb Uniform##39592
-Take control of the Ultimate Footbomb Uniform |q 25251/1 |goto 43.9,25.2
+Pilot the Ultimate Footbomb Uniform |q 25251/1 |goto 43.85,25.18
 step
-Follow the path up |goto 42.3,18.5 < 10 |only if walking
-Use the abilities on your hotbar to kill Trade Prince Gallywix
+Follow the path up |goto 42.3,18.5 < 15 |only if walking
+Follow the path |goto 42.08,17.56 < 15 |only if walking
+kill Trade Prince Gallywix##39582
+|tip Use the abilities on your action bar.
 |tip Stand behind Trade Prince Gallywix when you are fighting him.
 Deal with Trade Prince Gallywix |q 25251/2 |goto 43.5,20.0
-|modelnpc Trade Prince Gallywix##39615
+step
+Follow the path down |goto 41.82,17.81 < 15 |only if walking
+Follow the path up |goto 42.31,21.95 < 20 |only if walking
+Leave the Ultimate Footbomb Uniform |nobuff The Ultimate Footbomb Uniform |c |goto 43.69,25.25 |q 25251
+|tip Run to this location first, since you run faster in the shredder.
+|tip Click the yellow arrow on your action bar.
 step
 talk Sassy Hardwrench##38869
-turnin Final Confrontation##25251 |goto 43.6,25.3
-accept Victory!##25265 |goto 43.6,25.3
+turnin Final Confrontation##25251 |goto 43.63,25.32
+accept Victory!##25265 |goto 43.63,25.32
+step
+Travel to Thrall |goto 42.08,17.47 < 20 |c |q 25265
 step
 talk Thrall##38935
-turnin Victory!##25265 |goto 42.1,17.4
-accept Warchief's Emissary##25266 |goto 42.1,17.4
+turnin Victory!##25265 |goto 42.15,17.37
+accept Warchief's Emissary##25266 |goto 42.15,17.37
 step
-talk Sassy Hardwrench##38869 |goto 42.6,16.4
-Tell her to set sail for Orgrimmar before the island blows for good!
-talk Kor'kron Loyalist##39609
-turnin Warchief's Emissary##25266 |goto Durotar,57.7,9.8
-accept Message for Vol'jin##25267 |goto Durotar,57.7,9.8
-You will ride a Battleworg to you Vol'jin's Chamber |invehicle |c
-|modelnpc Battleworg##39610
+talk Sassy Hardwrench##38869 |goto 42.58,16.37 |n
+Tell her _"Sassy, let's set sail for Orgrimmar before the island blows for good!"_
+Leave the Lost Isles |goto Durotar |noway |c |q 25266
+step
+talk Darkspear Loyalist##86884
+turnin Warchief's Emissary##25266 |goto Durotar/0 57.65,9.77
+accept Message for Vol'jin##25267 |goto Durotar/0 57.65,9.77
+step
+Travel to Orgrimmar |goto Orgrimmar/1 50.10,76.17 < 20 |c |q 25267
 step
 talk Eitrigg##3144
-accept Missing Reports##26803 |goto Orgrimmar,49.2,72.3
+|tip Inside the building.
+accept Missing Reports##26803 |goto Orgrimmar/1 49.2,72.3
 step
-talk Vol'jin##86832
-turnin Message for Vol'jin##25267 |goto 48.1,70.5
-accept Report to the Labor Captain##25275 |goto 48.1,70.5
+talk High Overlord Saurfang##14720
+|tip Inside the building.
+turnin Message for Vol'jin##25267 |goto 48.26,70.94
+accept Report to the Labor Captain##25275 |goto 48.26,70.94
 step
-_Ride_ the elevator up |goto 51.2,63.1 < 10
+talk Gotura Fourwinds##35068
+|tip Inside the building.
+accept Preserving the Barrens##26642 |goto 47.63,71.22
+step
+Leave the building |goto 50.07,75.97 < 10 |walk
+Follow the path up |goto 52.08,71.45 < 20 |only if walking
+Run up the ramp |goto 50.96,64.57 < 10 |only if walking
+Ride the elevator up |goto 51.12,63.04 < 15 |only if walking
 talk Doras##3310
 turnin Missing Reports##26803 |goto 49.7,59.2
 accept Flight to Razor Hill##26804 |goto 49.7,59.2
 step
 talk Gar'Thok##3139
-turnin Flight to Razor Hill##26804 |goto Durotar,52.0,43.5
-accept Reports to Orgrimmar##26806 |goto Durotar,52.0,43.5
+turnin Flight to Razor Hill##26804 |goto Durotar/0 52.0,43.5
+accept Reports to Orgrimmar##26806 |goto Durotar/0 52.0,43.5
 step
 talk Burok##41140
 turnin Reports to Orgrimmar##26806 |goto 53.1,43.6
-step
-talk Kargal Battlescar##3337
-accept In Defense of Far Watch##871 |goto Northern Barrens,67.7,39.4
-step
-talk Halga Bloodeye##34258
-accept Plainstrider Menace##844 |goto 67.5,38.7
-step
-kill Greater Plainstrider##3244+
-collect 7 Plainstrider Beak |q 844/1 |goto 67.8,30.3
-You can find more Greater Plainstriders at the following lcoation |goto 64.6,41.3
-step
-talk Halga Bloodeye##34258
-turnin Plainstrider Menace##844 |goto 67.4,38.7
-step
-talk Dorak##34284
-accept Through Fire and Flames##13878 |goto 67.1,45.5
-stickystart "razormaneplunder"
-step
-click Wolf Chains##8721+
-Free 3 Wolves |q 13878/1 |goto 66.6,47.3
-step "razormaneplunder"
-kill 8 Razormane Plunderer##3267+ |q 871/1 |goto 66.8,49.8
-kill 3 Razormane Hunter##3265+ |q 871/2 |goto 66.8,49.8
-step
-talk Dorak##34284
-turnin Through Fire and Flames##13878 |goto 67.1,45.5
-step
-talk Kargal Battlescar##3337
-turnin In Defense of Far Watch##871 |goto 67.7,39.4
-accept The Far Watch Offensive##872 |goto 67.7,39.4
-step
-talk Halga Bloodeye##34258
-accept Supplies for the Crossroads##5041 |goto 67.4,38.7
-stickystart "xroadssupply"
-step
-_Enter_ the cave |goto Northern Barrens,66.0,52.5 < 10 |walk
-Follow the path in the cave until it dead ends on a small platform
-kill Kreenig Snarlsnout##3438
-collect Kreenig Snarlsnout's Tusk |q 872/3 |goto 64.3,55.0
-step "xroadssupply"
-kill 5 Razormane Thornweaver##3268+ |q 872/1 |goto 64.7,53.2
-kill 5 Razormane Defender##3266+ |q 872/2 |goto 64.7,53.2
-click Crossroads Supply Crate##5531+
-collect 5 Crossroads Supply Crate |q 5041/1 |goto 64.7,53.2
-step
-_Leave_ the cave |goto Northern Barrens,66.0,52.5 < 10 |walk
-talk Kargal Battlescar##3337
-turnin The Far Watch Offensive##872 |goto 67.7,39.4
-step
-talk Halga Bloodeye##34258
-turnin Supplies for the Crossroads##5041 |goto 67.4,38.7
-accept Crossroads Caravan Pickup##13949 |goto 67.4,38.7
-step
-talk Halga Bloodeye##34258
-Tell her you're ready
-clicknpc Lead Caravan Kodo##34430
-Use your Shoot ability to kill the quilboars that attack the caravan as you ride the kodo
-|tip To kill them very easily, spam the 1 button and the Tab key on your keyboard together.
-Escort the Caravan |q 13949/1 |goto 67.4,38.7
-step
-talk Kranal Fiss##5907
-turnin Crossroads Caravan Pickup##13949 |goto 56.4,40.3
-step
-talk Rocco Whipshank##34578
-accept Crossroads Caravan Delivery##13975 |goto 54.6,41.5
-step
-talk Rocco Whipshank##34578
-Tell him to bring it on
-clicknpc Head Caravan Kodo##34577
-Use your abilities on your hotbar on the Burning Blade mobs that attack you
-|tip It's easier to just manually left click the Burning Blade mobs and spam the 1 button on your hotbar to shoot them all.  Don't bother with the melee attack at all.
-Escort the Crossroads Caravan |q 13975/1 |goto 54.6,41.5
-step
-talk Sergra Darkthorn##3338
-accept The Zhevra##845 |goto 50.0,59.9
-accept Hunting the Huntress##903 |goto 50.0,59.9
-step
-talk Innkeeper Boorand Plainswind##3934
-home The Crossroads |goto 49.6,57.9
-step
-talk Thork##3429
-turnin Crossroads Caravan Delivery##13975 |goto 48.7,59.6
-step
-talk Devrak##3615
-fpath The Crossroads |goto Northern Barrens 48.7,58.7
-step
-kill Savannah Huntress##3415+
-collect 5 Huntress Claws |q 903/1 |goto 46.3,60.1
-kill Zhevra Runner##3242+
-collect 4 Zhevra Hooves |q 845/1 |goto 46.3,60.1
-More can be found around at the following location |goto Northern Barrens,40.4,50.5
-step
-talk Sergra Darkthorn##3338
-turnin The Zhevra##845 |goto 50.0,59.8
-turnin Hunting the Huntress##903 |goto 50.0,59.8
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Cataclysm (80-85)\\Mount Hyjal (80-82)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Cataclysm (80-85)\\Mount Hyjal (80-82)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Hyjal",
-next="Zygor's Horde Leveling Guides\\Cataclysm (80-85)\\Deepholm (82-83)",
+next="Zygor's Leveling Guides\\Cataclysm (80-85)\\Deepholm (82-83)",
 startlevel=80.00,
 dynamic=true,
 },[[
@@ -34468,7 +34676,7 @@ kill Spinescale Matriarch##40403
 collect Spiked Basilisk Hide##54610 |q 25494/1 |goto 84.7,46.8
 step
 Use your Ogre Disguise next to the Ogre Outhouse |use Ogre Disguise##55137
-Put on your Ogre Disguise |havebuff Interface\Icons\inv_misc_ogrepinata |goto 77.6,48.1 |q 25308
+Put on your Ogre Disguise |havebuff 306868 |goto 77.6,48.1 |q 25308
 step
 _Enter_ the building |goto Mount Hyjal/0 77.3,49.6 < 10 |walk
 talk Karr'gonn##40489
@@ -34655,10 +34863,10 @@ step
 talk Farseer Krogar##45244
 turnin The Battle Is Won, The War Goes On##27399 |goto Orgrimmar 50.5,38.4
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Cataclysm (80-85)\\Vashj'ir (80-82)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Cataclysm (80-85)\\Vashj'ir (80-82)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Vashjir",
-next="Zygor's Horde Leveling Guides\\Cataclysm (80-85)\\Deepholm (82-83)",
+next="Zygor's Leveling Guides\\Cataclysm (80-85)\\Deepholm (82-83)",
 achieveid={5452,5318},
 startlevel=80.00,
 dynamic=true,
@@ -34710,7 +34918,8 @@ home The Immortal Coil |goto 38.7,31.7 |q 25942
 stickystart "succulentcrabmeat"
 step
 kill 8 Zin'jatar Raider##41781 |q 25942/1 |goto 40.9,30.7
-step "succulentcrabmeat"
+step
+label "succulentcrabmeat"
 kill Splitclaw Skitterer##40685+
 collect 10 Succulent Crab Meat##54845 |q 25943/1 |goto 40.9,30.7
 step
@@ -34728,11 +34937,13 @@ kill Gilblin Plunderer##41746+
 click Orgrimmar Axe##9562+
 |tip They can be a little hard to see from far away, so keep an eye out for them.
 collect 5 Orgrimmar Axe##56243 |q 25944/1 |goto 36.7,28.9
-step "orgrimmarhelmet"
+step
+label "orgrimmarhelmet"
 kill Gilblin Plunderer##41746+
 click Orgrimmar Helm##9560+
 collect 5 Orgrimmar Helm##56244 |q 25944/2 |goto 36.7,28.9
-step "orgrimmarbreastplate"
+step
+label "orgrimmarbreastplate"
 kill Gilblin Plunderer##41746+
 click Orgrimmar Breastplate##8419+
 collect 5 Orgrimmar Breastplate##56245 |q 25944/3 |goto 36.7,28.9
@@ -34793,17 +35004,21 @@ talk Adarrah##39667
 turnin Good Deed Left Undone##27685 |goto 53.4,43.0
 accept Gimme Shelter!##25587 |goto 53.4,43.0
 step
-Scout Smuggler's Hole |q 25587/1 |goto 56.8,29.8 |indoors Smuggler's Scar
+Enter the cave |goto 54.4,33.7 < 10 |walk
+Scout Smuggler's Hole |q 25587/1 |goto 56.8,29.8
 step
+Leave the cave |goto 54.4,33.7 |walk
 Signal Adarrah |q 25587/2 |goto 54.0,34.6
 step
+Enter the cave |goto 54.4,33.7 |walk
 talk Swift Seahorse##40852
-fpath Smuggler's Scar |goto 56.1,31.1 |indoors Smuggler's Scar
+fpath Smuggler's Scar |goto 56.1,31.1
 step
 talk Adarrah##39883
-turnin Gimme Shelter!##25587 |goto 57.1,28.8 |indoors Smuggler's Scar
-accept Ain't Too Proud to Beg##25598 |goto 57.1,28.8 |indoors Smuggler's Scar
+turnin Gimme Shelter!##25587 |goto 57.1,28.8
+accept Ain't Too Proud to Beg##25598 |goto 57.1,28.8
 step
+Leave the cave |goto 54.4,33.7 |walk
 talk Captain Samir##39669
 Tell him _"Make for that cave to the west. It's safe and dry."_
 Rescue Mack and Samir |q 25598/1 |goto 48.3,39.6
@@ -34811,22 +35026,29 @@ step
 click Sunken Crate##336
 accept A Case of Crabs##25388 |goto 49.7,40.9
 step
+Enter the cave |goto 54.4,33.7 < 10 |walk
 talk Adarrah##39883
-turnin Ain't Too Proud to Beg##25598 |goto 57.1,28.8 |indoors Smuggler's Scar
-turnin A Case of Crabs##25388 |goto 57.1,28.8 |indoors Smuggler's Scar
-accept A Girl's Best Friend##25390 |goto 57.1,28.8 |indoors Smuggler's Scar
-accept A Taste For Tail##25389 |goto 57.1,28.8 |indoors Smuggler's Scar
+turnin Ain't Too Proud to Beg##25598 |goto 57.1,28.8
+turnin A Case of Crabs##25388 |goto 57.1,28.8
+accept A Girl's Best Friend##25390 |goto 57.1,28.8
+accept A Taste For Tail##25389 |goto 57.1,28.8
 step
 talk Captain Samir##39884
-accept Can't Start a Fire Without a Spark##25602 |goto 57.3,28.9 |indoors Smuggler's Scar
+accept Can't Start a Fire Without a Spark##25602 |goto 57.3,28.9
 stickystart "adarrahskeepsake"
+stickystart "Clacksnap"
 step
+Leave the cave |goto 54.4,33.7 < 10 |walk
 kill Clacksnap Pincer##39918+
-collect 4 Clacksnap Tail##53073 |q 25389/1 |goto 51.7,42.3
 collect Tattered Treasure Map##53053 |n
 use Tattered Treasure Map##53053
 accept The Horde's Hoard##25377 |goto 51.7,42.3
-step "adarrahskeepsake"
+step
+label "Clacksnap"
+kill Clacksnap Pincer##39918+
+collect 4 Clacksnap Tail##53073 |q 25389/1 |goto 51.7,42.3
+step
+label "adarrahskeepsake"
 click Adarrah's Jewelry Box##1+
 |tip Small brown boxes on the sea floor.
 collect 6 Adarrah's Keepsake##53074 |q 25390/1 |goto 51.7,42.3
@@ -34840,25 +35062,28 @@ step
 click Sunken Horde Chest##9281
 turnin The Horde's Hoard##25377 |goto 57.8,35.2
 step
+Enter the cave |goto 54.4,33.7 < 10 |walk
 talk Adarrah##39883
-turnin A Girl's Best Friend##25390 |goto 57.1,28.8 |indoors Smuggler's Scar
-turnin A Taste For Tail##25389 |goto 57.1,28.8 |indoors Smuggler's Scar
+turnin A Girl's Best Friend##25390 |goto 57.1,28.8
+turnin A Taste For Tail##25389 |goto 57.1,28.8
 step
 talk Captain Samir##39884
-turnin Can't Start a Fire Without a Spark##25602 |goto 57.3,28.9 |indoors Smuggler's Scar
+turnin Can't Start a Fire Without a Spark##25602 |goto 57.3,28.9
 step
 talk Adarrah##39883
-accept Ophidophobia##25459 |goto 57.1,28.8 |indoors Smuggler's Scar
+accept Ophidophobia##25459 |goto 57.1,28.8
 step
 talk Mack Fearsen##40983
-accept Nerve Tonic##25358 |goto 57.3,29.3 |indoors Smuggler's Scar
+accept Nerve Tonic##25358 |goto 57.3,29.3
 step
+Leave the cave |goto 54.4,33.7 |walk
 talk Budd##46338
 accept Oh, the Insanity!##25651 |goto 55.3,38.9
 stickystart "sunkencargos"
 step
 kill 4 Brinescale Serpent##39948 |q 25459/1 |goto 56.8,36.3
-step "sunkencargos"
+step
+label "sunkencargos"
 click Sunken Cargo##7539+
 collect 5 Sunken Cargo##52973 |q 25358/1 |goto 56.8,36.3
 step
@@ -34872,15 +35097,17 @@ talk Budd##46338
 turnin Oh, the Insanity!##25651 |goto 55.3,38.9
 accept Dah, Nunt... Dah, Nunt...##25657 |goto 55.3,38.9
 step
+Enter the cave |goto 54.4,33.7 < 10 |walk
 talk Mack Fearsen##40983
-turnin Nerve Tonic##25358 |goto 57.3,29.3 |indoors Smuggler's Scar
+turnin Nerve Tonic##25358 |goto 57.3,29.3
 step
 talk Adarrah##39883
-turnin Ophidophobia##25459 |goto 57.1,28.8 |indoors Smuggler's Scar
+turnin Ophidophobia##25459 |goto 57.1,28.8
 step
 click Broken Bottle##238
-accept A Desperate Plea##25638 |goto 56.4,30.1 |indoors Smuggler's Scar
+accept A Desperate Plea##25638 |goto 56.4,30.1
 step
+Leave the cave |goto 54.4,33.7 < 10 |walk
 talk Erunak Stonespeaker##40105
 turnin A Desperate Plea##25638 |goto 46.3,46.9
 accept Undersea Sanctuary##25794 |goto 46.3,46.9
@@ -34912,20 +35139,22 @@ While in Gnaws' mouth, spam the _Fire Harpoon Gun_ on your hotbar
 |tip A huge harpoon will eventually shoot into Gnaws. Once that happens, you can stop spamming the ability.
 Slay Gnaws |q 25670/1 |goto 58.3,48.8
 step
+Enter the cave |goto 61.5,63.4 < 10 |walk
 talk Gurrok##41863
-turnin Spelunking##26000 |goto 64.0,59.8 |indoors Deepmist Grotto
+turnin Spelunking##26000 |goto 64.0,59.8
 step
 talk Erunak Stonespeaker##41341
-accept Debriefing##26007 |goto 63.9,59.9 |indoors Deepmist Grotto
+accept Debriefing##26007 |goto 63.9,59.9
 step
 talk Gurrok##41885
 Ask him _"Tell me your name, orc."_
-Debrief Gurrok |q 26007/1 |goto 64.0,59.8 |indoors Deepmist Grotto
+Debrief Gurrok |q 26007/1 |goto 64.0,59.8
 step
 talk Erunak Stonespeaker##41341
-turnin Debriefing##26007 |goto 63.9,59.9 |indoors Deepmist Grotto
-accept Wake of Destruction##25887 |goto 63.9,59.9 |indoors Deepmist Grotto
+turnin Debriefing##26007 |goto 63.9,59.9
+accept Wake of Destruction##25887 |goto 63.9,59.9
 step
+Leave the cave |goto 61.7,63.1 < 10 |walk
 talk Budd##46458
 turnin DUN-dun-DUN-dun-DUN-dun##25670 |goto 58.4,48.7
 accept A Bone to Pick##25732 |goto 58.4,48.7
@@ -34955,21 +35184,23 @@ step
 Use the _Return to Safety_ ability on your hotbar |petaction 3
 Go Back to the Deepmist Grotto |outvehicle |goto 57.5,72.4 |q 25887
 step
+Enter the cave |goto 61.1,63.9 < 10 |walk
 talk Erunak Stonespeaker##41341
-turnin Wake of Destruction##25887 |goto 63.9,59.9 |indoors Deepmist Grotto
+turnin Wake of Destruction##25887 |goto 63.9,59.9
 step
 talk Erunak Stonespeaker##41341
-home Deepmist Grotto |goto 63.9,59.9 |q 25884 |future |indoors Deepmist Grotto
+home Deepmist Grotto |goto 63.9,59.9 |q 25884 |future
 step
 talk Gurrok##41885
-accept What? What? In My Gut...?##26040 |goto 64.0,59.8 |indoors Deepmist Grotto
+accept What? What? In My Gut...?##26040 |goto 64.0,59.8
 step
 talk Moanah Stormhoof##41347
-accept Decompression##26008 |goto 63.9,59.4 |indoors Deepmist Grotto
+accept Decompression##26008 |goto 63.9,59.4
 step
 talk Rendel Firetongue##41344
-accept Come Hell or High Water##25884 |goto 64.2,59.9 |indoors Deepmist Grotto
+accept Come Hell or High Water##25884 |goto 64.2,59.9
 step
+Leave the cave |goto 61.5,63.3 < 10 |walk
 click Naga Tridents##9552
 accept How Disarming##25883 |goto 60.3,69.9
 stickystart "collectwiggleweeds"
@@ -34978,16 +35209,19 @@ stickystart "destroynagaweapons"
 step
 kill Zin'jatar Guardian##41996+, Zin'jatar Pearlbinder##41477+, Zin'jatar Overseer##41549+, Zin'jatar Warden##41530
 Slay #12# Zin'jatar Naga |q 25884/1 |goto 57.7,75.4
-step "collectwiggleweeds"
+step
+label "collectwiggleweeds"
 kill Zin'jatar Guardian##41996+, Zin'jatar Pearlbinder##41477+, Zin'jatar Overseer##41549+
 collect 7 Wiggleweed Sprout##56167 |q 26040/1 |goto 57.7,75.4
-step "freeimprisonedwarriors"
+step
+label "freeimprisonedwarriors"
 clicknpc Imprisoned Warrior
 use Breathstone##56169
 |tip Use your Breathstone on Imprisoned Warriors.
 |tip They looks like dead orcs in big balls of light all around on the naga Holding Pens.
 Free #10# Imprisoned Warriors |q 26008/1 |goto 57.7,75.4
-step "destroynagaweapons"
+step
+label "destroynagaweapons"
 click Naga Tridents##9552+
 Destroy #6# Naga Weapons |q 25883/1 |goto 57.7,75.4
 step
@@ -35001,17 +35235,19 @@ step
 kill Warden Azjakir##41530 |q 27708/1 |goto 60.1,81.2
 |tip He is up on the highest level of the Naga Holding Pens.
 step
+Enter the cave |goto 61.1,63.9 < 10 |walk
 talk Erunak Stonespeaker##41341
-turnin The Warden's Time##27708 |goto 63.9,59.9 |indoors Deepmist Grotto
-accept Across the Great Divide##25471 |goto 63.9,59.9 |indoors Deepmist Grotto
+turnin The Warden's Time##27708 |goto 63.9,59.9
+accept Across the Great Divide##25471 |goto 63.9,59.9
 step
 talk Gurrok##41885
-turnin What? What? In My Gut...?##26040 |goto 64.0,59.8 |indoors Deepmist Grotto
+turnin What? What? In My Gut...?##26040 |goto 64.0,59.8
 step
 talk Moanah Stormhoof##41347
-turnin Decompression##26008 |goto 63.9,59.4 |indoors Deepmist Grotto
+turnin Decompression##26008 |goto 63.9,59.4
 step
-_Enter_ the cave |goto 48.3,72.5 < 10 |walk
+Leave the cave |goto 61.5,63.3 < 10 |walk
+Enter the cave |goto 48.3,72.5 < 10 |walk
 talk Farseer Gadra##39226
 turnin Across the Great Divide##25471 |goto Shimmering Expanse 56.0,13.7
 accept The Looming Threat##25334 |goto Shimmering Expanse 56.0,13.7
@@ -35050,23 +35286,24 @@ talk Toshe Chaosrender##39877
 turnin Rundown##25221 |goto 53.3,33.1
 accept Silver Tide Hollow##25222 |goto 53.3,33.1
 step
+Enter the cave |goto 50.1,39.1 < 10 |walk
 talk Swift Seahorse##40851
-fpath Silver Tide Hollow |goto 49.5,41.2 |indoors Silver Tide Hollow
+fpath Silver Tide Hollow |goto 49.5,41.2
 step
 talk Felora Firewreath##39876
 |tip She walks around a little and may not be in this exact spot.
-turnin Silver Tide Hollow##25222 |goto 49.4,42.6 |indoors Silver Tide Hollow
-accept A Distracting Scent##25215 |goto 49.4,42.6 |indoors Silver Tide Hollow
-accept The Great Sambino##25216 |goto 49.4,42.6 |indoors Silver Tide Hollow
+turnin Silver Tide Hollow##25222 |goto 49.4,42.6
+accept A Distracting Scent##25215 |goto 49.4,42.6
+accept The Great Sambino##25216 |goto 49.4,42.6
 step
 talk Earthmender Duarn##39875
-accept Don't be Shellfish##25219 |goto 49.2,42.6 |indoors Silver Tide Hollow
+accept Don't be Shellfish##25219 |goto 49.2,42.6
 step
 talk Caretaker Movra##39878
-accept Slippery Threat##25220 |goto 49.1,42.0 |indoors Silver Tide Hollow
+accept Slippery Threat##25220 |goto 49.1,42.0
 step
 talk Caretaker Movra##39878
-home Silver Tide Hollow |goto 49.1,42.0 |q 25215 |indoors Silver Tide Hollow
+home Silver Tide Hollow |goto 49.1,42.0 |future |q 25215
 step
 clicknpc Dead Zin'jatar Raider##39911+ |goto 50.3,41.1 < 10 |walk |indoors Silver Tide Hollow
 |tip You have to drag them one at a time. You can click them while mounted.
@@ -35080,15 +35317,17 @@ clicknpc Coilshell Sifter##39422+
 |tip You can mark them with shift+v to make them easier to find (use v to mark enemies again).
 collect 10 Coilshell Sifter##52975 |q 25219/1 |goto 59.6,40.1
 step
+Enter the cave |goto 50.1,39.1 < 10 |walk
 talk Felora Firewreath##39876
-turnin A Distracting Scent##25215 |goto 49.5,42.4 |indoors Silver Tide Hollow
+turnin A Distracting Scent##25215 |goto 49.5,42.4
 step
 talk Earthmender Duarn##39875
-turnin Don't be Shellfish##25219 |goto 49.2,42.6 |indoors Silver Tide Hollow
+turnin Don't be Shellfish##25219 |goto 49.2,42.6
 step
 talk Caretaker Movra##39878
-turnin Slippery Threat##25220 |goto 49.1,42.0 |indoors Silver Tide Hollow
+turnin Slippery Threat##25220 |goto 49.1,42.0
 step
+Leave the cave |goto 50,39.4 < 10 |walk
 talk The Great Sambino##39882
 turnin The Great Sambino##25216 |goto 41.3,34.2
 accept Undersea Inflation##25218 |goto 41.3,34.2
@@ -35125,9 +35364,11 @@ talk The Great Sambino##39882
 turnin Totem Modification##25217 |goto 41.3,34.2
 accept Back in One Piece##25456 |goto 41.3,34.2
 step
+Enter Silver Tide Hollow |goto 50.1,39.0 |walk
 talk Felora Firewreath##39876
-turnin Back in One Piece##25456 |goto 49.6,42.1 |indoors Silver Tide Hollow
-accept Toshe's Vengeance##25359 |goto 49.6,42.1 |indoors Silver Tide Hollow
+|tip She walks around the camp a little
+turnin Back in One Piece##25456 |goto 49.6,42.1
+accept Toshe's Vengeance##25359 |goto 49.6,42.1
 step
 talk Toshe Chaosrender##40221
 turnin Toshe's Vengeance##25359 |goto 64.1,42.3
@@ -35138,7 +35379,6 @@ step
 use Globes of Tumultuous Water##54785
 |tip Use your Globes of Tumultuous Water near Swarming Serpents.
 Trap #30# Swarming Serpents |q 25441/1 |goto 65.8,43.1
-modelnpc Swarming Serpent##40280
 step "zinjatarravagerkills"
 kill 10 Zin'jatar Ravager##40275 |q 25439/1 |goto 65.8,43.1
 step
@@ -35156,10 +35396,10 @@ talk Toshe Chaosrender##40221
 turnin Fathom-Lord Zin'jatar##25440 |goto 64.1,42.3
 step
 talk Earthmender Duarn##39875
-turnin A Pearl of Wisdom##25442 |goto 49.2,42.6 |indoors Silver Tide Hollow
-accept Nespirah##25890 |goto 49.2,42.6 |indoors Silver Tide Hollow
+turnin A Pearl of Wisdom##25442 |goto 49.2,42.6
+accept Nespirah##25890 |goto 49.2,42.6
 step
-talk Swift Seahorse##40873 |goto Shimmering Expanse/0 49.5,41.3 |indoors Silver Tide Hollow
+talk Swift Seahorse##40873 |goto Shimmering Expanse/0 49.5,41.3
 Tell him _"I need to go to Nespirah."_ |goto 51.8,48.5 < 10 |noway |q 25890
 step
 _Swim up_ through the tube |goto Shimmering Expanse/0 52.0,48.8 < 10 |walk
@@ -35371,7 +35611,7 @@ accept Visions of the Past: The Invasion of Vashj'ir##25957 |goto 51.6,62.8
 step
 use Blade of the Naz'jar Battlemaiden##55171
 |tip Use your Blade of the Naz'jar Battlemaiden next to the Vision of the Battlemaiden. It's a bright flashing light on the ground in the ruins.
-Become the Naz'jar Battlemaiden |havebuff Interface\Icons\Achievement_Boss_LadyVashj |goto 40.5,75.6 |q 25957
+Become the Naz'jar Battlemaiden |havebuff 236422 |goto 40.5,75.6 |q 25957
 step
 talk Fathom-Stalker Azjentus##40978
 accept Reoccupation##25619 |goto 40.6,75.3
@@ -35489,7 +35729,7 @@ step
 use Blade of the Naz'jar Battlemaiden##55171
 |tip Use your Blade of the Naz'jar Battlemaiden next to the Vision of the Battlemaiden.
 |tip It's a bright flashing light on the ground on the stone terrace.
-Become the Naz'jar Battlemaiden |havebuff Interface\Icons\Achievement_Boss_LadyVashj |q 25966 |goto 28.9,78.6
+Become the Naz'jar Battlemaiden |havebuff 236422 |q 25966 |goto 28.9,78.6
 step
 talk Lady Naz'jar##42076
 accept By Her Lady's Word##25858 |goto 29.0,78.5
@@ -35603,7 +35843,7 @@ Infiltrate the Quel'Dormir Temple |q 26135/1 |goto 33.2,77.8
 step
 use Blade of the Naz'jar Battlemaiden##55171
 |tip Use your Blade of the Naz'jar Battlemaiden next to the Vision of the Battlemaiden. It looks like a bright flashing light inside the temple.
-Become the Naz'jar Battlemaiden |havebuff Interface\Icons\Achievement_Boss_LadyVashj |goto 33.1,77.8 |q 26135
+Become the Naz'jar Battlemaiden |havebuff 236422 |goto 33.1,77.8 |q 26135
 step
 talk Lady Sira'kess##41456
 accept Devout Assembly##25896 |goto 33.1,77.9
@@ -35741,10 +35981,10 @@ accept Here Fishie Fishie##26088 |goto 42.9,51.0
 accept Die Fishman Die##26089 |goto 42.9,51.0
 step
 use Fish Hat##56813
-Get the Lure buff |havebuff Interface\Icons\Ability_Vehicle_ElectroCharge |q 26088
+Get the Lure buff |havebuff 252174 |q 26088
 stickystart "allthecoldlightkills"
 step
-Go near Coldlight Nibblers
+Go near Underlight Nibblers
 |tip You can mark them with shift+v to make them easier to spot (Use v to mark enemies again).
 |tip They look like small fish that hang out in the tips of the huge tube plants around this area.
 collect 30 Underlight Nibbler##56569 |q 26088/1 |goto 46.4,54.9
@@ -35961,10 +36201,10 @@ step
 talk Legionnaire Nazgrim##44540
 turnin Defending the Rift##26194 |goto 69.8,34.4
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Cataclysm (80-85)\\Deepholm (82-83)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Cataclysm (80-85)\\Deepholm (82-83)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Deepholm",
-next="Zygor's Horde Leveling Guides\\Cataclysm (80-85)\\Uldum (83-84)",
+next="Zygor's Leveling Guides\\Cataclysm (80-85)\\Uldum (83-84)",
 startlevel=82.00,
 dynamic=true,
 },[[
@@ -36412,7 +36652,7 @@ accept Close Escort##26632 |goto 20.7,61.6
 step
 talk Peak Grindstone##45043
 Tell him _"Peak, I'm ready to escort the catapult."_
-Begin the Escort |havebuff Interface\Icons\ability_vehicle_playerloaded |q 26632
+Begin the Escort |havebuff 252180 |q 26632
 step
 kill Stone Trogg Rockmagus##43652+, Needlerock Pummeller##43847+
 |tip Stay with the catapult and defend it as it moves.
@@ -36911,11 +37151,11 @@ _Enter_ Grommash Hold |goto Orgrimmar/1 50.0,75.9 < 10 |walk
 talk Belloc Brightblade##47571
 turnin That's No Pyramid!##28293 |goto 49.1,70.5
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Cataclysm (80-85)\\Uldum (83-84)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Cataclysm (80-85)\\Uldum (83-84)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\Uldum",
 achieveid={4961},
-next="Zygor's Horde Leveling Guides\\Cataclysm (80-85)\\Twilight Highlands (84-85)",
+next="Zygor's Leveling Guides\\Cataclysm (80-85)\\Twilight Highlands (84-85)",
 startlevel=83.00,
 dynamic=true,
 },[[
@@ -37642,7 +37882,7 @@ talk Commander Schnottz##47159
 accept Make Yourself Useful##27969 |goto 24.4,64.1
 step
 use Refurbished Trooper Uniform##62813
-Wear the Uniform |havebuff INTERFACE\ICONS\inv_chest_leather_08 |q 27969
+Wear the Uniform |havebuff 132723 |q 27969
 step
 talk Slacking Laborer##47292
 Tell them _"Enough slacking! You're behind schedule."_
@@ -37904,7 +38144,7 @@ step
 talk Brann Bronzebeard##49351
 turnin The Coffer of Promise##28633 |goto 44.9,67.3
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Cataclysm (80-85)\\Twilight Highlands (84-85)",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Cataclysm (80-85)\\Twilight Highlands (84-85)",{
 author="support@zygorguides.com",
 image=ZGV.DIR.."\\Guides\\Images\\TwilightHighlands",
 startlevel=84.00,
@@ -38446,7 +38686,7 @@ step
 _Enter_ the cave |goto 36.0,37.9 < 10 |walk
 talk Uchek##47826
 Tell him _"I am ready, Uchek!"_
-Enter the Spirit Realm |havebuff Interface\Icons\Achievement_Halloween_Ghost_01 |q 28170 |goto 35.0,36.6 |indoors The Gullet
+Enter the Spirit Realm |havebuff 236548 |q 28170 |goto 35.0,36.6 |indoors The Gullet
 step
 _Follow_ the path |goto 35.1,35.9 < 10 |walk |indoors The Gullet
 use The Light of Souls##67537
@@ -38736,15 +38976,15 @@ use Mother's Flame##63126
 Hatch the Obsidian Whelps |q 28176/1 |goto 59.3,82.5
 step
 _Enter_ the cave |goto 55.4,83.5 < 10 |walk
-Infiltrate the Obsidian Lair |q 28176/2 |goto 49.8,85.8 |indoors Obsidian Lair
+Infiltrate the Obsidian Lair |q 28176/2 |goto 49.8,85.8
 step
 talk Baleflame##47905
-turnin Following the Young Home##28176 |goto 44.9,91.0 |indoors Obsidian Lair
-accept Last of Her Kind##28247 |goto 44.9,91.0 |indoors Obsidian Lair
+turnin Following the Young Home##28176 |goto 44.9,91.0
+accept Last of Her Kind##28247 |goto 44.9,91.0
 step
 kill Obsidia##47929
 |tip If you are much higher level, be sure to allow Obsidia to attack Baleflame several times or the quest could bug.
-Defeat Obsidia |q 28247/1 |goto 44.9,91.0 |indoors Obsidian Lair
+Defeat Obsidia |q 28247/1 |goto 44.9,91.0
 step
 talk Lirastrasza##47902
 turnin Last of Her Kind##28247 |goto 59.1,69.8
@@ -39012,37 +39252,106 @@ step
 talk Warlord Zaela##45658
 turnin Skullcrusher the Mountain##27788 |goto 45.3,75.4
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Cataclysm (80-85)\\Mount Hyjal",{
-author="support@zygorguides.com",
-condition_end="achieved(4870)",
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\The Loremaster\\Loremaster of Eastern Kingdoms",{
+condition_end="achieved(1676)",
+description="Complete all the storyline achievements in all the zones of the game.",
 },[[
 step
-next "Zygor's Horde Leveling Guides\\Cataclysm (80-85)\\Mount Hyjal (80-82)"
+Use the Eastern Kingdoms Leveling Guides to complete Loremaster:
+|tip The Leveling guides cover all required questlines for Loremaster.
+|tip Click one of the lines below to load the Leveling guide for that zone.
+Arathi Highlands Quests |achieve 4896 |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Arathi Highlands (26-30)\\Arathi Highlands (26-29)"
+Badlands Quests |achieve 4900 |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Badlands (44-47)\\Badlands (44-47)"
+Blasted Lands Quests |achieve 4909 |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Blasted Lands (57-60)\\Blasted Lands (57-60)"
+Burning Steppes Quests |achieve 4901 |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Burning Steppes (49-52)\\Burning Steppes (49-52)"
+Cape of Stranglethorn Quests |achieve 4905 |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\The Cape of Stranglethorn (31-36)\\The Cape of Stranglethorn (31-36)"
+Silverpine Quests |achieve 4894 |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Silverpine Forest (11-20)\\Silverpine Forest (11-20)"
+Eastern Plaguelands Quests |achieve 4892 |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Eastern Plaguelands (39-44)\\Eastern Plaguelands (39-44)"
+Hinterlands Quests |achieve 4897 |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\The Hinterlands (30-34)\\The Hinterlands (30-32)"
+Ghostlands Quests |achieve 4908 |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Ghostlands (12-20)\\Ghostlands (12-20)"
+Northern Stranglethorn Quests |achieve 4906 |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Northern Stranglethorn (26-31)\\Northern Stranglethorn (26-31)"
+Hillsbrad Foothills Quests  |achieve 4895 |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Hillsbrad Foothills (20-26)\\Hillsbrad Foothills (20-26)"
+Searing Gorge Quests |achieve 4910 |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Searing Gorge (47-49)\\Searing Gorge (47-49)"
+Swamp of Sorrows Quests |achieve 4904  |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Swamp of Sorrows (52-54)\\Swamp of Sorrows (52-54)"
+Western Plaguelands Quests |achieve 4893 |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Eastern Kingdoms 1-60\\Western Plaguelands (34-39)\\Western Plaguelands (34-39)"
+step
+Congratulations, you have _earned_ the _Loremaster of Eastern Kingdoms_ achievement!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Cataclysm (80-85)\\Vashj'ir",{
-author="support@zygorguides.com",
-condition_end="achieved(4982)",
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\The Loremaster\\Loremaster of Kalimdor",{
+condition_end="achieved(7520)",
+description="Complete all the storyline achievements in all the zones of the game.",
 },[[
 step
-next "Zygor's Horde Leveling Guides\\Cataclysm (80-85)\\Vashj'ir (80-82)"
+Use the Kalimdor Leveling Guides to complete Loremaster:
+|tip The Leveling guides cover all required questlines for Loremaster.
+|tip Click one of the lines below to load the Leveling guide for that zone.
+Ashenvale Quests |achieve 4976 |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Ashenvale (20-26)\\Ashenvale (20-23)"
+Azshara Quests |achieve 4927  |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Azshara (10-22)\\Azshara (10-12)"
+Desolace Quests |achieve 4930  |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Desolace (31-36)\\Desolace (31-33)"
+Dustwallow March Quests |achieve 4978  |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Dustwallow Marsh (35-39)\\Dustwallow Marsh (35-39)"
+Felwood Quests |achieve 4931  |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Felwood (47-51)\\Felwood (47-48)"
+Feralas Quests |achieve 4979  |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Feralas (36-40)\\Feralas (36-40)"
+Silithus Quests |achieve 4934  |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Silithus (55-57)\\Silithus (55-57)"
+Northern Barrens Quests |achieve 4933  |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Northern Barrens (10-20)\\Northern Barrens (10-13)"
+Southern Barrens Quests |achieve 4981  |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Southern Barrens (31-35)\\Southern Barrens (31-34)"
+Stonetalon Mountains Quests |achieve 4980  |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Stonetalon Mountains (26-31)\\Stonetalon Mountains (26-31)"
+Tanaris Quests |achieve 4935 |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Tanaris (44-47)\\Tanaris (44-47)"
+Thousand Needles Quests |achieve 4938  |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Thousand Needles (39-44)\\Thousand Needles (39-44)"
+Un'Goro Crater Quests |achieve 4939  |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Un'Goro Crater (55-57)\\Un'Goro Crater (55-57)"
+Winterspring Quests |achieve 4940  |loadguide "Zygor's Leveling Guides\\Classic (1-60)\\Kalimdor 1-60\\Winterspring (51-55)\\Winterspring (51-52)"
+step
+Congratulations, you have _earned_ the _Loremaster of Kalimdor_ achievement!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Cataclysm (80-85)\\Deepholm",{
-author="support@zygorguides.com",
-condition_end="achieved(4871)",
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\The Loremaster\\Loremaster of Outland",{
+condition_end="achieved(1262)",
+description="Complete all the storyline achievements in all the zones of the game.",
 },[[
 step
-next "Zygor's Horde Leveling Guides\\Cataclysm (80-85)\\Deepholm (82-83)"
+Use the Outland Leveling Guides to complete Loremaster:
+|tip The Leveling guides cover all required questlines for Loremaster.
+|tip Click one of the lines below to load the Leveling guide for that zone.
+Hellfire Peninsula Quests |achieve 1271 |loadguide "Zygor's Leveling Guides\\The Burning Crusade (60-70)\\Hellfire Peninsula (60-62)"
+Zangarmarsh Quests |achieve 1190 |loadguide "Zygor's Leveling Guides\\The Burning Crusade (60-70)\\Zangarmarsh (62-64)"
+Terrokar Forest Quests |achieve 1272 |loadguide "Zygor's Leveling Guides\\The Burning Crusade (60-70)\\Terokkar Forest (64-66)"
+Nagrand Quests |achieve 1273 |loadguide "Zygor's Leveling Guides\\The Burning Crusade (60-70)\\Nagrand (66-67)"
+Blades Edge Mountains March Quests |achieve 1193  |loadguide "Zygor's Leveling Guides\\The Burning Crusade (60-70)\\Blade's Edge Mountains (67-68)"
+Netherstorm Quests |achieve 1194 |loadguide "Zygor's Leveling Guides\\The Burning Crusade (60-70)\\Netherstorm (68-70)"
+Shadowmoon Valley Quests |achieve 1195 |loadguide "Zygor's Leveling Guides\\The Burning Crusade (60-70)\\Shadowmoon Valley (68-70)"
+step
+Congratulations, you have _earned_ the _Loremaster of Outland_ achievement!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Cataclysm (80-85)\\Uldum",{
-author="support@zygorguides.com",
-condition_end="achieved(4872)",
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\The Loremaster\\Loremaster of Northrend",{
+condition_end="achieved(41)",
+description="Complete all the storyline achievements in all the zones of the game.",
 },[[
 step
-next "Zygor's Horde Leveling Guides\\Cataclysm (80-85)\\Uldum (83-84)"
+Use the Northrend Horde Guides to complete Loremaster:
+|tip The Leveling guides cover all required questlines for Loremaster.
+|tip Click one of the lines below to load the Leveling guide for that zone.
+Borean Tundra Quests |achieve 1358 |loadguide "Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\Borean Tundra (70-72)"
+Howling Fjord Quests |achieve 1356 |loadguide "Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\Howling Fjord (70-71)"
+Grizzly Hills Quests |achieve 1357 |loadguide "Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\Grizzly Hills (74-75)"
+Dragonblight Quests |achieve 1359 |loadguide "Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\Dragonblight (71-74)"
+Zul'drak Quests |achieve 36 |loadguide "Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\Zul'Drak (75-77)"
+Sholazar Basin Quests |achieve 39 |loadguide "Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\Sholazar Basin (77-78)"
+Storm Peaks Quests |achieve 38 |loadguide "Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\The Storm Peaks (78-80)"
+Icecrown Valley Quests |achieve 40 |loadguide "Zygor's Leveling Guides\\Wrath of the Lich King (70-80)\\Icecrown (78-80)"
+step
+Congratulations, you have _earned_ the _Loremaster of Northrend_ achievement!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Loremaster Guides\\Cataclysm (80-85)\\Twilight Highlands",{
-condition_end="achieved(5501)",
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\The Loremaster\\Loremaster of Cataclysm",{
+condition_end="achieved(4875)",
+description="Complete all the storyline achievements in all the zones of the game.",
 },[[
 step
-next "Zygor's Horde Leveling Guides\\Cataclysm (80-85)\\Twilight Highlands (84-85)"
+Use the Cataclysm Leveling Guides to complete Loremaster:
+|tip The Leveling guides cover all required questlines for Loremaster.
+|tip Click one of the lines below to load the Leveling guide for that zone.
+Mount Hyjal Quests |achieve 4870 |loadguide "Zygor's Leveling Guides\\Cataclysm (80-85)\\Mount Hyjal (80-82)"
+Vashj'ir Quests |achieve 4982 |loadguide "Zygor's Leveling Guides\\Cataclysm (80-85)\\Vashj'ir (80-82)"
+Deepholm Quests |achieve 4871 |loadguide "Zygor's Leveling Guides\\Cataclysm (80-85)\\Deepholm (82-83)"
+Uldum Quests |achieve 4872 |loadguide "Zygor's Leveling Guides\\Cataclysm (80-85)\\Uldum (83-84)"
+Twilight Highlands Quests |achieve 5501 |loadguide "Zygor's Leveling Guides\\Cataclysm (80-85)\\Twilight Highlands (84-85)"
+step
+Congratulations, you have _earned_ the _Loremaster of Cataclysm_ achievement!
 ]])

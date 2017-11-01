@@ -3,7 +3,3 @@ VER 3 0100000000000621 "DC" "INV_MISC_QUESTIONMARK"
 /cast [nomod] Death Coil
 /cast [mod:shift, @pet] Death Coil
 END
-VER 3 0100000000000641 "ZGVMacro1" "0"
-/target Archmage Khadgar
-/run ZGV:MRM():CG(2,1)
-END

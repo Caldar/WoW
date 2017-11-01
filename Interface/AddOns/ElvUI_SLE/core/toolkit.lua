@@ -3,6 +3,11 @@ local _G = _G
 local getmetatable = getmetatable
 local NUM_BAG_SLOTS = NUM_BAG_SLOTS
 
+--This shit should be in Alphabetical Order to make it easier to see what is here or not... DARTH!
+T.GetBuildInfo = GetBuildInfo
+T.GetTalentLink = GetTalentLink
+T.GetPlayerInfoByGUID = GetPlayerInfoByGUID
+T.GetCursorPosition = GetCursorPosition
 --Adding a lot of shit from global functions--
 T.format = format
 T.strlower = strlower
@@ -32,7 +37,7 @@ T.GetTalentInfo = GetTalentInfo
 T.GetTalentInfoByID = GetTalentInfoByID
 T.GetNumSpecializationsForClassID = GetNumSpecializationsForClassID
 T.GetSpecializationInfoForClassID = GetSpecializationInfoForClassID
-T.GetActiveSpecGroup = GetActiveSpecGroup
+T.GetSpecialization = GetSpecialization
 T.GetAverageItemLevel = GetAverageItemLevel
 T.UnitStat = UnitStat
 T.UnitIsPlayer = UnitIsPlayer
@@ -57,6 +62,10 @@ T.UnitHonorLevel = UnitHonorLevel
 T.GetMaxPlayerHonorLevel = GetMaxPlayerHonorLevel
 T.UnitIsVisible = UnitIsVisible
 T.UnitIsDeadOrGhost = UnitIsDeadOrGhost
+T.HasInspectHonorData = HasInspectHonorData
+T.GetInspectSpecialization = GetInspectSpecialization
+T.SetSmallGuildTabardTextures = SetSmallGuildTabardTextures
+T.GetInventoryItemTexture = GetInventoryItemTexture
 --Class
 T.GetNumClasses = GetNumClasses
 T.GetClassInfo = GetClassInfo
@@ -68,6 +77,7 @@ T.GetInventorySlotInfo = GetInventorySlotInfo
 T.GetInventoryItemDurability = GetInventoryItemDurability
 T.GetInventoryItemQuality = GetInventoryItemQuality
 T.GetItemInfo = GetItemInfo
+T.GetDetailedItemLevelInfo = GetDetailedItemLevelInfo
 T.GetBuybackItemLink = GetBuybackItemLink
 T.GetItemIcon = GetItemIcon
 T.GetItemCooldown = GetItemCooldown
@@ -75,6 +85,7 @@ T.GetItemCount = GetItemCount
 T.IsEquippableItem = IsEquippableItem
 T.GetItemQualityColor = GetItemQualityColor
 T.GetInventoryItemID = GetInventoryItemID
+T.SetItemRef = SetItemRef
 -- T.
 --XP
 T.IsXPUserDisabled = IsXPUserDisabled
@@ -93,6 +104,7 @@ T.GetNumGuildMembers = GetNumGuildMembers
 T.GetGuildRosterInfo = GetGuildRosterInfo
 T.GetGuildRosterMOTD = GetGuildRosterMOTD
 T.GetGuildLogoInfo = GetGuildLogoInfo
+T.GetInspectGuildInfo = GetInspectGuildInfo
 T.CanEditOfficerNote = CanEditOfficerNote
 T.CanEditPublicNote = CanEditPublicNote
 T.InviteUnit = InviteUnit
@@ -136,6 +148,9 @@ T.GetBattlefieldScore = GetBattlefieldScore
 T.CanPrestige = CanPrestige
 T.GetPVPLifetimeStats = GetPVPLifetimeStats
 T.GetPersonalRatedInfo = GetPersonalRatedInfo
+T.GetInspectArenaData = GetInspectArenaData
+T.GetInspectRatedBGData = GetInspectRatedBGData
+T.GetInspectHonorData = GetInspectHonorData
 --Map
 T.GetZoneText = GetZoneText
 T.GetRealZoneText = GetRealZoneText
@@ -155,6 +170,7 @@ T.GetInboxHeaderInfo = GetInboxHeaderInfo
 --Addons
 T.IsAddOnLoaded = IsAddOnLoaded
 T.DisableAddOn = DisableAddOn
+T.SendAddonMessage = SendAddonMessage
 
 T.GetQuestDifficultyColor = GetQuestDifficultyColor
 
@@ -189,11 +205,6 @@ T.BNGetGameAccountInfo = BNGetGameAccountInfo --6.2.4
 T.BNGetFriendIndex = BNGetFriendIndex
 T.GetFriendInfo = GetFriendInfo
 T.GetNumFriends = GetNumFriends
---Equip
-T.UseEquipmentSet = UseEquipmentSet
-T.GetEquipmentSetInfo = GetEquipmentSetInfo
-T.GetNumEquipmentSets = GetNumEquipmentSets
-T.GetEquipmentSetLocations = GetEquipmentSetLocations
 --Quests
 T.GetQuestLogTitle = GetQuestLogTitle
 T.GetNumQuestLogEntries = GetNumQuestLogEntries
@@ -321,7 +332,6 @@ end
 function SLE:Reset(group)
 	if not group then print("U wot m8?") end
 	if group == "unitframes" or group == "all" then
-		E.db.sle.combatico.pos = 'TOP'
 		E.db.sle.roleicons = "ElvUI"
 		E.db.sle.powtext = false
 	end
@@ -435,7 +445,9 @@ function SLE:InitializeModules()
 			local _, catch = pcall(module.Initialize, module)
 
 			if catch and GetCVarBool('scriptErrors') == true then
-				ScriptErrorsFrame_OnError(catch, false)
+				if E.wowbuild < 24330 then --7.2
+					ScriptErrorsFrame_OnError(catch, false)
+				end
 			end
 		end
 	end

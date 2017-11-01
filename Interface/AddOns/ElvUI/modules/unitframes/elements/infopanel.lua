@@ -1,12 +1,15 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames');
 
+--Global variables that we don't need to cache, list them here for mikk's FindGlobals script
+-- GLOBALS: CreateFrame
+
 function UF:Construct_InfoPanel(frame)
 	local infoPanel = CreateFrame("Frame", nil, frame)
-	infoPanel:SetFrameStrata("LOW")
+
 	infoPanel:SetFrameLevel(7) --Health is 10 and filled power is 5 by default
 	local thinBorders = self.thinBorders
-	infoPanel:CreateBackdrop("Default", true, nil, thinBorders)
+	infoPanel:CreateBackdrop("Default", true, nil, thinBorders, true)
 
 	return infoPanel
 end
@@ -38,9 +41,9 @@ function UF:Configure_InfoPanel(frame, noTemplateChange)
 		if (not noTemplateChange) then
 			local thinBorders = self.thinBorders
 			if db.infoPanel.transparent then
-				frame.InfoPanel.backdrop:SetTemplate("Transparent", nil, nil, thinBorders)
+				frame.InfoPanel.backdrop:SetTemplate("Transparent", nil, nil, thinBorders, true)
 			else
-				frame.InfoPanel.backdrop:SetTemplate("Default", true, nil, thinBorders)
+				frame.InfoPanel.backdrop:SetTemplate("Default", true, nil, thinBorders, true)
 			end
 		end
 	else

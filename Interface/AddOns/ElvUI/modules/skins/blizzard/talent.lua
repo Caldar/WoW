@@ -95,7 +95,7 @@ local function LoadSkin()
 	end
 
 	hooksecurefunc('PlayerTalentFrame_UpdateSpecs', function()
-		local point, relatedTo, point2, x, y = PlayerSpecTab1:GetPoint()
+		local point, relatedTo, point2, _, y = PlayerSpecTab1:GetPoint()
 		PlayerSpecTab1:Point(point, relatedTo, point2, E.PixelMode and -1 or 1, y)
 	end)
 
@@ -116,6 +116,7 @@ local function LoadSkin()
 			bu:SetFrameLevel(bu:GetFrameLevel() + 5)
 			bu:CreateBackdrop("Default")
 			bu.backdrop:SetOutside(ic)
+			bu.knownSelection:SetAlpha(0)
 			ic:SetDrawLayer("OVERLAY")
 			ic:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 
@@ -223,7 +224,7 @@ local function LoadSkin()
 		bu.SelectedTexture:SetColorTexture(1, 1, 0, 0.1)
 	end
 
-	local buttons = {"PlayerTalentFrameSpecializationSpecButton", "PlayerTalentFramePetSpecializationSpecButton"}
+	buttons = {"PlayerTalentFrameSpecializationSpecButton", "PlayerTalentFramePetSpecializationSpecButton"}
 
 	for _, name in pairs(buttons) do
 		for i = 1, 4 do
@@ -289,7 +290,7 @@ local function LoadSkin()
 			child:DisableDrawLayer("OVERLAY")
 		end
 	end
-	
+
 	-- PVP Talents
 	PlayerTalentFramePVPTalents.XPBar:StripTextures()
 	PlayerTalentFramePVPTalents.XPBar.PrestigeReward.Accept:ClearAllPoints()
@@ -297,10 +298,23 @@ local function LoadSkin()
 	S:HandleButton(PlayerTalentFramePVPTalents.XPBar.PrestigeReward.Accept)
 
 	--Honor progress bar
-	-- PlayerTalentFramePVPTalents.XPBar.Bar:StripTextures() -- The default blizz bar looks good, we should keep it.
-	PlayerTalentFramePVPTalents.XPBar.Bar:CreateBackdrop('Default')
-	-- PlayerTalentFramePVPTalents.XPBar.Bar:SetStatusBarTexture(E.media.normTex)
-	-- E:RegisterStatusBar(PlayerTalentFramePVPTalents.XPBar.Bar)
+	PlayerTalentFramePVPTalents.XPBar.Bar:CreateBackdrop("Default")
+	PlayerTalentFramePVPTalents.XPBar.Bar.Spark:SetAlpha(0)
+
+	PlayerTalentFramePVPTalents.XPBar.NextAvailable:StripTextures()
+	PlayerTalentFramePVPTalents.XPBar.NextAvailable:CreateBackdrop("Default")
+	PlayerTalentFramePVPTalents.XPBar.NextAvailable.backdrop:SetOutside(PlayerTalentFramePVPTalents.XPBar.NextAvailable.Icon)
+	PlayerTalentFramePVPTalents.XPBar.NextAvailable:ClearAllPoints()
+	PlayerTalentFramePVPTalents.XPBar.NextAvailable:SetPoint("LEFT", PlayerTalentFramePVPTalents.XPBar.Bar, "RIGHT", 3, -2)
+
+	--Next Available Icon
+	hooksecurefunc(PlayerTalentFramePVPTalents.XPBar.NextAvailable.Icon, "SetTexCoord", function(self, x1)
+		if x1 == 0 then
+			self:SetTexCoord(unpack(E.TexCoords))
+		end
+	end);
+	-- This seems to break some icons at higher prestige level. ElvUI/issue#1853
+	-- PlayerTalentFramePVPTalents.XPBar.NextAvailable.Icon.SetTexCoord = E.noop
 
 	--Skin talent rows and buttons
 	for i = 1, MAX_PVP_TALENT_TIERS do
@@ -336,6 +350,7 @@ local function LoadSkin()
 			button.bg.SelectedTexture:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", -10, 1)
 		end
 	end
+
 	--Apply color to chosen talents
 	hooksecurefunc("PVPTalentFrame_Update", function(self)
 		for i = 1, MAX_PVP_TALENT_TIERS do

@@ -38,7 +38,6 @@ Engine[4] = AddOn.DF["profile"];
 Engine[5] = AddOn.DF["global"];
 
 _G[AddOnName] = Engine;
-Engine[1].UIName = AddOnName
 local tcopy = table.copy
 function AddOn:OnInitialize()
 	if not ElvCharacterDB then
@@ -95,7 +94,7 @@ function AddOn:OnInitialize()
 	if IsAddOnLoaded("Tukui") then
 		self:StaticPopup_Show("TUKUI_ELVUI_INCOMPATIBLE")
 	end
-	
+
 	local GameMenuButton = CreateFrame("Button", nil, GameMenuFrame, "GameMenuButtonTemplate")
 	GameMenuButton:SetText(AddOnName)
 	GameMenuButton:SetScript("OnClick", function()
@@ -119,6 +118,8 @@ function AddOn:OnInitialize()
 		GameMenuButton:Point("TOP", GameMenuButtonWhatsNew, "BOTTOMLEFT", 0, -1)
 		GameMenuFrame:Size(530, 576)
 	end
+
+	self.loadedtime = GetTime()
 end
 
 function AddOn:PositionGameMenuButton()
@@ -188,15 +189,14 @@ function AddOn:OnProfileReset()
 	self:StaticPopup_Show("RESET_PROFILE_PROMPT")
 end
 
-function AddOn:ToggleConfig()
+function AddOn:ToggleConfig(msg)
 	if InCombatLockdown() then
 		self:Print(ERR_NOT_IN_COMBAT)
 		self:RegisterEvent('PLAYER_REGEN_ENABLED')
 		return;
 	end
-	
-	if not IsAddOnLoaded("ElvUI_Config") then
 
+	if not IsAddOnLoaded("ElvUI_Config") then
 		local _, _, _, _, reason = GetAddOnInfo("ElvUI_Config")
 		if reason ~= "MISSING" and reason ~= "DISABLED" then
 			self.GUIFrame = false
@@ -207,7 +207,7 @@ function AddOn:ToggleConfig()
 				self:Print("|cffff0000Error -- Addon 'ElvUI_Config' not found or is disabled.|r")
 				return
 			end
-			if GetAddOnMetadata("ElvUI_Config", "Version") ~= "1.04" then
+			if GetAddOnMetadata("ElvUI_Config", "Version") ~= "1.05" then
 				self:StaticPopup_Show("CLIENT_UPDATE_REQUEST")
 			end
 		else
@@ -218,33 +218,18 @@ function AddOn:ToggleConfig()
 
 	local ACD = LibStub("AceConfigDialog-3.0-ElvUI")
 
+	local pages
+	if (msg and msg ~= "") then
+		pages = {string.split(",", msg)}
+	end
 	local mode = 'Close'
-	if not ACD.OpenFrames[AddOnName] then
+	if not ACD.OpenFrames[AddOnName] or (pages ~= nil) then
 		mode = 'Open'
 	end
 	ACD[mode](ACD, AddOnName)
-	
-	if self.GUIFrame and mode == "Open" and AddOn.global.general.animateConfig then
-		local width, height = self.GUIFrame:GetSize()
-		self.GUIFrame:SetWidth(width - 40)
-		self.GUIFrame:SetHeight(height - 40)	
-		if(not self.GUIFrame.bounce) then
-			self.GUIFrame.bounce = CreateAnimationGroup(self.GUIFrame)
 
-			self.GUIFrame.bounce.width = self.GUIFrame.bounce:CreateAnimation("Width")
-			self.GUIFrame.bounce.width:SetDuration(1.3)
-			self.GUIFrame.bounce.width:SetSmoothing("elastic")
-			self.GUIFrame.bounce.width:SetOrder(1)
-			self.GUIFrame.bounce.width:SetChange(width)
-			
-			self.GUIFrame.bounce.height = self.GUIFrame.bounce:CreateAnimation("Height")
-			self.GUIFrame.bounce.height:SetDuration(1.3)
-			self.GUIFrame.bounce.height:SetSmoothing("elastic")
-			self.GUIFrame.bounce.height:SetOrder(1)
-			self.GUIFrame.bounce.height:SetChange(height)			
-		end
-
-		self.GUIFrame.bounce:Play()
+	if pages then
+		ACD:SelectGroup("ElvUI", unpack(pages))
 	end
 
 	GameTooltip:Hide() --Just in case you're mouseovered something and it closes.

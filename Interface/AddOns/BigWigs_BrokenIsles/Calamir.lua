@@ -1,6 +1,3 @@
--- TODO LIST
--- - Timers need to be checked
--- - Tuning sounds / message colors
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -9,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Calamir", -1015, 1774)
 if not mod then return end
 mod:RegisterEnableMob(109331)
-mod.otherMenu = 1007
+mod.otherMenu = -1007
 mod.worldBoss = 109331
 
 --------------------------------------------------------------------------------
@@ -38,7 +35,7 @@ function mod:GetOptions()
 		217925, -- Icy Comet
 		--[[ Ancient Rage: Arcane  ]]--
 		217986, -- Arcane Desolation
-		{218012, "FLASH"}, -- Arcanopulse, this spell id has the icon, desc - 218005 is the one for the cast
+		218012, -- Arcanopulse
 	},{
 		["stages"] = "general",
 		[217877] = 217563, -- Ancient Rage: Fire
@@ -50,8 +47,7 @@ end
 function mod:OnBossEnable()
 	--[[ General ]] --
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:ScheduleTimer("CheckForEngage", 1)
 	self:RegisterEvent("BOSS_KILL")
 
 	--[[ Ancient Rage: Fire ]]--
@@ -69,6 +65,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:CheckForWipe()
 	burningBombCount = 1
 	howlingGaleCount = 1
 	arcaneDesolationCount = 1
@@ -81,7 +78,7 @@ end
 --
 
 --[[ General ]] --
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, castGUID, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellName, _, castGUID, spellId)
 	if castCollector[castGUID] then return end -- don't fire twice for the same cast
 
 	if spellId == 217563 then --[[ Ancient Rage: Fire ]]--
@@ -108,11 +105,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, castGUID, spellId)
 		-- First Arcanopulse happens directly in the phase, so we start the bar after it
 	elseif spellId == 217919 then -- Icy Comet
 		castCollector[castGUID] = true
-		self:Message(spellId, "Attention", "Long")
+		self:Message(217925, "Attention", "Long")
 	elseif spellId == 218005 then -- Arcanopulse
 		castCollector[castGUID] = true
 		self:Message(218012, "Attention", "Long")
-		self:Flash(218012)
 		if arcanopulseCount == 1 then -- first one is happening directly after Ancient Rage: Arance
 			self:CDBar(218012, 10.5)
 		end
@@ -144,14 +140,14 @@ do
 
 	function mod:BurningBombRemoved(args)
 		if self:Me(args.destGUID) then
-			self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
+			self:Message(args.spellId, "Personal", nil, CL.removed:format(args.spellName))
 			self:CloseProximity(args.spellId)
 			self:StopBar(args.spellId, args.destName)
 		end
 	end
 end
 
-function mod:BurningBombSuccess(args)
+function mod:BurningBombSuccess()
 	if burningBombCount == 1 then
 		self:CDBar(217877, 13.4)
 	end
@@ -164,7 +160,7 @@ end
 
 --[[ Ancient Rage: Frost ]]--
 function mod:HowlingGale(args)
-	self:Message(args.spellId, "Important", "Alarm")
+	self:Message(args.spellId, "Important", "Warning")
 	if howlingGaleCount == 1 then
 		self:CDBar(args.spellId, 12.5)
 	end
@@ -173,13 +169,13 @@ end
 
 function mod:IcyCometApplied(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", "Warning", CL.underyou:format(args.spellName))
+		self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 	end
 end
 
 --[[ Ancient Rage: Arcane  ]]--
 function mod:ArcaneDesolation(args)
-	self:Message(args.spellId, "Important", "Alarm")
+	self:Message(args.spellId, "Important", "Alert")
 	if arcaneDesolationCount == 1 then
 		self:CDBar(args.spellId, 12)
 	end

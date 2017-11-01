@@ -3,705 +3,59 @@ if not ZygorGuidesViewer then return end
 if UnitFactionGroup("player")~="Alliance" then return end
 if ZGV:DoMutex("AchievementsA") then return end
 ZygorGuidesViewer.GuideMenuTier = "TRI"
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Achievements Guides\\General\\Going Down?",{
-condition_end="achieved(964)",
-description="This guide will walk you through falling 65 yards without dying.",
+ZygorGuidesViewer:RegisterGuide("Zygor's Achievement Guides\\Collections\\Represent",{
+condition_end="achieved(5755)",
+achieveid={621,1020,1021},
+description="Equip a tabard.",
 },[[
 step
-You can do this in several different waysdepending on yoiur class, but we listed the easiest way regardless of level and class
-Ride up to the Elevator to the Terrace of Light and jump off either the right or the left side of the Terrace to the flat ground |goto Shattrath City 63.8,41.6 |achieve 964
-|tip MAKE SURE TO JUMP.
+You can obtain various tabards through reputation, achievements, PvP, and questing
+Please refer to our reputation and achievment guides to earn your tabards
+What follows is the seven faction tabards to get you on your way to 30 tabards
+confirm
 step
-Congratulations, you have earned the Going Down? achievement!
+talk Captain Lancy Revshon##49877 |goto Stormwind City 67.7,73.0
+buy Stormwind Tabard##45574 |n
+Equip Stormwind Tabard |use Stormwind Tabard##45574
+confirm
+step
+talk Old Whitenose##65068 |goto Stormwind City 67.8,18.6
+buy Tushui Tabard##83079 |n
+Equip Tushui Tabard |use Tushui Tabard##83079
+confirm
+step
+talk Master Tinker Trini##50308 |goto Ironforge 55.3,48.2
+buy Gnomeregan Tabard##45578 |n
+Equip Gnomeregan Tabard |use Gnomeregan Tabard##45578
+confirm
+step
+talk Captain Stonehelm##50309 |goto Ironforge 55.6,47.3
+buy Ironforge Tabard##45577 |n
+Equip Ironforge Tabard |use Ironforge Tabard##45577
+confirm
+step
+talk Moon Priestess Lasara##50305 |goto Darnassus 36.2,48.5
+buy Darnassus Tabard##45579 |n
+Equip Darnassus Tabard |use Darnassus Tabard##45579
+confirm
+step
+talk Lord Candren##50307 |goto Darnassus 37.1,47.5
+buy Gilneas Tabard##64882 |n
+Equip Gilneas Tabard |use Gilneas Tabard##64882
+confirm
+step
+talk Kadu##50306 |goto The Exodar 54.8,36.8
+buy Exodar Tabard##45580 |n
+Equip Exodar Tabard |use Exodar Tabard##45580
+confirm
+step
+Congratulations, you have earned the Represent achievement! |only if achieved(621)
+Congratulations, you have earned the Ten Tabards achievement! |only if achieved(1020)
+Congratulations, you have earned the Twenty-Five Tabards achievement! |only if achieved(1021)
+Congratulations, you have earned the Thirty Tabards achievement! |only if achieved(5755)
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Achievements Guides\\General\\Higher Learning",{
-condition_end="achieved(1956)",
-description="This guide will walk you through reading the volumes of 'The Schools of Arcane Magic' found in Dalaran.",
-},[[
-step
-Warning: These books have respawn timers of about 3-4 hours (it seems to be random between those times) so this achievement may take you a while to get
-|tip The book you want won't always be there. Fake trash books spawn to make the achievement even harder to get, but keep at it. Make sure you click the fake trash books anyway, so the real books have a chance to spawn.
-This is an achievement that you may want to dedicate a lot of time to if you want it
-|tip You'll have a much greater chance of earning the achievement if you camp each book until you have them all, rather than constantly running through the path in this guide
-Good luck!
-confirm |only if not achieved(1956)
-step "RestartHigherLearning"
-click The Schools of Arcane Magic - Illusion##8128
-|tip It looks like a brown book laying on a wooden crate.
-Read The Schools of Arcane Magic - Illusion |achieve 1956/3 |goto Dalaran 64.4,52.4
-_Click here_ if this book isn't available |confirm
-step
-click The Schools of Arcane Magic - Introduction##8133
-|tip It looks like a blue book laying on ground next to a bookshelf inside this building.
-Read The Schools of Arcane Magic - Introduction |achieve 1956/6 |goto Dalaran 56.6,45.6
-_Click here_ if this book isn't available |confirm
-step
-click The Schools of Arcane Magic - Abjuration##8128
-|tip It looks like a brown book laying on ground next to a small table inside this building.
-Read The Schools of Arcane Magic - Abjuration |achieve 1956/1 |goto Dalaran 52.3,54.8
-_Click here_ if this book isn't available |confirm
-step
-click The Schools of Arcane Magic - Enchantment##8051
-|tip It looks like a blue book laying on a small wooden crate on the balcony upstairs in this building.
-Read The Schools of Arcane Magic - Enchantment |achieve 1956/2 |goto Dalaran 43.6,46.7
-_Click here_ if this book isn't available |confirm
-step
-click The Schools of Arcane Magic - Transmutation##8051
-|tip It looks like a grayand green striped book laying on a bookshelf downstairs in this building.
-Read The Schools of Arcane Magic - Transmutation |achieve 1956/7 |goto Dalaran 46.8,40.0
-_Click here_ if this book isn't available |confirm
-step
-click The Schools of Arcane Magic - Necromancy##8133
-|tip It looks like a blue book laying on a bookshelf upstairs in this building.
-Read The Schools of Arcane Magic - Necromancy |achieve 1956/4 |goto Dalaran 46.8,39.1
-_Click here_ if this book isn't available |confirm
-step
-click The Schools of Arcane Magic - Conjuration##8345
-|tip It looks like a blue book laying on the left on the bottom shelf of a bookshelf in this building.
-Read The Schools of Arcane Magic - Conjuration |achieve 1956/8 |goto Dalaran 30.8,46.0
-_Click here_ if this book isn't available |confirm
-step
-click The Schools of Arcane Magic - Divination##8051
-|tip It looks like a blue book laying on the floor next to 2 bookshelves upstairs inside this building.
-Read The Schools of Arcane Magic - Divination |achieve 1956/5 |goto Dalaran 26.5,52.1
-_Click here_ if this book isn't available |confirm
-step
-Looks like you still need more education! _Click here_ to start the guide over |confirm |next "RestartHigherLearning" |only if not achieved(1956)
-Congratulations, you have earned the Higher Learning achievement! |only if achieved(1956)
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Achievements Guides\\General\\It's Happy Hour Somewhere",{
-condition_end="achieved(1833)",
-description="This guide will walk you through drinking 25 different types of beverages.",
-},[[
-stickystart "tracker"
-step
-talk Innkeeper Allison##6740 |goto Stormwind City 60.4,75.3
-buy 1 Refreshing Spring Water##159 |condition itemcount(159) >= 1
-buy 1 Ice Cold Milk##1179 |condition itemcount(1179) >= 1
-buy 1 Melon Juice##1205 |condition itemcount(1205) >= 1
-buy 1 Sweet Nectar##1708 |condition itemcount(1708) >= 1
-buy 1 Moonberry Juice##1645 |condition itemcount(1645) >= 1
-buy 1 Morning Glory Dew##8766 |condition itemcount(8766) >= 1
-buy 1 Filtered Draenic Water##28399 |condition itemcount(28399) >= 1
-buy 1 Fresh Water##58274 |condition itemcount(58274) >= 1
-buy 1 Pugnent Seal Whey##33444 |condition itemcount(33444) >= 1
-buy 1 Honeymint Tea##33445 |condition itemcount(33445) >= 1
-buy 1 Sparkling Oasis Water##58256 |condition itemcount(58256) >= 1
-buy 1 Highland Spring Water##58257 |condition itemcount(58257) >= 1
-only if not achieved(1833)
-step
-Drink the Refreshing Spring Water |use Refreshing Spring Water##159
-Drink the Ice Cold Milk |use Ice Cold Milk##1179
-Drink the Melon Juice |use Melon Juice##1205
-Drink the Sweet Nectar |use Sweet Nectar##1708
-Drink the Moonberry Juice |use Moonberry Juice##1645
-Drink the Morning Glory Dew |use Morning Glory Dew##8766
-Drink the Filtered Draenic Water |use Filtered Draenic Water##28399
-Drink the Pugnent Seal Whey |use Pugnent Seal Whey##33444
-Drink the Fresh Water |use Fresh Water##58274
-Drink the Honeymint Tea |use Honeymint Tea##33445
-Drink the Sparkling Oasis Water |use Sparkling Oasis Water##58256
-Drink the Highland Spring Water |use Highland Spring Water##58257
-_Click here_ to continue |confirm
-step
-talk Daisy##40832 |goto Thousand Needles 76.5,74.8
-buy 1 Bottle of Pinot Noir##2723 |condition itemcount(2723) >= 1
-buy 1 Glass of Eversong Wine##44570 |condition itemcount(44570) >= 1
-buy 1 Honey Mead##40035 |condition itemcount(40035) >= 1
-buy 1 Flask of Port##2593 |condition itemcount(2593) >= 1
-buy 1 Bottle of Silvermoon Port##44571 |condition itemcount(44571) >= 1
-buy 1 Skin of Dwarven Stout##2596 |condition itemcount(2596) >= 1
-buy 1 Flask of Bitter Cactus Cider##44575 |condition itemcount(44575) >= 1
-buy 1 Snowplum Brandy##40036 |condition itemcount(40036) >= 1
-buy 1 Flagon of Mead##2594 |condition itemcount(2594) >= 1
-buy 1 Cup of Frog Venom Brew##44573 |condition itemcount(44573) >= 1
-buy 1 Caraway Burnwine##40042 |condition itemcount(40042) >= 1
-buy 1 Jug of Bourbon##2595 |condition itemcount(2595) >= 1
-buy 1 Skin of Mulgore Firewater##44574 |condition itemcount(44574) >= 1
-only if not achieved(1833)
-step
-Drink the Bottle of Pinot Noir |use Bottle of Pinot Noir##2723
-Drink the Glass of Eversong Wine |use Glass of Eversong Wine##44570
-Drink the Honey Mead |use Honey Mead##40035
-Drink the Flask of Port |use Flask of Port##2593
-Drink the Bottle of Silvermooon Port |use Bottle of Silvermoon Port##44571
-Drink the Skin of Dwarven Stout |use Skin of Dwarven Stout##2596
-Drink the Flask of Bitter Cactus |use Flask of Bitter Cactus Cider##44575
-Drink the Snowplum Brandy |use Snowplum Brandy##40036
-Drink the Flagon of Mead |use Flagon of Mead##2594
-Drink the Cup of Frog Venom Brew |use Cup of Frog Venom Brew##44573
-Drink the Caraway Burnwine |use Caraway Burnwine##40042
-Drink the Jug of Bourbon |use Jug of Bourbon##2595
-Drink the Skin of Mulgore Firewater |use Skin of Mulgore Firewater##44574
-_Click here_ to continue |confirm
-step "tracker"
-Drink #25# different types of beverages |achieve 1833 |only if not achieved(1833)
-Congratulations, you have earned the It's Happy Hour Somewhere Achievement! |only if achieved(1833)
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Achievements Guides\\General\\To All The Squirrels (Loved, Shared, Cared)/Pest Control",{
-condition_end="achieved(5548)",
-achieveid={1206,2557,2556},
-description="This guide will walk you through showing the critters of Azeroth how much you /love them and slaying the pests.",
-},[[
-step
-label "start"
-talk Innkeeper Allison##6740
-home Trade District |goto Stormwind City 60.4,75.3
-only if not achieved(5548)
-step
-clicknpc Rockchewer Whelk##48848
-Use the Love emote on a Rockchewer Whelk |script DoEmote("LOVE")
-Love a Rockchewer Whelk |achieve 5548/4 |goto Shimmering Expanse 41.3,53.9
-step
-clicknpc Sea Cucumber##48802
-Use the Love emote on a Sea Cucumber |script DoEmote("LOVE")
-Love a Sea Cucumber |achieve 5548/6 |goto Shimmering Expanse 41.3,53.9
-step
-kill Rat##4075 |achieve 2556/18 |goto The Cape of Stranglethorn 40.0,67.7
-step
-kill Roach##4076 |achieve 2556/2 |goto The Cape of Stranglethorn 42.2,69.5
-step
-clicknpc Wharf Rat##47667
-Use the Love emote on a Wharf Rat |script DoEmote("LOVE")
-Love a Wharf Rat |achieve 5548/3 |goto The Cape of Stranglethorn 42.7,72.8
-step
-clicknpc Parrot##9600
-Use the Love emote on a Parrot |script DoEmote("LOVE")
-Love a Parrot |achieve 1206/17 |goto Northern Stranglethorn 50.5,66.4
-step
-kill Scorpion##61326 |achieve 2556/1 |goto Blasted Lands 42.5,21.9
-step
-kill Fire Beetle##9699 |achieve 2556/16 |goto Blasted Lands 44.4,32.9
-step
-clicknpc Huge Toad##61368
-Use the Love emote on a Huge Toad |script DoEmote("LOVE")
-Love a Huge Toad |achieve 2557/9 |goto Swamp of Sorrows 39.7,51.0
-step
-clicknpc Skunk##17467
-Use the Love emote on a Skunk |script DoEmote("LOVE")
-|tip It looks like a small skunk that walks around this area.
-Love a Skunk |achieve 1206/19 |goto Duskwood 12.3,65.8
-step
-clicknpc Rabbit##61080
-Use the Love emote on a Rabbit |script DoEmote("LOVE")
-Love a Rabbit |achieve 1206/6 |goto Elwynn Forest 36.3,85.8
-step
-clicknpc Deer##883
-Use the Love emote on a Deer |script DoEmote("LOVE")
-|tip Be sure not to get it mixed up with the fawn also in the area.
-Love a Deer |achieve 1206/15 |goto Elwynn Forest 24.9,83.0
-step
-clicknpc Fawn##890
-Use the Love emote on a Fawn |script DoEmote("LOVE")
-Love a Fawn |achieve 1206/3 |goto Elwynn Forest 24.9,83.0
-step
-clicknpc Cow##2442
-Use the Love emote on a Cow |script DoEmote("LOVE")
-Love a Cow |achieve 1206/11 |goto Elwynn Forest 32.3,77.2
-step
-clicknpc Chicken##620
-Use the Love emote on a Chicken |script DoEmote("LOVE")
-Love a Chicken |achieve 1206/10 |goto Elwynn Forest 36.5,60.1
-step
-clicknpc Cat##6368
-Use the Love emote on a Cat |script DoEmote("LOVE")
-Love a Cat |achieve 1206/9 |goto Elwynn Forest 44.5,53.8
-step
-kill Gold Beetle##32258 |achieve 2556/11 |goto Badlands 50.4,43.9
-step
-clicknpc Lava Crab##9700
-Use the Love emote on a Lava Crab |script DoEmote("LOVE")
-Love a Lava Crab |achieve 2557/10 |goto Searing Gorge 31.1,43.7
-step
-clicknpc Sheep##1933
-Use the Love emote on a Sheep |script DoEmote("LOVE")
-Love a Sheep |achieve 1206/18 |goto Loch Modan 20.9,71.9
-step
-clicknpc Ram##2098
-Use the Love emote on a Ram |script DoEmote("LOVE")
-Love a Ram |achieve 1206/8 |goto Loch Modan 25.1,37.8
-step
-clicknpc Squirrel##1412
-Use the Love emote on a Squirrel |script DoEmote("LOVE")
-Love a Squirrel |achieve 1206/1 |goto Loch Modan 29.0,66.3
-step
-kill Squirrel##1412 |achieve 2556/14 |goto Loch Modan 29.0,66.3
-step
-label "travel_twilight"
-clicknpc Yellow-Bellied Marmot##48683
-Use the Love emote on a Yellow-Bellied Marmot |script DoEmote("LOVE")
-Love a Yellow-Bellied Marmot |achieve 5548/7 |goto Twilight Highlands 29.3,33.1
-step
-clicknpc Highlands Turkey##48706
-Use the Love emote on a Highlands Turkey |script DoEmote("LOVE")
-Love a Highlands Turkey |achieve 5548/9 |goto Twilight Highlands 29.3,33.1
-step
-clicknpc Shore Crab##60761
-Use the Love emote on a Shore Crab |script DoEmote("LOVE")
-Love a Shore Crab |achieve 1206/2 |goto Twilight Highlands 71.2,41.2
-step
-kill Maggot##16030 |achieve 2556/6 |goto The Hinterlands 31.9,57.9
-step
-kill Larva##16068 |achieve 2556/15 |goto Ghostlands 45.3,31.1
-step
-clicknpc Ewe##19665
-Use the Love emote on a Ewe |script DoEmote("LOVE")
-Love an Ewe |achieve 1206/12 |goto Shattrath City 58.8,23.3
-step
-clicknpc Borean Marmot##31685
-Use the Love emote on a Borean Marmot |script DoEmote("LOVE")
-Love a Borean Marmot |achieve 2557/5 |goto Borean Tundra 36.0,55.9
-step
-clicknpc Tundra Penguin##28440
-Use the Love emote on a Tundra Penguin |script DoEmote("LOVE")
-Love a Tundra Penguin |achieve 2557/12 |goto Borean Tundra 24.5,61.8
-step
-clicknpc Steam Frog##25679
-Use the Love emote on a Steam Frog |script DoEmote("LOVE")
-Love a Steam Frog |achieve 1206/13 |goto Borean Tundra 61.0,51.8
-step
-clicknpc Borean Frog##25677
-Use the Love emote on a Borean Frog |script DoEmote("LOVE")
-Love a Borean Frog |achieve 1206/14 |goto Borean Tundra 72.7,41.0
-step
-clicknpc Sholazar Tickbird##28093
-Use the Love emote on a Sholazar Tickbird |script DoEmote("LOVE")
-Love a Sholazar Tickbird |achieve 2557/7 |goto Sholazar Basin 27.1,60.5
-step
-clicknpc Glacier Penguin##32498
-Use the Love emote on a Glacier Penguin |script DoEmote("LOVE")
-Love a Glacier Penguin |achieve 2557/4 |goto Icecrown 60.9,18.8
-step
-kill Underbelly Rat##32428 |achieve 2556/5 |goto Dalaran/2 41.0,50.4
-step
-kill Zul'Drak Rat##28202 |achieve 2556/9 |goto Zul'Drak 42.4,63.1
-step
-clicknpc Arctic Hare##29328
-Use the Love emote on an Arctic Hare |script DoEmote("LOVE")
-Love an Artic Hare |achieve 2557/1 |goto Zul'Drak 71.8,69.8
-step
-clicknpc Grizzly Squirrel##31889
-Use the Love emote on a Grizzly Squirrel |script DoEmote("LOVE")
-Love a Grizzly Squirrel |achieve 2557/8 |goto Grizzly Hills 66.7,13.1
-step
-clicknpc Mountain Skunk##31890
-Use the Love emote on a Mountain Skunk |script DoEmote("LOVE")
-Love a Mountain Skunk |achieve 2557/11 |goto Grizzly Hills 68.6,11.8
-step
-kill Fjord Rat##24174 |achieve 2556/10 |goto Howling Fjord 45.0,30.3
-step
-clicknpc Fjord Penguin##28407
-Use the Love emote on a Fjord Penguin |script DoEmote("LOVE")
-Love a Fjord Penguin |achieve 2557/2 |goto Howling Fjord 20.8,61.8
-step
-clicknpc Scalawag Frog##26503
-Use the Love emote on a Scalawag Frog |script DoEmote("LOVE")
-Love a Scalawag Frog |achieve 2557/6 |goto Howling Fjord 35.6,81.8
-step
-Follow the path to the bottom of the catacombs
-kill Devouring Maggot##24270 |achieve 2556/12 |goto Howling Fjord 57.1,56.8
-step
-clicknpc Fjord Turkey##24746
-Use the Love emote on a Fjord Turkey |script DoEmote("LOVE")
-Love a Fjord Turkey |achieve 2557/2 |goto Howling Fjord 66.4,71.1
-step
-clicknpc Sassy Cat##47682
-Use the Love emote on a Sassy Cat |script DoEmote("LOVE")
-Love a Sassy Cat |achieve 5548/5 |goto Tol Barad Peninsula 61.2,35.5
-step
-clicknpc Baradin Fox Kit##48630
-Use the Love emote on a Baradin Fox Kit |script DoEmote("LOVE")
-Love a Baradin Fox Kit |achieve 5548/8 |goto Tol Barad 44.5,25.8
-step
-clicknpc Toad##1420
-Use the Love emote on a Toad |script DoEmote("LOVE")
-Love a Toad |achieve 1206/20 |goto Darnassus 42.4,46.9
-step
-clicknpc Alpine Chipmunk##49779
-Use the Love emote on an Alpine Chipmunk |script DoEmote("LOVE")
-Love an Alpine Chipmunk |achieve 5548/1 |goto Winterspring 51.5,47.9
-step
-kill Crystal Spider##32261 |achieve 2556/13 |goto Winterspring 48.8,54.8
-step
-clicknpc Grotto Vole##50419
-Use the Love emote on a Grotto Vole |script DoEmote("LOVE")
-Love a Grotto Vole |achieve 5548/2 |tip Inside of the cave |goto Mount Hyjal 54.5,17.1
-step
-clicknpc Rock Viper##50481
-Use the Love emote on a Rock Viper |script DoEmote("LOVE")
-Love a Rock Viper |achieve 5548/13 |goto Mount Hyjal 38.4,56.6
-step
-clicknpc Gazelle##4166
-Use the Love emote on a Gazelle |script DoEmote("LOVE")
-Love a Gazelle |achieve 1206/5 |goto Northern Barrens 51.8,56.4
-step
-clicknpc Small Frog##13321
-Use the Love emote on a Small Frog |script DoEmote("LOVE")
-Love a Small Frog |achieve 1206/8 |goto Northern Barrens 37.9,46.1
-step
-clicknpc Prairie Dog##2620
-Use the Love emote on a Prairie Dog |script DoEmote("LOVE")
-Love a Prairie Dog |achieve 1206/21 |goto Northern Barrens 66.0,42.1
-step
-kill Water Snake##4953 |achieve 2556/8 |goto Durotar 36.4,40.8
-step
-clicknpc Hare##5951
-Use the Love emote on a Hare |script DoEmote("LOVE")
-Love a Hare |achieve 1206/16 |goto Durotar 50.5,30.2
-step
-kill Adder##3300 |achieve 2556/7 |goto Durotar 45.6,16.0
-step
-clicknpc Swine##10685
-Use the Love emote on a Swine |script DoEmote("LOVE")
-Love a Swine |achieve 1206/7 |goto Durotar 43.7,30.1
-step
-kill Spider##14881 |achieve 2556/4 |goto Dustwallow Marsh 35.0,24.0
-step
-kill Mouse##6271 |achieve 2556/17 |goto Dustwallow Marsh 46.2,56.9
-step
-kill Snake##2914 |achieve 2556/3  |goto Dustwallow Marsh 50.0,57.6
-step
-clicknpc Rattlesnake##48686
-Use the Love emote on a Rattlesnake |script DoEmote("LOVE")
-Love a Rattlesnake |achieve 5548/12 |goto Tanaris 46.9,26.9
-step
-clicknpc Mac Frog##50491
-Use the Love emote on a Mac Frog |script DoEmote("LOVE")
-Love a Mac Frog |achieve 5548/11 |goto Uldum 56.6,35.1
-step
-clicknpc Oasis Moth##50496
-Use the Love emote on an Oasis Moth |script DoEmote("LOVE")
-Love an Oasis Moth |achieve 5548/10 |goto Uldum 55.0,36.1
-step
-Congratulations, you have earned the To All The Squirrels I've Loved Before achievement! |only if achieved(1206)
-You've missed some squirrels! _Click here_ to start over |confirm |next "start" |only if not achieved(1206)
-Congratulations, you have earned the To All The Squirrels Who Shared My Life achievement! |only if achieved(2557)
-You've missed some squirrels! _Click here_ to start over |confirm |next "start" |only if not achieved(2557)
-Congratulations, you have earned the To All the Squirrels Who Cared for Me achievement! |only if achieved(5548)
-You've missed some squirrels! _Click here_ to start over |confirm |next "start" |only if not achieved(5548)
-Congratulations, you have earned the Pest Control achievement! |only if achieved(2556)
-You've missed some pests! _Click here_ to start over |confirm |next "start" |only if not achieved(2556)
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Achievements Guides\\General\\Shave and a Haircut",{
-condition_end="achieved(545)",
-description="This guide will walk you through visiting a Barber Shop and get your hair cut.",
-},[[
-step
-Click on the Barbershop Chair |goto Stormwind City 61.6,64.6 |only if not achieved(545)
-|tip It looks like a mechanical chair with a foot rest.
-Change your hair style or hair color then click "Okay." |achieve 545
-|tip This will cost money to do so be sure you have the extra gold to purchase a hair style.
-step
-Congratulations, you have earned the Shave and a Haircut achievement!
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Achievements Guides\\General\\Tastes Like Chicken",{
-condition_end="achieved(1832)",
-description="This guide will walk you through sampling 50 different kinds of Azeroth's delectable dishes.",
-},[[
-stickystart "tracker"
-step
-talk Innkeeper Firebrew##5111 |goto Ironforge 18.6,51.6
-buy 1 Tough Jerky##117 |condition itemcount(117) >= 1
-buy 1 Haunch of Meat##2287 |condition itemcount(2287) >= 1
-buy 1 Mutton Chop##3770 |condition itemcount(3770) >= 1
-buy 1 Wild Hog Shank##3771 |condition itemcount(3771) >= 1
-buy 1 Cured Ham Steak##4599 |condition itemcount(4599) >= 1
-buy 1 Roasted Quail##8952 |condition itemcount(8952) >= 1
-buy 1 Smoked Talbuk Venison##27854 |condition itemcount(27854) >= 1
-buy 1 Salted Venison##33454 |condition itemcount(33454) >= 1
-buy 1 Mead Basted Caribou##35953 |condition itemcount(35953) >= 1
-buy 1 Roasted Beef##58268 |condition itemcount(58268) >= 1
-buy 1 Massive Turkey Leg##58269 |condition itemcount(58269) >= 1
-only if not achieved(1832)
-step
-talk Myra Tyrngaarde##5109 |goto Ironforge 27.8,72.2
-|tip She patrols the auction house area.
-buy 1 Tough Hunk of Bread##4540 |condition itemcount(4540) >= 1
-buy 1 Freshly Baked Bread##4541 |condition itemcount(4541) >= 1
-buy 1 Moist Cornbread##4542 |condition itemcount(4542) >= 1
-buy 1 Mulgore Spice Bread##4544 |condition itemcount(4544) >= 1
-buy 1 Soft Banana Bread##4601 |condition itemcount(4601) >= 1
-buy 1 Homemade Cherry Pie##8950 |condition itemcount(8950) >= 1
-buy 1 Mag'har Grainbread##27855 |condition itemcount(27855) >= 1
-buy 1 Crusty Flatbread##33449 |condition itemcount(33449) >= 1
-buy 1 Sweet Potato Bread##35950 |condition itemcount(35950) >= 1
-buy 1 Pine Nut Bread##58260 |condition itemcount(58260) >= 1
-buy 1 Buttery Wheat Roll##58261 |condition itemcount(58261) >= 1
-only if not achieved(1832)
-step
-Eat the Tough Jerky |use Tough Jerky##117
-Eat the Tough Hunk of Bread |use Tough Hunk of Bread##4540
-Eat the Haunch of Meat |use Haunch of Meat##2287
-Eat the Freshly Baked Bread |use Freshly Baked Bread##4541
-Eat the Mutton Chop |use Mutton Chop##3770
-Eat the Moist Cornbread |use Moist Cornbread##4542
-Eat the Wild Hog Shank |use Wild Hog Shank##3771
-Eat the Mulgore Spice Bread |use Mulgore Spice Bread##4544
-Eat the Cured Ham Steak |use Cured Ham Steak##4599
-Eat the Soft Banana Bread |use Soft Banana Bread##4601
-_Click here_ to continue |confirm
-step
-Eat the Roasted Quail |use Roasted Quail##8952
-Eat the Homemade Cherry Pie |use Homemade Cherry Pie##8950
-Eat the Smoked Talbuk Venison |use Smoked Talbuk Venison##27854
-Eat the Mag'har Grainbread |use Mag'har Grainbread##27855
-Eat the Salted Venison |use Salted Venison##33454
-Eat the Crusty Flatbread |use Crusty Flatbread##33449
-Eat the Mead Basted Cariboy |use Mead Basted Caribou##35953
-Eat the Sweet Potato Bread |use Sweet Potato Bread##35950
-Eat the Roasted Beef |use Roasted Beef##58268
-Eat the Pine Nut Bread |use Pine Nut Bread##58260
-Eat the Massive Turkey |use Massive Turkey Leg##58269
-Eat the Buttery Wheat Roll |use Buttery Wheat Roll##58261
-_Click here_ to continue |confirm
-step
-talk Thaegra Tillstone##44235 |goto Stormwind City 64.9,32.0
-buy 1 Forest Mushroom Cap##4604 |condition itemcount(4604) >= 1
-buy 1 Red-Speckeled Mushroom##4605 |condition itemcount(4605) >= 1
-buy 1 Spongy Morel##4606 |condition itemcount(4606) >= 1
-buy 1 Delicious Cave Mold##4607 |condition itemcount(4607) >= 1
-buy 1 Raw Black Truffle##4608 |condition itemcount(4608) >= 1
-buy 1 Dried King Bolete##8948 |condition itemcount(8948) >= 1
-only if not achieved(1832)
-step
-Eat the Forest Mushroom |use Forest Mushroom Cap##4604
-Eat the Red-Speckeled Mushroom |use Red-Speckeled Mushroom##4605
-Eat the Spongy Morel |use Spongy Morel##4606
-Eat the Delicious Cave Mold |use Delicious Cave Mold##4607
-Eat the Raw Black Truffle |use Raw Black Truffle##4608
-Eat the Dried King Bolete |use Dried King Bolete##8948
-_Click here_ to continue |confirm
-step
-talk Talaelar##4221 |goto Darnassus 48.8,61.3
-buy 1 Slitherskin Mackerel##787 |condition itemcount(787) >= 1
-buy 1 Longjaw Mud Snapper##4592 |condition itemcount(4592) >= 1
-buy 1 Bristle Whisker Catfish##4593 |condition itemcount(4593) >= 1
-buy 1 Rockscale Cod##4594 |condition itemcount(4594) >= 1
-buy 1 Striped Yellowtail##21552 |condition itemcount(21552) >= 1
-buy 1 Spinefin Halibut##8957 |condition itemcount(8957) >= 1
-buy 1 Sunspring Carp##27858 |condition itemcount(27858) >= 1
-buy 1 Fillet of Icefin##33451 |condition itemcount(33451) >= 1
-buy 1 Poached Emperor Salmon##35951 |condition itemcount(35951) >= 1
-buy 1 Sliced Raw Billfish##58262 |condition itemcount(58262) >= 1
-buy 1 Grilled Shark##58263 |condition itemcount(58263) >= 1
-only if not achieved(1832)
-step
-talk Innkeeper Saelienne##6735 |goto Darnassus 62.5,32.8
-buy 1 Shiny Red Apple##4536 |condition itemcount(4536) >= 1
-buy 1 Tel'Abim Banana##4537 |condition itemcount(4537) >= 1
-buy 1 Snapvine Watermelon##4538 |condition itemcount(4538) >= 1
-buy 1 Goldenbark Apple##4539 |condition itemcount(4539) >= 1
-buy 1 Moon Harvest Pumpkin##4602 |condition itemcount(4602) >= 1
-buy 1 Deep Fried Plantains##8953 |condition itemcount(8953) >= 1
-buy 1 Skethyl Berries##27856 |condition itemcount(27856) >= 1
-buy 1 Tundra Berries##35949 |condition itemcount(35949) >= 1
-buy 1 Savory Snowplum##35948 |condition itemcount(35948) >= 1
-buy 1 Sour Green Apple##58264 |condition itemcount(58264) >= 1
-buy 1 Highland Pomegranate##58265 |condition itemcount(58265) >= 1
-only if not achieved(1832)
-step
-Eat the Slitherskin Mackerel |use Slitherskin Mackerel##787
-Eat the Shiny Red Apple |use Shiny Red Apple##4536
-Eat the Longjaw Mud Snapper |use Longjaw Mud Snapper##4592
-Eat the Tel'Abim Banana |use Tel'Abim Banana##4537
-Eat the Bristle Whisker Catfish |use Bristle Whisker Catfish##4593
-Eat the Snapvine Watermelon |use Snapvine Watermelon##4538
-Eat the Rockscale Cod |use Rockscale Cod##4594
-Eat the Goldenbark Apple |use Goldenbark Apple##4539
-Eat the Striped Yellowtail |use Striped Yellowtail##21552
-Eat the Moon Harvest Pumpkin |use Moon Harvest Pumpkin##4602
-_Click here_ to continue |confirm
-step
-Eat the Spinefin Hailibut |use Spinefin Halibut##8957
-Eat the Deep Fried Plantains |use Deep Fried Plantains##8953
-Eat the Sunspring Carp |use Sunspring Carp##27858
-Eat the Skethyl Berries |use Skethyl Berries##27856
-Eat the Fillet of Icefin |use Fillet of Icefin##33451
-Eat the Tundra Berries |use Tundra Berries##35949
-Eat the Poached Emperor |use Poached Emperor Salmon##35951
-Eat the Savory Snowplum |use Savory Snowplum##35948
-Eat the Sliced Raw Billfish |use Sliced Raw Billfish##58262
-Eat the Sour Green Apple |use Sour Green Apple##58264
-Eat the Grilled Shark |use Grilled Shark##58263
-Eat the Highland Pomegranate |use Highland Pomegranate##58265
-_Click here_ to continue |confirm
-step "tracker"
-Sample #50# different kinds of Azeroth's delectable dishes |achieve 1832 |only if not achieved(1832)
-Congratulations, you have earned the Tastes Like Chicken Achievement! |only if achieved(1832)
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Achievements Guides\\General\\Well Read",{
-condition_end="achieved(1244)",
-description="This guide will walk you through reading the scattered books of Azeroth.",
-},[[
-step
-click The World Tree and the Emerald Dream##559 |achieve 1244/27 |goto Stormwind City 85.4,23.3
-|tip It's on the table.
-step
-click The War of the Ancients##559 |achieve 1244/4 |goto Stormwind City 85.3,23.2
-|tip It's on the table.
-step
-click Aegwynn and the Dragon Hunt##3871 |achieve 1244/22 |goto Stormwind City 85.8,23.7
-|tip On the pillar base next to the candles.
-step
-click The New Horde##559 |achieve 1244/17 |goto Stormwind City 86.1,25.5
-|tip On the pillar base.
-step
-click The Guardians of Tirisfal##2530 |achieve 1244/16 |goto Stormwind City 85.0,26.1
-|tip On the table.
-step
-click Aftermath of the Second War##558 |achieve 1244/18 |goto Stormwind City 85.2,26.1
-|tip On the table.
-step
-click The Alliance of Lordaeron##558 |achieve 1244/33 |goto Stormwind City 85.2,26.1
-|tip On the table.
-step
-click The Kaldorei and the Well of Eternity##560 |achieve 1244/21 |goto Stormwind City 84.7,25.9
-|tip On the pillar base next to the candles.
-step
-click Beyond the Dark Portal##559 |achieve 1244/9 |goto Stormwind City 84.6,24.3
-|tip On the chair.
-step
-click Civil War in the Plaguelands##559 |achieve 1244/20 |goto Stormwind City 85.0,23.4
-|tip On the pillar base next to the candles.
-step
-click War of the Spider##558 |achieve 1244/14 |goto Stormwind City 86.7,35.8
-|tip On the command table.
-step
-click The Battle of Grim Batol##560 |achieve 1244/36 |goto Stormwind City 86.5,36.0
-|tip On the command table.
-step
-click The Dark Portal and the Fall of Stormwind##558 |achieve 1244/15 |goto Stormwind City 87.1,35.9
-|tip On the command table.
-step
-click Archimonde's Return and the Flight to Kalimdor##560 |achieve 1244/30 |goto Stormwind City 51.8,74.5
-|tip Inside on the table behind Mazen Mac'Nadir.
-step
-click Mount Hyjal and Illidan's Gift##559 |achieve 1244/39 |goto Stormwind City 51.8,74.6
-|tip Inside on the table behind Mazen Mac'Nadir.
-step
-click Rise of the Blood Elves##3871 |achieve 1244/40 |goto Elwynn Forest 64.6,69.5
-|tip On top of the bookshelf on the top floor of the tower.
-step
-click Lethargy of the Orcs##3871 |achieve 1244/31 |goto Elwynn Forest 85.3,69.7
-|tip Upstairs on the table.
-step
-click The Birth of the Lich King##2530 |achieve 1244/42 |goto Duskwood 72.1,46.6
-|tip In the town hall on a table next to Role Dreuger.
-step
-click Kil'jaeden and the Shadow Pact##2530 |achieve 1244/13 |goto Duskwood 74.2,45.3
-|tip In the inn on the bookshelf on the second floor.
-step
-click The Founding of Quel'Thalas##3871 |achieve 1244/24 |goto Duskwood 73.7,45.1
-|tip In the next room over on the table.
-step
-click The Last Guardian##559 |achieve 1244/1 |goto Loch Modan 37.2,47.0
-|tip Downstairs inside the home on the nightstand next to the bed.
-step
-click The Old Gods and the Ordering of Azeroth##558 |achieve 1244/29 |goto Ironforge 76.5,10.6
-|tip On the center table.
-step
-click Charge of the Dragonflights##560 |achieve 1244/34 |goto Ironforge 76.5,10.6
-|tip On the center table.
-step
-click Ironforge - the Awakening of the Dwarves##558 |achieve 1244/38 |goto Ironforge 75.1,9.1
-|tip On the table.
-step
-click War of the Three Hammers##560 |achieve 1244/32 |goto Ironforge 75.1,9.2
-|tip On the table.
-step
-click Arathor and the Troll Wars##559 |achieve 1244/8 |goto Ironforge 77.0,9.5
-|tip On the table.
-step
-click Rise of the Horde##560 |achieve 1244/41 |goto Ironforge 76.8,12.3
-|tip On the table.
-step
-click The Invasion of Draenor##3871 |achieve 1244/19 |goto Scholomance/2 56.1,41.2
-|tip This book is found after fighting Lilian Voss on the floor in the corner.
-step
-Make your way into The Scarlet Bastion |goto Stratholme/1 31.9,34.8 < 10 |walk
-click The Seven Kingdoms##560 |achieve 1244/7 |goto Stratholme/1 30.1,41.3
-|tip On the table next to Commander Malor.
-step
-click Kel'Thuzad and the Forming of the Scourge##2530 |achieve 1244/28 |goto Stratholme/1 25.1,70.3
-|tip On the table between the bookshelves.
-step
-click The Lich King Triumphant##560 |achieve 1244/6 |goto Stratholme/1 25.5,70.5
-|tip On the table between the bookshelves.
-step
-click Icecrown and the Frozen Throne##559 |achieve 1244/12 |goto Stratholme/1 25.8,71.5
-|tip On the table between the bookshelves.
-step
-click Sunwell - The Fall of Quel'Thalas##559 |achieve 1244/25 |goto The Cape of Stranglethorn 41.0,74.4
-|tip Inside the inn on the corner table right up the stairs.
-step
-click The Twin Empires##559 |achieve 1244/3 |goto The Cape of Stranglethorn 42.1,73.7
-|tip All the way downstairs on a bookshelf in the same room as the auctioneer.
-step
-click Empires' Fall##558 |achieve 1244/10 |goto The Cape of Stranglethorn 42.1,73.7
-|tip All the way downstairs on a bookshelf in the same room as the auctioneer.
-step
-click Wrath of Soulflayer##3871 |achieve 1244/5 |goto The Cape of Stranglethorn 42.1,73.7
-|tip All the way downstairs on a bookshelf in the same room as the auctioneer.
-step
-click The Scourge of Lordaeron##2530 |achieve 1244/26 |goto The Cape of Stranglethorn 41.9,73.5
-|tip All the way downstairs on a bookshelf under the stairs in the same room as the auctioneer.
-step
-click The Sentinels and the Long Vigil##560 |achieve 1244/2 |goto The Cape of Stranglethorn 42.1,73.6
-|tip All the way upstairs on the nightstand next to the bed.
-step
-click Sargeras and the Betrayal##2530 |achieve 1244/23 |goto Northern Barrens 67.0,74.9
-|tip In the Ratchet Inn on the nightstand between two beds.
-step
-click Exile of the High Elves##558 |achieve 1244/11 |goto Northern Barrens 67.1,73.4
-|tip In the Ratchet Blacksmith second floor on a barrel sitting on the balcony.
-step
-click Old Hatreds - The Colonization of Kalimdor##560 |achieve 1244/35 |goto Tanaris 51.0,30.2
-|tip In Godgetzan laying on the sand next to a set of baskets.
-step
-click The Betrayer Ascendant##2530 |achieve 1244/37 |goto Darnassus 62.0,74.6
-|tip On the counter against the south west wall.
-step
-Congratulations, you have earned the Well Read Achievement!
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Achievements Guides\\General\\You'll Feel Right as Rain",{
-condition_end="achieved(5779)",
-description="This guide will walk you through feeling 1000% better by eating Chocolate Cookies.",
-},[[
-step
-_Click here_ to buy them from the Auction House |confirm |next "buy"
-_Click here_ to make them yourself  |confirm |next "cook"
-step
-label "buy"
-talk Auctioneer Fitch##8719
-buy 91 Chocolate Cookie##62680 |n |goto Stormwind City 61.0,70.7
-Eat #91# Chocolate Cookies in a row to feel 1000% better |use Chocolate Cookie##62680 |achieve 5779 |next "end"
-step
-label "cook"
-Use the Stormwind City Cooking Dailies guide to
-earn 6 Epicurean's Award##81 |tip Three for the recipe and the rest for the cocoa beans you'll need.
-step
-talk Bario Matalli##49701
-buy Recipe: Chocolate Cookie##65431 |n
-learn Chocolate Cookie##88013 |use Recipe: Chocolate Cookie##65431 |goto Stormwind City 50.4,71.8
-step
-talk Bario Matalli##49701
-buy 2 Imported Supplies##68689 |n |tip If you need more buy another until you have 91 beans.
-collect 91 Cocoa Beans##62786 |use Imported Supplies##68689 |goto Stormwind City 50.4,71.8
-step
-talk Erika Tate##5483
-buy 91 Simple Flour##30817 |condition itemcount(30817) >= 91 |goto Stormwind City 77.6,53.1
-step
-Make a Cooking Fire |cast Cooking Fire##818
-create 91 Chocolate Cookie##88013,Cooking,91 total |n
-collect 91 Chocolate Cookie##62680
-step
-Eat #91# Chocolate Cookies in a row to feel 1000% better |use Chocolate Cookie##62680 |achieve 5779
-step
-label "end"
-Congratulations, you have earned the You'll Feel Right as Rain achievement!
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Achievements Guides\\Exploration\\Eastern Kingdoms\\Explore Eastern Kingdoms",{
-condition_end="achieved(42) and achieved(4868)",
+ZygorGuidesViewer:RegisterGuide("Zygor's Achievement Guides\\Exploration\\Eastern Kingdoms\\Explore Eastern Kingdoms",{
+condition_end="achieved(42)",
 achieveid={4825,4864,4866,775,761,765,766,775,627,778,772,779,780,768,859,774,769,858,781,4995,782,773,802,841,777,770,771,868,776},
 description="Explore the regions of Eastern Kingdoms.",
 },[[
@@ -716,7 +70,6 @@ _Click here_ to explore Badlands |achieve 765 |confirm |next "badlands"
 _Click here_ to explore Blasted Lands |achieve 766 |confirm |next "blasted"
 _Click here_ to explore Burning Steppes |achieve 775 |confirm |next "burning"
 _Click here_ to explore Deadwind Pass |achieve 777 |confirm |next "deadwind"
-_Click here_ to explore Deepholm |achieve 4864 |confirm |next "deepholm"
 _Click here_ to explore Dun Morogh |achieve 627 |confirm |next "dun"
 _Click here_ to explore Duskwood |achieve 778 |confirm |next "duskwood"
 _Click here_ to explore Eastern Plaguelands |achieve 771 |confirm |next "e_plague"
@@ -734,92 +87,12 @@ _Click here_ to explore Swamp of Sorrows |achieve 782 |confirm |next "swamp"
 _Click here_ to explore The Cape of Stranglethorn |achieve 4995 |confirm |next "strangle"
 _Click here_ to explore The Hinterlands |achieve 773 |confirm |next "hinterlands"
 _Click here_ to explore Tirisfal Glades |achieve 768 |confirm |next "tirisfal"
-_Click here_ to explore Twilight Highlands |achieve 4866 |confirm |next "twilight"
-_Click here_ to explore Vashj'ir |achieve 4825 |confirm |next "vashj'ir"
 _Click here_ to explore Westfall |achieve 802 |confirm |next "westfall"
 _Click here_ to explore Western Plaguelands |achieve 770 |confirm |next "w_plague"
 _Click here_ to explore Wetlands |achieve 841 |confirm |next "wetlands"
 _OR_
-_Click here_ to complete Zygor's suggested path through all of the above zones |confirm |next
+_Click here_ to complete Zygor's suggested path through all of the above zones |confirm |next |or
 stickystart "stickyreturn"
-step
-label "deepholm"
-_Skipping_ to the next part of guide |next "+vashj'ir" |only if step:Find("+deepholm1"):IsComplete()
-_Proceeding_ to the next step |next |only if default
-step
-_Discover_ Temple of Earth |achieve 4864/9 |goto Deepholm 49.0,49.0
-step
-_Discover_ Storm's Fury Wreckage |achieve 4864/8 |goto Deepholm 55.8,75.4
-step
-_Discover_ Twilight Overlook |achieve 4864/12 |goto Deepholm 68.3,77.8
-step
-_Discover_ Deathwing's Fall |achieve 4864/11 |goto Deepholm 62.9,58.5
-step
-_Discover_ Crimson Expanse |achieve 4864/5 |goto Deepholm 74.2,40.7
-step
-_Discover_ Therazane's Throne |achieve 4864/2 |goto Deepholm 56.6,10.9
-step
-_Discover_ The Pale Roost |achieve 4864/3 |goto Deepholm 39.8,18.6
-step
-_Discover_ Needlerock Chasm |achieve 4864/6 |goto Deepholm 26.8,32.6
-step
-_Discover_ Needlerock Slag |achieve 4864/7 |goto Deepholm 21.7,47.7
-step
-_Discover_ Stonehearth |achieve 4864/1 |goto Deepholm 26.3,69.5
-step
-_Discover_ The Quaking Fields |achieve 4864/10 |goto Deepholm 35.2,80.3
-step
-_Discover_ Masters' Gate |achieve 4864/4 |goto Deepholm 39.2,69.1
-step
-label	"deepholm1"
-_Explore_ Deepholm |achieve 4864
-step
-label	"vashj'ir"
-_Skipping_ to the next part of guide |next "+strangle" |only if step:Find("+vashj'ir1"):IsComplete()
-_Proceeding_ to the next step |next |only if default
-step
-_Discover_ Korthun's End |achieve 4825/4 |goto Abyssal Depths 54.1,63.9
-step
-_Discover_ Underlight Canyon |achieve 4825/16 |goto Abyssal Depths 42.2,70.0
-step
-_Discover_ Abandoned Reef |achieve 4825/1 |goto Abyssal Depths 22.1,80.2
-step
-_Discover_ L'ghorek |achieve 4825/5 |goto Abyssal Depths 32.3,54.1
-step
-_Discover_ Deepfin Ridge |achieve 4825/3 |goto Abyssal Depths 39.4,19.3
-step
-_Discover_ Seabrush |achieve 4825/8 |goto Abyssal Depths 54.9,43.5
-step
-_Discover_ Abyssal Breach |achieve 4825/2 |goto Abyssal Depths 71.5,29.8
-step
-_Discover_ Shimmering Grotto |achieve 4825/21 |goto Shimmering Expanse 50.9,21.5
-step
-_Discover_ Silver Tide Hollow |achieve 4825/15 |goto Shimmering Expanse 47.9,37.8
-step
-_Discover_ Glimmerdeep Gorge |achieve 4825/6 |goto Shimmering Expanse 43.6,48.4
-step
-_Discover_ Ruins of Vashj'ir |achieve 4825/14 |goto Shimmering Expanse 33.7,72.4
-step
-_Discover_ Beth'mora Ridge |achieve 4825/12 |goto Shimmering Expanse 55.4,83.0
-step
-_Discover_ Nespirah |achieve 4825/13 |goto Shimmering Expanse 59.2,56.5
-step
-_Discover_ Ruins of Thelserai Temple |achieve 4825/19 |goto Shimmering Expanse 66.4,41.7
-step
-_Discover_ The Clutch |achieve 4825/10 |goto Kelp'thar Forest 58.8,81.4
-step
-_Discover_ Gnaws' Boneyard |achieve 4825/7 |goto Kelp'thar Forest 61.5,58.9
-step
-_Discover_ Gurboggle's Ledge |achieve 4825/9 |goto Kelp'thar Forest 53.2,56.2
-step
-_Discover_ Legion's Fate |achieve 4825/11 |goto Kelp'thar Forest 39.7,29.7
-step
-_Discover_ Seafarer's Tomb |achieve 4825/18 |goto Kelp'thar Forest 50.3,24.1
-step
-_Discover_ The Skeletal Reef |achieve 4825/17 |goto Kelp'thar Forest 64.8,49.3
-step
-label	"vashj'ir1"
-_Explore_ Vashj'ir |achieve 4825
 step
 label	"strangle"
 _Skipping_ to the next part of guide |next "+n_strangle" |only if step:Find("+strangle1"):IsComplete()
@@ -1059,27 +332,27 @@ label	"elwynn"
 _Skipping_ to the next part of guide |next "+burning" |only if step:Find("+elwynn1"):IsComplete()
 _Proceeding_ to the next step |next |only if default
 step
-_Discover_ Eastvale Logging Camp |achieve 776/7 |goto Elwynn Forest 83.5,66.9
+_Discover_ Eastvale Logging Camp |achieve 776/8 |goto Elwynn Forest 83.5,66.9
 step
-_Discover_ Ridgepoint Tower |achieve 776/8 |goto Elwynn Forest 84.8,79.4
+_Discover_ Ridgepoint Tower |achieve 776/9 |goto Elwynn Forest 84.8,79.4
 step
-_Discover_ Brackwell Pumpkin Patch |achieve 776/3 |goto Elwynn Forest 69.4,79.4
+_Discover_ Brackwell Pumpkin Patch |achieve 776/7 |goto Elwynn Forest 69.4,79.4
 step
-_Discover_ Tower of Azora |achieve 776/4 |goto Elwynn Forest 64.6,69.3
+_Discover_ Tower of Azora |achieve 776/6 |goto Elwynn Forest 64.6,69.3
 step
-_Discover_ Crystal Lake |achieve 776/1 |goto Elwynn Forest 52.9,66.2
+_Discover_ Crystal Lake |achieve 776/10 |goto Elwynn Forest 52.9,66.2
 step
-_Discover_ Jerod's Landing |achieve 776/10 |goto Elwynn Forest 48.5,85.8
+_Discover_ Jerod's Landing |achieve 776/5 |goto Elwynn Forest 48.5,85.8
 step
-_Discover_ Fargodeep Mine |achieve 776/6 |goto Elwynn Forest 39.5,80.3
+_Discover_ Fargodeep Mine |achieve 776/4 |goto Elwynn Forest 39.5,80.3
 step
-_Discover_ Westbrook Garrison |achieve 776/11 |goto Elwynn Forest 24.5,73.3
+_Discover_ Westbrook Garrison |achieve 776/2 |goto Elwynn Forest 24.5,73.3
 step
-_Discover_ Goldshire |achieve 776/5 |goto Elwynn Forest 42.1,64.7
+_Discover_ Goldshire |achieve 776/3 |goto Elwynn Forest 42.1,64.7
 step
-_Discover_ Northshire Valley |achieve 776/9 |goto Elwynn Forest 50.4,42.5
+_Discover_ Northshire Valley |achieve 776/1 |goto Elwynn Forest 50.4,42.5
 step
-_Discover_ Stone Cairn Lake |achieve 776/2 |goto Elwynn Forest 74.0,51.5
+_Discover_ Stone Cairn Lake |achieve 776/11 |goto Elwynn Forest 74.0,51.5
 step
 label	"elwynn1"
 _Explore_ Elwynn Forest |achieve 776
@@ -1221,67 +494,6 @@ step
 label	"loch1"
 _Explore_ Loch Modan |achieve 779
 step
-label	"twilight"
-_Skipping_ to the next part of guide |next "+wetlands" |only if step:Find("+twilight1"):IsComplete()
-_Proceeding_ to the next step |next |only if default
-step
-_Discover_ Grim Batol |achieve 4866/16 |goto Twilight Highlands 18.9,51.4
-step
-_Discover_ Dragonmaw Pass |achieve 4866/9 |goto Twilight Highlands 28.18,37.67
-step
-_Discover_ Wyrms' Bend |achieve 4866/18 |goto Twilight Highlands 29.0,47.8
-step
-_Discover_ The Gullet |achieve 4866/26 |goto Twilight Highlands 36.39,38.03
-step
-_Discover_ The Twilight Breach |achieve 4866/11 |goto Twilight Highlands 39.9,46.6
-step
-_Discover_ Victor's Point |achieve 4866/6 |goto Twilight Highlands 43.2,58.1
-step
-_Discover_ Crushblow |achieve 4866/17 |goto Twilight Highlands 46.1,77.2
-step
-_Discover_ Dunwald Ruins |achieve 4866/14 |goto Twilight Highlands 49.5,68.8
-step
-_Discover_ Obsibian Forest |achieve 4866/3 |goto Twilight Highlands 64.4,78.9
-step
-_Discover_ Twilight Shore |achieve 4866/19 |goto Twilight Highlands 71.0,70.9
-step
-_Discover_ Discover Highbank |achieve 4866/10 |goto Twilight Highlands 80.7,76.8
-step
-_Discover_ Dragonmaw Port |achieve 4866/8 |goto Twilight Highlands 76.0,53.0
-step
-_Discover_ Firebeards's Patrol |achieve 4866/15 |goto Twilight Highlands 59.9,57.0
-step
-_Discover_ Highland Forest |achieve 4866/2 |goto Twilight Highlands 54.0,62.9
-step
-_Discover_ Crucible of Carnage |achieve 4866/13 |goto Twilight Highlands 50.7,56.9
-step
-_Discover_ Bloodgulch |achieve 4866/12 |goto Twilight Highlands 54.1,42.7
-step
-_Discover_ Gorshak War Camp |achieve 4866/1 |goto Twilight Highlands 62.7,46.0
-step
-_Discover_ Slithering Cove |achieve 4866/24 |goto Twilight Highlands 71.0,38.8
-step
-_Discover_ The Krazzworks |achieve 4866/27 |goto Twilight Highlands 76.8,14.5
-step
-_Discover_ Kirthaven |achieve 4866/22 |goto Twilight Highlands 54.9,17.3
-step
-_Discover_ The Black Breach |achieve 4866/25 |goto Twilight Highlands 57.9,30.3
-step
-_Discover_ Thundermar |achieve 4866/4 |goto Twilight Highlands 50.2,29.1
-step
-_Discover_ The Maw of Madness |achieve 4866/7 |goto Twilight Highlands 47.8,10.6
-step
-_Discover_ Ruins of Drakgor |achieve 4866/23 |goto Twilight Highlands 43.6,18.1
-step
-_Discover_ Humboldt Conflagration |achieve 4866/21 |goto Twilight Highlands 44.3,27.3
-step
-_Discover_ Glopgut's Hollow |achieve 4866/5 |goto Twilight Highlands 38.3,29.0
-step
-_Discover_ Vermillion Redoubt |achieve 4866/20 |goto Twilight Highlands 25.3,21.0
-step
-label	"twilight1"
-_Explore_ Twilight Highlands |achieve 4866
-step
 label	"wetlands"
 _Skipping_ to the next part of guide |next "+arathi" |only if step:Find("+wetlands1"):IsComplete()
 _Proceeding_ to the next step |next |only if default
@@ -1409,33 +621,33 @@ label	"silver"
 _Skipping_ to the next part of guide |next "+tirisfal" |only if step:Find("+silver1"):IsComplete()
 _Proceeding_ to the next step |next |only if default
 step
-_Discover_ The Battlefront |achieve 769/13 |goto Silverpine Forest 46.1,79.5
+_Discover_ The Battlefront |achieve 769/1 |goto Silverpine Forest 46.1,79.5
 step
-_Discover_ Shadowfang Keep |achieve 769/7 |goto Silverpine Forest 42.2,63.2
+_Discover_ Shadowfang Keep |achieve 769/12 |goto Silverpine Forest 42.2,63.2
 step
-_Discover_ The Forsaken Front |achieve 769/4 |goto Silverpine Forest 50.9,66.6
+_Discover_ The Forsaken Front |achieve 769/3 |goto Silverpine Forest 50.9,66.6
 step
-_Discover_ Ambermill |achieve 769/12 |goto Silverpine Forest 61.2,62.4
+_Discover_ Ambermill |achieve 769/11 |goto Silverpine Forest 61.2,62.4
 step
-_Discover_ Olsen's Farthing |achieve 769/11 |goto Silverpine Forest 46.1,51.0
+_Discover_ Olsen's Farthing |achieve 769/10 |goto Silverpine Forest 46.1,51.0
 step
-_Discover_ The Sepulcher |achieve 769/10 |goto Silverpine Forest 45.0,40.0
+_Discover_ The Sepulcher |achieve 769/8 |goto Silverpine Forest 45.0,40.0
 step
-_Discover_ North Tide's Beachead |achieve 769/14 |goto Silverpine Forest 37.3,28.0
+_Discover_ North Tide's Beachead |achieve 769/5 |goto Silverpine Forest 37.3,28.0
 step
-_Discover_ The Skittering Dark |achieve 769/5 |goto Silverpine Forest 34.8,12.4
+_Discover_ The Skittering Dark |achieve 769/4 |goto Silverpine Forest 34.8,12.4
 step
 _Discover_ Forsaken Rear Guard |achieve 769/15 |goto Silverpine Forest 44.9,18.8
 step
-_Discover_ Valgan's Field |achieve 769/9 |goto Silverpine Forest 53.2,25.6
+_Discover_ Valgan's Field |achieve 769/7 |goto Silverpine Forest 53.2,25.6
 step
-_Discover_ The Decrepit Fields |achieve 769/3 |goto Silverpine Forest 56.5,34.7
+_Discover_ The Decrepit Fields |achieve 769/2 |goto Silverpine Forest 56.5,34.7
 step
-_Discover_ Deep Elem Mine |achieve 769/6 |goto Silverpine Forest 59.3,45.4
+_Discover_ Deep Elem Mine |achieve 769/9 |goto Silverpine Forest 59.3,45.4
 step
-_Discover_ Fenris Isle |achieve 769/2 |goto Silverpine Forest 69.1,26.8
+_Discover_ Fenris Isle |achieve 769/6 |goto Silverpine Forest 69.1,26.8
 step
-_Discover_ Forsaken High Command |achieve 769/1 |goto Silverpine Forest 62.0,8.7
+_Discover_ Forsaken High Command |achieve 769/13 |goto Silverpine Forest 62.0,8.7
 step
 label	"silver1"
 _Explore_ Silverpine Forest |achieve 769
@@ -1444,31 +656,35 @@ label	"tirisfal"
 _Skipping_ to the next part of guide |next "+w_plague" |only if step:Find("+tirisfal1"):IsComplete()
 _Proceeding_ to the next step |next |only if default
 step
-_Discover_ Deathknell |achieve 768/10 |goto Tirisfal Glades 32.2,63.8
+_Discover_ Deathknell |achieve 768/1 |goto Tirisfal Glades 32.2,63.8
 step
-_Discover_ Nightmare Vale |achieve 768/9 |goto Tirisfal Glades 45.1,65.4
+_Discover_ Nightmare Vale |achieve 768/4 |goto Tirisfal Glades 45.1,65.4
 step
 _Discover_ Cold Hearth Manor |achieve 768/5 |goto Tirisfal Glades 53.8,58.7
 step
 _Discover_ Calston Estate |achieve 768/16 |goto Tirisfal Glades 46.2,51.4
 step
-_Discover_ Solliden Farmstead |achieve 768/3 |goto Tirisfal Glades 38.4,48.9
+_Discover_ Solliden Farmstead |achieve 768/2 |goto Tirisfal Glades 38.4,48.9
 step
-_Discover_ Agamand Mills |achieve 768/11 |goto Tirisfal Glades 45.6,32.9
+_Discover_ Agamand Mills |achieve 768/3 |goto Tirisfal Glades 45.6,32.9
 step
-_Discover_ Garren's Haunt |achieve 768/6 |goto Tirisfal Glades 56.9,35.6
+_Discover_ Garren's Haunt |achieve 768/7 |goto Tirisfal Glades 56.9,35.6
 step
-_Discover_ Brill |achieve 768/12 |goto Tirisfal Glades 59.7,50.9
+_Discover_ Brill |achieve 768/6 |goto Tirisfal Glades 59.7,50.9
 step
-_Discover_ Brightwater Lake |achieve 768/4 |goto Tirisfal Glades 68.3,45.0
+_Discover_ Brightwater Lake |achieve 768/8 |goto Tirisfal Glades 68.3,45.0
 step
-_Discover_ Scarlet Watch Post |achieve 768/2 |goto Tirisfal Glades 78.4,26.9
+_Discover_ Scarlet Watch Post |achieve 768/11 |goto Tirisfal Glades 78.4,26.9
 step
-_Discover_ Venomweb Vale |achieve 768/1 |goto Tirisfal Glades 87.00,47.2
+_Discover_ Scarlet Monastery Entrance |achieve 768/14 |goto Tirisfal Glades 85.08,31.34
 step
-_Discover_ Crusader Outpost |achieve 768/8 |goto Tirisfal Glades 79.1,54.7
+_Discover_ Venomweb Vale |achieve 768/12 |goto Tirisfal Glades 87.00,47.2
 step
-_Discover_ Balnir Farmstead |achieve 768/7 |goto Tirisfal Glades 73.7,60.0
+_Discover_ Crusader Outpost |achieve 768/10 |goto Tirisfal Glades 79.1,54.7
+step
+_Discover_ Balnir Farmstead |achieve 768/9 |goto Tirisfal Glades 73.7,60.0
+step
+_Discover_ Ruins of Lordaeron |achieve 768/13 |goto Tirisfal Glades 61.87,67.55
 step
 _Discover_ The Bulwark |achieve 768/15 |goto Tirisfal Glades 84.9,69.4
 step
@@ -1693,12 +909,11 @@ _Click here_ at anytime to return to the checklist |next "start"
 step
 label	"end"
 Congratulations, you have _earned_ the _Explore Eastern Kingdoms_ Achievement! |only if achieved(42)
-Congratulations, you have _earned_ the _Explore Cataclysm_ Achievement! |only if achieved(4868)
 Congratulations, you have _earned_ the _World Explorer_ Achievement! |only if achieved(46)
 You _have not_ explored all of Eastern Kingdoms yet |only if not achieved(42)
 |confirm |next "start" |only if not achieved(42)
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Achievements Guides\\Exploration\\Kalimdor\\Explore Kalimdor",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Achievement Guides\\Exploration\\Kalimdor\\Explore Kalimdor",{
 condition_end="achieved(43) and achieved(4868)",
 achieveid={46,4868,4863,4865,728,736,842,860,750,857,4996,844,861,845,846,847,848,850,849,851,852,853,854,855,856},
 description="Explore the regions of Kalimdor.",
@@ -1720,7 +935,6 @@ _Click here_ to explore Dustwallow Marsh |achieve 850 |confirm |next "dustwallow
 _Click here_ to explore Felwood |achieve 853 |confirm |next "felwood"
 _Click here_ to explore Feralas |achieve 849 |confirm |next "feralas"
 _Click here_ to explore Moonglade |achieve 855 |confirm |next "moon"
-_Click here_ to explore Mount Hyjal |achieve 4863 |confirm |next "hyjal"
 _Click here_ to explore Mulgore |achieve 736 |confirm |next "mulgore"
 _Click here_ to explore Northern Barrens |achieve 750 |confirm |next "n_barrens"
 _Click here_ to explore Silithus |achieve 856 |confirm |next "silithus"
@@ -1729,7 +943,6 @@ _Click here_ to explore Stonetalon Mountains |achieve 847 |confirm |next "stonet
 _Click here_ to explore Tanaris |achieve 851 |confirm |next "tanaris"
 _Click here_ to explore Teldrassil |achieve 842 |confirm |next "teldrassil"
 _Click here_ to explore Thousand Needles |achieve 846 |confirm |next "thousand"
-_Click here_ to explore Uldum |achieve 4865 |confirm |next "uldum"
 _Click here_ to explore Un'Goro Crater |achieve 854 |confirm |next "ungoro"
 _Click here_ to explore Winterspring |achieve 857 |confirm |next "winter"
 _OR_
@@ -1957,57 +1170,6 @@ step
 label "ungoro1"
 _Explore_ Un'Goro Crater |achieve 854
 step
-label "uldum"
-_Skipping_ to the next part of guide |next "+silithus" |only if step:Find("+uldum1"):IsComplete()
-_Proceeding_ to the next step |next |only if default
-step
-_Discover_ Khartut's Tomb |achieve 4865/6 |goto Uldum 64.5,16.1
-step
-_Discover_ The Gate of Unending Cycles |achieve 4865/21 |goto Uldum 69.0,21.8
-step
-_Discover_ Obelisk of the Stars |achieve 4865/16 |goto Uldum 64.6,31.8
-step
-_Discover_ Nahorn |achieve 4865/13 |goto Uldum 67.1,40.9
-step
-_Discover_ Tombs of the Precursors |achieve 4865/4 |goto Uldum 72.16,44.35
-step
-_Discover_ The Cursed Landing |achieve 4865/8 |goto Uldum 84.7,52.8
-step
-_Discover_ The Trail of Devastation |achieve 4865/10 |goto Uldum 80.3,60.0
-step
-_Discover_ Lost City of the Tol'vir |achieve 4865/1 |goto Uldum 63.9,73.3
-step
-_Discover_ Neferset City |achieve 4865/14 |goto Uldum 51.2,82.0
-step
-_Discover_ Cradle of the Ancients |achieve 4865/11 |goto Uldum 43.7,70.4
-step
-_Discover_ Obelisk of the Sun |achieve 4865/9 |goto Uldum 45.6,56.2
-step
-_Discover_ Akhenet Fields |achieve 4865/2 |goto Uldum 54.3,52.2
-step
-_Discover_ Vir'naal Dam |achieve 4865/22 |goto Uldum 58.3,40.9
-step
-_Discover_ Tahret Grounds |achieve 4865/7 |goto Uldum 60.5,39.2
-step
-_Discover_ Ramkahen |achieve 4865/18 |goto Uldum 54.8,32.4
-step
-_Discover_ Mar'at |achieve 4865/12 |goto Uldum 49.0,38.4
-step
-_Discover_ Ruins of Ahmtul |achieve 4865/19 |goto Uldum 46.1,15.5
-step
-_Discover_ Obelisk of the Moon |achieve 4865/15 |goto Uldum 40.8,22.9
-step
-_Discover_ Temple of Uldum |achieve 4865/3 |goto Uldum 33.7,30.9
-step
-_Discover_ Orsis |achieve 4865/17 |goto Uldum 40.5,39.9
-step
-_Discover_ Ruins of Ammon |achieve 4865/20 |goto Uldum 32.1,65.5
-step
-_Discover_ Schnottz's Landing |achieve 4865/5 |goto Uldum 20.8,61.8
-step
-label "uldum1"
-_Explore_ Uldum |achieve 4865
-step
 label "silithus"
 _Skipping_ to the next part of guide |next "+feralas" |only if step:Find("+silithus1"):IsComplete()
 _Proceeding_ to the next step |next |only if default
@@ -2219,35 +1381,6 @@ _Discover_ Bough Shadow |achieve 845/7 |goto Ashenvale 93.4,39.2
 step
 label "ashenvale1"
 _Explore_ Ashenvale |achieve 845
-step
-label "hyjal"
-_Skipping_ to the next part of guide |next "+winter" |only if step:Find("+hyjal1"):IsComplete()
-_Proceeding_ to the next step |next |only if default
-step
-_Discover_ Gates of Sothann |achieve 4863/6 |goto Mount Hyjal 72.5,76.7
-step
-_Discover_ Darkwhisper Gorge |achieve 4863/5 |goto Mount Hyjal 76.0,64.9
-step
-_Discover_ The Scorched Plain |achieve 4863/10 |goto Mount Hyjal 53.4,55.1
-step
-_Discover_ The Throne of Flame |achieve 4863/3 |goto Mount Hyjal 45.3,80.5
-step
-_Discover_ Sethria's Roost |achieve 4863/8 |goto Mount Hyjal 31.4,84.9
-step
-_Discover_ Rim of the World |achieve 4863/4 |goto Mount Hyjal 25.5,64.5
-step
-_Discover_ Ashen Lake |achieve 4863/2 |goto Mount Hyjal 31.8,53.5
-step
-_Discover_ The Flamewake |achieve 4863/11 |goto Mount Hyjal 32.9,51.2
-step
-_Discover_ Shrine of Goldrinn |achieve 4863/9 |goto Mount Hyjal 28.5,27.5
-step
-_Discover_ The Circle of Cinders |achieve 4863/1 |goto Mount Hyjal 45.1,26.0
-step
-_Discover_ Nordrassil |achieve 4863/7 |goto Mount Hyjal 63.4,21.0
-step
-label "hyjal1"
-_Explore_ Mount Hyjal |achieve 4863
 step
 label "winter"
 _Skipping_ to the next part of guide |next "+azshara" |only if step:Find("+winter1"):IsComplete()
@@ -2535,59 +1668,704 @@ _Click here_ at anytime to return to the checklist |next "start"
 step
 label "end"
 Congratulations, you have _earned_ the _Explore Kalimdor_ Achievement! |only if achieved(43)
-Congratulations, you have _earned_ the _Explore Cataclysm_ Achievement! |only if achieved(4868)
 Congratulations, you have _earned_ the _World Explorer_ Achievement! |only if achieved(46)
 You _have not_ explored all of Kalimdor yet |only if not achieved(43)
 confirm |next "start" |only if not achieved(43)
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Alliance Achievements Guides\\Collections\\Represent",{
-condition_end="achieved(5755)",
-achieveid={621,1020,1021},
-description="Equip a tabard.",
+ZygorGuidesViewer:RegisterGuide("Zygor's Achievement Guides\\General\\Going Down?",{
+condition_end="achieved(964)",
+description="This guide will walk you through falling 65 yards without dying.",
 },[[
 step
-You can obtain various tabards through reputation, achievements, PvP, and questing
-Please refer to our reputation and achievment guides to earn your tabards
-What follows is the seven faction tabards to get you on your way to 30 tabards
-confirm
+You can do this in several different waysdepending on yoiur class, but we listed the easiest way regardless of level and class
+Ride up to the Elevator to the Terrace of Light and jump off either the right or the left side of the Terrace to the flat ground |goto Shattrath City 63.8,41.6 |achieve 964
+|tip MAKE SURE TO JUMP.
 step
-talk Captain Lancy Revshon##49877 |goto Stormwind City 67.7,73.0
-buy Stormwind Tabard##45574 |n
-Equip Stormwind Tabard |use Stormwind Tabard##45574
-confirm
+Congratulations, you have earned the Going Down? achievement!
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Achievement Guides\\General\\Higher Learning",{
+condition_end="achieved(1956)",
+description="This guide will walk you through reading the volumes of 'The Schools of Arcane Magic' found in Dalaran.",
+},[[
 step
-talk Old Whitenose##65068 |goto Stormwind City 67.8,18.6
-buy Tushui Tabard##83079 |n
-Equip Tushui Tabard |use Tushui Tabard##83079
-confirm
+Warning: These books have respawn timers of about 3-4 hours (it seems to be random between those times) so this achievement may take you a while to get
+|tip The book you want won't always be there. Fake trash books spawn to make the achievement even harder to get, but keep at it. Make sure you click the fake trash books anyway, so the real books have a chance to spawn.
+This is an achievement that you may want to dedicate a lot of time to if you want it
+|tip You'll have a much greater chance of earning the achievement if you camp each book until you have them all, rather than constantly running through the path in this guide
+Good luck!
+confirm |only if not achieved(1956)
+step "RestartHigherLearning"
+click The Schools of Arcane Magic - Illusion##8128
+|tip It looks like a brown book laying on a wooden crate.
+Read The Schools of Arcane Magic - Illusion |achieve 1956/6 |goto Dalaran 64.4,52.4
+_Click here_ if this book isn't available |confirm
 step
-talk Master Tinker Trini##50308 |goto Ironforge 55.3,48.2
-buy Gnomeregan Tabard##45578 |n
-Equip Gnomeregan Tabard |use Gnomeregan Tabard##45578
-confirm
+click The Schools of Arcane Magic - Introduction##8133
+|tip It looks like a blue book laying on ground next to a bookshelf inside this building.
+Read The Schools of Arcane Magic - Introduction |achieve 1956/1 |goto Dalaran 56.6,45.6
+_Click here_ if this book isn't available |confirm
 step
-talk Captain Stonehelm##50309 |goto Ironforge 55.6,47.3
-buy Ironforge Tabard##45577 |n
-Equip Ironforge Tabard |use Ironforge Tabard##45577
-confirm
+click The Schools of Arcane Magic - Abjuration##8128
+|tip It looks like a brown book laying on ground next to a small table inside this building.
+Read The Schools of Arcane Magic - Abjuration |achieve 1956/2 |goto Dalaran 52.3,54.8
+_Click here_ if this book isn't available |confirm
 step
-talk Moon Priestess Lasara##50305 |goto Darnassus 36.2,48.5
-buy Darnassus Tabard##45579 |n
-Equip Darnassus Tabard |use Darnassus Tabard##45579
-confirm
+click The Schools of Arcane Magic - Enchantment##8051
+|tip It looks like a blue book laying on a small wooden crate on the balcony upstairs in this building.
+Read The Schools of Arcane Magic - Enchantment |achieve 1956/5 |goto Dalaran 43.6,46.7
+_Click here_ if this book isn't available |confirm
 step
-talk Lord Candren##50307 |goto Darnassus 37.1,47.5
-buy Gilneas Tabard##64882 |n
-Equip Gilneas Tabard |use Gilneas Tabard##64882
-confirm
+click The Schools of Arcane Magic - Transmutation##8051
+|tip It looks like a grayand green striped book laying on a bookshelf downstairs in this building.
+Read The Schools of Arcane Magic - Transmutation |achieve 1956/8 |goto Dalaran 46.8,40.0
+_Click here_ if this book isn't available |confirm
 step
-talk Kadu##50306 |goto The Exodar 54.8,36.8
-buy Exodar Tabard##45580 |n
-Equip Exodar Tabard |use Exodar Tabard##45580
-confirm
+click The Schools of Arcane Magic - Necromancy##8133
+|tip It looks like a blue book laying on a bookshelf upstairs in this building.
+Read The Schools of Arcane Magic - Necromancy |achieve 1956/7 |goto Dalaran 46.8,39.1
+_Click here_ if this book isn't available |confirm
 step
-Congratulations, you have earned the Represent achievement! |only if achieved(621)
-Congratulations, you have earned the Ten Tabards achievement! |only if achieved(1020)
-Congratulations, you have earned the Twenty-Five Tabards achievement! |only if achieved(1021)
-Congratulations, you have earned the Thirty Tabards achievement! |only if achieved(5755)
+click The Schools of Arcane Magic - Conjuration##8345
+|tip It looks like a blue book laying on the left on the bottom shelf of a bookshelf in this building.
+Read The Schools of Arcane Magic - Conjuration |achieve 1956/3 |goto Dalaran 30.8,46.0
+_Click here_ if this book isn't available |confirm
+step
+click The Schools of Arcane Magic - Divination##8051
+|tip It looks like a blue book laying on the floor next to 2 bookshelves upstairs inside this building.
+Read The Schools of Arcane Magic - Divination |achieve 1956/4 |goto Dalaran 26.5,52.1
+_Click here_ if this book isn't available |confirm
+step
+Looks like you still need more education! _Click here_ to start the guide over |confirm |next "RestartHigherLearning" |only if not achieved(1956)
+Congratulations, you have earned the Higher Learning achievement! |only if achieved(1956)
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Achievement Guides\\General\\It's Happy Hour Somewhere",{
+condition_end="achieved(1833)",
+description="This guide will walk you through drinking 25 different types of beverages.",
+},[[
+stickystart "tracker"
+step
+talk Innkeeper Allison##6740 |goto Stormwind City 60.4,75.3
+buy 1 Refreshing Spring Water##159 |condition itemcount(159) >= 1
+buy 1 Ice Cold Milk##1179 |condition itemcount(1179) >= 1
+buy 1 Melon Juice##1205 |condition itemcount(1205) >= 1
+buy 1 Sweet Nectar##1708 |condition itemcount(1708) >= 1
+buy 1 Moonberry Juice##1645 |condition itemcount(1645) >= 1
+buy 1 Morning Glory Dew##8766 |condition itemcount(8766) >= 1
+buy 1 Filtered Draenic Water##28399 |condition itemcount(28399) >= 1
+buy 1 Fresh Water##58274 |condition itemcount(58274) >= 1
+buy 1 Pugnent Seal Whey##33444 |condition itemcount(33444) >= 1
+buy 1 Honeymint Tea##33445 |condition itemcount(33445) >= 1
+buy 1 Sparkling Oasis Water##58256 |condition itemcount(58256) >= 1
+buy 1 Highland Spring Water##58257 |condition itemcount(58257) >= 1
+only if not achieved(1833)
+step
+Drink the Refreshing Spring Water |use Refreshing Spring Water##159
+Drink the Ice Cold Milk |use Ice Cold Milk##1179
+Drink the Melon Juice |use Melon Juice##1205
+Drink the Sweet Nectar |use Sweet Nectar##1708
+Drink the Moonberry Juice |use Moonberry Juice##1645
+Drink the Morning Glory Dew |use Morning Glory Dew##8766
+Drink the Filtered Draenic Water |use Filtered Draenic Water##28399
+Drink the Pugnent Seal Whey |use Pugnent Seal Whey##33444
+Drink the Fresh Water |use Fresh Water##58274
+Drink the Honeymint Tea |use Honeymint Tea##33445
+Drink the Sparkling Oasis Water |use Sparkling Oasis Water##58256
+Drink the Highland Spring Water |use Highland Spring Water##58257
+_Click here_ to continue |confirm
+step
+talk Daisy##40832 |goto Thousand Needles 76.5,74.8
+buy 1 Bottle of Pinot Noir##2723 |condition itemcount(2723) >= 1
+buy 1 Glass of Eversong Wine##44570 |condition itemcount(44570) >= 1
+buy 1 Honey Mead##40035 |condition itemcount(40035) >= 1
+buy 1 Flask of Port##2593 |condition itemcount(2593) >= 1
+buy 1 Bottle of Silvermoon Port##44571 |condition itemcount(44571) >= 1
+buy 1 Skin of Dwarven Stout##2596 |condition itemcount(2596) >= 1
+buy 1 Flask of Bitter Cactus Cider##44575 |condition itemcount(44575) >= 1
+buy 1 Snowplum Brandy##40036 |condition itemcount(40036) >= 1
+buy 1 Flagon of Mead##2594 |condition itemcount(2594) >= 1
+buy 1 Cup of Frog Venom Brew##44573 |condition itemcount(44573) >= 1
+buy 1 Caraway Burnwine##40042 |condition itemcount(40042) >= 1
+buy 1 Jug of Bourbon##2595 |condition itemcount(2595) >= 1
+buy 1 Skin of Mulgore Firewater##44574 |condition itemcount(44574) >= 1
+only if not achieved(1833)
+step
+Drink the Bottle of Pinot Noir |use Bottle of Pinot Noir##2723
+Drink the Glass of Eversong Wine |use Glass of Eversong Wine##44570
+Drink the Honey Mead |use Honey Mead##40035
+Drink the Flask of Port |use Flask of Port##2593
+Drink the Bottle of Silvermooon Port |use Bottle of Silvermoon Port##44571
+Drink the Skin of Dwarven Stout |use Skin of Dwarven Stout##2596
+Drink the Flask of Bitter Cactus |use Flask of Bitter Cactus Cider##44575
+Drink the Snowplum Brandy |use Snowplum Brandy##40036
+Drink the Flagon of Mead |use Flagon of Mead##2594
+Drink the Cup of Frog Venom Brew |use Cup of Frog Venom Brew##44573
+Drink the Caraway Burnwine |use Caraway Burnwine##40042
+Drink the Jug of Bourbon |use Jug of Bourbon##2595
+Drink the Skin of Mulgore Firewater |use Skin of Mulgore Firewater##44574
+_Click here_ to continue |confirm
+step "tracker"
+Drink #25# different types of beverages |achieve 1833 |only if not achieved(1833)
+Congratulations, you have earned the It's Happy Hour Somewhere Achievement! |only if achieved(1833)
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Achievement Guides\\General\\To All The Squirrels (Loved, Shared, Cared)/Pest Control",{
+condition_end="achieved(5548)",
+achieveid={1206,2557,2556},
+description="This guide will walk you through showing the critters of Azeroth how much you /love them and slaying the pests.",
+},[[
+step
+label "start"
+talk Innkeeper Allison##6740
+home Trade District |goto Stormwind City 60.4,75.3
+only if not achieved(5548)
+step
+clicknpc Rockchewer Whelk##48848
+Use the Love emote on a Rockchewer Whelk |script DoEmote("LOVE")
+Love a Rockchewer Whelk |achieve 5548/9 |goto Shimmering Expanse 41.3,53.9
+step
+clicknpc Sea Cucumber##48802
+Use the Love emote on a Sea Cucumber |script DoEmote("LOVE")
+Love a Sea Cucumber |achieve 5548/11 |goto Shimmering Expanse 41.3,53.9
+step
+kill Rat##4075 |achieve 2556/18 |goto The Cape of Stranglethorn 40.0,67.7
+step
+kill Roach##4076 |achieve 2556/9 |goto The Cape of Stranglethorn 42.2,69.5
+step
+clicknpc Wharf Rat##47667
+Use the Love emote on a Wharf Rat |script DoEmote("LOVE")
+Love a Wharf Rat |achieve 5548/12 |goto The Cape of Stranglethorn 42.7,72.8
+step
+clicknpc Parrot##9600
+Use the Love emote on a Parrot |script DoEmote("LOVE")
+Love a Parrot |achieve 1206/11 |goto Northern Stranglethorn 50.5,66.4
+step
+kill Scorpion##61326 |achieve 2556/14 |goto Blasted Lands 42.5,21.9
+step
+kill Fire Beetle##9699 |achieve 2556/16 |goto Blasted Lands 44.4,32.9
+step
+clicknpc Huge Toad##61368
+Use the Love emote on a Huge Toad |script DoEmote("LOVE")
+Love a Huge Toad |achieve 2557/7 |goto Swamp of Sorrows 39.7,51.0
+step
+clicknpc Skunk##17467
+Use the Love emote on a Skunk |script DoEmote("LOVE")
+|tip It looks like a small skunk that walks around this area.
+Love a Skunk |achieve 1206/16 |goto Duskwood 12.3,65.8
+step
+clicknpc Rabbit##61080
+Use the Love emote on a Rabbit |script DoEmote("LOVE")
+Love a Rabbit |achieve 1206/12 |goto Elwynn Forest 36.3,85.8
+step
+clicknpc Deer##883
+Use the Love emote on a Deer |script DoEmote("LOVE")
+|tip Be sure not to get it mixed up with the fawn also in the area.
+Love a Deer |achieve 1206/5 |goto Elwynn Forest 24.9,83.0
+step
+clicknpc Fawn##890
+Use the Love emote on a Fawn |script DoEmote("LOVE")
+Love a Fawn |achieve 1206/7 |goto Elwynn Forest 24.9,83.0
+step
+clicknpc Cow##2442
+Use the Love emote on a Cow |script DoEmote("LOVE")
+Love a Cow |achieve 1206/4 |goto Elwynn Forest 32.3,77.2
+step
+clicknpc Chicken##620
+Use the Love emote on a Chicken |script DoEmote("LOVE")
+Love a Chicken |achieve 1206/3 |goto Elwynn Forest 36.5,60.1
+step
+clicknpc Cat##6368
+Use the Love emote on a Cat |script DoEmote("LOVE")
+Love a Cat |achieve 1206/2 |goto Elwynn Forest 44.5,53.8
+step
+kill Gold Beetle##32258 |achieve 2556/17 |goto Badlands 50.4,43.9
+step
+clicknpc Lava Crab##9700
+Use the Love emote on a Lava Crab |script DoEmote("LOVE")
+Love a Lava Crab |achieve 2557/8 |goto Searing Gorge 31.1,43.7
+step
+clicknpc Sheep##1933
+Use the Love emote on a Sheep |script DoEmote("LOVE")
+Love a Sheep |achieve 1206/14 |goto Loch Modan 20.9,71.9
+step
+clicknpc Ram##2098
+Use the Love emote on a Ram |script DoEmote("LOVE")
+Love a Ram |achieve 1206/13 |goto Loch Modan 25.1,37.8
+step
+clicknpc Squirrel##1412
+Use the Love emote on a Squirrel |script DoEmote("LOVE")
+Love a Squirrel |achieve 1206/17 |goto Loch Modan 29.0,66.3
+step
+kill Squirrel##1412 |achieve 2556/4 |goto Loch Modan 29.0,66.3
+step
+label "travel_twilight"
+clicknpc Yellow-Bellied Marmot##48683
+Use the Love emote on a Yellow-Bellied Marmot |script DoEmote("LOVE")
+Love a Yellow-Bellied Marmot |achieve 5548/13 |goto Twilight Highlands 29.3,33.1
+step
+clicknpc Highlands Turkey##48706
+Use the Love emote on a Highlands Turkey |script DoEmote("LOVE")
+Love a Highlands Turkey |achieve 5548/4 |goto Twilight Highlands 29.3,33.1
+step
+clicknpc Shore Crab##60761
+Use the Love emote on a Shore Crab |script DoEmote("LOVE")
+Love a Shore Crab |achieve 1206/15 |goto Twilight Highlands 71.2,41.2
+step
+kill Maggot##16030 |achieve 2556/13 |goto The Hinterlands 31.9,57.9
+step
+kill Larva##16068 |achieve 2556/1 |goto Ghostlands 45.3,31.1
+step
+clicknpc Ewe##19665
+Use the Love emote on a Ewe |script DoEmote("LOVE")
+Love an Ewe |achieve 1206/6 |goto Shattrath City 58.8,23.3
+step
+clicknpc Borean Marmot##31685
+Use the Love emote on a Borean Marmot |script DoEmote("LOVE")
+Love a Borean Marmot |achieve 2557/2 |goto Borean Tundra 36.0,55.9
+step
+clicknpc Tundra Penguin##28440
+Use the Love emote on a Tundra Penguin |script DoEmote("LOVE")
+Love a Tundra Penguin |achieve 2557/12 |goto Borean Tundra 24.5,61.8
+step
+clicknpc Steam Frog##25679
+Use the Love emote on a Steam Frog |script DoEmote("LOVE")
+Love a Steam Frog |achieve 1206/18 |goto Borean Tundra 61.0,51.8
+step
+clicknpc Borean Frog##25677
+Use the Love emote on a Borean Frog |script DoEmote("LOVE")
+Love a Borean Frog |achieve 1206/1 |goto Borean Tundra 72.7,41.0
+step
+clicknpc Sholazar Tickbird##28093
+Use the Love emote on a Sholazar Tickbird |script DoEmote("LOVE")
+Love a Sholazar Tickbird |achieve 2557/11 |goto Sholazar Basin 27.1,60.5
+step
+clicknpc Glacier Penguin##32498
+Use the Love emote on a Glacier Penguin |script DoEmote("LOVE")
+Love a Glacier Penguin |achieve 2557/5 |goto Icecrown 60.9,18.8
+step
+kill Underbelly Rat##32428 |achieve 2556/5 |goto Dalaran/2 41.0,50.4
+step
+kill Zul'Drak Rat##28202 |achieve 2556/8 |goto Zul'Drak 42.4,63.1
+step
+clicknpc Arctic Hare##29328
+Use the Love emote on an Arctic Hare |script DoEmote("LOVE")
+Love an Artic Hare |achieve 2557/1 |goto Zul'Drak 71.8,69.8
+step
+clicknpc Grizzly Squirrel##31889
+Use the Love emote on a Grizzly Squirrel |script DoEmote("LOVE")
+Love a Grizzly Squirrel |achieve 2557/6 |goto Grizzly Hills 66.7,13.1
+step
+clicknpc Mountain Skunk##31890
+Use the Love emote on a Mountain Skunk |script DoEmote("LOVE")
+Love a Mountain Skunk |achieve 2557/9 |goto Grizzly Hills 68.6,11.8
+step
+kill Fjord Rat##24174 |achieve 2556/15 |goto Howling Fjord 45.0,30.3
+step
+clicknpc Fjord Penguin##28407
+Use the Love emote on a Fjord Penguin |script DoEmote("LOVE")
+Love a Fjord Penguin |achieve 2557/3 |goto Howling Fjord 20.8,61.8
+step
+clicknpc Scalawag Frog##26503
+Use the Love emote on a Scalawag Frog |script DoEmote("LOVE")
+Love a Scalawag Frog |achieve 2557/10 |goto Howling Fjord 35.6,81.8
+step
+Follow the path to the bottom of the catacombs
+kill Devouring Maggot##24270 |achieve 2556/6 |goto Howling Fjord 57.1,56.8
+step
+clicknpc Fjord Turkey##24746
+Use the Love emote on a Fjord Turkey |script DoEmote("LOVE")
+Love a Fjord Turkey |achieve 2557/4 |goto Howling Fjord 66.4,71.1
+step
+clicknpc Sassy Cat##47682
+Use the Love emote on a Sassy Cat |script DoEmote("LOVE")
+Love a Sassy Cat |achieve 5548/10 |goto Tol Barad Peninsula 61.2,35.5
+step
+clicknpc Baradin Fox Kit##48630
+Use the Love emote on a Baradin Fox Kit |script DoEmote("LOVE")
+Love a Baradin Fox Kit |achieve 5548/2 |goto Tol Barad 44.5,25.8
+step
+clicknpc Toad##1420
+Use the Love emote on a Toad |script DoEmote("LOVE")
+Love a Toad |achieve 1206/20 |goto Darnassus 42.4,46.9
+step
+clicknpc Alpine Chipmunk##49779
+Use the Love emote on an Alpine Chipmunk |script DoEmote("LOVE")
+Love an Alpine Chipmunk |achieve 5548/1 |goto Winterspring 51.5,47.9
+step
+kill Crystal Spider##32261 |achieve 2556/11 |goto Winterspring 48.8,54.8
+step
+clicknpc Grotto Vole##50419
+Use the Love emote on a Grotto Vole |script DoEmote("LOVE")
+Love a Grotto Vole |achieve 5548/3 |tip Inside of the cave |goto Mount Hyjal 54.5,17.1
+step
+clicknpc Rock Viper##50481
+Use the Love emote on a Rock Viper |script DoEmote("LOVE")
+Love a Rock Viper |achieve 5548/8 |goto Mount Hyjal 38.4,56.6
+step
+clicknpc Gazelle##4166
+Use the Love emote on a Gazelle |script DoEmote("LOVE")
+Love a Gazelle |achieve 1206/9 |goto Northern Barrens 51.8,56.4
+step
+clicknpc Small Frog##13321
+Use the Love emote on a Small Frog |script DoEmote("LOVE")
+Love a Small Frog |achieve 1206/8 |goto Northern Barrens 37.9,46.1
+step
+clicknpc Prairie Dog##2620
+Use the Love emote on a Prairie Dog |script DoEmote("LOVE")
+Love a Prairie Dog |achieve 1206/21 |goto Northern Barrens 66.0,42.1
+step
+kill Water Snake##4953 |achieve 2556/2 |goto Durotar 36.4,40.8
+step
+clicknpc Hare##5951
+Use the Love emote on a Hare |script DoEmote("LOVE")
+Love a Hare |achieve 1206/10 |goto Durotar 50.5,30.2
+step
+kill Adder##3300 |achieve 2556/12 |goto Durotar 45.6,16.0
+step
+clicknpc Swine##10685
+Use the Love emote on a Swine |script DoEmote("LOVE")
+Love a Swine |achieve 1206/19 |goto Durotar 43.7,30.1
+step
+kill Spider##14881 |achieve 2556/3 |goto Dustwallow Marsh 35.0,24.0
+step
+kill Mouse##6271 |achieve 2556/7 |goto Dustwallow Marsh 46.2,56.9
+step
+kill Snake##2914 |achieve 2556/10  |goto Dustwallow Marsh 50.0,57.6
+step
+clicknpc Rattlesnake##48686
+Use the Love emote on a Rattlesnake |script DoEmote("LOVE")
+Love a Rattlesnake |achieve 5548/7 |goto Tanaris 46.9,26.9
+step
+clicknpc Mac Frog##50491
+Use the Love emote on a Mac Frog |script DoEmote("LOVE")
+Love a Mac Frog |achieve 5548/5 |goto Uldum 56.6,35.1
+step
+clicknpc Oasis Moth##50496
+Use the Love emote on an Oasis Moth |script DoEmote("LOVE")
+Love an Oasis Moth |achieve 5548/6 |goto Uldum 55.0,36.1
+step
+Congratulations, you have earned the To All The Squirrels I've Loved Before achievement! |only if achieved(1206)
+You've missed some squirrels! _Click here_ to start over |confirm |next "start" |only if not achieved(1206)
+Congratulations, you have earned the To All The Squirrels Who Shared My Life achievement! |only if achieved(2557)
+You've missed some squirrels! _Click here_ to start over |confirm |next "start" |only if not achieved(2557)
+Congratulations, you have earned the To All the Squirrels Who Cared for Me achievement! |only if achieved(5548)
+You've missed some squirrels! _Click here_ to start over |confirm |next "start" |only if not achieved(5548)
+Congratulations, you have earned the Pest Control achievement! |only if achieved(2556)
+You've missed some pests! _Click here_ to start over |confirm |next "start" |only if not achieved(2556)
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Achievement Guides\\General\\Shave and a Haircut",{
+condition_end="achieved(545)",
+description="This guide will walk you through visiting a Barber Shop and get your hair cut.",
+},[[
+step
+Click on the Barbershop Chair |goto Stormwind City 61.6,64.6 |only if not achieved(545)
+|tip It looks like a mechanical chair with a foot rest.
+Change your hair style or hair color then click "Okay." |achieve 545
+|tip This will cost money to do so be sure you have the extra gold to purchase a hair style.
+step
+Congratulations, you have earned the Shave and a Haircut achievement!
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Achievement Guides\\General\\Tastes Like Chicken",{
+condition_end="achieved(1832)",
+description="This guide will walk you through sampling 50 different kinds of Azeroth's delectable dishes.",
+},[[
+stickystart "tracker"
+step
+talk Innkeeper Firebrew##5111 |goto Ironforge 18.6,51.6
+buy 1 Tough Jerky##117 |condition itemcount(117) >= 1
+buy 1 Haunch of Meat##2287 |condition itemcount(2287) >= 1
+buy 1 Mutton Chop##3770 |condition itemcount(3770) >= 1
+buy 1 Wild Hog Shank##3771 |condition itemcount(3771) >= 1
+buy 1 Cured Ham Steak##4599 |condition itemcount(4599) >= 1
+buy 1 Roasted Quail##8952 |condition itemcount(8952) >= 1
+buy 1 Smoked Talbuk Venison##27854 |condition itemcount(27854) >= 1
+buy 1 Salted Venison##33454 |condition itemcount(33454) >= 1
+buy 1 Mead Basted Caribou##35953 |condition itemcount(35953) >= 1
+buy 1 Roasted Beef##58268 |condition itemcount(58268) >= 1
+buy 1 Massive Turkey Leg##58269 |condition itemcount(58269) >= 1
+only if not achieved(1832)
+step
+talk Myra Tyrngaarde##5109 |goto Ironforge 27.8,72.2
+|tip She patrols the auction house area.
+buy 1 Tough Hunk of Bread##4540 |condition itemcount(4540) >= 1
+buy 1 Freshly Baked Bread##4541 |condition itemcount(4541) >= 1
+buy 1 Moist Cornbread##4542 |condition itemcount(4542) >= 1
+buy 1 Mulgore Spice Bread##4544 |condition itemcount(4544) >= 1
+buy 1 Soft Banana Bread##4601 |condition itemcount(4601) >= 1
+buy 1 Homemade Cherry Pie##8950 |condition itemcount(8950) >= 1
+buy 1 Mag'har Grainbread##27855 |condition itemcount(27855) >= 1
+buy 1 Crusty Flatbread##33449 |condition itemcount(33449) >= 1
+buy 1 Sweet Potato Bread##35950 |condition itemcount(35950) >= 1
+buy 1 Pine Nut Bread##58260 |condition itemcount(58260) >= 1
+buy 1 Buttery Wheat Roll##58261 |condition itemcount(58261) >= 1
+only if not achieved(1832)
+step
+Eat the Tough Jerky |use Tough Jerky##117
+Eat the Tough Hunk of Bread |use Tough Hunk of Bread##4540
+Eat the Haunch of Meat |use Haunch of Meat##2287
+Eat the Freshly Baked Bread |use Freshly Baked Bread##4541
+Eat the Mutton Chop |use Mutton Chop##3770
+Eat the Moist Cornbread |use Moist Cornbread##4542
+Eat the Wild Hog Shank |use Wild Hog Shank##3771
+Eat the Mulgore Spice Bread |use Mulgore Spice Bread##4544
+Eat the Cured Ham Steak |use Cured Ham Steak##4599
+Eat the Soft Banana Bread |use Soft Banana Bread##4601
+_Click here_ to continue |confirm
+step
+Eat the Roasted Quail |use Roasted Quail##8952
+Eat the Homemade Cherry Pie |use Homemade Cherry Pie##8950
+Eat the Smoked Talbuk Venison |use Smoked Talbuk Venison##27854
+Eat the Mag'har Grainbread |use Mag'har Grainbread##27855
+Eat the Salted Venison |use Salted Venison##33454
+Eat the Crusty Flatbread |use Crusty Flatbread##33449
+Eat the Mead Basted Cariboy |use Mead Basted Caribou##35953
+Eat the Sweet Potato Bread |use Sweet Potato Bread##35950
+Eat the Roasted Beef |use Roasted Beef##58268
+Eat the Pine Nut Bread |use Pine Nut Bread##58260
+Eat the Massive Turkey |use Massive Turkey Leg##58269
+Eat the Buttery Wheat Roll |use Buttery Wheat Roll##58261
+_Click here_ to continue |confirm
+step
+talk Thaegra Tillstone##44235 |goto Stormwind City 64.9,32.0
+buy 1 Forest Mushroom Cap##4604 |condition itemcount(4604) >= 1
+buy 1 Red-Speckeled Mushroom##4605 |condition itemcount(4605) >= 1
+buy 1 Spongy Morel##4606 |condition itemcount(4606) >= 1
+buy 1 Delicious Cave Mold##4607 |condition itemcount(4607) >= 1
+buy 1 Raw Black Truffle##4608 |condition itemcount(4608) >= 1
+buy 1 Dried King Bolete##8948 |condition itemcount(8948) >= 1
+only if not achieved(1832)
+step
+Eat the Forest Mushroom |use Forest Mushroom Cap##4604
+Eat the Red-Speckeled Mushroom |use Red-Speckeled Mushroom##4605
+Eat the Spongy Morel |use Spongy Morel##4606
+Eat the Delicious Cave Mold |use Delicious Cave Mold##4607
+Eat the Raw Black Truffle |use Raw Black Truffle##4608
+Eat the Dried King Bolete |use Dried King Bolete##8948
+_Click here_ to continue |confirm
+step
+talk Talaelar##4221 |goto Darnassus 48.8,61.3
+buy 1 Slitherskin Mackerel##787 |condition itemcount(787) >= 1
+buy 1 Longjaw Mud Snapper##4592 |condition itemcount(4592) >= 1
+buy 1 Bristle Whisker Catfish##4593 |condition itemcount(4593) >= 1
+buy 1 Rockscale Cod##4594 |condition itemcount(4594) >= 1
+buy 1 Striped Yellowtail##21552 |condition itemcount(21552) >= 1
+buy 1 Spinefin Halibut##8957 |condition itemcount(8957) >= 1
+buy 1 Sunspring Carp##27858 |condition itemcount(27858) >= 1
+buy 1 Fillet of Icefin##33451 |condition itemcount(33451) >= 1
+buy 1 Poached Emperor Salmon##35951 |condition itemcount(35951) >= 1
+buy 1 Sliced Raw Billfish##58262 |condition itemcount(58262) >= 1
+buy 1 Grilled Shark##58263 |condition itemcount(58263) >= 1
+only if not achieved(1832)
+step
+talk Innkeeper Saelienne##6735 |goto Darnassus 62.5,32.8
+buy 1 Shiny Red Apple##4536 |condition itemcount(4536) >= 1
+buy 1 Tel'Abim Banana##4537 |condition itemcount(4537) >= 1
+buy 1 Snapvine Watermelon##4538 |condition itemcount(4538) >= 1
+buy 1 Goldenbark Apple##4539 |condition itemcount(4539) >= 1
+buy 1 Moon Harvest Pumpkin##4602 |condition itemcount(4602) >= 1
+buy 1 Deep Fried Plantains##8953 |condition itemcount(8953) >= 1
+buy 1 Skethyl Berries##27856 |condition itemcount(27856) >= 1
+buy 1 Tundra Berries##35949 |condition itemcount(35949) >= 1
+buy 1 Savory Snowplum##35948 |condition itemcount(35948) >= 1
+buy 1 Sour Green Apple##58264 |condition itemcount(58264) >= 1
+buy 1 Highland Pomegranate##58265 |condition itemcount(58265) >= 1
+only if not achieved(1832)
+step
+Eat the Slitherskin Mackerel |use Slitherskin Mackerel##787
+Eat the Shiny Red Apple |use Shiny Red Apple##4536
+Eat the Longjaw Mud Snapper |use Longjaw Mud Snapper##4592
+Eat the Tel'Abim Banana |use Tel'Abim Banana##4537
+Eat the Bristle Whisker Catfish |use Bristle Whisker Catfish##4593
+Eat the Snapvine Watermelon |use Snapvine Watermelon##4538
+Eat the Rockscale Cod |use Rockscale Cod##4594
+Eat the Goldenbark Apple |use Goldenbark Apple##4539
+Eat the Striped Yellowtail |use Striped Yellowtail##21552
+Eat the Moon Harvest Pumpkin |use Moon Harvest Pumpkin##4602
+_Click here_ to continue |confirm
+step
+Eat the Spinefin Hailibut |use Spinefin Halibut##8957
+Eat the Deep Fried Plantains |use Deep Fried Plantains##8953
+Eat the Sunspring Carp |use Sunspring Carp##27858
+Eat the Skethyl Berries |use Skethyl Berries##27856
+Eat the Fillet of Icefin |use Fillet of Icefin##33451
+Eat the Tundra Berries |use Tundra Berries##35949
+Eat the Poached Emperor |use Poached Emperor Salmon##35951
+Eat the Savory Snowplum |use Savory Snowplum##35948
+Eat the Sliced Raw Billfish |use Sliced Raw Billfish##58262
+Eat the Sour Green Apple |use Sour Green Apple##58264
+Eat the Grilled Shark |use Grilled Shark##58263
+Eat the Highland Pomegranate |use Highland Pomegranate##58265
+_Click here_ to continue |confirm
+step "tracker"
+Sample #50# different kinds of Azeroth's delectable dishes |achieve 1832 |only if not achieved(1832)
+Congratulations, you have earned the Tastes Like Chicken Achievement! |only if achieved(1832)
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Achievement Guides\\General\\Well Read",{
+condition_end="achieved(1244)",
+description="This guide will walk you through reading the scattered books of Azeroth.",
+},[[
+step
+click The World Tree and the Emerald Dream##559 |achieve 1244/27 |goto Stormwind City 85.4,23.3
+|tip It's on the table.
+step
+click The War of the Ancients##559 |achieve 1244/4 |goto Stormwind City 85.3,23.2
+|tip It's on the table.
+step
+click Aegwynn and the Dragon Hunt##3871 |achieve 1244/22 |goto Stormwind City 85.8,23.7
+|tip On the pillar base next to the candles.
+step
+click The New Horde##559 |achieve 1244/17 |goto Stormwind City 86.1,25.5
+|tip On the pillar base.
+step
+click The Guardians of Tirisfal##2530 |achieve 1244/16 |goto Stormwind City 85.0,26.1
+|tip On the table.
+step
+click Aftermath of the Second War##558 |achieve 1244/18 |goto Stormwind City 85.2,26.1
+|tip On the table.
+step
+click The Alliance of Lordaeron##558 |achieve 1244/33 |goto Stormwind City 85.2,26.1
+|tip On the table.
+step
+click The Kaldorei and the Well of Eternity##560 |achieve 1244/21 |goto Stormwind City 84.7,25.9
+|tip On the pillar base next to the candles.
+step
+click Beyond the Dark Portal##559 |achieve 1244/9 |goto Stormwind City 84.6,24.3
+|tip On the chair.
+step
+click Civil War in the Plaguelands##559 |achieve 1244/20 |goto Stormwind City 85.0,23.4
+|tip On the pillar base next to the candles.
+step
+click War of the Spider##558 |achieve 1244/14 |goto Stormwind City 86.7,35.8
+|tip On the command table.
+step
+click The Battle of Grim Batol##560 |achieve 1244/36 |goto Stormwind City 86.5,36.0
+|tip On the command table.
+step
+click The Dark Portal and the Fall of Stormwind##558 |achieve 1244/15 |goto Stormwind City 87.1,35.9
+|tip On the command table.
+step
+click Archimonde's Return and the Flight to Kalimdor##560 |achieve 1244/30 |goto Stormwind City 51.8,74.5
+|tip Inside on the table behind Mazen Mac'Nadir.
+step
+click Mount Hyjal and Illidan's Gift##559 |achieve 1244/39 |goto Stormwind City 51.8,74.6
+|tip Inside on the table behind Mazen Mac'Nadir.
+step
+click Rise of the Blood Elves##3871 |achieve 1244/40 |goto Elwynn Forest 64.6,69.5
+|tip On top of the bookshelf on the top floor of the tower.
+step
+click Lethargy of the Orcs##3871 |achieve 1244/31 |goto Elwynn Forest 85.3,69.7
+|tip Upstairs on the table.
+step
+click The Birth of the Lich King##2530 |achieve 1244/42 |goto Duskwood 72.1,46.6
+|tip In the town hall on a table next to Role Dreuger.
+step
+click Kil'jaeden and the Shadow Pact##2530 |achieve 1244/13 |goto Duskwood 74.2,45.3
+|tip In the inn on the bookshelf on the second floor.
+step
+click The Founding of Quel'Thalas##3871 |achieve 1244/24 |goto Duskwood 73.7,45.1
+|tip In the next room over on the table.
+step
+click The Last Guardian##559 |achieve 1244/1 |goto Loch Modan 37.2,47.0
+|tip Downstairs inside the home on the nightstand next to the bed.
+step
+click The Old Gods and the Ordering of Azeroth##558 |achieve 1244/29 |goto Ironforge 76.5,10.6
+|tip On the center table.
+step
+click Charge of the Dragonflights##560 |achieve 1244/34 |goto Ironforge 76.5,10.6
+|tip On the center table.
+step
+click Ironforge - the Awakening of the Dwarves##558 |achieve 1244/38 |goto Ironforge 75.1,9.1
+|tip On the table.
+step
+click War of the Three Hammers##560 |achieve 1244/32 |goto Ironforge 75.1,9.2
+|tip On the table.
+step
+click Arathor and the Troll Wars##559 |achieve 1244/8 |goto Ironforge 77.0,9.5
+|tip On the table.
+step
+click Rise of the Horde##560 |achieve 1244/41 |goto Ironforge 76.8,12.3
+|tip On the table.
+step
+click The Invasion of Draenor##3871 |achieve 1244/19 |goto Scholomance/2 56.1,41.2
+|tip This book is found after fighting Lilian Voss on the floor in the corner.
+step
+Make your way into The Scarlet Bastion |goto Stratholme/1 31.9,34.8 < 10 |walk
+click The Seven Kingdoms##560 |achieve 1244/7 |goto Stratholme/1 30.1,41.3
+|tip On the table next to Commander Malor.
+step
+click Kel'Thuzad and the Forming of the Scourge##2530 |achieve 1244/28 |goto Stratholme/1 25.1,70.3
+|tip On the table between the bookshelves.
+step
+click The Lich King Triumphant##560 |achieve 1244/6 |goto Stratholme/1 25.5,70.5
+|tip On the table between the bookshelves.
+step
+click Icecrown and the Frozen Throne##559 |achieve 1244/12 |goto Stratholme/1 25.8,71.5
+|tip On the table between the bookshelves.
+step
+click Sunwell - The Fall of Quel'Thalas##559 |achieve 1244/25 |goto The Cape of Stranglethorn 41.0,74.4
+|tip Inside the inn on the corner table right up the stairs.
+step
+click The Twin Empires##559 |achieve 1244/3 |goto The Cape of Stranglethorn 42.1,73.7
+|tip All the way downstairs on a bookshelf in the same room as the auctioneer.
+step
+click Empires' Fall##558 |achieve 1244/10 |goto The Cape of Stranglethorn 42.1,73.7
+|tip All the way downstairs on a bookshelf in the same room as the auctioneer.
+step
+click Wrath of Soulflayer##3871 |achieve 1244/5 |goto The Cape of Stranglethorn 42.1,73.7
+|tip All the way downstairs on a bookshelf in the same room as the auctioneer.
+step
+click The Scourge of Lordaeron##2530 |achieve 1244/26 |goto The Cape of Stranglethorn 41.9,73.5
+|tip All the way downstairs on a bookshelf under the stairs in the same room as the auctioneer.
+step
+click The Sentinels and the Long Vigil##560 |achieve 1244/2 |goto The Cape of Stranglethorn 42.1,73.6
+|tip All the way upstairs on the nightstand next to the bed.
+step
+click Sargeras and the Betrayal##2530 |achieve 1244/23 |goto Northern Barrens 67.0,74.9
+|tip In the Ratchet Inn on the nightstand between two beds.
+step
+click Exile of the High Elves##558 |achieve 1244/11 |goto Northern Barrens 67.1,73.4
+|tip In the Ratchet Blacksmith second floor on a barrel sitting on the balcony.
+step
+click Old Hatreds - The Colonization of Kalimdor##560 |achieve 1244/35 |goto Tanaris 51.0,30.2
+|tip In Godgetzan laying on the sand next to a set of baskets.
+step
+click The Betrayer Ascendant##2530 |achieve 1244/37 |goto Darnassus 62.0,74.6
+|tip On the counter against the south west wall.
+step
+Congratulations, you have earned the Well Read Achievement!
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Achievement Guides\\General\\You'll Feel Right as Rain",{
+condition_end="achieved(5779)",
+description="This guide will walk you through feeling 1000% better by eating Chocolate Cookies.",
+},[[
+step
+_Click here_ to buy them from the Auction House |confirm |next "buy"
+_Click here_ to make them yourself  |confirm |next "cook"
+step
+label "buy"
+talk Auctioneer Fitch##8719
+buy 91 Chocolate Cookie##62680 |n |goto Stormwind City 61.0,70.7
+Eat #91# Chocolate Cookies in a row to feel 1000% better |use Chocolate Cookie##62680 |achieve 5779 |next "end"
+step
+label "cook"
+Use the Stormwind City Cooking Dailies guide to
+earn 6 Epicurean's Award##81 |tip Three for the recipe and the rest for the cocoa beans you'll need.
+step
+talk Bario Matalli##49701
+buy Recipe: Chocolate Cookie##65431 |n
+learn Chocolate Cookie##88013 |use Recipe: Chocolate Cookie##65431 |goto Stormwind City 50.4,71.8
+step
+talk Bario Matalli##49701
+buy 2 Imported Supplies##68689 |n |tip If you need more buy another until you have 91 beans.
+collect 91 Cocoa Beans##62786 |use Imported Supplies##68689 |goto Stormwind City 50.4,71.8
+step
+talk Erika Tate##5483
+buy 91 Simple Flour##30817 |condition itemcount(30817) >= 91 |goto Stormwind City 77.6,53.1
+step
+Make a Cooking Fire |cast Cooking Fire##818
+create 91 Chocolate Cookie##88013,Cooking,91 total |n
+collect 91 Chocolate Cookie##62680
+step
+Eat #91# Chocolate Cookies in a row to feel 1000% better |use Chocolate Cookie##62680 |achieve 5779
+step
+label "end"
+Congratulations, you have earned the You'll Feel Right as Rain achievement!
 ]])

@@ -13,6 +13,7 @@ local ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
 
 local function LoadSkin()
 	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.collections ~= true then return end
+
 	-- global
 	CollectionsJournal:StripTextures()
 	CollectionsJournal:SetTemplate('Transparent')
@@ -44,8 +45,8 @@ local function LoadSkin()
 	S:HandleButton(MountJournalMountButton, true)
 	S:HandleEditBox(MountJournalSearchBox)
 	S:HandleScrollBar(MountJournalListScrollFrameScrollBar)
-	S:HandleRotateButton(MountJournal.MountDisplay.ModelFrame.RotateLeftButton)
-	S:HandleRotateButton(MountJournal.MountDisplay.ModelFrame.RotateRightButton)
+	S:HandleRotateButton(MountJournal.MountDisplay.ModelScene.RotateLeftButton)
+	S:HandleRotateButton(MountJournal.MountDisplay.ModelScene.RotateRightButton)
 
 	for i = 1, #MountJournal.ListScrollFrame.buttons do
 		local b = _G["MountJournalListScrollFrameButton"..i];
@@ -53,6 +54,7 @@ local function LoadSkin()
 		b.favorite:SetTexture("Interface\\COMMON\\FavoritesIcon")
 		b.favorite:Point("TOPLEFT",b.DragButton,"TOPLEFT",-8,8)
 		b.favorite:SetSize(32,32)
+		b.selectedTexture:SetColorTexture(1, 1, 1, 0.1)
 	end
 
 	-----------------------------
@@ -64,6 +66,7 @@ local function LoadSkin()
 	S:HandleButton(PetJournalFindBattle)
 	PetJournalRightInset:StripTextures()
 	PetJournalLeftInset:StripTextures()
+	S:HandleItemButton(PetJournalSummonRandomFavoritePetButton, true)
 
 	for i = 1, 3 do
 		local f = _G["PetJournalLoadoutPet"..i.."HelpFrame"]
@@ -91,6 +94,7 @@ local function LoadSkin()
 		S:HandleItemButton(b)
 		b.dragButton.favorite:SetParent(b.backdrop)
 		b.dragButton.ActiveTexture:Kill()
+		b.selectedTexture:SetColorTexture(1, 1, 1, 0.1)
 	end
 
 	local function ColorSelectedPet()
@@ -102,7 +106,7 @@ local function LoadSkin()
 			if not index then break; end
 			local b = _G["PetJournalListScrollFrameButton"..i]
 			local t = _G["PetJournalListScrollFrameButton"..i.."Name"]
-			local petID, speciesID, isOwned, customName, level, favorite, isRevoked, name, icon, petType, creatureID, sourceText, description, isWildPet, canBattle = C_PetJournal_GetPetInfoByIndex(index, isWild);
+			local petID = C_PetJournal_GetPetInfoByIndex(index, isWild);
 
 			if b.selectedTexture:IsShown() then
 				t:SetTextColor(1,1,0)
@@ -110,7 +114,7 @@ local function LoadSkin()
 				t:SetTextColor(1,1,1)
 			end
 			if petID ~= nil then
-				local health, maxHealth, attack, speed, rarity = C_PetJournal_GetPetStats(petID);
+				local _, _, _, _, rarity = C_PetJournal_GetPetStats(petID);
 				if rarity then
 					local color = ITEM_QUALITY_COLORS[rarity-1]
 					b.backdrop:SetBackdropBorderColor(color.r, color.g, color.b);
@@ -229,12 +233,11 @@ local function LoadSkin()
 	--Toy Box
 	S:HandleButton(ToyBoxFilterButton)
 	ToyBoxFilterButton:Point("TOPRIGHT", ToyBox, "TOPRIGHT", -15, -34)
-
 	S:HandleEditBox(ToyBox.searchBox)
 	ToyBox.iconsFrame:StripTextures()
-	S:HandleNextPrevButton(ToyBox.navigationFrame.nextPageButton)
-	S:HandleNextPrevButton(ToyBox.navigationFrame.prevPageButton)
-	SquareButton_SetIcon(ToyBox.navigationFrame.prevPageButton, 'LEFT')
+	S:HandleNextPrevButton(ToyBox.PagingFrame.NextPageButton)
+	S:HandleNextPrevButton(ToyBox.PagingFrame.PrevPageButton)
+	SquareButton_SetIcon(ToyBox.PagingFrame.PrevPageButton, 'LEFT')
 	ToyBox.progressBar:StripTextures()
 
 	local function TextColorModified(self, r, g, b)
@@ -264,14 +267,14 @@ local function LoadSkin()
 	--Heirlooms
 	S:HandleButton(HeirloomsJournalFilterButton)
 	HeirloomsJournalFilterButton:Point("TOPRIGHT", HeirloomsJournal, "TOPRIGHT", -15, -34)
-
 	S:HandleEditBox(HeirloomsJournal.SearchBox)
 	HeirloomsJournal.iconsFrame:StripTextures()
-	S:HandleNextPrevButton(HeirloomsJournal.navigationFrame.nextPageButton)
-	S:HandleNextPrevButton(HeirloomsJournal.navigationFrame.prevPageButton)
-	SquareButton_SetIcon(HeirloomsJournal.navigationFrame.prevPageButton, 'LEFT')
+	S:HandleNextPrevButton(HeirloomsJournal.PagingFrame.NextPageButton)
+	S:HandleNextPrevButton(HeirloomsJournal.PagingFrame.PrevPageButton)
+	SquareButton_SetIcon(HeirloomsJournal.PagingFrame.PrevPageButton, 'LEFT')
 	HeirloomsJournal.progressBar:StripTextures()
 	S:HandleDropDownBox(HeirloomsJournalClassDropDown)
+
 	hooksecurefunc(HeirloomsJournal, "LayoutCurrentPage", function()
 		for i=1, #HeirloomsJournal.heirloomHeaderFrames do
 			local header = HeirloomsJournal.heirloomHeaderFrames[i]
@@ -307,20 +310,96 @@ local function LoadSkin()
 			button.name:SetTextColor(0.6, 0.6, 0.6)
 		end
 	end)
-	
+
 	-- Appearances Tab
+	local function SkinTab(tab)
+		S:HandleTab(tab)
+		tab.backdrop:SetTemplate("Default", true)
+		tab.backdrop:SetOutside(nil, 2, 2)
+	end
+	SkinTab(WardrobeCollectionFrame.ItemsTab)
+	SkinTab(WardrobeCollectionFrame.SetsTab)
+
+	--Items
 	WardrobeCollectionFrame.progressBar:StripTextures()
 	WardrobeCollectionFrame.progressBar:CreateBackdrop("Default")
 	WardrobeCollectionFrame.progressBar:SetStatusBarTexture(E.media.normTex)
 	E:RegisterStatusBar(WardrobeCollectionFrame.progressBar)
 	S:HandleEditBox(WardrobeCollectionFrameSearchBox)
+	WardrobeCollectionFrameSearchBox:SetFrameLevel(5)
 	S:HandleButton(WardrobeCollectionFrame.FilterButton)
 	S:HandleDropDownBox(WardrobeCollectionFrameWeaponDropDown)
-	
-	WardrobeCollectionFrame.ModelsFrame:StripTextures()
+	WardrobeCollectionFrame.ItemsCollectionFrame:StripTextures()
+	WardrobeCollectionFrame.ItemsCollectionFrame:SetTemplate("Transparent")
+	S:HandleNextPrevButton(WardrobeCollectionFrame.ItemsCollectionFrame.PagingFrame.PrevPageButton, nil, true)
+	S:HandleNextPrevButton(WardrobeCollectionFrame.ItemsCollectionFrame.PagingFrame.NextPageButton)
 
-	S:HandleNextPrevButton(WardrobeCollectionFrame.NavigationFrame.PrevPageButton, nil, true)
-	S:HandleNextPrevButton(WardrobeCollectionFrame.NavigationFrame.NextPageButton)
+	-- Taken from AddOnSkins
+	for i = 1, 3 do
+		for j = 1, 6 do
+			WardrobeCollectionFrame.ItemsCollectionFrame["ModelR"..i.."C"..j]:StripTextures()
+			WardrobeCollectionFrame.ItemsCollectionFrame["ModelR"..i.."C"..j]:SetFrameLevel(WardrobeCollectionFrame.ItemsCollectionFrame["ModelR"..i.."C"..j]:GetFrameLevel() + 2)
+			WardrobeCollectionFrame.ItemsCollectionFrame["ModelR"..i.."C"..j]:CreateBackdrop("Default")
+			WardrobeCollectionFrame.ItemsCollectionFrame["ModelR"..i.."C"..j].Border:Kill()
+			hooksecurefunc(WardrobeCollectionFrame.ItemsCollectionFrame["ModelR"..i.."C"..j].Border, 'SetAtlas', function(self, texture)
+				local color = E.media.bordercolor
+				if texture == "transmog-wardrobe-border-uncollected" then
+					color = { 1, 1, 0}
+				elseif texture == "transmog-wardrobe-border-unusable" then
+					color = { 1, 0, 0}
+				end
+				self:GetParent().backdrop:SetBackdropBorderColor(unpack(color))
+			end)
+		end
+	end
+
+	--Sets
+	WardrobeCollectionFrame.SetsCollectionFrame.RightInset:StripTextures()
+	WardrobeCollectionFrame.SetsCollectionFrame:SetTemplate("Transparent")
+	WardrobeCollectionFrame.SetsCollectionFrame.LeftInset:StripTextures()
+	S:HandleButton(WardrobeCollectionFrame.SetsCollectionFrame.DetailsFrame.VariantSetsButton)
+	S:HandleScrollBar(WardrobeCollectionFrame.SetsCollectionFrame.ScrollFrame.scrollBar)
+	S:HandleCloseButton(WardrobeCollectionFrame.SetsTabHelpBox.CloseButton)
+
+	--Skin set buttons
+	for i = 1, #WardrobeCollectionFrame.SetsCollectionFrame.ScrollFrame.buttons do
+		local b = WardrobeCollectionFrame.SetsCollectionFrame.ScrollFrame.buttons[i];
+		S:HandleItemButton(b)
+		b.Favorite:SetAtlas("PetJournal-FavoritesIcon", true)
+		b.Favorite:Point("TOPLEFT", b.Icon, "TOPLEFT", -8, 8)
+		b.SelectedTexture:SetColorTexture(1, 1, 1, 0.1)
+	end
+
+	--Set quality color on set item buttons
+	local function SetItemQuality(self, itemFrame)
+		if (itemFrame.backdrop) then
+			local _, _, quality = GetItemInfo(itemFrame.itemID);
+			local alpha = 1
+			if (not itemFrame.collected) then
+				alpha = 0.4
+			end
+
+			if (not quality or quality < 2) then --Not collected or item is white or grey
+				itemFrame.backdrop:SetBackdropBorderColor(0, 0, 0)
+			else
+				itemFrame.backdrop:SetBackdropBorderColor(ITEM_QUALITY_COLORS[quality].r, ITEM_QUALITY_COLORS[quality].g, ITEM_QUALITY_COLORS[quality].b, alpha)
+			end
+		end
+	end
+	hooksecurefunc(WardrobeCollectionFrame.SetsCollectionFrame, "SetItemFrameQuality", SetItemQuality)
+
+	--Skin set item buttons
+	local function SkinSetItemButtons(self)
+		for itemFrame in self.DetailsFrame.itemFramesPool:EnumerateActive() do
+			if (not itemFrame.isSkinned) then
+				S:HandleIcon(itemFrame.Icon, itemFrame)
+				itemFrame.isSkinned = true
+			end
+			itemFrame.IconBorder:SetAlpha(0)
+			SetItemQuality(self, itemFrame)
+		end
+	end
+	hooksecurefunc(WardrobeCollectionFrame.SetsCollectionFrame, "DisplaySet", SkinSetItemButtons)
 
 	-- Transmogrify NPC
 	WardrobeFrame:StripTextures()
@@ -338,7 +417,7 @@ local function LoadSkin()
 
 	WardrobeTransmogFrame:StripTextures()
 	WardrobeTransmogFrame.Inset:StripTextures()
-	
+
 	for i = 1, #WardrobeTransmogFrame.Model.SlotButtons do
 		WardrobeTransmogFrame.Model.SlotButtons[i]:StripTextures()
 		WardrobeTransmogFrame.Model.SlotButtons[i]:SetFrameLevel(WardrobeTransmogFrame.Model.SlotButtons[i]:GetFrameLevel() + 2)
@@ -347,13 +426,27 @@ local function LoadSkin()
 		WardrobeTransmogFrame.Model.SlotButtons[i].Border:Kill()
 		WardrobeTransmogFrame.Model.SlotButtons[i].Icon:SetTexCoord(unpack(E.TexCoords))
 	end
-	
+
 	WardrobeTransmogFrame.SpecButton:ClearAllPoints()
 	WardrobeTransmogFrame.SpecButton:SetPoint("RIGHT", WardrobeTransmogFrame.ApplyButton, "LEFT", -2, 0)
 	S:HandleButton(WardrobeTransmogFrame.SpecButton)
 	S:HandleButton(WardrobeTransmogFrame.ApplyButton)
 	S:HandleButton(WardrobeTransmogFrame.Model.ClearAllPendingButton)
-	
+
+	--Transmogrify NPC Sets tab
+	WardrobeCollectionFrame.SetsTransmogFrame:StripTextures()
+	WardrobeCollectionFrame.SetsTransmogFrame:SetTemplate("Transparent")
+	S:HandleNextPrevButton(WardrobeCollectionFrame.SetsTransmogFrame.PagingFrame.NextPageButton)
+	S:HandleNextPrevButton(WardrobeCollectionFrame.SetsTransmogFrame.PagingFrame.PrevPageButton, nil, true)
+
+	-- Taken from AddOnSkins
+	for i = 1, 2 do
+		for j = 1, 4 do
+			WardrobeCollectionFrame.SetsTransmogFrame["ModelR"..i.."C"..j]:StripTextures()
+			WardrobeCollectionFrame.SetsTransmogFrame["ModelR"..i.."C"..j]:CreateBackdrop("Default")
+		end
+	end
+
 	-- Outfit Edit Frame
 	WardrobeOutfitEditFrame:StripTextures()
 	WardrobeOutfitEditFrame:CreateBackdrop("Transparent")

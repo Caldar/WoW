@@ -12,9 +12,12 @@ Scan.queryspin = 0
 
 local MassScanInterval = 15*60
 
+local QUERY_TIMEOUT = 5
+
+local Appraiser
 
 local yield=coroutine.yield
-local floor=math.floor
+local floor=floor
 local round=math.round
 
 tinsert(ZGV.startups,{"Gold scan startup",function(self)
@@ -30,6 +33,8 @@ tinsert(ZGV.startups,{"Gold scan startup",function(self)
 	if not Scan.db.realm.gold_scan_data then Scan.db.realm.gold_scan_data={} end
 	Scan.data = Scan.db.realm.gold_scan_data
 
+	Scan:ImportHourly()
+
 	--if not Scan.db.realm.gold_scan_rawdata then Scan.db.realm.gold_scan_rawdata={} end
 	--Scan.rawdata = Scan.db.realm.gold_scan_rawdata
 	Scan.rawdata = {}
@@ -41,20 +46,36 @@ tinsert(ZGV.startups,{"Gold scan startup",function(self)
 	-- Fix blizzard scan errors
 	ITEM_QUALITY_COLORS[-1]=ITEM_QUALITY_COLORS[0]
 
+	Appraiser = ZGVG.Appraiser
+
 	ZGV:Debug("Gold: Scan enabled.")
 end})
 
 
-
+Scan.scan_page=1
+Scan.scan_pages=0
+Scan.last_scan_start_time_ms=0
+Scan.last_scan_start_time=0
 
 local orderedPairs = ZGV.OrderedPairs
 
 
+Scan.Proxy = {}
+local Proxy=Scan.Proxy
 
 function Scan:ScanFast()
-	if not select(2,CanSendAuctionQuery()) or self.state=="SS_OUT" then return FALSE end
-	QueryAuctionItems("", nil, nil, 0, false, -1, true) -- FULL SCAN!
+	if not select(2,CanSendAuctionQuery()) then return FALSE,"can't scan yet" end
+	if self.state~="SS_IDLE" then return FALSE,"state "..self.state.." not SS_IDLE" end
+
+	self.get_links = not ZGV.db.profile.quickscan
+	if ZGV.db.profile.quickscan then ZGV:Print(ZGV.L["opt_quickscan_warning"]) end
+
+	self.scan_page = 1
+
 	table.wipe(self.rawdata)
+	self.Proxy:PerformQuery("", nil, nil, 0, false, -1, true) -- FULL SCAN!
+	
+	self.scanning_fast = true
 	self:SetState("SS_QUERYING")
 	self.db.realm.LastScan=time()
 	self.db.realm.LastScanAvailable=time()
@@ -63,56 +84,88 @@ end
 
 function Scan:ScanByName(name,itemid,options)
 	if self.state=="SS_BUYING" then ZGV:Debug("&scan Scan:ScanByName|cffffee00 cannot scan, buyout not finished!") return false end
-	if not select(1,CanSendAuctionQuery()) or self.state=="SS_OUT" or name=="" then
+	if not select(1,CanSendAuctionQuery()) then 
 		ZGV:Debug("&scan Scan:ScanByName|cffffee00 %s |rcan't scan yet!",name)
-		return false
+		return FALSE,"can't scan yet"
 	end
+	if name=="" then return FALSE,"no name" end
+	if self.state~="SS_IDLE" then return FALSE,"state "..self.state.." not SS_IDLE" end
+
 	local exact = true
 	self.queried_by_id = nil
+	self.get_links = false
 
 	local queryname,_ = ZGV:GetItemInfo(itemid)
+
+	if not queryname then
+		ZGV:Debug("&scan GetItemInfo for %d missing, setting up async waiter.",itemid)
+		self:SetState("SS_WAITFORII")
+		self.WAITFORII_callbacks = {itemid=itemid,starttime=GetTime(),wait=3,fun=function() self:ScanByName(name,itemid,options) end}
+		return
+	end
 	
-	if queryname~=name or options=="forcePartial" then -- if generic name not the same as search param, use plain search, as we are searching for "x of y" type item
+	if queryname~=name or options=="forcePartial" then 
+		-- if generic name not the same as search param, use plain search, as we are searching for "x of y" type item, or a battle pet
 		self.queried_by_id = itemid
 		exact = false
+		--self.get_links = true
 	end
+
+	if options=="forceFullname" then
+		self.queried_by_id = nil
+		queryname = name
+		exact = true
+		self.get_links = true
+	end
+		
 	if itemid > 1000000000 then -- search for pets by name
 		self.queried_by_id = nil
 		queryname = name
 		exact = true
+		self.get_links = true
 	end
 	if not queryname then
 		ZGV:Debug("&scan Scan:ScanByName|cffffee00 %s |rGetItemInfo not ready!",name)
 		return false
 	end
 
-	ZGV:Debug("&scan Scan:ScanByName|cffffee00%s",name)
 	table.wipe(self.rawdata)
 	self.queried_by_name = queryname
+	self.queried_by_partial_name = not exact
 	self.scan_page = 1
+	self.scan_pages = 1
+	self.scanning_by_name = true
 	self:SetState("SS_QUERYING")
-	self:UpdateDefaultUI(queryname,self.scan_page-1)
-	QueryAuctionItems(queryname, nil, nil, 0, false, -1, false, exact)  -- 6.0.2: query by exact name
+
+	self.WaitingForSortAuctionSetSort=true
+	SortAuctionSetSort("list","unitprice",false)
+	SortAuctionApplySort("list")
+	ZGV:Debug("&scan ScanByName for: "..queryname.." id="..(self.queried_by_id or "nil").." partial="..(self.queried_by_partial_name and "yes" or "no").." exact="..tostring(exact))
+	self.Proxy:PerformQuery(queryname, nil, nil, 0, false, -1, false, exact)  -- 6.0.2: query by exact name
 	return true
 end
 
 function Scan:ScanByPartialName(queryname)
 	if self.state=="SS_BUYING" then ZGV:Debug("&scan Scan:ScanByPartialName|cffffee00 cannot scan, buyout not finished!") return false end
-	if not select(1,CanSendAuctionQuery()) or self.state=="SS_OUT" or queryname=="" then
+	if not select(1,CanSendAuctionQuery()) or self.state~="SS_IDLE" or queryname=="" then
 		ZGV:Debug("&scan Scan:ScanByPartialName|cffffee00 %s |rcan't scan yet!",queryname)
 		return FALSE
 	end
-	local exact = false
 
+	local exact = false
 	self.queried_by_name = queryname
 	self.queried_by_partial_name = true
+	self.queried_by_id = nil
+	self.get_links = true
 
-	ZGV:Debug("&scan Scan:ScanByPartialName|cffffee00 %s",queryname)
 	table.wipe(self.rawdata)
 	self.scan_page = 1
 	self:SetState("SS_QUERYING")
-	self:UpdateDefaultUI(queryname,self.scan_page-1)
-	QueryAuctionItems(queryname, nil, nil, 0, false, -1, false, exact)  -- 6.0.2: query by exact name
+	self.WaitingForSortAuctionSetSort=true
+	SortAuctionSetSort("list","unitprice",false)
+	SortAuctionApplySort("list")
+	ZGV:Debug("&gold ScanByPartialName for: "..queryname.." partial="..(self.queried_by_partial_name and "yes" or "no").." exact="..tostring(exact))
+	self.Proxy:PerformQuery(queryname, nil, nil, 0, false, -1, false, exact)  -- 6.0.2: query by exact name
 end
 
 function Scan:ScanByLink(itemlink)
@@ -121,17 +174,21 @@ function Scan:ScanByLink(itemlink)
 		ZGV:Debug("&scan Scan:ScanByLink|cffffee00 %s |rcan't scan yet!",itemlink)
 		return FALSE
 	end
-	local exact = true
 
-	self.queried_by_link = ZGV.ItemLink.StripBlizzExtras(itemlink)
-	local queryname = ZGV:GetItemInfo(itemlink)
-
-	ZGV:Debug("&scan Scan:ScanByLink|cffffee00 %s %s",itemlink,queryname)
 	table.wipe(self.rawdata)
+	local exact = true
+	self.queried_by_link = ZGV.ItemLink.StripBlizzExtras(itemlink)
+	self.queried_by_id = nil
+	local queryname = ZGV:GetItemInfo(itemlink)
+	self.get_links = true
+
 	self.scan_page = 1
 	self:SetState("SS_QUERYING")
-	self:UpdateDefaultUI(queryname,self.scan_page-1)
-	QueryAuctionItems(queryname, nil, nil, 0, false, -1, false, exact)  -- 6.0.2: query by exact name
+	self.WaitingForSortAuctionSetSort=true
+	SortAuctionSetSort("list","unitprice",false)
+	SortAuctionApplySort("list")
+	ZGV:Debug("&gold ScanByLink for: "..queryname.." id="..(self.queried_by_id or "nil").." link="..(self.queried_by_link or "nil").." exact="..tostring(exact))
+	self.Proxy:PerformQuery(queryname, nil, nil, 0, false, -1, false, exact)  -- 6.0.2: query by exact name
 end
 
 
@@ -141,6 +198,7 @@ function Scan:CanScanByName()
 end
 
 function Scan:CanScanFast()
+	if DISABLE_FAST_SCAN then return false,99 end
 	local canOne,canMass = CanSendAuctionQuery()
 	if canMass then
 		self.db.realm.LastScanAvailable=time()
@@ -178,27 +236,46 @@ end
 --]]
 
 
-function Scan:UpdateDefaultUI(name,page)
-	if not name then return end
-	BrowseName:SetText(name)
 
-	AuctionFrameBrowse.page = page
-	FauxScrollFrame_SetOffset(BrowseScrollFrame,0)
+-- WARNING: may requery for some rows, WILL keep requerying for large result sets that won't fit in cache!
+function Scan:ResultsListComplete()
+	local count = self:GetAuctionCount("list")
+	for row=1,count do
+		local name, texture, count, quality,canUse,  level,levelColHeader,minBid,minIncrement,buyoutPrice,  bidAmount,ishighBidder,bidderFullName,ownerName,ownerFullName,  saleStatus,itemId,hasAllInfo = GetAuctionItemInfo("list", row)
+		if not hasAllInfo then
+			self:Debug("ResultsListComplete? |cffff0000NO|r. Row %d has missing data.")
+			return false
+		end
+	end
+	self:Debug("ResultsListComplete? |cff00ff00YES|r!")
+	return true
+end
 
-	AuctionFrameBid.page = page
-	FauxScrollFrame_SetOffset(BidScrollFrame,0)
 
-	AuctionFrameAuctions.page = page
+function Scan:DumpAuctionItems(focusrow)
+	ZGV:Debug("Here's what's on the AH (%d rows):",GetNumAuctionItems("list"))
+	for row=1,GetNumAuctionItems("list") do
+		local aName,_,aStack,_,_,_,_,_,_,aBuyout,_,_,_,aOwner,_,_,aId  = GetAuctionItemInfo("list",row)
+		ZGV:Debug("%s%d. '%s'##%d x%d, b/o %s, owner '%s'",focusrow==row and "|cffffddff" or "",row,aName or "",aId or -1,aStack or -1,GetMoneyString(aBuyout or 0),aOwner or "")
+	end
 end
 
 
 
 
-
 local hasQueried = false
-local PAGELENGTH = 50
 
 local consecutive_updates=0
+
+local prev_scan = {}
+Scan.prev_scan = prev_scan
+
+local tabcopy = {}
+local function smart_concat(tab,str)
+	table.wipe(tabcopy)
+	for k=1,18 do tabcopy[k]=tostring(tab[k]) end
+	return table.concat(tabcopy,str)
+end
 
 function Scan.EventHandler(frame,event,arg1,arg2)
 	self=Scan
@@ -210,21 +287,104 @@ function Scan.EventHandler(frame,event,arg1,arg2)
 		self.FWORK:Hide()
 		self:SetState("SS_OUT")
 	elseif event=="AUCTION_ITEM_LIST_UPDATE" then
+		self.last_was_AILU = true
+		if self.last_scan_start_time==GetTime() then return end  -- same frame as query, couldn't possibly be results - this is an initial wipe. Ignore it.
+		--[[
+		if self.WaitingForSortAuctionSetSort then
+			-- we fired SortAuctionSetSort, so next AILU will be a result of that
+			ZGV:Debug("&gold |cffffdd00AILU|r - waiting for sort.")
+			self.WaitingForSortAuctionSetSort=false
+			return
+		end
+		--]]
+
 		-- Delaying scan because results tend to arrive with several subsequent A_I_L_U events
-		self.last_AILU_time = GetTime()
-		self.consecutive_AILU_count= self.consecutive_AILU_count+ 1
-		if self.state=="SS_BUYING" then self:SetState("SS_IDLE") end
-		if self.state=="SS_QUERYING"
-		-- or (self.state=="SS_IDLE" and self:GetAuctionCount("list")>PAGELENGTH) --leech  -- creates an infinite loop! ~~ Jeremiah
-		then
-			self.consecutive_AILU_count = 1
-			if self.queried_by_name or self.queried_by_partial_name or self.queried_by_link then -- this is a slow scan, just go ahead and scan results.
-				self:SetState("SS_SCANNING")
+
+		--== Count AILUs
+			if self.last_AILU_time ~= GetTime() then
+				ZGV:Debug("AILU (auctions updated)")
+				self.consecutive_AILU_count = 0
+			end
+			self.last_AILU_time = GetTime()
+			self.consecutive_AILU_count= self.consecutive_AILU_count+ 1
+
+		--==
+
+		if self.state=="SS_BUYING" then
+			self:SetState("SS_IDLE")
+		
+		elseif self.state=="SS_QUERYING" then
+			self:SetState("SS_SCANNING")
+			-- or (self.state=="SS_IDLE" and self:GetAuctionCount("list")>NUM_AUCTION_ITEMS_PER_PAGE) --leech  -- creates an infinite loop! ~~ Jeremiah
+				-- First of all, verify if the data is what we asked for!
+
+				--[[
+
+				local name, texture, count, quality,canUse,  level,levelColHeader,minBid,minIncrement,buyoutPrice,  bidAmount,ishighBidder,bidderFullName,ownerName,ownerFullName,  saleStatus,itemId,hasAllInfo = GetAuctionItemInfo("list", 1)
+				local link = GetAuctionItemLink("list", 1)
+
+				if (self.queried_by_name and name~=self.queried_by_name)
+				or (self.queried_by_partial_name and not name:find(self.queried_by_partial_name,1,true))
+				or (self.queried_by_link and link~=self.queried_by_link) then
+					-- WRONG results. Ignore.
+					ZGV:Debug("AILU: wrong result ("..(name or "?").."), ignoring.")
+					return
+				end
+				ZGV:Debug("AILU: correct result, proceeding.")
+				--]]
+
+				-- Now verify if we have all the data we need (it seems hasAll is ALWAYS true, so may not be needed anymore.)
+
+				--[[
+				if self:GetAuctionCount("list")<=NUM_AUCTION_ITEMS_PER_PAGE then
+					local dps = debugprofilestop()
+					local allHaveAll=true
+					local prevnum = #prev_scan
+					local changes=0
+					for row=1,self:GetAuctionCount("list") do
+						local rowdata = {GetAuctionItemInfo("list", row)}
+						local rowstring = smart_concat(rowdata,"^")
+						if prev_scan[row] and rowstring~=prev_scan[row] then
+							ZGV:Debug("&gold AILU: diff in row "..row.." - was "..prev_scan[row]..", now "..rowstring)
+							changes=changes+1
+						end
+						prev_scan[row]=rowstring
+
+						local hasAll = select(18,GetAuctionItemInfo("list", row))
+						if not hasAll then allHaveAll=false break end
+					end
+					ZGV:Debug("&gold rows present: "..self:GetAuctionCount("list")..", changed: "..changes)
+					ZGV:Debug("&gold |cffffdd00AILU|r - have all? " .. (allHaveAll and "|cff00ff00YES!|r" or "|cffff0000Nope.|r") .. " (took "..math.floor((debugprofilestop()-dps)).." ms)")
+				else
+					ZGV:Debug("&gold |cffffdd00AILU|r - have all? " ..self:GetAuctionCount("list").." rows.")
+				end
+				--]]
+
+				--self.consecutive_AILU_count = 1
+				--[[
+				if self.queried_by_name or self.queried_by_partial_name or self.queried_by_link then -- this is a slow scan, just go ahead and scan results.
+					self:SetState("SS_SCANNING")
+				else
+					self:Debug("Scan:EventHandler |cff77bbff%s - they come in floods, waiting for %dms pause...",event,Scan.wait_after_AILU*1000)
+					self:SetState("SS_RECEIVING")
+				end
+				--]]
+		
+		end
+		
+		--[[
+		if false and self.state=="SS_RECEIVING" then
+			if not self.scanning_fast then
+				ZGV:Debug("Scan after receiving? %s",tostring(self.scan_after_receiving))
+				if self.scan_after_receiving and not self.scanning_fast and self:ResultsListComplete() then  -- Note: never check ResultsListComplete in a full scan.
+					self:SetState("SS_SCANNING")
+					self.scan_after_receiving = false
+				end
 			else
-				self:Debug("Scan:EventHandler |cff77bbff%s - they come in floods, waiting for 2s pause...",event)
-				self:SetState("SS_RECEIVING")
+				self:SetState("SS_SCANNING")
 			end
 		end
+		--]]
 
 		--if self.state=="SS_QUERYING" then
 		-- let's leech instead.
@@ -234,50 +394,108 @@ function Scan.EventHandler(frame,event,arg1,arg2)
 			--hasQueried = true
 		--end
 		--end
+	elseif event=="ZYGOR_CSAQNAME_CHANGED" then
+		local can_scan = arg2
+		ZGV:Debug("Can scan?: %s",can_scan and "|cffbbeebbyes|r" or "|cffff7799no|r")
+		if not self.scanning_fast then
+			if can_scan and self.state=="SS_QUERYING" and GetNumAuctionItems("list")==0 then
+				-- well damn, no results arrived within timeout. Scan it, call it quits.
+				self:Debug("Can scan again, but no results arrived yet... Calling it quits. Scan, wrap.")
+				self:SetState("SS_SCANNING")
+			end
+
+			--[[
+			if not can_scan and (self.state=="SS_QUERYING" or self.state=="SS_RECEIVING") then -- initial de-csaq-ing
+				ZGV:Debug("Setting scan after receiving.")
+				self.scan_after_receiving=true
+			end
+			--]]
+		end
+
+		if can_scan and self.CanScanCallback then self.CanScanCallback() self.CanScanCallback=nil end
 	end
+	ZGVG.Appraiser.UpdateHandler(nil,1000) -- force update
 end
 
 
 Scan.consecutive_AILU_count=0
 Scan.last_AILU_time=0
-Scan.wait_after_AILU = 0.500
+Scan.wait_after_AILU = 0.000
 
 local lasttime=0
 function Scan:Work()
-	if self.state=="SS_QUERYING" then
-		return
-	end
-	if self.state=="SS_RECEIVING" then
-		if GetTime()-self.last_AILU_time > self.wait_after_AILU then  -- 1000 ms passed since the last AILU event... this maaay not be good, but let's start with this.
+	if self.state=="SS_WAITFORII" and self.WAITFORII_callbacks then
+		local n = ZGV:GetItemInfo(self.WAITFORII_callbacks.itemid)
+		if n then
+			ZGV:Debug("Scan:Work GetItemInfo for " .. self.WAITFORII_callbacks.itemid .. " is ready, resuming query.")
+			self:SetState("SS_IDLE")
+			self.WAITFORII_callbacks.fun()
+			self.WAITFORII_callbacks = nil
+		elseif GetTime()>self.WAITFORII_callbacks.starttime+self.WAITFORII_callbacks.wait then
+			-- timed out!
+			ZGV:Debug("Scan:Work Timed out waiting for GetItemInfo " .. self.WAITFORII_callbacks.itemid)
+			self:SetState("SS_IDLE")
+			self.WAITFORII_callbacks = nil
+		else
+			ZGV:Debug("Scan:Work Waiting for GetItemInfo " .. self.WAITFORII_callbacks.itemid)
+		end
+	elseif self.state=="SS_QUERYING" then
+		if not self.Proxy:IsFullScan() and GetTime()-self.last_scan_start_time > QUERY_TIMEOUT then
+			ZGV:Print("Auction query timed out.")
+			self:SetState("SS_IDLE")
+		end
+	elseif self.state=="SS_RECEIVING" then
+		-- grab the page count, for progress
+		self.scan_pages = math.ceil(select(2,GetNumAuctionItems("list"))/NUM_AUCTION_ITEMS_PER_PAGE)
+
+		--[[
+		if GetTime()-self.last_AILU_time >= self.wait_after_AILU then  -- Scan.wait_after_AILU ms passed since the last AILU event... this maaay not be good, but let's start with this.
 			self:Debug("Scan:Work - got %d AILUs, %d ms passed since then, moving from RECEIVING to SCANNING",self.consecutive_AILU_count,self.wait_after_AILU*1000)
 			self:SetState("SS_SCANNING")
 		else
 			self:Debug("Scan:Work - got %d AILUs so far",self.consecutive_AILU_count)
 		end
 		return
-	end
-	if self.state=="SS_SCANNING" then
+		--]]
+	elseif self.state=="SS_SCANNING" then
 		self:ScanAuctions()
 		return
-	end
-	if self.state=="SS_ANALYZING" then
+	elseif self.state=="SS_ANALYZING" then
 		self:AnalyzeAuctions("go")
 		return
-	end
-	if self.state=="SS_NEEDTOQUERY" then
-		if CanSendAuctionQuery() then
-			ZGV:Debug("&scan Running queued query for|cffffee00 %s |rpage %s",(self.queried_by_name or self.queried_by_partial_name or self.queried_by_link),self.scan_page)
+	elseif self.state=="SS_NEEDTOQUERY" then
+		if CanSendAuctionQuery() and self.queryfunc then
+			ZGV:Debug("&scan Running queued query:")
 			self:queryfunc()
 			self:SetState("SS_QUERYING")
+			self.needtoquery_msg=false
 		else
+			if not self.needtoquery_msg then self:Debug("SS_NEEDTOQUERY Can't query, waiting...") end
+			self.needtoquery_msg=true
 			if GetTime()-lasttime>1.000 then self:Debug("SS_NEEDTOQUERY Still can't query, waiting...") lasttime=GetTime() end
 		end
 	end
 end
 
+local last_csaq,last_csaq2
 local delay,interval=0,0.1
 function Scan.UpdateHandler(frame,elapsed)
-	delay=delay+elapsed  if delay>interval then delay=0 else return end
+	-- count AILUs, just for debugging
+	if Scan.last_was_AILU then
+		if Scan.consecutive_AILU_count>1 then
+			Scan:Debug("AILU x".. Scan.consecutive_AILU_count)
+		end
+		Appraiser.EventHandler(frame,"ZYGOR_AFTER_SINGLE_AILU")
+		Scan.last_was_AILU=false
+	end
+
+	-- Announce CanSendAuctionQuery changes
+	local csaq,csaq2 = CanSendAuctionQuery()
+	if csaq~=last_csaq then self.EventHandler(self.FWORK,"ZYGOR_CSAQNAME_CHANGED",last_csaq,csaq) Appraiser.EventHandler(self.FWORK,"ZYGOR_CSAQNAME_CHANGED",last_csaq,csaq) end
+	if csaq2~=last_csaq2 then self.EventHandler(self.FWORK,"ZYGOR_CSAQFAST_CHANGED",last_csaq2,csaq2) Appraiser.EventHandler(self.FWORK,"ZYGOR_CSAQFAST_CHANGED",last_csaq2,csaq2) end
+	last_csaq,last_csaq2=csaq,csaq2
+
+	--delay=delay+elapsed  if delay>interval then delay=0 else return end
 	--[[
 	if consecutive_updates>1 then
 		ZGV:Debug("Scan:UpdateHandler: |cff335588AUCTION_ITEM_LIST_UPDATE x",consecutive_updates)
@@ -326,7 +544,7 @@ function Scan:ScanAuctions()  -- in state: SS_SCANNING
 
 	local newitems={}
 
-	if batch>PAGELENGTH then  -- full scan? prepare to wipe.
+	if Proxy:IsFullScan() then  -- full scan? prepare to wipe.
 		--[[
 			-- LEGION: we're now "rescanning" current auction results over and over, to grab all the links which are now served asynchronously.
 			-- The block below has to go. Yo.
@@ -341,7 +559,9 @@ function Scan:ScanAuctions()  -- in state: SS_SCANNING
 		--]]
 		last_full_scan=time()
 		if self.data then self.data.wipe_me=true end
+		self.scan_pages = 1000
 	else
+		self.scan_pages = math.ceil(total/NUM_AUCTION_ITEMS_PER_PAGE)
 		self.last_scanned_in_batch=nil
 	end
 
@@ -366,6 +586,8 @@ function Scan:ScanAuctions()  -- in state: SS_SCANNING
 
 	local good_data_so_far = true
 
+	local wrong_were_present = false
+
 	for row=self.last_scanned_in_batch+1,batch do  repeat
 		if rows_processed[row] then break end --continue
 
@@ -373,10 +595,27 @@ function Scan:ScanAuctions()  -- in state: SS_SCANNING
 
 		local name, texture, count, quality,canUse,  level,levelColHeader,minBid,minIncrement,buyoutPrice,  bidAmount,ishighBidder,bidderFullName,ownerName,ownerFullName,  saleStatus,itemId,hasAllInfo = GetAuctionItemInfo("list", row)
 		local link = GetAuctionItemLink("list", row)
+		if link=="" then link=nil end
 
-		if hasAllInfo and not link then print("WTF! HasAllInfo but no link!") hasAllInfo=false end
+		
+		if not (self.queried_by_id or self.queried_by_link or self.queried_by_partial_name) and self.queried_by_name and not name:find(self.queried_by_name,1,true) then
+			-- whoa, it's not our search!
+			ZGV:Debug("&scan Scan:ScanAuctions: wrong results! (row %d, queried for %s, found %s... Let's wait for proper results.",row,self.queried_by_name,(name or "unnamed"))
+			--self:Crash()
+			--wrong_were_present = true
+			self:SetState("SS_QUERYING")
+			table.wipe(self.rawdata)
+			return
+		end
 
-		if not hasAllInfo then
+
+		if not self.get_links then link="item:"..itemId end
+
+		if hasAllInfo and not link then ZGV:Debug("WTF! HasAllInfo but no link!") hasAllInfo=false end
+		if hasAllInfo and (not name or name=="") then ZGV:Debug("WTF! HasAllInfo but no name!") hasAllInfo=false end
+
+		if not hasAllInfo then --and self.get_links then
+		--@if not hasAllInfo then
 			hasNotAllCounter=hasNotAllCounter+1
 			good_data_so_far = false
 			break --continue
@@ -387,7 +626,8 @@ function Scan:ScanAuctions()  -- in state: SS_SCANNING
 		hasAllCounter=hasAllCounter+1
 		rows_processed[row]=true
 
-		if itemId == 82800 then
+		if itemId == 82800 and self.get_links then
+		--@if itemId == 82800 then
 			if link then
 				itemId = ZGV.PetBattle:GetPetFakeIdByLink(link)
 			end
@@ -408,18 +648,18 @@ function Scan:ScanAuctions()  -- in state: SS_SCANNING
 
 			if not (self.queried_by_link or self.queried_by_partial_name)
 			and (
-				(self.queried_by_id and itemId~=self.queried_by_id)
+				(self.queried_by_id and itemId~=self.queried_by_id)  -- queried by ID, but it's wrong
 				or
-				(not self.queried_by_id and self.queried_by_name and name~=self.queried_by_name)
+				(not self.queried_by_id and self.queried_by_name and name~=self.queried_by_name)  -- queried by name, not by ID, but the name is wrong
 			)
-			then  
+			then
 				unwanted=unwanted+1  
 				--break
 				itemId = 0
 				count = 1
 				buyoutPrice = 0
 				link = ""
-				end
+			end
 
 			if self.queried_by_link and self.queried_by_link~=ZGV.ItemLink.StripBlizzExtras(link) then  
 				unwanted=unwanted+1
@@ -428,7 +668,7 @@ function Scan:ScanAuctions()  -- in state: SS_SCANNING
 				count = 1
 				buyoutPrice = 0
 				link = ""
-				end
+			end
 
 			-- if all's good...
 			tinsert(self.rawdata,(self.scan_page or 1) .. "^" .. row .."^".. itemId .."^".. count .."^".. buyoutPrice .."^".. link .."^".. (ownerName==player_name and 1 or 0))
@@ -485,13 +725,6 @@ function Scan:ScanAuctions()  -- in state: SS_SCANNING
 		rowsnow=rowsnow+1
 
 
-		if not (self.queried_by_id or self.queried_by_link or self.queried_by_partial_name) and (batch<total or total<=PAGELENGTH) and (not self.queried_by_name or not name:find(self.queried_by_name,1,true)) then
-			-- whoa, it's not our search!
-			ZGV:Debug("&scan Scan:ScanAuctions, it's not our search, sorry! (What the hell are we doing here anyway!?)")
-			self:SetState("SS_IDLE")
-			return
-		end
-
 		scanning_this_sec = scanning_this_sec + 1
 
 		--[[ Legion: we're being screwed by the cache anyway; disabling partial analysis for now.
@@ -516,15 +749,17 @@ function Scan:ScanAuctions()  -- in state: SS_SCANNING
 		--]]
 
 	until true
-	if hasNotAllCounter>query_at_once then break end -- out of the scanning loop, abort.
+	if hasNotAllCounter>=query_at_once then break end -- Too many missing rows? They got sent as queries to the server. Get out of the scanning loop, come back later.
 	end
+
+	if wrong_were_present then ZGV:Debug("Wrong rows detected, returning to query maybe?") self:SetState("SS_QUERYING") return end
 
 
 	-- we're done!
 
 	self.last_scanned_in_batch=nil
 
-	if batch>PAGELENGTH then
+	if batch>NUM_AUCTION_ITEMS_PER_PAGE then
 
 		-- batch==total, probably, but trust no one
 		local rows_received = #self.rawdata
@@ -536,14 +771,13 @@ function Scan:ScanAuctions()  -- in state: SS_SCANNING
 		total_badlinks = total_badlinks + badlinks
 		total_uniqueids = total_uniqueids + uniqueids
 
-		if hasNotAllCounter>0 then  -- there were holes in the data. Retry.
-			self:Debug("FastScan |cff88ff00PENDING|r: %d/%d (%d%%) rows. %d have all info: %d good, %d bad, %d unique.",
-				rows_received,batch,progress*100,
-				hasAllCounter,
-				goodlinks,badlinks,uniqueids)
-			-- retry, not all rows had links
-		else
-			self:Debug("FastScan |cff88ff00OVER|r: %d/%d (%d%%) rows, %d good, %d bad, %d unique",
+		self:Debug("FastScan |cff88ff00RUNNING|r: %d/%d (%d%%) rows. %d in cycle: %d have all info, %d don't: %d good, %d bad, %d unique.",
+			rows_received,batch,progress*100,
+			rowsnow,hasAllCounter,hasNotAllCounter,
+			goodlinks,badlinks,uniqueids)
+
+		if hasNotAllCounter==0 then
+			self:Debug("FastScan |cff88ff00OVER|r: %d/%d (%d%%) rows, %d good, %d bad, %d unique.",
 				rows_received,batch,progress*100,
 				total_goodlinks,total_badlinks,total_uniqueids)
 			self:SetState("SS_ANALYZING")
@@ -554,30 +788,40 @@ function Scan:ScanAuctions()  -- in state: SS_SCANNING
 		end
 
 
-	elseif batch==PAGELENGTH and (self.scan_page*PAGELENGTH<total) and (self.queried_by_name or self.queried_by_partial_name or self.queried_by_link) then
+	elseif batch==NUM_AUCTION_ITEMS_PER_PAGE and (self.scan_page*NUM_AUCTION_ITEMS_PER_PAGE<total) and (self.queried_by_name or self.queried_by_partial_name or self.queried_by_link) then
 
 		if hasNotAllCounter==0 then  self.scan_page = self.scan_page + 1  end
-		if CanSendAuctionQuery() then
+
+		local queryfunc = function(self)
 			local queryname = self.queried_by_name or self.queried_by_partial_name or self.queried_by_link
-			self:Debug("SlowScan for |cffffee00%s|r |cffffaa00running|r: got %d rows, %d total, %d good, %d bad, %d unwanted, %d unique, %d have all info. This was page %d, going for next.",self.queried_by_name, #self.rawdata,total, goodlinks,badlinks,unwanted,uniqueids,hasAllCounter,self.scan_page-1)
-			QueryAuctionItems(queryname, nil, nil, self.scan_page-1, false, -1, false)
+			ZGV:Debug("SlowScan querying...")
+			self.Proxy:PerformQuery(queryname, nil, nil, self.scan_page-1, false, -1, false, not self.queried_by_partial_name)
 			wipe(rows_processed)
-			self:UpdateDefaultUI(queryname,self.scan_page-1)
 			self:SetState("SS_QUERYING")
+		end
+
+		if CanSendAuctionQuery() then
+			self:Debug("SlowScan for |cffffee00%s|r |cffffaa00running|r: got %d rows, %d total. %d in cycle: %d good, %d bad, %d unwanted, %d unique, %d have all info. This was page %d, going for next.",
+				self.queried_by_name, #self.rawdata,total,
+				rowsOnPage,
+				goodlinks,badlinks,unwanted,uniqueids,hasAllCounter,
+				self.scan_page-1)
+			queryfunc(self)
 		else
-			self:Debug("SlowScan for |cffffee00%s|r |cffffaa00running|r: got %d rows, %d total, %d good, %d bad, %d unwanted, %d unique. %d have all info. This was page %d, WAITING for next.",self.queried_by_name, #self.rawdata,total, goodlinks,badlinks,unwanted,uniqueids,hasAllCounter,self.scan_page-1)
+			self:Debug("SlowScan for |cffffee00%s|r |cffffaa00running|r: got %d rows, %d total. %d in cycle: %d good, %d bad, %d unwanted, %d unique, %d have all info. This was page %d, WAITING for next.",
+				self.queried_by_name, #self.rawdata,total,
+				rowsOnPage,
+				goodlinks,badlinks,unwanted,uniqueids,hasAllCounter,
+				self.scan_page-1)
 			self:SetState("SS_NEEDTOQUERY")
-			self.queryfunc = function(self)
-				local queryname = self.queried_by_name or self.queried_by_partial_name or self.queried_by_link
-				QueryAuctionItems(queryname, nil, nil, self.scan_page-1, false, -1, false, not self.queried_by_partial_name)
-				wipe(rows_processed)
-				self:UpdateDefaultUI(queryname,self.scan_page-1)
-				self:SetState("SS_QUERYING")
-			end
+			self.queryfunc=queryfunc
 		end
 	else
 		-- end
-		self:Debug("SlowScan for |cffffee00%s|r |cff88ff00OVER|r: got %d rows, %d total, %d good, %d bad, %d unwanted, %d unique, %d had all info.",self.queried_by_name, #self.rawdata,total, goodlinks,badlinks,unwanted,uniqueids,hasAllCounter)
+		self:Debug("SlowScan for |cffffee00%s|r |cff88ff00OVER|r: got %d rows, %d total. %d in cycle: %d good, %d bad, %d unwanted, %d unique, %d had all info.",
+			self.queried_by_name, #self.rawdata,total,
+			rowsOnPage,
+			goodlinks,badlinks,unwanted,uniqueids,hasAllCounter)
 		self:SetState("SS_ANALYZING")
 		self:AnalyzeAuctions("reset")
 		self.data.wipe_one = saved_Id
@@ -592,6 +836,7 @@ function Scan:ScanAuctions()  -- in state: SS_SCANNING
 
 end
 
+-- Returns: batch, sane_total, total
 function Scan:GetAuctionCount(typ)
 	local batch,total = GetNumAuctionItems(typ)
 	return batch,(total>500000 or total<0) and batch or total,total
@@ -599,7 +844,7 @@ end
 
 
 local analyze_throttle = 50 --ms
-function Scan:AnalyzeAuctions(cmd)  -- Abominable Self-coroutine.
+function Scan:AnalyzeAuctions(cmd)  -- Ugly Self-coroutine.
 	-- selfdriver:
 	if cmd=="reset" then self.analyzethread=nil return end
 	if cmd=="go" then  self.analyzethread=self.analyzethread or coroutine.create(self.AnalyzeAuctions)  local suc,err=coroutine.resume(self.analyzethread,self)  
@@ -689,6 +934,8 @@ function Scan:AnalyzeAuctions(cmd)  -- Abominable Self-coroutine.
 			end
 		end
 	until true  end
+	self.analysis_progress = 1
+	self:Debug("AnalyzeAuctions: %d%% (%d / %d)",self.analysis_progress*100,#self.rawdata,#self.rawdata)
 
 	-- now: data_byitems[itemid]={[12300]=1,[12301]=10,[12299]=1000}
 
@@ -696,52 +943,62 @@ function Scan:AnalyzeAuctions(cmd)  -- Abominable Self-coroutine.
 
 	--[[
 
-	local new=0
-	for itemid=1,100000 do if data[itemid] then -- force sort; pairs or ipairs wouldn't suffice
-		-- itemId ..":".. count ..":".. minBid ..":".. buyoutPrice
+		local new=0
+		for itemid=1,100000 do if data[itemid] then -- force sort; pairs or ipairs wouldn't suffice
+			-- itemId ..":".. count ..":".. minBid ..":".. buyoutPrice
 
-		local stats={}
+			local stats={}
 
-		for i,countprice in ipairs(data[itemid]) do
-			local count,price = strsplit(":",countprice)
-			stats[price]=
-		end
-
-
-		local count,buyoutPrice = strsplit(":",v)
-		itemId=tonumber(itemId)
-
-		if not data[itemId] then data[itemId]={} new=new+1 end
-		local dat=data[itemId]
-
-		-- just get the minimum
-		buyoutPrice=buyoutPrice/count
-		dat.min = dat.min and min(dat.min,buyoutPrice) or buyoutPrice
+			for i,countprice in ipairs(data[itemid]) do
+				local count,price = strsplit(":",countprice)
+				stats[price]=
+			end
 
 
+			local count,buyoutPrice = strsplit(":",v)
+			itemId=tonumber(itemId)
 
-		if i%5000==0 then 
-			self.analysis_progress = i / #self.rawdata
-			yield()
-		end
-	end end
+			if not data[itemId] then data[itemId]={} new=new+1 end
+			local dat=data[itemId]
+
+			-- just get the minimum
+			buyoutPrice=buyoutPrice/count
+			dat.min = dat.min and min(dat.min,buyoutPrice) or buyoutPrice
+
+
+
+			if i%5000==0 then 
+				self.analysis_progress = i / #self.rawdata
+				yield()
+			end
+		end end
 
 	--]]
 
-	ZGV:Print(("Analysis complete. %d items scanned in %d auctions."):format(new,#self.rawdata))
+	if not ZGV.Gold.Appraiser.AttemptingToBuyout then
+		ZGV:Print(("Analysis of " .. (self.queried_by_name or self.queried_by_partial_name or self.queried_by_link or "all auctions") .. " complete. %d items scanned in %d auctions."):format(new,#self.rawdata))
+	end
 
 	--table.wipe(self.rawdata)  -- NOT wiping, please remember to wipe after using the toi- I mean, the Scan. Thank you -- the management.  ~sinus 2015-04-08
 
 	if (self.queried_by_name or self.queried_by_partial_name or self.queried_by_link) then
 		ZGV:Debug("&scan Results for|cffffee00 %s |cff888888## %s |r:",(self.queried_by_name or self.queried_by_partial_name or self.queried_by_link),save_itemId)
-		if save_data then for k,v in pairs(save_data) do ZGV:Debug("&scan "..k..","..v) end else ZGV:Debug("&scan NONE") end
+		local count=0
+		if save_data then
+			for k,v in pairs(save_data) do
+				--ZGV:Debug("&scan "..k..","..v)
+				count=count+1
+			end
+			ZGV:Debug("&scan %d postings.",count)
+		else
+			ZGV:Debug("&scan NONE")
+		end
 		if save_itemId then self:DebugItem(save_itemId) end
 	end
-	self.queried_by_name = false
-	self.queried_by_partial_name = false
-	self.queried_by_link = false
 
 	ZGV:SendMessage("GOLD_SCANNED")
+
+	if ZGVG.Scan.ResultCallback then ZGVG.Scan.ResultCallback() ZGVG.Scan.ResultCallback=nil end
 
 	self:SetState("SS_IDLE")
 end
@@ -749,24 +1006,45 @@ end
 
 function Scan:SetState(state)
 	self:Debug("SetState %s",state)
+
+	if state=="SS_QUERYING" then
+		table.wipe(prev_scan)
+		self.scan_pages=0
+		self.last_scan_start_time_ms = debugprofilestop()
+		self.scan_after_receiving = false
+		self.last_scan_start_time = GetTime()
+	end
+
 	if self.state=="SS_QUERYING" and state=="SS_OUT" then
 		ZGV:Debug("&scan Query cancelled.")
 	end
 	if state=="SS_NEEDTOQUERY" then lasttime=GetTime() end  -- timestamp last attempt to query, just cosmetics
 
-	if state=="SS_SCANNING" and state~=self.state then
+	if (state=="SS_SCANNING" or state=="SS_BUYING") and state~=self.state then
 		self:PrepareBeforeScanning()
+	end
+
+	if state=="SS_IDLE" then
+		-- ABOMINABLE WORKAROUND for a case of hanging/freezing after a full scan.
+		--if not (self.queried_by_name or self.queried_by_partial_name or self.queried_by_link or self.WAITFORII_callbacks or ZGV.Gold.Appraiser.AttemptingToBuyout) then ZGV:Debug("&gold Scan: Sending abominable empty query")  QueryAuctionItems("chrzaszcz brzmi w trzcinie", nil, nil, 0, false, -1, false) end
+
+		self.queried_by_id=false
+		self.queried_by_name = false
+		self.queried_by_partial_name = false
+		self.queried_by_link = false
+		self.scanning_fast = false
+
+		ZGV.Gold.Appraiser:Update()
 	end
 
 	local oldstate = self.state
 	self.state=state
-
-	-- Output an event when the state changes
-	if oldstate~=state then
-		ZGV:SendMessage("SS_STATE_CHANGE", state)
-	end
 	
-	-- add specific state change handlers here
+	-- Output an event when the state changes
+		if oldstate~=state then
+			ZGV:SendMessage("SS_STATE_CHANGE", state)
+		end
+	--
 end
 
 function Scan:ReAnalyze()
@@ -953,10 +1231,8 @@ function Scan:DebugItem(id)
 
 	ZGV:Debug("&scan Debug for item #%s",id)
 
-	if  ZGV.Gold.servertrends
-	and ZGV.Gold.servertrends.items
-	and ZGV.Gold.servertrends.items[id] then
-		local data=ZGV.Gold.servertrends.items[id]
+	local data = ZGV.Gold.servertrends and ZGV.Gold.servertrends.items and ZGV.Gold.servertrends.items[id]
+	if data then
 		if next(data) then
 			ZGV:Debug("&scan Server data: health %d, q %d-%d, p %s-%s,",data.health,data.q_lo,data.q_hi,ZGV.GetMoneyString(data.p_lo or -1),ZGV.GetMoneyString(data.p_hi or -1))
 		else
@@ -969,12 +1245,15 @@ function Scan:DebugItem(id)
 	if  ZGV.db.realm.gold_scan_data
 	and ZGV.db.realm.gold_scan_data[1]
 	and ZGV.db.realm.gold_scan_data[1][id] then
-		ZGV:Debug("&scan AH data:")
+		--ZGV:Debug("&scan AH data:")
+		local count=0
 		for k,v in pairs(ZGV.db.realm.gold_scan_data[1][id]) do
-			ZGV:Debug("&scan "..k..","..v)
+			--ZGV:Debug("&scan "..k..","..v)
+			count=count+1
 		end
+		ZGV:Debug("&scan Item debug: %d postings.",count)
 	else
-		ZGV:Debug("&scan No AH data for item")
+		ZGV:Debug("&scan Item debug: No postings for item.")
 	end
 
 	ZGV:Debug("&scan ZGV.Gold.Scan:GetPrice :")
@@ -985,3 +1264,82 @@ end
 function Scan:Debug(s,...)
 	return ZGV:Debug("&gold &scan &_SUB "..s,...)
 end
+
+
+function Scan:Crash()
+	self:SetState("SS_CRASHED")
+end
+
+
+
+function Scan:ImportHourly()
+	if not ZGV_IMPORT_HOURLY_TIME then return nil,"No hourly to import" end
+	if ZGV_IMPORT_HOURLY_TIME<(ZGV.db.realm.LastScan or 0) then return nil,"Current scan is newer than hourly" end
+	ZGV.db.realm.gold_scan_data = {[1]={},today=1}
+	for itemid,itemdata in pairs(ZGV_IMPORT_HOURLY_DATA) do
+		for buyout,quantity in pairs(itemdata) do
+			ZGV.db.realm.gold_scan_data[1][itemid]=ZGV.db.realm.gold_scan_data[1][itemid] or {}
+			ZGV.db.realm.gold_scan_data[1][itemid][buyout]=quantity
+		end
+	end
+	ZGV.db.realm.LastScan = ZGV_IMPORT_HOURLY_TIME
+	ZGV:Print("Imported 'hourly' data with timestamp "..ZGV.db.realm.LastScan)
+end
+
+
+
+--== PROXY
+	local lqkeys={name=1, minLevel=2, maxLevel=3, page=4, isUsable=5, qualityIndex=6, getAll=7, exactMatch=8, filterData=9}
+	local lqmeta = { __index = {
+		Get=function(t,key) return t[lqkeys[key] or 0] end,
+		Set=function(t,key,val) t[lqkeys[key] or 0]=val end,
+	}}
+	Scan.Proxy.lastQuery = {"",nil,nil,0}
+	setmetatable(Scan.Proxy.lastQuery,lqmeta)
+
+	function Scan.Proxy:PerformQuery(name, minLevel, maxLevel, page, isUsable, qualityIndex, getAll, exactMatch, filterData)
+		if not name then return end
+		self.lastQuery = {name, minLevel, maxLevel, tonumber(page), isUsable, qualityIndex, getAll, exactMatch, filterData}
+		setmetatable(self.lastQuery,lqmeta)
+
+		ZGV:Debug("&scan |cffffaaffPerforming Query: \"|cffffffff%s|cffffaaff\", page |cffffddff%d|cffffaaff, exact? %s, all? %s",name,page+1,exactMatch and "YES" or "no", getAll and "YES" or "no")
+		QueryAuctionItems(unpack(self.lastQuery))
+
+		self:UpdateDefaultUI()
+	end
+
+	function Scan.Proxy:GoToPage(page)
+		self.lastQuery:Set("page",page)
+		self:PerformQuery(unpack(self.lastQuery))
+	end
+
+	function Scan.Proxy:GetCurrentPage()
+		return self.lastQuery:Get("page")
+	end
+
+	function Scan.Proxy:IsFullScan()
+		return self.lastQuery:Get("getAll")
+	end
+
+	function Scan.Proxy:UpdateDefaultUI()
+		local name = self.lastQuery:Get("name")
+		local page = self.lastQuery:Get("page")
+
+		BrowseName:SetText(name)
+
+		AuctionFrameBrowse.page = page
+		FauxScrollFrame_SetOffset(BrowseScrollFrame,0)
+
+		--[[
+		AuctionFrameBid.page = page
+		FauxScrollFrame_SetOffset(BidScrollFrame,0)
+
+		AuctionFrameAuctions.page = page
+		--]]
+	end
+
+	function Scan.Proxy:UpdateFromDefaultUI()
+		self.lastQuery:Set("name",BrowseName:GetText())
+		self.lastQuery:Set("page",AuctionFrameBrowse.page)
+	end
+--==

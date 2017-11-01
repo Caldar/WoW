@@ -5,7 +5,7 @@
 local plugin = BigWigs:NewPlugin("Colors")
 if not plugin then return end
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Plugins")
+local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 
 --------------------------------------------------------------------------------
 -- Options
@@ -70,7 +70,7 @@ local function set(info, r, g, b, a)
 end
 local function reset(info)
 	local name, key = unpack(info.arg)
-	for k, v in next, plugin.db.profile do
+	for k in next, plugin.db.profile do
 		plugin.db.profile[k][name][key] = nil
 	end
 end

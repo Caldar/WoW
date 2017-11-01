@@ -3,11 +3,11 @@ if not ZygorGuidesViewer then return end
 if UnitFactionGroup("player")~="Horde" then return end
 if ZGV:DoMutex("GarrisonHWOD") then return end
 ZygorGuidesViewer.GuideMenuTier = "WOD"
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Small Buildings\\Alchemy Lab",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Small Buildings\\Alchemy Lab",{
 description="This guide will walk you through creating and upgrading the Alchemy Lab Garrison building.",
 },[[
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Select the _Small_ tab at the top
 Drag _Alchemy Lab_ to a _Small Plot_
 Build your Alchemy Lab |havebuilding Alchemy
@@ -15,10 +15,10 @@ step
 Wait for your Alchemy Lab to be Built |havebuilding Alchemy,1,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Alchemy"
+#include "Garrison_Finalize_Small", building="Alchemy"
 Finalize the Level 1 Alchemy Lab |havebuilding Alchemy,1,active
 step
-#include "H_Garrison_Small_Building", action="talk Albert de Hyde##79813", building="Alchemy"
+#include "Garrison_Small_Building", action="talk Albert de Hyde##79813", building="Alchemy"
 accept Your First Alchemy Work Order##37568
 step
 #include "auctioneer_warspear"
@@ -29,15 +29,15 @@ click Frostweed##228571+
 |tip They look like small blue glowing plants on the ground around this area.
 collect 5 Frostweed##109124 |q 37568 |goto Frostfire Ridge/0 54.1,64.1
 step
-#include "H_Garrison_Small_Building", action="talk Keyana Tone##79814", building="Alchemy"
+#include "Garrison_Small_Building", action="talk Keyana Tone##79814", building="Alchemy"
 Tell her _"I would like to place a work order."_
 Click _Start Work Order_
 Start the Alchemy Work Order |q Your First Alchemy Work Order##37568/1
 step
-#include "H_Garrison_Small_Building", action="click Alchemy Work Order##235892", building="Alchemy"
+#include "Garrison_Small_Building", action="click Alchemy Work Order##235892", building="Alchemy"
 Collect the Alchemy Work Order |q Your First Alchemy Work Order##37568/2
 step
-#include "H_Garrison_Small_Building", action="talk Keyana Tone##79814", building="Alchemy"
+#include "Garrison_Small_Building", action="talk Keyana Tone##79814", building="Alchemy"
 turnin Your First Alchemy Work Order##37568
 step
 Reach level 96 |ding 96 |or
@@ -46,13 +46,13 @@ _Or_
 Complete the Talador Outpost questline |condition completedq(34569) or completedq(34632) |or
 |tip Use the Talador Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Alchemy Lab, Level 2##111929 |condition itemcount(111929) > 0 or hasblueprint("Alchemy",2)
 step
 use Garrison Blueprint: Alchemy Lab, Level 2##111929
 Learn the Alchemy Lab, Level 2 Blueprint |condition hasblueprint("Alchemy",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Alchemy Lab
 Click _Upgrade_
 Upgrade your Alchemy Lab to Level 2 |havebuilding Alchemy,2,building
@@ -60,10 +60,10 @@ step
 Wait for your Alchemy Lab to be built |havebuilding Alchemy,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Alchemy"
+#include "Garrison_Finalize_Small", building="Alchemy"
 Finalize the Level 2 Alchemy Lab |havebuilding Alchemy,2,active
 step
-#include "H_Garrison_Small_Building", action="talk Keyana Tone##79814", building="Alchemy"
+#include "Garrison_Small_Building", action="talk Keyana Tone##79814", building="Alchemy"
 Tell her _"I would like to place a work order"_
 Click _Start Work Order_
 Complete 250 Work Orders |achieve 9406
@@ -72,13 +72,13 @@ step
 Upgrade your Garrison to level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Alchemy Lab, Level 3##111930 |condition itemcount(111930) > 0 or hasblueprint("Alchemy",3)
 step
 use Garrison Blueprint: Alchemy Lab, Level 3##111930
 Learn the Alchemy Lab, Level 3 Blueprint |condition hasblueprint("Alchemy",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Alchemy Lab
 Click _Upgrade_
 Upgrade your Alchemy Lab to Level 3 |havebuilding Alchemy,3,building
@@ -86,16 +86,16 @@ step
 Wait for your Alchemy Lab to be Built |havebuilding Alchemy,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Alchemy"
+#include "Garrison_Finalize_Small", building="Alchemy"
 Finalize the Level 3 Alchemy Lab |havebuilding Alchemy,3,active
 step
 Congratulations, you've finished upgrading your Alchemy Lab!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Small Buildings\\Enchanter's Study",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Small Buildings\\Enchanter's Study",{
 description="This guide will walk you through creating and upgrading the Enchanter's Study Garrison building.",
 },[[
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Select the _Small_ tab at the top
 Drag _Enchanter's Study_ to a _Small Plot_
 Build your Enchanter's Study |havebuilding Enchanting
@@ -103,10 +103,10 @@ step
 Wait for your Enchanter's Study to be Built |havebuilding Enchanting,1,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Enchanting"
+#include "Garrison_Finalize_Small", building="Enchanting"
 Finalize the Level 1 Enchanter's Study |havebuilding Enchanting,1,active
 step
-#include "H_Garrison_Small_Building", action="talk Yukla Greenshadow##79821", building="Enchanting"
+#include "Garrison_Small_Building", action="talk Yukla Greenshadow##79821", building="Enchanting"
 accept Your First Enchanting Work Order##37570
 step
 #include "auctioneer_warspear"
@@ -118,15 +118,15 @@ Disenchant any green or blue items you loot
 collect 5 Draenic Dust##109693 |q 37570
 |tip You can only do this if you have the Enchanting skill.
 step
-#include "H_Garrison_Small_Building", action="talk Garra##79820", building="Enchanting"
+#include "Garrison_Small_Building", action="talk Garra##79820", building="Enchanting"
 Tell her _"I would like to place a work order."_
 Click _Start Work Order_
 Start the Enchanting Work Order |q Your First Enchanting Work Order##37570/1
 step
-#include "H_Garrison_Small_Building", action="click Enchanting Work Order##237138", building="Enchanting"
+#include "Garrison_Small_Building", action="click Enchanting Work Order##237138", building="Enchanting"
 Collect the Enchanting Work Order |q Your First Enchanting Work Order##37570/2
 step
-#include "H_Garrison_Small_Building", action="talk Garra##79820", building="Enchanting"
+#include "Garrison_Small_Building", action="talk Garra##79820", building="Enchanting"
 turnin Your First Enchanting Work Order##37570
 step
 Reach level 96 |ding 96 |or
@@ -135,13 +135,13 @@ _Or_
 Complete the Talador Outpost questline |condition completedq(34569) or completedq(34632) |or
 |tip Use the Talador Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Enchanter's Study, Level 2##111972 |condition itemcount(111972) > 0 or hasblueprint("Enchanting",2)
 step
 use Garrison Blueprint: Enchanter's Study, Level 2##111972
 Learn the Enchanter's Study, Level 2 Blueprint |condition hasblueprint("Enchanting",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Enchanter's Study
 Click _Upgrade_
 Upgrade your Enchanter's Study to Level 2 |havebuilding Enchanting,2,building
@@ -149,10 +149,10 @@ step
 Wait for your Enchanter's Study to be Built |havebuilding Enchanting,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Enchanting"
+#include "Garrison_Finalize_Small", building="Enchanting"
 Finalize the Level 2 Enchanter's Study |havebuilding Enchanting,2,active
 step
-#include "H_Garrison_Small_Building", action="talk Garra##79820", building="Enchanting"
+#include "Garrison_Small_Building", action="talk Garra##79820", building="Enchanting"
 Tell her _"I would like to place a work order"_
 Click _Start Work Order_
 Complete 250 Work Orders |achieve 9406
@@ -161,13 +161,13 @@ step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Enchanter's Study, Level 3##111973 |condition itemcount(111973) > 0 or hasblueprint("Enchanting",3)
 step
 use Garrison Blueprint: Enchanter's Study, Level 3##111973
 Learn the Enchanter's Study, Level 3 Blueprint |condition hasblueprint("Enchanting",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Enchanter's Study
 Click _Upgrade_
 Upgrade your Enchanter's Study to Level 3 |havebuilding Enchanting,3,building
@@ -175,16 +175,16 @@ step
 Wait for your Enchanter's Study to be Built |havebuilding Enchanting,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Enchanting"
+#include "Garrison_Finalize_Small", building="Enchanting"
 Finalize the Level 3 Enchanter's Study |havebuilding Enchanting,3,active
 step
 Congratulations, you've finished upgrading your Enchanter's Study!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Small Buildings\\Engineering Works",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Small Buildings\\Engineering Works",{
 description="This guide will walk you through creating and upgrading the Engineering Works Garrison building.",
 },[[
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Select the _Small_ tab at the top
 Drag _Engineering Works_ to a _Small Plot_
 Build your Engineering Works |havebuilding Engineering
@@ -192,10 +192,10 @@ step
 Wait for your Engineering Works to be Built |havebuilding Engineering,1,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Engineering"
+#include "Garrison_Finalize_Small", building="Engineering"
 Finalize the Level 1 Engineering Works |havebuilding Engineering,1,active
 step
-#include "H_Garrison_Small_Building", action="talk Pozzlow##79826", building="Engineering"
+#include "Garrison_Small_Building", action="talk Pozzlow##79826", building="Engineering"
 accept Your First Engineering Work Order##37571
 step
 #include "auctioneer_warspear"
@@ -208,15 +208,15 @@ click True Iron Deposit##228493+
 collect 2 True Iron Ore##109119 |goto Frostfire Ridge/0 38.5,59.5 |q 37571
 |tip These can be found around the cliffs in this area. They can also be mined in your Frostwall Mines, if you have one.
 step
-#include "H_Garrison_Small_Building", action="talk Garbra Fizzwonk##86696", building="Engineering"
+#include "Garrison_Small_Building", action="talk Garbra Fizzwonk##86696", building="Engineering"
 Tell her _"I would like to place a work order"_
 Click _Start Work Order_
 Start the Engineering Work Order |q Your First Engineering Work Order##37571/1
 step
-#include "H_Garrison_Small_Building", action="click Engineering Work Order##237146", building="Engineering"
+#include "Garrison_Small_Building", action="click Engineering Work Order##237146", building="Engineering"
 Collect the Engineering Work Order |q Your First Engineering Work Order##37571/2
 step
-#include "H_Garrison_Small_Building", action="talk Garbra Fizzwonk##86696", building="Engineering"
+#include "Garrison_Small_Building", action="talk Garbra Fizzwonk##86696", building="Engineering"
 turnin Your First Engineering Work Order##37571
 step
 Reach level 96 |ding 96 |or
@@ -225,13 +225,13 @@ _Or_
 Complete the Talador Outpost questline |condition completedq(34569) or completedq(34632) |or
 |tip Use the Talador Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Engineering Works, Level 2##109256 |condition itemcount(109256) > 0 or hasblueprint("Engineering",2)
 step
 use Garrison Blueprint: Engineering Works, Level 2##109256
 Learn the Engineering Works, Level 2 Blueprint |condition hasblueprint("Engineering",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Engineering Works
 Click _Upgrade_
 Upgrade your Engineering Works to Level 2 |havebuilding Engineering,2,building
@@ -239,10 +239,10 @@ step
 Wait for your Engineering Works to be Built |havebuilding Engineering,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Engineering"
+#include "Garrison_Finalize_Small", building="Engineering"
 Finalize the Level 2 Engineering Works |havebuilding Engineering,2,active
 step
-#include "H_Garrison_Small_Building", action="talk Garbra Fizzwonk##86696", building="Engineering"
+#include "Garrison_Small_Building", action="talk Garbra Fizzwonk##86696", building="Engineering"
 Tell her _"I would like to place a work order"_
 Click _Start Work Order_
 Complete 250 Work Orders |achieve 9406
@@ -251,13 +251,13 @@ step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Engineering Works, Level 3##109257 |condition itemcount(109257) > 0 or hasblueprint("Engineering",3)
 step
 use Garrison Blueprint: Engineering Works, Level 3##109257
 Learn the Engineering Works, Level 3 Blueprint |condition hasblueprint("Engineering",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Engineering Works
 Click _Upgrade_
 Upgrade your Engineering Works to Level 3 |havebuilding Engineering,3,building
@@ -265,16 +265,16 @@ step
 Wait for your Engineering Works to be Built |havebuilding Engineering,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Engineering"
+#include "Garrison_Finalize_Small", building="Engineering"
 Finalize the Level 3 Engineering Works |havebuilding Engineering,3,active
 step
 Congratulations, you've finished upgrading your Engineering Works!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Small Buildings\\The Forge",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Small Buildings\\The Forge",{
 description="This guide will walk you through creating and upgrading The Forge Garrison building.",
 },[[
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Select the _Small_ tab at the top
 Drag _The Forge_ to a _Small Plot_
 Build your Forge |havebuilding Blacksmith
@@ -282,10 +282,10 @@ step
 Wait for your Forge to be Built |havebuilding Blacksmith,1,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Blacksmith"
+#include "Garrison_Finalize_Small", building="Blacksmith"
 Finalize the Level 1 Forge |havebuilding Blacksmith,1,active
 step
-#include "H_Garrison_Small_Building", action="talk Orgek Ironhand##79867", building="Blacksmith"
+#include "Garrison_Small_Building", action="talk Orgek Ironhand##79867", building="Blacksmith"
 accept Your First Blacksmithing Work Order##37569
 step
 #include "auctioneer_warspear"
@@ -296,15 +296,15 @@ click True Iron Deposit##228493+
 collect 5 True Iron Ore##109119 |goto Frostfire Ridge/0 38.5,59.5 |q 37569
 |tip These can be found around the cliffs in this area. They can also be mined in your Frostwall Mines, if you have one.
 step
-#include "H_Garrison_Small_Building", action="talk Kinja##79817", building="Blacksmith"
+#include "Garrison_Small_Building", action="talk Kinja##79817", building="Blacksmith"
 Tell her _"I would like to place a work order"_
 Click _Start Work Order_
 Start the Blacksmithing Work Order |q Your First Blacksmithing Work Order##37569/1
 step
-#include "H_Garrison_Small_Building", action="click Blacksmithing Work Order##236641", building="Blacksmith"
+#include "Garrison_Small_Building", action="click Blacksmithing Work Order##236641", building="Blacksmith"
 Collect the Blacksmithing Work Order |q Your First Blacksmithing Work Order##37569/2
 step
-#include "H_Garrison_Small_Building", action="talk Kinja##79817", building="Blacksmith"
+#include "Garrison_Small_Building", action="talk Kinja##79817", building="Blacksmith"
 turnin Your First Blacksmithing Work Order##37569
 step
 Reach level 96 |ding 96 |or
@@ -313,13 +313,13 @@ _Or_
 Complete the Talador Outpost questline |condition completedq(34569) or completedq(34632) |or
 |tip Use the Talador Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: The Forge, Level 2##111990 |condition itemcount(111990) > 0 or hasblueprint("Blacksmith",2)
 step
 use Garrison Blueprint: The Forge, Level 2##111990
 Learn the Forge, Level 2 Blueprint |condition hasblueprint("Blacksmith",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Forge
 Click _Upgrade_
 Upgrade your Forge to Level 2 |havebuilding Blacksmith,2,building
@@ -327,10 +327,10 @@ step
 Wait for your Forge to be Built |havebuilding Blacksmith,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Blacksmith"
+#include "Garrison_Finalize_Small", building="Blacksmith"
 Finalize the Level 2 Forge |havebuilding Blacksmith,2,active
 step
-#include "H_Garrison_Small_Building", action="talk Kinja##79817", building="Blacksmith"
+#include "Garrison_Small_Building", action="talk Kinja##79817", building="Blacksmith"
 Tell her _"I would like to place a work order"_
 Click _Start Work Order_
 Complete 250 Work Orders |achieve 9406
@@ -339,13 +339,13 @@ step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: The Forge, Level 3##111991 |condition itemcount(111991) > 0 or hasblueprint("Blacksmith",3)
 step
 use Garrison Blueprint: The Forge, Level 3##111991
 Learn the Forge, Level 3 Blueprint |condition hasblueprint("Blacksmith",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Forge
 Click _Upgrade_
 Upgrade your Forge to Level 3 |havebuilding Blacksmith,3,building
@@ -353,16 +353,16 @@ step
 Wait for your Forge to be Built |havebuilding Blacksmith,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Blacksmith"
+#include "Garrison_Finalize_Small", building="Blacksmith"
 Finalize the Level 3 Forge |havebuilding Blacksmith,3,active
 step
 Congratulations, you've finished upgrading your Forge!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Small Buildings\\Gem Boutique",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Small Buildings\\Gem Boutique",{
 description="This guide will walk you through creating and upgrading the Gem Boutique Garrison building.",
 },[[
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Select the _Small_ tab at the top
 Drag _Gem Boutique_ to a _Small Plot_
 Build your Gem Boutique |havebuilding Jewelcrafting
@@ -370,10 +370,10 @@ step
 Wait for your Gem Boutique to be Built |havebuilding Jewelcrafting,1,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Jewelcrafting"
+#include "Garrison_Finalize_Small", building="Jewelcrafting"
 Finalize the Level 1 Gem Boutique |havebuilding Jewelcrafting,1,active
 step
-#include "H_Garrison_Small_Building", action="talk Dorogarr##79832", building="Jewelcrafting"
+#include "Garrison_Small_Building", action="talk Dorogarr##79832", building="Jewelcrafting"
 accept Your First Jewelcrafting Work Order##37573
 step
 #include "auctioneer_warspear"
@@ -384,15 +384,15 @@ click Blackrock Deposit##228563+
 collect 5 Blackrock Ore##109118 |goto Shadowmoon Valley D/0 30.0,30.0 |condition completedq(37573)
 |tip You can also get these by mining ore nodes in your Frostwall Mines Garrison building, if you have one.
 step
-#include "H_Garrison_Small_Building", action="talk Elrondir Surrion##79830", building="Jewelcrafting"
+#include "Garrison_Small_Building", action="talk Elrondir Surrion##79830", building="Jewelcrafting"
 Tell her _"I would like to place a Work Order"_
 Click _Start Work Order_
 Start the Jewelcrafting Work Order |q Your First Jewelcrafting Work Order##37573/1
 step
-#include "H_Garrison_Small_Building", action="click Jewelcrafting Work Order##236652", building="Jewelcrafting"
+#include "Garrison_Small_Building", action="click Jewelcrafting Work Order##236652", building="Jewelcrafting"
 Collect the Jewelcrafting Work Order |q Your First Jewelcrafting Work Order##37573/2
 step
-#include "H_Garrison_Small_Building", action="talk Elrondir Surrion##79830", building="Jewelcrafting"
+#include "Garrison_Small_Building", action="talk Elrondir Surrion##79830", building="Jewelcrafting"
 turnin Your First Jewelcrafting Work Order##37573
 step
 Reach level 96 |ding 96 |or
@@ -401,13 +401,13 @@ _Or_
 Complete the Talador Outpost questline |condition completedq(34569) or completedq(34632) |or
 |tip Use the Talador Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Gem Boutique, Level 2##111974 |condition itemcount(111974) > 0 or hasblueprint("Jewelcrafting",2)
 step
 use Garrison Blueprint: Gem Boutique, Level 2##111974
 Learn the Gem Boutique, Level 2 Blueprint |condition hasblueprint("Jewelcrafting",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Gem Boutique
 Click _Upgrade_
 Upgrade your Gem Boutique to Level 2 |havebuilding Jewelcrafting,2,building
@@ -415,10 +415,10 @@ step
 Wait for your Gem Boutique to be Built |havebuilding Jewelcrafting,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Jewelcrafting"
+#include "Garrison_Finalize_Small", building="Jewelcrafting"
 Finalize the Level 1 Gem Boutique |havebuilding Jewelcrafting,2,active
 step
-#include "H_Garrison_Small_Building", action="talk Elrondir Surrion##79830", building="Jewelcrafting"
+#include "Garrison_Small_Building", action="talk Elrondir Surrion##79830", building="Jewelcrafting"
 Tell her _"I would like to place a Work Order"_
 Click _Start Work Order_
 Complete 250 Work Orders |achieve 9406
@@ -427,13 +427,13 @@ step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Gem Boutique, Level 3##111975 |condition itemcount(111975) > 0 or hasblueprint("Jewelcrafting",3)
 step
 use Garrison Blueprint: Gem Boutique, Level 3##111975
 Learn the Gem Boutique, Level 3 Blueprint |condition hasblueprint("Jewelcrafting",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Forge
 Click _Upgrade_
 Upgrade your Gem Boutique to Level 3 |havebuilding Jewelcrafting,3,building
@@ -441,25 +441,25 @@ step
 Wait for your Gem Boutique to be Built |havebuilding Jewelcrafting,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Jewelcrafting"
+#include "Garrison_Finalize_Small", building="Jewelcrafting"
 Finalize the Level 3 Gem Boutique |havebuilding Jewelcrafting,3,active
 step
 Congratulations, you've finished upgrading your Gem Boutique!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Small Buildings\\Salvage Yard",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Small Buildings\\Salvage Yard",{
 description="This guide will walk you through creating and upgrading the Salvage Yard Garrison building.",
 },[[
 step
 Complete the Pinchwhistle Gearworks questline |condition completedq(35298)
 |tip Use the Spires of Arak Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Salvage Yard, Level 1##111957 |condition itemcount(111957) > 0 or hasblueprint("SalvageYard",1)
 step
 use Garrison Blueprint: Salvage Yard, Level 1##111957
 Learn the Salvage Yard, Level 1 Blueprint |condition hasblueprint("SalvageYard",1)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Select the _Small_ tab at the top
 Drag _Salvage Yard_ to a _Small Plot_
 Build your Salvage Yard |havebuilding SalvageYard,1,building
@@ -467,16 +467,16 @@ step
 Wait for your Salvage Yard to be Built |havebuilding SalvageYard,1,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="SalvageYard"
+#include "Garrison_Finalize_Small", building="SalvageYard"
 Finalize the Level 1 Salvage Yard |havebuilding SalvageYard,1,active
 step
-#include "H_Garrison_Small_Building", action="talk Lumba the Crusher##79857", building="SalvageYard"
+#include "Garrison_Small_Building", action="talk Lumba the Crusher##79857", building="SalvageYard"
 accept Salvaging the Situation##37045
 step
 use Small Sack of Salvaged Goods##118473
 Open the Sack of Salvaged Goods |q Salvaging the Situation##37045/1
 step
-#include "H_Garrison_Small_Building", action="talk Lumba the Crusher##79857", building="SalvageYard"
+#include "Garrison_Small_Building", action="talk Lumba the Crusher##79857", building="SalvageYard"
 turnin Salvaging the Situation##37045
 step
 Reach level 96 |ding 96 |or
@@ -485,13 +485,13 @@ _Or_
 Complete the Talador Outpost questline |condition completedq(34569) or completedq(34632) |or
 |tip Use the Talador Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Salvage Yard, Level 2##111976 |condition itemcount(111976) > 0 or hasblueprint("SalvageYard",2)
 step
 use Garrison Blueprint: Salvage Yard, Level 2##111976
 Learn the Salvage Yard, Level 2 Blueprint |condition hasblueprint("SalvageYard",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Salvage Yard
 Click _Upgrade_
 Upgrade your Salvage Yard to Level 2 |havebuilding SalvageYard,2,building
@@ -499,10 +499,10 @@ step
 Wait for your Salvage Yard to be Built |havebuilding SalvageYard,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="SalvageYard"
+#include "Garrison_Finalize_Small", building="SalvageYard"
 Finalize the Level 2 Salvage Yard |havebuilding SalvageYard,2,active
 step
-#include "H_Garrison_Small_Building", action="In your Salvage Yard:", building="SalvageYard"
+#include "Garrison_Small_Building", action="In your Salvage Yard:", building="SalvageYard"
 use Bag of Salvaged Goods##114116
 |tip You get these when your followers successfully complete level 90-94 Garrison missions.
 use Crate of Salvage##114119
@@ -510,13 +510,13 @@ use Crate of Salvage##114119
 Open 100 Pieces of Salvage |achieve 9468
 |tip You must be standing next to the Incinerator in your Salvage Yard.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Salvage Yard, Level 3##111977 |condition itemcount(111977) > 0 or hasblueprint("SalvageYard",3)
 step
 use Garrison Blueprint: Salvage Yard, Level 3##111977
 Learn the Salvage Yard, Level 3 Blueprint |condition hasblueprint("SalvageYard",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Salvage Yard
 Click _Upgrade_
 Upgrade your Salvage Yard to Level 3 |havebuilding SalvageYard,3,building
@@ -524,16 +524,16 @@ step
 Wait for your Salvage Yard to be Built |havebuilding SalvageYard,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="SalvageYard"
+#include "Garrison_Finalize_Small", building="SalvageYard"
 Finalize the Level 3 Salvage Yard |havebuilding SalvageYard,3,active
 step
 Congratulations, you've finished upgrading your Salvage Yard!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Small Buildings\\Scribe's Quarters",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Small Buildings\\Scribe's Quarters",{
 description="This guide will walk you through creating and upgrading the Scribe's Quarters Garrison building.",
 },[[
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Select the _Small_ tab at the top
 Drag _Scribe's Quarters_ to a _Small Plot_
 Build your Scribe's Quarters |havebuilding Inscription
@@ -541,10 +541,10 @@ step
 Wait for your Scribe's Quarters to be Built |havebuilding Inscription,1,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Inscription"
+#include "Garrison_Finalize_Small", building="Inscription"
 Finalize the Level 1 Scribe's Quarters |havebuilding Inscription,1,active
 step
-#include "H_Garrison_Small_Building", action="talk Urgra##79829", building="Inscription"
+#include "Garrison_Small_Building", action="talk Urgra##79829", building="Inscription"
 accept Your First Inscription Work Order##37572
 step
 #include "auctioneer_warspear"
@@ -556,15 +556,15 @@ Mill the herbs |cast Milling##51005
 collect 2 Cerulean Pigment##114931 |conditon completedq(37572)
 |tip You can also get these by gathering herbs and milling them at your Herb Garden Garrison building, if you have one.
 step
-#include "H_Garrison_Small_Building",action="talk Y'rogg##79831", building="Inscription"
+#include "Garrison_Small_Building",action="talk Y'rogg##79831", building="Inscription"
 Tell him _"I would like to place a work order"_
 Click _Start Work Order_
 Start the Inscription Work Order |q Your First Inscription Work Order##37572/1
 step
-#include "H_Garrison_Small_Building",action="click Inscription Work Order##236649", building="Inscription"
+#include "Garrison_Small_Building",action="click Inscription Work Order##236649", building="Inscription"
 Collect the Inscription Work Order |q Your First Inscription Work Order##37572/2
 step
-#include "H_Garrison_Small_Building",action="talk Y'rogg##79831", building="Inscription"
+#include "Garrison_Small_Building",action="talk Y'rogg##79831", building="Inscription"
 turnin Your First Inscription Work Order##37572
 step
 Reach level 96 |ding 96 |or
@@ -573,13 +573,13 @@ _Or_
 Complete the Talador Outpost questline |condition completedq(34569) or completedq(34632) |or
 |tip Use the Talador Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Scribe's Quarters, Level 2##111978 |condition itemcount(111978) > 0 or hasblueprint("Inscription",2)
 step
 use Garrison Blueprint: Scribe's Quarters, Level 2##111978
 Learn the Scribe's Quarters, Level 2 Blueprint |condition hasblueprint("Inscription",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Scribe's Quarters
 Click _Upgrade_
 Upgrade your Scribe's Quarters to Level 2 |havebuilding Inscription,2,building
@@ -587,10 +587,10 @@ step
 Wait for your Scribe's Quarters to be Built |havebuilding Inscription,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Inscription"
+#include "Garrison_Finalize_Small", building="Inscription"
 Finalize the Level 2 Scribe's Quarters |havebuilding Inscription,2,active
 step
-#include "H_Garrison_Small_Building",action="talk Y'rogg##79831", building="Inscription"
+#include "Garrison_Small_Building",action="talk Y'rogg##79831", building="Inscription"
 Tell him _"I would like to place a work order"_
 Click _Start Work Order_
 Complete 250 Work Orders |achieve 9406
@@ -599,13 +599,13 @@ step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Scribe's Quarters, Level 3##111979 |condition itemcount(111979) > 0 or hasblueprint("Inscription",3)
 step
 use Garrison Blueprint: Scribe's Quarters, Level 3##111979
 Learn the Scribe's Quarters, Level 3 Blueprint |condition hasblueprint("Inscription",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Scribe's Quarters
 Click _Upgrade_
 Upgrade your Scribe's Quarters to Level 3 |havebuilding Inscription,3,building
@@ -613,16 +613,16 @@ step
 Wait for your Scribe's Quarters to be Built |havebuilding Inscription,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Inscription"
+#include "Garrison_Finalize_Small", building="Inscription"
 Finalize the Level 3 Scribe's Quarters |havebuilding Inscription,3,active
 step
 Congratulations, you've finished upgrading your Scribe's Quarters!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Small Buildings\\Storehouse",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Small Buildings\\Storehouse",{
 description="This guide will walk you through creating and upgrading the Storehouse Garrison building.",
 },[[
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Select the _Small_ tab at the top
 Drag _Storehouse_ to a _Small Plot_
 Build your Storehouse |havebuilding Storehouse
@@ -630,17 +630,17 @@ step
 Wait for your Storehouse to be Built |havebuilding Storehouse,1,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Storehouse"
+#include "Garrison_Finalize_Small", building="Storehouse"
 Finalize the Level 1 Storehouse |havebuilding Storehouse,1,active
 step
-#include "H_Garrison_Small_Building", action="talk Yorn Longhoof##79862", building="Storehouse"
+#include "Garrison_Small_Building", action="talk Yorn Longhoof##79862", building="Storehouse"
 accept Lost in Transition##37060
 step
 click Crate of Surplus Material##6478+
 |tip They look like small wooden crates on the ground all around your garrison.
 collect 5 Crate of Surplus Materials##118417 |q Lost in Transition##37060/1 |goto Frostwall 53.1,49.1
 step
-#include "H_Garrison_Small_Building", action="talk Yorn Longhoof##79862", building="Storehouse"
+#include "Garrison_Small_Building", action="talk Yorn Longhoof##79862", building="Storehouse"
 turnin Lost in Transition##37060
 step
 Reach level 96 |ding 96 |or
@@ -649,13 +649,13 @@ _Or_
 Complete the Talador Outpost questline |condition completedq(34569) or completedq(34632) |or
 |tip Use the Talador Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Storehouse, Level 2##111982 |condition itemcount(111982) > 0 or hasblueprint("Storehouse",2)
 step
 use Garrison Blueprint: Storehouse, Level 2##111982
 Learn the Storehoue, Level 2 Blueprint |condition hasblueprint("Storehouse",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Storehouse
 Click _Upgrade_
 Upgrade your Storehouse to Level 2 |havebuilding Storehouse,2,building
@@ -663,7 +663,7 @@ step
 Wait for your Storehouse to be Built |havebuilding Storehouse,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Storehouse"
+#include "Garrison_Finalize_Small", building="Storehouse"
 Finalize the Level 2 Storehouse |havebuilding Storehouse,2,active
 step
 Reach Level 100 |ding 100
@@ -675,13 +675,13 @@ step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Storehouse, Level 3##111983 |condition itemcount(111983) > 0 or hasblueprint("Storehouse",3)
 step
 use Garrison Blueprint: Storehouse, Level 3##111983
 Learn the Storehoue, Level 3 Blueprint |condition hasblueprint("Storehouse",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Storehouse
 Click _Upgrade_
 Upgrade your Storehouse to Level 3 |havebuilding Storehouse,3,building
@@ -689,16 +689,16 @@ step
 Wait for your Storehouse to be Built |havebuilding Storehouse,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Storehouse"
+#include "Garrison_Finalize_Small", building="Storehouse"
 Finalize the Level 3 Storehouse |havebuilding Storehouse,3,active
 step
 Congratulations, you've finished upgrading your Storehouse!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Small Buildings\\Tailoring Emporium",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Small Buildings\\Tailoring Emporium",{
 description="This guide will walk you through creating and upgrading the Tailoring Emporium Garrison building.",
 },[[
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Select the _Small_ tab at the top
 Drag _Tailoring Emporium_ to a _Small Plot_
 Build your Tailoring Emporium |havebuilding Tailoring
@@ -706,10 +706,10 @@ step
 Wait for your Tailoring Emporium to be Built |havebuilding Tailoring,1,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Tailoring"
+#include "Garrison_Finalize_Small", building="Tailoring"
 Finalize the Level 1 Tailoring Emporium |havebuilding Tailoring,1,active
 step
-#include "H_Garrison_Small_Building", action="talk Warra the Weaver##79864", building="Tailoring"
+#include "Garrison_Small_Building", action="talk Warra the Weaver##79864", building="Tailoring"
 accept Your First Tailoring Work Order##37575
 step
 #include "auctioneer_warspear"
@@ -719,15 +719,15 @@ _Or_
 kill Wooly Clefthoof##72162+
 collect 5 Sumptuous Fur##111557 |goto Frostfire Ridge 25.8,46.0 |condition completedq(37575)
 step
-#include "H_Garrison_Small_Building", action="talk Turga##79863", building="Tailoring"
+#include "Garrison_Small_Building", action="talk Turga##79863", building="Tailoring"
 Tell her _"I would like to place a work order"_
 Click _Start Work Order_
 Start the Tailoring Work Order |q Your First Tailoring Work Order##37575/1
 step
-#include "H_Garrison_Small_Building", action="click Tailoring Work Order##237665", building="Tailoring"
+#include "Garrison_Small_Building", action="click Tailoring Work Order##237665", building="Tailoring"
 Collect the Tailoring Work Order |q Your First Tailoring Work Order##37575/2
 step
-#include "H_Garrison_Small_Building", action="talk Turga##79863", building="Tailoring"
+#include "Garrison_Small_Building", action="talk Turga##79863", building="Tailoring"
 turnin Your First Tailoring Work Order##37575
 step
 Reach level 96 |ding 96 |or
@@ -736,13 +736,13 @@ _Or_
 Complete the Talador Outpost questline |condition completedq(34569) or completedq(34632) |or
 |tip Use the Talador Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Tailoring Emporium, Level 2##111992 |condition itemcount(111992) > 0 or hasblueprint("Tailoring",2)
 step
 use Garrison Blueprint: Tailoring Emporium, Level 2##111992
 Learn the Tailoring Emporium, Level 2 Blueprint |condition hasblueprint("Tailoring",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Tailoring Emporium
 Click _Upgrade_ |condition hasbuilding(127,2)
 Upgrade your Tailoring Emporium to Level 2 |havebuilding Tailoring,2,building
@@ -750,10 +750,10 @@ step
 Wait for your Tailoring Emporium to be Built |havebuilding Tailoring,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Tailoring"
+#include "Garrison_Finalize_Small", building="Tailoring"
 Finalize the Level 2 Tailoring Emporium |havebuilding Tailoring,2,active
 step
-#include "H_Garrison_Small_Building", action="talk Turga##79863", building="Tailoring"
+#include "Garrison_Small_Building", action="talk Turga##79863", building="Tailoring"
 Tell her _"I would like to place a work order"_
 Click _Start Work Order_
 Complete 250 Work Orders |achieve 9406
@@ -762,13 +762,13 @@ step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Tailoring Emporium, Level 3##111993 |condition itemcount(111993) > 0 or hasblueprint("Tailoring",3)
 step
 use Garrison Blueprint: Tailoring Emporium, Level 3##111993
 Learn the Tailoring Emporium, Level 3 Blueprint |condition hasblueprint("Tailoring",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Tailoring Emporium
 Click _Upgrade_
 Upgrade your Tailoring Emporium to Level 3 |havebuilding Tailoring,3,building
@@ -776,16 +776,16 @@ step
 Wait for your Tailoring Emporium to be Built |havebuilding Tailoring,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Tailoring"
+#include "Garrison_Finalize_Small", building="Tailoring"
 Finalize the Level 3 Tailoring Emporium |havebuilding Tailoring,3,active
 step
 Congratulations, you've finished upgrading your Tailoring Emporium!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Small Buildings\\The Tannery",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Small Buildings\\The Tannery",{
 description="This guide will walk you through creating and upgrading The Tannery Garrison building.",
 },[[
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Select the _Small_ tab at the top
 Drag _The Tannery_ to a _Small Plot_
 Build your Tannery |havebuilding Leatherworking
@@ -793,10 +793,10 @@ step
 Wait for your Tannery to be Built |havebuilding Leatherworking,1,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Leatherworking"
+#include "Garrison_Finalize_Small", building="Leatherworking"
 Finalize the Level 1 Tannery |havebuilding Leatherworking,1,active
 step
-#include "H_Garrison_Small_Building", action="talk Murne Greenhoof##79834", building="Leatherworking"
+#include "Garrison_Small_Building", action="talk Murne Greenhoof##79834", building="Leatherworking"
 accept Your First Leatherworking Work Order##37574
 step
 #include "auctioneer_warspear"
@@ -807,15 +807,15 @@ kill Wooly Clefthoof##72162+
 |tip Skin your kills.
 collect 5 Raw Beast Hide##110609 |goto Frostfire Ridge 25.8,46.0 |condition completedq(37574)
 step
-#include "H_Garrison_Small_Building", action="talk Yanney##79833", building="Leatherworking"
+#include "Garrison_Small_Building", action="talk Yanney##79833", building="Leatherworking"
 Tell her _"I would like to place a Work Order"_
 Click _Start Work Order_
 Start the Leatherworking Work Order |q Your First Leatherworking Work Order##37574/1
 step
-#include "H_Garrison_Small_Building", action="click Leatherworking Work Order##236948", building="Leatherworking"
+#include "Garrison_Small_Building", action="click Leatherworking Work Order##236948", building="Leatherworking"
 Collect the Leatherworking Work Order |q Your First Leatherworking Work Order##37574/2
 step
-#include "H_Garrison_Small_Building", action="talk Yanney##79833", building="Leatherworking"
+#include "Garrison_Small_Building", action="talk Yanney##79833", building="Leatherworking"
 turnin Your First Leatherworking Work Order##37574
 step
 Reach level 96 |ding 96 |or
@@ -824,13 +824,13 @@ _Or_
 Complete the Talador Outpost questline |condition completedq(34569) or completedq(34632) |or
 |tip Use the Talador Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: The Tannery, Level 2##111988 |condition itemcount(111988) > 0 or hasblueprint("Leatherworking",2)
 step
 use Garrison Blueprint: The Tannery, Level 2##111988
 Learn the Tannery, Level 2 Blueprint |condition hasblueprint("Leatherworking",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Tannery
 Click _Upgrade_
 Upgrade your Tannery to Level 2 |havebuilding Leatherworking,2,building
@@ -838,10 +838,10 @@ step
 Wait for your Tannery to be Built |havebuilding Leatherworking,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Leatherworking"
+#include "Garrison_Finalize_Small", building="Leatherworking"
 Finalize the Level 2 Tannery |havebuilding Leatherworking,2,active
 step
-#include "H_Garrison_Small_Building", action="talk Yanney##79833", building="Leatherworking"
+#include "Garrison_Small_Building", action="talk Yanney##79833", building="Leatherworking"
 Tell her _"I would like to place a Work Order"_
 Click _Start Work Order_
 Complete 250 Work Orders |achieve 9406
@@ -850,13 +850,13 @@ step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: The Tannery, Level 3##111989 |condition itemcount(111989) > 0 or hasblueprint("Leatherworking",3)
 step
 use Garrison Blueprint: The Tannery, Level 3##111989
 Learn the Tannery, Level 3 Blueprint |condition hasblueprint("Leatherworking",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Tannery
 Click _Upgrade_
 Upgrade your Tannery to Level 3 |havebuilding Leatherworking,3,building
@@ -864,19 +864,19 @@ step
 Wait for your Tannery to be Built |havebuilding Leatherworking,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Small", building="Leatherworking"
+#include "Garrison_Finalize_Small", building="Leatherworking"
 Finalize the Level 3 Tannery |havebuilding Leatherworking,3,active
 step
 Congratulations, you've finished upgrading your Tannery!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Medium Buildings\\Barn",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Medium Buildings\\Barn",{
 description="This guide will walk you through creating and upgrading the Barn Garrison building.",
 },[[
 step
 Upgrade your Garrison to Level 2 |condition garrisonlvl() > 1
 |tip You do not have Medium building plots until your Garrison is level 2. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Select the _Medium_ tab at the top
 Drag _Barn_ to a _Medium Plot_
 Build your Barn |havebuilding Barn
@@ -884,10 +884,10 @@ step
 Wait for your Barn to be Built |havebuilding Barn,1,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Medium", building="Barn"
+#include "Garrison_Finalize_Medium", building="Barn"
 Finalize the Level 1 Barn |havebuilding Barn,1,active
 step
-#include "H_Garrison_Medium_Building", action="talk Farmer Lok'lub##85048", building="Barn"
+#include "Garrison_Medium_Building", action="talk Farmer Lok'lub##85048", building="Barn"
 accept Breaking into the Trap Game##36345
 step
 use Iron Trap##113991
@@ -895,12 +895,12 @@ kill Shadowmoon Stalker##82308
 |tip Fight it until it's almost dead, but don't kill it, then lure the Shadowmoon Stalker into your trap.
 Trap a Beast |q Breaking into the Trap Game##36345/1 |goto Shadowmoon Valley D/0 54.1,34.1
 step
-#include "H_Garrison_Medium_Building", action="talk Farmer Lok'lub##85048", building="Barn"
+#include "Garrison_Medium_Building", action="talk Farmer Lok'lub##85048", building="Barn"
 Tell him _"I would like to place a work order for fur."_
 Click _Start Work Order_
 Place a Work Order |q Breaking into the Trap Game##36345/2
 step
-#include "H_Garrison_Medium_Building", action="talk Farmer Lok'lub##85048", building="Barn"
+#include "Garrison_Medium_Building", action="talk Farmer Lok'lub##85048", building="Barn"
 turnin Breaking into the Trap Game##36345
 step
 Reach Level 98 |ding 98 |or
@@ -909,13 +909,13 @@ _Or_
 Complete the Spires of Arak Outpost questline |condition completedq(36166) or completedq(35797) |or
 |tip Use the Spires of Arak Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Barn, Level 2##111968 |condition itemcount(111968) > 0 or hasblueprint("Barn",2)
 step
 use Garrison Blueprint: Barn, Level 2##111968
 Learn the Barn, Level 2 Blueprint |condition hasblueprint("Barn",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Barn
 Click _Upgrade_
 Upgrade your Barn to Level 2 |havebuilding Barn,2,building
@@ -923,10 +923,10 @@ step
 Wait for your Barn to be Built |havebuilding Barn,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Medium", building="Barn"
+#include "Garrison_Finalize_Medium", building="Barn"
 Finalize the Level 2 Barn |havebuilding Barn,2,active
 step
-#include "H_Garrison_Medium_Building", action="click Iron Trap##234186", building="Barn"
+#include "Garrison_Medium_Building", action="click Iron Trap##234186", building="Barn"
 collect 150 Iron Trap##113991 |condition hasblueprint("Barn",3)
 step
 use Iron Trap##113991
@@ -934,7 +934,7 @@ kill Frost Wolf##76593+, Frost Wolf Alpha##76597+
 |tip Fight it until it's almost dead, but don't kill it, then lure the Shadowmoon Stalker into your trap.
 collect 125 Furry Caged Beast##119813 |goto Frostfire Ridge 54.6,66.0 |condition hasblueprint("Barn",3)
 step
-#include "H_Garrison_Medium_Building", action="talk Farmer Lok'lub##85048", building="Barn"
+#include "Garrison_Medium_Building", action="talk Farmer Lok'lub##85048", building="Barn"
 Tell him _"I would like to place a work order for fur."_
 Click _Start Work Order_
 Complete 125 Barn Work Orders |achieve 9565
@@ -942,13 +942,13 @@ step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Barn, Level 3##111969 |condition itemcount(111969) > 0 or hasblueprint("Barn",3)
 step
 use Garrison Blueprint: Barn, Level 3##111969
 Learn the Barn, Level 3 Blueprint |condition hasblueprint("Barn",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Barn
 Click _Upgrade_
 Upgrade your Barn to Level 3 |havebuilding Barn,3,building
@@ -956,19 +956,19 @@ step
 Wait for your Barn to be Built |havebuilding Barn,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Medium", building="Barn"
+#include "Garrison_Finalize_Medium", building="Barn"
 Finalize the Level 3 Barn |havebuilding Barn,3,active
 step
 Congratulations, you've finished upgrading your Barn!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Medium Buildings\\Frostwall Tavern",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Medium Buildings\\Frostwall Tavern",{
 description="This guide will walk you through creating and upgrading the Frostwall Tavern Garrison building.",
 },[[
 step
 Upgrade your Garrison to Level 2 |condition garrisonlvl() > 1
 |tip You do not have Medium building plots until your Garrison is level 2. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Select the _Medium_ tab at the top
 Drag _Frostwall Tavern_ to a _Medium Plot_
 Build your Frostwall Tavern |havebuilding Inn
@@ -976,7 +976,7 @@ step
 Wait for your Frostwall Tavern to be Built |havebuilding Inn,1,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Medium", building="Inn"
+#include "Garrison_Finalize_Medium", building="Inn"
 Finalize the Level 1 Frostwall Tavern |havebuilding Inn,1,active
 step
 Reach Level 98 |ding 98 |or
@@ -985,13 +985,13 @@ _Or_
 Complete the Spires of Arak Outpost questline |condition completedq(36166) or completedq(35797) |or
 |tip Use the Spires of Arak Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Frostwall Tavern, Level 2##116431 |condition itemcount(116431) > 0 or hasblueprint("Inn",2)
 step
 use Garrison Blueprint: Frostwall Tavern, Level 2##116431
 Learn the Frostwall Tavern, Level 2 Blueprint |condition hasblueprint("Inn",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Frostwall Tavern
 Click _Upgrade_
 Upgrade your Frostwall Tavern to Level 2 |havebuilding Inn,2,building
@@ -999,13 +999,13 @@ step
 Wait for your Frostwall Tavern to be Built |havebuilding Inn,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Medium", building="Inn"
+#include "Garrison_Finalize_Medium", building="Inn"
 Finalize the Level 2 Frostwall Tavern |havebuilding Inn,2,active
 step
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 accept The Headhunter's Harvest##37046
 step
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 Tell her _"I'm looking to recruit someone."_
 Choose any _Ability_ or _Trait_ you want
 |tip This is the ability or trait you want your recruited follower to have. Pick any one you want. The follower you recruit will be level 90, and you will have to level them up with garrison missions.
@@ -1013,7 +1013,7 @@ Choose your Follower
 |tip You can choose 1 of the 3 followers the headhunter finds for you.
 Recruit a Follower From the Headhunter |q The Headhunter's Harvest##37046/1
 step
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 turnin The Headhunter's Harvest##37046
 step
 Reach Level 100 |ding 100
@@ -1024,7 +1024,7 @@ Reach Item Level 610 |condition _G.GetAverageItemLevel() >= 610
 |tip You could also run Random PvP Battlegrounds and buy gear with honor, if you prefer to do that.
 |tip Lastly, you can also buy gear from Auction House, which may be the fastest route, but it may be pricey.
 step
-#include "H_Garrison_WarmasterZog"
+#include "Garrison_WarmasterZog"
 Tell him _"Enter the Proving Grounds"_
 Enter the Proving Grounds |goto Proving Grounds/1 51.5,82.4 < 50 |noway |c |condition achieved(9573) or achieved(9579) or achieved(9585)
 |tip Wait in the queue to enter.
@@ -1042,16 +1042,16 @@ Defeat the 8 waves of enemies that attack
 Complete a Silver Trial |condition achieved(9573) or achieved(9579) or achieved(9585)
 |tip Leave the Proving Grounds afterward by clicking the green eye icon on your minimap and choosing "Leave Instance Group".
 step
-#include "H_Garrison_Medium_Building", action="talk Millhouse Manastorm##88009", building="Inn"
+#include "Garrison_Medium_Building", action="talk Millhouse Manastorm##88009", building="Inn"
 |tip He's upstairs in the Frostwall Tavern.
 accept For The Children!##37179
 step
 label "Start_Inn_Quests"
-#include "H_Garrison_Medium_Building", action="Accept any quests in your Frostwall Tavern", building="Inn"
+#include "Garrison_Medium_Building", action="Accept any quests in your Frostwall Tavern", building="Inn"
 |tip You will be able to accept 2 different dungeon quests each day. The quests that will be available are random. Daily quests won't count toward the goal of completing 10 Frostwall Tavern quests, only regular dungeon quests.
 Click after accepting all quests |confirm |condition achieved(9703)
 step
-#include "H_Inn_Quests"
+#include "Garrison_Inn_Quests"
 step
 Complete 10 Frostwall Tavern Quests |achieve 9703 |or
 _
@@ -1061,13 +1061,13 @@ step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Frostwall Tavern, Level 3##116432 |condition itemcount(116432) > 0 or hasblueprint("Inn",3)
 step
 use Garrison Blueprint: Frostwall Tavern, Level 3##116432
 Learn the Frostwall Tavern, Level 3 Blueprint |condition hasblueprint("Inn",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Frostwall Tavern
 Click _Upgrade_
 Upgrade your Frostwall Tavern to Level 3 |havebuilding Inn,3,building
@@ -1075,19 +1075,19 @@ step
 Wait for your Frostwall Tavern to be Built |havebuilding Inn,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Medium", building="Inn"
+#include "Garrison_Finalize_Medium", building="Inn"
 Finalize the Level 3 Frostwall Tavern |havebuilding Inn,3,active
 step
 Congratulations, you've finished upgrading your Frostwall Tavern!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Medium Buildings\\Gladiator's Sanctum",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Medium Buildings\\Gladiator's Sanctum",{
 description="This guide will walk you through creating and upgrading the Gladiator's Sanctum Garrison building.",
 },[[
 step
 Upgrade your Garrison to Level 2 |condition garrisonlvl() > 1
 |tip You do not have Medium building plots until your Garrison is level 2. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Select the _Medium_ tab at the top
 Drag _Gladiator's Sanctum_ to a _Medium Plot_
 Build your Gladiator's Sanctum |havebuilding SparringArena,1,building
@@ -1095,10 +1095,10 @@ step
 Wait for your Gladiator's Sanctum to be Built |havebuilding SparringArena,1,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Medium", building="SparringArena"
+#include "Garrison_Finalize_Medium", building="SparringArena"
 Finalize the Level 1 Gladiator's Sanctum |havebuilding SparringArena,1,active
 step
-#include "H_Garrison_Medium_Building", action="talk Raza'kul##86629", building="SparringArena"
+#include "Garrison_Medium_Building", action="talk Raza'kul##86629", building="SparringArena"
 accept Warlord of Draenor##36874
 step
 Reach Level 100 |ding 100
@@ -1115,21 +1115,21 @@ collect 20 Broken Bones##118043 |q 36874 |goto Ashran/0 49.4,49.9
 step
 Return to your Garrison |goto Frostwall 50.3,46.9 < 300 |q 36874
 step
-#include "H_Garrison_Medium_Building", action="clicknpc Altar of Bones##86639", building="SparringArena"
+#include "Garrison_Medium_Building", action="clicknpc Altar of Bones##86639", building="SparringArena"
 |tip It looks like a pile of while skulls and bones in your Gladiator's Sanctum building.
 Click _Start Work Order_
 Earn a Conqueror's Tribute |q Warlord of Draenor##36874/2
 step
-#include "H_Garrison_Medium_Building", action="talk Raza'kul##86629", building="SparringArena"
+#include "Garrison_Medium_Building", action="talk Raza'kul##86629", building="SparringArena"
 turnin Warlord of Draenor##36874
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Gladiator's Sanctum, Level 2##111980 |condition itemcount(111980) > 0 or hasblueprint("SparringArena",2)
 step
 use Garrison Blueprint: Gladiator's Sanctum, Level 2##111980
 Learn the use Gladiator's Sanctum, Level 2 Blueprint |condition hasblueprint("SparringArena",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Gladiator's Sanctum
 Click _Upgrade_
 Upgrade your Gladiator's Sanctum to Level 2 |havebuilding SparringArena,2,building
@@ -1137,17 +1137,17 @@ step
 Wait for your Gladiator's Sanctum to be Built |havebuilding SparringArena,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Medium", building="SparringArena"
+#include "Garrison_Finalize_Medium", building="SparringArena"
 Finalize the Level 2 Gladiator's Sanctum |havebuilding SparringArena,2,active
 step
-#include "H_Garrison_Medium_Building", action="talk Raza'kul##86629", building="SparringArena"
+#include "Garrison_Medium_Building", action="talk Raza'kul##86629", building="SparringArena"
 accept Nemesis: Hunter - Hunted##36889
 step
-#include "H_Garrison_Medium_Building", action="click Nemesis", building="SparringArena"
+#include "Garrison_Medium_Building", action="click Nemesis", building="SparringArena"
 |tip They are statues circling your Gladiator's Sanctum.  You will have to kill players of the race you select. We recommend you pick Human, since they are statistically the most common race of Alliance players, but you can choose whichever you like.
 Select your Nemesis |q Nemesis: Hunter - Hunted##36889/1
 step
-#include "H_Garrison_Medium_Building", action="talk Raza'kul##86629", building="SparringArena"
+#include "Garrison_Medium_Building", action="talk Raza'kul##86629", building="SparringArena"
 turnin Nemesis: Hunter - Hunted##36889
 accept Nemesis: Becoming Death##36897 |or
 accept Nemesis: Becoming Death##36927 |or
@@ -1180,7 +1180,7 @@ Return to your Garrison |goto Frostwall 50.3,46.9 < 300 |q 36933 |only if havequ
 Return to your Garrison |goto Frostwall 50.3,46.9 < 300 |q 36923 |only if havequest(36923) or completedq(36923)
 Return to your Garrison |goto Frostwall 50.3,46.9 < 300 |q 36925 |only if havequest(36925) or completedq(36925)
 step
-#include "H_Garrison_Medium_Building", action="talk Raza'kul##86629", building="SparringArena"
+#include "Garrison_Medium_Building", action="talk Raza'kul##86629", building="SparringArena"
 turnin Nemesis: Becoming Death##36897 |only if havequest(36897) or completedq(36897)
 turnin Nemesis: Becoming Death##36927 |only if havequest(36927) or completedq(36927)
 turnin Nemesis: Becoming Death##36929 |only if havequest(36929) or completedq(36929)
@@ -1218,7 +1218,7 @@ Return to your Garrison |goto Frostwall 50.3,46.9 < 300 |q 36934 |only if havequ
 Return to your Garrison |goto Frostwall 50.3,46.9 < 300 |q 36924 |only if havequest(36923) or completedq(36923)
 Return to your Garrison |goto Frostwall 50.3,46.9 < 300 |q 36926 |only if havequest(36925) or completedq(36925)
 step
-#include "H_Garrison_Medium_Building", action="talk Raza'kul##86629", building="SparringArena"
+#include "Garrison_Medium_Building", action="talk Raza'kul##86629", building="SparringArena"
 turnin Nemesis: Manslayer##36921 |only if havequest(36897) or completedq(36897)
 turnin Nemesis: Worgen Hunter##36928 |only if havequest(36927) or completedq(36927)
 turnin Nemesis: Draenei Destroyer##36930 |only if havequest(36929) or completedq(36929)
@@ -1238,13 +1238,13 @@ step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Gladiator's Sanctum, Level 3##111981 |condition itemcount(111981) > 0 or hasblueprint("SparringArena",3)
 step
 use Garrison Blueprint: Gladiator's Sanctum, Level 3##111981
 Learn the use Gladiator's Sanctum, Level 2 Blueprint |condition hasblueprint("SparringArena",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Gladiator's Sanctum
 Click _Upgrade_
 Upgrade your Gladiator's Sanctum to Level 3 |havebuilding SparringArena,3,building
@@ -1252,19 +1252,19 @@ step
 Wait for your Gladiator's Sanctum to be Built |havebuilding SparringArena,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Medium", building="SparringArena"
+#include "Garrison_Finalize_Medium", building="SparringArena"
 Finalize the Level 3 Gladiator's Sanctum |havebuilding SparringArena,3,active
 step
 Congratulations, you've finished upgrading your Galdiator's Sanctum!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Medium Buildings\\Lumber Mill",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Medium Buildings\\Lumber Mill",{
 description="This guide will walk you through creating and upgrading the Lumber Mill Garrison building.",
 },[[
 step
 Upgrade your Garrison to Level 2 |condition garrisonlvl() > 1
 |tip You do not have Medium building plots until your Garrison is level 2. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Select the _Medium_ tab at the top
 Drag _Lumber Mill_ to a _Medium Plot_
 Build your Lumber Mill |havebuilding LumberMill
@@ -1272,17 +1272,17 @@ step
 Wait for your Lumber Mill to be Built |havebuilding LumberMill,1,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Medium", building="LumberMill"
+#include "Garrison_Finalize_Medium", building="LumberMill"
 Finalize the Level 1 Lumber Mill |havebuilding LumberMill,1,active
 step
-#include "H_Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
+#include "Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
 accept Easing into Lumberjacking##36137
 step
 click Small Timber##168641
 |tip It looks like a tall thin tree with purple leaves at the top.
 Harvest the Timber |q Easing into Lumberjacking##36137/1 |goto Frostfire Ridge/0 44.5,53.6
 step
-#include "H_Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
+#include "Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
 turnin Easing into Lumberjacking##36137
 accept Turning Timber into Profit##36138
 step
@@ -1290,12 +1290,12 @@ click Small Timber##167895+
 |tip They look like tall thin trees with green or purple leaves at the top all around this area. Look for the blinking yellow dots on your minimap.
 collect 10 Timber##114781 |q Turning Timber into Profit##36138/1 |goto Gorgrond/0 50.7,60.6
 step
-#include "H_Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
+#include "Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
 Tell him _"I would like to submit a work order."_
 Click _Start Work Order_
 Start a Work Order |q Turning Timber into Profit##36138/2
 step
-#include "H_Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
+#include "Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
 turnin Turning Timber into Profit##36138
 step
 Reach Level 98 |ding 98 |or
@@ -1304,13 +1304,13 @@ _Or_
 Complete the Spires of Arak Outpost questline |condition completedq(36166) or completedq(35797) |or
 |tip Use the Spires of Arak Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Lumber Mill, Level 2##109254 |condition itemcount(109254) > 0 or hasblueprint("LumberMill",2)
 step
 use Garrison Blueprint: Lumber Mill, Level 2##109254
 Learn the Lumber Mill, Level 2 Blueprint |condition hasblueprint("LumberMill",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click on your Lumber Mill
 Click _Upgrade_
 Upgrade your Lumber Mill to Level 2 |havebuilding LumberMill,2,building
@@ -1318,20 +1318,20 @@ step
 Wait for your Lumber Mill to be Built |havebuilding LumberMill,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Medium", building="LumberMill"
+#include "Garrison_Finalize_Medium", building="LumberMill"
 Finalize the Level 2 Lumber Mill |havebuilding LumberMill,2,active
 step
-#include "H_Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
+#include "Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
 accept Sharper Blades, Bigger Timber##36142
 step
 click Timber##233634
 |tip It looks like a large tall tree with purple leaves at the top.
 collect Timber Sample##114898 |q Sharper Blades, Bigger Timber##36142/1 |goto Frostfire Ridge/0 45.3,49.2
 step
-#include "H_Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
+#include "Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
 turnin Sharper Blades, Bigger Timber##36142
 step
-#include "H_Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
+#include "Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
 turnin Sharper Blades, Bigger Timber##36194
 step
 Check these 10 Locations in Gorgrond:
@@ -1379,7 +1379,7 @@ click Timber##233634
 kill Autuk the Ancient##85274
 collect Trunk of Autuk##115477 |q Legacy of the Ancients##36385/2 |goto Nagrand D/0 58.0,52.9
 step
-#include "H_Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
+#include "Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
 turnin Legacy of the Ancients##36385
 step
 Harvest the Fallen Tree |goto Talador 73.7,64.0
@@ -1392,14 +1392,14 @@ Location 1: [Talador/0 59.0,29.8]
 Location 2: [Talador/0 54.3,56.2]
 Location 3: [Talador/0 70.1,54.2]
 step
-#include "H_Garrison_Medium_Building", action="talk Alexi Barov##85414", building="LumberMill"
+#include "Garrison_Medium_Building", action="talk Alexi Barov##85414", building="LumberMill"
 accept Reduction in Force##36449
 step
 kill Weldon Barov##85447
 |tip He spawns with a group of helpers when you approach this any type of Timber tree around this area.
 collect Head of Weldon Barov##116153 |q Reduction in Force##36449/1 |goto Talador 58.6,48.0
 step
-#include "H_Garrison_Medium_Building", action="talk Alexi Barov##85414", building="LumberMill"
+#include "Garrison_Medium_Building", action="talk Alexi Barov##85414", building="LumberMill"
 turnin Reduction in Force##36449
 step
 map Spires of Arak/0
@@ -1416,20 +1416,20 @@ click Timber##233634+
 |tip They look like medium sized trees with bushes of trees at the top.
 collect 750 Timber##114781 |condition itemcount(114781) >= 750 or hasbuilding("LumberMill",3)
 step
-#include "H_Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
+#include "Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
 Click _Create All_ in the _Work Order_ window
 Place #75# Work Orders at the Lumber Mill |achieve 9429
 step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Lumber Mill, Level 3##109255 |condition itemcount(109255) > 0 or hasblueprint("LumberMill",3)
 step
 use Garrison Blueprint: Lumber Mill, Level 3##109255
 Learn the Lumber Mill, Level 3 Blueprint |condition hasblueprint("LumberMill",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click on your Lumber Mill
 Click _Upgrade_
 Upgrade your Lumber Mill to Level 3 |havebuilding LumberMill,3,building
@@ -1437,10 +1437,10 @@ step
 Wait for your Lumber Mill to be Built |havebuilding LumberMill,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Medium", building="LumberMill"
+#include "Garrison_Finalize_Medium", building="LumberMill"
 Finalize the Level 3 Lumber Mill |havebuilding LumberMill,3,active
 step
-#include "H_Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
+#include "Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
 accept Tree-i-cide##36182
 step
 _Run up_ the rocks here |goto Shadowmoon Valley D/0 34.7,25.5 < 10 |only if walking
@@ -1448,19 +1448,19 @@ click Large Timber##233635
 |tip It looks like a large tree up on top of a big hill.
 collect Timber Sample##114899 |q Tree-i-cide##36182/1 |goto Frostfire Ridge 62.4,76.6
 step
-#include "H_Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
+#include "Garrison_Medium_Building", action="talk Lumber Lord Oktron##84247", building="LumberMill"
 turnin Tree-i-cide##36182
 step
 Congratulations, you've finished upgrading your Lumber Mill!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Medium Buildings\\Trading Post",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Medium Buildings\\Trading Post",{
 description="This guide will walk you through creating and upgrading the Trading Post Garrison building.",
 },[[
 step
 Upgrade your Garrison to Level 2 |condition garrisonlvl() > 1
 |tip You do not have Medium building plots until your Garrison is level 2. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Select the _Medium_ tab at the top
 Drag _Trading Post_ to a _Medium Plot_
 Build your Trading Post |havebuilding TradingPost
@@ -1468,16 +1468,16 @@ step
 Wait for your Trading Post to be Built |havebuilding TradingPost,1,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Medium", building="TradingPost"
+#include "Garrison_Finalize_Medium", building="TradingPost"
 Finalize the Level 1 Trading Post |havebuilding TradingPost,1,active
 step
-#include "H_Garrison_Medium_Building", action="talk Fayla Fairfeather##87120", building="TradingPost"
+#include "Garrison_Medium_Building", action="talk Fayla Fairfeather##87120", building="TradingPost"
 accept Tricks of the Trade##37062
 step
 use Mug of Rousing Coffee##118418
 Rouse the Trader |q Tricks of the Trade##37062/1 |goto Frostwall 45.3,14.4
 step
-#include "H_Garrison_Medium_Building", action="talk Fayla Fairfeather##87120", building="TradingPost"
+#include "Garrison_Medium_Building", action="talk Fayla Fairfeather##87120", building="TradingPost"
 turnin Tricks of the Trade##37062
 step
 Reach Level 98 |ding 98 |or
@@ -1486,13 +1486,13 @@ _Or_
 Complete the Spires of Arak Outpost questline |condition completedq(36166) or completedq(35797) |or
 |tip Use the Spires of Arak Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Trading Post, Level 2##111986 |condition itemcount(111986) > 0 or hasblueprint("TradingPost",2)
 step
 use Garrison Blueprint: Trading Post, Level 2##111986
 Learn the Trading Post, Level 2 Blueprint |condition hasblueprint("TradingPost",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Trading Post
 Click _Upgrade_
 Upgrade your Trading Post to Level 2 |havebuilding TradingPost,2,building
@@ -1500,7 +1500,7 @@ step
 Wait for your Trading Post to be Built |havebuilding TradingPost,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Medium", building="TradingPost"
+#include "Garrison_Finalize_Medium", building="TradingPost"
 Finalize the Level 2 Trading Post |havebuilding TradingPost,2,active
 step
 Reach Level 100 |ding 100 |tip Use the Leveling guide to accomplish this.
@@ -1511,13 +1511,13 @@ step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Trading Post, Level 3##111987 |condition itemcount(111987) > 0 or hasblueprint("TradingPost",3)
 step
 use Garrison Blueprint: Trading Post, Level 3##111987
 Learn the Trading Post, Level 3 Blueprint |condition hasblueprint("TradingPost",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Trading Post
 Click _Upgrade_
 Upgrade your Trading Post to Level 3 |havebuilding TradingPost,3,building
@@ -1525,7 +1525,7 @@ step
 Wait for your Trading Post to be Built |havebuilding TradingPost,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Medium", building="TradingPost"
+#include "Garrison_Finalize_Medium", building="TradingPost"
 Finalize the Level 3 Trading Post |havebuilding TradingPost,3,active
 step
 collect 1 Arcane Crystal Casing##118344 |q 37014 |future
@@ -1577,17 +1577,17 @@ step
 use Cyclical Power Converter##118340
 collect Cyclical Power Module##118379 |q 37014 |future
 step
-#include "H_Garrison_Medium_Building", action="talk Ancient Trading Mechanism##87206", building="TradingPost"
+#include "Garrison_Medium_Building", action="talk Ancient Trading Mechanism##87206", building="TradingPost"
 |tip It's a metal robot laying on the porch of your Trading Post.
 accept Auctioning for Parts##37014
 step
 Congratulations, you've finished upgrading your Trading Post!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Large Buildings\\Barracks",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Large Buildings\\Barracks",{
 description="This guide will walk you through creating and upgrading the Barracks Garrison building.",
 },[[
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Select the _Large_ tab at the top
 Drag _Barracks_ to a _Large Plot_
 Build your Barracks |havebuilding Barracks
@@ -1595,7 +1595,7 @@ step
 Wait for your Barracks to be Built |havebuilding Barracks,1,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Large", building="Barracks"
+#include "Garrison_Finalize_Large", building="Barracks"
 Finalize the Level 1 Barracks |havebuilding Barracks,1,active
 step
 Reach Level 100 |ding 100 |or
@@ -1604,13 +1604,13 @@ _Or_
 Complete the Nagrand Outpost questline |condition completedq(34899) |or
 |tip Use the Nagrand (Warlords of Draenor) leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Barracks, Level 2##111970 |condition itemcount(111970) > 0 or hasblueprint("Barracks",2)
 step
 use Garrison Blueprint: Barracks, Level 2##111970
 Learn the Barracks, Level 2 Blueprint |condition hasblueprint("Barracks",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Barracks
 Click _Upgrade_
 Upgrade your Barracks to Level 2 |havebuilding Barracks,2,building
@@ -1618,10 +1618,10 @@ step
 Wait for your Barracks to be Built |havebuilding Barracks,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Large", building="Barracks"
+#include "Garrison_Finalize_Large", building="Barracks"
 Finalize the Level 2 Barracks |havebuilding Barracks,2,active
 step
-#include "H_Garrison_CommandTable"
+#include "Garrison_CommandTable"
 Complete 50 Garrison Patrol Missions |achieve 9523
 |tip These are Garrison Missions. Garrison Patrol missions have a spyglass icon next to the level difficulty number.
 _And_
@@ -1631,13 +1631,13 @@ step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Barracks, Level 3##111971 |condition itemcount(111971) > 0 or hasblueprint("Barracks",3)
 step
 use Garrison Blueprint: Barracks, Level 3##111971
 Learn the Barracks, Level 3 Blueprint |condition hasblueprint("Barracks",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Barracks
 Click _Upgrade_
 Upgrade your Barracks to Level 3 |havebuilding Barracks,3,building
@@ -1645,19 +1645,19 @@ step
 Wait for your Barracks to be Built |havebuilding Barracks,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Large", building="Barracks"
+#include "Garrison_Finalize_Large", building="Barracks"
 Finalize the Level 3 Barracks |havebuilding Barracks,3,active
 step
 Congratulations, you've finished upgrading your Barracks!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Large Buildings\\Goblin Workshop",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Large Buildings\\Goblin Workshop",{
 description="This guide will walk you through creating and upgrading the Goblin Workshop Garrison building.",
 },[[
 step
 Upgrade your Garrison to Level 2 |condition garrisonlvl() > 1
 |tip You do not have another Large building plot until your Garrison is level 2. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Select the _Large_ tab at the top
 Drag _Goblin Workshop_ to a _Large Plot_
 Build your Goblin Workshop |havebuilding Workshop
@@ -1665,18 +1665,18 @@ step
 Wait for your Goblin Workshop to be Built |havebuilding Workshop,1,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Large", building="Workshop"
+#include "Garrison_Finalize_Large", building="Workshop"
 Finalize the Level 1 Goblin Workshop |havebuilding Workshop,1,active
 step
-#include "H_Garrison_Large_Building", action="talk Vee##85369", building="Workshop"
+#include "Garrison_Large_Building", action="talk Vee##85369", building="Workshop"
 |tip She's in your Goblin Workshop garrison building.
 accept Unconventional Inventions##37044
 step
-#include "H_Garrison_Large_Building", action="click Sticky Grenades##234146", building="Workshop"
+#include "Garrison_Large_Building", action="click Sticky Grenades##234146", building="Workshop"
 |tip They look like a pyramid pile of metal bombs on a table next to Vee.
 Acquire a Workshop Invention |q Unconventional Inventions##37044/1
 step
-#include "H_Garrison_Large_Building", action="talk Vee##85369", building="Workshop"
+#include "Garrison_Large_Building", action="talk Vee##85369", building="Workshop"
 |tip She's in your Goblin Workshop garrison building.
 turnin Unconventional Inventions##37044
 step
@@ -1686,13 +1686,13 @@ _Or_
 Complete the Nagrand Outpost questline |condition completedq(34899) |or
 |tip Use the Nagrand (Warlords of Draenor) Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Goblin Workshop, Level 2##116200 |condition itemcount(116200) > 0 or hasblueprint("Workshop",2)
 step
 use Garrison Blueprint: Goblin Workshop, Level 2##116200
 Learn the Goblin Workshop, Level 2 Blueprint |condition hasblueprint("Workshop",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Goblin Workshop
 Click _Upgrade_
 Upgrade your Goblin Workshop to Level 2 |havebuilding Workshop,2,building
@@ -1700,11 +1700,11 @@ step
 Wait for your Goblin Workshop to be Built |havebuilding Workshop,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Large", building="Workshop"
+#include "Garrison_Finalize_Large", building="Workshop"
 Finalize the Level 2 Goblin Workshop |havebuilding Workshop,2,active
 step
 label "Inventions_Start"
-#include "H_Garrison_Large_Building", action="click Invention", building="Workshop"
+#include "Garrison_Large_Building", action="click Invention", building="Workshop"
 |tip The Inventions will be on the wooden table next to Vee and the wall in your Goblin Workshop. All the of the items are large and obvious, except the Prototype Mekgineer's Chopper key, which is pretty small and could be overlooked or covered by other invention, if you're not careful.
 |tip You need multiple charges for each invention, so the fastest way seems to be to use the charges as fast as possible, causing another of the same item to spawn again immediately in your Goblin Workshop.
 |tip If the Prototype Mekgineer's Chopper key isn't respawning, try logging out and in again, then moving your Goblin Workshop building to a different plot.
@@ -1770,13 +1770,13 @@ step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Goblin Workshop, Level 3##116201 |condition itemcount(116201) > 0 or hasblueprint("Workshop",3)
 step
 use Garrison Blueprint: Goblin Workshop, Level 3##116201
 Learn the Goblin Workshop, Level 3 Blueprint |condition hasblueprint("Workshop",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Goblin Workshop
 Click _Upgrade_
 Upgrade your Goblin Workshop to Level 3 |havebuilding Workshop,3,building
@@ -1784,19 +1784,19 @@ step
 Wait for your Goblin Workshop to be Built |havebuilding Workshop,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Large", building="Workshop"
+#include "Garrison_Finalize_Large", building="Workshop"
 Finalize the Level 3 Goblin Workshop |havebuilding Workshop,3,active
 step
 Congratulations, you've finished upgrading your Goblin Workshop!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Large Buildings\\Spirit Lodge",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Large Buildings\\Spirit Lodge",{
 description="This guide will walk you through creating and upgrading the Spirit Lodge Garrison building.",
 },[[
 step
 Upgrade your Garrison to Level 2 |condition garrisonlvl() > 1
 |tip You do not have another Large building plot until your Garrison is level 2. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Select the _Large_ tab at the top
 Drag _Spirit Lodge_ to a _Large Plot_
 Build your Spirit Lodge |havebuilding MageTower
@@ -1804,18 +1804,18 @@ step
 Wait for your Spirit Lodge to be Built |havebuilding MageTower,1,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Large", building="MageTower"
+#include "Garrison_Finalize_Large", building="MageTower"
 Finalize the Level 1 Spirit Lodge |havebuilding MageTower,1,active
 step
-#include "H_Garrison_Large_Building", action="talk Gez'la##79836", building="MageTower"
+#include "Garrison_Large_Building", action="talk Gez'la##79836", building="MageTower"
 |tip She's inside the tent.
 accept Portable Portals##38351
 step
-#include "H_Garrison_Large_Building", action="talk Varsha##91577", building="MageTower"
+#include "Garrison_Large_Building", action="talk Varsha##91577", building="MageTower"
 |tip She's standing outside the tent, near the entrance.
 Speak with Var'nath |q Portable Portals##38351/1
 step
-#include "H_Garrison_Large_Building", action="talk Gez'la##79836", building="MageTower"
+#include "Garrison_Large_Building", action="talk Gez'la##79836", building="MageTower"
 |tip She's inside the tent.
 turnin Portable Portals##38351
 step
@@ -1825,13 +1825,13 @@ _Or_
 Complete the Nagrand Outpost questline |condition completedq(34899) |or
 |tip Use the Nagrand (Warlords of Draenor) Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Spirit Lodge, Level 2##116196 |condition itemcount(116196) > 0 or hasblueprint("MageTower",2)
 step
 use Garrison Blueprint: Spirit Lodge, Level 2##116196
 Learn the Spirit Lodge, Level 2 Blueprint |condition hasblueprint("MageTower",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Spirit Lodge
 Click _Upgrade_
 Upgrade your Spirit Lodge to Level 2 |havebuilding MageTower,2,building
@@ -1839,10 +1839,10 @@ step
 Wait for your Spirit Lodge to be Built |havebuilding MageTower,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Large", building="MageTower"
+#include "Garrison_Finalize_Large", building="MageTower"
 Finalize the Level 2 Spirit Lodge |havebuilding MageTower,2,active
 step
-#include "H_Garrison_Large_Building", action="talk Gez'la##79836", building="MageTower"
+#include "Garrison_Large_Building", action="talk Gez'la##79836", building="MageTower"
 accept Ogre Waygates##36848
 step
 _Follow_ the path |goto Gorgrond/0 44.3,70.0 < 20 |only if walking
@@ -1915,7 +1915,7 @@ Return to your Garrison |goto Frostwall/0 50.2,39.4 < 300 |c |noway |q 36848
 |next "turnin"
 step
 label "turnin"
-#include "H_Garrison_Large_Building", action="talk Gez'la##79836", building="MageTower"
+#include "Garrison_Large_Building", action="talk Gez'la##79836", building="MageTower"
 turnin Ogre Waygates##36848
 step
 _Follow_ the path |goto Gorgrond/0 44.3,70.0 < 20 |only if walking
@@ -1926,13 +1926,13 @@ step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Spirit Lodge, Level 3##116197 |condition itemcount(116197) > 0 or hasblueprint("MageTower",3)
 step
 use Garrison Blueprint: Spirit Lodge, Level 3##116197
 Learn the Spirit Lodge, Level 3 Blueprint |condition hasblueprint("MageTower",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Spirit Lodge
 Click _Upgrade_
 Upgrade your Spirit Lodge to Level 3 |havebuilding MageTower,3,building
@@ -1940,19 +1940,19 @@ step
 Wait for your Spirit Lodge to be Built |havebuilding MageTower,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Large", building="MageTower"
+#include "Garrison_Finalize_Large", building="MageTower"
 Finalize the Level 3 Spirit Lodge |havebuilding MageTower,3,active
 step
 Congratulations, you've finished upgrading your Spirit Lodge!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Large Buildings\\Stables",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Large Buildings\\Stables",{
 description="This guide will walk you through creating and upgrading the Stables Garrison building.",
 },[[
 step
 Upgrade your Garrison to Level 2 |condition garrisonlvl() > 1
 |tip Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Select the _Large_ tab at the top
 Drag _Stables_ to a _Large Plot_
 Build your Stables |havebuilding Stables
@@ -1960,7 +1960,7 @@ step
 Wait for your Stables to be Built |havebuilding Stables,1,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Large", building="Stables"
+#include "Garrison_Finalize_Large", building="Stables"
 Finalize the Level 1 Stables |havebuilding Stables,1,active
 step
 Reach Level 100 |ding 100 |or
@@ -1969,13 +1969,13 @@ _Or_
 Complete the Nagrand Outpost questline |condition completedq(34899) |or
 |tip Use the Nagrand (Warlords of Draenor) Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Stables, Level 2##112002 |condition itemcount(112002) > 0 or hasblueprint("Stables",2)
 step
 use Garrison Blueprint: Stables, Level 2##112002
 Learn the Stables, Level 2 Blueprint |condition hasblueprint("Stables",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click on your Stables
 Click _Upgrade_
 Upgrade your Stables to Level 2 |havebuilding Stables,2,building
@@ -1983,29 +1983,29 @@ step
 Wait for your Stables to be Built |havebuilding Stables,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Large", building="Stables"
+#include "Garrison_Finalize_Large", building="Stables"
 Finalize the Level 2 Stables |havebuilding Stables,2,active
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 accept Taming a Talbuk##36917
 accept The Black Claw##37123
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 Talk to Sage Paluna |q The Black Claw##37123/1
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 turnin The Black Claw##37123
 step
-#include "H_Garrison_Large_Building", action="click Black Claw of Sethe##237169", building="Stables"
+#include "Garrison_Large_Building", action="click Black Claw of Sethe##237169", building="Stables"
 |tip It is a small black, sparkling claw sitting on the ground in your Stables.
 collect 1 Black Claw of Sethe##118469
 |tip You need this with you as you train your new mounts.
 only if not achieved(9705)
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 accept Capturing a Clefthoof##36912
 step
 clicknpc Young Icehoof##86847
@@ -2013,10 +2013,10 @@ use Clefthoof Lasso##118287
 |tip The clefthoof will run from you, chase it. If it gets too far away from you the rope will break.
 Tame a Clefhoof |q Capturing a Clefthoof##36912/1 |goto Frostfire Ridge 54.6,19.9
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 turnin Capturing a Clefthoof##36912
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 accept Taming a Talbuk##36917
 |tip This may be bugged. If you can't accept the quest, logout and login again, and the quest should be available.
 step
@@ -2025,10 +2025,10 @@ use Talbuk Lasso##118284
 |tip The talbuk will run from you, chase it. If it gets too far away from you the rope will break.
 Tame a Silverpelt |q Taming a Talbuk##36917/1 |goto Shadowmoon Valley D/0 50.9,30.1
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 turnin Taming a Talbuk##36917
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 accept Besting a Boar##36944
 |tip This may be bugged. If you can't accept the quest, logout and login again, and the quest should be available.
 step
@@ -2037,16 +2037,16 @@ use Boar Lasso##118288
 |tip The boar will run from you, chase it. If it gets too far away from you the rope will break.
 Tame a Young Rocktusk |q Besting a Boar##36944/1 |goto Gorgrond/0 43.1,37.2
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 turnin Besting a Boar##36944
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 accept Requisition a Riverbeast##36945
 |tip This may be bugged. If you can't accept the quest, logout and login again, and the quest should be available.
 step
 click Shadow Lily##77271
 |tip They look like white glowing flowers on the ground right next to the water.
-Obtain the _Glowstep_ Buff |havebuff Interface\Icons\Spell_DeathKnight_PathOfFrost |goto Talador/0 64.4,56.3 |q 36945
+Obtain the _Glowstep_ Buff |havebuff 237528 |goto Talador/0 64.4,56.3 |q 36945
 |tip This buff will allow you to walk on water for 10 minutes, and will not be cancelled when you take damage.
 step
 clicknpc Young Riverwallow##86848
@@ -2054,10 +2054,10 @@ use Riverbeast Lasso##118285
 |tip The beast will run from you, chase it. If it gets too far away from you the rope will break.
 Tame a Young Riverwallow |q Requisition a Riverbeast##36945/1 |goto Talador/0 64.4,56.3
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 turnin Requisition a Riverbeast##36945
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 accept Entangling an Elekk##36946
 |tip This may be bugged. If you can't accept the quest, logout and login again, and the quest should be available.
 step
@@ -2066,10 +2066,10 @@ use Elekk Lasso##118286
 |tip The elekk will run from you, chase it. If it gets too far away from you the rope will break.
 Tame a Young Meadowstomper |q Entangling an Elekk##36946/1 |goto Nagrand D/0 85.1,40.7
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 turnin Entangling an Elekk##36946
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 accept Wrangling a Wolf##36950
 |tip This may be bugged. If you can't accept the quest, logout and login again, and the quest should be available.
 step
@@ -2078,15 +2078,15 @@ use Wolf Lasso##118283
 |tip The wolf will run from you, chase it. If it gets too far away from you the rope will break.
 Tame a Young Snarler |q Wrangling a Wolf##36950/1 |goto Nagrand D/0 57.2,60.3
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 turnin Wrangling a Wolf##36950
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 accept Talbuk Training: Great-Tusk##37093
 |tip She will offer other quests, but wait to do them later. This will save you a lot of travel time each day you have to do these types of quests. Only accept the quests listed in this step.
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 accept Clefthoof Training: Great-Tusk##37048
 |tip He will offer other quests, but wait to do them later. This will save you a lot of travel time each day you have to do these types of quests. Only accept the quests listed in this step.
@@ -2100,21 +2100,21 @@ kill Great-Tusk##87083 |q Talbuk Training: Great-Tusk##37093/1 |goto Shadowmoon 
 |tip Wait for him to respawn, since you just killed him.
 |tip You can make a macro that includes "/cast Mend Pet". Using the whistle dismisses your pet and your mount takes damage in the fight. Using this macro will allow you to heal your mount. |only Hunter
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 turnin Talbuk Training: Great-Tusk##37093
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 turnin Clefthoof Training: Great-Tusk##37048
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 accept Talbuk Training: Rakkiri##37094
 |tip You may not be able to pick this up until the next day.
 |tip She will offer other quests, but wait to do them later. This will save you a lot of travel time each day you have to do these types of quests. Only accept the quests listed in this step.
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 accept Clefthoof Training: Rakkiri##37049
 |tip You may not be able to pick this up until the next day.
@@ -2131,20 +2131,20 @@ kill Rakkiri##87085 |q Talbuk Training: Rakkiri##37094/1
 |tip Wait for him to respawn, since you just killed him.
 |tip You can make a macro that includes "/cast Mend Pet". Using the whistle dismisses your pet and your mount takes damage in the fight. Using this macro will allow you to heal your mount. |only Hunter
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 turnin Talbuk Training: Rakkiri##37094
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 turnin Clefthoof Training: Rakkiri##37049
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 accept Talbuk Training: Riplash##37095
 |tip She will offer other quests, but wait to do them later. This will save you a lot of travel time each day you have to do these types of quests. Only accept the quests listed in this step.
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 accept Boar Training: Riplash##37032
 accept Clefthoof Training: Riplash##37050
@@ -2167,22 +2167,22 @@ kill Riplash##87084 |q Clefthoof Training: Riplash##37050/1 |goto Gorgrond 50.2,
 |tip Wait for him to respawn, since you just killed him.
 |tip You can make a macro that includes "/cast Mend Pet". Using the whistle dismisses your pet and your mount takes damage in the fight. Using this macro will allow you to heal your mount. |only Hunter
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 turnin Talbuk Training: Riplash##37095
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 turnin Boar Training: Riplash##37032
 turnin Clefthoof Training: Riplash##37050
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 accept Riverbeast Training: Gezz'ran##37071
 accept Talbuk Training: Gezz'ran##37096
 |tip She will offer other quests, but wait to do them later. This will save you a lot of travel time each day you have to do these types of quests. Only accept the quests listed in this step.
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 accept Boar Training: Gezz'ran##37033
 accept Clefthoof Training: Gezz'ran##37051
@@ -2209,23 +2209,23 @@ kill Gezz'ran##87086 |q Clefthoof Training: Gezz'ran##37051/1 |goto Talador 31.4
 |tip Wait for him to respawn, since you just killed him.
 |tip You can make a macro that includes "/cast Mend Pet". Using the whistle dismisses your pet and your mount takes damage in the fight. Using this macro will allow you to heal your mount. |only Hunter
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 turnin Talbuk Training: Gezz'ran##37096
 turnin Riverbeast Training: Gezz'ran##37071
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 turnin Boar Training: Gezz'ran##37033
 turnin Clefthoof Training: Gezz'ran##37051
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 accept Riverbeast Training: Bulbapore##37072
 accept Talbuk Training: Bulbapore##37097
 |tip She will offer other quests, but wait to do them later. This will save you a lot of travel time each day you have to do these types of quests. Only accept the quests listed in this step.
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 accept Boar Training: Bulbapore##37034
 accept Clefthoof Training: Bulbapore##37052
@@ -2251,23 +2251,23 @@ kill Bulbapore##87087 |q Clefthoof Training: Bulbapore##37052/1 |goto Spires of 
 |tip Wait for him to respawn, since you just killed him.
 |tip You can make a macro that includes "/cast Mend Pet". Using the whistle dismisses your pet and your mount takes damage in the fight. Using this macro will allow you to heal your mount. |only Hunter
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 turnin Riverbeast Training: Bulbapore##37072
 turnin Talbuk Training: Bulbapore##37097
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 turnin Boar Training: Bulbapore##37034
 turnin Clefthoof Training: Bulbapore##37052
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 accept Riverbeast Training: Cruel Ogres##37073
 accept Talbuk Training: Cruel Ogres##37098
 accept Wolf Training: Cruel Ogres##37105
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 accept Boar Training: Cruel Ogres##37035
 accept Clefthoof Training: Cruel Ogres##37053
@@ -2303,25 +2303,25 @@ kill Gorian Beast-Lasher##87095 |q Elekk Training: Cruel Ogres##37063/1 |goto Na
 |tip Wait for him to respawn, since you just killed him.
 |tip You can make a macro that includes "/cast Mend Pet". Using the whistle dismisses your pet and your mount takes damage in the fight. Using this macro will allow you to heal your mount. |only Hunter
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 turnin Riverbeast Training: Cruel Ogres##37073
 turnin Talbuk Training: Cruel Ogres##37098
 turnin Wolf Training: Cruel Ogres##37105
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 turnin Boar Training: Cruel Ogres##37035
 turnin Clefthoof Training: Cruel Ogres##37053
 turnin Elekk Training: Cruel Ogres##37063
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 accept Riverbeast Training: Darkwing Roc##37074
 accept Talbuk Training: Darkwing Roc##37099
 accept Wolf Training: Darkwing Roc##37106
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 accept Boar Training: Darkwing Roc##37036
 accept Clefthoof Training: Darkwing Roc##37054
@@ -2359,25 +2359,25 @@ kill Darkwing Roc##87088 |q Elekk Training: Darkwing Roc##37064/1 |goto Nagrand 
 |tip Wait for him to respawn, since you just killed him.
 |tip You can make a macro that includes "/cast Mend Pet". Using the whistle dismisses your pet and your mount takes damage in the fight. Using this macro will allow you to heal your mount. |only Hunter
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 turnin Riverbeast Training: Darkwing Roc##37074
 turnin Talbuk Training: Darkwing Roc##37099
 turnin Wolf Training: Darkwing Roc##37106
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 turnin Boar Training: Darkwing Roc##37036
 turnin Clefthoof Training: Darkwing Roc##37054
 turnin Elekk Training: Darkwing Roc##37064
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 accept Riverbeast Training: Moth of Wrath##37075
 accept Talbuk Training: Moth of Wrath##37100
 accept Wolf Training: Moth of Wrath##37107
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 accept Boar Training: Moth of Wrath##37037
 accept Clefthoof Training: Moth of Wrath##37055
@@ -2412,25 +2412,25 @@ kill Moth of Wrath##87089 |q Elekk Training: Moth of Wrath##37065/1 |goto Nagran
 |tip Wait for him to respawn, since you just killed him.
 |tip You can make a macro that includes "/cast Mend Pet". Using the whistle dismisses your pet and your mount takes damage in the fight. Using this macro will allow you to heal your mount. |only Hunter
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 turnin Riverbeast Training: Moth of Wrath##37075
 turnin Talbuk Training: Moth of Wrath##37100
 turnin Wolf Training: Moth of Wrath##37107
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 turnin Boar Training: Moth of Wrath##37037
 turnin Clefthoof Training: Moth of Wrath##37055
 turnin Elekk Training: Moth of Wrath##37065
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 accept Riverbeast Training: Thundercall##37076
 accept Talbuk Training: Thundercall##37101
 accept Wolf Training: Thundercall##37108
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 accept Boar Training: Thundercall##37038
 accept Clefthoof Training: Thundercall##37056
@@ -2470,25 +2470,25 @@ kill Thundercall##87102 |q Elekk Training: Thundercall##37066/1 |goto Nagrand D 
 |tip Wait for him to respawn, since you just killed him.
 |tip You can make a macro that includes "/cast Mend Pet". Using the whistle dismisses your pet and your mount takes damage in the fight. Using this macro will allow you to heal your mount. |only Hunter
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 turnin Riverbeast Training: Thundercall##37076
 turnin Talbuk Training: Thundercall##37101
 turnin Wolf Training: Thundercall##37108
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 turnin Boar Training: Thundercall##37038
 turnin Clefthoof Training: Thundercall##37056
 turnin Elekk Training: Thundercall##37066
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 accept Riverbeast Training: Ironbore##37077
 accept Talbuk Training: Ironbore##37102
 accept Wolf Training: Ironbore##37109
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 accept Boar Training: Ironbore##37039
 accept Clefthoof Training: Ironbore##37057
@@ -2523,25 +2523,25 @@ kill Ironbore##87090 |q Elekk Training: Ironbore##37067/1 |goto Nagrand D/0 53.2
 |tip Wait for him to respawn, since you just killed him.
 |tip You can make a macro that includes "/cast Mend Pet". Using the whistle dismisses your pet and your mount takes damage in the fight. Using this macro will allow you to heal your mount. |only Hunter
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 turnin Riverbeast Training: Ironbore##37077
 turnin Talbuk Training: Ironbore##37102
 turnin Wolf Training: Ironbore##37109
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 turnin Boar Training: Ironbore##37039
 turnin Clefthoof Training: Ironbore##37057
 turnin Elekk Training: Ironbore##37067
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 accept Riverbeast Training: Orc Hunters##37078
 accept Talbuk Training: Orc Hunters##37103
 accept Wolf Training: Orc Hunters##37110
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 accept Boar Training: Orc Hunters##37040
 accept Clefthoof Training: Orc Hunters##37058
@@ -2576,25 +2576,25 @@ kill Karak the Great Hunter##87105 |q Elekk Training: Orc Hunters##37068/1 |goto
 |tip Wait for him to respawn, since you just killed him.
 |tip You can make a macro that includes "/cast Mend Pet". Using the whistle dismisses your pet and your mount takes damage in the fight. Using this macro will allow you to heal your mount. |only Hunter
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 turnin Riverbeast Training: Orc Hunters##37078
 turnin Talbuk Training: Orc Hunters##37103
 turnin Wolf Training: Orc Hunters##37110
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 turnin Boar Training: Orc Hunters##37040
 turnin Clefthoof Training: Orc Hunters##37058
 turnin Elekk Training: Orc Hunters##37068
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 accept Riverbeast Training: The Garn##37079
 accept Talbuk Training: The Garn##37104
 accept Wolf Training: The Garn##37111
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 accept Boar Training: The Garn##37041
 accept Clefthoof Training: The Garn##37059
@@ -2632,13 +2632,13 @@ kill Maimclaw##87174 |q Elekk Training: The Garn##37069/1 |goto Nagrand D/0 63.8
 |tip Wait for him to respawn, since you just killed him.
 |tip You can make a macro that includes "/cast Mend Pet". Using the whistle dismisses your pet and your mount takes damage in the fight. Using this macro will allow you to heal your mount. |only Hunter
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 |tip She walks around this area.
 turnin Riverbeast Training: The Garn##37079
 turnin Talbuk Training: The Garn##37104
 turnin Wolf Training: The Garn##37111
 step
-#include "H_Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
+#include "Garrison_Large_Building", action="talk Tormak the Scarred##86979", building="Stables"
 |tip He walks around this area.
 turnin Boar Training: The Garn##37041
 turnin Clefthoof Training: The Garn##37059
@@ -2656,13 +2656,13 @@ step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Stables, Level 3##112003 |condition itemcount(112003) > 0 or hasblueprint("Stables",3)
 step
 use Garrison Blueprint: Stables, Level 3##112003
 Learn the Stables, Level 3 Blueprint |condition hasblueprint("Stables",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Stables
 Click _Upgrade_
 Upgrade your Stables to Level 3 |havebuilding Stables,3,building
@@ -2670,28 +2670,28 @@ step
 Wait for your Stables to be Built |havebuilding Stables,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Large", building="Stables"
+#include "Garrison_Finalize_Large", building="Stables"
 Finalize the Level 3 Stables |havebuilding Stables,3,active
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 accept Teeth of a Predator##37124
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 Talk to Sage Paluna |q Teeth of a Predator##37124/1
 step
-#include "H_Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
+#include "Garrison_Large_Building", action="talk Sage Paluna##87242", building="Stables"
 turnin Teeth of a Predator##37124
 step
 Congratulations, you've finished upgrading your Stables!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Large Buildings\\War Mill",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Large Buildings\\War Mill",{
 description="This guide will walk you through creating and upgrading the War Mill Garrison building.",
 },[[
 step
 Upgrade your Garrison to Level 2 |condition garrisonlvl() > 1
 |tip You do not have another Large building plot until your Garrison is level 2. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Select the _Large_ tab at the top
 Drag _War Mill_ to a _Large Plot_
 Build your War Mill |havebuilding Armory
@@ -2699,7 +2699,7 @@ step
 Wait for your War Mill to be Built |havebuilding Armory,1,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Large", building="Armory"
+#include "Garrison_Finalize_Large", building="Armory"
 Finalize the Level 1 War Mill |havebuilding Armory,1,active
 step
 Reach Level 100 |ding 100 |or
@@ -2708,7 +2708,7 @@ _Or_
 Complete the Nagrand Outpost questline |condition completedq(34899) |or
 |tip Use the Nagrand (Warlords of Draenor) Leveling guide to accomplish this.
 step
-#include "H_Garrison_Large_Building", action="talk Grun'lek##79815", building="Armory"
+#include "Garrison_Large_Building", action="talk Grun'lek##79815", building="Armory"
 accept Scraps of Iron##37043
 step
 _Cross_ the broken bridge |goto Talador/0 66.9,9.2 < 20 |only if walking
@@ -2717,16 +2717,16 @@ kill Grom'kar Bulwark##85454+, Grom'kar Punisher##85455+, Grom'kar Deadeye##8546
 collect 5 Iron Horde Scraps##113681 |q Scraps of Iron##37043/1 |goto Talador/0 67.8,6.5
 |tip Depending on your luck, this could take a little while, so be patient if you're not getting them at first.
 step
-#include "H_Garrison_Large_Building", action="talk Grun'lek##79815", building="Armory"
+#include "Garrison_Large_Building", action="talk Grun'lek##79815", building="Armory"
 turnin Scraps of Iron##37043
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: War Mill, Level 2##116185 |condition itemcount(116185) > 0 or hasblueprint("Armory",2)
 step
 use Garrison Blueprint: War Mill, Level 2##116185
 Learn the War Mill, Level 2 Blueprint |condition hasblueprint("Armory",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your War Mill
 Click _Upgrade_
 Upgrade your War Mill to Level 2 |havebuilding Armory,2,building
@@ -2734,23 +2734,23 @@ step
 Wait for your War Mill to be Built |havebuilding Armory,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Large", building="Armory"
+#include "Garrison_Finalize_Large", building="Armory"
 Finalize the Level 2 War Mill |havebuilding Armory,2,active
 step
-#include "H_Garrison_CommandTable"
+#include "Garrison_CommandTable"
 Level 20 Garrison Followers to Level 100 |achieve 9129
 |tip Send your Garrison Followers on missions to accomplish this.
 step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: War Mill, Level 3##116186 |condition itemcount(116186) > 0 or hasblueprint("Armory",3)
 step
 use Garrison Blueprint: War Mill, Level 3##116186
 Learn the War Mill, Level 3 Blueprint |condition hasblueprint("Armory",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your War Mill
 Click _Upgrade_
 Upgrade your War Mill to Level 3 |havebuilding Armory,3,building
@@ -2758,12 +2758,12 @@ step
 Wait for your War Mill to be Built |havebuilding Armory,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Finalize_Large", building="Armory"
+#include "Garrison_Finalize_Large", building="Armory"
 Finalize the Level 3 War Mill |havebuilding Armory,3,active
 step
 Congratulations, you've finished upgrading your War Mill!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Default Buildings\\Fishing Shack",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Default Buildings\\Fishing Shack",{
 description="This guide will walk you through creating and upgrading the Fishing Shack Garrison building.",
 },[[
 step
@@ -2803,13 +2803,13 @@ step
 talk Mak'jin##79892
 turnin Anglin' In Our Garrison##36132 |goto Frostwall/0 38.16,72.42
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Fishing Shack, Level 2##111927 |condition itemcount(111927) > 0 or hasblueprint("Fishing",2)
 step
 use Garrison Blueprint: Fishing Shack, Level 2##111927
 Learn the Fishing Shack, Level 2 Blueprint |condition hasblueprint("Fishing",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Fishing Shack
 Click _Upgrade_
 Upgrade your Fishing Shack to Level 2 |havebuilding Fishing,2,building
@@ -2817,7 +2817,7 @@ step
 Wait for your Fishing Shack to be Built |havebuilding Fishing,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Fishing_Finalize"
+#include "Garrison_Fishing_Finalize"
 Finalize the Level 2 Fishing Shack |havebuilding Fishing,2,active
 step
 Use your Fishing skill to fish in the water |goto Frostwall/0 38.6,79.2 |cast Fishing##131474
@@ -2886,13 +2886,13 @@ step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Fishing Shack, Level 3##111928 |condition itemcount(111928) > 0 or hasblueprint("Fishing",3)
 step
 use Garrison Blueprint: Fishing Shack, Level 3##111928
 Learn the Fishing Shack, Level 3 Blueprint |condition hasblueprint("Fishing",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Fishing Shack
 Click _Upgrade_
 Upgrade your Fishing Shack to Level 3 |havebuilding Fishing,3,building
@@ -2900,7 +2900,7 @@ step
 Wait for your Fishing Shack to be Built |havebuilding Fishing,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_Fishing_Finalize"
+#include "Garrison_Fishing_Finalize"
 Finalize the Level 3 Fishing Shack |havebuilding Fishing,3,active
 step
 talk Rak'jin##79971
@@ -2957,7 +2957,7 @@ accept An Angler on Our Team##36616 |instant |goto Frostwall/0 37.9,71.7
 step
 Congratulations, you've finished upgrading your Fishing Shack!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Default Buildings\\Frostwall Mines",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Default Buildings\\Frostwall Mines",{
 description="This guide will walk you through creating and upgrading the Frostwall Mines Garrison building.",
 },[[
 step
@@ -2985,13 +2985,13 @@ _Or_
 Complete the Talador Outpost questline |condition completedq(34971) or completedq(34712) |or
 |tip Use the Talador Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Frostwall Mines, Level 2##116248 |condition itemcount(116248) > 0 or hasblueprint("Mine",2)
 step
 use Garrison Blueprint: Frostwall Mines, Level 2##116248
 Learn the Frostwall Mines, Level 2 Blueprint |condition hasblueprint("Mine",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Frostwall Mines
 Click _Upgrade_
 Upgrade your Frostwall Mines to Level 2 |havebuilding Mine,2,building
@@ -2999,7 +2999,7 @@ step
 Wait for your Frostwall Mines to be Built |havebuilding Mine,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_FrostwallMines_Finalize"
+#include "Garrison_FrostwallMines_Finalize"
 Finalize the Level 2 Frostwall Mines |havebuilding Mine,2,active
 step
 click True Iron Deposit##232544+
@@ -3013,13 +3013,13 @@ step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Frostwall Mines, Level 3##116249 |condition itemcount(116249) > 0 or hasblueprint("Mine",3)
 step
 use Garrison Blueprint: Frostwall Mines, Level 3##116249
 Learn the Frostwall Mines, Level 3 Blueprint |condition hasblueprint("Mine",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Frostwall Mines
 Click _Upgrade_
 Upgrade your Frostwall Mines to Level 3 |havebuilding Mine,3,building
@@ -3027,12 +3027,12 @@ step
 Wait for your Frostwall Mines to be Built |havebuilding Mine,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_FrostwallMines_Finalize"
+#include "Garrison_FrostwallMines_Finalize"
 Finalize the Level 3 Frostwall Mines |havebuilding Mine,3,active
 step
 Congratulations, you've finished upgrading your Frostwall Mines!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Default Buildings\\Herb Garden",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Default Buildings\\Herb Garden",{
 description="This guide will walk you through creating and upgrading the Herb Garden Garrison building.",
 },[[
 step
@@ -3050,13 +3050,13 @@ step
 talk Tarnon##81981
 turnin Clearing the Garden##34193 |goto Frostwall/0 43.3,83.3
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Herb Garden, Level 2##109577 |condition itemcount(109577) > 0 or hasblueprint("Farm",2)
 step
 use Garrison Blueprint: Herb Garden, Level 2##109577
 Learn the Herb Garden, Level 2 Blueprint |condition hasblueprint("Farm",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Herb Garden
 Click _Upgrade_
 Upgrade your Herb Garden to Level 2 |havebuilding Farm,2,building
@@ -3064,7 +3064,7 @@ step
 Wait for your Herb Garden to be Built |havebuilding Farm,2,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_HerbGarden_Finalize"
+#include "Garrison_HerbGarden_Finalize"
 Finalize the Level 2 Herb Garden |havebuilding Farm,2,active
 step
 Reach Level 100 |ding 100
@@ -3077,13 +3077,13 @@ step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Herb Garden, Level 3##111997 |condition itemcount(111997) > 0 or hasblueprint("Farm",3)
 step
 use Garrison Blueprint: Herb Garden, Level 3##111997
 Learn the Herb Garden, Level 3 Blueprint |condition hasblueprint("Farm",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Herb Garden
 Click _Upgrade_
 Upgrade your Herb Garden to Level 3 |havebuilding Farm,3,building
@@ -3091,12 +3091,12 @@ step
 Wait for your Herb Garden to be Built |havebuilding Farm,3,ready
 |tip This takes 1 hour from the time you initiated the upgrade.
 step
-#include "H_Garrison_HerbGarden_Finalize"
+#include "Garrison_HerbGarden_Finalize"
 Finalize the Level 3 Herb Garden |havebuilding Farm,3,active
 step
 Congratulations, you've finished upgrading your Herb Garden!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Default Buildings\\Menagerie",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Default Buildings\\Menagerie",{
 description="This guide will walk you through creating and upgrading the Menagerie Garrison building.",
 },[[
 step
@@ -3146,13 +3146,13 @@ step
 talk Serr'ah##79858
 turnin Pets Versus Pests##36469 |goto 31.54,42.14
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Menagerie, Level 2##111998 |condition itemcount(111998) > 0 or hasblueprint("PetStable",2)
 step
 use Garrison Blueprint: Menagerie, Level 2##111998
 Learn the Menagerie, Level 2 Blueprint |condition hasblueprint("PetStable",2)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Menagerie
 Click _Upgrade_
 Upgrade your Menagerie to Level 2 |havebuilding PetStable,2,building
@@ -3170,13 +3170,13 @@ step
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 |tip You cannot buy level 3 blueprints until your Garrison is level 3. Use the Garrison Leveling guide to accomplish this.
 step
-#include "H_Garrison_BlueprintVendor"
+#include "Garrison_BlueprintVendor"
 buy 1 Garrison Blueprint: Menagerie, Level 3##111999 |condition itemcount(111999) > 0 or hasblueprint("PetStable",3)
 step
 use Garrison Blueprint: Menagerie, Level 3##111999
 Learn the Menagerie, Level 3 Blueprint |condition hasblueprint("PetStable",3)
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Menagerie
 Click _Upgrade_
 Upgrade your Menagerie to Level 3 |havebuilding PetStable,3,building
@@ -3190,7 +3190,7 @@ Finalize the Level 3 Menagerie |havebuilding PetStable,3,active
 step
 Congratulations, you've finished upgrading your Menagerie!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Default Buildings\\Frostwall Shipyard",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Buildings\\Default Buildings\\Frostwall Shipyard",{
 description="This guide will walk you through creating and upgrading the Frostwall Shipyard Garrison building.",
 },[[
 step
@@ -3534,12 +3534,12 @@ turnin Naval Domination##39246 |goto Frostfire Ridge/0 42.1,71.0
 step
 Congratulations, you've finished upgrading your Frostwall Shipyard!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Campaign Guide",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Campaign Guide",{
 description="This guide will walk you through the Garrison Campaign questlines.",
 },[[
-#include "H_Garrison_Campaign"
+#include "Garrison_Campaign"
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Tanaan Jungle (6.2) Garrison Campaign\\Onslaught at Auchindoun",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Tanaan Jungle (6.2) Garrison Campaign\\Onslaught at Auchindoun",{
 description="This guide will walk you through the Onslaught at Auchindoun Garrison Campaign questline in Tanaan Jungle, introduced in patch 6.2.",
 },[[
 step
@@ -3600,7 +3600,7 @@ turnin Secrets of the Sargerei##38416 |goto Talador/30 53.5,68.9
 step
 Congratulations, you've completed the _"Onslaught at Auchindoun"_ Garrison Campaign questline!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Tanaan Jungle (6.2) Garrison Campaign\\The Bane of the Bleeding Hollow",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Tanaan Jungle (6.2) Garrison Campaign\\The Bane of the Bleeding Hollow",{
 description="This guide will walk you through the Bane of the Bleeding Hollow Garrison Campaign questline in Tanaan Jungle, introduced in patch 6.2.",
 },[[
 step
@@ -3672,7 +3672,7 @@ turnin The Eye of Kilrogg##38274 |goto Tanaan Jungle/0 32.8,37.5
 step
 Congratulations, you've completed the _"Bane of the Bleeding Hollow"_ Garrison Campaign questline!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Tanaan Jungle (6.2) Garrison Campaign\\In the Shadows",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Tanaan Jungle (6.2) Garrison Campaign\\In the Shadows",{
 description="This guide will walk you through the In the Shadows Garrison Campaign questline in Tanaan Jungle, introduced in patch 6.2.",
 },[[
 step
@@ -3740,7 +3740,7 @@ turnin Dark Ascension##38223 |goto Tanaan Jungle/0 16.1,44.3
 step
 Congratulations, you've completed the _"In the Shadows"_ Garrison Campaign questline!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Tanaan Jungle (6.2) Garrison Campaign\\The Warlock",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Tanaan Jungle (6.2) Garrison Campaign\\The Warlock",{
 description="This guide will walk you through the Warlock Garrison Campaign questline in Tanaan Jungle, introduced in patch 6.2.",
 },[[
 step
@@ -3813,7 +3813,7 @@ accept Oronok's Offer##39395 |goto Tanaan Jungle/0 62.8,27.9
 step
 Congratulations, you've completed the _"Warlock"_ Garrison Campaign questline!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Leveling Guide",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Leveling Guide",{
 description="This guide will walk you through leveling up your Garrison to level 3.",
 },[[
 step
@@ -3926,13 +3926,13 @@ step
 use Garrison Blueprint: Barracks, Level 1##111956
 Learn the Garrison Blueprints: Barracks 1 |q Build Your Barracks##34461/2
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Use the Architect Table
 |tip It looks like a wooden artist workstation.
 While using the table, _drag the Barracks_ to the _"Large Empty Plot"_
 Build Your Barracks |q Build Your Barracks##34461/3 |goto Frostwall 52.2,53.3
 step
-#include "H_Garrison_Finalize_Large", building="Barracks"
+#include "Garrison_Finalize_Large", building="Barracks"
 Finalize Your Plot |q Build Your Barracks##34461/5
 step
 talk Gazlowe##78466
@@ -4109,9 +4109,13 @@ talk Durotan##70860
 turnin Moving In##33657 |goto Frostfire Ridge/1 43.2,41.3
 accept Save Wolf Home##33468 |goto Frostfire Ridge/1 43.2,41.3
 step
+kill Giantslayer Zhakta##74702 |q Save Wolf Home##33468/4 |goto 22.02,57.28
+step
 stickystart "free"
 talk Wor'gol Defender##74507
 accept Free Our Brothers and Sisters##33807 |goto Frostfire Ridge/0 19.1,58.3
+step
+kill Gronnstalker Korhol##74700 |q Save Wolf Home##33468/2 |goto 19.25,58.21
 step
 _Go up_ the hill |goto Frostfire Ridge 19.7,60.0 < 15 |only if walking
 kill Beastmaster Trokar##74708 |q Save Wolf Home##33468/3 |goto 19.8,61.4
@@ -4119,7 +4123,7 @@ step "thunderlords"
 kill Thunderlord Ranger##76289+, Thunderlord Invader##74329+, Thunderlord Handler##74514+, Thunderlord Seer##78073+
 Slay #15# Thunderlords |q Save Wolf Home##33468/5 |goto Frostfire Ridge 20.0,59.0
 step "free"
-clicknpc Wor'gol Villager##84781+, Frost Wolf##74544+
+click Wor'gol Villager##84781+, Frost Wolf##74544+
 Free #6# Villagers and Frostwolves |q Free Our Brothers and Sisters##33807/1 |goto Frostfire Ridge 20.0,59.0
 step
 talk Draka##74651
@@ -4247,27 +4251,27 @@ step
 Reach level 100 |ding 100
 |tip Use the Leveling guides to accomplish this.
 step
-#include "H_Garrison_Gazlowe"
+#include "Garrison_Gazlowe"
 accept My Very Own Fortress##36614
 step
 Gather 2,000 Garrison Resources |q My Very Own Fortress##36614/1
 |tip Gather your Garrison Supply Cache each day, and send followers on missions that award Garrison Resources. You can also collect Treasures in Draenor zones to get Garrison Resources faster, if you'd like.
 step
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click your Town Hall
 Click _Upgrade_
 Upgrade your Garrison to Level 3 |condition garrisonlvl(3)
 step
-#include "H_Garrison_Gazlowe"
+#include "Garrison_Gazlowe"
 turnin My Very Own Fortress##36614
 step
 Congratulations, you've upgraded your Garrison to level 3!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Quests Guide",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Quests Guide",{
 description="This guide will walk you through the quests found in your Garrison.",
 },[[
 step
-#include "H_Garrison_Rokhan"
+#include "Garrison_Rokhan"
 accept We Be Needin' Supplies##34736
 step
 talk Shadow Hunter Rala##78208
@@ -4281,7 +4285,7 @@ step
 talk Ja'kana##78699
 fpath Darkspear's Edge |goto Frostfire Ridge/0 51.7,41.1
 step
-#include "H_Garrison_Rokhan"
+#include "Garrison_Rokhan"
 turnin Wanted: Grondo's Bounty##33918
 step
 Reach level 94 |ding 94
@@ -4317,10 +4321,10 @@ step
 Reach level 100 |ding 100
 |tip Use the Leveling guides to accomplish this.
 step
-#include "H_Garrison_WarmasterZog"
+#include "Garrison_WarmasterZog"
 accept Proving Grounds##37434
 step
-#include "H_Garrison_WarmasterZog"
+#include "Garrison_WarmasterZog"
 Click _"Enter the Proving Grounds"_
 Speak With Warmaster Zog to Enter Proving Grounds |q Proving Grounds##37434/1
 step
@@ -4336,17 +4340,17 @@ Return to Your Garrison |goto Frostwall/0 41.1,53.2 < 100 |c |noway
 |tip Right click on the green eye icon on your mini map and select Leave Instanace Group.
 only if not completedq(37434)
 step
-#include "H_Garrison_WarmasterZog"
+#include "Garrison_WarmasterZog"
 turnin Proving Grounds##37434
 accept New Goods##38427
 step
-#include "H_Garrison_Grimjaw"
+#include "Garrison_Grimjaw"
 Find Sergeant Grimjaw |q New Goods##38427/1
 step
 Click the _Quest Complete_ Box:
 turnin New Goods##38427
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Legendary Ring Guide",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Legendary Ring Guide",{
 description="This guide will walk you through the Legendary Ring questline.",
 },[[
 step
@@ -4755,7 +4759,7 @@ Congratulations, you have completed the Legendary Ring questline!
 |tip You can continue to upgrade your ring by defeating Archimonde every week in Normal, Heroic, or Mythic difficulty.
 |tip Use the Crystallized Fel he drops to upgrade your ring by 3 item levels, up to a maximum of 795.
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\FOLLOWERS STARTER GUIDE",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\FOLLOWERS STARTER GUIDE",{
 description="This guide will provide a tutorial for Garrison Followers.",
 },[[
 step
@@ -4768,7 +4772,7 @@ step
 label "assign"
 Assigning a Follower to a Garrison building yields more resources
 Each Follower has random traits and some have a profession that allows them to be assigned to a building
-#include "H_Garrison_ArchitectTable"
+#include "Garrison_ArchitectTable"
 Click on your buildings and click the _"+"_ sign to assign an available Follower to that building
 Click here to return to the _Main Menu_ |confirm |next "start"
 step
@@ -4791,7 +4795,7 @@ Click here to return to the _Main Menu_ |confirm |next "start"
 step
 _Frostwall Tavern Info_
 After reaching Level 2 with the Frostwall Tavern, you can search for specific Follower abilities or traits and then recruit that Follower
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 Click a specific Ability or Trait from the drop down menus and then search
 Hire whichever Follower you like best
 You can recruit a new Follower this way once every week
@@ -4800,23 +4804,23 @@ step
 label "leveling"
 The best way to level up your Followers is through Garrison Missions
 Mission bonuses are listed on the right side of each mission. Look for mission that grant _Bonus Follower XP_
-#include "H_Garrison_CommandTable"
+#include "Garrison_CommandTable"
 Send your Followers on missions to level them
 Click here to return to the _Main Menu_ |confirm |next "start"
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower 'Doc' Schweitzer",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower 'Doc' Schweitzer",{
 keywords={"discipline","priest","herbalism"},
 description="This guide will walk you through obtaining 'Doc' Schweitzer as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit "Doc" Schweitzer |condition hasfollower(342)
 step
 Congratulations, you now have "Doc" Schweitzer as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Abu'gar",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Abu'gar",{
 keywords={"blood","death","knight","wild","aggression"},
 description="This guide will walk you through obtaining Abu'gar as a Garrison Follower.",
 },[[
@@ -4841,7 +4845,7 @@ accept Abu'Gar##36711 |instant |goto 67.18,56.01
 step
 Congratulations, you now have Abu'gar as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Aeda Brightdawn",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Aeda Brightdawn",{
 keywords={"demonology","warlock","timed","battle","bodyguard"},
 description="This guide will walk you through obtaining Aeda Brightdawn as a Garrison Follower.",
 },[[
@@ -4861,7 +4865,7 @@ accept The True Path##36518 |instant |goto Talador 58.12,52.98
 step
 Congratulations, you now have Aeda Brightdawn as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Ahm",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Ahm",{
 keywords={"arms","warrior","danger","zones","enchanting"},
 description="This guide will walk you through obtaining Ahm as a Garrison Follower.",
 },[[
@@ -4883,19 +4887,19 @@ accept Solidarity In Death##36522 |instant |goto Frostwall 50.8,15.8
 step
 Congratulations, you now have Ahm as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Aila Dourblade",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Aila Dourblade",{
 keywords={"subtlety","rogue"},
 description="This guide will walk you through obtaining Auriel Brightsong as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Aila Dourblade |condition hasfollower(376)
 step
 Congratulations, you now have Aila Dourblade as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Aknor Steelbringer",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Aknor Steelbringer",{
 keywords={"arms","warrior","minion","swarms"},
 description="This guide will walk you through obtaining Aknor Steelbringer as a Garrison Follower.",
 },[[
@@ -4906,7 +4910,7 @@ achieve 8929 |goto Blackrock Foundry/1 18.8,76.8
 step
 Congratulations, you now have Aknor Steelbringer as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Alexi Barov",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Alexi Barov",{
 keywords={"assassination","rogue","danger","zones"},
 description="This guide will walk you through obtaining Alexi Barov as a Garrison Follower.",
 },[[
@@ -4924,43 +4928,43 @@ accept The Rise and Fall of Barov Industries: Alexi Barov##36427 |instant
 step
 Congratulations, you now have Alexi Barov as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Arienne Black",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Arienne Black",{
 keywords={"discipline","priest"},
 description="This guide will walk you through obtaining Arienne Black as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Arienne Black |condition hasfollower(345)
 step
 Congratulations, you now have Arienne Black as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Auriel Brightsong",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Auriel Brightsong",{
 keywords={"holy","paladin"},
 description="This guide will walk you through obtaining Auriel Brightsong as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Auriel Brightsong |condition hasfollower(327)
 step
 Congratulations, you now have Auriel Brightsong as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Awarri Blazecall",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Awarri Blazecall",{
 keywords={"fire","mage"},
 description="This guide will walk you through obtaining Awarri Blazecall as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Awarri Blazecall |condition hasfollower(296)
 step
 Congratulations, you now have Awarri Blazecall as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Benjamin Gibb",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Benjamin Gibb",{
 keywords={"unholy","death","knight","minion","swarms","inscription"},
 description="This guide will walk you through obtaining Benjamin Gibb as a Garrison Follower.",
 },[[
@@ -4973,19 +4977,19 @@ accept Three Feet Under##36864 |instant |goto Spires of Arak 35.8,52.2
 step
 Congratulations, you now have Benjamin Gibb as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Bim'ini",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Bim'ini",{
 keywords={"fury","warrior"},
 description="This guide will walk you through obtaining Bim'ini as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Bim'ini |condition hasfollower(420)
 step
 Congratulations, you now have Bim'ini as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Blook",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Blook",{
 keywords={"fury","warrior","timed","battle","combat","experience"},
 description="This guide will walk you through obtaining Blook as a Garrison Follower.",
 },[[
@@ -4999,7 +5003,7 @@ accept I Am Blook##34279 |instant |goto Gorgrond 41.2,91.4
 step
 Congratulations, you now have Blook as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Bruto",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Bruto",{
 keywords={"windwalker","monk","wild","aggression"},
 description="This guide will walk you through obtaining Bruto as a Garrison Follower.",
 },[[
@@ -5061,7 +5065,7 @@ Recruit Bruto |condition hasfollower(176)
 step "end"
 Congratulations, you now have Bruto as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Cacklebone",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Cacklebone",{
 keywords={"restoration","shaman","group","damage"},
 description="This guide will walk you through obtaining Cacklebone as a Garrison Follower.",
 },[[
@@ -5074,7 +5078,7 @@ Become Revered with the Laughing Skill Orcs |condition rep('Laughing Skull Orcs'
 |tip This is most easily obtained by farming mobs with Mutagen stacks in the Everbloom Wilds in Gorgrond.
 |tip Twisted Guardians and Enthralled Mutants spawn mutagen pools when they die. Stand in these pools to gain stacks of Mutagen.
 step
-#include "H_Garrison_Medium_Building", action="talk Kil'rip##86698", building="TradingPost"
+#include "Garrison_Medium_Building", action="talk Kil'rip##86698", building="TradingPost"
 |tip He is found in your Trading Post.
 buy Contract: Cacklebone##119166 |condition itemcount(119166) > 0 or hasfollower(458)
 |tip It costs 5,000 gold.
@@ -5086,48 +5090,48 @@ label "end"
 Congratulations, you now have Cacklebone as a Garrison Follower! |only if hasfollower(458)
 You must have at least a level 2 Trading Post to recruit this Follower! |only if default
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Cadi Grasshoof",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Cadi Grasshoof",{
 keywords={"restoration","druid"},
 description="This guide will walk you through obtaining Cadi Grasshoof as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Cadi Grasshoof |condition hasfollower(262)
 step
 Congratulations, you now have Cadi Grasshoof as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Candice Morey",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Candice Morey",{
 keywords={"frost","mage"},
 description="This guide will walk you through obtaining Candice Morey as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Candice Morey |condition hasfollower(300)
 step
 Congratulations, you now have Candice Morey as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Cheri",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Cheri",{
 keywords={"demonology","warlock"},
 description="This guide will walk you through obtaining Cheri as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Cheri |condition hasfollower(403)
 step
 Congratulations, you now have Cheri as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Choluna",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Choluna",{
 keywords={"feral","druid","wild","aggression"},
 description="This guide will walk you through obtaining Choluna as a Garrison Follower.",
 },[[
 step
-#include "H_Garrison_Rokhan"
+#include "Garrison_Rokhan"
 accept Garrison Campaign: Awakening##36136
 |tip This quest is one of the Garrison Campaigns that has a chance to appear every week. If it's not here now check back next week.
 step
@@ -5163,37 +5167,37 @@ step
 Watch the dialogue
 Witness Grommash Hellscream's Challenge |q Primal Fury##36342/5 |goto Talador/0 69.5,9.1
 step
-#include "H_Garrison_WarmasterZog"
+#include "Garrison_WarmasterZog"
 turnin Primal Fury##36342
 turnin Sanketsu, The Burning Blade##37192
 step
 Congratulations, you now have Choluna as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Clever Ashyo",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Clever Ashyo",{
 keywords={"mistweaver","monk"},
 description="This guide will walk you through obtaining Clever Ashyo as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Clever Ashyo |condition hasfollower(434)
 step
 Congratulations, you now have Clever Ashyo as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Coggeye Aimbot",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Coggeye Aimbot",{
 keywords={"marksmanship","hunter"},
 description="This guide will walk you through obtaining Coggeye Aimbot as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Coggeye Aimbot |condition hasfollower(280)
 step
 Congratulations, you now have Coggeye Aimbot as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Croman",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Croman",{
 keywords={"retribution","paladin","massive","strike"},
 description="This guide will walk you through obtaining Croman as a Garrison Follower.",
 },[[
@@ -5245,19 +5249,19 @@ Recruit Croman |condition hasfollower(177)
 step
 Congratulations, you now have Croman as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Cyril Fogus",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Cyril Fogus",{
 keywords={"blood","death","knight"},
 description="This guide will walk you through obtaining Cyril Fogus as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Cyril Fogus |condition hasfollower(229)
 step
 Congratulations, you now have Cyril Fogus as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Dagg",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Dagg",{
 keywords={"subtlety","rogue","deadly","minions"},
 description="This guide will walk you through obtaining Dagg as a Garrison Follower.",
 },[[
@@ -5275,7 +5279,7 @@ accept Services of Dagg##34733 |instant |goto Frostwall/0 48.2,17.5
 step
 Congratulations, you now have Dagg as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Dark Ranger Velonara",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Dark Ranger Velonara",{
 keywords={"marksmanship","hunter","powerful","spell","skinning"},
 description="This guide will walk you through obtaining Dark Ranger Velonara as a Garrison Follower.",
 },[[
@@ -5372,19 +5376,19 @@ Recruit Dark Ranger Velonara |condition hasfollower(453)
 step "end"
 Congratulations, you now have Dark Ranger Velonara as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Dawn Mercurus",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Dawn Mercurus",{
 keywords={"fire","mage"},
 description="This guide will walk you through obtaining Dawn Mercurus as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Dawn Mercurus |condition hasfollower(295)
 step
 Congratulations, you now have Dawn Mercurus as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Dawnseeker Rukaryx",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Dawnseeker Rukaryx",{
 keywords={"balance","druid","minion","swarms"},
 description="This guide will walk you through obtaining Dawnseeker Rukaryx as a Garrison Follower.",
 },[[
@@ -5398,55 +5402,55 @@ Recruit Dawnseeker Rukaryx |condition hasfollower(462)
 step
 Congratulations, you now have Dawnseeker Rukaryx as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Deneezo Hailstrike",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Deneezo Hailstrike",{
 keywords={"frost","death","knight"},
 description="This guide will walk you through obtaining Deneezo Hailstrike as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Deneezo Hailstrike |condition hasfollower(238)
 step
 Congratulations, you now have Deneezo Hailstrike as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Eula Clay",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Eula Clay",{
 keywords={"protection","warrior"},
 description="This guide will walk you through obtaining Eula Clay as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Eula Clay |condition hasfollower(428)
 step
 Congratulations, you now have Eula Clay as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Faala",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Faala",{
 keywords={"protection","paladin"},
 description="This guide will walk you through obtaining Faala as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Faala |condition hasfollower(333)
 step
 Congratulations, you now have Faala as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Fazerra",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Fazerra",{
 keywords={"enhancement","shaman"},
 description="This guide will walk you through obtaining Fazerra as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Fazerra |condition hasfollower(383)
 step
 Congratulations, you now have Fazerra as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Fen Tao",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Fen Tao",{
 keywords={"fen","tao","mistweaver","monk","magic","debuff","skinning","brew","aficionado"},
 description="This guilde will walk you through obtaining Fen Tao as a Garrison Follower.",
 },[[
@@ -5459,31 +5463,31 @@ Recruit Fen Tao |condition hasfollower(467) |goto Warspear/0 46.9,45.2
 step
 Congratulations, you now have Fen Tao as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Fo Sho Knucklebump",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Fo Sho Knucklebump",{
 keywords={"brewmaster","monk"},
 description="This guide will walk you through obtaining Fo Sho Knucklebump as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Fo Sho Knucklebump |condition hasfollower(436)
 step
 Congratulations, you now have Fo Sho Knucklebump as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Glaiveweaver Xuan",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Glaiveweaver Xuan",{
 keywords={"protection","warrior"},
 description="This guide will walk you through obtaining Glaiveweaver Xuan as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Glaiveweaver Xuan |condition hasfollower(429)
 step
 Congratulations, you now have Glaiveweaver Xuan as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Goldmane the Skinner",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Goldmane the Skinner",{
 keywords={"assassination","rogue","danger","zones","skinning"},
 description="This guide will walk you through obtaining Goldmane the Skinner as a Garrison Follower.",
 },[[
@@ -5501,19 +5505,19 @@ accept Feline Friends Forever##35596 |instant |goto Nagrand D 40.4,76.2
 step
 Congratulations, you now have Goldmane the Skinner as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Gravewalker Gie",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Gravewalker Gie",{
 keywords={"unholy","death","knight"},
 description="This guide will walk you through obtaining Gravewalker Gie as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Gravewalker Gie |condition hasfollower(239)
 step
 Congratulations, you now have Gravewalker Gie as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Greatmother Geyah",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Greatmother Geyah",{
 keywords={"restoration","shaman","magic","debuff"},
 description="This guide will walk you through obtaining Greatmother Geyah as a Garrison Follower.",
 },[[
@@ -5532,7 +5536,7 @@ Congratulations, you now have Greatmother Geyah as a Garrison Follower! |only if
 You chose Lokra instead, and cannot gain this Follower |only if hasfollower(185)
 You chose Kaiel instead, and cannot gain this Follower |only if hasfollower(329)
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Gronnstalker Rokash",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Gronnstalker Rokash",{
 keywords={"marksmanship","hunter","deadly","minions"},
 description="This guide will walk you through obtaining Gronnstalker Rokash as a Garrison Follower.",
 },[[
@@ -5550,31 +5554,31 @@ accept Defection of Gronnstalker Rokash##35341 |instant |goto Frostfire Ridge/0 
 step
 Congratulations, you now have Gronnstalker Rokash as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Hannya",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Hannya",{
 keywords={"restribution","paladin"},
 description="This guide will walk you through obtaining Hannya as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Hannya |condition hasfollower(340)
 step
 Congratulations, you now have Hannya as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Haomi",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Haomi",{
 keywords={"windwalker","monk","deadly","minions"},
 description="This guide will walk you through obtaining Haomi as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Haomi |condition hasfollower(119)
 step
 Congratulations, you now have Haomi as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Image of Archmage Vargoth",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Image of Archmage Vargoth",{
 keywords={"arcane","mage","powerful","spell"},
 description="This guide will walk you through obtaining the Image of Archmage Vargoth as a Garrison Follower.",
 },[[
@@ -5617,54 +5621,54 @@ accept The Staff of Archmage Vargoth##36027 |instant |goto 84.54,31.68
 step
 Congratulations, you now have the Image of Archmage Vargoth as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Iye",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Iye",{
 keywords={"restoration","druid"},
 description="This guide will walk you through obtaining Iye as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Iye |condition hasfollower(266)
 step
 Congratulations, you now have Iye as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Ja'kala",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Ja'kala",{
 keywords={"restoration","druid"},
 description="This guide will walk you through obtaining Ja'kala as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Ja'kala |condition hasfollower(267)
 step
 Congratulations, you now have Ja'kala as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Ka'la",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Ka'la",{
 keywords={"subtlety","rogue","massive","strike","leatherworking"},
 description="This guide will walk you through obtaining Ka'la as a Garrison Follower.",
 },[[
 step
 In order to recruit this Follower you must complete the _Gronnlings Abound_ Garrison Mission
-#include "H_Garrison_CommandTable"
+#include "Garrison_CommandTable"
 Recruit Ka'la |condition hasfollower(153)
 step
 Congratulations, you now have Ka'la as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Kaiel",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Kaiel",{
 keywords={"protection","paladin"},
 description="This guide will walk you through obtaining Kaiel as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Kaiel |condition hasfollower(329)
 step
 Congratulations, you now have Kaiel as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Kal'gor the Honorable",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Kal'gor the Honorable",{
 keywords={"elemental","shaman","minion","swarms"},
 description="This guide will walk you through obtaining Kal'gor the Honorable as a Garrison Follower.",
 },[[
@@ -5683,31 +5687,31 @@ Congratulations, you now have Kal'gor the Honorable as a Garrison Follower! |onl
 You chose Greatmother Geyah instead, and cannot gain this Follower |only if hasfollower(186)
 You chose Lokra instead, and cannot gain this Follower |only if hasfollower(185)
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Kaluaka",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Kaluaka",{
 keywords={"balance","druid"},
 description="This guide will walk you through obtaining Kaluaka as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Kaluaka |condition hasfollower(247)
 step
 Congratulations, you now have Kaluaka as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Kana'tin",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Kana'tin",{
 keywords={"windwalker","monk"},
 description="This guide will walk you through obtaining Kana'tin as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Kana'tin |condition hasfollower(452)
 step
 Congratulations, you now have Kana'tin as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Karg Bloodfury",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Karg Bloodfury",{
 keywords={"arms","warrior","powerful","spell"},
 description="This guide will walk you through obtaining Karg Bloodfury as a Garrison Follower.",
 },[[
@@ -5724,31 +5728,31 @@ Recruit Karg Bloodfury |condition hasfollower(459)
 step
 Congratulations, you now have Karg Bloodfury as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Karga Quickshot",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Karga Quickshot",{
 keywords={"beast","master","hunter"},
 description="This guide will walk you through obtaining Karga Quickshot as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Karga Quickshot |condition hasfollower(273)
 step
 Congratulations, you now have Karga Quickshot as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Karn Steelhoof",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Karn Steelhoof",{
 keywords={"protection","warrior"},
 description="This guide will walk you through obtaining Karn Steelhoof as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Karn Steelhoof |condition hasfollower(430)
 step
 Congratulations, you now have Karn Steelhoof as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Kaz the Shrieker",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Kaz the Shrieker",{
 keywords={"elemental","shaman","deadly","minions"},
 description="This guide will walk you through obtaining Kaz the Shrieker as a Garrison Follower.",
 },[[
@@ -5866,19 +5870,19 @@ Recruit Kaz the Shrieker |condition hasfollower(159)
 step "end"
 Congratulations, you now have Kaz the Shrieker as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Kil'weh",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Kil'weh",{
 keywords={"demonology","warlock"},
 description="This guide will walk you through obtaining Kil'weh as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Kil'weh |condition hasfollower(402)
 step
 Congratulations, you now have Kil'weh as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Kimzee Pinchwhistle",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Kimzee Pinchwhistle",{
 keywords={"combat","rogue","danger","zones","engineering"},
 description="This guide will walk you through obtaining Kimzee Pinchwhistle as a Garrison Follower.",
 },[[
@@ -5887,7 +5891,7 @@ talk Murla Longeye##86614
 accept Pinchwhistle Gearworks##36862 |goto Frostwall 46.6,46.2
 only if not completedq(35620)
 step
-#include "H_Garrison_Flightmaster"
+#include "Garrison_Flightmaster"
 Tell him _"Take me to the Pinchwhistle Gearworks."_
 Travel to Pinchwhistle Gearworks |q Pinchwhistle Gearworks##36862/1
 only if not completedq(35620)
@@ -6047,7 +6051,7 @@ accept Kimzee Pinchwhistle##36062 |instant |goto 61.60,72.84
 step
 Congratulations, you now have Kimzee Pinchwhistle as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Lantresor of the Blade",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Lantresor of the Blade",{
 keywords={"arms","warrior","danger","zones","mining"},
 description="This guide will walk you through obtaining Lantresor of the Blade as a Garrison Follower.",
 },[[
@@ -6078,7 +6082,7 @@ accept The Honor of a Blademaster##34770 |instant |goto Nagrand D/0 82.6,46.6
 step
 Congratulations, you now have Lantresor of the Blade as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Leeroy Jenkins",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Leeroy Jenkins",{
 keywords={"retribution","paladin","minion","swarms"},
 description="This guide will walk you through obtaining Leeroy Jenkins as a Garrison Follower.",
 },[[
@@ -6109,7 +6113,7 @@ achieve 9058 |goto Upper Blackrock Spire 2/3 61.7,46.3
 step
 Congratulations, you now have Leeroy Jenkins as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Leorajh",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Leorajh",{
 keywords={"restoration","shaman","group","damage","bodyguard"},
 description="This guide will walk you through obtaining Leorajh as a Garrison Follower.",
 },[[
@@ -6127,19 +6131,19 @@ accept Leorajh, the Enlightened##37168 |instant |goto Spires of Arak 54.2,63.0
 step
 Congratulations, you now have Leorajh as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Lin Tenderpaw",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Lin Tenderpaw",{
 keywords={"brewmaster","monk"},
 description="This guide will walk you through obtaining Lin Tenderpaw as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Lin Tenderpaw |condition hasfollower(437)
 step
 Congratulations, you now have Lin Tenderpaw as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Lokra",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Lokra",{
 keywords={"enhancement","shaman","danger","zones"},
 description="This guide will walk you through obtaining Lokra as a Garrison Follower.",
 },[[
@@ -6158,31 +6162,31 @@ Congratulations, you now have Lokra as a Garrison Follower! |only if hasfollower
 You chose Greatmother Geyah instead, and cannot gain this Follower |only if hasfollower(186)
 You chose Kaiel instead, and cannot gain this Follower |only if hasfollower(329)
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Lonan",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Lonan",{
 keywords={"enhancement","shaman"},
 description="This guide will walk you through obtaining Lonan as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Lonan |condition hasfollower(388)
 step
 Congratulations, you now have Lonan as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Lucy Keller",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Lucy Keller",{
 keywords={"windwalker","monk"},
 description="This guide will walk you through obtaining Lucy Keller as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Lucy Keller |condition hasfollower(450)
 step
 Congratulations, you now have Lucy Keller as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Magister Krelas",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Magister Krelas",{
 keywords={"fire","mage","powerful","spell"},
 description="This guide will walk you through obtaining Magister Krelas as a Garrison Follower.",
 },[[
@@ -6255,43 +6259,43 @@ step
 label "end"
 Congratulations, you now have Magister Krelas as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Maska",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Maska",{
 keywords={"arms","warrior"},
 description="This guide will walk you through obtaining Maska as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Maska |condition hasfollower(418)
 step
 Congratulations, you now have Maska as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Matoclaw",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Matoclaw",{
 keywords={"balance","druid"},
 description="This guide will walk you through obtaining Matoclaw as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Matoclaw |condition hasfollower(249)
 step
 Congratulations, you now have Matoclaw as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Mau'iti",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Mau'iti",{
 keywords={"destruction","warlock"},
 description="This guide will walk you through obtaining Mau'iti as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Mau'iti |condition hasfollower(411)
 step
 Congratulations, you now have Mau'iti as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Meatball",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Meatball",{
 keywords={"fury","warrior","timed","battle"},
 description="This guide will walk you through obtaining Meatball as a Garrison Follower.",
 },[[
@@ -6401,7 +6405,7 @@ accept Meatball##36702 |instant |goto Brawl'gar Arena 56.4,75.2
 step
 Congratulations, you now have Meatball as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Millhouse Manastorm",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Millhouse Manastorm",{
 keywords={"arcane","mage","deadly","minions"},
 description="This guide will walk you through obtaining Millhouse Manastorm as a Garrison Follower.",
 },[[
@@ -6413,7 +6417,7 @@ Reach level 100 |ding 100
 |tip Use the Leveling guides to accomplish this.
 stickystart "Manastorm"
 step
-#include "H_Garrison_Medium_Building", action="talk Millhouse Manastorm##88009", building="Inn"
+#include "Garrison_Medium_Building", action="talk Millhouse Manastorm##88009", building="Inn"
 |tip He sometimes appears in your Frostwall Tavern.
 accept For the Children!##37179
 step
@@ -6427,7 +6431,7 @@ step
 kill Warlord Zaela##77120 |q For the Children!##37179/2 |goto Upper Blackrock Spire 2/3 13.8,47.7
 |tip Warlord Zaela is the final boss of the dungeon.
 step
-#include "H_Garrison_Medium_Building", action="talk Millhouse Manastorm##88009", building="Inn"
+#include "Garrison_Medium_Building", action="talk Millhouse Manastorm##88009", building="Inn"
 turnin For the Children!##37179
 step "Manastorm"
 You will have a limited amount of time to retrieve the Miniature Iron Star and return to Millhouse Manastorm before he despawns
@@ -6438,7 +6442,7 @@ label "end"
 Congratulations, you now have Millhouse Manastorm as a Garrison Follower! |only if completedq(37179)
 You must have a Frostwall Tavern to recruit this Follower! |only if default
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Morketh Bladehowl",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Morketh Bladehowl",{
 keywords={"fury","warrior","massive","strike"},
 description="This guide will walk you through obtaining Morketh Bladehowl as a Garrison Follower.",
 },[[
@@ -6546,31 +6550,31 @@ step
 label "end"
 Congratulations, you now have Morketh Bladehowl as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Motina",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Motina",{
 keywords={"arms","warrior"},
 description="This guide will walk you through obtaining Motina as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Motina |condition hasfollower(417)
 step
 Congratulations, you now have Motina as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Muaha Stonehide",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Muaha Stonehide",{
 keywords={"guardian","druid"},
 description="This guide will walk you through obtaining Muaha Stonehide as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Muaha Stonehide |condition hasfollower(257)
 step
 Congratulations, you now have Muaha Stonehide as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Mulverick",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Mulverick",{
 keywords={"survival","hunter","powerful","spell","alchemy"},
 description="This guide will walk you through obtaining Mulverick as a Garrison Follower.",
 },[[
@@ -6609,7 +6613,7 @@ accept Mulverick's Offer of Service##34732 |instant |goto Frostfire Ridge 30.8,4
 step
 Congratulations, you now have Mulverick as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Nat Pagle",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Nat Pagle",{
 keywords={"survival","hunter","deadly","minions","swamp","fishing","shack"},
 description="This guide will walk you through obtaining Nat Pagle as a Garrison Follower.",
 },[[
@@ -6668,36 +6672,36 @@ accept An Angler on Our Team##36616 |instant |goto Frostwall/0 37.6,70.2
 step
 Congratulations, you now have Nat Pagle as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Nuan Skydream",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Nuan Skydream",{
 keywords={"windwalker","monk"},
 description="This guide will walk you through obtaining Nuan Skydream as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Nuan Skydream |condition hasfollower(451)
 step
 Congratulations, you now have Nuan Skydream as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Olin Umberhide",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Olin Umberhide",{
 keywords={"protection","warrior","wild","aggression","jewelcrafting"},
 description="This guide will walk you through obtaining Olin Umberhide as a Garrison Follower.",
 },[[
 step
-#include "H_Garrison_WarmasterZog"
+#include "Garrison_WarmasterZog"
 accept Winds of Change##34462
 step
 _Enter_ the cave |goto Frostfire Ridge 56.6,62.5 < 20 |walk
 clicknpc Olin Umberhide##80577
 Rescue Olin Umberhide |q Winds of Change##34462/1 |goto Frostfire Ridge 57.3,62.9
 step
-#include "H_Garrison_WarmasterZog"
+#include "Garrison_WarmasterZog"
 turnin Winds of Change##34462
 step
 Congratulations, you now have Olin Umberhide as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Penny Clobberbottom",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Penny Clobberbottom",{
 keywords={"survival","hunter","massive","strike"},
 description="This guide will walk you through obtaining Penny Clobberbottom as a Garrison Follower.",
 },[[
@@ -6768,19 +6772,19 @@ step
 label "end"
 Congratulations, you now have Penny Clobberbottom as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Phaedra Heartbinder",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Phaedra Heartbinder",{
 keywords={"holy","priest"},
 description="This guide will walk you through obtaining Phaedra Heartbinder as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Phaedra Heartbinder |condition hasfollower(347)
 step
 Congratulations, you now have Phaedra Heartbinder as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Phylarch the Evergreen",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Phylarch the Evergreen",{
 keywords={"restoration","druid","deadly","minions","swamp","lumber","mill"},
 description="This guide will walk you through obtaining Phylarch the Evergreen as a Garrison Follower.",
 },[[
@@ -6806,19 +6810,19 @@ accept Phylarch the Evergreen##36296 |instant
 step
 Congratulations, you now have Phylarch the Evergreen as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Pikake",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Pikake",{
 keywords={"discipline","priest"},
 description="This guide will walk you through obtaining Pikake as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Pikake |condition hasfollower(344)
 step
 Congratulations, you now have Pikake as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Pleasure-Bot 8000",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Pleasure-Bot 8000",{
 keywords={"fury","warrior","timed","battle","tailoring"},
 description="This guide will walk you through obtaining Pleasure-Bot 8000 as a Garrison Follower.",
 },[[
@@ -6838,7 +6842,7 @@ accept New Owner##35238 |instant |goto Talador 64.2,47.8
 step
 Congratulations, you now have Pleasure-Bot 8000 as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Professor Felblast",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Professor Felblast",{
 keywords={"destruction","warlock","timed","battle"},
 description="This guide will walk you through obtaining Professor Felblast as a Garrison Follower.",
 },[[
@@ -6855,67 +6859,67 @@ Recruit Professor Felblast |condition hasfollower(460)
 step
 Congratulations, you now have Professor Felblast as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Rizei Stormhoof",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Rizei Stormhoof",{
 keywords={"enhancement","shaman","danger","zones"},
 description="This guide will walk you through obtaining Rizei Stormhoof as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Rizei Stormhoof |condition hasfollower(110)
 step
 Congratulations, you now have Rizei Stormhoof as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Robin Fredericksen",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Robin Fredericksen",{
 keywords={"discipline","priest"},
 description="This guide will walk you through obtaining Robin Fredericksen as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Robin Fredericksen |condition hasfollower(341)
 step
 Congratulations, you now have Robin Fredericksen as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Ruthia the Unchaste",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Ruthia the Unchaste",{
 keywords={"holy","priest"},
 description="This guide will walk you through obtaining Ruthia the Unchaste as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Ruthia the Unchaste |condition hasfollower(348)
 step
 Congratulations, you now have Ruthia the Unchaste as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Sahale",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Sahale",{
 keywords={"holy","paladin"},
 description="This guide will walk you through obtaining Sahale as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Sahale |condition hasfollower(328)
 step
 Congratulations, you now have Sahale as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Seleria Dawncaller",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Seleria Dawncaller",{
 keywords={"holy","paladin","group","damage"},
 description="This guide will walk you through obtaining Seleria Dawncaller as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Seleria Dawncaller |condition hasfollower(107)
 step
 Congratulations, you now have Seleria Dawncaller as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Shadow Hunter Rala",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Shadow Hunter Rala",{
 keywords={"marksmanship","hunter","timed","battle","herbalism"},
 description="This guide will walk you through obtaining Shadow Hunter Rala as a Garrison Follower.",
 },[[
@@ -6960,31 +6964,31 @@ accept Oath of Shadow Hunter Rala##34731 |instant |goto 52.6,40.4
 step
 Congratulations, you now have Shadow Hunter Rala as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Skalliz Skullslice",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Skalliz Skullslice",{
 keywords={"combat","rogue"},
 description="This guide will walk you through obtaining Skalliz Skullslice as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Skalliz Skullslice |condition hasfollower(370)
 step
 Congratulations, you now have Skalliz Skullslice as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Soulare of Andorhal",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Soulare of Andorhal",{
 keywords={"protection","paladin","wild","aggression"},
 description="This guide will walk you through obtaining Soulare of Andorhal as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Soulare of Andorhal |condition hasfollower(172)
 step
 Congratulations, you now have Soulare of Andorhal as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Soulbinder Tuulani",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Soulbinder Tuulani",{
 keywords={"shadow","priest","group","damage"},
 description="This guide will walk you through obtaining Soulbinder Tuulani as a Garrison Follower.",
 },[[
@@ -7158,7 +7162,7 @@ accept Together We Are Strong##36512 |instant |goto 46.32,74.09
 step
 Congratulations, you now have Soulbinder Tuulani as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Spirit of Bony Xuk",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Spirit of Bony Xuk",{
 keywords={"subtlety","rogue","deadly","minions"},
 description="This guide will walk you through obtaining Spirit of Bony Xuk as a Garrison Follower.",
 },[[
@@ -7325,43 +7329,43 @@ step
 label "end"
 Congratulations, you now have Spirit of Bony Xuk as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Su-Lai Snowpetal",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Su-Lai Snowpetal",{
 keywords={"mistweaver","monk"},
 description="This guide will walk you through obtaining Su-Lai Snowpetal as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Su-Lai Snowpetal |condition hasfollower(120)
 step
 Congratulations, you now have Su-Lai Snowpetal as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Taela Shatterborne",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Taela Shatterborne",{
 keywords={"frost","mage"},
 description="This guide will walk you through obtaining Taela Shatterborne as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Taela Shatterborne |condition hasfollower(304)
 step
 Congratulations, you now have Taela Shatterborne as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Tak'moa",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Tak'moa",{
 keywords={"holy","priest"},
 description="This guide will walk you through obtaining Tak'moa as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Tak'moa |condition hasfollower(351)
 step
 Congratulations, you now have Tak'moa as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Talon Guard Kurekk",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Talon Guard Kurekk",{
 keywords={"arms","warrior","minion","swarms"},
 description="This guide will walk you through obtaining Talon Guard Kurekk as a Garrison Follower.",
 },[[
@@ -7385,7 +7389,7 @@ accept Talon Guard Kurekk##37144 |instant |goto Spires of Arak 64.1,37.0
 step
 Congratulations, you now have Talon Guard Kurekk as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Talonpriest Ishaal",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Talonpriest Ishaal",{
 keywords={"shadow","priest","magic","debuff","bodyguard"},
 description="This guide will walk you through obtaining Talonpriest Ishaal as a Garrison Follower.",
 },[[
@@ -7400,31 +7404,31 @@ accept Talonpriest Ishaal##37141 |instant |goto Spires of Arak 46.4,46.6
 step
 Congratulations, you now have Talonpriest Ishaal as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Tama Skyhoof",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Tama Skyhoof",{
 keywords={"balance","druid"},
 description="This guide will walk you through obtaining Tama Skyhoof as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Tama Skyhoof |condition hasfollower(250)
 step
 Congratulations, you now have Tama Skyhoof as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Toega",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Toega",{
 keywords={"mistweaver","monk"},
 description="This guide will walk you through obtaining Toega as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Toega |condition hasfollower(446)
 step
 Congratulations, you now have Toega as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Tormmok",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Tormmok",{
 keywords={"arms","warrior","wild","aggression","bodyguard"},
 description="This guide will walk you through obtaining Tormmok as a Garrison Follower.",
 },[[
@@ -7437,25 +7441,25 @@ accept A Centurion Without a Cause##36037 |instant |goto Gorgrond 45.0,86.9
 step
 Congratulations, you now have Tormmok as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Torwa Rimeheart",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Torwa Rimeheart",{
 keywords={"frost","death","knight"},
 description="This guide will walk you through obtaining Torwa Rimeheart as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Torwa Rimeheart |condition hasfollower(237)
 step
 Congratulations, you now have Torwa Rimeheart as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Ulna Thresher",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Ulna Thresher",{
 keywords={"holy","priest","magic","debuff"},
 description="This guide will walk you through obtaining Ulna Thresher as a Garrison Follower.",
 },[[
 step
 In order to recruit this Follower you must complete the _Stonefury Rescue_ Garrison Mission
-#include "H_Garrison_CommandTable"
+#include "Garrison_CommandTable"
 Recruit Ulna Thresher |condition hasfollower(463)
 _Or_
 Click to Purchase this Follower with Gold |confirm |next "buy"
@@ -7470,51 +7474,51 @@ Recruit Ulna Thresher |condition hasfollower(463)
 step "end"
 Congratulations, you now have Ulna Thresher as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Unkala Stormgrinder",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Unkala Stormgrinder",{
 keywords={"elemental","shaman"},
 description="This guide will walk you through obtaining Unkala Stormgrinder as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Unkala Stormgrinder |condition hasfollower(382)
 step
 Congratulations, you now have Unkala Stormgrinder as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Utona Wolfeye",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Utona Wolfeye",{
 keywords={"restoration","shaman"},
 description="This guide will walk you through obtaining Utona Wolfeye as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Utona Wolfeye |condition hasfollower(393)
 step
 Congratulations, you now have Utona Wolfeye as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Vella A'nar",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Vella A'nar",{
 keywords={"fire","mage","deadly","minions"},
 description="This guide will walk you through obtaining Vella A'nar as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Vella A'nar |condition hasfollower(90)
 step
 Congratulations, you now have Vella A'nar as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Vivianne",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Vivianne",{
 keywords={"fire","mage","minion","swarms","bodyguard"},
 description="This guide will walk you through obtaining Vivianne as a Garrison Follower.",
 },[[
 step
-#include "H_Garrison_Gazlowe"
+#include "Garrison_Gazlowe"
 accept Ashran Appearance##36706
 step
-#include "H_Garrison_Flightmaster"
+#include "Garrison_Flightmaster"
 Tell him, _"Take me to Ashran"_ |goto Warspear/0 43.9,34.5 < 20 |c
 only if not completedq(36706)
 step
@@ -7545,31 +7549,31 @@ accept The Dark Lady's Gift##35243 |instant |goto Warspear/0 61.98,23.13
 step
 Congratulations, you now have Vivianne as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Vol'motu",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Vol'motu",{
 keywords={"mistweaver","monk"},
 description="This guide will walk you through obtaining Vol'motu as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Vol'motu |condition hasfollower(444)
 step
 Congratulations, you now have Vol'motu as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Walsh Atkins",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Walsh Atkins",{
 keywords={"protection","warrior"},
 description="This guide will walk you through obtaining Walsh Atkins as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Walsh Atkins |condition hasfollower(425)
 step
 Congratulations, you now have Walsh Atkins as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Weaponsmith Na'Shra",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Weaponsmith Na'Shra",{
 keywords={"arms","warrior","timed","battle","blacksmithing"},
 description="This guide will walk you through obtaining Weaponsmith Na'Shra as a Garrison Follower.",
 },[[
@@ -7591,67 +7595,67 @@ accept Blood Oath of Na'Shra##34729 |instant |goto Frostfire Ridge/0 64.7,39.8
 step
 Congratulations, you now have Weaponsmith Na'Shra as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Xen Barleystrike",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Xen Barleystrike",{
 keywords={"brewmaster","monk"},
 description="This guide will walk you through obtaining Xen Barleystrike as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Xen Barleystrike |condition hasfollower(440)
 step
 Congratulations, you now have Xen Barleystrike as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Yu'un Tigersbite",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Yu'un Tigersbite",{
 keywords={"brewmaster","monk"},
 description="This guide will walk you through obtaining Yu'un Tigersbite as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Yu'un Tigersbite |condition hasfollower(439)
 step
 Congratulations, you now have Yu'un Tigersbite as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Zen'taki",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Zen'taki",{
 keywords={"feral","druid"},
 description="This guide will walk you through obtaining Zen'taki as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Zen'taki |condition hasfollower(254)
 step
 Congratulations, you now have Zen'taki as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Zen'tenbi",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Zen'tenbi",{
 keywords={"guardian","druid"},
 description="This guide will walk you through obtaining Zen'tenbi as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting her through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Zen'tenbi |condition hasfollower(259)
 step
 Congratulations, you now have Zen'tenbi as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Zen'tiki",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Zen'tiki",{
 keywords={"feral","druid"},
 description="This guide will walk you through obtaining Zen'tiki as a Garrison Follower.",
 },[[
 step
 This Follower is gained by recruiting him through the Frostwall Tavern
-#include "H_Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
+#include "Garrison_Medium_Building", action="talk Akanja##87305", building="Inn"
 |tip You must have at least a level 2 Frostwall Tavern to recruit new Followers.
 Recruit Zen'tiki |condition hasfollower(256)
 step
 Congratulations, you now have Zen'tiki as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Ziri'ak",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Followers\\Follower Ziri'ak",{
 keywords={"arms","warrior","powerful","spell"},
 description="This guide will walk you through obtaining Ziri'ak as a Garrison Follower.",
 },[[
@@ -7682,7 +7686,7 @@ step
 label "end"
 Congratulations, you now have Ziri'ak as a Garrison Follower!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Scouting Missives",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Scouting Missives",{
 description="This guide will walk you through completing the Garrison Missive quests bought from Sergeant Crowler.",
 endlevel=100
 },[[
@@ -7707,7 +7711,7 @@ Missive: Assault on the Everbloom Wilds |confirm |next "M_Wilds"
 Missive: Assault on the Iron Siegeworks |confirm |next "M_Iron"
 step
 label "M_Heart"
-#include "H_Garrison_Grimjaw"
+#include "Garrison_Grimjaw"
 buy Scouting Missive: The Heart of Shattrath##133884
 step
 use Scouting Missive: The Heart of Shattrath##133884
@@ -7721,12 +7725,12 @@ clicknpc Sargerei Missive##87364+
 Assault the Sargerei Forces in Shattrath City |q 40943/1 |goto Talador/0 41.2,42.3
 |tip You will see a progress bar in your quest tracking area.
 step
-#include "H_Garrison_ShadowHunterUkambe"
+#include "Garrison_ShadowHunterUkambe"
 turnin Missive: Assault on the Heart of Shattrath##40943
 next "Menu"
 step
 label "M_Pit"
-#include "H_Garrison_Grimjaw"
+#include "Garrison_Grimjaw"
 buy Scouting Missive: The Pit##133876
 step
 use Scouting Missive: The Pit##133876
@@ -7736,12 +7740,12 @@ kill Iron Bulwark##86536+, Iron Deadshot##86528+, Iron Laborer##85277+, Iron Blo
 Assault the Pit |q 40941/1 |goto Gorgrond/0 46.23,24.35
 |tip You will see a progress bar in your quest tracking area.
 step
-#include "H_Garrison_ShadowHunterUkambe"
+#include "Garrison_ShadowHunterUkambe"
 turnin Missive: Assault on the Pit##40941
 next "Menu"
 step
 label "M_Darktide"
-#include "H_Garrison_Grimjaw"
+#include "Garrison_Grimjaw"
 buy 1 Scouting Missive: Darktide Roost##122418
 step
 use Scouting Missive: Darktide Roost##122418
@@ -7752,12 +7756,12 @@ click Rylak Egg##8386+
 Assault the Iron Horde Forces at Darktide Roost |q Missive: Assault on Darktide Roost##38182/1 |goto Shadowmoon Valley D 59.1,86.0
 |tip You will see a progress bar in your quest tracking area.
 step
-#include "H_Garrison_ShadowHunterUkambe"
+#include "Garrison_ShadowHunterUkambe"
 turnin Missive: Assault on Darktide Roost##38182
 next "Menu"
 step
 label "M_Anzu"
-#include "H_Garrison_Grimjaw"
+#include "Garrison_Grimjaw"
 buy 1 Scouting Missive: Lost Veil Anzu##122413
 step
 use Scouting Missive: Lost Veil Anzu##122413
@@ -7786,12 +7790,12 @@ Assault the Creatures at Lost Veil Anzu |q Missive: Assault on Lost Veil Anzu##3
 |tip You will see a progress bar in your quest tracking area.
 step
 label "Turnin"
-#include "H_Garrison_ShadowHunterUkambe"
+#include "Garrison_ShadowHunterUkambe"
 turnin Missive: Assault on Lost Veil Anzu##38184
 next "Menu"
 step
 label "M_Magnarok"
-#include "H_Garrison_Grimjaw"
+#include "Garrison_Grimjaw"
 buy 1 Scouting Missive: Magnarok##122403
 step
 use Scouting Missive: Magnarok##122403
@@ -7801,12 +7805,12 @@ kill Vicious Acidmaw##76905+, Burning Slagmaw##72348+, Slagmaw Nibbler##87360+, 
 Assault the Stone Monstrosities at Magnarok |q Missive: Assault on Magnarok##38177/1 |goto Frostfire Ridge/0 69.4,29.4
 |tip You will see a progress bar in your quest tracking area.
 step
-#include "H_Garrison_ShadowHunterUkambe"
+#include "Garrison_ShadowHunterUkambe"
 turnin Missive: Assault on Magnarok##38177
 next "Menu"
 step
 label "M_Mok"
-#include "H_Garrison_Grimjaw"
+#include "Garrison_Grimjaw"
 buy 1 Scouting Missive: Mok'gol Watchpost##122421
 step
 use Scouting Missive: Mok'gol Watchpost##122421
@@ -7816,12 +7820,12 @@ kill Mok'gol Grunt##86657+, Mok'gol Brutalizer##72571+, Mok'gol Raider##86660+, 
 Assault the Warsong Force at Sunspring Watchpost |q Missive: Assault on Mok'gol Watchpost##38181/1 |goto Nagrand D/0 45.5,35.9
 |tip You will see a progress bar in your quest tracking area.
 step
-#include "H_Garrison_ShadowHunterUkambe"
+#include "Garrison_ShadowHunterUkambe"
 turnin Missive: Assault on Mok'gol Watchpost##38181
 next "Menu"
 step
 label "M_Pillars"
-#include "H_Garrison_Grimjaw"
+#include "Garrison_Grimjaw"
 buy 1 Scouting Missive: Pillars of Fate##122411
 step
 use Scouting Missive: Pillars of Fate##122411
@@ -7831,12 +7835,12 @@ kill Shadowmoon Warrior##85068+, Shadowmoon Defiler##85075+, Shadowmoon Peon##85
 Assault the Shadowmoon Forces at the Pillars of Fate |q Missive: Assault on Pillars of Fate##38185/1 |goto Spires of Arak/0 73.4,30.8
 |tip You will see a progress bar in your quest tracking area.
 step
-#include "H_Garrison_ShadowHunterUkambe"
+#include "Garrison_ShadowHunterUkambe"
 turnin Missive: Assault on Pillars of Fate##38185
 next "Menu"
 step
 label "M_Shatt"
-#include "H_Garrison_Grimjaw"
+#include "Garrison_Grimjaw"
 buy 1 Scouting Missive: Shattrath Harbor##122412
 step
 use Scouting Missive: Shattrath Harbor##122412
@@ -7846,12 +7850,12 @@ kill Imp Charmer##83017+, Sargerei Felbringer##84334+, Nefarious Consort##82990+
 Assault the Sargerei Forces in Shattrath City |q Missive: Assault on Shattrath Harbor##38187/1 |goto Talador/0 44.6,37.3
 |tip You will see a progress bar in your quest tracking area.
 step
-#include "H_Garrison_ShadowHunterUkambe"
+#include "Garrison_ShadowHunterUkambe"
 turnin Missive: Assault on Shattrath Harbor##38187
 next "Menu"
 step
 label "M_Skettis"
-#include "H_Garrison_Grimjaw"
+#include "Garrison_Grimjaw"
 buy 1 Scouting Missive: Skettis##122408
 step
 use Scouting Missive: Skettis##122408
@@ -7868,12 +7872,12 @@ Assault the Arakkoa Forces at Skettis |q Missive: Assault on Skettis##38186/1 |g
 Lead the slaves to [Spires of Arak/0 59.7,11.5]
 |tip Talk to Outcast Darkscryer to free them.
 step
-#include "H_Garrison_ShadowHunterUkambe"
+#include "Garrison_ShadowHunterUkambe"
 turnin Missive: Assault on Skettis##38186
 next "Menu"
 step
 label "M_Rise"
-#include "H_Garrison_Grimjaw"
+#include "Garrison_Grimjaw"
 buy 1 Scouting Missive: Socrethar's Rise##122416
 step
 use Scouting Missive: Socrethar's Rise##122416
@@ -7883,12 +7887,12 @@ kill Sargerei Initiate##81541+, Sargerei Binder##81542+, Sargerei Darkblade##849
 Assault the Sargerei Forces at Socrethar's Rise |q Missive: Assault on Socrethar's Rise##38183/1 |goto Shadowmoon Valley D/0 49.3,78.2
 |tip You will see a progress bar in your quest tracking area.
 step
-#include "H_Garrison_ShadowHunterUkambe"
+#include "Garrison_ShadowHunterUkambe"
 turnin Missive: Assault on Socrethar's Rise##38183
 next "Menu"
 step
 label "M_Cliffs"
-#include "H_Garrison_Grimjaw"
+#include "Garrison_Grimjaw"
 buy 1 Scouting Missive: Stonefury Cliffs##122405
 step
 use Scouting Missive: Stonefury Cliffs##122405
@@ -7899,12 +7903,12 @@ kill Bloodmaul Brute##77991+, Bloodmaul Gladiator##78782+, Bloodmaul Taskmaster#
 Assault the Bloodmaul Forces at Stonefury Cliffs |q Missive: Assault on Stonefury Cliffs##38176/1 |goto Frostfire Ridge/0 47.4,17.1
 |tip You will see a progress bar in your quest tracking area.
 step
-#include "H_Garrison_ShadowHunterUkambe"
+#include "Garrison_ShadowHunterUkambe"
 turnin Missive: Assault on Stonefury Cliffs##38176
 next "Menu"
 step
 label "M_Broken"
-#include "H_Garrison_Grimjaw"
+#include "Garrison_Grimjaw"
 buy 1 Scouting Missive: Broken Precipice##122424
 step
 use Scouting Missive: Broken Precipice##122424
@@ -7915,12 +7919,12 @@ click Unearthed Reliquary##6478+
 Exploit the Conflict at the Broken Precipice |q Missive: Assault on the Broken Precipice##38180/1 |goto Nagrand D/0 38.8,14.9
 |tip You will see a progress bar in your quest tracking area.
 step
-#include "H_Garrison_ShadowHunterUkambe"
+#include "Garrison_ShadowHunterUkambe"
 turnin Missive: Assault on the Broken Precipice##38180
 next "Menu"
 step
 label "M_Wilds"
-#include "H_Garrison_Grimjaw"
+#include "Garrison_Grimjaw"
 buy 1 Scouting Missive: Everbloom Wilds##122400
 step
 use Scouting Missive: Everbloom Wilds##122400
@@ -7930,12 +7934,12 @@ kill Twisted Guardian##88279+, Lumbering Ancient##86262+, Wild Mandragora##86260
 Assault the Botani Forces in the Everbloom Wilds |q Missive: Assault on the Everbloom Wilds##38179/1 |goto Gorgrond/0 57.5,44.0
 |tip You will see a progress bar in your quest tracking area.
 step
-#include "H_Garrison_ShadowHunterUkambe"
+#include "Garrison_ShadowHunterUkambe"
 turnin Missive: Assault on the Everbloom Wilds##38179
 next "Menu"
 step
 label "M_Iron"
-#include "H_Garrison_Grimjaw"
+#include "Garrison_Grimjaw"
 buy 1 Scouting Missive: Iron Siegeworks##122402
 step
 use Scouting Missive: Iron Siegeworks##122402
@@ -7945,11 +7949,11 @@ kill Grom'kar Deadeye##85973+, Grom'kar Enforcer##77940+, Grom'kar Warforger##77
 Assault the Iron Horde Forces at the Iron Siegeworks |q Missive: Assault on the Iron Siegeworks##38178/1 |goto Frostfire Ridge/0 85.7,51.4
 |tip You will see a progress bar in your quest tracking area.
 step
-#include "H_Garrison_ShadowHunterUkambe"
+#include "Garrison_ShadowHunterUkambe"
 turnin Missive: Assault on the Everbloom Wilds##38178
 next "Menu"
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Jukebox",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Garrison Jukebox",{
 description="This guide will walk you through obtaining the Jukebox for your garrison",
 },[[
 step
@@ -8020,11 +8024,11 @@ Learn Music Roll: Way of the Monk |achieve 10016/30
 step
 Congratulations, you unlocked your _Garrison Jukebox_!
 ]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Leveling Guides\\Draenor (90-100)\\Garrisons\\Mystery Notebook Questline",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Leveling Guides\\Draenor (90-100)\\Garrisons\\Mystery Notebook Questline",{
 description="This guide will walk you through obtaining the Heirloom Casings",
 },[[
 step
-#include "H_Garrison_Drix"
+#include "Garrison_Drix"
 accept Mystery Notebook##38306
 step
 talk Estelle Gendry##6566

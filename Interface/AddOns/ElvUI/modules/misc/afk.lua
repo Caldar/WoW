@@ -7,39 +7,40 @@ local CH = E:GetModule("Chat")
 --Lua functions
 local _G = _G
 local GetTime = GetTime
-local tostring = tostring
+local tostring, pcall = tostring, pcall
 local floor = floor
-local format, strsub = string.format, string.sub
+local format, strsub, gsub = string.format, string.sub, string.gsub
 --WoW API / Variables
-local CreateFrame = CreateFrame
-local InCombatLockdown = InCombatLockdown
-local CinematicFrame = CinematicFrame
-local MovieFrame = MovieFrame
-local MoveViewLeftStart = MoveViewLeftStart
-local MoveViewLeftStop = MoveViewLeftStop
-local CloseAllBags = CloseAllBags
-local IsInGuild = IsInGuild
-local GetGuildInfo = GetGuildInfo
-local PVEFrame_ToggleFrame = PVEFrame_ToggleFrame
-local GetBattlefieldStatus = GetBattlefieldStatus
-local UnitIsAFK = UnitIsAFK
-local SetCVar = SetCVar
-local Screenshot = Screenshot
-local IsShiftKeyDown = IsShiftKeyDown
-local GetColoredName = GetColoredName
-local RemoveExtraSpaces = RemoveExtraSpaces
-local Chat_GetChatCategory = Chat_GetChatCategory
 local ChatFrame_GetMobileEmbeddedTexture = ChatFrame_GetMobileEmbeddedTexture
 local ChatHistory_GetAccessID = ChatHistory_GetAccessID
-local GetScreenWidth = GetScreenWidth
+local Chat_GetChatCategory = Chat_GetChatCategory
+local CinematicFrame = CinematicFrame
+local CloseAllWindows = CloseAllWindows
+local CreateFrame = CreateFrame
+local GetBattlefieldStatus = GetBattlefieldStatus
+local GetColoredName = GetColoredName
+local GetGuildInfo = GetGuildInfo
 local GetScreenHeight = GetScreenHeight
+local GetScreenWidth = GetScreenWidth
+local InCombatLockdown = InCombatLockdown
+local IsInGuild = IsInGuild
+local IsShiftKeyDown = IsShiftKeyDown
+local MoveViewLeftStart = MoveViewLeftStart
+local MoveViewLeftStop = MoveViewLeftStop
+local MovieFrame = MovieFrame
+local PVEFrame_ToggleFrame = PVEFrame_ToggleFrame
+local RemoveExtraSpaces = RemoveExtraSpaces
+local Screenshot = Screenshot
+local SetCVar = SetCVar
+local UnitCastingInfo = UnitCastingInfo
 local UnitFactionGroup = UnitFactionGroup
-local RAID_CLASS_COLORS = RAID_CLASS_COLORS
-local CUSTOM_CLASS_COLORS = CUSTOM_CLASS_COLORS
+local UnitIsAFK = UnitIsAFK
 local DND = DND
+local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 
 --Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: UIParent, PVEFrame, ElvUIAFKPlayerModel, ChatTypeInfo
+-- GLOBALS: CUSTOM_CLASS_COLORS
 
 local CAMERA_SPEED = 0.035
 local ignoreKeys = {
@@ -61,7 +62,6 @@ function AFK:UpdateTimer()
 end
 
 function AFK:SetAFK(status)
-	if(InCombatLockdown() or CinematicFrame:IsShown() or MovieFrame:IsShown()) then return end
 	if(status) then
 		MoveViewLeftStart(CAMERA_SPEED);
 		self.AFKMode:Show()
@@ -131,7 +131,15 @@ function AFK:OnEvent(event, ...)
 		self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 	end
 
-	if(UnitIsAFK("player")) then
+	if (not E.db.general.afk) then return; end
+	if (InCombatLockdown() or CinematicFrame:IsShown() or MovieFrame:IsShown()) then return; end
+	if (UnitCastingInfo("player") ~= nil) then
+		 --Don't activate afk if player is crafting stuff, check back in 30 seconds
+		self:ScheduleTimer('OnEvent', 30)
+		return;
+	end
+
+	if (UnitIsAFK("player")) then
 		self:SetAFK(true)
 	else
 		self:SetAFK(false)
@@ -210,7 +218,7 @@ local function Chat_OnEvent(self, event, arg1, arg2, arg3, arg4, arg5, arg6, arg
 	if ( arg14 ) then	--isMobile
 		message = ChatFrame_GetMobileEmbeddedTexture(info.r, info.g, info.b)..message;
 	end
-	
+
 	--Escape any % characters, as it may otherwise cause an "invalid option in format" error in the next step
 	message = gsub(message, "%%", "%%%%");
 
@@ -263,6 +271,11 @@ function AFK:Initialize()
 	self.AFKMode.chat:SetMaxLines(500)
 	self.AFKMode.chat:EnableMouseWheel(true)
 	self.AFKMode.chat:SetFading(false)
+	self.AFKMode.chat:SetMovable(true)
+	self.AFKMode.chat:EnableMouse(true)
+	self.AFKMode.chat:RegisterForDrag("LeftButton")
+	self.AFKMode.chat:SetScript("OnDragStart", self.AFKMode.chat.StartMoving)
+	self.AFKMode.chat:SetScript("OnDragStop", self.AFKMode.chat.StopMovingOrSizing)
 	self.AFKMode.chat:SetScript("OnMouseWheel", Chat_OnMouseWheel)
 	self.AFKMode.chat:SetScript("OnEvent", Chat_OnEvent)
 
@@ -320,7 +333,7 @@ function AFK:Initialize()
 	self.AFKMode.bottom.model:SetSize(GetScreenWidth() * 2, GetScreenHeight() * 2) --YES, double screen size. This prevents clipping of models. Position is controlled with the helper frame.
 	self.AFKMode.bottom.model:SetCamDistanceScale(4.5) --Since the model frame is huge, we need to zoom out quite a bit.
 	self.AFKMode.bottom.model:SetFacing(6)
-	self.AFKMode.bottom.model:SetScript("OnUpdateModel", function(self)
+	self.AFKMode.bottom.model:SetScript("OnUpdate", function(self)
 		local timePassed = GetTime() - self.startTime
 		if(timePassed > self.duration) and self.isIdle ~= true then
 			self:SetAnimation(0)
@@ -333,5 +346,8 @@ function AFK:Initialize()
 	self.isActive = false
 end
 
+local function InitializeCallback()
+	AFK:Initialize()
+end
 
-E:RegisterModule(AFK:GetName())
+E:RegisterModule(AFK:GetName(), InitializeCallback)

@@ -27,7 +27,7 @@ do
 	})
 end
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs: Plugins")
+local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.bars
 
 local startBreak -- Break timer function
@@ -159,8 +159,8 @@ do
 	barStyles.BeautyCase = {
 		apiVersion = 1,
 		version = 1,
-		GetSpacing = function(bar) return 10 end,
-		ApplyStyle = styleBar, -- function(bar) return end
+		GetSpacing = function() return 10 end,
+		ApplyStyle = styleBar,
 		BarStopped = freeStyle,
 		GetStyleName = function() return "!Beautycase" end,
 	}
@@ -246,7 +246,7 @@ do
 	barStyles.MonoUI = {
 		apiVersion = 1,
 		version = 2,
-		GetSpacing = function(bar) return 15 end,
+		GetSpacing = function() return 15 end,
 		ApplyStyle = styleBar,
 		BarStopped = removeStyle,
 		GetStyleName = function() return "MonoUI" end,
@@ -328,7 +328,7 @@ do
 	barStyles.TukUI = {
 		apiVersion = 1,
 		version = 3,
-		GetSpacing = function(bar) return 7 end,
+		GetSpacing = function() return 7 end,
 		ApplyStyle = styleBar,
 		BarStopped = removeStyle,
 		GetStyleName = function() return "TukUI" end,
@@ -431,7 +431,7 @@ do
 	barStyles.ElvUI = {
 		apiVersion = 1,
 		version = 2,
-		GetSpacing = function(bar) return E and (E.PixelMode and 4 or 8) or 4 end,
+		GetSpacing = function() return E and (E.PixelMode and 4 or 8) or 4 end,
 		ApplyStyle = styleBar,
 		BarStopped = removeStyle,
 		GetStyleName = function() return "ElvUI" end,
@@ -788,7 +788,6 @@ do
 						},
 					},
 				},
-				order = 3,
 			},
 			clicking = {
 				name = L.clickableBars,
@@ -937,19 +936,6 @@ local function barStopped(event, bar)
 	end
 end
 
-local function findBar(module, key)
-	for k in next, normalAnchor.bars do
-		if k:Get("bigwigs:module") == module and k:Get("bigwigs:option") == key then
-			return k
-		end
-	end
-	for k in next, emphasizeAnchor.bars do
-		if k:Get("bigwigs:module") == module and k:Get("bigwigs:option") == key then
-			return k
-		end
-	end
-end
-
 --------------------------------------------------------------------------------
 -- Anchors
 --
@@ -960,7 +946,7 @@ local defaultPositions = {
 }
 
 local function onDragHandleMouseDown(self) self:GetParent():StartSizing("BOTTOMRIGHT") end
-local function onDragHandleMouseUp(self, button) self:GetParent():StopMovingOrSizing() end
+local function onDragHandleMouseUp(self) self:GetParent():StopMovingOrSizing() end
 local function onResize(self, width)
 	db[self.w] = width
 end
@@ -1072,7 +1058,7 @@ local function updateProfile()
 	if plugin:IsEnabled() then
 		if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
 		plugin:SetBarStyle(db.barStyle)
-		plugin:RegisterMessage("DBM_AddonMessage", "OnDBMSync")
+		plugin:RegisterMessage("DBM_AddonMessage")
 	end
 	-- XXX temp cleanup [7.0]
 	db.align = nil
@@ -1099,23 +1085,8 @@ function plugin:OnRegister()
 end
 
 function plugin:OnPluginEnable()
-	-- XXX Temporary workaround for registering barstyles until I redo the style system
-	self:ScheduleTimer("OnDelayedEnable", 0.1)
-end
-
-function plugin:OnDelayedEnable()
 	colors = BigWigs:GetPlugin("Colors")
-
-	if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
-	if currentBarStyler and currentBarStyler.GetStyleName then
-		for k, v in next, barStyleRegister do
-			if currentBarStyler.GetStyleName() == v then
-				self:SetBarStyle(k)
-			end
-		end
-	else
-		self:SetBarStyle(db.barStyle)
-	end
+	updateProfile()
 
 	self:RegisterMessage("BigWigs_StartBar")
 	self:RegisterMessage("BigWigs_PauseBar", "PauseBar")
@@ -1135,9 +1106,8 @@ function plugin:OnDelayedEnable()
 	self:RegisterEvent("MODIFIER_STATE_CHANGED", "RefixClickIntercepts")
 
 	-- custom bars
-	BigWigs:AddSyncListener(self, "BWCustomBar", 0)
-	BigWigs:AddSyncListener(self, "BWBreak", 0)
-	self:RegisterMessage("DBM_AddonMessage", "OnDBMSync")
+	self:RegisterMessage("BigWigs_PluginComm")
+	self:RegisterMessage("DBM_AddonMessage")
 
 	local tbl = BigWigs3DB.breakTime
 	if tbl then -- Break time present, resume it
@@ -1405,7 +1375,6 @@ end
 
 -- Removes the clicked bar
 clickHandlers.remove = function(bar)
-	local anchor = bar:Get("bigwigs:anchor")
 	plugin:SendMessage("BigWigs_SilenceOption", bar:Get("bigwigs:option"), bar.remaining + 0.3)
 	bar:Stop()
 end
@@ -1447,7 +1416,6 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 	if not text then text = "" end
 	self:StopSpecificBar(nil, module, text)
 	local bar = candy:New(media:Fetch("statusbar", db.texture), 200, 14)
-	normalAnchor.bars[bar] = true
 	bar.candyBarBackground:SetVertexColor(colors:GetColor("barBackground", module, key))
 	bar:Set("bigwigs:module", module)
 	bar:Set("bigwigs:anchor", normalAnchor)
@@ -1457,6 +1425,7 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 	bar:SetShadowColor(colors:GetColor("barTextShadow", module, key))
 	bar.candyBarLabel:SetJustifyH(db.alignText)
 	bar.candyBarDuration:SetJustifyH(db.alignTime)
+	normalAnchor.bars[bar] = true
 
 	local flags = nil
 	if db.monochrome and db.outline ~= "NONE" then
@@ -1590,8 +1559,8 @@ do
 		if seconds == 0 then
 			plugin:SendMessage("BigWigs_StopBar", plugin, nick..": "..barText)
 		else
-			timers[id] = plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", plugin, false, L.timerFinished:format(nick, barText), "Attention", "Interface\\Icons\\INV_Misc_PocketWatch_01")
-			plugin:SendMessage("BigWigs_StartBar", plugin, id, nick..": "..barText, seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
+			timers[id] = plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", plugin, false, L.timerFinished:format(nick, barText), "Attention", 134376)
+			plugin:SendMessage("BigWigs_StartBar", plugin, id, nick..": "..barText, seconds, 134376) -- 134376 = "Interface\\Icons\\INV_Misc_PocketWatch_01"
 		end
 	end
 end
@@ -1629,31 +1598,31 @@ do
 		BigWigs:Print(L.breakStarted:format(isDBM and "DBM" or "BigWigs", nick))
 
 		timerTbl = {
-			plugin:ScheduleTimer("SendMessage", seconds - 30, "BigWigs_Message", plugin, nil, L.breakSeconds:format(30), "Urgent", "Interface\\Icons\\inv_misc_fork&knife"),
-			plugin:ScheduleTimer("SendMessage", seconds - 10, "BigWigs_Message", plugin, nil, L.breakSeconds:format(10), "Urgent", "Interface\\Icons\\inv_misc_fork&knife"),
-			plugin:ScheduleTimer("SendMessage", seconds - 5, "BigWigs_Message", plugin, nil, L.breakSeconds:format(5), "Important", "Interface\\Icons\\inv_misc_fork&knife"),
-			plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", plugin, nil, L.breakFinished, "Important", "Interface\\Icons\\inv_misc_fork&knife"),
+			plugin:ScheduleTimer("SendMessage", seconds - 30, "BigWigs_Message", plugin, nil, L.breakSeconds:format(30), "Urgent", 134062), -- 134062 = "Interface\\Icons\\inv_misc_fork&knife"
+			plugin:ScheduleTimer("SendMessage", seconds - 10, "BigWigs_Message", plugin, nil, L.breakSeconds:format(10), "Urgent", 134062),
+			plugin:ScheduleTimer("SendMessage", seconds - 5, "BigWigs_Message", plugin, nil, L.breakSeconds:format(5), "Important", 134062),
+			plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", plugin, nil, L.breakFinished, "Important", 134062),
 			plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Sound", plugin, nil, "Long"),
 			plugin:ScheduleTimer(function() BigWigs3DB.breakTime = nil timerTbl = nil end, seconds)
 		}
 		if seconds > 119 then -- 2min
-			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds - 60, "BigWigs_Message", plugin, nil, L.breakMinutes:format(1), "Positive", "Interface\\Icons\\inv_misc_fork&knife")
+			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds - 60, "BigWigs_Message", plugin, nil, L.breakMinutes:format(1), "Positive", 134062)
 		end
 		if seconds > 239 then -- 4min
 			local half = seconds / 2
 			local m = half % 60
 			local halfMin = (half - m) / 60
-			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", half + m, "BigWigs_Message", plugin, nil, L.breakMinutes:format(halfMin), "Positive", "Interface\\Icons\\inv_misc_fork&knife")
+			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", half + m, "BigWigs_Message", plugin, nil, L.breakMinutes:format(halfMin), "Positive", 134062)
 		end
 
-		plugin:SendMessage("BigWigs_Message", plugin, nil, L.breakMinutes:format(seconds/60), "Attention", "Interface\\Icons\\inv_misc_fork&knife")
+		plugin:SendMessage("BigWigs_Message", plugin, nil, L.breakMinutes:format(seconds/60), "Attention", 134062)
 		plugin:SendMessage("BigWigs_Sound", plugin, nil, "Long")
-		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L.breakBar, seconds, "Interface\\Icons\\inv_misc_fork&knife")
+		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L.breakBar, seconds, 134062)
 		plugin:SendMessage("BigWigs_StartBreak", plugin, seconds, nick, isDBM, reboot)
 	end
 end
 
-function plugin:OnDBMSync(_, sender, prefix, seconds, text)
+function plugin:DBM_AddonMessage(_, sender, prefix, seconds, text)
 	if prefix == "U" then
 		startCustomBar(seconds.." "..text, sender, nil, true)
 	elseif prefix == "BT" then
@@ -1661,12 +1630,12 @@ function plugin:OnDBMSync(_, sender, prefix, seconds, text)
 	end
 end
 
-function plugin:OnSync(sync, seconds, nick)
-	if seconds and nick then
-		if sync == "BWCustomBar" then
-			startCustomBar(seconds, nick)
-		elseif sync == "BWBreak" then
-			startBreak(seconds, nick)
+function plugin:BigWigs_PluginComm(_, msg, seconds, sender)
+	if seconds then
+		if msg == "CBar" then
+			startCustomBar(seconds, sender)
+		elseif msg == "Break" then
+			startBreak(seconds, sender)
 		end
 	end
 end
@@ -1681,7 +1650,7 @@ do
 	SlashCmdList.BIGWIGSRAIDBAR = function(input)
 		if not plugin:IsEnabled() then BigWigs:Enable() end
 
-		if not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player") then BigWigs:Print(L.requiresLeadOrAssist) return end
+		if not IsInGroup() or (not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player")) then BigWigs:Print(L.requiresLeadOrAssist) return end
 
 		local seconds, barText = input:match("(%S+) (.*)")
 		if not seconds or not barText then BigWigs:Print(L.wrongCustomBarFormat) return end
@@ -1694,7 +1663,7 @@ do
 		if not times[input] or (times[input] and (times[input] + 2) < t) then
 			times[input] = t
 			BigWigs:Print(L.sendCustomBar:format(barText))
-			BigWigs:Transmit("BWCustomBar", seconds, barText)
+			plugin:Sync("CBar", input)
 			SendAddonMessage("D4", ("U\t%d\t%s"):format(seconds, barText), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 		end
 	end
@@ -1710,7 +1679,7 @@ SlashCmdList.BIGWIGSLOCALBAR = function(input)
 	seconds = parseTime(seconds)
 	if not seconds then BigWigs:Print(L.wrongTime) return end
 
-	startCustomBar(seconds, UnitName("player"), barText)
+	startCustomBar(seconds, plugin:UnitName("player"), barText)
 end
 SLASH_BIGWIGSLOCALBAR1 = "/localbar"
 
@@ -1725,7 +1694,7 @@ SlashCmdList.BIGWIGSBREAK = function(input)
 			BigWigs:Print(L.sendBreak)
 		end
 		local seconds = minutes * 60
-		BigWigs:Transmit("BWBreak", seconds)
+		plugin:Sync("Break", seconds)
 
 		if IsInGroup() then
 			SendAddonMessage("D4", ("BT\t%d"):format(seconds), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message

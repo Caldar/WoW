@@ -1,4 +1,4 @@
-﻿local AS = unpack(AddOnSkins)
+local AS = unpack(AddOnSkins)
 
 if not AS:CheckAddOn('Skillet') then return end
 
@@ -133,35 +133,37 @@ function AS:Skillet()
 		end	
 
 		AS:SkinCloseButton(SkilletNotesCloseButton)
-		SkilletSkillListParent:SetPoint('TOPLEFT', SkilletFrame, 'TOPLEFT', 5, -100)
-		SkilletRankFrame:SetPoint('TOPRIGHT', SkilletFrame, 'TOPRIGHT', -12, -57)
-		SkilletRankFrameRed:SetPoint('TOPRIGHT', SkilletFrame, 'TOPRIGHT', -12, -70)
-		SkilletRankFrameOrange:SetPoint('TOPRIGHT', SkilletFrame, 'TOPRIGHT', -12, -70)
-		SkilletRankFrameYellow:SetPoint('TOPRIGHT', SkilletFrame, 'TOPRIGHT', -12, -70)
-		SkilletRankFrameGreen:SetPoint('TOPRIGHT', SkilletFrame, 'TOPRIGHT', -12, -70)
-		SkilletRankFrameGray:SetPoint('TOPRIGHT', SkilletFrame, 'TOPRIGHT', -12, -70)
-		SkilletRecipeGroupDropdown:SetPoint('BOTTOMLEFT', SkilletSkillListParent, 'TOPLEFT', 45, 43)
-		SkilletRecipeGroupOperations:SetPoint('LEFT', SkilletRecipeGroupDropdownButton, 'RIGHT', 4, 0)
-		SkilletSortAscButton:SetPoint('LEFT', SkilletSortDropdownButton, 'RIGHT', 4, 0)
-		SkilletSortDescButton:SetPoint('LEFT', SkilletSortDropdownButton, 'RIGHT', 4, 0)
-		SkilletSearchFilterClear:SetPoint('LEFT', SkilletFilterBox, 'RIGHT', -2, 0)
-		SkilletQueueSaveButton:SetPoint('LEFT', SkilletQueueSaveEditBox, 'RIGHT', 5, 0)
-		SkilletQueueLoadButton:SetPoint('LEFT', SkilletQueueLoadDropdownButton, 'RIGHT', 5, 0)
-		SkilletQueueDeleteButton:SetPoint('LEFT', SkilletQueueLoadButton, 'RIGHT', 2, 0)
-		SkilletHideUncraftableRecipes:SetPoint('BOTTOMRIGHT', SkilletSkillListParent, 'TOPRIGHT', -5, 5)
-		SkilletFrameCloseButton:ClearAllPoints()
-		SkilletFrameCloseButton:SetPoint('TOPRIGHT', SkilletFrame, 'TOPRIGHT', 0, 0)
-		SkilletTradeSkillLinkButton:SetPoint('RIGHT', SkilletShowOptionsButton, 'LEFT', 0, 0)
-		SkilletIgnoredMatsButton:SetPoint('RIGHT', SkilletQueueManagementButton, 'LEFT', -5, 0)
+		-- SkilletSkillListParent:SetPoint('TOPLEFT', SkilletFrame, 'TOPLEFT', 5, -100)
+		-- SkilletRankFrame:SetPoint('TOPRIGHT', SkilletFrame, 'TOPRIGHT', -12, -57)
+		-- SkilletRankFrameRed:SetPoint('TOPRIGHT', SkilletFrame, 'TOPRIGHT', -12, -70)
+		-- SkilletRankFrameOrange:SetPoint('TOPRIGHT', SkilletFrame, 'TOPRIGHT', -12, -70)
+		-- SkilletRankFrameYellow:SetPoint('TOPRIGHT', SkilletFrame, 'TOPRIGHT', -12, -70)
+		-- SkilletRankFrameGreen:SetPoint('TOPRIGHT', SkilletFrame, 'TOPRIGHT', -12, -70)
+		-- SkilletRankFrameGray:SetPoint('TOPRIGHT', SkilletFrame, 'TOPRIGHT', -12, -70)
+		-- SkilletRecipeGroupDropdown:SetPoint('BOTTOMLEFT', SkilletSkillListParent, 'TOPLEFT', 45, 43)
+		-- SkilletRecipeGroupOperations:SetPoint('LEFT', SkilletRecipeGroupDropdownButton, 'RIGHT', 4, 0)
+		-- SkilletSortAscButton:SetPoint('LEFT', SkilletSortDropdownButton, 'RIGHT', 4, 0)
+		-- SkilletSortDescButton:SetPoint('LEFT', SkilletSortDropdownButton, 'RIGHT', 4, 0)
+		-- SkilletSearchFilterClear:SetPoint('LEFT', SkilletFilterBox, 'RIGHT', -2, 0)
+		-- SkilletQueueSaveButton:SetPoint('LEFT', SkilletQueueSaveEditBox, 'RIGHT', 5, 0)
+		-- SkilletQueueLoadButton:SetPoint('LEFT', SkilletQueueLoadDropdownButton, 'RIGHT', 5, 0)
+		-- SkilletQueueDeleteButton:SetPoint('LEFT', SkilletQueueLoadButton, 'RIGHT', 2, 0)
+		-- SkilletHideUncraftableRecipes:SetPoint('BOTTOMRIGHT', SkilletSkillListParent, 'TOPRIGHT', -5, 5)
+		-- SkilletFrameCloseButton:ClearAllPoints()
+		-- SkilletFrameCloseButton:SetPoint('TOPRIGHT', SkilletFrame, 'TOPRIGHT', 0, 0)
+		-- SkilletTradeSkillLinkButton:SetPoint('RIGHT', SkilletShowOptionsButton, 'LEFT', 0, 0)
+		-- SkilletIgnoredMatsButton:SetPoint('RIGHT', SkilletQueueManagementButton, 'LEFT', -5, 0)
 
 		AS:SkinTooltip(SkilletTradeskillTooltip)
 		AS:SkinScrollBar(SkilletQueueListScrollBar)
 
 		for i = 1, 2 do
 			local queDelete = _G['SkilletQueueButton'..i..'DeleteButton']
-			AS:SkinButton(queDelete)
-			queDelete:SetWidth(14)
-			queDelete:SetHeight(14)
+			if queDelete then
+				AS:SkinButton(queDelete)
+				queDelete:SetWidth(14)
+				queDelete:SetHeight(14)
+			end
 		end
 
 		if Enchantrix_BarkerOptions_Frame then
@@ -268,9 +270,11 @@ function AS:Skillet()
 		if SkilletQueueButton13DeleteButton then
 			for i = 1, 13 do
 				local queDelete = _G['SkilletQueueButton'..i..'DeleteButton']
-				AS:SkinButton(queDelete)
-				queDelete:SetWidth(14)
-				queDelete:SetHeight(14)
+				if queDelete then
+					AS:SkinButton(queDelete)
+					queDelete:SetWidth(14)
+					queDelete:SetHeight(14)
+				end
 			end
 		end
 	end
@@ -308,7 +312,7 @@ function AS:Skillet()
 	if not SkilletSortAscButton.text then
 		SkilletSortAscButton.text = SkilletSortAscButton:CreateFontString(nil, 'OVERLAY')
 		SkilletSortAscButton.text:SetFont(AS.LSM:Fetch('font', 'Arial'), 12)
-		SkilletSortAscButton.text:Point('CENTER', 0, 0)
+		SkilletSortAscButton.text:SetPoint('CENTER', 0, 0)
 		SkilletSortAscButton.text:SetText("▲")
 	end
 	AS:StripTextures(SkilletSortDescButton)
@@ -316,15 +320,13 @@ function AS:Skillet()
 	if not SkilletSortDescButton.text then
 		SkilletSortDescButton.text = SkilletSortDescButton:CreateFontString(nil, 'OVERLAY')
 		SkilletSortDescButton.text:SetFont(AS.LSM:Fetch('font', 'Arial'), 12)
-		SkilletSortDescButton.text:Point('CENTER', 0, 0)
+		SkilletSortDescButton.text:SetPoint('CENTER', 0, 0)
 		SkilletSortDescButton.text:SetText("▼")
 	end
 	AS:SkinNextPrevButton(SkilletRecipeGroupOperations)
 	AS:SkinEditBox(SkilletItemCountInputBox)
 	AS:SkinEditBox(SkillButtonNameEdit)
 	AS:SkinEditBox(GroupButtonNameEdit)
-	AS:SkinEditBox(SkilletFilterBox)
-	SkilletFilterBox:SetHeight(20)
 	AS:SkinEditBox(SkilletQueueSaveEditBox)
 	AS:StripTextures(SkilletRankFrameBorder)
 	AS:SkinStatusBar(SkilletRankFrame)

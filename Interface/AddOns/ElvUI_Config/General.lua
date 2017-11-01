@@ -9,23 +9,10 @@ E.Options.args.general = {
 	get = function(info) return E.db.general[ info[#info] ] end,
 	set = function(info, value) E.db.general[ info[#info] ] = value end,
 	args = {
-		animateConfig = {
-			order = 1,
-			type = "toggle",
-			name = L["Animate Config"],
-			get = function(info) return E.global.general.animateConfig end,
-			set = function(info, value) E.global.general.animateConfig = value; E:StaticPopup_Show("GLOBAL_RL") end,
-		},
-		spacer = {
-			order = 2,
-			type = "description",
-			name = "",
-			width = "full",
-		},
 		intro = {
 			order = 3,
 			type = "description",
-			name = L["ELVUI_DESC"]:gsub('ElvUI', E.UIName),
+			name = L["ELVUI_DESC"],
 		},
 		general = {
 			order = 4,
@@ -172,8 +159,16 @@ E.Options.args.general = {
 					get = function(info) return E.global.general.autoScale end,
 					set = function(info, value) E.global.general[ info[#info] ] = value; E:StaticPopup_Show("GLOBAL_RL") end
 				},
-				minUiScale = {
+				raidUtility = {
 					order = 20,
+					type = "toggle",
+					name = RAID_CONTROL,
+					desc = L["Enables the ElvUI Raid Control panel."],
+					get = function(info) return E.private.general.raidUtility end,
+					set = function(info, value) E.private.general.raidUtility = value; E:StaticPopup_Show("PRIVATE_RL") end
+				},
+				minUiScale = {
+					order = 21,
 					type = "range",
 					name = L["Lowest Allowed UI Scale"],
 					min = 0.32, max = 0.64, step = 0.01,
@@ -181,7 +176,7 @@ E.Options.args.general = {
 					set = function(info, value) E.global.general.minUiScale = value; E:StaticPopup_Show("GLOBAL_RL") end
 				},
 				talkingHeadFrameScale = {
-					order = 21,
+					order = 22,
 					type = "range",
 					name = L["Talking Head Scale"],
 					isPercent = true,
@@ -190,20 +185,22 @@ E.Options.args.general = {
 					set = function(info, value) E.db.general.talkingHeadFrameScale = value; B:ScaleTalkingHeadFrame() end,
 				},
 				numberPrefixStyle = {
-					order = 22,
+					order = 23,
 					type = "select",
-					name = L["Number Prefix"],
+					name = L["Unit Prefix Style"],
 					desc = L["The unit prefixes you want to use when values are shortened in ElvUI. This is mostly used on UnitFrames."],
 					get = function(info) return E.db.general.numberPrefixStyle end,
 					set = function(info, value) E.db.general.numberPrefixStyle = value; E:StaticPopup_Show("CONFIG_RL") end,
 					values = {
-						["METRIC"] = "k, M, G",
-						["ENGLISH"] = "K, M, B",
-						["CHINESE"] = "W, Y",
+						["METRIC"] = "Metric (k, M, G)",
+						["ENGLISH"] = "English (K, M, B)",
+						["CHINESE"] = "Chinese (W, Y)",
+						["KOREAN"] = "Korean (천, 만, 억)",
+						["GERMAN"] = "German (Tsd, Mio, Mrd)"
 					},
 				},
 				commandBarSetting = {
-					order = 23,
+					order = 24,
 					type = "select",
 					name = L["Order Hall Command Bar"],
 					get = function(info) return E.global.general.commandBarSetting end,
@@ -231,10 +228,10 @@ E.Options.args.general = {
 				},
 				fontSize = {
 					order = 2,
-					name = L["Font Size"],
+					name = FONT_SIZE,
 					desc = L["Set the font size for everything in UI. Note: This doesn't effect somethings that have their own seperate options (UnitFrame Font, Datatext Font, ect..)"],
 					type = "range",
-					min = 4, max = 212, step = 1,
+					min = 4, softMax = 32, step = 1,
 					set = function(info, value) E.db.general[ info[#info] ] = value; E:UpdateMedia(); E:UpdateFontTemplates(); end,
 				},
 				font = {
@@ -341,13 +338,13 @@ E.Options.args.general = {
 				colorsHeader = {
 					order = 30,
 					type = "header",
-					name = L["Colors"],
+					name = COLORS,
 				},
 				bordercolor = {
 					type = "color",
 					order = 31,
 					name = L["Border Color"],
-					desc = L["Main border color of the UI. |cffFF0000This is disabled if you are using the Thin Border Theme.|r"],
+					desc = L["Main border color of the UI."],
 					hasAlpha = false,
 					get = function(info)
 						local t = E.db.general[ info[#info] ]
@@ -355,13 +352,11 @@ E.Options.args.general = {
 						return t.r, t.g, t.b, t.a, d.r, d.g, d.b
 					end,
 					set = function(info, r, g, b)
-						E.db.general[ info[#info] ] = {}
 						local t = E.db.general[ info[#info] ]
 						t.r, t.g, t.b = r, g, b
 						E:UpdateMedia()
 						E:UpdateBorderColors()
 					end,
-					disabled = function() return E.PixelMode end,
 				},
 				backdropcolor = {
 					type = "color",
@@ -375,7 +370,6 @@ E.Options.args.general = {
 						return t.r, t.g, t.b, t.a, d.r, d.g, d.b
 					end,
 					set = function(info, r, g, b)
-						E.db.general[ info[#info] ] = {}
 						local t = E.db.general[ info[#info] ]
 						t.r, t.g, t.b = r, g, b
 						E:UpdateMedia()
@@ -424,14 +418,14 @@ E.Options.args.general = {
 		totems = {
 			order = 6,
 			type = "group",
-			name = L["Class Bar"],
+			name = L["Class Totems"],
 			get = function(info) return E.db.general.totems[ info[#info] ] end,
 			set = function(info, value) E.db.general.totems[ info[#info] ] = value; E:GetModule('Totems'):PositionAndSize() end,
 			args = {
 				header = {
 					order = 1,
 					type = "header",
-					name = L["Class Bar"],
+					name = L["Class Totems"],
 				},
 				enable = {
 					order = 2,
@@ -481,7 +475,6 @@ E.Options.args.general = {
 				return t.r, t.g, t.b, t.a, d.r, d.g, d.b
 			end,
 			set = function(info, r, g, b)
-				E.db.cooldown[ info[#info] ] = {}
 				local t = E.db.cooldown[ info[#info] ]
 				t.r, t.g, t.b = r, g, b
 				E:UpdateCooldownSettings();
@@ -565,17 +558,8 @@ E.Options.args.general = {
 						['backdrop'] = L["Skin Backdrop"],
 						['nobackdrop'] = L["Remove Backdrop"],
 						['backdrop_noborder'] = L["Skin Backdrop (No Borders)"],
-						['disabled'] = L["Disabled"]
+						['disabled'] = DISABLE
 					}
-				},
-				classColorMentionsSpeech = {
-					order = 2,
-					type = "toggle",
-					name = L["Class Color Mentions"],
-					desc = L["Use class color for the names of players when they are mentioned."],
-					get = function(info) return E.private.general.classColorMentionsSpeech end,
-					set = function(info, value) E.private.general.classColorMentionsSpeech = value; E:StaticPopup_Show("PRIVATE_RL") end,
-					disabled = function() return E.private.general.chatBubbles == "disabled" end,
 				},
 				font = {
 					order = 3,
@@ -585,16 +569,27 @@ E.Options.args.general = {
 					values = AceGUIWidgetLSMlists.font,
 					get = function(info) return E.private.general.chatBubbleFont end,
 					set = function(info, value) E.private.general.chatBubbleFont = value; E:StaticPopup_Show("PRIVATE_RL") end,
-					disabled = function() return E.private.general.chatBubbles == "disabled" end,
 				},
 				fontSize = {
 					order = 4,
 					type = "range",
-					name = L["Font Size"],
+					name = FONT_SIZE,
 					get = function(info) return E.private.general.chatBubbleFontSize end,
 					set = function(info, value) E.private.general.chatBubbleFontSize = value; E:StaticPopup_Show("PRIVATE_RL") end,
 					min = 4, max = 212, step = 1,
-					disabled = function() return E.private.general.chatBubbles == "disabled" end,
+				},
+				fontOutline = {
+					order = 5,
+					type = "select",
+					name = L["Font Outline"],
+					get = function(info) return E.private.general.chatBubbleFontOutline end,
+					set = function(info, value) E.private.general.chatBubbleFontOutline = value; E:StaticPopup_Show("PRIVATE_RL") end,
+					values = {
+						["NONE"] = NONE,
+						["OUTLINE"] = "OUTLINE",
+						["MONOCHROMEOUTLINE"] = "MONOCROMEOUTLINE",
+						["THICKOUTLINE"] = "THICKOUTLINE",
+					},
 				},
 			},
 		},
@@ -615,7 +610,7 @@ E.Options.args.general = {
 					desc = L["Height of the objective tracker. Increase size to be able to see more objectives."],
 					min = 400, max = E.screenheight, step = 1,
 					get = function(info) return E.db.general.objectiveFrameHeight end,
-					set = function(info, value) E.db.general.objectiveFrameHeight = value; E:GetModule('Blizzard'):ObjectiveFrameHeight(); end,
+					set = function(info, value) E.db.general.objectiveFrameHeight = value; E:GetModule('Blizzard'):SetObjectiveFrameHeight(); end,
 				},
 				bonusObjectivePosition = {
 					order = 32,
@@ -627,7 +622,7 @@ E.Options.args.general = {
 					values = {
 						['RIGHT'] = L["Right"],
 						['LEFT'] = L["Left"],
-						['AUTO'] = L["Auto"],
+						['AUTO'] = L["Automatic"],
 					},
 				},
 			},
@@ -663,11 +658,24 @@ E.Options.args.general = {
 				},
 				threatTextSize = {
 					order = 43,
-					name = L["Font Size"],
+					name = FONT_SIZE,
 					type = "range",
 					min = 6, max = 22, step = 1,
 					get = function(info) return E.db.general.threat.textSize end,
 					set = function(info, value) E.db.general.threat.textSize = value; E:GetModule('Threat'):UpdatePosition() end,
+				},
+				threatTextOutline = {
+					order = 44,
+					type = "select",
+					name = L["Font Outline"],
+					get = function(info) return E.db.general.threat.textOutline end,
+					set = function(info, value) E.db.general.threat.textOutline = value; E:GetModule('Threat'):UpdatePosition() end,
+					values = {
+						["NONE"] = NONE,
+						["OUTLINE"] = "OUTLINE",
+						["MONOCHROMEOUTLINE"] = "MONOCROMEOUTLINE",
+						["THICKOUTLINE"] = "THICKOUTLINE",
+					},
 				},
 			},
 		},

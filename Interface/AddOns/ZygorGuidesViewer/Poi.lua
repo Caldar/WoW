@@ -19,6 +19,7 @@ local POI_TYPES = {
 	[2] = {keyword="battlepet",display="Battle pets"},
 	[3] = {keyword="rare",display="Rares"},
 	[4] = {keyword="treasure",display="Treasures"},
+	[5] = {keyword="questobjective",display="Quest Objective"},
 	}
 
 Poi.OwnedTypes = {}
@@ -34,6 +35,7 @@ function Poi:RegisterPoiGuide()
 		if guide.poi then
 			if not guide.fully_parsed then
 				guide:Parse(true)
+				if coroutine.running() then coroutine.yield() end
 			end
 			table.insert(Poi.Guides,guide) 
 		end
@@ -42,15 +44,17 @@ function Poi:RegisterPoiGuide()
 	ZGV:SendMessage("ZYGOR_POI_REGISTERED_GUIDE", "done")
 end
 
-function Poi:CheckValidity(poistep)
+function Poi:CheckValidity(poistep,register)
 	if ZGV.db.profile.hideguide[poistep.poitype] then
 		return false -- poi type hidden
 	end
 
+	if ZGV.db.profile.poitype==1 and poistep.poiaccess then return false end -- quick mode, and point has access completionist
+
 	if poistep.poitype == "battlepet" then
 		return not ZGV.PetBattle:HasPetByDisplay(poistep.poipet)
 	elseif poistep.poitype=="treasure" or poistep.poitype=="rare" then
-		return not ZGV.completedQuests[poistep.poiquest]
+		return not IsQuestFlaggedCompleted(poistep.poiquest)
 	elseif poistep.poitype=="achievement" then
 		if poistep.poisubachieve then
 			if GetAchievementNumCriteria(poistep.poiachieve) < poistep.poisubachieve then -- Causes errors when blizzard changes crap.
@@ -62,6 +66,14 @@ function Poi:CheckValidity(poistep)
 			-- full achievement
 			local temp = {GetAchievementInfo(poistep.poiachieve)}
 			return not (select(4,GetAchievementInfo(poistep.poiachieve)))
+		end
+	elseif poistep.poitype=="questobjective" then
+		if register then 
+			-- we want to register the poi regardless of what guide is loaded
+			return true
+		else
+			-- but after that, it is valid if its parent guide is active
+			return poistep.parentGuide.title==ZGV.CurrentGuide and ZGV.CurrentGuide.title or ""
 		end
 	else
 		return true
@@ -77,7 +89,7 @@ function Poi:RegisterPoints()
 	for j,guide in pairs(Poi.Guides) do
 		for i,step in pairs(guide.steps) do
 			if step.poiname then
-				local valid_poi = Poi:CheckValidity(step)
+				local valid_poi = Poi:CheckValidity(step,true)
 				if not step:AreRequirementsMet() then valid_poi = false end
 
 				Poi.OwnedTypes[step.poitype]=true
@@ -91,6 +103,11 @@ function Poi:RegisterPoints()
 					--]]
 					if step.poipet then Poi.ModelTooltip:SetCreature(step.poipet) end -- request model from server
 
+					if step.poitype=="questobjective" then 
+						-- default quest markers to switch guide to proper step, rather than show poi as sticky
+						step.poiquestmode = step.poiquestmode or "inline"
+					end
+
 					step.stepstart = i
 					step.stepend = i
 					step.ident = j.."_"..i
@@ -103,8 +120,11 @@ function Poi:RegisterPoints()
 					previndex = false
 				end
 			else
-				if previndex then
+				if previndex and Poi.Points[previndex] then
+				-- next step of multistep poi, tie it to parent
 					Poi.Points[previndex].stepend = i
+					step.ident = Poi.Points[previndex].ident
+					step.is_poi = true
 				end
 			end
 		end
@@ -113,14 +133,16 @@ function Poi:RegisterPoints()
 end
 
 function Poi:RefreshMapIcons()
+	local cdb = ZGV.db.char
 	for i,point in pairs(ZGV.Pointer.waypoints) do
 		if point.poiNum and point.storedData then
-			local active = ZGV.db.char.ActivatedPois[point.poiNum] and "_on" or ""	
+			local active = (cdb.ActivatedPois[point.poiNum] or cdb.ActivatedInlinePois[point.poiNum]) and "_on" or ""	
 			point:SetIcon(ZGV.Pointer.Icons[(ZGV.Poi.Points[point.poiNum].poitype)..active]) 
 
 			if not Poi:CheckValidity(point.storedData) then
-				ZGV.db.char.ActivatedPois[point.poiNum] = nil
-				ZGV.Pointer:RemoveWaypoint(i)
+				cdb.ActivatedPois[point.poiNum] = nil
+				cdb.ActivatedInlinePois[point.poiNum] = nil
+				ZGV.Pointer:RemoveWaypoint(point)
 			end
 		end
 	end
@@ -129,22 +151,41 @@ end
 function Poi.Waypoint_OnClick(way,button)
 	if UnitAffectingCombat("player") then return end
 
+	local poi = way.waypoint.storedData
+
 	if button=="LeftButton" then
 		-- deactive all current pois
-		ZGV.db.char.ActivatedPois = {}
+		if poi.poitype=="questobjective" and poi.poiquestmode=="inline" then
+			table.wipe(ZGV.db.char.ActivatedInlinePois)
+		else
+			table.wipe(ZGV.db.char.ActivatedPois)
+		end
+
 		local currentState = way.waypoint.isActivated
 		for i,point in pairs(ZGV.Pointer.pointsets["zgv_poi_"..Poi.DisplayedPoiSet].points) do
 			point.isActivated = false
 		end
 
 		way.waypoint.isActivated = not currentState
-		ZGV.db.char.ActivatedPois[way.waypoint.poiNum]=way.waypoint.isActivated 
-		if way.waypoint.isActivated then
-			ZGV:SetStepFocus(way.waypoint.storedData)
-			way.waypoint:SetIcon(ZGV.Pointer.Icons[way.waypoint.storedData.poitype.."_on"])
-		elseif not way.waypoint.isNear then
-			ZGV.Poi.Points[way.waypoint.poiNum].is_expanded = false
-			way.waypoint:SetIcon(ZGV.Pointer.Icons[way.waypoint.storedData.poitype])
+
+		if poi.poitype=="questobjective" and poi.poiquestmode=="inline" then
+			ZGV.db.char.ActivatedInlinePois[way.waypoint.poiNum]=way.waypoint.isActivated 
+			if way.waypoint.isActivated then
+				ZGV:FocusStep(poi.stepstart)
+				way.waypoint:SetIcon(ZGV.Pointer.Icons.questobjective_on)
+			else
+				ZGV:FocusStep(1)
+				way.waypoint:SetIcon(ZGV.Pointer.Icons.questobjective)
+			end
+		else
+			ZGV.db.char.ActivatedPois[way.waypoint.poiNum]=way.waypoint.isActivated 
+			if way.waypoint.isActivated then
+				ZGV:SetStepFocus(way.waypoint.storedData)
+				way.waypoint:SetIcon(ZGV.Pointer.Icons[way.waypoint.storedData.poitype.."_on"])
+			elseif not way.waypoint.isNear then
+				ZGV.Poi.Points[way.waypoint.poiNum].is_expanded = false
+				way.waypoint:SetIcon(ZGV.Pointer.Icons[way.waypoint.storedData.poitype])
+			end
 		end
 		Poi:RefreshMapIcons()
 		ZGV:UpdateFrame(true)
@@ -191,6 +232,10 @@ function Poi.Waypoint_GetTooltipData(way)
 		if newpoi.poilvl-UnitLevel("player")>3 then
 			table.insert(tooltipdata,"|cffee0000Warning: Mobs in this area will be hard to solo at your level") 
 		end
+	end
+
+	if newpoi.poicomment then 
+		table.insert(tooltipdata,"|cffffaa00"..newpoi.poicomment) 
 	end
 
 	local itemtooltip = {}
@@ -248,18 +293,18 @@ function Poi.Waypoint_GetTooltipData(way)
 	end
 
 	local currencytooltip = {}
-	if newpoi.poicurrency and #newpoi.poicurrency>0 and (newpoi.poitype=="treasure" or newpoi.poitype=="rare") then
+	if newpoi.poicurrencydata and #newpoi.poicurrencydata>0 and (newpoi.poitype=="treasure" or newpoi.poitype=="rare") then
 		table.insert(currencytooltip,"|cffffffffCurrency:")
 
-		for _,currency in pairs(newpoi.poicurrency) do
+		for _,currency in pairs(newpoi.poicurrencydata) do
 			table.insert(currencytooltip,{text="|cffffffff".."|T"..currency.icon..":0|t "..currency.type})
 		end
 		table.insert(currencytooltip,"|cffffffff|r")
 	end
-	if newpoi.poicurrency and #newpoi.poicurrency>0 and (newpoi.poitype=="battlepet") then
+	if newpoi.poicurrencydata and #newpoi.poicurrencydata>0 and (newpoi.poitype=="battlepet") then
 		local data = {}
 
-		for _,currency in pairs(newpoi.poicurrency) do
+		for _,currency in pairs(newpoi.poicurrencydata) do
 			table.insert(data,"|cffffffff"..(currency.value and currency.value.." " or "").."|T"..currency.icon..":0|t")
 		end
 		table.insert(currencytooltip,"|cffffffffCost: "..table.concat(data,", ").."|cffffffff|r")
@@ -285,43 +330,40 @@ function Poi:RegisterWaypoints()
 	local collectedr = 0
 	Poi.DoneLoadingPoints = false
 
-	for i,poi in pairs(Poi.Points) do
-		if (ZGV.db.profile.poitype==1 and poi.access=="Quick") or  -- quick mode
-		   (ZGV.db.profile.poitype==2)  -- complete mode, ignore access type
-		   then
-			if Poi:CheckValidity(poi) then -- we do not care about pois that are already completed
-				local newway = {}
-				newway.map = poi.starts_m
-				newway.floor = poi.starts_f or 0
-				newway.x = poi.starts_x
-				newway.y = poi.starts_y
+	for i,poi in pairs(Poi.Points) do  repeat
+		if Poi:CheckValidity(poi) then -- we do not care about pois that are already completed
+			local newway = {}
+			newway.map = poi.starts_m
+			newway.floor = poi.starts_f or 0
+			newway.x = poi.starts_x
+			newway.y = poi.starts_y
+			if not ZGV.softassert(newway.map and newway.x and newway.y,"No map/x/y in POI #"..i.." "..(poi.name or "unnamed")) then break end  --continue
 
-				newway.title = poi.name
+			newway.title = poi.name
 
 
-				if ZGV.db.char.ActivatedPois[i] then
-					newway.icon = ZGV.Pointer.Icons[poi.poitype.."_on"]
-				else
-					newway.icon = ZGV.Pointer.Icons[poi.poitype]
-				end
+			if ZGV.db.char.ActivatedPois[i] then
+				newway.icon = ZGV.Pointer.Icons[poi.poitype.."_on"]
+			else
+				newway.icon = ZGV.Pointer.Icons[poi.poitype]
+			end
 
-				newway.OnClick = ZGV.Poi.Waypoint_OnClick
+			newway.OnClick = ZGV.Poi.Waypoint_OnClick
 
-				newway.tooltipdata = ZGV.Poi.Waypoint_GetTooltipData
+			newway.tooltipdata = ZGV.Poi.Waypoint_GetTooltipData
 
-				newway.isNear=false
-				newway.onminimap = "zone"
-				newway.onworldmap = "zone"
-				newway.storedData = poi
+			newway.isNear=false
+			newway.onminimap = "zone"
+			newway.onworldmap = "zone"
+			newway.storedData = poi
 
-				newway.poiNum = i
-
-				Poi.Waypoints[newway.map] = Poi.Waypoints[newway.map] or {}
-				table.insert(Poi.Waypoints[newway.map],newway)
-				--Poi.Waypoints[i] = newway
-			end --/quest
-		end --/type
-	end
+			newway.poiNum = i
+			
+			Poi.Waypoints[newway.map] = Poi.Waypoints[newway.map] or {}
+			table.insert(Poi.Waypoints[newway.map],newway)
+			--Poi.Waypoints[i] = newway
+		end --/validity
+	until true  end
 
 	ZGV:SendMessage("ZYGOR_POI_REGISTERED_WAYS", "done")
 end
@@ -330,6 +372,8 @@ function Poi:DisplayPois(forceRefresh)
 	--if not ZGV.DEV then ZGV.Poi.Waypoints={} return end  --devwall
 	if not ZGV.db.profile.poienabled then return end
 	if not ZGV.Poi.Waypoints then return end
+
+	Poi.Ready = true
 
 	local mapid,_ = GetCurrentMapAreaID()
 
@@ -420,15 +464,22 @@ function Poi:GetListOfPois()
 		local announce_guide = poi.parentGuide
 
 		for index=poi.stepstart,poi.stepend do -- find first not completed poi step
-			if not announce_guide.steps[index]:IsComplete() then
+			local check_step = announce_guide.steps[index]
+			if not check_step.was_poi_complete and check_step:IsComplete() then
+				check_step.was_poi_complete = true
+			end
+
+			if not check_step.was_poi_complete then
 				announce_index = index
-				announce_ident = announce_guide.steps[index].ident
 				break
 			end
 		end
 
 		Poi.Points[announce_ident].is_expanded = true
 		poisteps[poiindex] = announce_guide.steps[announce_index]
+
+		-- if we are on next step of multistep poi, keep it focused
+		if announce_index~=poi.stepstart then poisteps[poiindex].isFocused=true end
 
 		poiindex = poiindex + 1
 	end
@@ -498,12 +549,11 @@ function Poi:ShowMapButtons()
 
 	--if not ZGV.DEV then return end  --devwall
 
-	Poi.MapButtonFrame = CHAIN(CreateFrame("FRAME","ZygorPoiMapButtonFrame",WorldMapScrollFrame))
+	Poi.MapButtonFrame = CHAIN(CreateFrame("FRAME","ZygorPoiMapButtonFrame",ZGV.Pointer.OverlayFrame))
 		:SetPoint("BOTTOMLEFT",WorldMapScrollFrame,"BOTTOMLEFT",5,-20)
 		:SetSize(50,50)
 		:SetBackdrop({bgFile="Interface\\Minimap\\MiniMap-TrackingBorder"})--,tile=true, tileSize=50})
-		:SetFrameStrata("HIGH")
-		:SetFrameLevel(75)
+		:SetFrameLevel(610)
 		:Show()
 	.__END
 
@@ -512,8 +562,7 @@ function Poi:ShowMapButtons()
 		:SetPoint("TOPLEFT", Poi.MapButtonFrame, "TOPLEFT", 5, -5)
 		:SetBackdrop({bgFile=ZGV.DIR.."\\Skins\\zglogo-back"})
 		:SetNormalTexture(ZGV.DIR.."\\Skins\\zglogo")
-		:SetFrameStrata("HIGH")
-		:SetFrameLevel(76)
+		:SetFrameLevel(611)
 		:SetScript("OnClick", function() Poi:ShowMapMenu() end)
 		:Show()
 	.__END
@@ -524,8 +573,8 @@ function Poi:ShowMapMenu()
 	--if not ZGV.DEV then return end  --devwall
 
 	local self=ZGV.Poi.MapButtonFrame 
-	if not self.menu then self.menu = CreateFrame("FRAME",self:GetName().."Menu",self,"UIDropDownMenuTemplate") end
-	UIDropDownMenu_SetAnchor(self.menu, 0, 0, "BOTTOMLEFT", self, "BOTTOMRIGHT")
+	if not self.menu then self.menu = CreateFrame("FRAME",self:GetName().."Menu",self,"UIDropDownForkTemplate") end
+	UIDropDownFork_SetAnchor(self.menu, 0, 0, "BOTTOMLEFT", self, "BOTTOMRIGHT")
 	local menu = {}
 
 	if ZGV.db.profile.poienabled then 
@@ -570,7 +619,7 @@ function Poi:ShowMapMenu()
 								ZGV.db.profile.hideguide[keyword] = true
 							end
 							ZGV.Poi:ChangeState(true) 
-							UIDropDownMenu_Refresh(self.menu) 
+							UIDropDownFork_Refresh(self.menu) 
 						end }
 				)
 			end
@@ -598,7 +647,7 @@ function Poi:ShowMapMenu()
 					func = function() 
 						ZGV.db.profile.poitype=1 
 						ZGV.Poi:ChangeState(true) 
-						UIDropDownMenu_Refresh(self.menu) 
+						UIDropDownFork_Refresh(self.menu) 
 					end },
 					{ text = L['opt_poitype_complete'], 
 					keepShownOnClick=true, 
@@ -606,7 +655,7 @@ function Poi:ShowMapMenu()
 					func = function() 
 						ZGV.db.profile.poitype=2 
 						ZGV.Poi:ChangeState(true) 
-						UIDropDownMenu_Refresh(self.menu) 
+						UIDropDownFork_Refresh(self.menu) 
 					end },
 				},
 				notCheckable=1,
@@ -639,8 +688,8 @@ function Poi:ShowMapMenu()
 			})
 	end
 	
-	EasyMenu(menu,self.menu,nil,0,0,"MENU",false)
-	UIDropDownMenu_SetWidth(self.menu, 300)
+	EasyFork(menu,self.menu,nil,0,0,"MENU",false)
+	UIDropDownFork_SetWidth(self.menu, 300)
 end
 
 
@@ -663,24 +712,22 @@ local function EventHandler(self, event, ...)
 	if event=="ZYGOR_POI_REGISTERED_WAYS" then Poi:DisplayPois("forceRefresh") end
 	if event=="WORLD_MAP_UPDATE" then Poi:DisplayPois() end
 
-	if ZGV.Poi.ActivePoiStepNum then	
-		if event=="QUEST_LOG_UPDATE" 
-		or event=="LOOT_READY" 
-		or event=="LOOT_SLOT_CLEARED" 
-		or event=="LOOT_CLOSED" 
-		or event=="ENCOUNTER_LOOT_RECEIVED" 
-		or event=="CHAT_MSG_CURRENCY" then 
-			ZGV:ScheduleTimer(function() 
-				Poi:RefreshMapIcons() 
-				Poi:GetListOfPois()
-				ZGV:UpdateFrame(true)
-			end,0)
-			ZGV:ScheduleTimer(function() 
-				Poi:RefreshMapIcons() 
-				Poi:GetListOfPois()
-				ZGV:UpdateFrame(true)
-			end,2)
-		end
+	if event=="QUEST_LOG_UPDATE" 
+	or event=="LOOT_READY" 
+	or event=="LOOT_SLOT_CLEARED" 
+	or event=="LOOT_CLOSED" 
+	or event=="ENCOUNTER_LOOT_RECEIVED" 
+	or event=="CHAT_MSG_CURRENCY" then 
+		ZGV:ScheduleTimer(function() 
+			Poi:GetListOfPois()
+			ZGV:UpdateFrame(true)
+			Poi:RefreshMapIcons() 
+		end,0)
+		ZGV:ScheduleTimer(function() 
+			Poi:GetListOfPois()
+			ZGV:UpdateFrame(true)
+			Poi:RefreshMapIcons() 
+		end,0.5)
 	end
 end
 
@@ -725,6 +772,7 @@ end
 
 tinsert(ZGV.startups,{"POI hooks",function(self)
 	ZGV.db.char.ActivatedPois = ZGV.db.char.ActivatedPois or {}
+	ZGV.db.char.ActivatedInlinePois = ZGV.db.char.ActivatedInlinePois or {}
 	ZGV.db.profile.hideguide = ZGV.db.profile.hideguide or {}
 	ZGV:AddMessage("ZYGOR_GUIDES_PARSED",EventHandler)
 	ZGV:AddMessage("ZYGOR_POI_REGISTERED_GUIDE",EventHandler)

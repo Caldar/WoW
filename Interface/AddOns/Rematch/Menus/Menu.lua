@@ -90,7 +90,8 @@ end
 -- with checkbox textures in top half and radio textures in bottom half
 -- and "on" texture on left and "off" texture on right
 function rematch:MenuButtonSetChecked(button,isChecked,isRadio)
-	button.Check:SetTexCoord(isChecked and 0 or 0.5,isChecked and 0.5 or 1,isRadio and 0.5 or 0,isRadio and 1 or 0.5)
+	local offset = (isRadio and 0.5 or 0) + (isChecked and 0.25 or 0)
+	button.Check:SetTexCoord(offset,offset+0.25,0.5,0.75)
 end
 
 function rematch:MenuButtonSetEnabled(button,enabled)
@@ -191,7 +192,7 @@ function rematch:ShowMenu(name,anchorPoint,relativeTo,relativePoint,anchorXoff,a
 				end
 				-- check or radio button
 				if getvalue(entry,entry.check) or getvalue(entry,entry.radio) then
-					button.Check:SetPoint("LEFT",padding,1) -- +2 is due to check being only 14x14
+					button.Check:SetPoint("LEFT",padding-2,entry.radio and -1 or 0) 
 					padding = padding + 19
 					button.isChecked = getvalue(entry,entry.value)
 					rematch:MenuButtonSetChecked(button,button.isChecked,entry.radio)
@@ -279,7 +280,7 @@ end
 
 -- shows or hides a menu as a toggle
 function rematch:ToggleMenu(name,...)
-	PlaySound("igMainMenuOptionCheckBoxOn")
+	PlaySound(PlaySoundKitID and "igMainMenuOptionCheckBoxOn" or 856)
 	if rematch:IsMenuOpen(name) then
 		rematch:HideMenu()
 	else
@@ -378,7 +379,7 @@ function rematch:MenuButtonOnMouseUp()
 end
 
 function rematch:MenuButtonOnClick()
-	PlaySound("igMainMenuOptionCheckBoxOn")
+	PlaySound(PlaySoundKitID and "igMainMenuOptionCheckBoxOn" or 856)
 	rematch.timeUIChanged = GetTime() -- to prevent hiding menu from HideWidgets in various panels
 	local entry = self.entry
 	if type(entry.func)=="function" then

@@ -14,6 +14,25 @@ local GetScreenHeight, GetScreenWidth = GetScreenHeight, GetScreenWidth
 
 --Determine if Eyefinity is being used, setup the pixel perfect script.
 local scale
+local uiParentWidth, uiParentHeight
+
+--This handles resizing/repositioning after leaving combat
+local frame = CreateFrame("Frame")
+frame:SetScript("OnEvent", function(self, event)
+	if uiParentWidth and uiParentHeight then
+		E.UIParent:SetSize(uiParentWidth, uiParentHeight)
+		E.UIParent.origHeight = E.UIParent:GetHeight()
+		uiParentWidth, uiParentHeight = nil, nil
+	else
+		E.UIParent:ClearAllPoints();
+		if E.global.general.commandBarSetting == "ENABLED_RESIZEPARENT" then
+			E.UIParent:Point("BOTTOM");
+		else
+			E.UIParent:Point("CENTER");
+		end
+	end
+	self:UnregisterEvent(event)
+end)
 
 function E:UIScale(event)
 	if IsMacClient() and self.global.screenheight and self.global.screenwidth and (self.screenheight ~= self.global.screenheight or self.screenwidth ~= self.global.screenwidth) then
@@ -67,16 +86,19 @@ function E:UIScale(event)
 	self.mult = 768/match(self.resolution, "%d+x(%d+)")/scale;
 	self.Spacing = self.PixelMode and 0 or self.mult
 	self.Border = (self.PixelMode and self.mult or self.mult*2)
-	--Set UIScale, NOTE: SetCVar for UIScale can cause taints so only do this when we need to..
-	if E.Round and E:Round(UIParent:GetScale(), 5) ~= E:Round(scale, 5) and (event == 'PLAYER_LOGIN') then
-		SetCVar("useUiScale", 1);
-		SetCVar("uiScale", scale);
-		WorldMapFrame.hasTaint = true;
-	end
-	
-	--SetCVar for UI scale only accepts value as low as 0.64, so scale UIParent if needed
-	if (scale < 0.64) then
-		UIParent:SetScale(scale)
+
+	if self.global.general.autoScale then
+		--Set UIScale, NOTE: SetCVar for UIScale can cause taints so only do this when we need to..
+		if E.Round and E:Round(UIParent:GetScale(), 5) ~= E:Round(scale, 5) and (event == 'PLAYER_LOGIN') then
+			SetCVar("useUiScale", 1);
+			SetCVar("uiScale", scale);
+			WorldMapFrame.hasTaint = true;
+		end
+		
+		--SetCVar for UI scale only accepts value as low as 0.64, so scale UIParent if needed
+		if (scale < 0.64) then
+			UIParent:SetScale(scale)
+		end
 	end
 
 	if (event == 'PLAYER_LOGIN' or event == 'UI_SCALE_CHANGED') then
@@ -100,8 +122,14 @@ function E:UIScale(event)
 				height = h;
 			end
 
-			self.UIParent:SetSize(width, height);
-			self.UIParent.origHeight = self.UIParent:GetHeight()
+			if InCombatLockdown() then --Delay changing size if we are in combat, to prevent error when people have minimized the game
+				uiParentWidth = width
+				uiParentHeight = height
+				frame:RegisterEvent("PLAYER_REGEN_ENABLED")
+			else
+				self.UIParent:SetSize(width, height);
+				self.UIParent.origHeight = self.UIParent:GetHeight()
+			end
 		else
 			--[[Eyefinity Test mode
 				Resize the E.UIParent to be smaller than it should be, all objects inside should relocate.
@@ -109,15 +137,25 @@ function E:UIScale(event)
 			]]
 			--self.UIParent:SetSize(UIParent:GetWidth() - 250, UIParent:GetHeight() - 250);
 
-			self.UIParent:SetSize(UIParent:GetSize());
-			self.UIParent.origHeight = self.UIParent:GetHeight()
+			if InCombatLockdown() then
+				uiParentWidth = width
+				uiParentHeight = height
+				frame:RegisterEvent("PLAYER_REGEN_ENABLED")
+			else
+				self.UIParent:SetSize(UIParent:GetSize());
+				self.UIParent.origHeight = self.UIParent:GetHeight()
+			end
 		end
 
-		self.UIParent:ClearAllPoints();
-		if self.global.general.commandBarSetting == "ENABLED_RESIZEPARENT" then
-			self.UIParent:Point("BOTTOM");
+		if InCombatLockdown() then
+			frame:RegisterEvent("PLAYER_REGEN_ENABLED")
 		else
-			self.UIParent:Point("CENTER");
+			self.UIParent:ClearAllPoints();
+			if self.global.general.commandBarSetting == "ENABLED_RESIZEPARENT" then
+				self.UIParent:Point("BOTTOM");
+			else
+				self.UIParent:Point("CENTER");
+			end
 		end
 
 		--Calculate potential coordinate differences

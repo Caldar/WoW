@@ -5,7 +5,7 @@
 
 local Search = LibStub('CustomSearch-1.0')
 local Unfit = LibStub('Unfit-1.0')
-local Lib = LibStub:NewLibrary('LibItemSearch-1.2-ElvUI', 5)
+local Lib = LibStub:NewLibrary('LibItemSearch-1.2-ElvUI', 6)
 if Lib then
 	Lib.Filters = {}
 else
@@ -23,8 +23,8 @@ function Lib:Tooltip(link, search)
 	return link and self.Filters.tip:match(link, nil, search)
 end
 
-function Lib:TooltipPhrase(link, search)
-	return link and self.Filters.tipPhrases:match(link, nil, search)
+function Lib:TooltipPhrase(link, search, allowPartialMatch)
+	return link and self.Filters.tipPhrases:match(link, nil, search, allowPartialMatch)
 end
 
 function Lib:InSet(link, search)
@@ -179,7 +179,7 @@ Lib.Filters.tipPhrases = {
 		return self.keywords[search]
 	end,
 
-	match = function(self, link, _, search)
+	match = function(self, link, _, search, allowPartialMatch)
 		local id = link:match('item:(%d+)')
 		if not id then
 			return
@@ -197,7 +197,7 @@ Lib.Filters.tipPhrases = {
 		for i = 1, scanner:NumLines() do
 			local text = _G['LibItemSearchTooltipScannerTextLeft' .. i]:GetText()
 			text = CleanString(text)
-			if search == text then
+			if search == text or (allowPartialMatch and text:find(search)) then
 				matches = true
 				break
 			end
@@ -270,7 +270,7 @@ else
 	function Lib:BelongsToSet(id, search)
 		for i = 1, GetNumEquipmentSets() do
 			local name = GetEquipmentSetInfo(i)
-			if Search:Find(search, name) then
+			if Search:Find(search, name) or search == "matchall" then
 				local items = GetEquipmentSetItemIDs(name)
 				for _, item in pairs(items) do
 					if id == item then

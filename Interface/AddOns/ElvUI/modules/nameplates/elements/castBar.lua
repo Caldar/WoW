@@ -12,6 +12,7 @@ local UnitCastingInfo = UnitCastingInfo
 local UnitChannelInfo = UnitChannelInfo
 local FAILED = FAILED
 local INTERRUPTED = INTERRUPTED
+local hooksecurefunc = hooksecurefunc
 
 function mod:UpdateElement_CastBarOnUpdate(elapsed)
 	if ( self.casting ) then
@@ -50,6 +51,10 @@ function mod:UpdateElement_CastBarOnUpdate(elapsed)
 		else --REMAINING
 			self.Time:SetFormattedText("%.1f", self.value)
 		end
+	elseif (self.holdTime > 0) then
+		self.holdTime = self.holdTime - elapsed
+	else
+		self:Hide()
 	end
 end
 
@@ -77,7 +82,7 @@ function mod:UpdateElement_Cast(frame, event, ...)
 	end
 
 	if ( event == "UNIT_SPELLCAST_START" ) then
-		local name, _, text, texture, startTime, endTime, _, castID, notInterruptible = UnitCastingInfo(unit);
+		local name, _, _, texture, startTime, endTime, _, castID, notInterruptible = UnitCastingInfo(unit);
 		if ( not name) then
 			frame.CastBar:Hide();
 			return;
@@ -93,9 +98,7 @@ function mod:UpdateElement_Cast(frame, event, ...)
 		frame.CastBar.maxValue = (endTime - startTime) / 1000;
 		frame.CastBar:SetMinMaxValues(0, frame.CastBar.maxValue);
 		frame.CastBar:SetValue(frame.CastBar.value);
-		if ( frame.CastBar.Text ) then
-			frame.CastBar.Text:SetText(text);
-		end
+
 		if ( frame.CastBar.Icon ) then
 			frame.CastBar.Icon.texture:SetTexture(texture);
 		end
@@ -103,6 +106,7 @@ function mod:UpdateElement_Cast(frame, event, ...)
 		frame.CastBar.casting = true;
 		frame.CastBar.castID = castID;
 		frame.CastBar.channeling = nil;
+		frame.CastBar.holdTime = 0
 
 		frame.CastBar:Show()
 	elseif ( event == "UNIT_SPELLCAST_STOP" or event == "UNIT_SPELLCAST_CHANNEL_STOP") then
@@ -130,17 +134,16 @@ function mod:UpdateElement_Cast(frame, event, ...)
 			if ( frame.CastBar.Spark ) then
 				frame.CastBar.Spark:Hide();
 			end
-			if ( frame.CastBar.Text ) then
-				if ( event == "UNIT_SPELLCAST_FAILED" ) then
-					frame.CastBar.Text:SetText(FAILED);
-				else
-					frame.CastBar.Text:SetText(INTERRUPTED);
-				end
+
+			if ( event == "UNIT_SPELLCAST_FAILED" ) then
+				frame.CastBar.Name:SetText(FAILED);
+			else
+				frame.CastBar.Name:SetText(INTERRUPTED);
 			end
 			frame.CastBar.casting = nil;
 			frame.CastBar.channeling = nil;
 			frame.CastBar.canInterrupt = nil
-			frame.CastBar:Hide()
+			frame.CastBar.holdTime = self.db.units[frame.UnitType].castbar.timeToHold --How long the castbar should stay visible after being interrupted, in seconds
 		end
 	elseif ( event == "UNIT_SPELLCAST_DELAYED" ) then
 		if ( frame:IsShown() ) then
@@ -166,7 +169,7 @@ function mod:UpdateElement_Cast(frame, event, ...)
 			end
 		end
 	elseif ( event == "UNIT_SPELLCAST_CHANNEL_START" ) then
-		local name, _, text, texture, startTime, endTime, _, notInterruptible = UnitChannelInfo(unit);
+		local name, _, _, texture, startTime, endTime, _, notInterruptible = UnitChannelInfo(unit);
 		if ( not name) then
 			frame.CastBar:Hide();
 			return;
@@ -177,10 +180,8 @@ function mod:UpdateElement_Cast(frame, event, ...)
 		frame.CastBar.maxValue = (endTime - startTime) / 1000;
 		frame.CastBar:SetMinMaxValues(0, frame.CastBar.maxValue);
 		frame.CastBar:SetValue(frame.CastBar.value);
+		frame.CastBar.holdTime = 0
 
-		if ( frame.CastBar.Text ) then
-			frame.CastBar.Text:SetText(text);
-		end
 		if ( frame.CastBar.Icon ) then
 			frame.CastBar.Icon.texture:SetTexture(texture);
 		end
@@ -217,10 +218,15 @@ function mod:UpdateElement_Cast(frame, event, ...)
 	else
 		frame.CastBar:SetStatusBarColor(self.db.castNoInterruptColor.r, self.db.castNoInterruptColor.g, self.db.castNoInterruptColor.b)
 	end
-	frame.CastBar.canInterrupt = nil
+
+	if frame.CastBar:IsShown() then --This is so we can trigger based on Cast Name or Interruptible
+		self:UpdateElement_Filters(frame, "UpdateElement_Cast")
+	else
+		frame.CastBar.canInterrupt = nil --Only remove this when it's not shown so we can use it in style filter
+	end
 
 	if(self.db.classbar.enable and self.db.classbar.position == "BELOW") then
-		self:ClassBar_Update(frame)
+		self:ClassBar_Update()
 	end
 end
 
@@ -229,7 +235,7 @@ function mod:ConfigureElement_CastBar(frame)
 
 	--Position
 	castBar:ClearAllPoints()
-	if(self.db.units[frame.UnitType].powerbar.enable) then
+	if(self.db.units[frame.UnitType].powerbar.enable and frame.PowerBar:IsShown()) then
 		castBar:SetPoint("TOPLEFT", frame.PowerBar, "BOTTOMLEFT", 0, -E.Border - E.Spacing*3)
 		castBar:SetPoint("TOPRIGHT", frame.PowerBar, "BOTTOMRIGHT", 0, -E.Border - E.Spacing*3)
 	else
@@ -238,8 +244,15 @@ function mod:ConfigureElement_CastBar(frame)
 	end
 	castBar:SetHeight(self.db.units[frame.UnitType].castbar.height)
 
-	castBar.Icon:SetPoint("TOPLEFT", frame.HealthBar, "TOPRIGHT", E.Border + E.Spacing*3, 0)
-	castBar.Icon:SetPoint("BOTTOMLEFT", castBar, "BOTTOMRIGHT", E.Border + E.Spacing*3, 0)
+	castBar.Icon:ClearAllPoints()
+	if(self.db.units[frame.UnitType].castbar.iconPosition == "RIGHT") then
+		castBar.Icon:SetPoint("TOPLEFT", frame.HealthBar, "TOPRIGHT", E.Border + E.Spacing*3, 0)
+		castBar.Icon:SetPoint("BOTTOMLEFT", castBar, "BOTTOMRIGHT", E.Border + E.Spacing*3, 0)
+	elseif(self.db.units[frame.UnitType].castbar.iconPosition == "LEFT") then
+		castBar.Icon:SetPoint("TOPRIGHT", frame.HealthBar, "TOPLEFT", -E.Border - E.Spacing*3, 0)
+		castBar.Icon:SetPoint("BOTTOMRIGHT", castBar, "BOTTOMLEFT", -E.Border - E.Spacing*3, 0)
+	end
+
 	if(self.db.units[frame.UnitType].powerbar.enable) then
 		castBar.Icon:SetWidth(self.db.units[frame.UnitType].castbar.height + self.db.units[frame.UnitType].healthbar.height + self.db.units[frame.UnitType].powerbar.height + mod.mult + E.Border + E.Spacing*3)
 	else
@@ -250,7 +263,6 @@ function mod:ConfigureElement_CastBar(frame)
 	castBar.Time:SetPoint("TOPRIGHT", castBar, "BOTTOMRIGHT", 0, -E.Border*3)
 	castBar.Name:SetPoint("TOPLEFT", castBar, "BOTTOMLEFT", 0, -E.Border*3)
 	castBar.Name:SetPoint("TOPRIGHT", castBar.Time, "TOPLEFT")
-
 	castBar.Name:SetJustifyH("LEFT")
 	castBar.Name:SetJustifyV("TOP")
 	castBar.Name:SetFont(LSM:Fetch("font", self.db.font), self.db.fontSize, self.db.fontOutline)
@@ -278,9 +290,32 @@ function mod:ConfigureElement_CastBar(frame)
 end
 
 function mod:ConstructElement_CastBar(parent)
+	local function updateGlowPosition(castBar)
+		if not parent.Glow2 then return end
+		local scale = 1;
+		if mod.db.useTargetScale then
+			if mod.db.targetScale >= 0.75 then
+				scale = mod.db.targetScale
+			else
+				scale = 0.75
+			end
+		end
+		local powerBar = parent.PowerBar:IsShown() and parent.PowerBar;
+		local size = E.Border*(10+(powerBar and 3 or 0))*scale;
+		if castBar:IsShown() then
+			parent.Glow2:SetPoint("TOPLEFT", parent.HealthBar, "TOPLEFT", -E:Scale(2+size*2), E:Scale(2+size))
+			parent.Glow2:SetPoint("BOTTOMRIGHT", castBar, "BOTTOMRIGHT", E:Scale(4+size*2), -E:Scale(4+size))
+		else
+			parent.Glow2:SetPoint("TOPLEFT", parent.HealthBar, "TOPLEFT", -E:Scale(size*2), E:Scale(size))
+			parent.Glow2:SetPoint("BOTTOMRIGHT", powerBar or parent.HealthBar, "BOTTOMRIGHT", E:Scale(size*2), -E:Scale(size))
+		end
+	end
+
 	local frame = CreateFrame("StatusBar", "$parentCastBar", parent)
 	self:StyleFrame(frame)
 	frame:SetScript("OnUpdate", mod.UpdateElement_CastBarOnUpdate)
+	frame:SetScript("OnShow", updateGlowPosition)
+	frame:SetScript("OnHide", updateGlowPosition)
 
 	frame.Icon = CreateFrame("Frame", nil, frame)
 	frame.Icon.texture = frame.Icon:CreateTexture(nil, "BORDER")
@@ -296,5 +331,15 @@ function mod:ConstructElement_CastBar(parent)
 	frame.Spark:SetBlendMode("ADD")
 	frame.Spark:SetSize(15, 15)
 	frame:Hide()
+
+	hooksecurefunc(frame, "Hide", function(self)
+		if not (parent.unit and parent.castbarTriggered) then return end
+		parent.castbarTriggered = nil
+		mod:UpdateElement_All(parent, parent.unit, true)
+		if parent.isTarget and mod.db.useTargetScale then
+			mod:SetFrameScale(parent, mod.db.targetScale)
+		end
+	end)
+
 	return frame
 end

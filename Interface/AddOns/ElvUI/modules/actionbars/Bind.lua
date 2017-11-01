@@ -6,7 +6,7 @@ local AB = E:GetModule('ActionBars');
 local _G = _G
 local select, tonumber, pairs = select, tonumber, pairs
 local floor = math.floor
-local find, format = string.find, string.format
+local format = string.format
 --WoW API / Variables
 local hooksecurefunc = hooksecurefunc
 local EnumerateFrames = EnumerateFrames
@@ -63,7 +63,9 @@ end
 function AB:BindHide()
 	bind:ClearAllPoints();
 	bind:Hide();
-	GameTooltip:Hide();
+	if not GameTooltip:IsForbidden() then
+		GameTooltip:Hide();
+	end
 end
 
 function AB:BindListener(key)
@@ -77,7 +79,9 @@ function AB:BindListener(key)
 		end
 		E:Print(format(L["All keybindings cleared for |cff00ff00%s|r."], bind.button.name));
 		self:BindUpdate(bind.button, bind.spellmacro);
-		if bind.spellmacro~="MACRO" then GameTooltip:Hide(); end
+		if bind.spellmacro~="MACRO" and not GameTooltip:IsForbidden() then
+			GameTooltip:Hide();
+		end
 		return;
 	end
 
@@ -107,7 +111,9 @@ function AB:BindListener(key)
 	end
 	E:Print(alt..ctrl..shift..key..L[" |cff00ff00bound to |r"]..bind.button.name..".");
 	self:BindUpdate(bind.button, bind.spellmacro);
-	if bind.spellmacro~="MACRO" then GameTooltip:Hide(); end
+	if bind.spellmacro~="MACRO" and not GameTooltip:IsForbidden() then
+		GameTooltip:Hide();
+	end
 end
 
 function AB:BindUpdate(button, spellmacro)
@@ -287,6 +293,8 @@ end
 
 local elapsed = 0;
 function AB:Tooltip_OnUpdate(tooltip, e)
+	if tooltip:IsForbidden() then return; end
+
 	elapsed = elapsed + e;
 	if elapsed < .2 then return else elapsed = 0; end
 	if (not tooltip.comparing and IsModifiedClick("COMPAREITEMS")) then
@@ -348,8 +356,14 @@ function AB:LoadKeyBinder()
 	bind.texture:SetColorTexture(0, 0, 0, .25);
 	bind:Hide();
 
-	self:HookScript(GameTooltip, "OnUpdate", "Tooltip_OnUpdate");
-	hooksecurefunc(GameTooltip, "Hide", function(tooltip) for _, tt in pairs(tooltip.shoppingTooltips) do tt:Hide(); end end);
+	self:SecureHookScript(GameTooltip, "OnUpdate", "Tooltip_OnUpdate");
+	hooksecurefunc(GameTooltip, "Hide", function(tooltip)
+		if not tooltip:IsForbidden() then
+			for _, tt in pairs(tooltip.shoppingTooltips) do
+				tt:Hide();
+			end
+		end
+	end);
 
 	bind:SetScript('OnEnter', function(self) local db = self.button:GetParent().db if db and db.mouseover then AB:Button_OnEnter(self.button) end end)
 	bind:SetScript("OnLeave", function(self) AB:BindHide(); local db = self.button:GetParent().db if db and db.mouseover then AB:Button_OnLeave(self.button) end end)
@@ -424,7 +438,7 @@ function AB:LoadKeyBinder()
 		self:SetChecked(GetCurrentBindingSet() == 2)
 	end)
 
-	perCharCheck:SetScript("OnClick", function(self)
+	perCharCheck:SetScript("OnClick", function()
 		if ( AB.bindingsChanged ) then
 			E:StaticPopup_Show("CONFIRM_LOSE_BINDING_CHANGES");
 		else
@@ -442,7 +456,7 @@ function AB:LoadKeyBinder()
 	local save = CreateFrame("Button", f:GetName()..'SaveButton', f, "OptionsButtonTemplate")
 	_G[save:GetName() .. "Text"]:SetText(L["Save"])
 	save:Width(150)
-	save:SetScript("OnClick", function(self)
+	save:SetScript("OnClick", function()
 		AB:DeactivateBindMode(true)
 	end)
 
@@ -450,7 +464,7 @@ function AB:LoadKeyBinder()
 	discard:Width(150)
 	_G[discard:GetName() .. "Text"]:SetText(L["Discard"])
 
-	discard:SetScript("OnClick", function(self)
+	discard:SetScript("OnClick", function()
 		AB:DeactivateBindMode(false)
 	end)
 

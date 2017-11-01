@@ -5,7 +5,6 @@ local UF = E:GetModule('UnitFrames');
 --Lua functions
 local random = math.random
 --WoW API / Variables
-local CreateFrame = CreateFrame
 local GetNumBattlefieldScores = GetNumBattlefieldScores
 local GetBattlefieldScore = GetBattlefieldScore
 local IsInInstance = IsInInstance
@@ -14,9 +13,7 @@ local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitIsConnected = UnitIsConnected
 
 function UF:Construct_RoleIcon(frame)
-	local f = CreateFrame('Frame', nil, frame)
-
-	local tex = f:CreateTexture(nil, "ARTWORK")
+	local tex = frame.RaisedElementParent.TextureParent:CreateTexture(nil, "ARTWORK")
 	tex:Size(17)
 	tex:Point("BOTTOM", frame.Health, "BOTTOM", 0, 2)
 	tex.Override = UF.UpdateRoleIcon
@@ -37,7 +34,7 @@ for i = 1, GetNumClasses() do
 	local _, class, classID = GetClassInfo(i)
 	specNameToRole[class] = {}
 	for j = 1, GetNumSpecializationsForClassID(classID) do
-		local _, spec, _, _, _, role = GetSpecializationInfoForClassID(classID, j)
+		local _, spec, _, _, role = GetSpecializationInfoForClassID(classID, j)
 		specNameToRole[class][spec] = role
 	end
 end
@@ -54,7 +51,7 @@ local function GetBattleFieldIndexFromUnitName(name)
 end
 
 function UF:UpdateRoleIcon()
-	local lfdrole = self.LFDRole
+	local lfdrole = self.GroupRoleIndicator
 	if not self.db then return; end
 	local db = self.db.roleIcon;
 
@@ -96,18 +93,18 @@ function UF:UpdateRoleIcon()
 end
 
 function UF:Configure_RoleIcon(frame)
-	local role = frame.LFDRole
+	local role = frame.GroupRoleIndicator
 	local db = frame.db
 
 	if db.roleIcon.enable then
-		frame:EnableElement('LFDRole')
+		frame:EnableElement('GroupRoleIndicator')
 		local attachPoint = self:GetObjectAnchorPoint(frame, db.roleIcon.attachTo)
 
 		role:ClearAllPoints()
 		role:Point(db.roleIcon.position, attachPoint, db.roleIcon.position, db.roleIcon.xOffset, db.roleIcon.yOffset)
 		role:Size(db.roleIcon.size)
 	else
-		frame:DisableElement('LFDRole')
+		frame:DisableElement('GroupRoleIndicator')
 		role:Hide()
 	end
 end

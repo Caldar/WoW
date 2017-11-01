@@ -7,6 +7,7 @@ local unpack = unpack
 
 local function LoadSkin()
 	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.gbank ~= true then return end
+
 	GuildBankFrame:StripTextures()
 	GuildBankFrame:SetTemplate("Transparent")
 	GuildBankEmblemFrame:StripTextures(true)
@@ -80,18 +81,6 @@ local function LoadSkin()
 		S:HandleTab(_G["GuildBankFrameTab"..i])
 	end
 
-	--Popup
-	GuildBankPopupFrame:StripTextures()
-	GuildBankPopupScrollFrame:StripTextures()
-	GuildBankPopupFrame:SetTemplate("Transparent")
-	GuildBankPopupFrame:Point("TOPLEFT", GuildBankFrame, "TOPRIGHT", 1, -30)
-	S:HandleButton(GuildBankPopupOkayButton)
-	S:HandleButton(GuildBankPopupCancelButton)
-	S:HandleEditBox(GuildBankPopupEditBox)
-	GuildBankPopupNameLeft:Kill()
-	GuildBankPopupNameRight:Kill()
-	GuildBankPopupNameMiddle:Kill()
-
 	GuildItemSearchBox.Left:Kill()
 	GuildItemSearchBox.Middle:Kill()
 	GuildItemSearchBox.Right:Kill()
@@ -100,18 +89,13 @@ local function LoadSkin()
 	GuildItemSearchBox.backdrop:Point("TOPLEFT", 10, -1)
 	GuildItemSearchBox.backdrop:Point("BOTTOMRIGHT", -1, 1)
 
-	for i=1, NUM_GUILDBANK_ICONS_SHOWN do
-		local button = _G["GuildBankPopupButton"..i]
-		local icon = _G[button:GetName().."Icon"]
-		button:StripTextures()
-		button:SetTemplate("Default")
-		button:StyleButton(true)
-		icon:SetInside()
-		icon:SetTexCoord(unpack(E.TexCoords))
-	end
-
 	S:HandleScrollBar(GuildBankTransactionsScrollFrameScrollBar)
 	S:HandleScrollBar(GuildBankInfoScrollFrameScrollBar)
+
+	--Popup
+	GuildBankPopupFrame:Show() --Toggle the frame in order to create the necessary button elements
+	GuildBankPopupFrame:Hide()
+	S:HandleIconSelectionFrame(GuildBankPopupFrame, NUM_GUILDBANK_ICONS_SHOWN, "GuildBankPopupButton", "GuildBankPopup")
 end
 
 S:AddCallbackForAddon("Blizzard_GuildBankUI", "GuildBank", LoadSkin)

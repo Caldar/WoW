@@ -2,9 +2,10 @@ local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, Private
 
 --Cache global variables
 --Lua functions
-local GetTime = GetTime
+local floor = math.floor
 --WoW API / Variables
 local CreateFrame = CreateFrame
+local GetTime = GetTime
 local hooksecurefunc = hooksecurefunc
 
 --Global variables that we don't cache, list them here for the mikk's Find Globals script
@@ -14,7 +15,7 @@ local ICON_SIZE = 36 --the normal size for an icon (don't change this)
 local FONT_SIZE = 20 --the base font size to use at a scale of 1
 local MIN_SCALE = 0.5 --the minimum scale we want to show cooldown counts at, anything below this will be hidden
 local MIN_DURATION = 1.5 --the minimum duration to show cooldown text for
-local threshold
+local threshold = 3 --Default fallback value, will be updated by settings later.
 
 local TimeColors = {
 	[0] = '|cfffefefe',
@@ -96,6 +97,11 @@ function E:CreateCooldownTimer(parent)
 	parent:SetScript('OnSizeChanged', function(_, ...) self:Cooldown_OnSizeChanged(timer, ...) end)
 
 	parent.timer = timer
+
+	if parent.FontOverride then
+		parent.FontOverride(parent) -- used to style nameplate aura cooldown text with `cooldownFontOverride`
+	end
+
 	return timer
 end
 
@@ -123,11 +129,6 @@ function E:RegisterCooldown(cooldown)
 	hooksecurefunc(cooldown, "SetCooldown", E.OnSetCooldown)
 	cooldown.isHooked = true
 	cooldown:SetHideCountdownNumbers(true)
-	cooldown.SetHideCountdownNumbers = E.noop
-	if E.private.actionbar.hideCooldownBling then
-		cooldown:SetDrawBling(false)
-		cooldown.SetDrawBling = E.noop
-	end
 end
 
 function E:UpdateCooldownSettings()

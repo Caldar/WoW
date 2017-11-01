@@ -72,11 +72,14 @@ local DungeonRaid = {
 	1166, --Timewarped Badge
 	1191, -- Valor
 	1273, --Seal of Broken Fate
+	1314, --Lingering soul fragment
 }
 
 local PvPPoints = {
 	391, -- Tol Barad
 	1149, --Sightless Eye
+	1356, --Echoes of battle
+	1357, --Echoes of domination
 }
 
 local MiscellaneousCurrency = {
@@ -86,6 +89,7 @@ local MiscellaneousCurrency = {
 	777, -- Timeless Coins
 	944, -- Artifact Fragment?
 	789, -- Bloody Coin
+	1416, --Coins of Air
 	823, -- Apexis Crystal
 	980, -- Dingy Iron Coins
 	824, -- Garrison
@@ -96,6 +100,11 @@ local MiscellaneousCurrency = {
 	1155, --Ancient Mana
 	1154, --Shadowy Coins
 	1268, --Timeworn Artifact
+	1342, --Legionfall war supplies
+	1501, --Writhing Essence
+	1506, --Argus Waystone
+	1299, --Brawler's Gold
+	1508, --Veiled Argunite
 }
 
 local HordeColor = RAID_CLASS_COLORS["DEATHKNIGHT"]
@@ -116,7 +125,8 @@ end
 local HiddenCurrency = {}
 
 local function UnusedCheck()
-	if GetOption('Unused') then HiddenCurrency = {}; return end
+	-- if GetOption('Unused') then HiddenCurrency = {}; return end
+	T.twipe(HiddenCurrency)
 	for i = 1, T.GetCurrencyListSize() do
 		local name, _, _, isUnused = GetCurrencyListInfo(i)
 		if isUnused then
@@ -143,9 +153,9 @@ end
 local function SortGold(a,b)
 	local method = E.db.sle.dt.currency.gold.method
 	if E.db.sle.dt.currency.gold.direction == "normal" then
-		return a[method] < b[method]
-	else
 		return a[method] > b[method]
+	else
+		return a[method] < b[method]
 	end
 end
 
@@ -277,6 +287,7 @@ local function Click(self, btn)
 end
 
 local function OnEnter(self)
+	if T.InCombatLockdown() then return end
 	DT:SetupTooltip(self)
 
 	DT.tooltip:AddLine(L["Session:"])

@@ -8,10 +8,16 @@ local GetRaidTargetIndex = GetRaidTargetIndex
 local SetRaidTargetIconTexture = SetRaidTargetIconTexture
 
 function mod:UpdateElement_RaidIcon(frame)
+	if (self.db.units[frame.UnitType].enable == false) then
+		return;
+	end
+
 	local icon = frame.RaidIcon;
 	local index = GetRaidTargetIndex(frame.unit);
 	icon:ClearAllPoints()
-	if(frame.HealthBar:IsShown()) then
+	if(frame.Portrait:IsShown()) then
+		icon:SetPoint("RIGHT", frame.Portrait, "LEFT", -6, 0)
+	elseif(frame.HealthBar:IsShown()) then
 		icon:SetPoint("RIGHT", frame.HealthBar, "LEFT", -6, 0)
 	else
 		icon:SetPoint("BOTTOM", frame.Name, "TOP", 0, 3)

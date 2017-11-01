@@ -12,8 +12,8 @@ function AS:MrTrader()
 
 	MRTSkillFilterButtons:SetWidth(160)
 	AS:SkinBackdropFrame(MRTSkillFilterButtons)
-	MRTSkillFilterButtons.Backdrop:Point("TOPLEFT", 0, 2)
-	MRTSkillFilterButtons.Backdrop:Point("BOTTOMRIGHT", -3, -1)
+	MRTSkillFilterButtons.Backdrop:SetPoint("TOPLEFT", 0, 2)
+	MRTSkillFilterButtons.Backdrop:SetPoint("BOTTOMRIGHT", -3, -1)
 
 	AS:StripTextures(MRTSkillFilterScrollFrame)
 	AS:SkinScrollBar(MRTSkillFilterScrollFrameScrollBar)
@@ -78,7 +78,7 @@ function AS:MrTrader()
 				button:SetBackdropBorderColor(unpack(AS.BorderColor))
 			end
 		end
-	end);
+	end)
 
 	hooksecurefunc(MRTSkillWindow, "AdjustWindow", function()
 		local expandButton = _G["MRTSkillFrameFilterExpandButton"]
@@ -104,8 +104,8 @@ function AS:MrTrader()
 	AS:SkinButton(MRTSkillCreateAllButton, true)
 	AS:SkinNextPrevButton(MRTSkillDecrementButton)
 	AS:SkinNextPrevButton(MRTSkillIncrementButton)
-	MRTSkillDecrementButton:Size(MRTSkillCreateButton:GetHeight())
-	MRTSkillIncrementButton:Size(MRTSkillCreateButton:GetHeight())
+	MRTSkillDecrementButton:SetSize(MRTSkillCreateButton:GetHeight(), MRTSkillCreateButton:GetHeight())
+	MRTSkillIncrementButton:SetSize(MRTSkillCreateButton:GetHeight(), MRTSkillCreateButton:GetHeight())
 	AS:SkinEditBox(MRTSkillInputBox)
 	AS:SkinCloseButton(MRTSkillFrameCloseButton)
 	AS:SkinFrame(MRTNewCategoryFrame, 'Transparent', nil, true)

@@ -9,7 +9,7 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("S&L Guild",
 	text	= "S&L Guild"
 })
 local _G = _G
-local MyRealm = E.myrealm
+local MyRealm = T.gsub(E.myrealm,'[%s%-]','')
 local frame = CreateFrame("frame")
 
 local tooltip
@@ -176,20 +176,20 @@ function DTP:update_Guild()
 	if T.IsInGuild() then
 		T.GuildRoster()
 		local guildTotal, online = T.GetNumGuildMembers()
-		for i = 1, T.GetNumGuildMembers() do
+		for i = 1, guildTotal do
 			local _, _, _, _, _, _, _, _, connected, _, _, _, _, isMobile = T.GetGuildRosterInfo(i)
 			if isMobile then
 				online = online + 1
 			end
 		end
-		local text = E.db.sle.dt.guild.textStyle == "Default" and "|cffffffff"..GUILD..": |r" or E.db.sle.dt.guild.textStyle == "NoText" and "" or E.db.sle.dt.guild.textStyle == "Icon" and "|TInterface\\ICONS\\Achievement_Dungeon_HEROIC_GloryoftheRaider:12|t: "
+		local text = E.db.sle.dt.guild.textStyle == "Default" and GUILD..": " or E.db.sle.dt.guild.textStyle == "NoText" and "" or E.db.sle.dt.guild.textStyle == "Icon" and "|TInterface\\ICONS\\Achievement_Dungeon_HEROIC_GloryoftheRaider:12|t: "
 		if E.db.sle.dt.guild.totals then
 			LDB.text = --[["|cff82c5ff"]]text..valueColor(online).."/"..valueColor(guildTotal)--[["|r"]]
 		else
 			LDB.text = text..valueColor(online)
 		end
 	else
-		LDB.text = "|cffffffff"..L["No Guild"].."|r"
+		LDB.text = L["No Guild"]
 	end
 end
 

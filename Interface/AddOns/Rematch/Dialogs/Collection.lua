@@ -169,6 +169,9 @@ function collection:GatherReportHash(forRarity)
 			local speciesID,_,level,_,_,_,_,_,_,petType = C_PetJournal.GetPetInfoByPetID(petID)
 			local _,_,_,_,rarity = C_PetJournal.GetPetStats(petID)
 			local chart = showSources and roster:GetSpeciesSource(speciesID) or petType
+			if showSources and chart>10 then
+				chart = 1 -- chart 11 is "Discovery" sources; adding them to Drop category
+			end
 			local hash
 			if forRarity then
 				hash = rarity*10000 + level*100 + chart

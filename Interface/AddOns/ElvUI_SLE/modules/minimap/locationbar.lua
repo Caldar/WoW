@@ -18,7 +18,7 @@ local UNKNOWN, GARRISON_LOCATION_TOOLTIP, ITEMS, SPELLS, CLOSE, BACK = UNKNOWN, 
 local DUNGEON_FLOOR_DALARAN1 = DUNGEON_FLOOR_DALARAN1
 local CHALLENGE_MODE = CHALLENGE_MODE
 local PlayerHasToy = PlayerHasToy
-local IsToyUsable = C_ToyBox.IsToyUsable
+local C_ToyBox = C_ToyBox
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 
 local collectgarbage = collectgarbage
@@ -39,6 +39,7 @@ LP.ReactionColors = {
 
 LP.MainMenu = {}
 LP.SecondaryMenu = {}
+LP.RestrictedArea = false
 
 local function GetDirection()
 	local x, y = _G["SLE_LocationPanel"]:GetCenter()
@@ -55,6 +56,7 @@ end
 LP.PortItems = {
 	{6948}, --Hearthstone
 	{64488, nil, true}, --The Innkeeper's Daughter
+	{142542, nil, true}, --Tome of Town Portal (Diablo Event)
 	{110560, GARRISON_LOCATION_TOOLTIP}, --Garrison Hearthstone
 	{128353}, --Admiral's Compass
 	{140192, DUNGEON_FLOOR_DALARAN1}, --Dalaran Hearthstone
@@ -73,6 +75,10 @@ LP.PortItems = {
 	{141605}, --Flight Masters's Whistle
 	{128502}, --Hunter's Seeking Crystal
 	{128503}, --Master Hunter's Seeking Crystal
+	{140324, nil, true}, --Mobile Telemancy Beacon
+	{129276}, --Beginner's Guide to Dimensional Rifting
+	{140493}, --Adept's Guide to Dimensional Rifting
+	{112059, nil, true}, --Wormhole Generator: Argus
 }
 LP.Spells = {
 	["DEATHKNIGHT"] = {
@@ -113,7 +119,7 @@ LP.Spells = {
 			[9] = {text = T.GetSpellInfo(132627),icon = SLE:GetIconFromID("spell", 132627),secure = {buttonType = "spell",ID = 132627}, UseTooltip = true},-- TP:Vale of Eternal Blossoms
 			[10] = {text = T.GetSpellInfo(120145),icon = SLE:GetIconFromID("spell", 120145),secure = {buttonType = "spell",ID = 120145}, UseTooltip = true},-- TP:Ancient Dalaran
 			[11] = {text = T.GetSpellInfo(176242),icon = SLE:GetIconFromID("spell", 176242),secure = {buttonType = "spell",ID = 176242}, UseTooltip = true},-- TP:Warspear
-			[12] = {text = T.GetSpellInfo(224873),icon = SLE:GetIconFromID("spell", 224873),secure = {buttonType = "spell",ID = 224873}, UseTooltip = true},-- TP:Dalaran - BI
+			[12] = {text = T.GetSpellInfo(224869),icon = SLE:GetIconFromID("spell", 224869),secure = {buttonType = "spell",ID = 224869}, UseTooltip = true},-- TP:Dalaran - BI
 		},
 		["Alliance"] = {
 			[1] = {text = T.GetSpellInfo(3561),icon = SLE:GetIconFromID("spell", 3561),secure = {buttonType = "spell",ID = 3561}, UseTooltip = true},-- TP:Stormwind
@@ -127,7 +133,7 @@ LP.Spells = {
 			[9] = {text = T.GetSpellInfo(132621),icon = SLE:GetIconFromID("spell", 132621),secure = {buttonType = "spell",ID = 132621}, UseTooltip = true},-- TP:Vale of Eternal Blossoms
 			[10] = {text = T.GetSpellInfo(120145),icon = SLE:GetIconFromID("spell", 120145),secure = {buttonType = "spell",ID = 120145}, UseTooltip = true},-- TP:Ancient Dalaran
 			[11] = {text = T.GetSpellInfo(176248),icon = SLE:GetIconFromID("spell", 176248),secure = {buttonType = "spell",ID = 176248}, UseTooltip = true},-- TP:StormShield
-			[12] = {text = T.GetSpellInfo(224873),icon = SLE:GetIconFromID("spell", 224873),secure = {buttonType = "spell",ID = 224873}, UseTooltip = true},-- TP:Dalaran - BI
+			[12] = {text = T.GetSpellInfo(224869),icon = SLE:GetIconFromID("spell", 224869),secure = {buttonType = "spell",ID = 224869}, UseTooltip = true},-- TP:Dalaran - BI
 		},
 	},
 	["portals"] = {
@@ -183,8 +189,8 @@ LP.Spells = {
 
 local function CreateCoords()
 	local x, y = T.GetPlayerMapPosition("player")
-	x = T.format(LP.db.format, x * 100)
-	y = T.format(LP.db.format, y * 100)
+	if x then x = T.format(LP.db.format, x * 100) else x = "0" end
+	if y then y = T.format(LP.db.format, y * 100) else y = "0" end
 	
 	return x, y
 end
@@ -254,13 +260,18 @@ end
 
 function LP:UpdateCoords(elapsed)
 	LP.elapsed = LP.elapsed + elapsed
-	if LP.elapsed < LP.db.throttle then return end
+	if LP.elapsed < (LP.db.throttle or 0.2) then return end
 	--Coords
-	local x, y = CreateCoords()
-	if x == "0" or x == "0.0" or x == "0.00" then x = "-" end
-	if y == "0" or y == "0.0" or y == "0.00" then y = "-" end
-	loc_panel.Xcoord.Text:SetText(x)
-	loc_panel.Ycoord.Text:SetText(y)
+	if not LP.RestrictedArea then
+		local x, y = CreateCoords()
+		if x == "0" or x == "0.0" or x == "0.00" then x = "-" end
+		if y == "0" or y == "0.0" or y == "0.00" then y = "-" end
+		loc_panel.Xcoord.Text:SetText(x)
+		loc_panel.Ycoord.Text:SetText(y)
+	else
+		loc_panel.Xcoord.Text:SetText("-")
+		loc_panel.Ycoord.Text:SetText("-")
+	end
 	--Coords coloring
 	local colorC = {r = 1, g = 1, b = 1}
 	if LP.db.colorType_Coords == "REACTION" then
@@ -355,39 +366,48 @@ function LP:Toggle()
 		loc_panel:Hide()
 		E:DisableMover(loc_panel.mover:GetName())
 	end
+	LP:UNIT_AURA(nil, "player")
 end
 
 function LP:PopulateItems()
 	local noItem = false
-	if T.select(2, T.GetItemInfo(6948)) == nil then noItem = true end
+
+	for index, data in T.pairs(LP.PortItems) do
+		if T.select(2, T.GetItemInfo(data[1])) == nil and (data[1] ~= 152964 and E.wowbuild < 24896) then noItem = true end
+	end
+
 	if noItem then
 		E:Delay(2, LP.PopulateItems)
 	else
-		for i = 1, #LP.PortItems do
-			local id, name, toy = T.unpack(LP.PortItems[i])
-			LP.PortItems[i] = {text = name or T.GetItemInfo(id), icon = SLE:GetIconFromID("item", id),secure = {buttonType = "item",ID = id, isToy = toy}, UseTooltip = true}
+		for index, data in T.pairs(LP.PortItems) do
+			local id, name, toy = data[1], data[2], data[3]
+			LP.PortItems[index] = {text = name or T.GetItemInfo(id), icon = SLE:GetIconFromID("item", id),secure = {buttonType = "item",ID = id, isToy = toy}, UseTooltip = true}
 		end
 	end
 end
 
 function LP:ItemList(check)
 	for i = 1, #LP.PortItems do
+		local tmp = {}
 		local data = LP.PortItems[i]
-		if SLE:BagSearch(data.secure.ID) or (PlayerHasToy(data.secure.ID) and IsToyUsable(data.secure.ID)) then
+		local ID, isToy = data.secure.ID, data.secure.isToy
+		if (not isToy and SLE:BagSearch(ID)) or (isToy and PlayerHasToy(ID) and C_ToyBox.IsToyUsable(ID)) then
 			if check then 
-				if LP.db.portals.HSplace then T.tinsert(LP.MainMenu, {text = HOME..": "..GetBindLocation(), title = true, nohighlight = true}) end
+				if LP.db.portals.HSplace then T.tinsert(LP.MainMenu, {text = L["Hearthstone Location"]..": "..GetBindLocation(), title = true, nohighlight = true}) end
 				T.tinsert(LP.MainMenu, {text = ITEMS..":", title = true, nohighlight = true})
 				return true 
 			else
-				local tmp = {}
-				local cd = DD:GetCooldown("Item", data.secure.ID)
-				E:CopyTable(tmp, data)
-				if cd or (T.tonumber(cd) and T.tonumber(cd) > 1.5) then
-					tmp.text = "|cff636363"..tmp.text.."|r"..T.format(LP.CDformats[LP.db.portals.cdFormat], cd)
-				else
-					tmp.text = tmp.text
+				if data.text then
+					local cd = DD:GetCooldown("Item", ID)
+					E:CopyTable(tmp, data)
+					if cd or (T.tonumber(cd) and T.tonumber(cd) > 1.5) then
+						tmp.text = "|cff636363"..tmp.text.."|r"..T.format(LP.CDformats[LP.db.portals.cdFormat], cd)
+						T.tinsert(LP.MainMenu, tmp)
+					else
+						T.tinsert(LP.MainMenu, data)
+					end
+					
 				end
-				T.tinsert(LP.MainMenu, tmp)
 			end
 		end
 	end
@@ -401,13 +421,15 @@ function LP:SpellList(list, dropdown, check)
 			if check then 
 				return true 
 			else
-				local cd = DD:GetCooldown("Spell", data.secure.ID)
-				if cd or (T.tonumber(cd) and T.tonumber(cd) > 1.5) then
-					E:CopyTable(tmp, data)
-					tmp.text = "|cff636363"..tmp.text.."|r"..T.format(LP.CDformats[LP.db.portals.cdFormat], cd)
-					T.tinsert(dropdown, tmp)
-				else
-					T.tinsert(dropdown, data)
+				if data.text then
+					local cd = DD:GetCooldown("Spell", data.secure.ID)
+					if cd or (T.tonumber(cd) and T.tonumber(cd) > 1.5) then
+						E:CopyTable(tmp, data)
+						tmp.text = "|cff636363"..tmp.text.."|r"..T.format(LP.CDformats[LP.db.portals.cdFormat], cd)
+						T.tinsert(dropdown, tmp)
+					else
+						T.tinsert(dropdown, data)
+					end
 				end
 			end
 		end
@@ -475,6 +497,20 @@ function LP:PLAYER_REGEN_ENABLED()
 	if LP.db.enable then loc_panel:Show() end
 end
 
+function LP:PLAYER_ENTERING_WORLD()
+	local x, y = T.GetPlayerMapPosition("player")
+	if x then LP.RestrictedArea = false else LP.RestrictedArea = true end
+	LP:UNIT_AURA(nil, "player")
+end
+
+function LP:UNIT_AURA(event, unit)
+	if unit ~= "player" then return end
+	if LP.db.enable and LP.db.orderhallhide then
+		local inOrderHall = C_Garrison.IsPlayerInGarrison(LE_GARRISON_TYPE_7_0);
+		loc_panel:SetShown(not inOrderHall);
+	end
+end
+
 function LP:Initialize()
 	LP.db = E.db.sle.minimap.locPanel
 	if not SLE.initialized then return end
@@ -496,6 +532,8 @@ function LP:Initialize()
 
 	LP:RegisterEvent("PLAYER_REGEN_DISABLED")
  	LP:RegisterEvent("PLAYER_REGEN_ENABLED")
+ 	LP:RegisterEvent("PLAYER_ENTERING_WORLD")
+	LP:RegisterEvent("UNIT_AURA")
 end
 
 SLE:RegisterModule(LP:GetName())

@@ -1,9 +1,8 @@
-﻿local AS = unpack(AddOnSkins)
+local AS = unpack(AddOnSkins)
 
 if not AS:CheckAddOn('AtlasLoot') then return end
 
 function AS:AtlasLoot(event, addon)
-	if not strfind(GetAddOnMetadata('AtlasLoot', 'Version'), 'v8') then AS:Print('AtlasLoot Aborted due to incompatible version.') return end
 	AS:SkinFrame(AtlasLootTooltip)
 	AtlasLootTooltip:HookScript('OnShow', function(self)
 		local Link = select(2, self:GetItem())
@@ -72,7 +71,7 @@ function AS:AtlasLoot(event, addon)
 
 	local AtlasLootItemFrame = _G["AtlasLoot_GUI-ItemFrame"]
 	AS:CreateBackdrop(AtlasLootItemFrame)
-	AS:SkinNextPrevButton(AtlasLootItemFrame.nextPageButton)		
+	AS:SkinNextPrevButton(AtlasLootItemFrame.nextPageButton)
 	AS:SkinButton(AtlasLootItemFrame.modelButton)
 	AS:SkinButton(AtlasLootItemFrame.soundsButton)
 	AS:SkinNextPrevButton(AtlasLootItemFrame.prevPageButton)

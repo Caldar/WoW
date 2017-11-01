@@ -5,14 +5,14 @@ function AS:Blizzard_EncounterJournal(event, addon)
 	AS:SkinBackdropFrame(EncounterJournal)
 
 	AS:SkinBackdropFrame(EncounterJournalNavBar, nil, nil, true)
-	EncounterJournalNavBar.Backdrop:Point("TOPLEFT", -2, 0)
+	EncounterJournalNavBar.Backdrop:SetPoint("TOPLEFT", -2, 0)
 	EncounterJournalNavBar.Backdrop:SetPoint("BOTTOMRIGHT")
 
 	AS:StripTextures(EncounterJournalNavBarOverlay, true)
-	
+
 	AS:SkinEditBox(EncounterJournalSearchBox)
 	AS:SkinCloseButton(EncounterJournalCloseButton)
-	
+
 	AS:StripTextures(EncounterJournalInset, true)
 	AS:CreateBackdrop(EncounterJournalEncounterFrameInfo)
 
@@ -35,14 +35,14 @@ function AS:Blizzard_EncounterJournal(event, addon)
 		Tab:GetDisabledTexture():SetTexture(nil)
 		Tab:GetHighlightTexture():SetTexture(nil)
 		AS:SkinBackdropFrame(Tab, nil, true)
-		Tab.Backdrop:Point('TOPLEFT', 11, -8)
-		Tab.Backdrop:Point('BOTTOMRIGHT', -6, 8)
+		Tab.Backdrop:SetPoint('TOPLEFT', 11, -8)
+		Tab.Backdrop:SetPoint('BOTTOMRIGHT', -6, 8)
 	end
 
-	EncounterJournalEncounterFrameInfoOverviewTab:Point('TOPLEFT', EncounterJournalEncounterFrameInfo, 'TOPRIGHT', AS.PixelMode and -3 or 0, -35)
+	EncounterJournalEncounterFrameInfoOverviewTab:SetPoint('TOPLEFT', EncounterJournalEncounterFrameInfo, 'TOPRIGHT', AS.PixelMode and -3 or 0, -35)
 	hooksecurefunc(EncounterJournalEncounterFrameInfoOverviewTab, "SetPoint", function(self, point, attachTo, anchorPoint, xOffset, yOffset)
 		if point ~= "TOPLEFT" or attachTo ~= EncounterJournalEncounterFrameInfo or anchorPoint ~= "TOPRIGHT" or xOffset ~= (AS.PixelMode and -3 or 0) or yOffset ~= -35 then
-			EncounterJournalEncounterFrameInfoOverviewTab:Point('TOPLEFT', EncounterJournalEncounterFrameInfo, 'TOPRIGHT', AS.PixelMode and -3 or 0, -35)
+			EncounterJournalEncounterFrameInfoOverviewTab:SetPoint('TOPLEFT', EncounterJournalEncounterFrameInfo, 'TOPRIGHT', AS.PixelMode and -3 or 0, -35)
 		end
 	end)
 
@@ -95,8 +95,8 @@ function AS:Blizzard_EncounterJournal(event, addon)
 	AS:SkinScrollBar(EncounterJournalEncounterFrameInfoDetailsScrollFrameScrollBar)
 	AS:SkinScrollBar(EncounterJournalEncounterFrameInstanceFrameLoreScrollFrameScrollBar)
 	AS:SkinScrollBar(EncounterJournalEncounterFrameInfoBossesScrollFrameScrollBar)
-	
-	EncounterJournalScrollBar:SkinScrollBar()
+
+	AS:SkinScrollBar(EncounterJournalScrollBar)
 	AS:StripTextures(EncounterJournal.LootJournal)
 	AS:SkinButton(EncounterJournal.LootJournal.LegendariesFrame.ClassButton, true)
 	AS:SkinButton(EncounterJournal.LootJournal.LegendariesFrame.SlotButton, true)

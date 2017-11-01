@@ -90,7 +90,7 @@ for class,specs in pairs(ItemScore.rules) do
         ZGV.ItemScore.Defaults[class][spec] = {}
 
         for name,v in pairs(data.stats) do
-		table.insert(ZGV.ItemScore.Defaults[class][spec],{name=name,weight=v.weight})
+		table.insert(ZGV.ItemScore.Defaults[class][spec],{name=name,weight=v})
 	end
 	sort(ZGV.ItemScore.Defaults[class][spec],function(a,b) return a.name<b.name end)
     end
@@ -126,6 +126,8 @@ function ItemScore:SetFilters(playerclass,playerspec,playerlevel)
 	self.playerclass = playerclass or (select(2,UnitClass("player")))
 	self.playerclassName = (select(1,UnitClass("player")))
 	self.playerspec = playerspec or GetSpecialization() or 1 -- Returns nil if < level 10
+	self.playerspecName = (select(2,GetSpecializationInfo(self.playerspec)))
+
 	self.playerlevel = playerlevel or UnitLevel("player")
 
 
@@ -135,14 +137,18 @@ function ItemScore:SetFilters(playerclass,playerspec,playerlevel)
 	self.curRuleSet.itemtypes = {}
 	self.curRuleSet.stats = {}
 
-	-- Copy itemtypes \as they are
+	-- Copy itemtypes as they are
 	for i,v in pairs(ItemScore.rules[self.playerclass][self.playerspec].itemtypes) do self.curRuleSet.itemtypes[i]=v end
 
-	-- Get stat weights from profile
+	-- Copy stats as they are
+	for i,v in pairs(ItemScore.rules[self.playerclass][self.playerspec].stats) do self.curRuleSet.stats[i]=v end
+
+	-- Update stats with users profile
 	local playermask = "gear_"..self.playerclass.."_"..tostring(self.playerspec).."_"
 	for index,stat in pairs(ZGV.ItemScore.Keywords) do
-	--for i,v in pairs(ItemScore.rules[self.playerclass][self.playerspec].stats) do 
-		self.curRuleSet.stats[(stat.blizz)]= {weight=tonumber(ZGV.db.profile[playermask..(stat.blizz)] or 0)}
+		if ZGV.db.profile[playermask..(stat.blizz)] then
+			self.curRuleSet.stats[(stat.blizz)]= tonumber(ZGV.db.profile[playermask..(stat.blizz)] or 0)
+		end
 	end
 
 	self:SetDualWield()
@@ -176,42 +182,6 @@ end
 function ItemScore:IsGoodEquipSlot(equipslot)
 	if not equipslot then return end
 	return not not self.possEquipSlots[equipslot]
-end
-
---[[
-  Tests whether the item is unique and if it is then tests to see if the 2nd item is of the same uniqueness
-
-	Parameters:
-		test_itemid - itemid or itemlink that you are questioning the uniqueness of
-		my_itemid - itemid or itemlink that is already in use, so could reject the testid
-	Return
-		T/F based on if the item can be equipped or not.
---]]
-
-local unique_equip_families = {
-	[10001] = {[124636]=1,[124635]=1,[124638]=1,[124634]=1,[124637]=1}, -- wod rings
-	}
-
-function ItemScore:GetItemUniqueness(id)
-	for family,fitems in pairs(unique_equip_families) do
-		if fitems[id] then 
-			return family,fitems[id]
-		end
-	end
-	local fam,max = GetItemUniqueness(id)
-	return fam,max
-end
-
-function ItemScore:CanUseUniqueItem(test_itemid, my_itemid)
-	if not (test_itemid and my_itemid) then return true end
-	local uniqueness_fam,maxEquip = ItemScore:GetItemUniqueness(test_itemid)
-	if uniqueness_fam	 -- Items without uniqueness return nil
-	and ( (uniqueness_fam < 0 and my_itemid == test_itemid)	-- If item is unique, but only to itself, then uniqueness_fam will be -1
-	or ( uniqueness_fam > 0 and uniqueness_fam == ItemScore:GetItemUniqueness(my_itemid)) ) then -- Will be the same if they are from the same uniqueness_fam. matching -1 isn't good though.
-		return false
-	else
-		return true
-	end
 end
 
 -- EVIL ASSUMPTION: Let's use a different slot, INVTYPE_2HWEAPON, for two-handers. And INVTYPE_SHIELD for shields.
@@ -357,7 +327,12 @@ function ItemScore:GetItemScore(itemlink, invslot, allowbad, verbose)
 			if not line:match(self.playerclassName) then
 				return 0,ItemScore.SC_OK,"wrong class"
 			end
-			break
+		end
+
+		if line:match( gsub(ITEM_REQ_SPECIALIZATION,"%%s","(.*)")) then
+			if not line:match(self.playerclassName) then
+				return 0,ItemScore.SC_OK,"wrong spec"
+			end
 		end
 	end
 
@@ -378,10 +353,10 @@ function ItemScore:GetItemScore(itemlink, invslot, allowbad, verbose)
 		if item.effect then
 			item.debug.old_weight = value
 			for statname,statvalue in pairs(item.effect) do
-				local statrule = rule.stats[statname]
+				local rulevalue = rule.stats[statname]
 				if statrule then
-					if verbose then do_verbose("Effect: %s %s, = %s",statname,statvalue,(statvalue*statrule.weight)) end
-					value = value + statvalue*(statrule.weight or 1)
+					if verbose then do_verbose("Effect: %s %s, = %s",statname,statvalue,(statvalue*rulevalue)) end
+					value = value + statvalue*(rulevalue or 1)
 				end
 			end
 		end
@@ -443,49 +418,11 @@ function ItemScore:ScoreItemStats(item, invslot, itemlink, verbose)
 			statname = statname:gsub("^ITEM_MOD_",""):gsub("^CR_","") :gsub("_SHORT$","") :gsub("_NAME$","") :gsub("_RATING$","")
 			if statname=="RESISTANCE0" then statname="ARMOR" end
 
-			--[[
-			     Test Hit/Expertise rating.
-				- If above cap then half the value of it.
-				- If below max level then half the value because it isn't nearly as important.
-			--]]
-
-			-- TODO items that make you break hit/exp cap need to be handled because score could alternate between two items.
-			if statname=="HIT" and rule.stats.HIT then -- if above hit rating cap for each class then make the weight half.
-				local hitRules=rule.stats.HIT
-				local curHitRating = GetCombatRatingBonus(hitRules.category) + GetHitModifier()
-
-				if curHitRating > ( hitRules.hitcap or 0) or self.playerlevel < GetMaxPlayerLevel() then
-					-- weight is half.
-					hitRules.weight=hitRules.default / 2
-				else
-					-- weight is full value. Make sure incase we changed it before.
-					hitRules.weight = hitRules.default
-				end
-			end
-
-			if statname=="EXPERTISE" and rule.stats.EXPERTISE then
-				local expRules=rule.stats.EXPERTISE
-				local curExpRating=GetExpertise()
-
-				if curExpRating >= (expRules.expcap or 0) or self.playerlevel < GetMaxPlayerLevel() then
-					expRules.weight = expRules.default / 2
-				else
-					expRules.weight = expRules.default
-				end
-			end
-
-			local statrule = rule.stats[statname]
-			if statrule then
-				if statrule.onlyinslot == invslot or not statrule.onlyinslot then
-					-- Upscaling dps/damage
-					--if statname=="DAMAGE_PER_SECOND" or statname=="DAMAGE" then statvalue=statvalue*0.3 end
-
-					value = value + statvalue*(statrule.weight or 1)
-					if verbose then do_verbose("  + |cff00ff00%.1f %s|r: |cffaaaaaa * %.1f = |cffffffff%.1f|r",statvalue,statname, statrule.weight or 1, statvalue*(statrule.weight or 1))  end
-				end
-			end
+			local rulevalue = rule.stats[statname]
+			value = value + statvalue*(rulevalue or 0)
+			if verbose then do_verbose("  + |cff00ff00%.1f %s|r: |cffaaaaaa * %.1f = |cffffffff%.1f|r",statvalue,statname, rulevalue or 0, statvalue*(rulevalue or 0))  end
 		elseif statname:find("^EMPTY_SOCKET") then
-			socketname = statname:gsub("^EMPTY_SOCKET_","")
+			local socketname = statname:gsub("^EMPTY_SOCKET_","")
 			--local statweight = (rule.sockets and rule.sockets[socketname]) or SOCKET_WEIGHT
 
 			local statweight = ItemScore:GetSocketWeight(socketname,item.info.ilevel)
@@ -1010,14 +947,11 @@ function ItemScore:ShowHloomPopup(data)
 end
 
 function ItemScore:ScoreGem(gemdata)
-	local rule = ItemScore.curRuleSet
+	local ruleSetStats = ItemScore.curRuleSet.stats
 	local score = 0
 
 	for stat,statvalue in pairs(gemdata) do
-		local statrule = rule.stats[stat]
-		if statrule then
-			score = score + ((statrule.weight or 0)*statvalue)
-		end
+		score = score + ((ruleSetStats[stat] or 0)*statvalue)
 	end
 
 	return score
@@ -1075,15 +1009,30 @@ function ItemScore:GetSocketWeight(type,ilvl)
 	return score,id
 end
 
-local function ItemScore_SetTooltipData(tooltip, ...)
+local function ItemScore_SetTooltipData(tooltip, tooltipobj)
+	tooltipobj=tooltipobj or GameTooltip
 	if not ItemScore.TooltipPatched then
-		local itemName,itemLink = GameTooltip:GetItem()
+		local itemName,itemLink = tooltipobj:GetItem()
 		if not itemLink then
 			ItemScore.TooltipPatched  = true
 			return
 		end
 
+		local cleanlink = ZGV.ItemLink.ProcessItemLink(itemLink,false)
+
+
 		local score,code,comment = ZGV.ItemScore:GetItemScore(itemLink,nil,false,verbose)
+		local subscore,cancode,cancomment = ZGV.ItemScore:CanEquipItem(itemLink,false,true)
+
+		if ZGV.db.profile.debug_display then
+			tooltip:AddLine("|cfffe6100Zygor debug:|r ")
+			tooltip:AddLine("score "..score)
+			tooltip:AddLine("code "..code)
+			tooltip:AddLine("reason "..comment)
+			tooltip:AddDoubleLine("  ITEMID:",ZGV.ItemLink.GetItemID(cleanlink))
+		end
+
+
 		local item = ItemScore:GetItemStatsWithTooltip(itemLink)
 		if not item then 
 			ItemScore.TooltipPatched  = true
@@ -1091,55 +1040,102 @@ local function ItemScore_SetTooltipData(tooltip, ...)
 		end
 		local itemslot = item.info.equipslot
 		local equippedscore,equippedscore2 = 0,0
+		local equippeditem,equippeditem2 
+
+		local ecode,ereason
 
 		if ItemScore.possEquipSlots[itemslot] then
-			local equippeditem,equippeditem2 = ItemScore:GetItemInSlot(itemslot)
-			if equippeditem then equippedscore = ItemScore:GetItemScore(equippeditem,nil,false,verbose) end
-			if equippeditem2 then equippedscore2 = ItemScore:GetItemScore(equippeditem2,nil,false,verbose) end
+			equippeditem,equippeditem2,equippeditemfull,equippeditem2full = ItemScore:GetItemInSlot(itemslot)
+			if equippeditem then 
+				equippeditem = ZGV.ItemLink.ProcessItemLink(equippeditemfull,false)
+				equippedscore,ecode,ereason = ItemScore:GetItemScore(equippeditem,nil,false,verbose) 
+			end
+			if equippeditem2 then 
+				equippeditem2 = ZGV.ItemLink.ProcessItemLink(equippeditem2full,false)
+				equippedscore2,ecode,ereason = ItemScore:GetItemScore(equippeditem2,nil,false,verbose) 
+			end
 		end
 
 		local diffscore,diffscore2 = math.round((score-equippedscore)*100)*0.01, math.round((score-equippedscore2)*100)*0.01
 		if diffscore > 0 then color = "|cff00ff00+" else color = "|cffff0000" end
 
+		tooltip:AddLine("|r")
 		if score>0 and (equippedscore>0 or equippedscore2>0) then
-			tooltip:AddLine("|cfffe6100Zygor ItemScore:|r "..score)
-			if equippedscore>0 then
-				local color
-				if diffscore > 0 then color = "|cff00ff00+" else color = "|cffff0000" end
-				tooltip:AddLine("|cfffe6100  equipped:|r "..equippedscore.." ("..color..diffscore..") ")
+			-- Item being previewed
+			if ZGV.db.profile.debug then
+				tooltip:AddLine("|cfffe6100Zygor ItemScore:|r "..score)
+			else
+				tooltip:AddLine("|cfffe6100Zygor ItemScore:|r ")
 			end
-			if equippedscore2>0 then
-				local color
-				if diffscore2 > 0 then color = "|cff00ff00+" else color = "|cffff0000" end
-				tooltip:AddLine("|cfffe6100  equipped:|r "..equippedscore2.." ("..color..diffscore2..") ")
+
+			local twoslots = (itemslot=="INVTYPE_TRINKET") or (itemslot=="INVTYPE_FINGER")
+
+			local comment
+			local slotinfo1 = twoslots and "Slot 1: " or ""
+			local slotinfo2 = twoslots and "Slot 2: " or ""
+
+			-- item in slot 1
+			if equippedscore>0 then
+				if cleanlink~=equippeditem then
+					local comment = "|r "..slotinfo1.."Upgrade |cff00ff00"
+					if diffscore <= 0 then 
+						comment = "|r "..slotinfo1.."Downgrade |cffff0000"
+					end
+					if ZGV.db.profile.debug then comment = comment..(score-equippedscore).." " end
+					local change=math.floor(((score*100/equippedscore)-100)*100)/100
+					tooltip:AddLine(comment..change.."% ")
+				else
+					tooltip:AddLine("|r "..slotinfo1.."Equipped")
+				end
+			else
+				tooltip:AddLine("|r "..slotinfo1.."Upgrade |cff00ff00100% ")
+			end
+
+			-- item in slot 2 only if it is ring or trinket
+			if twoslots and equippedscore2>0 then
+				if cleanlink~=equippeditem2 and equippedscore2>0 then
+					local comment = "|r "..slotinfo2.."Upgrade |cff00ff00"
+					if diffscore2 <= 0 then 
+						comment = "|r "..slotinfo2.."Downgrade |cffff0000"
+					end
+					if ZGV.db.profile.debug then comment = comment..(score-equippedscore2).." " end
+					local change=math.floor(((score*100/equippedscore2)-100)*100)/100
+					tooltip:AddLine(comment..change.."% ")
+				else
+					tooltip:AddLine("|r "..slotinfo2.."Equipped")
+				end
+			elseif twoslots then
+				tooltip:AddLine("|r "..slotinfo2.."Upgrade |cff00ff00100% ")
 			end
 		elseif score>0 then
 			tooltip:AddLine("|cfffe6100Zygor ItemScore:|r "..score)
+			tooltip:AddLine("|r  Upgrade |cff00ff00100% ")
 		end
-		if item.effect then
-			tooltip:AddLine("|rEffect parsed: ")
-			for i,v in pairs(item.effect) do
-				local statrule = ZGV.ItemScore.curRuleSet.stats[i]
-				if statrule then
-					tooltip:AddLine("|r  "..i.." "..v.." ("..(v*(statrule.weight or 0))..")")
+
+		if ZGV.db.profile.debug_display then
+			if item.effect then
+				for i,v in pairs(item.effect) do
+					local rulevalue = ZGV.ItemScore.curRuleSet.stats[i]
+					tooltip:AddLine("|rEffect parsed: ")
+					tooltip:AddLine("|r  "..i.." "..v.." ("..(v*(rulevalue or 0))..")")
 				end
 			end
-		end
-				
+		end				
 
 		ItemScore.TooltipPatched  = true
 	end
+	if tooltipobj==ItemRefTooltip then ItemRefTooltip:Show() end -- update to new height, have to do it by hand since IRT is called just once
 end
 
 local function ItemScore_ClearTooltipData(tooltip, ...)
 	ItemScore.TooltipPatched = false
 end
 
-if ZGV.DEV then
-	GameTooltip:HookScript("OnTooltipSetItem", ItemScore_SetTooltipData)
-	GameTooltip:HookScript("OnTooltipCleared", ItemScore_ClearTooltipData)
-	hooksecurefunc (GameTooltip, "SetHyperlink", function(tip) ItemScore_SetTooltipData(tip) end)
-end
+GameTooltip:HookScript("OnTooltipSetItem", ItemScore_SetTooltipData)
+GameTooltip:HookScript("OnTooltipCleared", ItemScore_ClearTooltipData)
+ItemRefTooltip:HookScript("OnTooltipCleared", ItemScore_ClearTooltipData)
+hooksecurefunc (GameTooltip, "SetHyperlink", function(tip) ItemScore_SetTooltipData(tip,GameTooltip) end)
+hooksecurefunc (ItemRefTooltip, "SetHyperlink", function(tip) ItemScore_SetTooltipData(tip,ItemRefTooltip) end)
 
 
 function ItemScore:ImportPawn(datastring)
@@ -1225,4 +1221,23 @@ function ItemScore:InitGearFinderOptions()
 	else
 		ZGV:ScheduleTimer(function() ItemScore:InitGearFinderOptions() end, 1)
 	end
+end
+
+function ItemScore:UsesCustomWeights(class,spec)
+	local statset = ZGV.ItemScore.rules[class][spec].stats
+	local prefix = 'gear_'..class..'_'..spec..'_'
+	local profile = ZGV.db.profile
+
+	for index=1,#ZGV.ItemScore.Keywords do
+		local statname = ZGV.ItemScore.Keywords[index].blizz
+
+		if not profile[prefix..statname] and statset[statname] then
+		
+		elseif tonumber(profile[prefix..statname]) and not statset[statname] then
+			return true
+		elseif tonumber(profile[prefix..statname]) and tonumber(statset[statname])~=tonumber(profile[prefix..statname]) then
+			return true
+		end
+	end
+	return false
 end

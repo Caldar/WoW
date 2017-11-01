@@ -175,7 +175,7 @@ ZygorGuidesViewer:RegisterGuide("GOLD\\Farming\\Felcloth",{
 },[[
 	step
 		talk Zidormi##88206
-		Tell her: "_Show me the Blasted Lands before the Invasion._" |havebuff Interface\Icons\spell_mage_altertime |goto Blasted Lands 48.2,7.3
+		Tell her: "_Show me the Blasted Lands before the Invasion._" |havebuff 609811 |goto Blasted Lands 48.2,7.3 --spell_mage_altertime
 	step
 		map Blasted Lands
 		path follow smart; loop on; ants curved
@@ -687,7 +687,7 @@ ZygorGuidesViewer:RegisterGuide("GOLD\\Farming\\Zesty Clam Meat, Black Pearl, Ir
 },[[
 	step
 		talk Zidormi##88206
-		Tell her: "_Show me the Blasted Lands before the Invasion._" |havebuff Interface\Icons\spell_mage_altertime |goto Blasted Lands 48.2,7.3
+		Tell her: "_Show me the Blasted Lands before the Invasion._" |havebuff 609811 |goto Blasted Lands 48.2,7.3 --spell_mage_altertime
 	step
 		map Blasted Lands
 		path follow smart; loop on; ants curved
@@ -1095,7 +1095,7 @@ ZygorGuidesViewer:RegisterGuide("GOLD\\Farming\\Volatile Fire",{
 		path	23.3,59.9	24.8,60.5
 		path	32.5,63.6	32.6,58.7	34.7,57.0
 		path	39.7,53.2	38.1,51.0	35.9,51.7
-		kill Flame Terror##52219+, Brimstone Destroyer##52794+
+		kill Raging Firestorm##39939+, Fiery Tormentor##41396+
 		goldcollect 140 Volatile Fire##52325
 		|meta crap_items_follow=1
 		goldtracker

@@ -1,23 +1,23 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames');
-
---Cache global variables
---Lua functions
-local _G = _G
-local unpack, pairs = unpack, pairs
-local max = math.max
-local format = format
---WoW API / Variables
-local C_TimerAfter = C_Timer.After
-local RAID_CLASS_COLORS = RAID_CLASS_COLORS
-local CUSTOM_CLASS_COLORS = CUSTOM_CLASS_COLORS
-
 local _, ns = ...
 local ElvUF = ns.oUF
 assert(ElvUF, "ElvUI was unable to locate oUF.")
 
+--Cache global variables
+--Lua functions
+local _G = _G
+local tinsert = tinsert
+local max = math.max
+--WoW API / Variables
+local CreateFrame = CreateFrame
+local MAX_COMBO_POINTS = MAX_COMBO_POINTS
+
+--Global variables that we don't cache, list them here for mikk's FindGlobals script
+-- GLOBALS: ElvUF_Target
+
 function UF:Construct_PlayerFrame(frame)
-	frame.Threat = self:Construct_Threat(frame, true)
+	frame.ThreatIndicator = self:Construct_Threat(frame)
 
 	frame.Health = self:Construct_HealthBar(frame, true, true, 'RIGHT')
 	frame.Health.frequentUpdates = true;
@@ -34,15 +34,15 @@ function UF:Construct_PlayerFrame(frame)
 
 	frame.Debuffs = self:Construct_Debuffs(frame)
 
-	frame.Castbar = self:Construct_Castbar(frame, 'LEFT', L["Player Castbar"])
+	frame.Castbar = self:Construct_Castbar(frame, L["Player Castbar"])
 
 	--Create a holder frame all "classbars" can be positioned into
 	frame.ClassBarHolder = CreateFrame("Frame", nil, frame)
 	frame.ClassBarHolder:Point("BOTTOM", E.UIParent, "BOTTOM", 0, 150)
 
-	--Combo points was moved to the ClassIcons element, so all classes need to have a ClassBar now.
-	frame.ClassIcons = self:Construct_ClassBar(frame)
-	frame.ClassBar = 'ClassIcons'
+	--Combo points was moved to the ClassPower element, so all classes need to have a ClassBar now.
+	frame.ClassPower = self:Construct_ClassBar(frame)
+	frame.ClassBar = 'ClassPower'
 
 	--Some classes need another set of different classbars.
 	if E.myclass == "DEATHKNIGHT" then
@@ -58,17 +58,16 @@ function UF:Construct_PlayerFrame(frame)
 		frame.AdditionalPower = self:Construct_AdditionalPowerBar(frame)
 	end
 
-	frame.RaidIcon = UF:Construct_RaidIcon(frame)
-	frame.Resting = self:Construct_RestingIndicator(frame)
-	frame.Combat = self:Construct_CombatIndicator(frame)
+	frame.RaidTargetIndicator = UF:Construct_RaidIcon(frame)
+	frame.RestingIndicator = self:Construct_RestingIndicator(frame)
+	frame.CombatIndicator = self:Construct_CombatIndicator(frame)
 	frame.PvPText = self:Construct_PvPIndicator(frame)
 	frame.DebuffHighlight = self:Construct_DebuffHighlight(frame)
-	frame.HealPrediction = self:Construct_HealComm(frame)
-
+	frame.HealthPrediction = self:Construct_HealComm(frame)
 	frame.AuraBars = self:Construct_AuraBarHeader(frame)
-
-	frame.CombatFade = true
 	frame.InfoPanel = self:Construct_InfoPanel(frame)
+	frame.PvPIndicator = UF:Construct_PvPIcon(frame)
+	frame.CombatFade = true
 	frame.customTexts = {}
 
 	frame:Point('BOTTOMLEFT', E.UIParent, 'BOTTOM', -413, 68) --Set to default position
@@ -100,7 +99,7 @@ function UF:Update_PlayerFrame(frame, db)
 		frame.USE_PORTRAIT_OVERLAY = frame.USE_PORTRAIT and (db.portrait.overlay or frame.ORIENTATION == "MIDDLE")
 		frame.PORTRAIT_WIDTH = (frame.USE_PORTRAIT_OVERLAY or not frame.USE_PORTRAIT) and 0 or db.portrait.width
 
-		frame.CAN_HAVE_CLASSBAR = true --Combo points are in ClassIcons now, so all classes need access to ClassBar
+		frame.CAN_HAVE_CLASSBAR = true --Combo points are in ClassPower now, so all classes need access to ClassBar
 		frame.MAX_CLASS_BAR = frame.MAX_CLASS_BAR or max(UF.classMaxResourceBar[E.myclass] or 0, MAX_COMBO_POINTS) --only set this initially
 		frame.USE_CLASSBAR = db.classbar.enable and frame.CAN_HAVE_CLASSBAR
 		frame.CLASSBAR_SHOWN = frame.CAN_HAVE_CLASSBAR and frame[frame.ClassBar]:IsShown()
@@ -185,6 +184,9 @@ function UF:Update_PlayerFrame(frame, db)
 	if E.db.unitframe.units.target.aurabar.attachTo == "PLAYER_AURABARS" and ElvUF_Target then
 		UF:Configure_AuraBars(ElvUF_Target)
 	end
+
+	--PvP & Prestige Icon
+	UF:Configure_PVPIcon(frame)
 
 	--CustomTexts
 	UF:Configure_CustomTexts(frame)

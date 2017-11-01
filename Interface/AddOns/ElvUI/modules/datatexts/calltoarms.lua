@@ -3,12 +3,12 @@ local DT = E:GetModule('DataTexts')
 
 --Cache global variables
 --WoW API / Variables
-local GetNumRandomDungeons = GetNumRandomDungeons
 local GetLFGRandomDungeonInfo = GetLFGRandomDungeonInfo
+local GetLFGRoleShortageRewards = GetLFGRoleShortageRewards
+local GetNumRandomDungeons = GetNumRandomDungeons
 local GetNumRFDungeons = GetNumRFDungeons
 local GetRFDungeonInfo = GetRFDungeonInfo
-local GetLFGRoleShortageRewards = GetLFGRoleShortageRewards
-local ToggleFrame = ToggleFrame
+local PVEFrame_ToggleFrame = PVEFrame_ToggleFrame
 local LFG_ROLE_NUM_SHORTAGE_TYPES = LFG_ROLE_NUM_SHORTAGE_TYPES
 local BATTLEGROUND_HOLIDAY = BATTLEGROUND_HOLIDAY
 local DUNGEONS = DUNGEONS
@@ -176,15 +176,4 @@ local function OnLeave()
 	enteredFrame = false;
 end
 
---[[
-	DT:RegisterDatatext(name, events, eventFunc, updateFunc, clickFunc, onEnterFunc)
-
-	name - name of the datatext (required)
-	events - must be a table with string values of event names to register
-	eventFunc - function that gets fired when an event gets triggered
-	updateFunc - onUpdate script target function
-	click - function to fire when clicking the datatext
-	onEnterFunc - function to fire OnEnter
-	onLeaveFunc - function to fire OnLeave, if not provided one will be set for you that hides the tooltip.
-]]
-DT:RegisterDatatext('Call to Arms', {"PLAYER_ENTERING_WORLD", "LFG_UPDATE_RANDOM_INFO"}, OnEvent, Update, OnClick, OnEnter, OnLeave)
+DT:RegisterDatatext('Call to Arms', {"PLAYER_ENTERING_WORLD", "LFG_UPDATE_RANDOM_INFO"}, OnEvent, Update, OnClick, OnEnter, OnLeave, BATTLEGROUND_HOLIDAY)

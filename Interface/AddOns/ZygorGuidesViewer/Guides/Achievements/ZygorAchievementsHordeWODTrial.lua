@@ -3,30 +3,7 @@ if not ZygorGuidesViewer then return end
 if UnitFactionGroup("player")~="Horde" then return end
 if ZGV:DoMutex("AchievementsHWOD") then return end
 ZygorGuidesViewer.GuideMenuTier = "TRI"
-ZygorGuidesViewer:RegisterInclude("trainCooking",[[
-talk Arugi##46709 |goto Orgrimmar 56.3,61.5
-]])
-ZygorGuidesViewer:RegisterInclude("trainFishing",[[
-talk Lumak##3332 |goto Orgrimmar 66.5,41.5
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Achievements Guides\\Draenor\\Quest Achievements\\Mean and Green",{
-condition_end="achieved(9654)",
-description="Reach 10 stacks of Mutagen in the Everbloom Wilds.",
-},[[
-step
-_Fly_ to Everbloom Outlook |goto Gorgrond/0 68.8,28.8 < 5 |only if walking
-_Head South_ through the forest |goto Gorgrond/0 70.6,33.5 < 20 |only if walking
-_Continue South_ through the marsh |goto Gorgrond/0 71.7,38.2 < 20 |only if walking
-_Gain_ the Mutagen debuff from killing mobs in the Everbloom Wilds
-_Stand_ in the green pool that will appear under their corpse to gain 1 stack of Mutagen
-|tip Leaving Everbloom Wilds will remove all stacks.
-kill Twisted Guardian##88279+, Enthralled Mutant##88394+
-_Gain_ 10 stacks of Mutagen
-|achieve 9654 |goto Gorgrond/0 71.6,41.8
-step
-Congratulations, you have _earned_ the Mean and Green Achievement!
-]])
-ZygorGuidesViewer:RegisterGuide("Zygor's Horde Achievements Guides\\Draenor\\Exploration Achievements\\Jungle Treasure Hunter/Master",{
+ZygorGuidesViewer:RegisterGuide("Zygor's Achievement Guides\\Exploration\\Jungle Treasure Hunter/Master",{
 condition_end="achieved(10262)",
 achieveid={10261, 10262},
 description="This guide will walk you through discovering all of the treasures in Tanaan Jungle.",
@@ -370,4 +347,21 @@ Click to restart this guide |confirm |next "tanaan_treasure_start" |only if not 
 Congratulations! You earned the: |only if achieved(10262)
 _Jungle Treasure Hunter_ Achievement |only if achieved(10262)
 _Jungle Treasure Master_ Achievement |only if achieved(10262)
+]])
+ZygorGuidesViewer:RegisterGuide("Zygor's Achievement Guides\\Quests\\Mean and Green",{
+condition_end="achieved(9654)",
+description="Reach 10 stacks of Mutagen in the Everbloom Wilds.",
+},[[
+step
+_Fly_ to Everbloom Outlook |goto Gorgrond/0 68.8,28.8 < 5 |only if walking
+_Head South_ through the forest |goto Gorgrond/0 70.6,33.5 < 20 |only if walking
+_Continue South_ through the marsh |goto Gorgrond/0 71.7,38.2 < 20 |only if walking
+_Gain_ the Mutagen debuff from killing mobs in the Everbloom Wilds
+_Stand_ in the green pool that will appear under their corpse to gain 1 stack of Mutagen
+|tip Leaving Everbloom Wilds will remove all stacks.
+kill Twisted Guardian##88279+, Enthralled Mutant##88394+
+_Gain_ 10 stacks of Mutagen
+|achieve 9654 |goto Gorgrond/0 71.6,41.8
+step
+Congratulations, you have _earned_ the Mean and Green Achievement!
 ]])

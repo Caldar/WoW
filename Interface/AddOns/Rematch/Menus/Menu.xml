@@ -1,6 +1,6 @@
 <Ui>
 
-	<Frame name="RematchMenuFrameTemplate" enableMouse="true" clampedToScreen="true" virtual="true">
+	<Frame name="RematchMenuFrameTemplate" enableMouse="true" clampedToScreen="true" hidden="true" virtual="true">
 		<Backdrop edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
 			<EdgeSize val="16"/>
 			<BorderColor r="0.5" g="0.5" b="0.5"/>
@@ -81,12 +81,12 @@
 				</Texture>
 			</Layer>
 			<Layer level="ARTWORK">
-				<Texture parentKey="Check" file="Interface\Common\UI-DropDownRadioChecks" hidden="true">
-					<Size x="18" y="18"/>
+				<Texture parentKey="Check" file="Interface\Addons\Rematch\Textures\checkbuttons" hidden="true">
+					<Size x="22" y="22"/>
 					<Anchors>
-						<Anchor point="LEFT" x="2" y="2"/>
+						<Anchor point="LEFT" x="-2" y="0"/>
 					</Anchors>
-					<TexCoords left="0" right="0.5" top="0.5" bottom="1.0"/>
+					<TexCoords left="0" right="0.25" top="0.5" bottom="0.75"/>
 				</Texture>
 				<Texture parentKey="Icon" hidden="true">
 					<Size x="18" y="18"/>

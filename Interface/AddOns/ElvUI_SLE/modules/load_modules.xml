@@ -5,14 +5,13 @@
 	<Include file='Armory\Load_Armory.xml'/>
 	<Script file='auras.lua'/>
 	<Script file='backgrounds.lua'/>
-	<Script file='bags.lua'/>
-	<Script file='baginfo.lua'/>
+	<Include file='bags\load_bags.xml'/>
 	<Script file='blizzard.lua'/>
 	<Include file='chat\load_chat.xml'/>
 	<Script file='datatexts.lua'/>
 	<Script file='elvConfig.lua'/>
 	<Script file='equipmanager.lua'/>
-	<Script file='enhancedshdows.lua'/>
+	<Script file='enhancedshadows.lua'/>
 	<Script file='toolbars.lua'/>
 	<Script file='garrison.lua'/>
 	<Script file='orderhall.lua'/>

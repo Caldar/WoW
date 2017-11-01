@@ -7,7 +7,7 @@ if not L then return end
 L["INCOMPATIBLE_ADDON"] = "Das Addon %s ist nicht mit dem ElvUI %s Modul kompatibel. Bitte deaktiviere entweder das Addon oder deaktiviere das ElvUI Modul."
 
 --*_MSG locales
-L["LOGIN_MSG"] = "Willkommen zu %sElvUI|r Version %s%s|r, Tippe /ec um das Konfigurationsmenü aufzurufen. Für technische Hilfe, besuche das Supportforum unter http://www.tukui.org"
+L["LOGIN_MSG"] = "Willkommen zu %sElvUI|r Version %s%s|r, Tippe /ec um das Konfigurationsmenü aufzurufen. Für technische Hilfe, besuche das Supportforum unter https://www.tukui.org"
 
 --ActionBars
 L["Binding"] = "Belegung"
@@ -30,7 +30,7 @@ L["Remove Bar %d Action Page"] = "Entferne Leiste %d Aktion Seite"
 L["Trigger"] = "Auslöser"
 
 --Bags
-L["Bank"] = true;
+L["Bank"] = true --No need to translate
 L["Deposit Reagents"] = "Reagenzien einlagern"
 L["Hold Control + Right Click:"] = "Halte Steuerung + Rechtsklick:"
 L["Hold Shift + Drag:"] = "Halte Shift + Ziehen:"
@@ -50,7 +50,9 @@ L["DND"] = "DND" --Also used in datatexts and tooltip
 L["G"] = "G"
 L["I"] = "I"
 L["IL"] = "IL"
+L["is looking for members"] = "sucht nach Mitgliedern"
 L["Invalid Target"] = "Ungültiges Ziel"
+L["joined a group"] = "ist einer Gruppe beigetreten"
 L["O"] = "O"
 L["P"] = "P"
 L["PL"] = "PL"
@@ -63,13 +65,13 @@ L["yells"] = "schreien"
 
 --DataBars
 L["Current Level:"] = "Derzeitiges Level:"
-L["Honor XP:"] = "Ehre XP:"
 L["Honor Remaining:"] = "Ehre verbleibend:"
+L["Honor XP:"] = "Ehre XP:"
+L["In Bags:"] = "In Tasche:"
 
 --DataTexts
 L["(Hold Shift) Memory Usage"] = "(Shift gedrückt) Speichernutzung"
 L["AP"] = "AP"
-L["App"] = true;
 L["Arena"] = "Arena"
 L["AVD: "] = "AVD: "
 L["Avoidance Breakdown"] = "Vermeidung Aufgliederung"
@@ -78,8 +80,9 @@ L["Building(s) Report:"] = "Gebäude Bericht:"
 L["Character: "] = "Charakter: "
 L["Chest"] = "Brust"
 L["Combat"] = "Kampf"
+L["Combat/Arena Time"] = "Kampf/Arena Zeit"
+L["Coords"] = "Koordinaten"
 L["copperabbrev"] = "|cffeda55fc|r" --Also used in Bags
-L["Defeated"] = "Besiegt"
 L["Deficit:"] = "Defizit:"
 L["Download"] = "Download"
 L["DPS"] = "DPS"
@@ -87,11 +90,11 @@ L["Earned:"] = "Verdient:"
 L["Feet"] = "Füße"
 L["Friends List"] = "Freundesliste"
 L["Friends"] = "Freunde" --Also in Skins
-L["Gold:"] = true;
+L["Garrison"] = "Garnison"
+L["Gold"] = true --No need to translate
 L["goldabbrev"] = "|cffffd700g|r" --Also used in gold datatext
 L["Hands"] = "Hände"
 L["Head"] = "Kopf"
-L["Hit"] = "Hit"
 L["Hold Shift + Right Click:"] = "Halte Umschalt + Rechts Klick:"
 L["Home Latency:"] = "Standort Latenz"
 L["HP"] = "HP"
@@ -99,8 +102,9 @@ L["HPS"] = "HPS"
 L["Legs"] = "Beine"
 L["lvl"] = "lvl"
 L["Main Hand"] = "Waffenhand"
-L["Mission(s) Report:"] = "Missionsbericht";
-L["Mitigation By Level: "] = "Milderung durch Stufe:"
+L["Mission(s) Report:"] = "Missionsbericht"
+L["Mitigation By Level: "] = "Milderung durch Stufe: "
+L["Mobile"] = "Handy"
 L["Naval Mission(s) Report:"] = "Marine Missionsbericht:"
 L["No Guild"] = "Keine Gilde"
 L["Offhand"] = "Schildhand"
@@ -113,9 +117,12 @@ L["Session:"] = "Sitzung:"
 L["Shoulder"] = "Schulter"
 L["silverabbrev"] = "|cffc7c7cfs|r" --Also used in Bags
 L["SP"] = "SP"
+L["Spell/Heal Power"] = "Zauber-/Heilungskraft"
 L["Spec"] = "Spec"
 L["Spent:"] = "Ausgegeben:"
 L["Stats For:"] = "Stats Für:"
+L["System"] = true --No need to translate
+L["Talent/Loot Specialization"] = "Talent-/Lootspezialisierung"
 L["Total CPU:"] = "Gesamt CPU:"
 L["Total Memory:"] = "Gesamte Speichernutzung:"
 L["Total: "] = "Gesamt: "
@@ -201,33 +208,28 @@ L["This will change the layout of your unitframes and actionbars."] = "Dies wird
 L["Trade"] = "Handel"
 L["Welcome to ElvUI version %s!"] = "Willkommen bei ElvUI Version %s!"
 L["You are now finished with the installation process. If you are in need of technical support please visit us at http://www.tukui.org."] = "Du hast den Installationsprozess abgeschlossen. Solltest du technische Hilfe benötigen, besuche uns auf http://www.tukui.org."
-L["You can always change fonts and colors of any element of elvui from the in-game configuration."] = "Du kannst jederzeit in der Ingame-Konfiguration Schriften und Farben von jedem Element des Interfaces ändern."
+L["You can always change fonts and colors of any element of ElvUI from the in-game configuration."] = "Du kannst jederzeit in der Ingame-Konfiguration Schriften und Farben von jedem Element des Interfaces ändern."
 L["You can now choose what layout you wish to use based on your combat role."] = "Du kannst nun auf Basis deiner Rolle im Kampf ein Layout wählen."
 L["You may need to further alter these settings depending how low you resolution is."] = "Unter Umständen musst du, je nachdem wie niedrig deine Auflösung ist, diese Einstellungen ändern."
 L["Your current resolution is %s, this is considered a %s resolution."] = "Deine Aktuelle Auflösung ist %s, diese wird als eine %s Auflösung angesehen."
 
 --Misc
 L["ABOVE_THREAT_FORMAT"] = "%s: %.0f%% [%.0f%% above |cff%02x%02x%02x%s|r]"
-L["Average Group iLvl:"] = "Durchschnittliches Gruppen iLvl:"
 L["Bars"] = "Leisten" --Also used in UnitFrames
 L["Calendar"] = "Kalender"
 L["Can't Roll"] = "Es kann nicht gewürfelt werden."
 L["Disband Group"] = "Gruppe auflösen"
+L["Empty Slot"] = "Leerer Platz"
 L["Enable"] = "Eingeschaltet" --Doesn't fit a section since it's used a lot of places
 L["Experience"] = "Erfahrung"
 L["Fishy Loot"] = "Faule Beute"
-L["iLvl"] = "iLvl" --Column header in raidbrowse
-L["Important Group Members:"] = "Wichtige Gruppenmitglieder:"
 L["Left Click:"] = "Linksklick:" --layout\layout.lua
-L["Raid Browser"] = "Schlachtzugsbrowser" -- Minimap middle click menu
 L["Raid Menu"] = "Schlachtzugsmenü"
 L["Remaining:"] = "Verbleibend:"
 L["Rested:"] = "Ausgeruht:"
-L["Right Click:"] = "Rechtsklick:" --layout\layout.lua
-L["Show BG Texts"] = "Zeige Schlachtfeldtexte" --layout\layout.lua
-L["Talent Spec"] = "Talent Spec" --Column header in raidbrowser
 L["Toggle Chat Frame"] = "Chatfenster an-/ausschalten" --layout\layout.lua
 L["Toggle Configuration"] = "Konfiguration umschalten" --layout\layout.lua
+L["AP:"] = true -- No need to translate (Artifact Power)
 L["XP:"] = "EP:"
 L["You don't have permission to mark targets."] = "Du hast keine Rechte um ein Ziel zu markieren."
 
@@ -246,7 +248,7 @@ L["Bar "] = "Leiste " --Also in ActionBars
 L["BNet Frame"] = "BNet-Fenster"
 L["Boss Button"] = "Boss Button"
 L["Boss Frames"] = "Boss Fenster" --Also used in UnitFrames
-L["Class Bar"] = "Klassenleiste"
+L["Class Totems"] = "Klassen Totems" --Maybe bad translation
 L["Classbar"] = "Klassenleiste"
 L["Experience Bar"] = "Erfahrungsleiste"
 L["Focus Castbar"] = "Fokus Zauberbalken"
@@ -255,6 +257,7 @@ L["FocusTarget Frame"] = "Fokus-Ziel Fenster" --Also used in UnitFrames
 L["GM Ticket Frame"] = "GM-Ticket-Fenster"
 L["Honor Bar"] = "Ehreleiste"
 L["Left Chat"] = "Linker Chat"
+L["Level Up Display / Boss Banner"] = "Level Up Anzeige / Boss Banner"
 L["Loot / Alert Frames"] = "Beute-/Alarmfenster"
 L["Loot Frame"] = "Beute-Fenster"
 L["Loss Control Icon"] = "Kontrollverlustsymbol"
@@ -289,6 +292,7 @@ L["TargetTarget Frame"] = "Ziel des Ziels Fenster" --Also used in UnitFrames
 L["TargetTargetTarget Frame"] = "Ziel des Ziels des Ziels Fenster"
 L["Tooltip"] = "Tooltip"
 L["Vehicle Seat Frame"] = "Fahrzeugfenster"
+L["Zone Ability"] = "Zonen Fähigkeit"
 L["DESC_MOVERCONFIG"] = [=[Ankerpunkte entriegelt. Bewege die Ankerpunkte und klicke 'sperren', wenn du fertig bist.
 
 Options:
@@ -297,7 +301,7 @@ Options:
 ]=]
 
 --Plugin Installer
-L["ElvUI Plugin Installation"] = true;
+L["ElvUI Plugin Installation"] = true --No need to translate
 L["In Progress"] = "In Bearbeitung"
 L["List of installations in queue:"] = "Liste von Installationen in Warteschlange:"
 L["Pending"] = "Ausstehend"
@@ -325,6 +329,8 @@ L["|cFFE30000Lua error recieved. You can view the error message when you exit co
 
 --Static Popups
 L["A setting you have changed will change an option for this character only. This setting that you have changed will be uneffected by changing user profiles. Changing this setting requires that you reload your User Interface."] = "Eine Einstellung, die du geändert hast, betrifft nur einen Charakter. Diese Einstellung, die du verändert hast, wird die Benutzerprofile unbeeinflusst lassen. Eine Änderung dieser Einstellung erfordert, dass du dein Interface neu laden musst."
+L["Accepting this will reset your Filter Priority lists for all auras on NamePlates. Are you sure?"] = "Wenn du aktzeptierst wird die Filter Priorität für alle Namensplaketten auf Standard zurückgesetzt. Bist du sicher?"
+L["Accepting this will reset your Filter Priority lists for all auras on UnitFrames. Are you sure?"] = "Wenn du aktzeptierst wird die Filter Priorität für alle Einheitenfenster auf Standard zurückgesetzt. Bist du sicher?"
 L["Are you sure you want to apply this font to all ElvUI elements?"] = "Bist du sicher, dass du diese Schrifart auf alle ElvUI Elemente anwenden möchtest?"
 L["Are you sure you want to delete all your gray items?"] = "Bist du sicher, dass du alle grauen Gegenstände löschen willst?"
 L["Are you sure you want to disband the group?"] = "Bist du dir sicher, dass du die Gruppe auflösen willst?"
@@ -340,7 +346,6 @@ L["Do you swear not to post in technical support about something not working wit
 L["ElvUI is five or more revisions out of date. You can download the newest version from www.tukui.org. Get premium membership and have ElvUI automatically updated with the Tukui Client!"] = "ElvUI ist seit fünf oder mehr Revisionen nicht aktuell. Du kannst die neuste Version bei www.tukui.org herunterladen. Hol dir die Premium-Mitgliedschaft und ElvUI wird durch den Tukui-Client automatisch aktualisiert!"
 L["ElvUI is out of date. You can download the newest version from www.tukui.org. Get premium membership and have ElvUI automatically updated with the Tukui Client!"] = "ElvUI ist nicht aktuell. Du kannst die neuste Version bei www.tukui.org herunterladen. Hol dir die Premium-Mitgliedschaft und ElvUI wird durch den Tukui-Client automatisch aktualisiert!"
 L["ElvUI needs to perform database optimizations please be patient."] = "ElvUI muss eine Datenbank Optimierung durchführen. Bitte warte eine Moment."
-L["Enabling/Disabling Bar #6 will toggle a paging option from your main actionbar to prevent duplicating bars, are you sure you want to do this?"] = "Aktivieren/Deaktivieren der Leiste #6 wird eine Option für die Seitennummerierung deine Hauptaktionsleiste hervorrufen um doppelte Leisten zu verhindern, bist du dir sich das du das tun willst?"
 L["Hover your mouse over any actionbutton or spellbook button to bind it. Press the escape key or right click to clear the current actionbutton's keybinding."] = "Bewege deine Maus über einen Aktionsbutton oder dein Zauberbuch um ihn mit einem Hotkey zu belegen. Drücke Escape oder rechte Maustaste um die aktuelle Tastenbelegung des Buttons zu löschen."
 L["I Swear"] = "Ich schwöre"
 L["It appears one of your AddOns have disabled the AddOn Blizzard_CompactRaidFrames. This can cause errors and other issues. The AddOn will now be re-enabled."] = "Es sieht so aus, als würde eines deiner Addons die Blizzard_CompactRaidFrames deaktivieren. Dass kann zu Fehlern oder anderen Problemen führen. Das Addon wird wieder aktiviert."

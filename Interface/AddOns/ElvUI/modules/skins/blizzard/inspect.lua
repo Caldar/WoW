@@ -5,8 +5,6 @@ local S = E:GetModule('Skins')
 --Lua functions
 local unpack = unpack
 --WoW API / Variables
-local GetInventoryItemQuality = GetInventoryItemQuality
-local GetItemQualityColor = GetItemQualityColor
 local GetPrestigeInfo = GetPrestigeInfo
 local UnitPrestige = UnitPrestige
 local UnitLevel = UnitLevel
@@ -17,6 +15,7 @@ local LE_EXPANSION_LEVEL_CURRENT = LE_EXPANSION_LEVEL_CURRENT
 
 local function LoadSkin()
 	if E.private.skins.blizzard.enable ~= true or E.private.skins.blizzard.inspect ~= true then return end
+
 	InspectFrame:StripTextures(true)
 	InspectFrameInset:StripTextures(true)
 	InspectFrame:SetTemplate('Transparent')
@@ -45,10 +44,47 @@ local function LoadSkin()
 			end
 		end
 	end)
-	
-	for i=1, 4 do
+
+	-- PVE Talents
+	for i = 1, 7 do
+		for j = 1, 3 do
+			local button = _G["TalentsTalentRow"..i.."Talent"..j]
+
+			button:StripTextures()
+			button:CreateBackdrop("Default")
+
+			button.icon:SetAllPoints()
+			button.icon:SetTexCoord(unpack(E.TexCoords))
+		end
+	end
+
+	-- PVP Talents
+	for i = 1, 6 do
+		for j = 1, 3 do
+			local button = _G["InspectPVPFrameTalentRow"..i.."Talent"..j]
+
+			button:StripTextures()
+			button:CreateBackdrop("Default")
+
+			button.Icon:SetAllPoints()
+			button.Icon:SetTexCoord(unpack(E.TexCoords))
+		end
+	end
+
+	for i = 1, 4 do
 		S:HandleTab(_G["InspectFrameTab"..i])
 	end
+
+	InspectModelFrame:StripTextures()
+	InspectModelFrame:CreateBackdrop("Default")
+	InspectModelFrame.backdrop:SetPoint("TOPLEFT", -3, 4)
+	InspectModelFrame.backdrop:SetPoint("BOTTOMRIGHT", 4, 0)
+
+	-- Background Texture
+	InspectModelFrameBackgroundTopLeft:SetPoint("TOPLEFT", InspectModelFrame.backdrop, "TOPLEFT", 2, -2)
+	InspectModelFrameBackgroundTopRight:SetPoint("TOPRIGHT", InspectModelFrame.backdrop, "TOPRIGHT", -2, -2)
+	InspectModelFrameBackgroundBotLeft:SetPoint("BOTTOMLEFT", InspectModelFrame.backdrop, "BOTTOMLEFT", 2, -50)
+	InspectModelFrameBackgroundBotRight:SetPoint("BOTTOMRIGHT", InspectModelFrame.backdrop, "BOTTOMRIGHT", -2, -50)
 
 	InspectModelFrameBorderTopLeft:Kill()
 	InspectModelFrameBorderTopRight:Kill()
@@ -60,7 +96,6 @@ local function LoadSkin()
 	InspectModelFrameBorderBottom:Kill()
 	InspectModelFrameBorderBottom2:Kill()
 	InspectModelFrameBackgroundOverlay:Kill()
-	InspectModelFrame:CreateBackdrop("Default")
 
 	local slots = {
 		"HeadSlot",
@@ -84,7 +119,7 @@ local function LoadSkin()
 	}
 	for _, slot in pairs(slots) do
 		local icon = _G["Inspect"..slot.."IconTexture"]
-		local slot = _G["Inspect"..slot]
+		slot = _G["Inspect"..slot]
 		slot:StripTextures()
 		slot:StyleButton(false)
 		icon:SetTexCoord(unpack(E.TexCoords))

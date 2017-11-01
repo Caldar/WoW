@@ -746,7 +746,7 @@ function IM:CreateFrames()
 	IM.ConfigButton.icon = CHAIN(IM.ConfigButton:CreateTexture()) :SetPoint("CENTER",IM.ConfigButton,"CENTER",0,0)
 		:SetSize(16,16)
 		:SetTexture(ZGV.DIR.."\\Skins\\Default\\Stealth\\titlebuttons")
-		--ZGV.AssignButtonTexture(IM.ConfigButton.icon,(SkinData("TitleButtons")),5,32)
+		--ZGV.F.AssignButtonTexture(IM.ConfigButton.icon,(SkinData("TitleButtons")),5,32)
 		--:SetTexture()
 		:SetTexCoord(4/32,5/32,0,1/4)
 	.__END
@@ -1061,11 +1061,14 @@ function IM:isItemSoulbound(bagID, bagSlotID)
 	
 end
 
+
 -- Returns items deemed to be unusable.
 function IM:GetUnusableItems()
 	ZGV.ItemScore.AutoEquip:ScoreCurrentEquippedItems() -- This eventually runs IsItemUpgrade.
 	ZGV.ItemScore.AutoEquip:ScanBagsForUpgrades()
 	ZGV.ItemScore:SetFilters()
+
+	if not ZGV.ItemScore.AutoEquip.PossibleUpgrades then return end -- too early?
 	
 	local itemsList = {}
 	
@@ -1074,7 +1077,7 @@ function IM:GetUnusableItems()
 			itemLink = GetContainerItemLink(bagID,bagSlotID)
 			if itemLink then
 				local _, _, Color, Ltype, Id, Enchant, Gem1, Gem2, Gem3, Gem4, Suffix, Unique, LinkLvl, Name = string.find(itemLink,"|?c?f?f?(%x*)|?H?([^:]*):?(%d+):?(%d*):?(%d*):?(%d*):?(%d*):?(%d*):?(%-?%d*):?(%-?%d*):?(%d*):?(%d*):?(%-?%d*)|?h?%[?([^%[%]]*)%]?|?h?|?r?") -- Blame WoWWiki
-				itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, itemSellPrice = ZGV:GetItemInfo(Id)
+				itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, itemSellPrice = ZGV:GetItemInfo(itemLink)
 				isSoulbound = IM:isItemSoulbound(bagID, bagSlotID)
 				id = tonumber(Id)
 
@@ -1085,11 +1088,11 @@ function IM:GetUnusableItems()
 					end
 				end
 				
-				-- TODO: itemType is localized!
-				if   ((isSoulbound  and not isUpgrade) or (itemRarity==1 and not isUpgrade)) 
-				 and itemSellPrice > 0
-				 and (itemType== "Armor" or itemType=="Weapon")
-				 and ((not db.keptItems) or db.keptItems[id]==nil)
+				if 	((isSoulbound  and not isUpgrade) or (itemRarity==1 and not isUpgrade)) 
+					and itemSellPrice > 0
+					and (itemType==_G["WEAPON"] or itemType==_G["ARMOR"])
+					and ((not db.keptItems) or db.keptItems[id]==nil)
+					and itemRarity<5 -- don't even look at legendaries...
 				then
 					local item = {}
 					item.ID=id
@@ -1277,7 +1280,7 @@ function IM:BagFullCheck(event)
 
 	--IM:GetDistanceToNearestVendor(point)
 	local distanceToVendor
-	point = {}
+	local point = {}
 	point.x,point.y,point.m,point.f=HBD:GetPlayerZonePosition(true)
 
 	--Spoo(nil, 0, point)

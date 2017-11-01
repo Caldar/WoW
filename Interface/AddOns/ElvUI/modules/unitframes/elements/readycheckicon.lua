@@ -3,16 +3,10 @@ local UF = E:GetModule('UnitFrames');
 
 --Cache global variables
 --Lua functions
-
 --WoW API / Variables
-local CreateFrame = CreateFrame
 
 function UF:Construct_ReadyCheckIcon(frame)
-	local f = CreateFrame("FRAME", nil, frame)
-	f:SetFrameStrata("HIGH")
-	f:SetFrameLevel(100)
-
-	local tex = f:CreateTexture(nil, "OVERLAY", nil, 7)
+	local tex = frame.RaisedElementParent.TextureParent:CreateTexture(nil, "OVERLAY", nil, 7)
 	tex:Size(12)
 	tex:Point("BOTTOM", frame.Health, "BOTTOM", 0, 2)
 
@@ -20,7 +14,19 @@ function UF:Construct_ReadyCheckIcon(frame)
 end
 
 function UF:Configure_ReadyCheckIcon(frame)
-	if not frame:IsElementEnabled('ReadyCheck') then
-		frame:EnableElement('ReadyCheck')
+	local ReadyCheckIndicator = frame.ReadyCheckIndicator
+	local db = frame.db
+
+	if (db.readycheckIcon.enable) then
+		if not frame:IsElementEnabled('ReadyCheckIndicator') then
+			frame:EnableElement('ReadyCheckIndicator')
+		end
+
+		local attachPoint = self:GetObjectAnchorPoint(frame, db.readycheckIcon.attachTo)
+		ReadyCheckIndicator:ClearAllPoints()
+		ReadyCheckIndicator:Point(db.readycheckIcon.position, attachPoint, db.readycheckIcon.position, db.readycheckIcon.xOffset, db.readycheckIcon.yOffset)
+		ReadyCheckIndicator:Size(db.readycheckIcon.size)
+	else
+		frame:DisableElement('ReadyCheckIndicator')
 	end
 end

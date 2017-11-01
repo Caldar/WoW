@@ -10,12 +10,15 @@ local GENERAL = GENERAL
 local TIMEWALKING = L["Timewalking"]
 
 local sets = {}
+local C_EquipmentSet = C_EquipmentSet
 
 local function FillTable()
-	sets = {}
+
+	T.twipe(sets)
 	sets["NONE"] = NONE
-	for i = 1, T.GetNumEquipmentSets() do
-		local name, icon, lessIndex = T.GetEquipmentSetInfo(i)
+	local equipmentSetIDs = C_EquipmentSet.GetEquipmentSetIDs()
+	for index = 1, C_EquipmentSet.GetNumEquipmentSets() do
+		local name, icon, lessIndex = C_EquipmentSet.GetEquipmentSetInfo(equipmentSetIDs[index])
 		if name then
 			sets[name] = name
 		end
@@ -129,49 +132,36 @@ local function configTable()
 				get = function(info) return EM.db.lockbutton end,
 				set = function(info, value) EM.db.lockbutton = value; E:StaticPopup_Show("PRIVATE_RL") end
 			},
-			instanceSet = {
+			onlyTalent = {
 				type = "toggle",
 				order = 7,
-				name = L["Use Instance Set"],
-				desc = L["Use a dedicated set for instances and raids."],
+				name = L["Ignore zone change"],
+				desc = L["Swap sets only on specialization change ignoring location change when. Does not influence entering/leaving instances and bg/arena."],
 				disabled = function() return not EM.db.enable end,
-				get = function(info) return EM.db.instanceSet end,
-				set = function(info, value) EM.db.instanceSet = value; end
-			},
-			timewalkingSet = {
-				type = "toggle",
-				order = 7,
-				name = L["Use Timewalking Set"],
-				desc = L["Use a dedicated set for timewalking instances."],
-				disabled = function() return not EM.db.enable end,
-				get = function(info) return EM.db.timewalkingSet end,
-				set = function(info, value) EM.db.timewalkingSet = value; end
-			},
-			pvpSet = {
-				type = "toggle",
-				order = 9,
-				name = L["Use PvP Set"],
-				desc = L["Use a dedicated set for PvP situations."],
-				disabled = function() return not EM.db.enable end,
-				get = function(info) return EM.db.pvpSet end,
-				set = function(info, value) EM.db.pvpSet = value; end
+				get = function(info) return EM.db.onlyTalent end,
+				set = function(info, value) EM.db.onlyTalent = value; end,
 			},
 			equipsets = {
 				type = "group",
 				name = PAPERDOLL_EQUIPMENTMANAGER,
-				order = 10,
+				order = 11,
 				disabled = function() return not EM.db.enable end,
 				guiInline = true,
 				args = {
-					intro = {
+					conditions = {
 						order = 1,
-						type = 'description',
-						name = L["Here you can choose what equipment sets to use in different situations."],
+						type = "input",
+						width = "full",
+						name = L["Equipment conditions"],
+						desc = L["SLE_EM_CONDITIONS_DESC"],
+						get = function(info) return EM.db.conditions end,
+						set = function(info, value) EM.db.conditions = value; EM:UpdateTags() end
 					},
-					firstSpec = ConstructSpecOption(1, 1, "firstSpec"),
-					secondSpec = ConstructSpecOption(2, 2, "secondSpec"),
-					thirdSpec = ConstructSpecOption(3, 3, "thirdSpec"),
-					forthSpec = ConstructSpecOption(4, 4, "forthSpec"),
+					help = {
+						order = 2,
+						type = 'description',
+						name = L["SLE_EM_TAGS_HELP"],
+					},
 				},
 			},
 		},
